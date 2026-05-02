@@ -1,0 +1,17 @@
+{
+  "calibration_kind": "collection_operator",
+  "calibration_data_role": "synthetic_fixture_not_experimental",
+  "synthetic_fixture": true,
+  "generated_by": "nodi_simulator_template",
+  "units": {
+    "width_nm": "nm",
+    "depth_nm": "nm",
+    "wavelength_nm": "nm",
+    "theta_center_rad": "rad",
+    "theta_sigma_rad": "rad",
+    "phi_sigma_rad": "rad",
+    "slit_phi_limit_rad": "rad",
+    "throughput_scale": "dimensionless absolute throughput when experimentally calibrated"
+  },
+  "warning": "Template geometry and throughput are placeholders only."
+}

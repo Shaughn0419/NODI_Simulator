@@ -1,0 +1,15 @@
+{
+  "calibration_kind": "reference_blank_channel",
+  "calibration_data_role": "synthetic_fixture_not_experimental",
+  "synthetic_fixture": true,
+  "generated_by": "nodi_simulator_template",
+  "units": {
+    "width_nm": "nm",
+    "depth_nm": "nm",
+    "wavelength_nm": "nm",
+    "g_ref": "relative amplitude scale",
+    "A_ref": "absolute reference amplitude when experimentally calibrated",
+    "phi_ref_rad": "rad"
+  },
+  "warning": "Template rows are synthetic examples and must not be used to unlock calibrated claims."
+}

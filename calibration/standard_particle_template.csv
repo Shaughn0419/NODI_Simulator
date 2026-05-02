@@ -1,0 +1,2 @@
+calibration_row_id,calibration_data_role,calibration_id,wavelength_nm,operator_id,K_sca,global_phase_offset_rad,K_sca_scope
+standard_template_660,synthetic_fixture_not_experimental,template_standard,660,template_operator,2.5,0.31,standard_particle_lumped_detector_scale

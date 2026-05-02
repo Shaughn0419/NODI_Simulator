@@ -1,0 +1,17 @@
+{
+  "calibration_kind": "collection_operator|standard_particle|blank_false_positive|reference_blank_channel",
+  "calibration_data_role": "experimental",
+  "synthetic_fixture": false,
+  "generated_by": "instrument_or_analysis_pipeline_name",
+  "instrument_id": "fill_me",
+  "operator_id": "fill_me_if_applicable",
+  "date_utc": "YYYY-MM-DD",
+  "units": {
+    "wavelength_nm": "nm",
+    "angles": "rad"
+  },
+  "validation": {
+    "held_out_cases": "fill_me",
+    "held_out_error": "fill_me"
+  }
+}

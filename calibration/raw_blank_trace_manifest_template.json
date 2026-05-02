@@ -1,0 +1,20 @@
+{
+  "calibration_kind": "raw_blank_trace",
+  "calibration_data_role": "synthetic_fixture_not_experimental",
+  "synthetic_fixture": true,
+  "required_columns": [
+    "time_s",
+    "lockin_nodi",
+    "lockin_pod",
+    "optional_blank_id",
+    "optional_lane"
+  ],
+  "expected_outputs": [
+    "lane_sigma",
+    "autocorrelation_time",
+    "effective_samples",
+    "peak_false_alarm_rate",
+    "pair_false_alarm_rate"
+  ],
+  "warning": "This is an API contract template, not a measured blank trace."
+}

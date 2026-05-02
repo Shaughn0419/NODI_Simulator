@@ -1,0 +1,16 @@
+{
+  "calibration_kind": "blank_false_positive",
+  "calibration_data_role": "synthetic_fixture_not_experimental",
+  "synthetic_fixture": true,
+  "generated_by": "nodi_simulator_template",
+  "units": {
+    "threshold_sigma_nodi": "robust sigma",
+    "threshold_sigma_pod": "robust sigma",
+    "blank_trace_autocorrelation_time_s": "s",
+    "effective_independent_samples_per_trace": "count",
+    "empirical_peak_false_alarm_rate_per_minute": "min^-1",
+    "empirical_pair_false_alarm_rate_per_minute": "min^-1",
+    "lane_noise_correlation_coefficient": "dimensionless"
+  },
+  "warning": "Template false-positive rates are illustrative only."
+}

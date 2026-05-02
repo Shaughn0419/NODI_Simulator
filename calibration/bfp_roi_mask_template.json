@@ -1,0 +1,24 @@
+{
+  "calibration_kind": "bfp_roi_mask",
+  "calibration_data_role": "synthetic_fixture_not_experimental",
+  "synthetic_fixture": true,
+  "operator_id": "template_operator",
+  "required_columns": [
+    "pixel_x",
+    "pixel_y",
+    "theta_rad",
+    "phi_rad",
+    "mask_weight",
+    "solid_angle_weight"
+  ],
+  "units": {
+    "pixel_x": "pixel",
+    "pixel_y": "pixel",
+    "theta_rad": "rad",
+    "phi_rad": "rad",
+    "mask_weight": "dimensionless",
+    "solid_angle_weight": "sr"
+  },
+  "coordinate_frame": "bfp:pixel_xy -> theta_phi",
+  "warning": "This mask contract is a placeholder until a measured BFP mapping exists."
+}

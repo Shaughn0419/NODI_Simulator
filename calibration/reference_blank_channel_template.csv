@@ -1,0 +1,13 @@
+calibration_row_id,calibration_data_role,width_nm,depth_nm,wavelength_nm,g_ref,A_ref,phi_ref_rad,phi_ref_source,phi_ref_confidence,phase_wrap_policy
+ref_template_800_550_488,synthetic_fixture_not_experimental,800,550,488,0.95,,0.00,,,unit_phasor_interpolation
+ref_template_800_550_532,synthetic_fixture_not_experimental,800,550,532,1.00,,0.02,,,unit_phasor_interpolation
+ref_template_800_550_660,synthetic_fixture_not_experimental,800,550,660,1.10,,0.05,,,unit_phasor_interpolation
+ref_template_1200_550_488,synthetic_fixture_not_experimental,1200,550,488,1.15,,0.03,,,unit_phasor_interpolation
+ref_template_1200_550_532,synthetic_fixture_not_experimental,1200,550,532,1.20,,0.05,,,unit_phasor_interpolation
+ref_template_1200_550_660,synthetic_fixture_not_experimental,1200,550,660,1.28,,0.07,,,unit_phasor_interpolation
+ref_template_800_900_488,synthetic_fixture_not_experimental,800,900,488,1.05,,0.01,,,unit_phasor_interpolation
+ref_template_800_900_532,synthetic_fixture_not_experimental,800,900,532,1.12,,0.04,,,unit_phasor_interpolation
+ref_template_800_900_660,synthetic_fixture_not_experimental,800,900,660,1.20,,0.06,,,unit_phasor_interpolation
+ref_template_1200_900_488,synthetic_fixture_not_experimental,1200,900,488,1.22,,0.04,,,unit_phasor_interpolation
+ref_template_1200_900_532,synthetic_fixture_not_experimental,1200,900,532,1.30,,0.06,,,unit_phasor_interpolation
+ref_template_1200_900_660,synthetic_fixture_not_experimental,1200,900,660,1.38,,0.08,,,unit_phasor_interpolation

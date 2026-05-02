@@ -1,0 +1,75 @@
+# OS / filesystem metadata
+.DS_Store
+._*
+Icon?
+
+# Python caches and compiled artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.nbc
+*.nbi
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+
+# Virtual environments and local dependency vendors
+.venv/
+.venv-tests/
+.codex_pdf_venv/
+.pytest_vendor/
+venv/
+env/
+
+# Build / packaging outputs
+build/
+dist/
+*.egg-info/
+
+# Local editor / agent state
+.claude/
+.omx/
+
+# Local scratch/output artifacts
+tmp/
+results/
+exports/
+.pdf_output/
+
+# Historical computed artifacts stay local by default; keep markdown audit notes.
+archive/**
+!archive/**/
+!archive/**/*.md
+
+# Reference paper binaries stay local; keep the directory README.
+papers/*.pdf
+papers/*.docx
+
+# Binary analysis/report exports
+reports/**/*.csv
+reports/**/*.json
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.pkl
+*.parquet
+*.npy
+*.npz
+*.h5
+*.hdf5
+
+# Local secrets and machine-specific config
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.p12
+
+# Keep AppleDouble metadata ignored even after directory-level exceptions.
+._*
+**/._*

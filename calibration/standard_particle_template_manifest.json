@@ -1,0 +1,12 @@
+{
+  "calibration_kind": "standard_particle",
+  "calibration_data_role": "synthetic_fixture_not_experimental",
+  "synthetic_fixture": true,
+  "generated_by": "nodi_simulator_template",
+  "units": {
+    "wavelength_nm": "nm",
+    "K_sca": "dimensionless lumped residual scale",
+    "global_phase_offset_rad": "rad"
+  },
+  "warning": "Template K_sca must not be used as an experimental calibration."
+}

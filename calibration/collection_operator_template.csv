@@ -1,0 +1,2 @@
+calibration_row_id,calibration_data_role,operator_id,width_nm,depth_nm,wavelength_nm,medium_refractive_index,theta_center_rad,theta_sigma_rad,phi_sigma_rad,slit_phi_limit_rad,throughput_scale
+operator_template_800_550_660,synthetic_fixture_not_experimental,template_operator,800,550,660,1.333,0.11,0.04,0.18,0.22,0.37
