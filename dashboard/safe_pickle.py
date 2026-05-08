@@ -6,14 +6,14 @@ import pickle  # nosec B403
 from typing import Any, BinaryIO
 
 
-_ALLOWED_PICKLE_GLOBALS = {
+_ALLOWED_PICKLE_GLOBALS: frozenset[tuple[str, str]] = frozenset({
     ("numpy", "dtype"),
     ("numpy", "ndarray"),
     ("numpy.core.multiarray", "_reconstruct"),
     ("numpy.core.multiarray", "scalar"),
     ("numpy._core.multiarray", "_reconstruct"),
     ("numpy._core.multiarray", "scalar"),
-}
+})
 
 
 class RestrictedDashboardUnpickler(pickle.Unpickler):

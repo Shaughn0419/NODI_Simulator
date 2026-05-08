@@ -27,7 +27,7 @@ import time
 from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from copy import copy, deepcopy
 from dataclasses import dataclass, field
-from typing import Any, Callable
+from typing import Any, Callable, Literal
 
 import numpy as np
 from scipy.signal import lfilter
@@ -36,6 +36,9 @@ from scipy.stats import qmc
 try:
     from numba import njit as _numba_njit
 except Exception:  # pragma: no cover - optional acceleration dependency
+    from .optional_acceleration import warn_numba_unavailable
+
+    warn_numba_unavailable("parameter-sweep kernels")
     _numba_njit = None
 
 _LOGGER = logging.getLogger(__name__)
@@ -8611,6 +8614,7 @@ def _emit_progress_callback(
     progress_callback,
     progress_state: dict,
     verbose: bool,
+    callback_error_policy: Literal["log", "raise"] = "log",
 ) -> None:
     """Best-effort dispatch of one sweep progress payload to the external callback."""
     if progress_callback is None:
@@ -8619,6 +8623,8 @@ def _emit_progress_callback(
         progress_callback(dict(progress_state))
     except Exception as exc:
         _LOGGER.warning("Sweep progress callback failed", exc_info=True)
+        if callback_error_policy == "raise":
+            raise
         if verbose:
             print(f"[progress] callback failed: {exc}", flush=True)
 
@@ -8628,6 +8634,7 @@ def _emit_case_result_callback(
     case_result_callback,
     raw_result: dict,
     verbose: bool,
+    callback_error_policy: Literal["log", "raise"] = "log",
 ) -> None:
     """Best-effort dispatch of one successful case payload to the external callback."""
     if case_result_callback is None:
@@ -8636,6 +8643,8 @@ def _emit_case_result_callback(
         case_result_callback(dict(raw_result))
     except Exception as exc:
         _LOGGER.warning("Sweep case-result callback failed", exc_info=True)
+        if callback_error_policy == "raise":
+            raise
         if verbose:
             print(f"[checkpoint] callback failed: {exc}", flush=True)
 
@@ -8949,12 +8958,14 @@ def _emit_sweep_progress(
     progress_state: dict,
     verbose: bool,
     detailed_case_logging: bool,
+    callback_error_policy: Literal["log", "raise"] = "log",
 ):
     """Emit a best-effort progress update to callback and/or stdout."""
     _emit_progress_callback(
         progress_callback=progress_callback,
         progress_state=progress_state,
         verbose=verbose,
+        callback_error_policy=callback_error_policy,
     )
 
     if not verbose or detailed_case_logging:
@@ -9317,6 +9328,7 @@ def run_parameter_sweep(
     skip_case_keys: set[str] | None = None,
     medium_resolver: Callable[[Particle], Medium] | None = None,
     allow_partial: bool = False,
+    callback_error_policy: Literal["log", "raise"] = "log",
 ) -> list[dict]:
     """
     Run full parameter sweep over (particle_types × W × H × λ).
@@ -9353,6 +9365,8 @@ def run_parameter_sweep(
         resume_results: Optional list of already computed raw case results to
             seed the sweep before final normalization/scoring.
         skip_case_keys: Optional set of case keys to skip recomputing.
+        callback_error_policy: Use "log" to keep callbacks best-effort, or
+            "raise" to fail the sweep when a progress/checkpoint callback fails.
         allow_partial: When True, return successful cases even if one or more
             cases failed. The default raises instead of silently returning a
             biased partial sweep.
@@ -9364,6 +9378,9 @@ def run_parameter_sweep(
     """
     if score_weights is None:
         score_weights = {"w_height": 1.0, "w_rate": 1.0, "w_cv": 1.0}
+
+    if callback_error_policy not in {"log", "raise"}:
+        raise ValueError("callback_error_policy must be 'log' or 'raise'")
 
     theta_grid_rad = _validate_theta_grid_rad(theta_grid_rad)
 
@@ -9489,6 +9506,7 @@ def run_parameter_sweep(
             progress_state=initial_progress_state,
             verbose=verbose,
             detailed_case_logging=detailed_case_logging,
+            callback_error_policy=callback_error_policy,
         )
 
         for case_result in case_outputs:
@@ -9515,6 +9533,7 @@ def run_parameter_sweep(
                     case_result_callback=case_result_callback,
                     raw_result=raw_result,
                     verbose=verbose,
+                    callback_error_policy=callback_error_policy,
                 )
 
             now = time.perf_counter()
@@ -9551,6 +9570,7 @@ def run_parameter_sweep(
                     progress_state=progress_state,
                     verbose=verbose,
                     detailed_case_logging=detailed_case_logging,
+                    callback_error_policy=callback_error_policy,
                 )
                 last_progress_emit = now
     finally:

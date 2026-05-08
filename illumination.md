@@ -23,4 +23,5 @@
 ## 备注
 - `compute_illumination_envelope(..., export_full_diagnostics=False)` 会跳过 `I_inc_*`、`E_env_complex` 与 `beam_inverse_wavefront_radius_m_inv` 等 stream-summary event block 不消费的大数组；信号生成仍保留 `A_env / A_env_scalar / phi_beam_rad / phi_beam_gouy_rad / phi_beam_curv_rad`。
 - 当输入是 2D event block 数组且安装了 `numba` 时，light diagnostics 路径会走 `_illumination_light_2d_kernel`，用于当前 `event_block_v3` 主线；它保持与 full diagnostics 中信号字段一致。
+- `numba` 缺失时 illumination kernel 会发出 runtime warning，并退回无 JIT 路径。
 - 本说明文件使用 UTF-8 编写，并与同名 Python 文件保持一一对应。

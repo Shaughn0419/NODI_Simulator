@@ -6,6 +6,7 @@ from collections.abc import Mapping
 from typing import Any
 
 from .data_objects import Channel, Particle, SimulationConfig
+from .type_coerce import as_float as _as_float
 
 
 EV_INTEGRITY_DIAGNOSTIC_FIELDS = (
@@ -19,14 +20,6 @@ EV_INTEGRITY_DIAGNOSTIC_FIELDS = (
     "ev_integrity_status",
     "ev_integrity_gate_passed",
 )
-
-
-def _as_float(value: Any, default: float = 0.0) -> float:
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return default
-
 
 def build_ev_integrity_risk_diagnostics(
     particle: Particle,

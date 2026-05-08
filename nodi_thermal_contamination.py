@@ -7,6 +7,7 @@ from collections.abc import Mapping
 from typing import Any
 
 from .data_objects import OpticalSystem, Particle, SimulationConfig
+from .type_coerce import finite_float as _as_float
 
 
 NODI_THERMAL_CONTAMINATION_FIELDS = (
@@ -24,15 +25,6 @@ NODI_THERMAL_CONTAMINATION_FIELDS = (
     "nodi_thermal_contamination_gate_passed",
     "nodi_thermal_contamination_blocker_summary",
 )
-
-
-def _as_float(value: Any, default: float = 0.0) -> float:
-    try:
-        numeric = float(value)
-    except (TypeError, ValueError):
-        return default
-    return numeric if math.isfinite(numeric) else default
-
 
 def _power_density_W_m2(optical: OpticalSystem, sim_cfg: SimulationConfig) -> float:
     if sim_cfg.probe_power_W is None:

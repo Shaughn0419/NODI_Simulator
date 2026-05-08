@@ -6,6 +6,7 @@ from collections.abc import Mapping
 from typing import Any
 
 from .calibration_plan_advisor import build_calibration_plan_advisor
+from .type_coerce import finite_float as _as_float
 
 
 EXPERIMENTAL_DESIGN_ADVISOR_FIELDS = (
@@ -32,15 +33,6 @@ _SENSITIVITY_STATUS_TOKENS = (
     "requires_joint_fullwave",
     "fullwave_required",
 )
-
-
-def _as_float(value: Any, default: float = 0.0) -> float:
-    try:
-        numeric = float(value)
-    except (TypeError, ValueError):
-        return default
-    return numeric if numeric == numeric and abs(numeric) != float("inf") else default
-
 
 def _clamp01(value: float) -> float:
     return max(0.0, min(1.0, float(value)))

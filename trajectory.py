@@ -19,10 +19,12 @@ import math
 import numpy as np
 
 from .data_objects import Channel, OpticalSystem, SimulationConfig
+from .optional_acceleration import warn_numba_unavailable
 
 try:
     from numba import njit, prange
 except Exception:  # pragma: no cover - optional acceleration dependency
+    warn_numba_unavailable("trajectory kernels")
     njit = None
     prange = range
 

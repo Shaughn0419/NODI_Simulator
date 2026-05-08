@@ -22,6 +22,7 @@ for candidate in (str(PROJECT_ROOT), str(PROJECT_PARENT)):
 from tools import tsuyama_detection_rate_calibration as rate_calib
 from tools import tsuyama_paper_target_audit as target_audit
 from tools import tsuyama_selected_annulus_joint_fit as joint_fit
+from nodi_simulator.type_coerce import finite_float_or_nan as _safe_float
 
 OUTPUT_DIR = PROJECT_ROOT / "results" / "tsuyama_phase2_acceptance_baseline_v1"
 SCHEMA_ID = "tsuyama_phase2_acceptance_report_v1"
@@ -72,15 +73,6 @@ REPRODUCTION_RESPONSE_COMPRESSION_GAMMA_PREFERRED_MIN = 0.70
 REPRODUCTION_RESPONSE_COMPRESSION_GAMMA_PREFERRED_MAX = 0.95
 REPRODUCTION_RESPONSE_COMPRESSION_GAMMA_HARD_MIN = 0.55
 REPRODUCTION_RESPONSE_COMPRESSION_GAMMA_HARD_MAX = 1.05
-
-
-def _safe_float(value: Any) -> float:
-    try:
-        result = float(value)
-    except (TypeError, ValueError):
-        return float("nan")
-    return result if np.isfinite(result) else float("nan")
-
 
 def _safe_bool(value: Any) -> bool:
     if isinstance(value, (bool, np.bool_)):

@@ -78,6 +78,9 @@ platform:
 python -m pip install -e ".[dev,acceleration]"
 ```
 
+If `numba` is absent, the simulator still runs on the pure-Python / NumPy path
+and now emits an explicit runtime warning for acceleration-backed kernels.
+
 Run the dashboard:
 
 ```bash
@@ -96,8 +99,9 @@ The latest local cleanup/review baseline was:
 
 - `ruff check .` -> pass
 - `python -m pyright` -> `0 errors, 0 warnings`
-- `python -m compileall ...` -> pass after excluding generated/cache paths
-- `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q` -> `953 passed`
+- `python -m mypy` -> pass
+- `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q` -> `984 passed`
+- AppleDouble `._*` metadata files -> cleaned outside `.git/` and `.claude/`
 
 ## Documentation Map
 
@@ -108,6 +112,7 @@ The latest local cleanup/review baseline was:
 - [guides/operations/14_测试说明.md](./guides/operations/14_测试说明.md): test operation notes.
 - [guides/operations/15_无实测数据时如何接入未来校准数据.md](./guides/operations/15_无实测数据时如何接入未来校准数据.md): future calibration-data handoff boundary.
 - [reports/89_EV_NODI_post_v2_unmodeled_realism_register.md](./reports/89_EV_NODI_post_v2_unmodeled_realism_register.md): post-v2 realism gaps acknowledged but not solved inside v2.
+- [type_coerce.md](./type_coerce.md), [realism_v2_io.md](./realism_v2_io.md), and [optional_acceleration.md](./optional_acceleration.md): small shared helper modules introduced during the May 8 hardening pass.
 
 The `docs/realism_v2/` files are contract/specification documents used by the
 test suite. They are retained for governance and regression checks even when

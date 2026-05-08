@@ -13,11 +13,13 @@ import json
 import math
 import os
 from collections.abc import Mapping
+from pathlib import Path
 from typing import Any
 
 
 SYNTHETIC_CALIBRATION_ROLE = "synthetic_fixture_not_experimental"
 UNSPECIFIED_CALIBRATION_ROLE = "unspecified_user_table"
+PROJECT_ROOT = Path(__file__).resolve().parent
 
 _SYNTHETIC_ROLE_ALIASES = {
     "synthetic",
@@ -144,15 +146,27 @@ def normalise_calibration_rows(raw: Any) -> list[dict[str, Any]]:
     return rows
 
 
+def _resolve_calibration_path(path: str) -> Path:
+    """Resolve calibration paths while blocking relative traversal outside the repo."""
+    raw = Path(path).expanduser()
+    if raw.is_absolute():
+        return raw.resolve()
+    resolved = (PROJECT_ROOT / raw).resolve()
+    if not resolved.is_relative_to(PROJECT_ROOT.resolve()):
+        raise ValueError(f"Calibration path outside project root: {path!r}")
+    return resolved
+
+
 def load_calibration_rows(path: str) -> list[dict[str, Any]]:
     """Load a calibration table from CSV or JSON."""
-    suffix = os.path.splitext(path)[1].lower()
+    resolved = _resolve_calibration_path(path)
+    suffix = resolved.suffix.lower()
     if suffix == ".json":
-        with open(path, "r", encoding="utf-8") as handle:
+        with resolved.open("r", encoding="utf-8") as handle:
             raw = json.load(handle)
         return normalise_calibration_rows(raw)
     if suffix == ".csv":
-        with open(path, "r", encoding="utf-8", newline="") as handle:
+        with resolved.open("r", encoding="utf-8", newline="") as handle:
             return normalise_calibration_rows(list(csv.DictReader(handle)))
     raise ValueError(f"Unsupported calibration file format: {path}. Use .csv or .json.")
 
@@ -178,13 +192,17 @@ def load_calibration_manifest(
         else candidate_manifest_paths(table_path)
     )
     for candidate in candidates:
-        if candidate and os.path.exists(candidate):
-            with open(candidate, "r", encoding="utf-8") as handle:
+        if candidate:
+            resolved = _resolve_calibration_path(candidate)
+        else:
+            continue
+        if resolved.exists():
+            with resolved.open("r", encoding="utf-8") as handle:
                 manifest = json.load(handle)
             if not isinstance(manifest, dict):
                 raise ValueError(f"Calibration manifest must be a JSON object: {candidate}")
             manifest = {str(key): value for key, value in manifest.items()}
-            manifest.setdefault("manifest_path", candidate)
+            manifest.setdefault("manifest_path", str(resolved))
             manifest.setdefault("manifest_status", "loaded")
             return manifest
     return {

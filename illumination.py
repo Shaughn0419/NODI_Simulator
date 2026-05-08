@@ -17,11 +17,13 @@ Key design choice:
 import numpy as np
 
 from .data_objects import OpticalSystem, SimulationConfig
+from .optional_acceleration import warn_numba_unavailable
 from .utils import build_projection_basis_diagnostics, resolve_polarization_coupling
 
 try:
     from numba import njit as _numba_njit, prange as _numba_prange
 except Exception:  # pragma: no cover - optional acceleration dependency
+    warn_numba_unavailable("illumination kernels")
     _numba_njit = None
     _numba_prange = range
 

@@ -49,6 +49,7 @@ from nodi_simulator.pulse_analysis import (
     estimate_threshold_stats_robust,
     extract_pulse_features,
 )
+from nodi_simulator.type_coerce import finite_float as _as_float
 
 OUTPUT_DIR = PROJECT_ROOT / "results" / "tsuyama_gold_aligned_detection_lane"
 REPORT_INPUT_DIR = PROJECT_ROOT / "reports" / "current" / "47_ev_design_full_grid_analysis"
@@ -391,21 +392,6 @@ def write_json(path: Path, payload: Any) -> None:
 def case_baseline_channel(width_nm: int, depth_nm: int) -> Channel:
     """Build the geometry-aware baseline channel for one explicit lane case."""
     return Channel(width_m=float(width_nm) * 1e-9, depth_m=float(depth_nm) * 1e-9)
-
-
-def _as_float(value: Any, default: float = 0.0) -> float:
-    if value is None:
-        return default
-    try:
-        if pd.isna(value):
-            return default
-    except TypeError:
-        pass
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return default
-
 
 def _as_int(value: Any, default: int = 0) -> int:
     return int(round(_as_float(value, float(default))))

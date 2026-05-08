@@ -24,4 +24,5 @@
 - `TrajectoryContext` 是 case-level 性能上下文，用来在同一 case 的多个 event 之间复用 `n_samples / dt_s / time_s / accessible half spans / rect_series` 常量。它不保存随机轨迹，不改变初始位置采样、扩散随机数或反射边界逻辑。
 - `simulate_particle_trajectory(..., trajectory_context=...)` 在未传 context 时仍会按旧路径即时构建，保持单函数调用兼容；precompute / sweep 会优先在 case 层构建并复用。
 - `plug + diffusion + no hindrance` 子路径有块级 kernel，可供显式启用的 `event_block_v3` 批量事件路径使用；它保持 scalar RNG 消费顺序和反射边界语义。当前正式 precompute 默认仍是 `vectorized_event_engine="off"` 的 scalar event loop。
+- `numba` 仍是可选加速依赖；缺失时 trajectory kernel 会发出 runtime warning，并退回无 JIT 路径。
 - 本说明文件使用 UTF-8 编写，并与同名 Python 文件保持一一对应。

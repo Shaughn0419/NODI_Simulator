@@ -13,9 +13,9 @@ Current interpretation anchors:
 
 Forbidden-current-claim reminder: v2 has no measured data and does not authorize calibrated SNR, calibrated event probability, absolute LOD, true EV concentration, biological specificity, route promotion, main-660 redefinition, or selected-annulus replacement of all-crossing ranking.
 
-Covered active Markdown files: 114
+Covered active Markdown files: 117
 Covered archived Markdown files: 56
-Covered Markdown files total: 170
+Covered Markdown files total: 173
 
 Archive rule: every `archive/` Markdown file is marked as historical provenance and must not be read as current truth unless a current entry document explicitly re-adopts it.
 
@@ -136,11 +136,13 @@ Archive rule: every `archive/` Markdown file is marked as historical provenance 
 | `intrinsic_scattering.md` | module-companion-current |
 | `materials.md` | module-companion-current |
 | `mie_engine.md` | module-companion-current |
+| `optional_acceleration.md` | module-companion-current |
 | `papers/README.md` | reference-bibliography-doc-current |
 | `parameter_sweep.md` | module-companion-current |
 | `photothermal_pod.md` | module-companion-current |
 | `pulse_analysis.md` | module-companion-current |
 | `reference_field.md` | module-companion-current |
+| `realism_v2_io.md` | module-companion-current |
 | `reports/48_EV_NODI_full_recompute_external_analysis.md` | stage-evidence-report-preserved |
 | `reports/49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md` | stage-evidence-report-preserved |
 | `reports/50_计算侧收口总结与工程瘦身记录.md` | stage-evidence-report-preserved |
@@ -189,5 +191,6 @@ Archive rule: every `archive/` Markdown file is marked as historical provenance 
 | `scattering_trace.md` | module-companion-current |
 | `tests/run_tests.md` | test-operation-doc-current |
 | `trajectory.md` | module-companion-current |
+| `type_coerce.md` | module-companion-current |
 | `utils.md` | module-companion-current |
 | `文档导航.md` | entry-current |

@@ -20,7 +20,8 @@ The latest local cleanup/review baseline was:
 ```text
 ruff check . -> pass
 python -m pyright -> 0 errors, 0 warnings
-PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q -> 953 passed
+python -m mypy -> pass
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q -> 984 passed
 ```
 
 `review_bundles/`, `.claude/`, virtual environments, caches, and generated

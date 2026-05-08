@@ -22,6 +22,19 @@ from typing import Any, Iterable
 
 import numpy as np
 
+try:  # Support both package and direct review-bundle imports.
+    from .realism_v2_io import (
+        sha256_file,
+        write_csv_rows,
+        write_run_manifest as _write_run_manifest_impl,
+    )
+except ImportError:  # pragma: no cover - direct bundle fallback
+    from realism_v2_io import (  # type: ignore[no-redef]
+        sha256_file,
+        write_csv_rows,
+        write_run_manifest as _write_run_manifest_impl,
+    )
+
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 CONFIG_DIR = PROJECT_ROOT / "configs" / "realism_v2"
@@ -85,6 +98,21 @@ DEFAULT_V2_NO_MEASURED_DATA_CLOSURE_DIR = (
     PROJECT_ROOT / "results" / "ev_nodi_realism_v2_no_measured_data_closure"
 )
 
+
+def _write_run_manifest(
+    manifest_path: Path,
+    manifest: dict[str, Any],
+    *,
+    write_root_manifest: bool,
+) -> None:
+    _write_run_manifest_impl(
+        manifest_path,
+        manifest,
+        project_root=PROJECT_ROOT,
+        write_root_manifest=write_root_manifest,
+    )
+
+
 MODULE_STATES = (
     "off",
     "surrogate",
@@ -126,7 +154,10 @@ REQUIRED_OUTPUT_PROVENANCE_FIELDS = (
     "run_manifest_path",
 )
 
-FORBIDDEN_OUTPUT_NAMES = {"detector_SNR", "calibrated_detector_SNR"}
+FORBIDDEN_OUTPUT_NAMES: frozenset[str] = frozenset(
+    {"detector_SNR", "calibrated_detector_SNR"}
+)
+
 
 MAX_ANCHOR_SCENARIO_BUNDLES = 8
 MAX_ANCHOR_ROUTES = 14
@@ -1426,14 +1457,6 @@ def load_json_yaml(name_or_path: str | Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def sha256_file(path: str | Path) -> str:
-    digest = hashlib.sha256()
-    with Path(path).open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
-
-
 def validate_claim_level(claim_level: str) -> str:
     if claim_level not in CLAIM_LEVELS:
         raise ValueError(f"Unknown realism_v2 claim_level: {claim_level}")
@@ -1918,6 +1941,11 @@ def bfp_roi_intensity_operator(
     apply_jacobian: bool = True,
     power_scale_W: float = 1.0,
 ) -> dict[str, Any]:
+    """Integrate reference, scattering, and cross terms with one shared BFP ROI operator.
+
+    ``u``, ``v``, and ``weight`` may include samples outside the objective NA; this
+    function owns the NA mask and zeroes those samples before integration.
+    """
     if E_ref.shape != E_sca.shape or E_ref.shape != weight.shape:
         raise ValueError("E_ref, E_sca, and weight must have the same shape")
     if du <= 0 or dv <= 0:
@@ -5994,6 +6022,7 @@ def build_run_manifest(
     }
     manifest = {
         "run_id": run_id,
+        "manifest_schema_version": "1",
         "git_commit": _git_commit(),
         "roadmap_version": "reports/51_EV_NODI_realism_v2_instrument_aware_roadmap.md",
         "schema_version": "realism_v2_R0_P0",
@@ -6043,20 +6072,6 @@ def validate_run_manifest(manifest: dict[str, Any]) -> None:
         value = str(manifest[field])
         if value != "unavailable" and len(value) != 64:
             raise ValueError(f"run_manifest checksum field is not sha256-like: {field}")
-
-
-def write_csv_rows(path: Path, rows: list[dict[str, Any]]) -> None:
-    if not rows:
-        raise ValueError(f"cannot write empty CSV: {path}")
-    fieldnames: list[str] = []
-    for row in rows:
-        for key in row:
-            if key not in fieldnames:
-                fieldnames.append(key)
-    with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
 
 
 def _micro_anchor_routes() -> tuple[tuple[int, int, int], ...]:
@@ -6536,7 +6551,7 @@ def _wilson_half_width(successes: int, total: int, z: float = 1.96) -> float:
 
 
 def run_micro_anchor(
-    output_dir: str | Path = DEFAULT_MICRO_ANCHOR_DIR, *, write_root_manifest: bool = True
+    output_dir: str | Path = DEFAULT_MICRO_ANCHOR_DIR, *, write_root_manifest: bool = False
 ) -> dict[str, Any]:
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
@@ -6786,11 +6801,11 @@ def run_micro_anchor(
     write_csv_rows(output / "mie_to_power_unit_check.csv", mie_rows)
     write_csv_rows(output / "blank_rare_tail_check.csv", blank_rows)
     write_csv_rows(output / "smoke_run_cost_estimate.csv", smoke_cost_rows)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
     report = (
         "# EV/NODI realism v2 micro-anchor report\n\n"
         "- Stage: R1.5 micro-anchor dry run only.\n"
@@ -6818,7 +6833,7 @@ def run_anchor_smoke(
     output_dir: str | Path = DEFAULT_ANCHOR_SMOKE_DIR,
     *,
     include_optional_routes: bool = True,
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
@@ -7206,11 +7221,11 @@ def run_anchor_smoke(
     write_csv_rows(output / "blank_rare_tail_check.csv", blank_rows)
     write_csv_rows(output / "unit_guardrail_summary.csv", unit_rows)
     write_csv_rows(output / "smoke_run_cost_estimate.csv", [cost])
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     all_snr_blocked = all(row["SNR_claim_level"] == "absolute_blocked" for row in summary_rows)
     no_legacy_names = all(
@@ -7292,7 +7307,7 @@ def _read_anchor_overlap_means() -> dict[tuple[int, int, int, str], float]:
 def run_reduced_grid_R3a(
     output_dir: str | Path = DEFAULT_REDUCED_GRID_R3A_DIR,
     *,
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
@@ -7798,11 +7813,11 @@ def run_reduced_grid_R3a(
     write_csv_rows(output / "blank_rare_tail_check.csv", blank_rows)
     write_csv_rows(output / "unit_guardrail_summary.csv", unit_rows)
     write_csv_rows(output / "reduced_grid_cost_estimate.csv", [cost])
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     all_snr_blocked = all(row["SNR_claim_level"] == "absolute_blocked" for row in summary_rows)
     no_legacy_names = all(
@@ -7851,7 +7866,7 @@ def run_reduced_grid_R3a(
 def run_uncertainty_R3b(
     output_dir: str | Path = DEFAULT_UNCERTAINTY_R3B_DIR,
     *,
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     pre_run = validate_R3b_pre_run_plan()
     output = Path(output_dir)
@@ -8584,11 +8599,11 @@ def run_uncertainty_R3b(
     write_csv_rows(output / "blank_rare_tail_check.csv", blank_rows)
     write_csv_rows(output / "unit_guardrail_summary.csv", unit_rows)
     write_csv_rows(output / "uncertainty_cost_estimate.csv", [cost])
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     all_snr_blocked = all(row["SNR_claim_level"] == "absolute_blocked" for row in summary_rows)
     no_legacy_names = all(
@@ -9092,7 +9107,7 @@ def run_representative_full_wave_R4(
     output_dir: str | Path = DEFAULT_REPRESENTATIVE_FULL_WAVE_R4_DIR,
     *,
     external_authorization: str = "PASS_TO_R4_REPRESENTATIVE_FULL_WAVE_VALIDATION_ONLY",
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
     allow_contract_proxy_when_backend_missing: bool = True,
 ) -> dict[str, Any]:
     if external_authorization != "PASS_TO_R4_REPRESENTATIVE_FULL_WAVE_VALIDATION_ONLY":
@@ -9951,11 +9966,11 @@ def run_representative_full_wave_R4(
         detector_blank_guard_rows,
     )
     write_csv_rows(output / "full_wave_cost_estimate.csv", [cost_row])
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     all_snr_blocked = all(row["SNR_claim_level"] == "absolute_blocked" for row in observable_rows)
     all_event_prob_blocked = all(
@@ -10173,7 +10188,7 @@ def run_revised_R4_rerun(
     output_dir: str | Path = DEFAULT_REVISED_R4_RERUN_DIR,
     *,
     external_authorization: str = "PASS_TO_REVISED_R4_RERUN_ONLY",
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if external_authorization != "PASS_TO_REVISED_R4_RERUN_ONLY":
         raise ValueError("revised R4 rerun requires exact external authorization")
@@ -10823,11 +10838,11 @@ def run_revised_R4_rerun(
     write_csv_rows(output / "route_validation_decision_table.csv", route_decision_rows)
     write_csv_rows(output / "revised_R4_guardrail_summary.csv", guardrail_rows)
     write_csv_rows(output / "full_wave_cost_estimate.csv", [cost_row])
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     report = (
         "# EV/NODI realism v2 revised R4 rerun report\n\n"
@@ -10942,7 +10957,7 @@ def run_R4_2_main660_nearwall_mesh_adjudication(
     external_authorization: str = (
         "PASS_TO_R4_2_MAIN660_NEARWALL_MESH_ADJUDICATION_ONLY"
     ),
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if external_authorization != (
         "PASS_TO_R4_2_MAIN660_NEARWALL_MESH_ADJUDICATION_ONLY"
@@ -11694,11 +11709,11 @@ def run_R4_2_main660_nearwall_mesh_adjudication(
     write_csv_rows(output / "coarse_screen_conflict_summary.csv", conflict_rows)
     write_csv_rows(output / "R4_2_guardrail_summary.csv", guardrail_rows)
     write_csv_rows(output / "R4_2_cost_estimate.csv", [cost_row])
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     report = (
         "# EV/NODI realism v2 R4.2 main-660 near-wall mesh adjudication report\n\n"
@@ -11774,6 +11789,24 @@ def _r5_float(row: dict[str, str], *names: str, default: float = 0.0) -> float:
             except ValueError:
                 continue
     return default
+
+
+def _r5_required_text(row: dict[str, str], *names: str, row_index: int) -> str:
+    for name in names:
+        value = row.get(name)
+        if value is not None and str(value).strip():
+            return str(value).strip()
+    raise ValueError(f"R5 source row {row_index} missing all required columns: {names!r}")
+
+
+def _r5_required_float(row: dict[str, str], *names: str, row_index: int) -> float:
+    text = _r5_required_text(row, *names, row_index=row_index)
+    try:
+        return float(text)
+    except ValueError as exc:
+        raise ValueError(
+            f"R5 source row {row_index} has non-numeric value {text!r} for columns {names!r}"
+        ) from exc
 
 
 def _r5_source_score(row: dict[str, str]) -> float:
@@ -11892,7 +11925,7 @@ def run_R5_full_grid_v2(
     output_dir: str | Path = DEFAULT_R5_FULL_GRID_V2_DIR,
     *,
     external_authorization: str = "PASS_TO_R5_FULL_GRID_V2_EXECUTION_ONLY",
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
     base_v1_summary_path: str | Path | None = None,
 ) -> dict[str, Any]:
     if external_authorization != "PASS_TO_R5_FULL_GRID_V2_EXECUTION_ONLY":
@@ -11980,12 +12013,38 @@ def run_R5_full_grid_v2(
 
     with base_path.open(newline="", encoding="utf-8") as handle:
         for source_row_index, source_row in enumerate(csv.DictReader(handle), start=1):
-            wavelength_nm = int(float(source_row.get("wavelength_nm") or source_row.get("lambda_nm")))
-            width_nm = int(float(source_row.get("width_nm") or source_row.get("W_nm")))
-            depth_nm = int(float(source_row.get("depth_nm") or source_row.get("H_nm")))
+            wavelength_nm = int(
+                _r5_required_float(
+                    source_row,
+                    "wavelength_nm",
+                    "lambda_nm",
+                    row_index=source_row_index,
+                )
+            )
+            width_nm = int(
+                _r5_required_float(
+                    source_row,
+                    "width_nm",
+                    "W_nm",
+                    row_index=source_row_index,
+                )
+            )
+            depth_nm = int(
+                _r5_required_float(
+                    source_row,
+                    "depth_nm",
+                    "H_nm",
+                    row_index=source_row_index,
+                )
+            )
             route_id = _R4_route_id(wavelength_nm, width_nm, depth_nm)
             route_role = route_role_R5(wavelength_nm, width_nm, depth_nm)
-            particle_name = str(source_row.get("particle_name") or source_row.get("particle_preset_id"))
+            particle_name = _r5_required_text(
+                source_row,
+                "particle_name",
+                "particle_preset_id",
+                row_index=source_row_index,
+            )
             particle_material = str(source_row.get("particle_material", "unspecified"))
             particle_diameter_nm = _r5_float(source_row, "particle_diameter_nm", default=float("nan"))
             source_case_id = str(source_row.get("case_id") or f"source_row_{source_row_index}")
@@ -12379,11 +12438,11 @@ def run_R5_full_grid_v2(
     write_csv_rows(output / "thermal_404_sidecar_summary.csv", thermal_rows)
     write_csv_rows(output / "unit_guardrail_summary.csv", unit_rows)
     write_csv_rows(output / "full_grid_v2_cost_estimate.csv", [cost_row])
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     no_legacy_names = all(
         not FORBIDDEN_OUTPUT_NAMES.intersection(row.keys()) for row in summary_rows
@@ -12431,7 +12490,7 @@ def run_R5_1_route_role_stability_interpretation(
     output_dir: str | Path = DEFAULT_R5_1_INTERPRETATION_DIR,
     *,
     external_authorization: str = "PASS_TO_R5_1_ROUTE_ROLE_STABILITY_INTERPRETATION_ONLY",
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if external_authorization != "PASS_TO_R5_1_ROUTE_ROLE_STABILITY_INTERPRETATION_ONLY":
         raise ValueError("R5.1 interpretation requires exact external authorization")
@@ -12835,11 +12894,11 @@ def run_R5_1_route_role_stability_interpretation(
     )
     write_csv_rows(output / "R5_1_claim_boundary_guardrail_summary.csv", claim_guard_rows)
     write_csv_rows(output / "R5_1_next_stage_options_matrix.csv", options_matrix_rows)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     report = (
         "# EV/NODI realism v2 R5.1 route-role stability interpretation report\n\n"
@@ -12896,7 +12955,7 @@ def run_R5_2_bounded_scenario_prior_audit(
     output_dir: str | Path = DEFAULT_R5_2_BOUNDED_SCENARIO_PRIOR_AUDIT_DIR,
     *,
     external_authorization: str = "PASS_TO_BOUNDED_SCENARIO_PRIOR_AUDIT_ONLY",
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if external_authorization != "PASS_TO_BOUNDED_SCENARIO_PRIOR_AUDIT_ONLY":
         raise ValueError("R5.2 audit requires exact external authorization")
@@ -13461,11 +13520,11 @@ def run_R5_2_bounded_scenario_prior_audit(
     write_csv_rows(output / "R5_2_claim_boundary_guardrail_summary.csv", claim_guard_rows)
     write_csv_rows(output / "R5_2_audit_decision_table.csv", decision_rows)
     write_csv_rows(output / "R5_2_next_stage_recommendation_matrix.csv", next_stage_rows)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     report = (
         "# EV/NODI realism v2 R5.2 bounded scenario-prior audit report\n\n"
@@ -13623,7 +13682,7 @@ def run_R5_3_route_prior_model_revision_audit(
     external_authorization: str = (
         "PASS_TO_BOUNDED_ROUTE_PRIOR_MODEL_REVISION_AUDIT_ONLY"
     ),
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if external_authorization != "PASS_TO_BOUNDED_ROUTE_PRIOR_MODEL_REVISION_AUDIT_ONLY":
         raise ValueError("R5.3 audit requires exact external authorization")
@@ -14302,11 +14361,11 @@ def run_R5_3_route_prior_model_revision_audit(
     write_csv_rows(output / "R5_3_claim_boundary_guardrail_summary.csv", claim_guard_rows)
     write_csv_rows(output / "R5_3_route_prior_revision_decision_table.csv", decision_rows)
     write_csv_rows(output / "R5_3_next_stage_recommendation_matrix.csv", next_stage_rows)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     report = (
         "# EV/NODI realism v2 R5.3 route-prior model revision audit report\n\n"
@@ -14454,7 +14513,7 @@ def run_R6_route_prior_sensitivity_audit(
     external_authorization: str = (
         "PASS_TO_BOUNDED_R6_ROUTE_PRIOR_SENSITIVITY_AUDIT_ONLY"
     ),
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if external_authorization != "PASS_TO_BOUNDED_R6_ROUTE_PRIOR_SENSITIVITY_AUDIT_ONLY":
         raise ValueError("R6 audit requires exact external authorization")
@@ -15182,11 +15241,11 @@ def run_R6_route_prior_sensitivity_audit(
     write_csv_rows(output / "R6_claim_boundary_guardrail_summary.csv", claim_guard_rows)
     write_csv_rows(output / "R6_stop_gate_summary.csv", stop_gate_rows)
     write_csv_rows(output / "R6_next_stage_recommendation_matrix.csv", next_stage_rows)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     report = (
         "# EV/NODI realism v2 R6 route-prior sensitivity audit report\n\n"
@@ -15236,7 +15295,7 @@ def run_R7_route_prior_mechanistic_decomposition_audit(
     external_authorization: str = (
         "PASS_TO_BOUNDED_R7_ROUTE_PRIOR_MECHANISTIC_DECOMPOSITION_AUDIT_ONLY"
     ),
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if external_authorization != (
         "PASS_TO_BOUNDED_R7_ROUTE_PRIOR_MECHANISTIC_DECOMPOSITION_AUDIT_ONLY"
@@ -15847,11 +15906,11 @@ def run_R7_route_prior_mechanistic_decomposition_audit(
     write_csv_rows(output / "R7_claim_boundary_guardrail_summary.csv", claim_guard_rows)
     write_csv_rows(output / "R7_stop_gate_summary.csv", stop_gate_rows)
     write_csv_rows(output / "R7_next_stage_recommendation_matrix.csv", next_stage_rows)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     report = (
         "# EV/NODI realism v2 R7 route-prior mechanistic decomposition audit report\n\n"
@@ -15932,7 +15991,7 @@ def run_R7_1_operator_artifact_validation_protocol_generation(
     self_authorization: str = (
         "PASS_TO_R7_1_OPERATOR_ARTIFACT_VALIDATION_PROTOCOL_GENERATION_ONLY"
     ),
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if self_authorization != (
         "PASS_TO_R7_1_OPERATOR_ARTIFACT_VALIDATION_PROTOCOL_GENERATION_ONLY"
@@ -16208,11 +16267,11 @@ def run_R7_1_operator_artifact_validation_protocol_generation(
     write_csv_rows(output / "R7_1_claim_boundary_guardrail_summary.csv", claim_guard_rows)
     write_csv_rows(output / "R7_1_stop_gate_summary.csv", stop_gate_rows)
     write_csv_rows(output / "R7_1_next_stage_recommendation_matrix.csv", next_stage_rows)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     report = (
         "# EV/NODI realism v2 R7.1 operator artifact validation protocol report\n\n"
@@ -16299,7 +16358,7 @@ def run_R7_2_operator_artifact_gap_register_generation(
     output_dir: str | Path = DEFAULT_R7_2_OPERATOR_ARTIFACT_GAP_REGISTER_DIR,
     *,
     self_authorization: str = "PASS_TO_OPERATOR_ARTIFACT_GAP_REGISTER_ONLY",
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if self_authorization != "PASS_TO_OPERATOR_ARTIFACT_GAP_REGISTER_ONLY":
         raise ValueError("R7.2 artifact gap plan generation requires exact self authorization")
@@ -16621,11 +16680,11 @@ def run_R7_2_operator_artifact_gap_register_generation(
     write_csv_rows(output / "R7_2_claim_boundary_guardrail_summary.csv", claim_guard_rows)
     write_csv_rows(output / "R7_2_stop_gate_summary.csv", stop_gate_rows)
     write_csv_rows(output / "R7_2_next_stage_recommendation_matrix.csv", next_stage_rows)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     report = (
         "# EV/NODI realism v2 R7.2 operator artifact gap register plan report\n\n"
@@ -16672,7 +16731,7 @@ def run_v2_no_measured_data_closure(
     output_dir: str | Path = DEFAULT_V2_NO_MEASURED_DATA_CLOSURE_DIR,
     *,
     self_authorization: str = "PASS_TO_V2_NO_MEASURED_DATA_CLOSURE_ONLY",
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if self_authorization != "PASS_TO_V2_NO_MEASURED_DATA_CLOSURE_ONLY":
         raise ValueError("v2 no-measured-data closure requires exact self authorization")
@@ -17060,11 +17119,11 @@ def run_v2_no_measured_data_closure(
     write_csv_rows(output / "v2_forbidden_scope_guardrail_summary.csv", forbidden_rows)
     write_csv_rows(output / "v2_post_v2_dependency_backlog.csv", backlog_rows)
     write_csv_rows(output / "v2_closure_decision_table.csv", decision_rows)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     report = (
         "# EV/NODI realism v2 no-measured-data closure report\n\n"
@@ -17112,7 +17171,7 @@ def run_R4_route_model_revision_audit(
     output_dir: str | Path = DEFAULT_ROUTE_MODEL_REVISION_AUDIT_DIR,
     *,
     external_authorization: str = "PASS_TO_ROUTE_MODEL_REVISION_AUDIT_ONLY",
-    write_root_manifest: bool = True,
+    write_root_manifest: bool = False,
 ) -> dict[str, Any]:
     if external_authorization != "PASS_TO_ROUTE_MODEL_REVISION_AUDIT_ONLY":
         raise ValueError("route-model revision audit requires exact external authorization")
@@ -17647,11 +17706,11 @@ def run_R4_route_model_revision_audit(
     )
     write_csv_rows(output / "route_model_revision_decision_table.csv", decision_table_rows)
     write_csv_rows(output / "route_model_revision_guardrail_summary.csv", guardrail_rows)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    if write_root_manifest:
-        (PROJECT_ROOT / "run_manifest.json").write_text(
-            json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8"
-        )
+    _write_run_manifest(
+        manifest_path,
+        manifest,
+        write_root_manifest=write_root_manifest,
+    )
 
     for rows in (
         audit_manifest_rows,

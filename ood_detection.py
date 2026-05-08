@@ -7,6 +7,7 @@ from collections.abc import Mapping
 from typing import Any
 
 from .data_objects import Particle, SimulationConfig
+from .type_coerce import finite_float as _as_float
 
 
 OOD_DIAGNOSTIC_FIELDS = (
@@ -28,15 +29,6 @@ OOD_DIAGNOSTIC_FIELDS = (
     "ood_gate_passed",
     "ood_blocker_summary",
 )
-
-
-def _as_float(value: Any, default: float = 0.0) -> float:
-    try:
-        numeric = float(value)
-    except (TypeError, ValueError):
-        return default
-    return numeric if math.isfinite(numeric) else default
-
 
 def _clamp01(value: float) -> float:
     return max(0.0, min(1.0, float(value)))

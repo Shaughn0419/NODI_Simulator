@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from types import MappingProxyType
+from collections.abc import Mapping
 from typing import Literal
 
 import numpy as np
@@ -27,7 +29,7 @@ class StandardParticleSpec:
     transfer_to_ev_risk: str
 
 
-STANDARD_PARTICLE_PRESETS: dict[str, StandardParticleSpec] = {
+STANDARD_PARTICLE_PRESETS: Mapping[str, StandardParticleSpec] = MappingProxyType({
     "polystyrene_50nm": StandardParticleSpec(
         "polystyrene_50nm",
         "polystyrene",
@@ -82,7 +84,7 @@ STANDARD_PARTICLE_PRESETS: dict[str, StandardParticleSpec] = {
         "research_mimic_not_primary_calibrator",
         "lower_material_mismatch_but_not_biological_EV",
     ),
-}
+})
 
 PARTICLE_CONTAMINANT_PRESETS = {
     "HDL_like": {
@@ -250,7 +252,13 @@ def _particle_family(particle: Particle) -> str:
         return "virus_like_particle"
     if "resin" in name or "column" in name:
         return "resin_particle"
-    if "exosome" in name or "ev" in name or particle.model_type == "mie_core_shell":
+    name_parts = set(name.replace("-", "_").split("_"))
+    if (
+        "exosome" in name_parts
+        or "ev" in name_parts
+        or "sev" in name_parts
+        or particle.model_type == "mie_core_shell"
+    ):
         return "EV_sEV"
     return "unknown"
 

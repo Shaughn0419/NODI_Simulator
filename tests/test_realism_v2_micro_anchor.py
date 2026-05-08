@@ -30,6 +30,16 @@ def test_micro_anchor_dry_run_outputs_required_files(tmp_path):
         assert (tmp_path / name).exists(), name
 
 
+def test_micro_anchor_default_does_not_update_root_manifest(tmp_path):
+    root_manifest = rv2.PROJECT_ROOT / "run_manifest.json"
+    before = root_manifest.read_text(encoding="utf-8")
+
+    rv2.run_micro_anchor(tmp_path)
+
+    assert (tmp_path / "run_manifest.json").exists()
+    assert root_manifest.read_text(encoding="utf-8") == before
+
+
 def test_micro_anchor_guardrails_are_encoded_in_outputs(tmp_path):
     rv2.run_micro_anchor(tmp_path, write_root_manifest=False)
 

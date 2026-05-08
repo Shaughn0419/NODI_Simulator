@@ -21,6 +21,7 @@ for candidate in (str(PROJECT_ROOT), str(PROJECT_PARENT)):
         sys.path.insert(0, candidate)
 
 from nodi_simulator.parameter_sweep import run_single_case_batch
+from nodi_simulator.type_coerce import float_or_nan as _safe_float
 from nodi_simulator.utils import compute_baseline_normalization
 from tools import tsuyama_detection_rate_calibration as rate_calib
 from tools import tsuyama_gold_aligned_detection_lane as lane
@@ -100,14 +101,6 @@ def extract_best_peak_feature(event: dict[str, Any], *, wavelength_nm: int) -> d
         f"threshold_{wavelength_nm}": threshold,
         f"threshold_robust_std_{wavelength_nm}": robust_std,
     }
-
-
-def _safe_float(value: Any, default: float = float("nan")) -> float:
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return default
-
 
 def _bool_mask(df: pd.DataFrame, column: str, default: bool = False) -> pd.Series:
     if column in df.columns:

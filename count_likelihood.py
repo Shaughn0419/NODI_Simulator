@@ -7,6 +7,7 @@ from collections.abc import Mapping
 from typing import Any
 
 from .data_objects import SimulationConfig
+from .type_coerce import optional_finite_float as _as_float
 
 
 COUNT_LIKELIHOOD_DIAGNOSTIC_FIELDS = (
@@ -27,15 +28,6 @@ COUNT_LIKELIHOOD_DIAGNOSTIC_FIELDS = (
     "count_likelihood_gate_passed",
     "count_likelihood_blocker_summary",
 )
-
-
-def _as_float(value: Any, default: float | None = None) -> float | None:
-    try:
-        numeric = float(value)
-    except (TypeError, ValueError):
-        return default
-    return numeric if math.isfinite(numeric) else default
-
 
 def _as_count(value: Any) -> int:
     numeric = _as_float(value, 0.0)

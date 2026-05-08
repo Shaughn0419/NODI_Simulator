@@ -7,6 +7,7 @@ from collections.abc import Mapping, Sequence
 from typing import Any
 
 from .data_objects import Particle, SimulationConfig
+from .type_coerce import finite_float as _as_float
 
 
 SELECTION_FUNCTION_DIAGNOSTIC_FIELDS = (
@@ -31,15 +32,6 @@ SELECTION_FUNCTION_DIAGNOSTIC_FIELDS = (
     "low_RI_EV_under_detection_bias",
     "contaminant_enrichment_in_observed_events",
 )
-
-
-def _as_float(value: Any, default: float = 0.0) -> float:
-    try:
-        numeric = float(value)
-    except (TypeError, ValueError):
-        return default
-    return numeric if math.isfinite(numeric) else default
-
 
 def _bounded_probability(value: float) -> float:
     return max(0.0, min(1.0, float(value)))

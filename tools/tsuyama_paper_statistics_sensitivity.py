@@ -19,6 +19,7 @@ for candidate in (str(PROJECT_ROOT), str(PROJECT_PARENT)):
         sys.path.insert(0, candidate)
 
 from tools import tsuyama_detection_rate_calibration as rate_calib
+from nodi_simulator.type_coerce import finite_float_or_nan as _safe_float
 
 DEFAULT_INPUT_DECOMPOSITION = (
     PROJECT_ROOT
@@ -33,15 +34,6 @@ SUMMARY_FILENAME = "paper_statistics_sensitivity_summary_v1.csv"
 JSON_FILENAME = "paper_statistics_sensitivity_summary_v1.json"
 REPORT_FILENAME = "paper_statistics_sensitivity_report_v1.md"
 TARGET_EXPONENT = 2.3
-
-
-def _safe_float(value: Any) -> float:
-    try:
-        result = float(value)
-    except (TypeError, ValueError):
-        return float("nan")
-    return result if np.isfinite(result) else float("nan")
-
 
 def _pair_bounds(pair: str) -> tuple[int, int]:
     left, right = str(pair).split("-", maxsplit=1)

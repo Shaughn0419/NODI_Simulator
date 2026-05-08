@@ -27,15 +27,15 @@ def main() -> None:
         help="Directory for R5.1 interpretation outputs.",
     )
     parser.add_argument(
-        "--no-root-manifest",
+        "--write-root-manifest",
         action="store_true",
-        help="Do not update the repository-root run_manifest.json.",
+        help="Also update the repository-root run_manifest.json.",
     )
     args = parser.parse_args()
 
     summary = rv2.run_R5_1_route_role_stability_interpretation(
         args.output_dir,
-        write_root_manifest=not args.no_root_manifest,
+        write_root_manifest=args.write_root_manifest,
     )
     print(json.dumps(summary, indent=2, sort_keys=True))
 

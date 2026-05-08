@@ -21,4 +21,5 @@
 - [`guides/dashboard/25_dashboard_estimate_precompute_runtime.md`](../guides/dashboard/25_dashboard_estimate_precompute_runtime.md)
 
 ## 备注
+- `numba` 缺失时会通过共享 acceleration warning helper 提示当前 estimate 运行在无 JIT 加速路径；依赖仍通过 `.[acceleration]` 可选安装。
 - 本说明文件使用 UTF-8 编写，并与同名 Python 文件保持一一对应。

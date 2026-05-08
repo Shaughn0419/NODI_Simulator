@@ -51,7 +51,7 @@ def _stable_hash(payload: Any) -> str:
         separators=(",", ":"),
         default=str,
     )
-    return hashlib.sha256(stable.encode("utf-8")).hexdigest()[:16]
+    return hashlib.sha256(stable.encode("utf-8")).hexdigest()[:32]
 
 
 def build_recompute_manifest_diagnostics(

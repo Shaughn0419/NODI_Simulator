@@ -1849,7 +1849,7 @@ tests/test_dashboard_workflow.py
 正式 EV design full recompute 之前必须满足：
 
 ```text
-ruff / pyright / pytest / production-code bandit 通过；pip-audit 仅剩无修复版本项时需在报告中保留风险
+ruff / pyright / mypy / pytest 通过；如重新运行 security audit 或 dependency audit，应在报告中单独记录当次结果和剩余风险
 P0 小网格 smoke 通过
 EV ensemble + Au20 + contaminants profile 可生成
 standard particle ladder + fit/validation/challenge split 可生成

@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-import math
 from collections.abc import Mapping, Sequence
 from typing import Any
+
+from .type_coerce import optional_finite_float as _as_float
 
 
 POPULATION_INFERENCE_DIAGNOSTIC_FIELDS = (
@@ -49,15 +50,6 @@ _LIKELIHOOD_SHAPE = {
         "and inference sampler exist"
     ),
 }
-
-
-def _as_float(value: Any, default: float | None = None) -> float | None:
-    try:
-        numeric = float(value)
-    except (TypeError, ValueError):
-        return default
-    return numeric if math.isfinite(numeric) else default
-
 
 def _as_count(
     diagnostics: Mapping[str, Any],

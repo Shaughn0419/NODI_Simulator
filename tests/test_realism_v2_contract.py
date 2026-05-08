@@ -92,6 +92,7 @@ def test_run_manifest_schema_and_checksum_fields(tmp_path):
         scenario_budget={"scenario_bundle": "micro_anchor_nominal_sanity"},
     )
     rv2.validate_run_manifest(manifest)
+    assert manifest["manifest_schema_version"] == "1"
     checksum_fields = [key for key in manifest if key.endswith("_checksum")]
     assert "scenario_registry_checksum" in checksum_fields
     assert "detector_state_machine_checksum" in checksum_fields

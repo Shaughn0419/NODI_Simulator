@@ -28,6 +28,7 @@ from nodi_simulator.design_claim_governance import (
     PAPER_ALIGNMENT_TARGETS,
     PAPER_ALIGNMENT_TARGET_TSUYAMA_2022_NODI_TABLE_S1,
     assert_paper_alignment_target_metadata,
+    governance_to_jsonable,
     require_claim_level,
     require_paper_alignment_target,
 )
@@ -947,9 +948,11 @@ def run_joint_fit(
             PAPER_ALIGNMENT_TARGET_TSUYAMA_2022_NODI_TABLE_S1
         ),
         "paper_alignment_target_metadata_status": "validated_per_raw_row",
-        "paper_alignment_target_required_metadata_fields": PAPER_ALIGNMENT_TARGETS[
-            PAPER_ALIGNMENT_TARGET_TSUYAMA_2022_NODI_TABLE_S1
-        ]["required_metadata_fields"],
+        "paper_alignment_target_required_metadata_fields": governance_to_jsonable(
+            PAPER_ALIGNMENT_TARGETS[
+                PAPER_ALIGNMENT_TARGET_TSUYAMA_2022_NODI_TABLE_S1
+            ]["required_metadata_fields"]
+        ),
         "selected_annulus_source": "initial_position_edge_norm_annulus",
         "scenario_config_id": scenario_id,
         "cases": [list(case) for case in JOINT_CASES],

@@ -26,7 +26,7 @@ SEED_ROBUSTNESS_DIAGNOSTIC_FIELDS = (
     "seed_robustness_claim_level",
 )
 
-_SEED_GATE_PASS_FRACTION_FIELD = "seed_gate_" + "pass_fraction"
+_SEED_GATE_PASS_FRACTION_FIELD = "seed_gate_pass_fraction"
 
 
 def run_seed_replicates(

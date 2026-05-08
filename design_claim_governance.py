@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from math import isnan
 from numbers import Real
+from types import MappingProxyType
 from typing import Any
 
 from .data_objects import Channel, OpticalSystem, Particle, SimulationConfig
@@ -73,7 +74,29 @@ DESIGN_CLAIM_GOVERNANCE_FIELDS = MINIMUM_OUTPUT_SCHEMA_FIELDS + (
 )
 
 PAPER_ALIGNMENT_TARGET_TSUYAMA_2022_NODI_TABLE_S1 = "tsuyama_2022_nodi_table_s1"
-PAPER_ALIGNMENT_TARGETS: dict[str, dict[str, Any]] = {
+
+
+def _freeze_mapping(value: Mapping[str, Any]) -> Mapping[str, Any]:
+    return MappingProxyType(
+        {
+            key: _freeze_mapping(item) if isinstance(item, Mapping) else item
+            for key, item in value.items()
+        }
+    )
+
+
+def governance_to_jsonable(value: Any) -> Any:
+    """Return frozen governance tables as plain JSON-serializable containers."""
+    if isinstance(value, Mapping):
+        return {
+            str(key): governance_to_jsonable(item) for key, item in value.items()
+        }
+    if isinstance(value, tuple):
+        return [governance_to_jsonable(item) for item in value]
+    return value
+
+
+PAPER_ALIGNMENT_TARGETS: Mapping[str, Mapping[str, Any]] = _freeze_mapping({
     PAPER_ALIGNMENT_TARGET_TSUYAMA_2022_NODI_TABLE_S1: {
         "description": (
             "Tsuyama 2022 NODI Table S1 wavelength, channel-geometry, "
@@ -102,13 +125,13 @@ PAPER_ALIGNMENT_TARGETS: dict[str, dict[str, Any]] = {
             "pulse_detection_mode": {"allowed": ("positive",)},
         },
     },
-}
+})
 
 CLAIM_LEVEL_PAPER_ALIGNED_2022_NODI_PROXY_LENS = (
     "paper_aligned_2022_nodi_proxy_lens"
 )
 CLAIM_LEVEL_ENGINEERING_RELATIVE = "engineering_relative"
-CLAIM_LEVELS: dict[str, dict[str, Any]] = {
+CLAIM_LEVELS: Mapping[str, Mapping[str, Any]] = _freeze_mapping({
     CLAIM_LEVEL_PAPER_ALIGNED_2022_NODI_PROXY_LENS: {
         "description": (
             "Selected-annulus engineering proxy lens for Tsuyama 2022 NODI "
@@ -126,7 +149,7 @@ CLAIM_LEVELS: dict[str, dict[str, Any]] = {
         "comparable_dims": ("within_same_model_contract",),
         "absolute_claim_allowed": False,
     },
-}
+})
 
 
 def require_paper_alignment_target(value: str) -> str:
@@ -475,6 +498,7 @@ def build_design_claim_governance_diagnostics(
         _get(reference_map, summary_map, "optical_exposure_safety_gate_passed", False)
     ) and _as_bool(_get(reference_map, summary_map, "exposure_safety_not_red", False))
 
+    # Keys describe the failure condition; True means the gate is met and not a blocker.
     gate_checks = {
         "unit_axis_convention_gate_not_passed": _as_bool(
             _get(

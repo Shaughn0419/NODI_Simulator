@@ -6,6 +6,7 @@ from collections.abc import Mapping
 from typing import Any
 
 from .data_objects import SimulationConfig
+from .type_coerce import as_float as _as_float
 
 
 EVENT_QC_DIAGNOSTIC_FIELDS = (
@@ -45,14 +46,6 @@ EVENT_ARTIFACT_RISK_WEIGHTS = {
     "local_noise_burst": 0.15,
     "phase_flip_fraction": 0.20,
 }
-
-
-def _as_float(value: Any, default: float = 0.0) -> float:
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return default
-
 
 def _bounded_probability(value: float) -> float:
     return max(0.0, min(1.0, float(value)))

@@ -28,15 +28,15 @@ def main() -> None:
         help="Directory for revised R4 rerun outputs.",
     )
     parser.add_argument(
-        "--no-root-manifest",
+        "--write-root-manifest",
         action="store_true",
-        help="Do not update the repository-root run_manifest.json.",
+        help="Also update the repository-root run_manifest.json.",
     )
     args = parser.parse_args()
 
     result = rv2.run_revised_R4_rerun(
         args.output_dir,
-        write_root_manifest=not args.no_root_manifest,
+        write_root_manifest=args.write_root_manifest,
     )
     print(
         json.dumps(

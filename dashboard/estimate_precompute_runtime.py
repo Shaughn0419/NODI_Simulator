@@ -41,12 +41,14 @@ from nodi_simulator.dashboard.config import (
     medium_for_particle,
 )
 from nodi_simulator.dashboard.precompute import build_precompute_sim_cfg
+from nodi_simulator.optional_acceleration import warn_numba_unavailable
 
 
 def _get_numba_info() -> dict:
     try:
         import numba  # type: ignore
     except Exception:
+        warn_numba_unavailable("precompute runtime estimates")
         return {"available": False, "version": None}
     return {"available": True, "version": getattr(numba, "__version__", None)}
 

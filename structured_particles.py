@@ -204,6 +204,12 @@ def equivalent_uniform_permittivity_core_shell(
         (epsilon_shell + 2.0 * epsilon_medium) * (epsilon_core + 2.0 * epsilon_shell)
         + 2.0 * f * (epsilon_shell - epsilon_medium) * (epsilon_core - epsilon_shell)
     )
+    if abs(denominator) < 1e-30:
+        raise ValueError(
+            "Maxwell-Garnett denominator near zero "
+            f"(abs={abs(denominator):.3e}); dielectric configuration is at an "
+            "effective-medium resonance."
+        )
     beta = numerator / denominator
     return epsilon_medium * (1.0 + 2.0 * beta) / (1.0 - beta)
 

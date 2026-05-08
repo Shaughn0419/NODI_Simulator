@@ -41,6 +41,14 @@ def test_R5_execution_requires_exact_external_authorization(tmp_path):
         )
 
 
+def test_R5_source_schema_helpers_report_missing_or_bad_columns():
+    with pytest.raises(ValueError, match="source row 7 missing all required columns"):
+        rv2._r5_required_text({}, "particle_name", "particle_preset_id", row_index=7)
+
+    with pytest.raises(ValueError, match="source row 8 has non-numeric value 'wide'"):
+        rv2._r5_required_float({"width_nm": "wide"}, "width_nm", "W_nm", row_index=8)
+
+
 def test_R5_outputs_required_files_only_and_respect_cap():
     assert R5_DIR.exists()
     files = {p.name for p in R5_DIR.iterdir() if p.is_file() and not p.name.startswith("._")}
