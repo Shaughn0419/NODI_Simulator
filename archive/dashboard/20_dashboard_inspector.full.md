@@ -1,18 +1,14 @@
 # dashboard/panels/inspector.py — Case Inspector 页面
 
-<!-- DOCSYNC:START -->
-> 归档提示（2026-04-28）：本文保留历史快照，不覆盖现行代码事实。当前主线已更新到 EV/NODI relative design gate 拆分、detector caution 分层、calibrated BFP ROI mask 到 Tsuyama 1D projected ROI、完整 governance diagnostics 导出；验证基线为 `pytest -q` = `509 passed`，`ruff check .` / `pyright` 通过。现行结论以根目录 `README.md`、`文档导航.md`、`00/24/42/43` 和代码测试为准。
-<!-- DOCSYNC:END -->
+<!-- ARCHIVE_STATUS:START -->
+> 归档状态：历史快照，仅保留当时推理、实验性计算或迁移记录；不代表当前 v1/v2 结论。当前读者入口请以 `README.md`、`文档导航.md`、`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`、`reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` 和 `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` 为准。
+<!-- ARCHIVE_STATUS:END -->
 
 > 2026-04-08 复核：已按当前代码、当前 dashboard 导航结构与当前文档分层重新核对；如与更深层专题分析冲突，应以明确标注为“现行”的专题文档和同名代码说明为准。
 
-
 > 2026-04-07 补充：当前 Inspector 默认读取标准 `fine_full_range_*` 主库，所展示的 case 结论与上下文均以四波长 `404 / 488 / 532 / 660 nm` 结果库为准。
 
-
-
 > 补充说明（2026-04-03）：Inspector 的摘要卡、batch 指标名和 live 参数提示已统一改成中文主标签，例如“评分 / 稳健评分 / 检出率 / 平均峰高 / 峰宽”。
-
 
 ## 当前使用方式
 

@@ -1,18 +1,14 @@
 # dashboard/panels/noise_detection_explorer.py — Noise & Detection Explorer
 
-<!-- DOCSYNC:START -->
-> 归档提示（2026-04-28）：本文保留历史快照，不覆盖现行代码事实。当前主线已更新到 EV/NODI relative design gate 拆分、detector caution 分层、calibrated BFP ROI mask 到 Tsuyama 1D projected ROI、完整 governance diagnostics 导出；验证基线为 `pytest -q` = `509 passed`，`ruff check .` / `pyright` 通过。现行结论以根目录 `README.md`、`文档导航.md`、`00/24/42/43` 和代码测试为准。
-<!-- DOCSYNC:END -->
+<!-- ARCHIVE_STATUS:START -->
+> 归档状态：历史快照，仅保留当时推理、实验性计算或迁移记录；不代表当前 v1/v2 结论。当前读者入口请以 `README.md`、`文档导航.md`、`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`、`reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` 和 `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` 为准。
+<!-- ARCHIVE_STATUS:END -->
 
 > 2026-04-08 复核：已按当前代码、当前 dashboard 导航结构与当前文档分层重新核对；如与更深层专题分析冲突，应以明确标注为“现行”的专题文档和同名代码说明为准。
 
-
 > 2026-04-07 补充：Noise & Detection Explorer 当前默认围绕标准四波长结果库 `404 / 488 / 532 / 660 nm` 解释噪声、检出与 gate 结论，相关统计均对应 `55296 cases` 的 full-range 主库。
 
-
-
 > 阶段 B 更新（2026-04-07）：当前页已开始收口到“标准结果库解释页”定位。页面会优先把当前选中 case 锚定到标准 `fine_full_range_*` 结果库，并在页首显示 recommendation / gate / stable-detection / freeze 这组结果库结论；如果 session 中存在工程调试参数，只作为提示，不再作为默认阅读来源。
-
 
 ## 当前使用方式
 

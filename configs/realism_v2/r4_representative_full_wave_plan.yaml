@@ -1,0 +1,542 @@
+{
+  "schema_version": "R4_representative_full_wave_plan_v1",
+  "stage": "R4_representative_full_wave_validation_plan_only",
+  "authorization_boundary": {
+    "R4_execution_authorized": false,
+    "R5_full_grid_v2_authorized": false,
+    "context_route_promotion_authorized": false,
+    "calibrated_SNR_claim_authorized": false,
+    "calibrated_event_probability_authorized": false,
+    "v1_full_grid_overwrite_authorized": false,
+    "Tsuyama_paper_fit_continuation_authorized": false,
+    "selected_annulus_bound_change_authorized": false,
+    "ET2030_direct_current_input_unlock_authorized": false
+  },
+  "cost_cap": {
+    "max_R4_representative_routes": 9,
+    "max_R4_representative_particles": 6,
+    "max_R4_interface_states": 2,
+    "max_R4_polarization_states": 2,
+    "max_R4_mesh_levels": 2,
+    "max_R4_solver_cases_before_review": 432
+  },
+  "route_panel": [
+    {
+      "wavelength_nm": 660,
+      "width_nm": 800,
+      "depth_nm": 1400,
+      "route_role": "main_660",
+      "route_role_locked": true,
+      "route_role_source": "R4_plan_v1",
+      "context_route_promotion_authorized": false,
+      "validation_question": "Does full-wave BFP/slit physics preserve the R3b main-660 baseline response?",
+      "confirm_if": "full_wave_delta_to_R3b_surrogate_is_small_and_observable_sign_is_preserved",
+      "demote_if": "BFP_or_slit_phase_structure_invalidates_R3b_surrogate_ranking",
+      "reclassify_if": "result_is_inconclusive_or_requires_new_route_governance_review"
+    },
+    {
+      "wavelength_nm": 660,
+      "width_nm": 800,
+      "depth_nm": 1500,
+      "route_role": "main_660",
+      "route_role_locked": true,
+      "route_role_source": "R4_plan_v1",
+      "context_route_promotion_authorized": false,
+      "validation_question": "Does the stronger R3b main-660 route remain robust under full-wave interface/BFP observables?",
+      "confirm_if": "main_660_band_stays_within_R3b_uncertainty_and_phase_sign_matches",
+      "demote_if": "full_wave_collection_or_interface_loss_erases_main_660_advantage",
+      "reclassify_if": "main_660_governance_needs_external_review_before_any_change"
+    },
+    {
+      "wavelength_nm": 660,
+      "width_nm": 900,
+      "depth_nm": 1400,
+      "route_role": "optional_robustness_probe",
+      "route_role_locked": true,
+      "route_role_source": "R4_plan_v1",
+      "context_route_promotion_authorized": false,
+      "validation_question": "Is the optional 660 / 900x1400 probe a real robustness pattern or a surrogate artifact?",
+      "confirm_if": "full_wave_observables_match_R3b_relative_trend_without_main_660_redefinition",
+      "demote_if": "full_wave_response_tracks_context_width_artifact_not_route_robustness",
+      "reclassify_if": "external_route_governance_review_explicitly_reopens_optional_660_status"
+    },
+    {
+      "wavelength_nm": 532,
+      "width_nm": 900,
+      "depth_nm": 1500,
+      "route_role": "context_validation_candidate",
+      "route_role_locked": true,
+      "route_role_source": "R4_plan_v1",
+      "context_route_promotion_authorized": false,
+      "validation_question": "Does the top R3b context median reflect real full-wave collection/interface physics?",
+      "confirm_if": "full_wave_observable_delta_supports_context_route_as_future_review_candidate_only",
+      "demote_if": "high_context_score_is_explained_by_surrogate_BFP_or_reference_scaling_error",
+      "reclassify_if": "route_promotion_or_experimental_recommendation_is_requested_by_external_review"
+    },
+    {
+      "wavelength_nm": 660,
+      "width_nm": 900,
+      "depth_nm": 1500,
+      "route_role": "context_validation_candidate",
+      "route_role_locked": true,
+      "route_role_source": "R4_plan_v1",
+      "context_route_promotion_authorized": false,
+      "validation_question": "Does the high longwave wide/deep context route survive full-wave BFP/slit validation?",
+      "confirm_if": "full_wave_sign_and_relative_magnitude_remain_consistent_with_R3b_context_candidate_status",
+      "demote_if": "wide_deep_advantage_collapses_under_full_wave_observable_mapping",
+      "reclassify_if": "external_review_separately_authorizes_context_route_promotion_discussion"
+    },
+    {
+      "wavelength_nm": 532,
+      "width_nm": 800,
+      "depth_nm": 1500,
+      "route_role": "context_validation_candidate",
+      "route_role_locked": true,
+      "route_role_source": "R4_plan_v1",
+      "context_route_promotion_authorized": false,
+      "validation_question": "Is 532 / 800x1500 a bridge route between context highs and locked main-660 geometry?",
+      "confirm_if": "full_wave_result_explains_R3b_high_score_without_promoting_context_route",
+      "demote_if": "score_is_not_supported_by_full_wave_interface_or_BFP_observables",
+      "reclassify_if": "future_external_review_changes_route_role_governance"
+    },
+    {
+      "wavelength_nm": 404,
+      "width_nm": 600,
+      "depth_nm": 1300,
+      "route_role": "shortwave_mechanism_candidate",
+      "route_role_locked": true,
+      "route_role_source": "R4_plan_v1",
+      "context_route_promotion_authorized": false,
+      "validation_question": "Does 404 show a distinct optical mechanism without thermal/POD-like score inflation?",
+      "confirm_if": "full_wave_optical_observable_is_separable_from_thermal_sidecar_and_no_score_bonus_is_added",
+      "demote_if": "thermal_or_filter_leakage_sidecar_blocks_interpretation",
+      "reclassify_if": "404_requires_new_safety_review_before_any_progression"
+    },
+    {
+      "wavelength_nm": 404,
+      "width_nm": 800,
+      "depth_nm": 600,
+      "route_role": "selected_annulus_sanity_overlap_shortwave",
+      "route_role_locked": true,
+      "route_role_source": "R4_plan_v1",
+      "context_route_promotion_authorized": false,
+      "validation_question": "Does selected-annulus shortwave sanity overlap behave as a diagnostic lens only?",
+      "confirm_if": "full_wave_result_preserves_selected_annulus_as_parallel_sanity_not_main_ranking",
+      "demote_if": "thermal_or_near_wall_artifact_dominates_the_shortwave_sanity_route",
+      "reclassify_if": "selected_annulus_role_change_would_require_external_review"
+    },
+    {
+      "wavelength_nm": 660,
+      "width_nm": 800,
+      "depth_nm": 600,
+      "route_role": "selected_annulus_sanity_overlap_longwave",
+      "route_role_locked": true,
+      "route_role_source": "R4_plan_v1",
+      "context_route_promotion_authorized": false,
+      "validation_question": "Does longwave selected-annulus overlap stay a sanity lens rather than an all-crossing replacement?",
+      "confirm_if": "full_wave_observable_is_useful_for_sanity_checks_without_replacing_all_crossing_rank",
+      "demote_if": "full_wave_result_shows_selected_annulus_overlap_is_not_representative",
+      "reclassify_if": "selected_annulus_bound_or_ranking_change_is_requested_by_new_review"
+    }
+  ],
+  "particle_panel": [
+    {
+      "particle_id": "blank",
+      "particle_class": "blank",
+      "particle_role": "blank_reference_and_false_positive_floor",
+      "biological_specificity_claim_allowed": false
+    },
+    {
+      "particle_id": "EV70_lowRI",
+      "particle_class": "EV",
+      "particle_role": "small_low_RI_stress_case",
+      "biological_specificity_claim_allowed": false
+    },
+    {
+      "particle_id": "EV100_nominal",
+      "particle_class": "EV",
+      "particle_role": "nominal_EV_reference_case",
+      "biological_specificity_claim_allowed": false
+    },
+    {
+      "particle_id": "EV250_nominal",
+      "particle_class": "EV",
+      "particle_role": "large_EV_upper_tail_case",
+      "biological_specificity_claim_allowed": false
+    },
+    {
+      "particle_id": "LDL_like_contaminant",
+      "particle_class": "contaminant",
+      "particle_role": "optical_contaminant_control_not_specificity_claim",
+      "biological_specificity_claim_allowed": false
+    },
+    {
+      "particle_id": "Au40",
+      "particle_class": "standard",
+      "particle_role": "metal_standard_amplitude_phase_control",
+      "biological_specificity_claim_allowed": false
+    }
+  ],
+  "particle_material_contract": [
+    {
+      "particle_id": "blank",
+      "diameter_nm": 0.0,
+      "size_convention": "not_applicable_blank",
+      "shape_model": "no_particle_medium_only",
+      "core_RI": "not_applicable",
+      "shell_RI": "not_applicable",
+      "shell_thickness_nm": 0.0,
+      "medium_RI_source": "water_like_medium_RI_1p333_at_visible_wavelengths_R4_prior_v1",
+      "material_database_key": "blank_medium_only_R4_v1",
+      "wavelength_interpolation_policy": "linear_interpolation_in_wavelength_nm_for_all_tabulated_complex_RI_values",
+      "absorption_imaginary_RI_policy": "medium_absorption_sidecar_only_no_particle_absorption",
+      "near_wall_pose_policy": "no_particle_blank_uses_same_channel_and_source_contract",
+      "biological_specificity_claim_allowed": false
+    },
+    {
+      "particle_id": "EV70_lowRI",
+      "diameter_nm": 70.0,
+      "size_convention": "diameter_nm",
+      "shape_model": "core_shell_sphere",
+      "core_RI": 1.36,
+      "shell_RI": 1.43,
+      "shell_thickness_nm": 5.0,
+      "medium_RI_source": "water_like_medium_RI_1p333_at_visible_wavelengths_R4_prior_v1",
+      "material_database_key": "EV_lowRI_core_shell_R4_prior_v1",
+      "wavelength_interpolation_policy": "constant_real_RI_over_404_660_nm_for_EV_prior_no_dispersion_claim",
+      "absorption_imaginary_RI_policy": "k_equals_0_for_EV_prior_absorption_claim_blocked",
+      "near_wall_pose_policy": "sphere_center_keeps_10_nm_nearest_wall_clearance_in_near_wall_stress_state",
+      "biological_specificity_claim_allowed": false
+    },
+    {
+      "particle_id": "EV100_nominal",
+      "diameter_nm": 100.0,
+      "size_convention": "diameter_nm",
+      "shape_model": "core_shell_sphere",
+      "core_RI": 1.39,
+      "shell_RI": 1.45,
+      "shell_thickness_nm": 5.0,
+      "medium_RI_source": "water_like_medium_RI_1p333_at_visible_wavelengths_R4_prior_v1",
+      "material_database_key": "EV_nominal_core_shell_R4_prior_v1",
+      "wavelength_interpolation_policy": "constant_real_RI_over_404_660_nm_for_EV_prior_no_dispersion_claim",
+      "absorption_imaginary_RI_policy": "k_equals_0_for_EV_prior_absorption_claim_blocked",
+      "near_wall_pose_policy": "sphere_center_keeps_10_nm_nearest_wall_clearance_in_near_wall_stress_state",
+      "biological_specificity_claim_allowed": false
+    },
+    {
+      "particle_id": "EV250_nominal",
+      "diameter_nm": 250.0,
+      "size_convention": "diameter_nm",
+      "shape_model": "core_shell_sphere",
+      "core_RI": 1.39,
+      "shell_RI": 1.45,
+      "shell_thickness_nm": 5.0,
+      "medium_RI_source": "water_like_medium_RI_1p333_at_visible_wavelengths_R4_prior_v1",
+      "material_database_key": "EV_nominal_core_shell_R4_prior_v1",
+      "wavelength_interpolation_policy": "constant_real_RI_over_404_660_nm_for_EV_prior_no_dispersion_claim",
+      "absorption_imaginary_RI_policy": "k_equals_0_for_EV_prior_absorption_claim_blocked",
+      "near_wall_pose_policy": "sphere_center_keeps_10_nm_nearest_wall_clearance_in_near_wall_stress_state",
+      "biological_specificity_claim_allowed": false
+    },
+    {
+      "particle_id": "LDL_like_contaminant",
+      "diameter_nm": 25.0,
+      "size_convention": "diameter_nm",
+      "shape_model": "homogeneous_sphere",
+      "core_RI": 1.46,
+      "shell_RI": 1.46,
+      "shell_thickness_nm": 0.0,
+      "medium_RI_source": "water_like_medium_RI_1p333_at_visible_wavelengths_R4_prior_v1",
+      "material_database_key": "LDL_like_homogeneous_R4_prior_v1",
+      "wavelength_interpolation_policy": "constant_real_RI_over_404_660_nm_for_contaminant_prior_no_specificity_claim",
+      "absorption_imaginary_RI_policy": "k_equals_0_for_LDL_like_prior_absorption_claim_blocked",
+      "near_wall_pose_policy": "sphere_center_keeps_10_nm_nearest_wall_clearance_in_near_wall_stress_state",
+      "biological_specificity_claim_allowed": false
+    },
+    {
+      "particle_id": "Au40",
+      "diameter_nm": 40.0,
+      "size_convention": "diameter_nm",
+      "shape_model": "homogeneous_sphere",
+      "core_RI": "complex_nk_from_material_database_key",
+      "shell_RI": "not_applicable",
+      "shell_thickness_nm": 0.0,
+      "medium_RI_source": "water_like_medium_RI_1p333_at_visible_wavelengths_R4_prior_v1",
+      "material_database_key": "Johnson_Christy_1972_Au_complex_nk_linear_interpolation_R4_v1",
+      "wavelength_interpolation_policy": "linear_interpolation_of_complex_nk_between_tabulated_wavelengths",
+      "absorption_imaginary_RI_policy": "use_complex_nk_from_material_database_key_no_biological_claim",
+      "near_wall_pose_policy": "sphere_center_keeps_10_nm_nearest_wall_clearance_in_near_wall_stress_state",
+      "biological_specificity_claim_allowed": false
+    }
+  ],
+  "solver_scope": {
+    "solver_family": "FEM_or_modal_equivalent",
+    "allowed_solver_families": [
+      "FDTD",
+      "BEM",
+      "FEM_or_modal_equivalent_if_documented"
+    ],
+    "execution_status": "not_run_plan_only",
+    "interface_states": [
+      "centerline_nominal",
+      "near_wall_stress"
+    ],
+    "polarization_states": [
+      "nominal_linear",
+      "orthogonal_sensitivity"
+    ],
+    "mesh_levels": [
+      "coarse_screen",
+      "review_refined"
+    ],
+    "no_R4_solver_call_in_plan_stage": true
+  },
+  "solver_case_contract": {
+    "solver_engine_class": "FEM_modal_equivalent",
+    "solver_name_or_backend": "internal_channel_modal_green_BFP_R4_v2",
+    "geometry_units": "nm",
+    "domain_extent_policy": {
+      "transverse_padding_nm": 900.0,
+      "axial_padding_nm": 900.0,
+      "minimum_boundary_clearance_from_particle_nm": 250.0,
+      "channel_cross_section_uses_route_width_depth_nm": true
+    },
+    "boundary_conditions": {
+      "x": "PML_open",
+      "y": "PML_open",
+      "z": "PML_open",
+      "channel_wall_interfaces": "explicit_glass_water_boundary_from_route_geometry",
+      "symmetry_policy": "no_symmetry_reduction_for_R4_review_cases"
+    },
+    "PML_or_open_boundary_settings": {
+      "PML_thickness_nm": 300.0,
+      "target_power_reflection_max": 0.000001,
+      "minimum_distance_from_BFP_extraction_box_nm": 120.0
+    },
+    "material_model_source_by_wavelength": {
+      "medium": "water_like_medium_RI_1p333_at_visible_wavelengths_R4_prior_v1",
+      "glass": "borosilicate_or_fused_silica_RI_1p46_prior_v1",
+      "EV_and_LDL": "particle_material_contract",
+      "Au40": "Johnson_Christy_1972_Au_complex_nk_linear_interpolation_R4_v1"
+    },
+    "particle_pose_definition": {
+      "centerline_nominal": {
+        "particle_center_x_nm": 0.0,
+        "particle_center_y_nm": 0.0,
+        "particle_center_z_policy": "channel_midplane",
+        "nearest_wall_clearance_nm": "computed_from_route_and_particle_radius"
+      },
+      "near_wall_stress": {
+        "nearest_wall_clearance_nm": 10.0,
+        "wall_selection": "nearest_width_sidewall",
+        "particle_center_z_policy": "channel_midplane",
+        "if_particle_radius_exceeds_half_width_minus_clearance": "case_marked_geometry_blocked"
+      }
+    },
+    "near_wall_stress_distance_nm": 10.0,
+    "centerline_nominal_position_definition": "particle_center_at_x_0_y_0_z_channel_midplane_in_route_cross_section",
+    "source_type": "unit_plane_wave",
+    "source_normalization": {
+      "incident_irradiance_W_per_m2_at_particle_plane": 1.0,
+      "phase_reference": "incident_field_phase_zero_at_particle_center",
+      "output_power_scaling_policy": "ROI_power_reported_per_unit_incident_irradiance_then_compared_as_relative_log_delta"
+    },
+    "polarization_vector_definition": {
+      "nominal_linear": {
+        "E_vector_xyz": [1.0, 0.0, 0.0],
+        "propagation_direction_xyz": [0.0, 0.0, 1.0]
+      },
+      "orthogonal_sensitivity": {
+        "E_vector_xyz": [0.0, 1.0, 0.0],
+        "propagation_direction_xyz": [0.0, 0.0, 1.0]
+      }
+    },
+    "BFP_far_field_extraction_method": "channel_modal_green_function_far_field_then_map_to_direction_cosines",
+    "BFP_coordinate_convention": {
+      "u": "sin_theta_x",
+      "v": "sin_theta_y",
+      "valid_domain": "u_squared_plus_v_squared_le_NA_squared",
+      "NA": 0.8,
+      "origin": "optical_axis"
+    },
+    "BFP_jacobian_policy": "apply_direction_cosine_jacobian_1_over_sqrt_1_minus_u2_minus_v2_before_ROI_integration",
+    "slit_ROI_definition": {
+      "coordinate_space": "direction_cosine_uv",
+      "center_u": 0.0,
+      "center_v": 0.0,
+      "width_u": 0.12,
+      "height_v": 1.4,
+      "same_operator_applied_to_reference_and_scattering": true
+    },
+    "pinhole_ROI_definition": {
+      "coordinate_space": "direction_cosine_uv",
+      "center_u": 0.0,
+      "center_v": 0.0,
+      "radius_uv": 0.18,
+      "same_operator_applied_to_reference_and_scattering": true
+    },
+    "mesh_level_definitions_nm": {
+      "coarse_screen": {
+        "base_cell_nm": 8.0,
+        "particle_surface_cell_nm": 2.0,
+        "minimum_cells_across_shell": 3
+      },
+      "review_refined": {
+        "base_cell_nm": 4.0,
+        "particle_surface_cell_nm": 1.0,
+        "minimum_cells_across_shell": 5
+      }
+    },
+    "mesh_refinement_region": {
+      "particle_padding_nm": 60.0,
+      "wall_interface_padding_nm": 40.0,
+      "near_to_far_box_clearance_nm": 120.0
+    },
+    "mesh_convergence_metric": "abs_log_ratio_review_refined_vs_coarse_screen_ROI_signal",
+    "mesh_convergence_threshold": 0.15,
+    "solver_boundary_sensitivity_threshold": 0.25
+  },
+  "observables": [
+    {
+      "observable_id": "BFP_complex_field",
+      "unit": "field_or_normalized_complex_amplitude_with_explicit_normalization",
+      "claim_level": "diagnostic_only",
+      "purpose": "Verify route-specific BFP phase/amplitude structure before ROI reduction."
+    },
+    {
+      "observable_id": "slit_intensity_perturbation",
+      "unit": "W",
+      "claim_level": "relative_with_priors",
+      "purpose": "Compare full-wave slit ROI perturbation with the R2/R3 surrogate operator."
+    },
+    {
+      "observable_id": "pinhole_intensity_perturbation",
+      "unit": "W",
+      "claim_level": "relative_with_priors",
+      "purpose": "Check whether route ordering is stable under a compact detector ROI."
+    },
+    {
+      "observable_id": "near_wall_interface_sensitivity",
+      "unit": "relative_log_delta",
+      "claim_level": "diagnostic_only",
+      "purpose": "Bound interface and near-wall stress effects without changing selected-annulus bounds."
+    },
+    {
+      "observable_id": "surrogate_full_wave_delta",
+      "unit": "relative_log_delta",
+      "claim_level": "relative_with_priors",
+      "purpose": "Quantify R3b surrogate-to-full-wave discrepancy for future review."
+    }
+  ],
+  "interface_near_wall_assumptions": [
+    "Use centerline nominal and one near-wall stress state only before next review.",
+    "Do not change selected-annulus 0.5-0.8 bounds.",
+    "Do not infer concentration or biological specificity from near-wall response.",
+    "Report interface material assumptions and boundary conditions in the case manifest."
+  ],
+  "promotion_demotion_criteria": {
+    "context_route_promotion_authorized": false,
+    "allowed_decision_labels": [
+      "confirm_for_future_review",
+      "demote_from_R4_candidate",
+      "reclassify_requires_external_review",
+      "inconclusive_requires_plan_revision"
+    ],
+    "numeric_decision_thresholds": {
+      "eps": 0.000000000001,
+      "sign_preserved_definition": "sign_full_wave_cross_term_equals_sign_surrogate_cross_term",
+      "surrogate_delta_log_definition": "log_abs_full_wave_ROI_signal_plus_eps_over_abs_surrogate_ROI_signal_plus_eps",
+      "surrogate_delta_log_confirm_abs_max": 0.35,
+      "surrogate_delta_log_demote_abs_min": 0.75,
+      "mesh_refined_delta_abs_max": 0.15,
+      "polarization_sensitivity_abs_max": 0.50,
+      "near_wall_stress_delta_abs_max": 0.75,
+      "solver_boundary_sensitivity_abs_max": 0.25,
+      "BFP_extraction_unit_guard_required": true,
+      "ROI_mapping_reversal_demotes": true
+    },
+    "numeric_decision_bins": {
+      "confirm_for_future_review": [
+        "sign_preserved",
+        "abs_surrogate_delta_log_lte_0p35",
+        "mesh_refined_delta_abs_lte_0p15",
+        "polarization_sensitivity_abs_lte_0p50",
+        "near_wall_stress_delta_abs_lte_0p75",
+        "no_claim_boundary_stop_gate_triggers"
+      ],
+      "demote_from_R4_candidate": [
+        "sign_mismatch",
+        "abs_surrogate_delta_log_gte_0p75",
+        "ROI_mapping_reverses_route_family_ordering",
+        "full_wave_identifies_BFP_slit_pinhole_surrogate_artifact",
+        "thermal_sidecar_blocks_404_interpretation"
+      ],
+      "inconclusive_requires_plan_revision": [
+        "mesh_refined_delta_abs_gt_0p15",
+        "solver_boundary_sensitivity_abs_gt_0p25",
+        "BFP_extraction_normalization_unit_guard_fails"
+      ]
+    },
+    "confirm_for_future_review": "Full-wave observable sign, relative magnitude, and ROI mapping remain compatible with R3b uncertainty bands.",
+    "demote_from_R4_candidate": "Full-wave result identifies a surrogate artifact, thermal sidecar block, or route-role instability.",
+    "reclassify_requires_external_review": "Any promotion, main-660 redefinition, selected-annulus role change, or context-route governance change requires a separate external review.",
+    "inconclusive_requires_plan_revision": "Mesh/interface/polarization disagreement prevents a stable conclusion under the 432-case cap."
+  },
+  "R3b_hardening_preconditions": {
+    "R3b_effect_delta_hardening_status": "equivalence_test_passed",
+    "effect_delta_equivalence_test_name": "test_R4_R3b_group_component_log_multiplier_equivalence_is_active",
+    "effect_delta_policy": "R4 plan requires either export of both effect_delta_log_score_ratio and group_component_log_multiplier, or an active equivalence test before R4 execution.",
+    "thermal_promotion_field_policy": "Rename or accompany promotion_allowed with thermal_not_blocking_stage_progression; route promotion remains unauthorized.",
+    "uncertainty_band_overlap_policy": "Heavy overlap in R3b uncertainty bands means R4 may validate candidates but may not promote routes."
+  },
+  "pre_run_tests": [
+    "test_R4_plan_cost_cap_blocks_over_cap_solver_design",
+    "test_R4_route_panel_is_representative_and_does_not_promote_context_routes",
+    "test_R4_particle_panel_is_representative_without_specificity_claims",
+    "test_R4_solver_scope_observables_and_outputs_are_defined",
+    "test_R4_solver_case_contract_has_numeric_executable_definitions",
+    "test_R4_particle_material_contract_defines_optical_parameters",
+    "test_R4_manifest_plan_keeps_R4_execution_false_and_R5_false",
+    "test_R4_numeric_decision_thresholds_are_pre_registered",
+    "test_R4_R3b_group_component_log_multiplier_equivalence_is_active",
+    "test_R4_stop_gates_and_decision_criteria_are_active",
+    "test_R4_plan_carries_R3b_effect_delta_and_thermal_field_hardening",
+    "test_R4_each_required_stop_gate_is_validated_fail_closed"
+  ],
+  "required_outputs_if_executed": [
+    "full_wave_case_manifest.csv",
+    "full_wave_observable_summary.csv",
+    "route_validation_decision_table.csv",
+    "BFP_slit_pinhole_observable_comparison.csv",
+    "interface_near_wall_sensitivity_summary.csv",
+    "surrogate_vs_full_wave_delta_summary.csv",
+    "context_route_governance_summary.csv",
+    "thermal_404_full_wave_gate_summary.csv",
+    "detector_blank_claim_guardrail_summary.csv",
+    "full_wave_cost_estimate.csv",
+    "run_manifest.json",
+    "R4_representative_full_wave_validation_report.md"
+  ],
+  "pre_review_manifest_fields": {
+    "R4_representative_full_wave_validation_run": false,
+    "R5_full_grid_v2_run": false,
+    "v1_full_grid_overwritten": false,
+    "Tsuyama_paper_fit_continued": false,
+    "selected_annulus_bounds_changed": false,
+    "calibrated_SNR_claim_emitted": false,
+    "ET2030_direct_current_input_unlocked": false
+  },
+  "stop_gates": [
+    "R4_execution_without_external_authorization",
+    "R5_or_full_grid_v2_started",
+    "context_route_promotion_attempted",
+    "calibrated_SNR_or_event_probability_claim_emitted",
+    "ET2030_direct_current_input_unlocked_without_measured_bench_artifact",
+    "selected_annulus_bounds_changed",
+    "v1_full_grid_output_overwritten",
+    "thermal_sidecar_used_to_increase_NODI_score",
+    "finite_zero_event_blank_safety_claim_emitted",
+    "legacy_detector_SNR_output_header_emitted",
+    "legacy_calibrated_detector_SNR_output_header_emitted"
+  ]
+}

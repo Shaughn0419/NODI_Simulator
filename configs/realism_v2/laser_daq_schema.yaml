@@ -1,0 +1,39 @@
+{
+  "schema_id": "realism_v2_laser_daq_schema_R0",
+  "owner": "laser_daq_sidecar",
+  "required_fields": [
+    "P_probe_W_by_lambda",
+    "beam_waist_xy_by_lambda",
+    "focus_z_shift_by_lambda",
+    "objective_transmission_by_lambda",
+    "filter_leakage_by_lambda",
+    "polarization_state_by_lambda",
+    "RIN_PSD_by_lambda",
+    "pointing_jitter_um_or_rad",
+    "modulation_frequency_Hz",
+    "modulation_depth",
+    "daq_model",
+    "adc_bits",
+    "adc_input_range_V",
+    "adc_sampling_rate_Hz",
+    "anti_alias_filter",
+    "quantization_noise_rms",
+    "timestamp_jitter"
+  ],
+  "field_units": {
+    "P_probe_W_by_lambda": "W",
+    "beam_waist_xy_by_lambda": "m",
+    "focus_z_shift_by_lambda": "m",
+    "objective_transmission_by_lambda": "fraction",
+    "filter_leakage_by_lambda": "fraction",
+    "RIN_PSD_by_lambda": "1/Hz",
+    "pointing_jitter_um_or_rad": "um_or_rad",
+    "modulation_frequency_Hz": "Hz",
+    "modulation_depth": "fraction",
+    "adc_input_range_V": "V",
+    "adc_sampling_rate_Hz": "Hz",
+    "quantization_noise_rms": "V",
+    "timestamp_jitter": "s"
+  },
+  "claim_level_without_measured_artifacts": "absolute_blocked"
+}

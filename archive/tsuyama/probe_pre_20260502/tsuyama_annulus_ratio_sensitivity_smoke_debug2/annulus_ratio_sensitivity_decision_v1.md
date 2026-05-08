@@ -1,5 +1,9 @@
 # Tsuyama selected-annulus ratio sensitivity
 
+<!-- ARCHIVE_STATUS:START -->
+> 归档状态：历史快照，仅保留当时推理、实验性计算或迁移记录；不代表当前 v1/v2 结论。当前读者入口请以 `README.md`、`文档导航.md`、`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`、`reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` 和 `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` 为准。
+<!-- ARCHIVE_STATUS:END -->
+
 - schema: `tsuyama_2022_selected_annulus_ratio_sensitivity_v1`
 - target: `tsuyama_2022_nodi_table_s1`
 - cases: `[[488, 800, 550], [532, 800, 550], [660, 800, 550], [488, 1200, 550], [532, 1200, 550], [660, 1200, 550]]`

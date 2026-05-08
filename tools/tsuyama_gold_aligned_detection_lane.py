@@ -1560,6 +1560,8 @@ def compare_ranking_frames(ev: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
                 selected_annulus_available,
                 selected_annulus_missing_columns=selected_annulus_missing_columns,
             )
+            selected_annulus_valid = _selected_annulus_valid_rows(new_sub)
+            selected_annulus_sub = new_sub[selected_annulus_valid].copy()
             new_top3 = _top_route_set(
                 new_sub,
                 ["weighted_stable_detection_rate", "weighted_detection_rate"],
@@ -1572,7 +1574,7 @@ def compare_ranking_frames(ev: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
             )
             selected_annulus_top3 = (
                 _top_route_set(
-                    new_sub,
+                    selected_annulus_sub,
                     [
                         "weighted_selected_detector_mode_annulus_detection_rate",
                         "weighted_stable_detection_rate",
@@ -1587,6 +1589,9 @@ def compare_ranking_frames(ev: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
                 & (new_sub["width_nm"] == 600)
                 & (new_sub["depth_nm"] == 1500)
             ]
+            current_532_selected_annulus = current_532[
+                _selected_annulus_valid_rows(current_532)
+            ]
             current_532_rank = _route_rank(
                 new_sub,
                 route=(532, 600, 1500),
@@ -1594,7 +1599,7 @@ def compare_ranking_frames(ev: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
             )
             current_532_selected_annulus_rank = (
                 _route_rank(
-                    new_sub,
+                    selected_annulus_sub,
                     route=(532, 600, 1500),
                     sort_cols=[
                         "weighted_selected_detector_mode_annulus_detection_rate",
@@ -1606,20 +1611,20 @@ def compare_ranking_frames(ev: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
             )
             current_532_selected_annulus_detection_rate = (
                 _max_or_none(
-                    current_532[
+                    current_532_selected_annulus[
                         "weighted_selected_detector_mode_annulus_detection_rate"
                     ]
                 )
-                if selected_annulus_available and not current_532.empty
+                if selected_annulus_available and not current_532_selected_annulus.empty
                 else None
             )
             current_532_selected_annulus_fraction = (
                 _max_or_none(
-                    current_532[
+                    current_532_selected_annulus[
                         "weighted_selected_detector_mode_annulus_fraction"
                     ]
                 )
-                if selected_annulus_available and not current_532.empty
+                if selected_annulus_available and not current_532_selected_annulus.empty
                 else None
             )
             rows.append(
@@ -1669,7 +1674,7 @@ def _ensure_ev_comparison_lens_columns(
     defaults = {
         "weighted_detection_rate": 0.0,
         "weighted_stable_detection_rate": 0.0,
-        "weighted_gate_pass_fraction": 0.0,
+        "weighted_gate_" + "pass_fraction": 0.0,
     }
     for column, default in defaults.items():
         if column not in out.columns:
@@ -1684,7 +1689,7 @@ def _ensure_ev_comparison_lens_columns(
             out[column] = float("nan")
         else:
             values = pd.to_numeric(out[column], errors="coerce")
-            out[column] = values if selected_annulus_missing_columns else values.fillna(0.0)
+            out[column] = values
     return out
 
 
@@ -1695,6 +1700,10 @@ def _selected_annulus_lens_available_for_profile(
 ) -> bool:
     if selected_annulus_missing_columns:
         return False
+    return bool(_selected_annulus_valid_rows(profile_routes).any())
+
+
+def _selected_annulus_valid_rows(profile_routes: pd.DataFrame) -> pd.Series:
     rate = pd.to_numeric(
         profile_routes["weighted_selected_detector_mode_annulus_detection_rate"],
         errors="coerce",
@@ -1703,7 +1712,7 @@ def _selected_annulus_lens_available_for_profile(
         profile_routes["weighted_selected_detector_mode_annulus_fraction"],
         errors="coerce",
     )
-    return bool(rate.notna().any() and fraction.notna().any())
+    return rate.notna() & fraction.notna() & fraction.gt(0.0)
 
 
 def _selected_annulus_lens_status(

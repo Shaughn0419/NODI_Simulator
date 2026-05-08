@@ -1,0 +1,10 @@
+module,claim_level,max_module_status_without_artifact,requires_artifact,allowed_without_measured_blank,notes
+R0_contract,relative_proxy,surrogate,false,true,Schema and compatibility only.
+Mie_to_power,relative_with_priors,bounded_prior,false,true,Watts are scenario-prior watts until measured throughput exists.
+BFP_operator,relative_with_priors,bounded_prior,false,true,ROI operator uses explicit coordinate and Jacobian metadata.
+detector_connection_state_machine,diagnostic_only,bounded_prior,false,true,Blocks invalid physical connection paths.
+detector_unit,absolute_blocked,bounded_prior,true,false,scenario_detector_SNR cannot be calibrated absolute without detector transfer plus measured blank.
+lockin_sidecar,absolute_blocked,bounded_prior,true,false,Model identity is bounded prior unless settings snapshot exists.
+laser_daq_sidecar,absolute_blocked,bounded_prior,true,false,Source/beam/DAQ priors remain blocked for absolute claims.
+blank_false_positive,absolute_blocked,bounded_prior,true,false,Analytic rare tail only before measured blank.
+thermal_404_sidecar,safety_sidecar,bounded_prior,false,true,Gate only; never increases NODI optical score.

@@ -1,0 +1,145 @@
+{
+  "schema_id": "realism_v2_scenario_registry_R0",
+  "module_status_enum": [
+    "off",
+    "surrogate",
+    "bounded_prior",
+    "measured_prior",
+    "calibrated",
+    "blocked"
+  ],
+  "claim_level_enum": [
+    "relative_proxy",
+    "relative_with_priors",
+    "scenario_count_rate",
+    "safety_sidecar",
+    "diagnostic_only",
+    "absolute_blocked",
+    "calibrated_absolute"
+  ],
+  "scenario_bundle_caps": {
+    "max_anchor_scenario_bundles": 8,
+    "max_anchor_routes": 14,
+    "max_stochastic_seeds": 3,
+    "max_event_level_runs_before_review": 2688
+  },
+  "owner_boundaries": {
+    "laser_daq_sidecar": [
+      "P_probe_W_by_lambda",
+      "RIN_PSD_by_lambda",
+      "pointing_jitter_um_or_rad",
+      "beam_waist_xy_by_lambda",
+      "focus_z_shift_by_lambda",
+      "DAQ_sampling",
+      "ADC_quantization"
+    ],
+    "BFP_operator": [
+      "pupil_slit_pinhole_ROI",
+      "objective_filter_throughput_in_ROI_operator",
+      "BFP_coordinate_mapping",
+      "detector_active_area"
+    ],
+    "blank_false_positive": [
+      "threshold_tails",
+      "colored_noise_effective_N",
+      "burst_drift_models",
+      "FP_per_min_estimates"
+    ]
+  },
+  "scenario_bundles": [
+    {
+      "scenario_id": "micro_anchor_nominal_sanity",
+      "stage": "R1.5_micro_anchor_only",
+      "full_scenario_registry_allowed": false,
+      "detector_path": "mapped_instrument_path_bundle",
+      "instrument_path_ids": [
+        "ET2030_50ohm_voltage",
+        "external_TIA_voltage"
+      ],
+      "connection_readout_paths": [
+        "voltage_input_50ohm",
+        "lockin_voltage_input"
+      ],
+      "BFP_operator": "centered_nominal",
+      "blank": "analytic_prior_clean_plus_bursty_upper_bound",
+      "laser_daq": "nominal_schema_values",
+      "thermal_404": "low_power_proxy",
+      "claim_level": "absolute_blocked",
+      "module_status": "bounded_prior"
+    }
+  ],
+  "scenario_parameters": [
+    {
+      "name": "P_probe_W_by_lambda",
+      "module": "laser_daq_sidecar",
+      "unit": "W",
+      "value_nominal": {"404": 0.000004, "488": 0.000012, "532": 0.000015, "660": 0.00002},
+      "value_optimistic": {"404": 0.000002, "488": 0.00001, "532": 0.000012, "660": 0.000018},
+      "value_pessimistic": {"404": 0.000001, "488": 0.000006, "532": 0.000008, "660": 0.000012},
+      "source_type": "assumption",
+      "source_ref": "reports/51_EV_NODI_realism_v2_instrument_aware_roadmap.md",
+      "artifact_id": "",
+      "claim_level": "absolute_blocked",
+      "applies_to": "micro_anchor_nominal_sanity",
+      "can_change_ranking": true,
+      "calibration_dependency": "power_meter_log_required_for_measured_prior",
+      "requires_bench_validation": false,
+      "v1_route_key": "not_applicable_scenario_separate",
+      "selected_annulus_policy": "unchanged_v1_0p5_0p8"
+    },
+    {
+      "name": "RIN_PSD_by_lambda",
+      "module": "laser_daq_sidecar",
+      "unit": "1/Hz",
+      "value_nominal": {"404": 1e-12, "488": 8e-13, "532": 7e-13, "660": 5e-13},
+      "value_optimistic": {"404": 2e-13, "488": 2e-13, "532": 2e-13, "660": 2e-13},
+      "value_pessimistic": {"404": 1e-10, "488": 3e-11, "532": 2e-11, "660": 1e-11},
+      "source_type": "assumption",
+      "source_ref": "R0 bounded prior placeholder",
+      "artifact_id": "",
+      "claim_level": "absolute_blocked",
+      "applies_to": "laser_daq_sidecar",
+      "can_change_ranking": true,
+      "calibration_dependency": "laser_RIN_trace_required",
+      "requires_bench_validation": false,
+      "v1_route_key": "not_applicable_scenario_separate",
+      "selected_annulus_policy": "unchanged_v1_0p5_0p8"
+    },
+    {
+      "name": "blank_false_positive_prior",
+      "module": "blank_false_positive",
+      "unit": "events/min",
+      "value_nominal": 0.001,
+      "value_optimistic": 1e-06,
+      "value_pessimistic": 0.1,
+      "source_type": "assumption",
+      "source_ref": "analytic Gaussian/Rayleigh prior before measured blank",
+      "artifact_id": "",
+      "claim_level": "absolute_blocked",
+      "applies_to": "micro_anchor_nominal_sanity",
+      "can_change_ranking": true,
+      "calibration_dependency": "trace_level_3_or_4_blank_required",
+      "requires_bench_validation": false,
+      "v1_route_key": "not_applicable_scenario_separate",
+      "selected_annulus_policy": "unchanged_v1_0p5_0p8"
+    },
+    {
+      "name": "ET2030_connection_path",
+      "module": "detector_connection_state_machine",
+      "unit": "categorical",
+      "value_nominal": "ET2030_50ohm_voltage",
+      "value_optimistic": "external_TIA_voltage",
+      "value_pessimistic": "ET2030_highZ_voltage_with_warning",
+      "source_type": "datasheet",
+      "source_ref": "ET2030/LI5640 bounded hardware prior",
+      "artifact_id": "",
+      "claim_level": "absolute_blocked",
+      "applies_to": "detector_unit_sidecar",
+      "can_change_ranking": true,
+      "calibration_dependency": "detector_transfer_and_lockin_setting_snapshot_required",
+      "requires_bench_validation": true,
+      "v1_route_key": "not_applicable_scenario_separate",
+      "selected_annulus_policy": "unchanged_v1_0p5_0p8"
+    }
+  ]
+}

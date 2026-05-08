@@ -1,0 +1,26 @@
+{
+  "schema_id": "realism_v2_run_manifest_schema_R0",
+  "required_fields": [
+    "run_id",
+    "git_commit",
+    "roadmap_version",
+    "schema_version",
+    "created_at",
+    "base_v1_summary_path",
+    "base_v1_summary_checksum",
+    "scenario_registry_checksum",
+    "detector_state_machine_checksum",
+    "laser_daq_schema_checksum",
+    "unit_registry_checksum",
+    "claim_level_matrix_checksum",
+    "calibration_artifact_registry_checksum",
+    "route_key_schema_checksum",
+    "run_manifest_schema_checksum",
+    "random_seed_policy",
+    "event_budget",
+    "scenario_budget",
+    "output_directory"
+  ],
+  "checksum_algorithm": "sha256",
+  "promote_rule": "no_result_without_run_manifest_can_enter_promote_decision"
+}

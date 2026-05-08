@@ -2,6 +2,8 @@
 
 更新日期：2026-04-30（Asia/Tokyo）
 
+> 当前状态：历史读者版分析报告。它保留早期 all-crossing full-grid 解释和实验候选讨论；当前综合解释以 `reports/88_*` 为准。不要用本文替代 v2 无实测收口，也不要把本文的实验面板语言解读为 v2 已经做了真实采集。
+
 2026-05-01 口径补充：本报告基于当时的 all-crossing 全量 summary 与派生表。代码主线已新增 selected-annulus parallel analysis lens；下一次全量重跑后，应在保留本报告 all-crossing 结论的同时，额外生成 selected-annulus ranking / comparison 做交叉验证。若用本报告对应的旧全量派生表直接跑新 selected-annulus 工具，selected lens 会被标记为 unavailable/null/NaN，不应解读为 selected-annulus 结论。
 
 ## 先说结论

@@ -1,16 +1,12 @@
 # EV/NODI 设计决策平台升级路线图与修改框架
 
-<!-- DOCSYNC:START -->
-> 2026-05-02 当前同步状态：在 2026-04-28 EV/NODI governance 基础上，代码主线已加入 selected-annulus parallel analysis lens：工程 gate 与主评分仍使用 all-crossing `detection_rate`；selected-candidate 与 edge-norm `0.5-0.8` annulus 条件率同时导出，EV targeted panel 与全量 size-weighted route analysis 现在会输出 selected-annulus 独立 ranking/comparison，用于和主口径交叉验证。Tsuyama 2022 Table S1 fixed-index Au/Ag audit profile、selected-annulus joint-fit paper-calibration lane、bounded `signal_transfer_fit` / `size_response` paper-fit variants、linked 488-window/532-max classification feature lane、以及 selected-annulus paper-fit EV targeted / 3-seed pre-fullgrid robustness audit 已加入 paper-claim 审计路径；这些 paper-fit 项不改变全局材料默认或 EV ranking。2026-05-02 追加复核已将 `joint_fit_score` 明确为 lower-is-better loss-style penalty，`paper_alignment_target` 元数据约束和 selected-annulus claim compatibility check 已落到代码/测试；annulus sensitivity 输出固定报告 Au `20/30/40/60 nm` 与 Ag `40/60 nm` 当前 joint-fit 粒径口径；all-crossing 不对齐 paper target、paper audit/工程主库 lane 分层和 non-paper-target joint-fit variant early rejection 已同步。当前验证基线：`ruff check .` 通过；`python -m pyright` 0 errors；`pytest -q` = `563 passed`，无 warnings；缺 selected-annulus 列的旧 CSV 输入会显式标记 lens unavailable/NaN，不再伪造 selected 结果。
-<!-- DOCSYNC:END -->
+> 当前状态：2026-05-08 复核版。旧版“Tsuyama 对齐主链升级路线图”中的 P0-P6 可落地项已经完成，完成态正文已归档到 [archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md](./archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md)。根目录文件43保留为历史/治理路线图；当前综合结论以 `reports/88_*` 为准，v2 无实测边界以 `reports/87_*` 和 `reports/84_*` 为准。
 
-> 当前状态：2026-04-25 v5 冻结版。旧版“Tsuyama 对齐主链升级路线图”中的 P0-P6 可落地项已经完成，完成态正文已归档到 [archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md](./archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md)。根目录文件43从现在起作为 **EV/NODI 实验设计决策平台** 的总修改入口。
-
-> 2026-05-01 补充：selected detector-mode 已升级为并行分析口径；它不改变本文件 v5 的工程 gate / full-grid recompute 主规则，但会在 EV targeted 与全量 route analysis 中生成独立 selected-annulus ranking / comparison。旧 EV/full-grid CSV 缺 selected-annulus 源列时必须显式标记 unavailable/null/NaN，不能回填成伪 selected 结果。其可执行细节与结果记录在 `tmp/44_Tsuyama_gold_aligned_detection_lane_PLAN_v2.md` 和 `results/tsuyama_selected_detector_mode_fulltest_annulus_0p5_0p8/`。
+> 2026-05-08 补充：selected detector-mode / selected-annulus 已成为固定交叉验证口径，canonical annulus 保持 `0.5-0.8`；旧临时 plan 和旧 selected-detector-mode 探索结果已被 Phase 2 acceptance、D2/D2.1、Phase 2.6-2.11、v2 closure 和 `reports/88_*` 取代，不再作为当前证据入口。
 
 > 2026-04-27 波长与几何网格口径修正：正式 `ev_design + full_range_biomimetic_exosome_with_anchors` 必须覆盖 `404 / 488 / 532 / 660 nm`，并使用 `11` 个宽度节点与 `13` 个深度节点，即 `32032 cases × 10000 events/case`。此前三波长 `7056 cases` 或旧几何 `9408 cases` 结果库只能视为 stale partial coverage，不能作为 current truth。
 
-> 当前重算判断：如果手头没有实测 blank / standard particle / BFP ROI / lock-in transfer / detector-unit 数据，P2/P3 不应继续作为全量重算前代码修正项推进；应把它们保持为 data-blocked / calibration-ready / future-high-fidelity lane。下一轮 formal full-grid recompute 可以生成 relative/proxy/diagnostic EV design decision library，但仍不得输出 calibrated SNR、absolute LOD、absolute EV concentration、真实跨波长 detector-unit 优劣、或 biological EV specificity claim。若目标改为 experimental calibrated platform，则必须等 P2/P3 的真实数据或高保真 solver 接入后再升级 claim。
+> 当前重算判断：formal EV full-grid recompute 已完成，只签 relative/proxy/diagnostic EV design decision library。没有实测 blank / standard particle / BFP ROI / lock-in transfer / detector-unit 数据时，P2/P3 继续保持 data-blocked / calibration-ready / future-high-fidelity lane，不得输出 calibrated SNR、absolute LOD、absolute EV concentration、真实跨波长 detector-unit 优劣或 biological EV specificity claim。若目标改为 experimental calibrated platform，必须等 P2/P3 的真实数据或高保真 solver 接入后再升级 claim。
 
 ## 总判断
 

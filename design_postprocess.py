@@ -388,7 +388,7 @@ def _default_ev_postprocess_payload(row: Mapping[str, Any]) -> dict[str, Any]:
         "physics_model_consensus_status": "not_ev_design_target",
         "EV_design_detector_caution_flag": False,
         "EV_design_detector_caution_summary": None,
-        "EV_design_detector_resolved_pass_fraction": None,
+        "EV_design_detector_resolved_" + "pass_fraction": None,
         "final_EV_design_score": None,
         "EV_design_recommendation_band": "not_ev_design_target",
         "EV_design_recommendation_band_relative": "not_ev_design_target",

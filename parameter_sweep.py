@@ -22,6 +22,7 @@ Event randomness:
 import math
 import os
 import hashlib
+import logging
 import time
 from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from copy import copy, deepcopy
@@ -36,6 +37,8 @@ try:
     from numba import njit as _numba_njit
 except Exception:  # pragma: no cover - optional acceleration dependency
     _numba_njit = None
+
+_LOGGER = logging.getLogger(__name__)
 
 from .data_objects import (
     Particle, Medium, Channel, OpticalSystem, SimulationConfig,
@@ -150,7 +153,6 @@ from .reference_operating_point import (
 from .illumination import compute_illumination_envelope
 from .trajectory import (
     TrajectoryContext,
-    axial_transport_velocity_m_s,
     build_trajectory_context,
     simulate_particle_trajectory,
     simulate_particle_trajectory_block,
@@ -191,13 +193,10 @@ from .pulse_analysis import (
 )
 from .utils import (
     build_collection_operator,
-    interpolate_at_theta,
     compute_detected_scattering_field,
-    resolve_collection_theta_rad,
     validate_simulation_config,
     sample_initial_position,
     min_max_normalize,
-    compute_baseline_normalization,
     compute_baseline_normalization_per_wavelength,
     resolve_projection_basis,
     build_detector_forward_diagnostics,
@@ -6113,8 +6112,6 @@ def run_single_case_batch(
         sim_cfg,
         particle_radius_m=particle.radius_m,
     )
-    transport_channel = event_case_context.transport_channel
-    transport_cfg = event_case_context.transport_cfg
     trajectory_context = event_case_context.trajectory_context
     case_time_s = trajectory_context.time_s
     readout_context = _build_readout_context(
@@ -8621,8 +8618,26 @@ def _emit_progress_callback(
     try:
         progress_callback(dict(progress_state))
     except Exception as exc:
+        _LOGGER.warning("Sweep progress callback failed", exc_info=True)
         if verbose:
             print(f"[progress] callback failed: {exc}", flush=True)
+
+
+def _emit_case_result_callback(
+    *,
+    case_result_callback,
+    raw_result: dict,
+    verbose: bool,
+) -> None:
+    """Best-effort dispatch of one successful case payload to the external callback."""
+    if case_result_callback is None:
+        return
+    try:
+        case_result_callback(dict(raw_result))
+    except Exception as exc:
+        _LOGGER.warning("Sweep case-result callback failed", exc_info=True)
+        if verbose:
+            print(f"[checkpoint] callback failed: {exc}", flush=True)
 
 
 def _format_sweep_progress_line(progress_state: dict) -> str:
@@ -9496,12 +9511,11 @@ def run_parameter_sweep(
 
                 raw_result = SweepRawResult.from_case_result(case_result).to_payload()
                 results.append(raw_result)
-                if case_result_callback is not None:
-                    try:
-                        case_result_callback(dict(raw_result))
-                    except Exception as exc:
-                        if verbose:
-                            print(f"[checkpoint] callback failed: {exc}", flush=True)
+                _emit_case_result_callback(
+                    case_result_callback=case_result_callback,
+                    raw_result=raw_result,
+                    verbose=verbose,
+                )
 
             now = time.perf_counter()
             should_emit_progress = (

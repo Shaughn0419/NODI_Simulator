@@ -35,6 +35,16 @@ def test_build_joint_candidates_expands_base_and_variant_ids():
     assert transfer.signal_transfer_mode == "fit_required_silver_by_wavelength"
     assert transfer.size_response_mode == "fit_required_au_power_law"
 
+    size_only = joint.build_joint_candidates(
+        base_candidate_ids=["baseline_current_estimates"],
+        variant_ids=["paper_5sigma_size_response_fit"],
+    )[0]
+    assert size_only.candidate_id == (
+        "baseline_current_estimates__paper_5sigma_size_response_fit"
+    )
+    assert size_only.signal_transfer_mode == "none"
+    assert size_only.size_response_mode == "fit_required_au_power_law"
+
 
 def test_build_joint_candidates_rejects_non_paper_target_variants_early():
     with pytest.raises(ValueError, match="diagnostic-only"):
@@ -187,6 +197,25 @@ def test_joint_summary_rewards_detection_and_signal_ratio_alignment():
         joint.AU_SIZE_EXPONENT_TARGET
     )
     assert good["au_size_exponent_scored_observable"] == "peak_height"
+    assert good["signal_ratio_target_mode"] == "interferometric_column_ratio"
+    assert good["joint_fit_score_strict"] == pytest.approx(good["joint_fit_score"])
+    assert "joint_fit_score_formula" in good
+    assert "joint_fit_score_recomputed_mie" in good
+    assert good["ag40_to_au40_target_ratio_interferometric_column_ratio_660"] == pytest.approx(
+        lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][660]
+        / lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][660]
+    )
+    assert good["ag40_to_au40_target_ratio_sqrt_scattering_column_ratio_660"] == pytest.approx(
+        (joint.TABLE_S1_SCATTERING_CROSS_SECTION["silver"][660]
+        / joint.TABLE_S1_SCATTERING_CROSS_SECTION["gold"][660]) ** 0.5
+    )
+    assert (
+        "ag40_to_au40_target_ratio_recomputed_mie_sqrt_csca_ratio_660" in good
+    )
+    assert good["signal_ratio_score_interferometric_column_ratio"] == pytest.approx(
+        good["signal_ratio_score"]
+    )
+    assert "raw_signal_ratio_score_sqrt_scattering_column_ratio" in good
     assert bad["paper_fit_status"] == "candidate_needs_signal_transfer_or_phase_fit"
 
 
@@ -348,6 +377,12 @@ def test_run_joint_fit_meta_exports_selected_annulus_traceability(
     assert (
         meta["target_notes"]["joint_fit_score_interpretation"]
         == joint.JOINT_FIT_SCORE_INTERPRETATION
+    )
+    assert meta["target_notes"]["signal_ratio_target_mode"] == (
+        "interferometric_column_ratio"
+    )
+    assert "sqrt_scattering_column_ratio" in (
+        meta["target_notes"]["ag_au_peak_ratio_target_modes"]["660"]
     )
     assert meta["paper_alignment_target_metadata_status"] == "validated_per_raw_row"
     assert "threshold_sigma" in meta["paper_alignment_target_required_metadata_fields"]

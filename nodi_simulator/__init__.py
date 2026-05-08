@@ -22,18 +22,20 @@ __path__ = [str(_PROJECT_ROOT)]
 # Reuse the canonical package exports defined at the project root.
 _ROOT_INIT = _PROJECT_ROOT / "__init__.py"
 _ROOT_EXPORTS_MODULE = "nodi_simulator._root_exports"
-_spec = importlib.util.spec_from_file_location(_ROOT_EXPORTS_MODULE, _ROOT_INIT)
-if _spec is None or _spec.loader is None:
-    raise ImportError(f"Unable to load canonical package exports from {_ROOT_INIT}")
+_root_exports = None
+if (_PROJECT_ROOT / "data_objects.py").exists() and _ROOT_INIT.exists():
+    _spec = importlib.util.spec_from_file_location(_ROOT_EXPORTS_MODULE, _ROOT_INIT)
+    if _spec is None or _spec.loader is None:
+        raise ImportError(f"Unable to load canonical package exports from {_ROOT_INIT}")
+    _root_exports = importlib.util.module_from_spec(_spec)
+    sys.modules[_ROOT_EXPORTS_MODULE] = _root_exports
+    _spec.loader.exec_module(_root_exports)
 
-_root_exports = importlib.util.module_from_spec(_spec)
-sys.modules[_ROOT_EXPORTS_MODULE] = _root_exports
-_spec.loader.exec_module(_root_exports)
-
-for _name, _value in vars(_root_exports).items():
-    if _name in {"__builtins__", "__cached__", "__loader__", "__name__", "__spec__"}:
-        continue
-    globals()[_name] = _value
+if _root_exports is not None:
+    for _name, _value in vars(_root_exports).items():
+        if _name in {"__builtins__", "__cached__", "__loader__", "__name__", "__spec__"}:
+            continue
+        globals()[_name] = _value
 
 __all__ = [
     _name

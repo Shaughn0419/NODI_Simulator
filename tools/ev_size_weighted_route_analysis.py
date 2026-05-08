@@ -47,6 +47,9 @@ import pandas as pd
 ALL_CROSSING_RATE_COLUMN = "all_crossing_detection_rate"
 SELECTED_ANNULUS_RATE_COLUMN = "selected_detector_mode_annulus_detection_rate"
 SELECTED_ANNULUS_FRACTION_COLUMN = "selected_detector_mode_annulus_fraction"
+SELECTED_ANNULUS_CONTRIBUTION_COLUMN = "selected_detector_mode_annulus_contribution"
+SELECTED_ANNULUS_UPLIFT_COLUMN = "selected_detector_mode_annulus_uplift"
+REFERENCE_USEFUL_BAND = "electronics_noise_limited_useful"
 ROUTE_COLUMNS = ["wavelength_nm", "width_nm", "depth_nm"]
 
 
@@ -108,7 +111,14 @@ def aggregate_routes(df: pd.DataFrame, priors: dict[str, dict[int, float]]) -> p
                 "selected_annulus_lens_available",
                 "max",
             ),
-            selected_annulus_lens_source=("selected_annulus_lens_source", "first"),
+            selected_annulus_lens_source=(
+                "selected_annulus_lens_source",
+                _aggregate_selected_annulus_source,
+            ),
+            reference_operating_band=(
+                "reference_operating_band",
+                _aggregate_reference_operating_band,
+            ),
             raw_mean_detection=("detection_rate", "mean"),
             raw_mean_all_crossing_detection=("all_crossing_detection_rate", "mean"),
             raw_mean_selected_annulus_detection=(
@@ -119,11 +129,24 @@ def aggregate_routes(df: pd.DataFrame, priors: dict[str, dict[int, float]]) -> p
                 SELECTED_ANNULUS_FRACTION_COLUMN,
                 "mean",
             ),
+            raw_min_selected_annulus_fraction=(
+                SELECTED_ANNULUS_FRACTION_COLUMN,
+                "min",
+            ),
+            raw_mean_selected_annulus_contribution=(
+                SELECTED_ANNULUS_CONTRIBUTION_COLUMN,
+                "mean",
+            ),
+            raw_mean_selected_annulus_uplift=(
+                SELECTED_ANNULUS_UPLIFT_COLUMN,
+                "mean",
+            ),
             raw_mean_stable=("stable_detection_rate", "mean"),
             raw_mean_final=("final_engineering_score", "mean"),
         )
         .reset_index()
     )
+    _add_selected_annulus_route_status_columns(out)
 
     for prior_name, prior in priors.items():
         wmap = normalize_prior(prior)
@@ -151,6 +174,15 @@ def aggregate_routes(df: pd.DataFrame, priors: dict[str, dict[int, float]]) -> p
                                 x[SELECTED_ANNULUS_FRACTION_COLUMN],
                                 x["weight"],
                             )
+                        ),
+                        f"{prior_name}_weighted_selected_annulus_contribution": (
+                            _weighted_sum_or_nan(
+                                x[SELECTED_ANNULUS_CONTRIBUTION_COLUMN],
+                                x["weight"],
+                            )
+                        ),
+                        f"{prior_name}_weighted_selected_annulus_uplift": (
+                            _weighted_selected_uplift(x, "weight")
                         ),
                         f"{prior_name}_weighted_stable": (
                             x["stable_detection_rate"] * x["weight"]
@@ -200,6 +232,8 @@ def _with_parallel_detection_lenses(df: pd.DataFrame) -> pd.DataFrame:
             out[ALL_CROSSING_RATE_COLUMN],
             errors="coerce",
         ).fillna(out["detection_rate"])
+    if "reference_operating_band" not in out:
+        out["reference_operating_band"] = "unknown_reference_band"
     has_selected_columns = (
         SELECTED_ANNULUS_RATE_COLUMN in out
         and SELECTED_ANNULUS_FRACTION_COLUMN in out
@@ -214,26 +248,115 @@ def _with_parallel_detection_lenses(df: pd.DataFrame) -> pd.DataFrame:
         if has_selected_columns
         else pd.Series(dtype=float)
     )
-    selected_available = bool(
-        has_selected_columns
-        and selected_rate.notna().any()
-        and selected_fraction.notna().any()
+    selected_valid = (
+        _selected_annulus_valid_rows(selected_rate, selected_fraction)
+        if has_selected_columns
+        else pd.Series(False, index=out.index)
     )
-    out["selected_annulus_lens_available"] = bool(selected_available)
-    if selected_available:
-        selected_source = "selected_detector_mode_annulus"
-    elif has_selected_columns:
-        selected_source = "selected_detector_mode_annulus_empty_or_no_valid_denominator"
+    selected_available = bool(selected_valid.any())
+    out["selected_annulus_lens_available"] = selected_valid.astype(bool)
+    if has_selected_columns:
+        selected_source = pd.Series(
+            "selected_detector_mode_annulus_empty_or_no_valid_denominator",
+            index=out.index,
+        )
+        selected_source.loc[selected_valid] = "selected_detector_mode_annulus"
     else:
-        selected_source = "missing_selected_annulus_columns_rerun_source_summary"
+        selected_source = pd.Series(
+            "missing_selected_annulus_columns_rerun_source_summary",
+            index=out.index,
+        )
     out["selected_annulus_lens_source"] = selected_source
     if not selected_available:
         out[SELECTED_ANNULUS_RATE_COLUMN] = float("nan")
         out[SELECTED_ANNULUS_FRACTION_COLUMN] = float("nan")
     else:
-        out[SELECTED_ANNULUS_RATE_COLUMN] = selected_rate
-        out[SELECTED_ANNULUS_FRACTION_COLUMN] = selected_fraction
+        out[SELECTED_ANNULUS_RATE_COLUMN] = selected_rate.where(selected_valid)
+        out[SELECTED_ANNULUS_FRACTION_COLUMN] = selected_fraction.where(
+            selected_valid
+        )
+    out[SELECTED_ANNULUS_CONTRIBUTION_COLUMN] = (
+        out[SELECTED_ANNULUS_RATE_COLUMN] * out[SELECTED_ANNULUS_FRACTION_COLUMN]
+    )
+    all_crossing = pd.to_numeric(out[ALL_CROSSING_RATE_COLUMN], errors="coerce")
+    out[SELECTED_ANNULUS_UPLIFT_COLUMN] = (
+        out[SELECTED_ANNULUS_RATE_COLUMN] / all_crossing.where(all_crossing.gt(0.0))
+    )
     return out
+
+
+def _selected_annulus_valid_rows(
+    selected_rate: pd.Series,
+    selected_fraction: pd.Series,
+) -> pd.Series:
+    return (
+        selected_rate.notna()
+        & selected_fraction.notna()
+        & selected_fraction.gt(0.0)
+    )
+
+
+def _aggregate_selected_annulus_source(values: pd.Series) -> str:
+    text = values.dropna().astype(str)
+    if text.empty:
+        return "missing_selected_annulus_columns_rerun_source_summary"
+    if (text == "selected_detector_mode_annulus").any():
+        return "selected_detector_mode_annulus"
+    return str(text.iloc[0])
+
+
+def _aggregate_reference_operating_band(values: pd.Series) -> str:
+    text = values.dropna().astype(str)
+    if text.empty:
+        return "unknown_reference_band"
+    unique = sorted(set(text))
+    if len(unique) == 1:
+        return unique[0]
+    if REFERENCE_USEFUL_BAND in unique and "reference_too_weak" in unique:
+        return "mixed_reference_useful_and_too_weak"
+    return "mixed_reference_operating_band"
+
+
+def _add_selected_annulus_route_status_columns(routes: pd.DataFrame) -> None:
+    routes["selected_annulus_fraction_guardrail_status"] = routes[
+        "raw_min_selected_annulus_fraction"
+    ].map(_selected_annulus_fraction_guardrail_status)
+    routes["selected_annulus_uplift_warning_status"] = routes[
+        "raw_mean_selected_annulus_uplift"
+    ].map(_selected_annulus_uplift_warning_status)
+    routes["selected_annulus_reference_interpretation"] = routes.apply(
+        _selected_annulus_reference_interpretation,
+        axis=1,
+    )
+
+
+def _selected_annulus_fraction_guardrail_status(value: float) -> str:
+    if pd.isna(value):
+        return "selected_annulus_unavailable"
+    if float(value) < 0.25:
+        return "selected_annulus_fraction_fail_below_0p25"
+    if float(value) < 0.35:
+        return "selected_annulus_fraction_warning_low"
+    return "selected_annulus_fraction_ok"
+
+
+def _selected_annulus_uplift_warning_status(value: float) -> str:
+    if pd.isna(value):
+        return "selected_annulus_unavailable"
+    if float(value) > 1.6:
+        return "selected_annulus_uplift_warning_high"
+    return "selected_annulus_uplift_ok"
+
+
+def _selected_annulus_reference_interpretation(row: pd.Series) -> str:
+    if not bool(row.get("selected_annulus_lens_available", False)):
+        return "selected_annulus_unavailable"
+    reference_band = str(row.get("reference_operating_band", "unknown_reference_band"))
+    if reference_band == REFERENCE_USEFUL_BAND:
+        return "reference_useful_selected_cross_check"
+    if reference_band == "reference_too_weak":
+        return "weak_reference_boundary_selected_only"
+    return "selected_annulus_reference_status_requires_review"
 
 
 def _weighted_sum_or_nan(values: pd.Series, weights: pd.Series) -> float:
@@ -245,6 +368,20 @@ def _weighted_sum_or_nan(values: pd.Series, weights: pd.Series) -> float:
     return float(result) if pd.notna(result) else float("nan")
 
 
+def _weighted_selected_uplift(rows: pd.DataFrame, weight_column: str) -> float:
+    selected_detection = _weighted_sum_or_nan(
+        rows[SELECTED_ANNULUS_RATE_COLUMN],
+        rows[weight_column],
+    )
+    all_crossing = _weighted_sum_or_nan(
+        rows[ALL_CROSSING_RATE_COLUMN],
+        rows[weight_column],
+    )
+    if pd.isna(selected_detection) or pd.isna(all_crossing) or all_crossing <= 0:
+        return float("nan")
+    return float(selected_detection / all_crossing)
+
+
 def build_selected_annulus_ranking_comparison(
     routes: pd.DataFrame,
     priors: dict[str, dict[int, float]],
@@ -252,10 +389,13 @@ def build_selected_annulus_ranking_comparison(
     top_n: int = 3,
 ) -> pd.DataFrame:
     rows: list[dict[str, object]] = []
-    selected_available = bool(
-        routes.get("selected_annulus_lens_available", pd.Series([False]))
+    selected_route_mask = (
+        routes.get(
+            "selected_annulus_lens_available",
+            pd.Series(False, index=routes.index),
+        )
+        .reindex(routes.index, fill_value=False)
         .astype(bool)
-        .any()
     )
     for prior_name in priors:
         primary_sort = [
@@ -268,12 +408,45 @@ def build_selected_annulus_ranking_comparison(
             f"{prior_name}_weighted_stable",
             f"{prior_name}_weighted_final",
         ]
+        selected_rate_col = f"{prior_name}_weighted_selected_annulus_detection"
+        selected_rankable = routes[selected_route_mask].copy()
+        if selected_rate_col in selected_rankable:
+            selected_rankable = selected_rankable[
+                pd.to_numeric(selected_rankable[selected_rate_col], errors="coerce")
+                .notna()
+            ]
+        else:
+            selected_rankable = selected_rankable.iloc[0:0]
+        selected_boundary_rankable = routes.iloc[0:0]
+        selected_rank_scope = "all_routes_no_reference_filter_available"
+        if "reference_operating_band" in selected_rankable:
+            useful_mask = selected_rankable["reference_operating_band"].astype(str).eq(
+                REFERENCE_USEFUL_BAND
+            )
+            boundary_mask = selected_rankable["reference_operating_band"].astype(str).ne(
+                REFERENCE_USEFUL_BAND
+            )
+            selected_boundary_rankable = selected_rankable[boundary_mask].copy()
+            if useful_mask.any():
+                selected_rankable = selected_rankable[useful_mask].copy()
+                selected_rank_scope = "reference_useful_only"
+        selected_available = not selected_rankable.empty
         primary_ranked = _rank_routes(routes, primary_sort)
         primary_top = _route_records(primary_ranked.head(top_n))
-        selected_ranked = _rank_routes(routes, selected_sort) if selected_available else routes
+        selected_ranked = (
+            _rank_routes(selected_rankable, selected_sort)
+            if selected_available
+            else routes.iloc[0:0]
+        )
         selected_top = (
             _route_records(selected_ranked.head(top_n)) if selected_available else []
         )
+        boundary_ranked = (
+            _rank_routes(selected_boundary_rankable, selected_sort)
+            if not selected_boundary_rankable.empty
+            else routes.iloc[0:0]
+        )
+        boundary_top = _route_records(boundary_ranked.head(top_n))
         primary_set = {tuple(record.values()) for record in primary_top}
         selected_set = {tuple(record.values()) for record in selected_top}
         primary_top1 = primary_top[0] if primary_top else None
@@ -284,11 +457,13 @@ def build_selected_annulus_ranking_comparison(
                 "selected_annulus_lens_available": selected_available,
                 "primary_lens": "strict_pass_then_stable_then_final",
                 "selected_annulus_lens": (
-                    "selected_annulus_detection_then_stable_then_final"
+                    "selected_annulus_detection_reference_useful_then_stable_then_final"
                 ),
+                "selected_annulus_rank_scope": selected_rank_scope,
                 "top_n": int(top_n),
                 "primary_top_routes": json.dumps(primary_top),
                 "selected_annulus_top_routes": json.dumps(selected_top),
+                "selected_annulus_boundary_top_routes": json.dumps(boundary_top),
                 "selected_annulus_top1_route_changed": (
                     selected_available and primary_top1 != selected_top1
                 ),
@@ -364,12 +539,25 @@ def print_top_routes(routes: pd.DataFrame, prior_name: str, top_n: int) -> None:
             "wavelength_nm",
             "width_nm",
             "depth_nm",
+            "reference_operating_band",
             f"{prior_name}_weighted_selected_annulus_detection",
             f"{prior_name}_weighted_selected_annulus_fraction",
+            f"{prior_name}_weighted_selected_annulus_contribution",
+            f"{prior_name}_weighted_selected_annulus_uplift",
+            "selected_annulus_reference_interpretation",
             f"{prior_name}_weighted_stable",
             f"{prior_name}_weighted_final",
         ]
-        selected_ranked = routes.sort_values(
+        selected_rankable = routes.copy()
+        if "reference_operating_band" in selected_rankable:
+            reference_useful = selected_rankable[
+                selected_rankable["reference_operating_band"].astype(str).eq(
+                    REFERENCE_USEFUL_BAND
+                )
+            ]
+            if not reference_useful.empty:
+                selected_rankable = reference_useful
+        selected_ranked = selected_rankable.sort_values(
             [
                 f"{prior_name}_weighted_selected_annulus_detection",
                 f"{prior_name}_weighted_stable",
@@ -377,8 +565,33 @@ def print_top_routes(routes: pd.DataFrame, prior_name: str, top_n: int) -> None:
             ],
             ascending=False,
         )
-        print(f"\nTOP {top_n} selected-annulus routes under prior: {prior_name}")
+        print(
+            f"\nTOP {top_n} reference-useful selected-annulus routes "
+            f"under prior: {prior_name}"
+        )
         print(selected_ranked[selected_cols].head(top_n).round(4).to_string(index=False))
+        if "reference_operating_band" in routes:
+            boundary_ranked = routes[
+                routes["reference_operating_band"].astype(str).ne(REFERENCE_USEFUL_BAND)
+            ].sort_values(
+                [
+                    f"{prior_name}_weighted_selected_annulus_detection",
+                    f"{prior_name}_weighted_stable",
+                    f"{prior_name}_weighted_final",
+                ],
+                ascending=False,
+            )
+            if not boundary_ranked.empty:
+                print(
+                    f"\nTOP {top_n} weak/unknown-reference selected-annulus "
+                    f"boundary routes under prior: {prior_name}"
+                )
+                print(
+                    boundary_ranked[selected_cols]
+                    .head(top_n)
+                    .round(4)
+                    .to_string(index=False)
+                )
 
 
 def main() -> None:
@@ -407,7 +620,7 @@ def main() -> None:
     parser.add_argument("--top-n", type=int, default=8)
     args = parser.parse_args()
 
-    df = pd.read_csv(args.summary_csv)
+    df = pd.read_csv(args.summary_csv, low_memory=False)
     df = df[df["particle_material"] == args.particle_material].copy()
     df = df[
         df["particle_diameter_nm"].between(args.diameter_min, args.diameter_max)

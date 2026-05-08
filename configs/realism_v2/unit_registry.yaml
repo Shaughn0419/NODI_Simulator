@@ -1,0 +1,35 @@
+{
+  "schema_id": "realism_v2_unit_registry_R0",
+  "units": {
+    "P_ref_ROI_W": "W",
+    "P_sca_ROI_W": "W",
+    "P_cross_ROI_W": "W",
+    "Delta_P_NODI_peak_signed_W": "W",
+    "Delta_P_NODI_peak_abs_W": "W",
+    "I_inc_W_per_m2": "W/m^2",
+    "dCsca_dOmega": "m^2/sr",
+    "Csca": "m^2",
+    "Delta_i_peak_A": "A",
+    "V_in_peak_V": "V",
+    "shot_noise_A2_per_Hz": "A^2/Hz",
+    "Johnson_noise_V2_per_Hz": "V^2/Hz",
+    "Johnson_noise_A2_per_Hz_equivalent": "A^2/Hz",
+    "RIN_PSD_1_per_Hz": "1/Hz",
+    "ENBW_Hz": "Hz",
+    "false_positive_rate_per_min": "events/min",
+    "P_medium_abs_W": "W",
+    "P_glass_abs_W": "W"
+  },
+  "forbidden_units": [
+    "W*m^2_for_scattered_power",
+    "arbitrary_unit_for_detector_unit_output"
+  ],
+  "PSD_convention_enum": [
+    "one_sided",
+    "two_sided"
+  ],
+  "ENBW_convention_enum": [
+    "Hz_one_sided",
+    "Hz_two_sided"
+  ]
+}

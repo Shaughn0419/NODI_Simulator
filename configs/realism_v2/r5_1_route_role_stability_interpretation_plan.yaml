@@ -1,0 +1,229 @@
+{
+  "schema_version": "R5_1_route_role_stability_interpretation_plan_v1",
+  "stage": "R5_1_route_role_stability_interpretation_plan_only",
+  "prior_gate": "PASS_R5_RESULTS_PREPARE_NEXT_STAGE_PLAN_ONLY",
+  "selected_next_stage_lane": "R5_1_route_role_stability_interpretation_report_only",
+  "authorization_boundary": {
+    "next_stage_plan_preparation_authorized_by_prior_gate": true,
+    "R5_1_interpretation_execution_authorized": false,
+    "R6_plan_preparation_authorized": false,
+    "R6_execution_authorized": false,
+    "R5_followup_expansion_authorized": false,
+    "v1_full_grid_overwrite_authorized": false,
+    "Tsuyama_paper_fit_continuation_authorized": false,
+    "selected_annulus_bound_change_authorized": false,
+    "selected_annulus_replaces_all_crossing_ranking_authorized": false,
+    "context_route_promotion_authorized": false,
+    "main_660_redefinition_authorized": false,
+    "optional_660_900x1400_redefines_main_660_authorized": false,
+    "route_specific_manual_sign_flips_authorized": false,
+    "calibrated_SNR_claim_authorized": false,
+    "calibrated_event_probability_authorized": false,
+    "absolute_LOD_claim_authorized": false,
+    "true_EV_concentration_claim_authorized": false,
+    "biological_specificity_claim_authorized": false,
+    "ET2030_direct_current_input_unlock_authorized": false,
+    "external_review_required_before_R5_1_execution": true
+  },
+  "R5_evidence_carryforward": {
+    "accepted_gate": "PASS_R5_RESULTS_PREPARE_NEXT_STAGE_PLAN_ONLY",
+    "R5_full_grid_v2_run": true,
+    "R5_case_rows": 256256,
+    "v1_source_rows": 32032,
+    "route_identity_count": 572,
+    "named_scenario_bundle_count": 8,
+    "stochastic_seed_count": 0,
+    "R5_cap_respected": true,
+    "R5_followup_expansion_authorized": false,
+    "R4_2_gate_carried_forward": true,
+    "coarse_screen_warning_only": true,
+    "claim_boundaries_all_rows_blocked": true,
+    "legacy_SNR_headers_absent": true,
+    "context_route_promotion_authorized": false,
+    "main_660_redefinition_authorized": false,
+    "route_specific_manual_sign_flips_authorized": false
+  },
+  "route_role_interpretation_targets": {
+    "main_660_route_identity_locked": true,
+    "locked_main_660_routes": [
+      {
+        "route_id": "660_800x1400",
+        "wavelength_nm": 660,
+        "width_nm": 800,
+        "depth_nm": 1400,
+        "mean_detectability_relative_prior_score": 0.12519010810464012
+      },
+      {
+        "route_id": "660_800x1500",
+        "wavelength_nm": 660,
+        "width_nm": 800,
+        "depth_nm": 1500,
+        "mean_detectability_relative_prior_score": 0.12700071112412847
+      }
+    ],
+    "route_role_mean_scores": {
+      "weak_reference_control": 0.1522574633111693,
+      "main_660": 0.12609540961438429,
+      "optional_robustness_probe": 0.12304146693752328,
+      "selected_annulus_sanity_overlap_longwave": 0.10090586000026561,
+      "medium_wave_baseline": 0.07765321741940008,
+      "full_grid_context_route": 0.07090140683426069,
+      "shortwave_mechanism_candidate": 0.0444752242704069,
+      "selected_annulus_sanity_overlap_shortwave": 0.04043281728509177
+    },
+    "weak_reference_control_requires_interpretation": true,
+    "context_route_high_score_warning_requires_interpretation": true,
+    "top_context_route_warnings_by_mean_score": [
+      {
+        "route_id": "660_500x1500",
+        "mean_detectability_relative_prior_score": 0.1963955892876444,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_500x1400",
+        "mean_detectability_relative_prior_score": 0.18974511792166776,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_500x1300",
+        "mean_detectability_relative_prior_score": 0.18257483857830317,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_500x1200",
+        "mean_detectability_relative_prior_score": 0.17385890228394868,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_600x1500",
+        "mean_detectability_relative_prior_score": 0.16547188266389543,
+        "route_promotion_authorized": false
+      }
+    ],
+    "context_route_promotion_authorized": false,
+    "main_660_redefinition_authorized": false
+  },
+  "next_stage_options_considered": [
+    {
+      "option_id": "R5_1_route_role_stability_interpretation_report_only",
+      "selected_for_this_plan": true,
+      "reason": "R5 is clean but high weak-reference and context-route scores require interpretation before R6 or experimental-panel planning.",
+      "authorizes_execution": false,
+      "authorizes_route_promotion": false,
+      "authorizes_calibrated_claims": false
+    },
+    {
+      "option_id": "R6_planning_only",
+      "selected_for_this_plan": false,
+      "reason": "R6 planning is premature before R5 route-role and weak-reference-control interpretation.",
+      "authorizes_execution": false,
+      "authorizes_route_promotion": false,
+      "authorizes_calibrated_claims": false
+    },
+    {
+      "option_id": "post_v2_validation_dependency_backlog_only",
+      "selected_for_this_plan": false,
+      "reason": "Experimental-panel planning is plausible later, but R5 scenario-prior interpretation must first define the candidate rationale.",
+      "authorizes_execution": false,
+      "authorizes_route_promotion": false,
+      "authorizes_calibrated_claims": false
+    },
+    {
+      "option_id": "bounded_additional_scenario_prior_audit_plan_only",
+      "selected_for_this_plan": false,
+      "reason": "No extra scenario-prior audit is selected before interpreting the current 8-scenario R5 evidence.",
+      "authorizes_execution": false,
+      "authorizes_route_promotion": false,
+      "authorizes_calibrated_claims": false
+    }
+  ],
+  "analysis_scope": {
+    "uses_existing_R5_artifacts_only": true,
+    "new_case_rows_authorized": 0,
+    "new_scenario_bundle_authorized": false,
+    "new_stochastic_seed_authorized": false,
+    "new_solver_case_authorized": false,
+    "new_experiment_authorized": false,
+    "future_output_directory_if_authorized": "results/ev_nodi_realism_v2_R5_1_route_role_stability_interpretation/",
+    "analysis_questions": [
+      "Do route-role stability and scenario sensitivity support preparing R6 plan, experimental panel plan, bounded additional scenario audit plan, or route-governance revision plan?",
+      "Are weak-reference-control and high context-route scores meaningful scenario-prior warnings or surrogate/control artifacts?",
+      "Does main-660 remain sufficiently robust as locked main route without redefining it?",
+      "Do claim boundaries remain relative-with-priors and absolute-blocked for detector/SNR/event probability claims?"
+    ]
+  },
+  "required_outputs_if_authorized_after_future_review": [
+    "R5_1_route_role_stability_interpretation_manifest.csv",
+    "R5_1_route_role_stability_decision_table.csv",
+    "R5_1_scenario_sensitivity_interpretation.csv",
+    "R5_1_context_route_high_score_warning_table.csv",
+    "R5_1_main_660_robustness_interpretation.csv",
+    "R5_1_weak_reference_control_interpretation.csv",
+    "R5_1_selected_annulus_nonpromotion_summary.csv",
+    "R5_1_claim_boundary_guardrail_summary.csv",
+    "R5_1_next_stage_options_matrix.csv",
+    "run_manifest.json",
+    "R5_1_route_role_stability_interpretation_report.md"
+  ],
+  "allowed_future_recommendation_classes": [
+    "prepare_R6_plan_for_external_review_only",
+    "prepare_post_v2_validation_dependency_backlog_only",
+    "prepare_bounded_additional_scenario_prior_audit_plan_only",
+    "hold_for_route_governance_revision_plan_only"
+  ],
+  "stop_gates": [
+    "R5_1_execution_without_external_authorization",
+    "R6_plan_preparation_started",
+    "R6_execution_started",
+    "R5_followup_expansion_started",
+    "R5_case_rows_expanded_beyond_reviewed_cap",
+    "v1_full_grid_output_overwritten",
+    "Tsuyama_paper_fit_continued",
+    "selected_annulus_bounds_changed",
+    "selected_annulus_replaces_all_crossing_ranking",
+    "context_route_promotion_attempted",
+    "main_660_redefinition_attempted",
+    "optional_660_900x1400_redefines_main_660",
+    "route_specific_manual_sign_flip_attempted",
+    "calibrated_SNR_or_event_probability_claim_emitted",
+    "absolute_LOD_or_true_concentration_claim_emitted",
+    "biological_specificity_claim_emitted",
+    "ET2030_direct_current_input_unlocked_without_measured_bench_artifact",
+    "thermal_sidecar_used_to_increase_NODI_score",
+    "finite_zero_event_blank_safety_claim_emitted",
+    "legacy_detector_SNR_output_header_emitted",
+    "legacy_calibrated_detector_SNR_output_header_emitted"
+  ],
+  "claim_boundaries": {
+    "SNR_claim_level": "absolute_blocked",
+    "event_probability_claim_level": "absolute_blocked",
+    "p_detect_mapping_claim_level": "relative_with_priors",
+    "calibrated_SNR_claim_authorized": false,
+    "calibrated_event_probability_claim_authorized": false,
+    "absolute_LOD_claim_authorized": false,
+    "true_EV_concentration_claim_authorized": false,
+    "biological_specificity_claim_authorized": false,
+    "legacy_detector_SNR_output_header_authorized": false,
+    "legacy_calibrated_detector_SNR_output_header_authorized": false
+  },
+  "provenance_freeze": {
+    "required_R5_checksum_fields": [
+      "R5_case_manifest_checksum",
+      "R5_summary_checksum",
+      "R5_route_role_stability_checksum",
+      "R5_main660_summary_checksum",
+      "R5_context_no_promotion_checksum",
+      "R5_scenario_sensitivity_checksum",
+      "R5_cost_estimate_checksum",
+      "R5_run_manifest_checksum"
+    ],
+    "R5_case_manifest_checksum": "0d5669a285b2a2160b833a7b4afd5035c5026c27918f6179b45248f21160447c",
+    "R5_summary_checksum": "850e6f9edc67f3d0fdeb18cea18a3b5910bcf0e7995e98651cf1e990a4423d4f",
+    "R5_route_role_stability_checksum": "fd3c65c1cf0d5c5a851a96b58534a274f61dd37255b62c5405e4741f254b2c32",
+    "R5_main660_summary_checksum": "9e10146314085277e8c8ca1b7ef4945b97ede8dd34a627ce129a6256dd3226cd",
+    "R5_context_no_promotion_checksum": "74402c6baa084a76afa8f7a3647d992c77f79d700cf573d124ffe75a4353f890",
+    "R5_scenario_sensitivity_checksum": "475a1b80c1e9b8e9669acbeaa504810935d1123166fea49cc60c5ad4e14b2646",
+    "R5_cost_estimate_checksum": "7b22e8b00483abf7707cfa88709bbca8aa1bd4e922b3573f56fcd7a28f262ce5",
+    "R5_run_manifest_checksum": "21fac8a93649e900304465e65ac49f8a15e50870ef2c8f1d7b3299f19f08d5e9"
+  }
+}

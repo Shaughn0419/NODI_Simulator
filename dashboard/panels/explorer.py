@@ -39,7 +39,6 @@ from nodi_simulator.dashboard.config import (
 )
 from nodi_simulator.dashboard.panels.common import (
     render_display_banner,
-    render_section_intro,
     set_selected_case_context,
     render_page_header_hub,
 )

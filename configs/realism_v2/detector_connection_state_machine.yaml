@@ -1,0 +1,72 @@
+{
+  "schema_id": "realism_v2_detector_connection_state_machine_R0",
+  "state_machine_version": "detector_connection_state_machine_v2_R0",
+  "rules": [
+    {
+      "connection_state_id": "ET2030_BNC_to_50ohm_voltage_input",
+      "detector_source": "ET2030_BNC_biased_output",
+      "readout_path": "voltage_input_50ohm",
+      "termination_mode": "50_ohm",
+      "status": "allowed",
+      "source_impedance_assumption": "ET2030_BNC_voltage_output_datasheet_prior",
+      "load_impedance_assumption": "explicit_50_ohm_termination",
+      "requires_bench_validation": false,
+      "warning": ""
+    },
+    {
+      "connection_state_id": "ET2030_BNC_to_highZ_voltage_input",
+      "detector_source": "ET2030_BNC_biased_output",
+      "readout_path": "high_Z_voltage_input",
+      "termination_mode": "high_Z",
+      "status": "allowed_with_warning",
+      "source_impedance_assumption": "ET2030_BNC_voltage_output_datasheet_prior",
+      "load_impedance_assumption": "high_Z_voltage_input_explicit_load_model_required",
+      "requires_bench_validation": false,
+      "warning": "high-Z voltage input requires explicit source/load model; do not inherit 50 ohm voltage path"
+    },
+    {
+      "connection_state_id": "ET2030_BNC_direct_to_LI5640_current_input",
+      "detector_source": "ET2030_BNC_biased_output",
+      "readout_path": "LI5640_current_input_direct",
+      "termination_mode": "current_input",
+      "status": "forbidden_unless_bench_validated",
+      "source_impedance_assumption": "ET2030_is_biased_BNC_output_not_bare_photodiode_terminal",
+      "load_impedance_assumption": "LI5640_current_input",
+      "requires_bench_validation": true,
+      "warning": "blocked unless bench_validation_artifact_id exists in calibration artifact registry"
+    },
+    {
+      "connection_state_id": "bare_photodiode_to_lockin_current_input",
+      "detector_source": "bare_photodiode",
+      "readout_path": "lockin_current_input",
+      "termination_mode": "current_input",
+      "status": "allowed",
+      "source_impedance_assumption": "bare_photodiode_current_source",
+      "load_impedance_assumption": "lockin_current_input",
+      "requires_bench_validation": false,
+      "warning": ""
+    },
+    {
+      "connection_state_id": "bare_photodiode_to_external_TIA",
+      "detector_source": "bare_photodiode",
+      "readout_path": "external_TIA",
+      "termination_mode": "TIA_current_input",
+      "status": "allowed",
+      "source_impedance_assumption": "bare_photodiode_current_source",
+      "load_impedance_assumption": "external_TIA_current_input",
+      "requires_bench_validation": false,
+      "warning": ""
+    },
+    {
+      "connection_state_id": "external_TIA_to_lockin_voltage_input",
+      "detector_source": "external_TIA_voltage_output",
+      "readout_path": "lockin_voltage_input",
+      "termination_mode": "voltage_input",
+      "status": "allowed",
+      "source_impedance_assumption": "external_TIA_voltage_output",
+      "load_impedance_assumption": "lockin_voltage_input",
+      "requires_bench_validation": false,
+      "warning": ""
+    }
+  ]
+}

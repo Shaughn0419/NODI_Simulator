@@ -1,5 +1,9 @@
 # Tsuyama 2022 Linked 488/532 Classification Lane
 
+<!-- ARCHIVE_STATUS:START -->
+> 归档状态：历史快照，仅保留当时推理、实验性计算或迁移记录；不代表当前 v1/v2 结论。当前读者入口请以 `README.md`、`文档导航.md`、`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`、`reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` 和 `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` 为准。
+<!-- ARCHIVE_STATUS:END -->
+
 > Historical v1 output: this run is superseded by `results/tsuyama_2022_classification_lane_v2_smoke_20260501/`, where the feature policy uses the detected 488 pulse window and the 532 maximum within that window. Keep this file only as provenance for the older feature-export-only protocol.
 
 ## Scope

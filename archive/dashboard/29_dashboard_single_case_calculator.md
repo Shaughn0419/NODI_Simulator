@@ -1,13 +1,12 @@
 # 单案例计算页设计框架
 
-<!-- DOCSYNC:START -->
-> 归档提示（2026-04-28）：本文保留历史快照，不覆盖现行代码事实。当前主线已更新到 EV/NODI relative design gate 拆分、detector caution 分层、calibrated BFP ROI mask 到 Tsuyama 1D projected ROI、完整 governance diagnostics 导出；验证基线为 `pytest -q` = `509 passed`，`ruff check .` / `pyright` 通过。现行结论以根目录 `README.md`、`文档导航.md`、`00/24/42/43` 和代码测试为准。
-<!-- DOCSYNC:END -->
+<!-- ARCHIVE_STATUS:START -->
+> 归档状态：历史快照，仅保留当时推理、实验性计算或迁移记录；不代表当前 v1/v2 结论。当前读者入口请以 `README.md`、`文档导航.md`、`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`、`reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` 和 `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` 为准。
+<!-- ARCHIVE_STATUS:END -->
 
 > 文档状态：设计草案。当前单案例页已经实现；如果你要理解或维护现行实现，请优先查看 [dashboard/panels/single_case_calculator.md](../../dashboard/panels/single_case_calculator.md)。
 
 > 2026-04-07 补充：当前单案例计算页定位为流程外 live 工具页，前 6 页主流程默认围绕标准 `fine_full_range_*` 结果库展开；标准主库口径为 `404 / 488 / 532 / 660 nm`、`55296 cases`。
-
 
 > 设计状态（2026-04-06）：本文基于当前完整计算核心、当前 dashboard 页结构，以及当前 `signal_backend / backend / mie_backend` 已有能力整理而成。它不是新的 physics 路线图，而是一个**流程外的单案例计算页**设计框架，用于把“输入一个具体 case，逐阶段看结果”做成独立页面。当前仍处于设计阶段，尚未开始写该页面的 Python 代码。
 

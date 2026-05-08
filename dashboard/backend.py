@@ -476,7 +476,7 @@ def load_sweep_summary(
     """Load sweep summary, preferring the typed parquet artifact when present."""
     if parquet_path is not None and os.path.exists(parquet_path):
         return _enrich_loaded_summary_df(pd.read_parquet(parquet_path))
-    return _enrich_loaded_summary_df(pd.read_csv(csv_path))
+    return _enrich_loaded_summary_df(pd.read_csv(csv_path, low_memory=False))
 
 
 def load_sweep_compact(pkl_path: str) -> list[dict]:
@@ -1808,7 +1808,6 @@ def run_case_on_demand(particle_name, wavelength_nm, W_nm, H_nm):
     from nodi_simulator.data_objects import Channel
     from nodi_simulator.dashboard.config import (
         BASELINE_PARTICLE,
-        MEDIUM,
         OPTICAL_TEMPLATE,
         THETA_GRID_RAD,
         medium_for_particle,

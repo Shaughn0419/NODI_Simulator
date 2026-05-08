@@ -7,6 +7,7 @@ import sys
 import time
 from dataclasses import dataclass
 from dataclasses import replace
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -21,6 +22,7 @@ for candidate in (str(PROJECT_ROOT), str(PROJECT_PARENT)):
 
 from tools import tsuyama_detection_rate_calibration as rate_calib
 from tools import tsuyama_gold_aligned_detection_lane as lane
+from nodi_simulator.data_objects import PBS_1X
 from nodi_simulator.design_claim_governance import (
     CLAIM_LEVEL_PAPER_ALIGNED_2022_NODI_PROXY_LENS,
     PAPER_ALIGNMENT_TARGETS,
@@ -29,6 +31,7 @@ from nodi_simulator.design_claim_governance import (
     require_claim_level,
     require_paper_alignment_target,
 )
+from nodi_simulator.intrinsic_scattering import compute_intrinsic_scattering
 
 OUTPUT_DIR = PROJECT_ROOT / "results" / "tsuyama_selected_annulus_joint_fit"
 TARGET_SCHEMA_ID = "tsuyama_2022_selected_annulus_joint_fit_v2"
@@ -54,6 +57,8 @@ SILVER_DIAMETERS_NM = (40, 60)
 # only if the annulus subset remains large enough to be interpretable. Keep this
 # tied to the annulus sensitivity decision before changing it.
 MIN_ANNULUS_FRACTION = 0.25
+SELECTED_DETECTOR_MODE_EDGE_NORM_MIN = 0.5
+SELECTED_DETECTOR_MODE_EDGE_NORM_MAX = 0.8
 MIN_SIGNAL_TRANSFER_GAIN = 0.25
 MAX_SIGNAL_TRANSFER_GAIN = 4.0
 MIN_SIZE_RESPONSE_EXPONENT_DELTA = -1.5
@@ -72,6 +77,16 @@ DETECTION_RATE_TARGETS: dict[int, dict[str, float]] = {
     40: {"low": 0.65, "target": 0.78, "high": 0.90},
     60: {"low": 0.85, "target": 0.92, "high": 0.98},
 }
+TABLE_S1_SCATTERING_CROSS_SECTION: dict[str, dict[int, float]] = {
+    "gold": {488: 0.20, 532: 0.46, 660: 0.10},
+    "silver": {488: 0.72, 532: 0.37, 660: 0.07},
+}
+SIGNAL_RATIO_TARGET_MODES = (
+    "interferometric_column_ratio",
+    "sqrt_scattering_column_ratio",
+    "recomputed_mie_sqrt_csca_ratio",
+)
+DEFAULT_SIGNAL_RATIO_TARGET_MODE = "interferometric_column_ratio"
 DEFAULT_JOINT_CANDIDATES = (
     "baseline_current_estimates",
     "velocity_0p15mmps_low_noise_stack_fluxmix_0p10",
@@ -80,6 +95,54 @@ DEFAULT_JOINT_CANDIDATES = (
     "logger_0p5ms_blank_edge_low_noise_stack_fluxmix_0p25",
     "velocity_0p15mmps_fluxmix_0p10_flowparabolic_rho_0p45_noise_0p008",
 )
+
+
+@lru_cache(maxsize=16)
+def recomputed_table_s1_csca_m2(material_key: str, wavelength_nm: int) -> float:
+    particle = lane.make_tsuyama_2022_table_s1_particle(
+        material_key,
+        40,
+        int(wavelength_nm),
+    )
+    theta_grid = np.linspace(0.0, np.pi, 361)
+    intrinsic = compute_intrinsic_scattering(
+        particle,
+        PBS_1X,
+        float(wavelength_nm) * 1e-9,
+        theta_grid,
+    )
+    return float(intrinsic["Csca_m2"])
+
+
+def table_s1_signal_ratio_target(wavelength_nm: int, target_mode: str) -> float:
+    wavelength = int(wavelength_nm)
+    if target_mode == "interferometric_column_ratio":
+        return float(
+            lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][wavelength]
+            / lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][wavelength]
+        )
+    if target_mode == "sqrt_scattering_column_ratio":
+        return float(
+            np.sqrt(
+                TABLE_S1_SCATTERING_CROSS_SECTION["silver"][wavelength]
+                / TABLE_S1_SCATTERING_CROSS_SECTION["gold"][wavelength]
+            )
+        )
+    if target_mode == "recomputed_mie_sqrt_csca_ratio":
+        return float(
+            np.sqrt(
+                recomputed_table_s1_csca_m2("silver", wavelength)
+                / recomputed_table_s1_csca_m2("gold", wavelength)
+            )
+        )
+    raise ValueError(f"Unknown Table S1 signal-ratio target mode: {target_mode}")
+
+
+def table_s1_signal_ratio_targets(wavelength_nm: int) -> dict[str, float]:
+    return {
+        mode: table_s1_signal_ratio_target(wavelength_nm, mode)
+        for mode in SIGNAL_RATIO_TARGET_MODES
+    }
 JOINT_EXTRA_CFG_OVERRIDES: dict[str, dict[str, Any]] = {
     "paper_10sigma": {},
     "paper_5sigma_sensitivity": {"threshold_sigma": 5.0},
@@ -91,6 +154,7 @@ JOINT_EXTRA_CFG_OVERRIDES: dict[str, dict[str, Any]] = {
     },
     "paper_signal_transfer_fit": {},
     "paper_5sigma_signal_transfer_fit": {"threshold_sigma": 5.0},
+    "paper_5sigma_size_response_fit": {"threshold_sigma": 5.0},
     "paper_signal_size_transfer_fit": {},
     "paper_5sigma_signal_size_transfer_fit": {"threshold_sigma": 5.0},
     "paper_inphase_signal_transfer_fit": {
@@ -115,6 +179,7 @@ JOINT_SIGNAL_TRANSFER_MODES: dict[str, str] = {
     "paper_inphase_signal_transfer_fit": "fit_required_silver_by_wavelength",
 }
 JOINT_SIZE_RESPONSE_MODES: dict[str, str] = {
+    "paper_5sigma_size_response_fit": "fit_required_au_power_law",
     "paper_signal_size_transfer_fit": "fit_required_au_power_law",
     "paper_5sigma_signal_size_transfer_fit": "fit_required_au_power_law",
 }
@@ -384,6 +449,7 @@ def summarize_joint_candidate(
         "joint_cfg_overrides_json": _json_dumps(candidate.cfg_overrides),
         "joint_signal_transfer_mode": candidate.signal_transfer_mode,
         "joint_size_response_mode": candidate.size_response_mode,
+        "signal_ratio_target_mode": DEFAULT_SIGNAL_RATIO_TARGET_MODE,
         "joint_candidate_rationale": candidate.rationale,
         "n_events": int(n_events),
         "n_workers": int(n_workers),
@@ -441,6 +507,12 @@ def summarize_joint_candidate(
                 previous_rate = rate
 
     signal_penalties: list[float] = []
+    signal_penalties_by_mode: dict[str, list[float]] = {
+        mode: [] for mode in SIGNAL_RATIO_TARGET_MODES
+    }
+    raw_signal_penalties_by_mode: dict[str, list[float]] = {
+        mode: [] for mode in SIGNAL_RATIO_TARGET_MODES
+    }
     transfer_gain_penalties: list[float] = []
     transfer_gain_guardrail_penalty = 0.0
     signal_observed_by_wavelength: dict[int, list[tuple[str, float]]] = {
@@ -475,10 +547,8 @@ def summarize_joint_candidate(
     for wavelength_nm in JOINT_WAVELENGTHS_NM:
         observed_values = [observed for _, observed in signal_observed_by_wavelength[int(wavelength_nm)]]
         observed_median = float(np.median(observed_values)) if observed_values else float("nan")
-        target = (
-            lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][wavelength_nm]
-            / lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][wavelength_nm]
-        )
+        targets = table_s1_signal_ratio_targets(int(wavelength_nm))
+        target = targets[DEFAULT_SIGNAL_RATIO_TARGET_MODE]
         required_gain = (
             float(target / observed_median)
             if np.isfinite(observed_median) and observed_median > 0
@@ -497,6 +567,13 @@ def summarize_joint_candidate(
         summary[f"ag40_to_au40_peak_ratio_{wavelength_nm}"] = observed_median
         summary[f"ag40_to_au40_calibrated_peak_ratio_{wavelength_nm}"] = calibrated_median
         summary[f"ag40_to_au40_target_ratio_{wavelength_nm}"] = float(target)
+        for target_mode, target_value in targets.items():
+            summary[f"ag40_to_au40_target_ratio_{target_mode}_{wavelength_nm}"] = float(
+                target_value
+            )
+            summary[f"raw_signal_ratio_score_{target_mode}_{wavelength_nm}"] = (
+                _log_ratio_penalty(observed_median, target_value)
+            )
         summary[f"required_silver_transfer_gain_{wavelength_nm}"] = required_gain
         summary[f"applied_silver_transfer_gain_{wavelength_nm}"] = applied_gain
         for case_key, observed in signal_observed_by_wavelength[int(wavelength_nm)]:
@@ -506,6 +583,13 @@ def summarize_joint_candidate(
                 else float("nan")
             )
             summary[f"ag40_to_au40_calibrated_peak_ratio_{case_key}"] = calibrated_observed
+            for target_mode, target_value in targets.items():
+                raw_signal_penalties_by_mode[target_mode].append(
+                    _log_ratio_penalty(observed, target_value)
+                )
+                signal_penalties_by_mode[target_mode].append(
+                    _log_ratio_penalty(calibrated_observed, target_value)
+                )
             signal_penalties.append(_log_ratio_penalty(calibrated_observed, target))
         if candidate.signal_transfer_mode != "none" and np.isfinite(applied_gain) and applied_gain > 0:
             transfer_gain_penalties.append(float(np.log(applied_gain) ** 2))
@@ -703,6 +787,14 @@ def summarize_joint_candidate(
 
     selected_rate_score = float(np.mean(rate_penalties)) if rate_penalties else 10.0
     signal_ratio_score = float(np.mean(signal_penalties)) if signal_penalties else 10.0
+    signal_ratio_scores_by_mode = {
+        mode: float(np.mean(values)) if values else 10.0
+        for mode, values in signal_penalties_by_mode.items()
+    }
+    raw_signal_ratio_scores_by_mode = {
+        mode: float(np.mean(values)) if values else 10.0
+        for mode, values in raw_signal_penalties_by_mode.items()
+    }
     transfer_gain_regularization_score = (
         0.25 * float(np.mean(transfer_gain_penalties))
         if transfer_gain_penalties
@@ -715,21 +807,56 @@ def summarize_joint_candidate(
     size_response_within_guardrail = (
         candidate.size_response_mode == "none" or size_response_guardrail_penalty <= 1e-12
     )
-    joint_fit_score = (
-        selected_rate_score
-        + 2.0 * signal_ratio_score
-        + 0.5 * float(size_exponent_score)
-        + 0.5 * float(snr_ratio_score)
-        + transfer_gain_regularization_score
-        + size_response_regularization_score
-        + hard_guardrail_penalty
-    )
+
+    def joint_score_for_signal(signal_score: float) -> float:
+        return (
+            selected_rate_score
+            + 2.0 * float(signal_score)
+            + 0.5 * float(size_exponent_score)
+            + 0.5 * float(snr_ratio_score)
+            + transfer_gain_regularization_score
+            + size_response_regularization_score
+            + hard_guardrail_penalty
+        )
+
+    joint_fit_score = joint_score_for_signal(signal_ratio_score)
+    joint_fit_scores_by_mode = {
+        mode: joint_score_for_signal(score)
+        for mode, score in signal_ratio_scores_by_mode.items()
+    }
     summary.update(
         {
             "joint_fit_score": float(joint_fit_score),
+            "joint_fit_score_strict": float(
+                joint_fit_scores_by_mode["interferometric_column_ratio"]
+            ),
+            "joint_fit_score_formula": float(
+                joint_fit_scores_by_mode["sqrt_scattering_column_ratio"]
+            ),
+            "joint_fit_score_recomputed_mie": float(
+                joint_fit_scores_by_mode["recomputed_mie_sqrt_csca_ratio"]
+            ),
             "joint_fit_score_interpretation": JOINT_FIT_SCORE_INTERPRETATION,
             "selected_rate_score": selected_rate_score,
             "signal_ratio_score": signal_ratio_score,
+            "signal_ratio_score_interferometric_column_ratio": float(
+                signal_ratio_scores_by_mode["interferometric_column_ratio"]
+            ),
+            "signal_ratio_score_sqrt_scattering_column_ratio": float(
+                signal_ratio_scores_by_mode["sqrt_scattering_column_ratio"]
+            ),
+            "signal_ratio_score_recomputed_mie_sqrt_csca_ratio": float(
+                signal_ratio_scores_by_mode["recomputed_mie_sqrt_csca_ratio"]
+            ),
+            "raw_signal_ratio_score_interferometric_column_ratio": float(
+                raw_signal_ratio_scores_by_mode["interferometric_column_ratio"]
+            ),
+            "raw_signal_ratio_score_sqrt_scattering_column_ratio": float(
+                raw_signal_ratio_scores_by_mode["sqrt_scattering_column_ratio"]
+            ),
+            "raw_signal_ratio_score_recomputed_mie_sqrt_csca_ratio": float(
+                raw_signal_ratio_scores_by_mode["recomputed_mie_sqrt_csca_ratio"]
+            ),
             "transfer_gain_regularization_score": transfer_gain_regularization_score,
             "transfer_gain_guardrail_penalty": float(transfer_gain_guardrail_penalty),
             "size_response_regularization_score": float(size_response_regularization_score),
@@ -839,13 +966,13 @@ def run_joint_fit(
             raw["selected_detector_mode_annulus_edge_norm_min"].dropna().iloc[0]
             if "selected_detector_mode_annulus_edge_norm_min" in raw
             and raw["selected_detector_mode_annulus_edge_norm_min"].notna().any()
-            else lane.SELECTED_DETECTOR_MODE_EDGE_NORM_MIN
+            else SELECTED_DETECTOR_MODE_EDGE_NORM_MIN
         ),
         "selected_annulus_edge_norm_max": float(
             raw["selected_detector_mode_annulus_edge_norm_max"].dropna().iloc[0]
             if "selected_detector_mode_annulus_edge_norm_max" in raw
             and raw["selected_detector_mode_annulus_edge_norm_max"].notna().any()
-            else lane.SELECTED_DETECTOR_MODE_EDGE_NORM_MAX
+            else SELECTED_DETECTOR_MODE_EDGE_NORM_MAX
         ),
         "target_notes": {
             "joint_fit_score_interpretation": JOINT_FIT_SCORE_INTERPRETATION,
@@ -856,6 +983,11 @@ def run_joint_fit(
                 "size_response_regularization_score + hard_guardrail_penalty"
             ),
             "selected_annulus_detection_rate_targets": DETECTION_RATE_TARGETS,
+            "signal_ratio_target_mode": DEFAULT_SIGNAL_RATIO_TARGET_MODE,
+            "ag_au_peak_ratio_target_modes": {
+                str(wavelength_nm): table_s1_signal_ratio_targets(wavelength_nm)
+                for wavelength_nm in JOINT_WAVELENGTHS_NM
+            },
             "ag_au_peak_ratio_targets": {
                 str(wavelength_nm): (
                     lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][
@@ -890,8 +1022,13 @@ def write_report(output_dir: Path, *, summary: pd.DataFrame, meta: dict[str, Any
     top_cols = [
         "candidate_id",
         "joint_fit_score",
+        "joint_fit_score_strict",
+        "joint_fit_score_formula",
+        "joint_fit_score_recomputed_mie",
         "selected_rate_score",
         "signal_ratio_score",
+        "signal_ratio_score_sqrt_scattering_column_ratio",
+        "raw_signal_ratio_score_sqrt_scattering_column_ratio",
         "size_exponent_score",
         "snr_ratio_score",
         "transfer_gain_regularization_score",

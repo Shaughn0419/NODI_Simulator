@@ -1,0 +1,413 @@
+{
+  "schema_version": "R5_2_bounded_scenario_prior_audit_plan_v1",
+  "stage": "R5_2_bounded_scenario_prior_audit_plan_only",
+  "prior_gate": "PASS_R5_1_RESULTS_PREPARE_BOUNDED_SCENARIO_PRIOR_AUDIT_PLAN_ONLY",
+  "selected_next_stage_lane": "bounded_additional_scenario_prior_audit_plan_only",
+  "authorization_boundary": {
+    "bounded_audit_plan_preparation_authorized_by_prior_gate": true,
+    "bounded_scenario_prior_audit_execution_authorized": false,
+    "R6_plan_preparation_authorized": false,
+    "R6_execution_authorized": false,
+    "R5_followup_expansion_authorized": false,
+    "new_scenario_bundle_authorized": false,
+    "new_stochastic_seed_authorized": false,
+    "new_solver_case_authorized": false,
+    "new_experiment_authorized": false,
+    "v1_full_grid_overwrite_authorized": false,
+    "Tsuyama_paper_fit_continuation_authorized": false,
+    "selected_annulus_bound_change_authorized": false,
+    "selected_annulus_replaces_all_crossing_ranking_authorized": false,
+    "context_route_promotion_authorized": false,
+    "main_660_redefinition_authorized": false,
+    "optional_660_900x1400_redefines_main_660_authorized": false,
+    "route_specific_manual_sign_flips_authorized": false,
+    "calibrated_SNR_claim_authorized": false,
+    "calibrated_event_probability_authorized": false,
+    "absolute_LOD_claim_authorized": false,
+    "true_EV_concentration_claim_authorized": false,
+    "biological_specificity_claim_authorized": false,
+    "ET2030_direct_current_input_unlock_authorized": false,
+    "external_review_required_before_audit_execution": true
+  },
+  "R5_1_evidence_carryforward": {
+    "accepted_gate": "PASS_R5_1_RESULTS_PREPARE_BOUNDED_SCENARIO_PRIOR_AUDIT_PLAN_ONLY",
+    "R5_1_interpretation_run": true,
+    "R5_case_rows_interpreted": 256256,
+    "new_case_rows_added": 0,
+    "new_scenario_bundles_added": 0,
+    "new_stochastic_seeds_added": 0,
+    "new_solver_cases_added": 0,
+    "new_experiments_started": 0,
+    "selected_future_recommendation_class": "prepare_bounded_additional_scenario_prior_audit_plan_only",
+    "main_660_mean_detectability_relative_prior_score": 0.12609540961438429,
+    "weak_reference_control_mean_detectability_relative_prior_score": 0.1522574633111693,
+    "weak_reference_control_exceeds_main_660": true,
+    "context_routes_exceeding_main_660_mean": 20,
+    "top_context_warning_route": "660_500x1500",
+    "context_route_high_score_warning_requires_audit": true,
+    "R5_source_checksums_matched": true,
+    "claim_boundaries_preserved": true,
+    "legacy_SNR_headers_absent": true,
+    "R6_plan_preparation_authorized": false,
+    "R6_execution_authorized": false,
+    "R5_followup_expansion_authorized": false,
+    "context_route_promotion_authorized": false,
+    "main_660_redefinition_authorized": false
+  },
+  "audit_design": {
+    "audit_execution_type": "posthoc_existing_R5_artifact_audit_only",
+    "uses_existing_R5_artifacts_only": true,
+    "deterministic_no_stochastic_seeds": true,
+    "new_case_rows_authorized": 0,
+    "new_scenario_bundle_authorized": false,
+    "new_stochastic_seed_authorized": false,
+    "new_solver_case_authorized": false,
+    "new_experiment_authorized": false,
+    "audit_route_id_count": 33,
+    "audit_existing_R5_source_row_cap": 14784,
+    "source_particles_per_route": 56,
+    "scenario_bundle_count": 8,
+    "stochastic_seed_count": 0,
+    "scenario_bundle_ids": [
+      "404_thermal_high_low_power",
+      "BFP_slit_offset_leakage",
+      "DAQ_low_resolution_sampling",
+      "PEG_pessimistic_wall_loss",
+      "blank_bursty_RIN_high",
+      "detector_50ohm_pessimistic",
+      "external_TIA_optimistic",
+      "nominal_instrument_clean_blank"
+    ],
+    "future_output_directory_if_authorized": "results/ev_nodi_realism_v2_R5_2_bounded_scenario_prior_audit/",
+    "audit_questions": [
+      "Do weak-reference-control scores exceed main-660 because of scenario-prior scaling, weak-reference/control artifact behavior, or route-family sensitivity?",
+      "Do all 20 above-main context routes share a low-dimensional scenario-prior explanation, or do they indicate unstable route-role governance?",
+      "Which existing R5 scenario bundles drive the weak-reference and context-route warnings?",
+      "Does locked main-660 remain an appropriate governance anchor without redefining main-660 or promoting context routes?",
+      "Do selected-annulus and 404 thermal sidecars remain non-promoting safety/diagnostic lenses?"
+    ]
+  },
+  "audit_route_set": {
+    "locked_main_660_comparators": [
+      {
+        "route_id": "660_800x1400",
+        "route_role": "main_660",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_800x1500",
+        "route_role": "main_660",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      }
+    ],
+    "weak_reference_controls": [
+      {
+        "route_id": "660_700x1500",
+        "route_role": "weak_reference_control",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      }
+    ],
+    "optional_660_probe": [
+      {
+        "route_id": "660_900x1400",
+        "route_role": "optional_robustness_probe",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      }
+    ],
+    "medium_and_shortwave_controls": [
+      {
+        "route_id": "488_600x1500",
+        "route_role": "medium_wave_baseline",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "532_600x1500",
+        "route_role": "medium_wave_baseline",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "404_600x1300",
+        "route_role": "shortwave_mechanism_candidate",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      }
+    ],
+    "selected_annulus_parallel_lens_sidecars": [
+      {
+        "route_id": "404_800x550",
+        "route_role": "selected_annulus_sanity_overlap_shortwave",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "404_800x600",
+        "route_role": "selected_annulus_sanity_overlap_shortwave",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "404_800x700",
+        "route_role": "selected_annulus_sanity_overlap_shortwave",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_800x550",
+        "route_role": "selected_annulus_sanity_overlap_longwave",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_800x600",
+        "route_role": "selected_annulus_sanity_overlap_longwave",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_800x700",
+        "route_role": "selected_annulus_sanity_overlap_longwave",
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      }
+    ],
+    "above_main_context_routes": [
+      {
+        "route_id": "660_500x1500",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.1963955892876444,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_500x1400",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.18974511792166776,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_500x1300",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.18257483857830317,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_500x1200",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.17385890228394868,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_600x1500",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.16547188266389543,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_500x1100",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.16483226146299018,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_600x1400",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.1589596771728135,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_500x1000",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.15516503326070727,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_600x1300",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.15195477555806366,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_700x1400",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.14565135833463486,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_500x900",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.1453243671852948,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_600x1200",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.14403186838553794,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_700x1300",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.13975888944753886,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_600x1100",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.1364911873537952,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "532_500x1500",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.1343889435794898,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_500x800",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.13418457411115228,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_700x1200",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.1325772358601727,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "532_500x1400",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.13123392086828883,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "660_600x1000",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.1283429214161836,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      },
+      {
+        "route_id": "532_500x1300",
+        "route_role": "full_grid_context_route",
+        "mean_detectability_relative_prior_score": 0.12743043935755186,
+        "expected_existing_R5_rows": 448,
+        "route_promotion_authorized": false
+      }
+    ]
+  },
+  "required_outputs_if_authorized_after_future_review": [
+    "R5_2_scenario_prior_audit_manifest.csv",
+    "R5_2_audit_route_set_traceability.csv",
+    "R5_2_context_route_above_main_audit.csv",
+    "R5_2_weak_reference_control_audit.csv",
+    "R5_2_scenario_bundle_contribution_audit.csv",
+    "R5_2_route_family_sensitivity_audit.csv",
+    "R5_2_main_660_locked_comparator_summary.csv",
+    "R5_2_selected_annulus_and_404_sidecar_guardrail_summary.csv",
+    "R5_2_claim_boundary_guardrail_summary.csv",
+    "R5_2_audit_decision_table.csv",
+    "R5_2_next_stage_recommendation_matrix.csv",
+    "run_manifest.json",
+    "R5_2_bounded_scenario_prior_audit_report.md"
+  ],
+  "allowed_future_recommendation_classes_after_audit": [
+    "prepare_R6_plan_for_external_review_only",
+    "prepare_post_v2_validation_dependency_backlog_only",
+    "hold_for_route_governance_revision_plan_only",
+    "prepare_route_prior_model_revision_plan_only",
+    "inconclusive_requires_plan_revision"
+  ],
+  "stop_gates": [
+    "bounded_scenario_prior_audit_execution_without_external_authorization",
+    "R6_plan_preparation_started",
+    "R6_execution_started",
+    "R5_followup_expansion_started",
+    "R5_case_rows_expanded_beyond_reviewed_cap",
+    "audit_source_rows_exceed_reviewed_plan_cap",
+    "audit_route_set_expanded_beyond_plan",
+    "new_scenario_bundle_added",
+    "new_stochastic_seed_added",
+    "new_solver_case_started",
+    "new_experiment_started",
+    "v1_full_grid_output_overwritten",
+    "Tsuyama_paper_fit_continued",
+    "selected_annulus_bounds_changed",
+    "selected_annulus_replaces_all_crossing_ranking",
+    "context_route_promotion_attempted",
+    "main_660_redefinition_attempted",
+    "optional_660_900x1400_redefines_main_660",
+    "route_specific_manual_sign_flip_attempted",
+    "calibrated_SNR_or_event_probability_claim_emitted",
+    "absolute_LOD_or_true_concentration_claim_emitted",
+    "biological_specificity_claim_emitted",
+    "ET2030_direct_current_input_unlocked_without_measured_bench_artifact",
+    "thermal_sidecar_used_to_increase_NODI_score",
+    "finite_zero_event_blank_safety_claim_emitted",
+    "legacy_detector_SNR_output_header_emitted",
+    "legacy_calibrated_detector_SNR_output_header_emitted"
+  ],
+  "claim_boundaries": {
+    "SNR_claim_level": "absolute_blocked",
+    "event_probability_claim_level": "absolute_blocked",
+    "p_detect_mapping_claim_level": "relative_with_priors",
+    "calibrated_SNR_claim_authorized": false,
+    "calibrated_event_probability_claim_authorized": false,
+    "absolute_LOD_claim_authorized": false,
+    "true_EV_concentration_claim_authorized": false,
+    "biological_specificity_claim_authorized": false,
+    "legacy_detector_SNR_output_header_authorized": false,
+    "legacy_calibrated_detector_SNR_output_header_authorized": false
+  },
+  "provenance_freeze": {
+    "required_checksum_fields": [
+      "R5_1_manifest_checksum",
+      "R5_1_decision_table_checksum",
+      "R5_1_context_warning_table_checksum",
+      "R5_1_weak_reference_checksum",
+      "R5_1_next_stage_options_checksum",
+      "R5_1_run_manifest_checksum",
+      "R5_case_manifest_checksum",
+      "R5_summary_checksum",
+      "R5_context_no_promotion_checksum",
+      "R5_route_role_stability_checksum",
+      "R5_scenario_sensitivity_checksum",
+      "R5_run_manifest_checksum"
+    ],
+    "R5_1_manifest_checksum": "3ea77f4ce84d3631ba0e7b6a833787346c6f3c9de0408c151a2cf99c5a5c6ed1",
+    "R5_1_decision_table_checksum": "6b98ec0d4fef87bb179cc8fd68b1a6364b9adaf9c7056780281a38816da5baf8",
+    "R5_1_context_warning_table_checksum": "a47a128f2b16f6fa331c607b0c757667487b77a97e3dd46327de91a594172327",
+    "R5_1_weak_reference_checksum": "8eb95c8abf1a2a1c58c5b4c9402678fe88881f97c8c6c0f66920c8722c914cbd",
+    "R5_1_next_stage_options_checksum": "da37e4ddd0472b72d5b102a53f6e297cd6de11d001f28bab1ae8789af2a53199",
+    "R5_1_run_manifest_checksum": "34a825e194069f6114f69392df66518132042dc87fecb6552df24c2a66c656fc",
+    "R5_case_manifest_checksum": "0d5669a285b2a2160b833a7b4afd5035c5026c27918f6179b45248f21160447c",
+    "R5_summary_checksum": "850e6f9edc67f3d0fdeb18cea18a3b5910bcf0e7995e98651cf1e990a4423d4f",
+    "R5_context_no_promotion_checksum": "74402c6baa084a76afa8f7a3647d992c77f79d700cf573d124ffe75a4353f890",
+    "R5_route_role_stability_checksum": "fd3c65c1cf0d5c5a851a96b58534a274f61dd37255b62c5405e4741f254b2c32",
+    "R5_scenario_sensitivity_checksum": "475a1b80c1e9b8e9669acbeaa504810935d1123166fea49cc60c5ad4e14b2646",
+    "R5_run_manifest_checksum": "21fac8a93649e900304465e65ac49f8a15e50870ef2c8f1d7b3299f19f08d5e9"
+  }
+}

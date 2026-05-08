@@ -1,9 +1,5 @@
 # Exosome Biomimetic Surface Model
 
-<!-- DOCSYNC:START -->
-> 2026-05-02 当前同步状态：本文仍记录 EV/sEV biomimetic optical-model rationale；代码主线已包含 EV/NODI relative design gate、detector caution、analytic lock-in surrogate、严格 event QC、EV biomimetic ensemble/anchors、calibrated BFP ROI 1D projected lane、dashboard diagnostics/schema inventory、selected-annulus parallel analysis lens、Tsuyama selected-annulus joint-fit paper-calibration lane、bounded `signal_transfer_fit` / `size_response` paper-fit variants，以及 linked 488-window/532-max classification feature lane。Selected-annulus paper-fit EV targeted panel 与 3-seed pre-fullgrid robustness audit 已通过；旧 CSV 缺 selected-annulus 源列时会标记 unavailable/null/NaN。`joint_fit_score` 已明确为 lower-is-better loss-style penalty，paper target metadata 与 claim compatibility 已进入代码测试。当前验证基线：`ruff check .` 通过；`python -m pyright` 0 errors；`pytest -q` = `563 passed`，无 warnings。
-<!-- DOCSYNC:END -->
-
 ## Why this document exists
 
 The simulator originally treated exosomes as a homogeneous dielectric sphere with `n = 1.38`.

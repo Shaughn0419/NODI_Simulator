@@ -1,8 +1,8 @@
 # Tsuyama 核心计算流程（中英对照，工程对照校核版）
 
-<!-- DOCSYNC:START -->
-> 归档提示（2026-04-28）：本文保留历史快照，不覆盖现行代码事实。当前主线已更新到 EV/NODI relative design gate 拆分、detector caution 分层、calibrated BFP ROI mask 到 Tsuyama 1D projected ROI、完整 governance diagnostics 导出；验证基线为 `pytest -q` = `509 passed`，`ruff check .` / `pyright` 通过。现行结论以根目录 `README.md`、`文档导航.md`、`00/24/42/43` 和代码测试为准。
-<!-- DOCSYNC:END -->
+<!-- ARCHIVE_STATUS:START -->
+> 归档状态：历史快照，仅保留当时推理、实验性计算或迁移记录；不代表当前 v1/v2 结论。当前读者入口请以 `README.md`、`文档导航.md`、`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`、`reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` 和 `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` 为准。
+<!-- ARCHIVE_STATUS:END -->
 
 > 目的 / Purpose：在前一版论文总结基础上，进一步**对照当前工程中 Tsuyama 模型相关函数实现**，把“论文物理链”“工程默认主线”“paper-aligned 对齐口径”三层语义拆开，避免把代理模型误写成论文原公式。
 >

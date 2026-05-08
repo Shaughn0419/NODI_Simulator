@@ -36,7 +36,16 @@ ESTIMATED_PARAMETER_FIELDS: tuple[str, ...] = (
     "mean_flow_velocity_m_s",
     "flow_profile_model",
     "lockin_time_constant_s",
+    "reference_model",
+    "ref_phi0_rad",
     "reference_spatial_amplitude_strength",
+    "reference_spatial_phase_strength_rad",
+    "collection_sigma_rad",
+    "collection_phi_sigma_rad",
+    "slit_phi_limit_rad",
+    "tsuyama_bfp_roi_mode",
+    "tsuyama_bfp_lobe_center_fraction",
+    "tsuyama_bfp_lobe_sigma_fraction",
     "initial_position_distribution_mode",
     "initial_position_center_bias_strength",
     "initial_position_center_bias_min_confinement_ratio",
@@ -156,6 +165,120 @@ def candidate_catalog() -> list[CalibrationCandidate]:
             "tau_2ms",
             {"lockin_time_constant_s": 2.0e-3},
             "Upper end of Tsuyama's stated 1-2 ms lock-in time constant range.",
+        ),
+        _candidate(
+            "tau_2ms_control",
+            {"lockin_time_constant_s": 2.0e-3},
+            "Phase 2.5 raw-operator control: same 2 ms lock-in candidate, without local transfer/size correction.",
+        ),
+        _candidate(
+            "tau_2ms_paper_aligned_phase_filter",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "reference_model": "paper_aligned_phase_filter",
+            },
+            "Phase 2.5 raw-operator candidate using the paper-aligned Tsuyama phase-filter reference path.",
+        ),
+        _candidate(
+            "tau_2ms_refphase_flat",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "reference_spatial_phase_strength_rad": 0.0,
+            },
+            "Phase 2.5 raw-operator candidate with the spatial phase surrogate flattened.",
+        ),
+        _candidate(
+            "tau_2ms_refphase_wide",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "reference_spatial_phase_strength_rad": 1.2,
+            },
+            "Phase 2.5 raw-operator candidate with wider spatial phase averaging.",
+        ),
+        _candidate(
+            "tau_2ms_global_refphi_plus",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "ref_phi0_rad": 0.4,
+            },
+            "Phase 2.5 raw-operator candidate with a shared positive global reference phase offset.",
+        ),
+        _candidate(
+            "tau_2ms_global_refphi_plus_0p2",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "ref_phi0_rad": 0.2,
+            },
+            "Phase 2.5 D2.1 raw-operator candidate with a smaller shared positive global reference phase offset.",
+        ),
+        _candidate(
+            "tau_2ms_global_refphi_plus_0p6",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "ref_phi0_rad": 0.6,
+            },
+            "Phase 2.5 D2.1 raw-operator candidate with a larger shared positive global reference phase offset.",
+        ),
+        _candidate(
+            "tau_2ms_global_refphi_minus",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "ref_phi0_rad": -0.4,
+            },
+            "Phase 2.5 raw-operator candidate with a shared negative global reference phase offset.",
+        ),
+        _candidate(
+            "tau_2ms_collection_narrow",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "collection_sigma_rad": 0.08,
+                "collection_phi_sigma_rad": 0.16,
+                "slit_phi_limit_rad": 0.25,
+            },
+            "Phase 2.5 raw-operator candidate with a narrower BFP/slit collection surrogate.",
+        ),
+        _candidate(
+            "tau_2ms_global_refphi_plus_collection_narrow",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "ref_phi0_rad": 0.4,
+                "collection_sigma_rad": 0.08,
+                "collection_phi_sigma_rad": 0.16,
+                "slit_phi_limit_rad": 0.25,
+            },
+            "Phase 2.5 D2.1 raw-operator candidate combining the current best positive reference phase with the narrower BFP/slit collection surrogate.",
+        ),
+        _candidate(
+            "tau_2ms_collection_wide",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "collection_sigma_rad": 0.22,
+                "collection_phi_sigma_rad": 0.35,
+                "slit_phi_limit_rad": 0.50,
+            },
+            "Phase 2.5 raw-operator candidate with a wider BFP/slit collection surrogate.",
+        ),
+        _candidate(
+            "tau_2ms_bfp_lobe_045",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "reference_model": "tsuyama_bfp_integrated",
+                "tsuyama_bfp_roi_mode": "slit_off_axis_lobe_surrogate",
+                "tsuyama_bfp_lobe_center_fraction": 0.45,
+                "tsuyama_bfp_lobe_sigma_fraction": 0.18,
+            },
+            "Phase 2.5 raw-operator candidate using an off-axis Tsuyama BFP lobe centered at 0.45 NA fraction.",
+        ),
+        _candidate(
+            "tau_2ms_bfp_lobe_065",
+            {
+                "lockin_time_constant_s": 2.0e-3,
+                "reference_model": "tsuyama_bfp_integrated",
+                "tsuyama_bfp_roi_mode": "slit_off_axis_lobe_surrogate",
+                "tsuyama_bfp_lobe_center_fraction": 0.65,
+                "tsuyama_bfp_lobe_sigma_fraction": 0.18,
+            },
+            "Phase 2.5 raw-operator candidate using an off-axis Tsuyama BFP lobe centered at 0.65 NA fraction.",
         ),
         _candidate(
             "refspace_0p25",

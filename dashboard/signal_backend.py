@@ -33,8 +33,6 @@ from nodi_simulator import (
     compute_reference_field_trace,
     compute_scattering_field_trace,
     generate_interferometric_trace,
-    interpolate_at_theta,
-    resolve_collection_theta_rad,
     run_single_case_batch,
     simulate_particle_trajectory,
     validate_simulation_config,

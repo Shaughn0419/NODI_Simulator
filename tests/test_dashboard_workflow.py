@@ -35,6 +35,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from nodi_simulator.data_objects import Channel, DEFAULT_SIM_CFG, PBS_1X, WATER
+import nodi_simulator.dashboard.backend as backend_module
 from nodi_simulator.design_claim_governance import (
     DESIGN_CLAIM_GOVERNANCE_FIELDS,
     PAPER_ALIGNMENT_TARGET_TSUYAMA_2022_NODI_TABLE_S1,
@@ -4195,6 +4196,34 @@ def test_load_sweep_summary_backfills_gate_and_recommendation_fields(tmp_path):
     assert row["engineering_gate_primary_blocker_label"]
     assert row["engineering_gate_blocker_summary"]
     assert row["design_recommendation_status"] == "physics_ready_gate_blocked"
+
+
+def test_load_sweep_summary_disables_chunked_csv_type_inference(monkeypatch):
+    calls: list[dict[str, object]] = []
+
+    def fake_read_csv(path: str, **kwargs: object) -> pd.DataFrame:
+        calls.append({"path": path, **kwargs})
+        return pd.DataFrame(
+            [
+                {
+                    "particle_name": "gold_80nm",
+                    "wavelength_nm": 660,
+                    "width_nm": 800,
+                    "depth_nm": 550,
+                    "engineering_gate_passed": True,
+                    "engineering_gate_failed_count": 0,
+                    "engineering_gate_reason": "passed",
+                    "observation_freeze_status": "default_ready_for_result_freeze",
+                }
+            ]
+        )
+
+    monkeypatch.setattr(backend_module.pd, "read_csv", fake_read_csv)
+
+    df = load_sweep_summary("summary.csv")
+
+    assert not df.empty
+    assert calls == [{"path": "summary.csv", "low_memory": False}]
 
 @pytest.mark.app_interactions
 @pytest.mark.skipif(AppTest is None, reason="streamlit.testing.v1.AppTest unavailable")

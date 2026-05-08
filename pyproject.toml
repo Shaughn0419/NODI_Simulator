@@ -13,6 +13,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+acceleration = [
+  "numba",
+]
 dev = [
   "mypy",
   "pyright",
@@ -25,6 +28,7 @@ target-version = "py313"
 line-length = 100
 extend-exclude = [
   "._*",
+  ".claude",
   "archive",
   ".codex_pdf_venv",
   ".omx",
@@ -34,6 +38,7 @@ extend-exclude = [
   ".venv",
   ".venv-tests",
   "__pycache__",
+  "review_bundles",
   "reports",
   "results",
   "tmp",
@@ -42,8 +47,11 @@ extend-exclude = [
 [tool.ruff.lint]
 select = [
   "E9",
+  "F401",
   "F541",
+  "F811",
   "F821",
+  "F841",
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -79,6 +87,7 @@ files = [
 ]
 exclude = [
   "^\\._",
+  "^\\.claude/",
   "^archive/",
   "^\\.codex_pdf_venv/",
   "^\\.omx/",
@@ -87,6 +96,7 @@ exclude = [
   "^\\.pytest_vendor/",
   "^\\.venv/",
   "^\\.venv-tests/",
+  "^review_bundles/",
   "^reports/",
   "^results/",
   "^tmp/",

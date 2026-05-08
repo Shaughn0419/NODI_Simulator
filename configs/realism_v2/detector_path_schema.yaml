@@ -1,0 +1,64 @@
+{
+  "schema_id": "realism_v2_detector_path_schema_R0",
+  "required_fields": [
+    "detector_source",
+    "instrument_path_id",
+    "connection_readout_path",
+    "state_machine_version",
+    "connection_physical_validity",
+    "termination_mode",
+    "source_impedance_assumption",
+    "load_impedance_assumption",
+    "requires_bench_validation",
+    "bench_validation_artifact_id",
+    "lockin_model_id",
+    "input_connector",
+    "input_impedance"
+  ],
+  "connection_readout_path_enum": [
+    "voltage_input_50ohm",
+    "high_Z_voltage_input",
+    "LI5640_current_input_direct",
+    "lockin_current_input",
+    "external_TIA",
+    "lockin_voltage_input"
+  ],
+  "instrument_path_id_enum": [
+    "ET2030_50ohm_voltage",
+    "ET2030_highZ_voltage_with_warning",
+    "ET2030_direct_current_input_forbidden_without_bench_validation",
+    "bare_photodiode_current_input",
+    "external_TIA_voltage"
+  ],
+  "instrument_to_connection_path": [
+    {
+      "instrument_path_id": "ET2030_50ohm_voltage",
+      "connection_readout_path": "voltage_input_50ohm",
+      "detector_source": "ET2030_BNC_biased_output"
+    },
+    {
+      "instrument_path_id": "ET2030_highZ_voltage_with_warning",
+      "connection_readout_path": "high_Z_voltage_input",
+      "detector_source": "ET2030_BNC_biased_output"
+    },
+    {
+      "instrument_path_id": "ET2030_direct_current_input_forbidden_without_bench_validation",
+      "connection_readout_path": "LI5640_current_input_direct",
+      "detector_source": "ET2030_BNC_biased_output"
+    },
+    {
+      "instrument_path_id": "bare_photodiode_current_input",
+      "connection_readout_path": "lockin_current_input",
+      "detector_source": "bare_photodiode"
+    },
+    {
+      "instrument_path_id": "external_TIA_voltage",
+      "connection_readout_path": "lockin_voltage_input",
+      "detector_source": "external_TIA_voltage_output"
+    }
+  ],
+  "forbidden_legacy_output_names": [
+    "detector_SNR",
+    "calibrated_detector_SNR"
+  ]
+}

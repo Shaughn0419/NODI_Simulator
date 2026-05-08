@@ -1,5 +1,9 @@
 # Selected Annulus More-Cases Probe v1
 
+<!-- ARCHIVE_STATUS:START -->
+> 归档状态：历史快照，仅保留当时推理、实验性计算或迁移记录；不代表当前 v1/v2 结论。当前读者入口请以 `README.md`、`文档导航.md`、`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`、`reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` 和 `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` 为准。
+<!-- ARCHIVE_STATUS:END -->
+
 - n_events per gold size/case: 3000
 - workers: 8
 - random_seed base: 20260501
@@ -46,14 +50,12 @@ velocity_0p15mmps_low_noise_stack_fluxmix_0p10_noise_0p0065,660,800,550,0.451476
 velocity_0p15mmps_low_noise_stack_fluxmix_0p10_noise_0p0065,660,800,1500,0.47048458149779737,0.8977973568281938,0.9594713656387666,0.9641025641025641,0.38125,True,True,False
 velocity_0p15mmps_low_noise_stack_fluxmix_0p10_noise_0p0065,660,900,1500,0.4299559471365639,0.8740088105726872,0.9515418502202643,0.9577092511013215,0.37833333333333335,True,True,False
 
-
 ## Median by Candidate
 
 candidate_id,au20_median_selected_annulus_rate,au20_median_all_crossing_rate,au30_median_selected_annulus_rate,au30_median_all_crossing_rate,au40_median_selected_annulus_rate,au40_median_all_crossing_rate,au60_median_selected_annulus_rate,au60_median_all_crossing_rate,median_annulus_fraction,sanity_ok_cases,total_cases
 baseline_current_estimates,0.09606352772671453,0.06633333333333333,0.44404043314729436,0.2825,0.738889478686403,0.4761666666666666,0.8878205128205128,0.5735,0.416,4,12
 velocity_0p15mmps_fluxmix_0p10_flowparabolic_rho_0p45_noise_0p008,0.20425531914893616,0.14766666666666667,0.7408510638297873,0.5231666666666667,0.9051063829787234,0.6565,0.9757446808510639,0.7281666666666666,0.39166666666666666,9,12
 velocity_0p15mmps_low_noise_stack_fluxmix_0p10_noise_0p0065,0.24726396928125427,0.16616666666666668,0.7628804236361151,0.5076666666666667,0.9033772389590264,0.6143333333333334,0.9463682432432432,0.6825,0.39483333333333337,8,12
-
 
 ## Outputs
 

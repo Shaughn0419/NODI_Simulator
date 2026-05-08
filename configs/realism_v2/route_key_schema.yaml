@@ -1,0 +1,23 @@
+{
+  "schema_id": "realism_v2_route_key_schema_R0",
+  "base_route_key": [
+    "wavelength_nm",
+    "width_nm",
+    "depth_nm",
+    "particle_profile_id",
+    "particle_id",
+    "event_lens"
+  ],
+  "event_lens_enum": [
+    "all_crossing",
+    "selected_annulus_0p5_0p8"
+  ],
+  "scenario_identity": [
+    "scenario_id",
+    "instrument_chain_id",
+    "prior_sample_id",
+    "sidecar_id"
+  ],
+  "separation_rule": "scenario_identity_must_not_be_encoded_in_base_route_key",
+  "v1_compatibility_rule": "do_not_change_all_crossing_main_ranking_or_selected_annulus_0p5_0p8"
+}

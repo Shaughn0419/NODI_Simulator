@@ -1,9 +1,5 @@
 # dashboard/estimate_precompute_runtime.py — 预计算时长试算脚本
 
-<!-- DOCSYNC:START -->
-> 2026-05-02 当前同步状态：在 2026-04-28 EV/NODI governance 基础上，代码主线已加入 selected-annulus parallel analysis lens：工程 gate 与主评分仍使用 all-crossing `detection_rate`；selected-candidate 与 edge-norm `0.5-0.8` annulus 条件率同时导出，EV targeted panel 与全量 size-weighted route analysis 现在会输出 selected-annulus 独立 ranking/comparison，用于和主口径交叉验证。Tsuyama 2022 Table S1 fixed-index Au/Ag audit profile、selected-annulus joint-fit paper-calibration lane、bounded `signal_transfer_fit` / `size_response` paper-fit variants、linked 488-window/532-max classification feature lane、以及 selected-annulus paper-fit EV targeted / 3-seed pre-fullgrid robustness audit 已加入 paper-claim 审计路径；这些 paper-fit 项不改变全局材料默认或 EV ranking。2026-05-02 追加复核已将 `joint_fit_score` 明确为 lower-is-better loss-style penalty，`paper_alignment_target` 元数据约束和 selected-annulus claim compatibility check 已落到代码/测试；annulus sensitivity 输出固定报告 Au `20/30/40/60 nm` 与 Ag `40/60 nm` 当前 joint-fit 粒径口径；all-crossing 不对齐 paper target、paper audit/工程主库 lane 分层和 non-paper-target joint-fit variant early rejection 已同步。当前验证基线：`ruff check .` 通过；`python -m pyright` 0 errors；`pytest -q` = `563 passed`，无 warnings；缺 selected-annulus 列的旧 CSV 输入会显式标记 lens unavailable/NaN，不再伪造 selected 结果。
-<!-- DOCSYNC:END -->
-
 > 2026-04-08 复核：已按当前代码、当前 dashboard 导航结构与当前文档分层重新核对；如与更深层专题分析冲突，应以明确标注为“现行”的专题文档和同名代码说明为准。
 
 
@@ -103,7 +99,7 @@ python -m nodi_simulator.dashboard.estimate_precompute_runtime \
 - `ev_design` / `fine` / `focus_50_150` 当前官方 `n_events` 是 `10000`
 - `--workers` 的甜点值依赖机器；建议先用这个脚本扫一轮再正式开跑
 
-当前这台 10 核机器上，`workers=8` 附近表现最好，当前主链下最新可参考结果是：
+当前这台 10 核机器上，`workers=8` 附近表现最好。这里的“实测”只表示本机运行耗时测量，不表示仪器/样品实测数据：
 
-- `coarse + full_range`: 正式实测 `3277.2 s`，约 `54.6 min`
-- `ev_design + full_range_biomimetic_exosome_with_anchors`: 当前主链下尚未正式全量实测
+- `coarse + full_range`: 运行计时 `3277.2 s`，约 `54.6 min`
+- `ev_design + full_range_biomimetic_exosome_with_anchors`: 正式 full-grid 已完成；最新科学解释以 `reports/88_*` 为准，复跑前应改用新的 tag 或先归档旧产物

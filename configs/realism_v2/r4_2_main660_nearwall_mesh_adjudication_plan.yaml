@@ -1,0 +1,233 @@
+{
+  "schema_version": "R4_2_main660_nearwall_mesh_adjudication_plan_v1",
+  "stage": "R4_2_main660_nearwall_mesh_adjudication_plan_only",
+  "authorization_boundary": {
+    "R4_2_execution_authorized": false,
+    "R5_plan_preparation_authorized": false,
+    "R5_full_grid_v2_authorized": false,
+    "context_route_promotion_authorized": false,
+    "main_660_redefinition_authorized": false,
+    "route_specific_manual_sign_flips_authorized": false,
+    "calibrated_SNR_claim_authorized": false,
+    "calibrated_event_probability_authorized": false,
+    "v1_full_grid_overwrite_authorized": false,
+    "Tsuyama_paper_fit_continuation_authorized": false,
+    "selected_annulus_bound_change_authorized": false,
+    "ET2030_direct_current_input_unlock_authorized": false
+  },
+  "input_evidence": {
+    "accepted_gate": "FAIL_REVISED_R4_RESULTS_RERUN_OR_ROUTE_MODEL_REVISION_REQUIRED",
+    "source_revised_R4_report": "reports/63_EV_NODI_realism_v2_R4_revised_rerun_analysis.md",
+    "source_revised_R4_observable_summary": "results/ev_nodi_realism_v2_revised_R4_rerun/revised_full_wave_observable_summary.csv",
+    "source_revised_R4_route_decision_table": "results/ev_nodi_realism_v2_revised_R4_rerun/route_validation_decision_table.csv",
+    "source_revised_R4_ambiguity_check": "results/ev_nodi_realism_v2_revised_R4_rerun/main_660_near_wall_coarse_sign_ambiguity_check.csv",
+    "recommended_next_action": "prepare_R4_2_main660_nearwall_mesh_adjudication_plan_only",
+    "all_nonblank_after_global_convention": 0.8611111111111112,
+    "main_660_nonblank_after_global_convention": 0.75,
+    "main_660_sign_reliable_subset": 0.7567567567567568,
+    "main_660_review_refined_mesh": 1.0,
+    "main_660_recovery_gate_met": false,
+    "main_660_nonblank_rows": 80,
+    "main_660_global_flip_failures": 20,
+    "main_660_sign_reliable_rows": 74,
+    "main_660_sign_reliable_pass_rows": 56,
+    "main_660_review_refined_rows": 40,
+    "main_660_review_refined_pass_rows": 40,
+    "residual_failure_cluster": [
+      {
+        "route_id": "660_800x1400",
+        "interface_state": "near_wall_stress",
+        "mesh_level": "coarse_screen",
+        "failed_rows_after_global_flip": 10
+      },
+      {
+        "route_id": "660_800x1500",
+        "interface_state": "near_wall_stress",
+        "mesh_level": "coarse_screen",
+        "failed_rows_after_global_flip": 10
+      }
+    ],
+    "interpretation": "global_convention_signal_remains_strong_but_main660_coarse_near_wall_adjudication_is_unresolved"
+  },
+  "route_panel": [
+    {
+      "wavelength_nm": 660,
+      "width_nm": 800,
+      "depth_nm": 1400,
+      "route_role": "main_660",
+      "route_role_locked": true,
+      "main_660_redefinition_authorized": false,
+      "adjudication_focus": "near_wall_stress_coarse_screen_failure_against_review_refined_and_fine_confirm"
+    },
+    {
+      "wavelength_nm": 660,
+      "width_nm": 800,
+      "depth_nm": 1500,
+      "route_role": "main_660",
+      "route_role_locked": true,
+      "main_660_redefinition_authorized": false,
+      "adjudication_focus": "near_wall_stress_coarse_screen_failure_against_review_refined_and_fine_confirm"
+    }
+  ],
+  "particle_panel": {
+    "required_nonblank_particles": [
+      "EV70_lowRI",
+      "EV100_nominal",
+      "EV250_nominal",
+      "LDL_like_contaminant",
+      "Au40"
+    ],
+    "optional_particles": [
+      "blank"
+    ],
+    "blank_rows_excluded_from_recovery_gates": true,
+    "biological_specificity_claim_allowed": false
+  },
+  "solver_scope": {
+    "interface_states": [
+      "near_wall_stress",
+      "centerline_nominal"
+    ],
+    "polarization_states": [
+      "nominal_linear",
+      "orthogonal_sensitivity"
+    ],
+    "new_mesh_levels": [
+      "fine_confirm"
+    ],
+    "mesh_level_roles": {
+      "coarse_screen": "screening_only",
+      "review_refined": "validation_grade",
+      "fine_confirm": "validation_grade_confirmation"
+    },
+    "validation_grade_mesh_levels": [
+      "review_refined",
+      "fine_confirm"
+    ],
+    "existing_coarse_and_review_refined_rows_are_reference_evidence": true,
+    "new_solver_cases_are_fine_confirm_only": true
+  },
+  "cost_cap": {
+    "max_R4_2_solver_cases_before_review": 64,
+    "planned_routes": 2,
+    "planned_particles_including_optional_blank": 6,
+    "planned_interface_states": 2,
+    "planned_polarization_states": 2,
+    "planned_new_mesh_levels": 1,
+    "planned_solver_case_count": 48,
+    "under_R4_2_review_cap": true,
+    "another_full_432_case_rerun_authorized": false,
+    "R5_or_full_grid_expansion_allowed": false
+  },
+  "adjudication_questions": {
+    "primary_question": "does_fine_confirm_agree_with_review_refined_or_coarse_screen_for_main660_near_wall_sign",
+    "coarse_screen_can_confirm_or_demote_routes": false,
+    "route_specific_manual_sign_flips_allowed": false,
+    "question_if_fine_confirm_agrees_with_review_refined": "coarse_screen_is_screening_artifact_and_validation_grade_main660_can_be_externally_reviewed",
+    "question_if_fine_confirm_agrees_with_coarse_screen": "main660_near_wall_route_model_remains_unresolved",
+    "question_if_lobe_or_mode_diagnostics_disagree": "ROI_operator_or_mode_overlap_mapping_requires_revision"
+  },
+  "required_diagnostics": {
+    "mode_lobe_fields": [
+      "BFP_lobe_left_cross_term_W",
+      "BFP_lobe_right_cross_term_W",
+      "BFP_lobe_inner_cross_term_W",
+      "BFP_lobe_outer_cross_term_W",
+      "even_mode_cross_term_W",
+      "odd_mode_cross_term_W",
+      "mode_overlap_complex",
+      "mode_overlap_phase_rad",
+      "mode_overlap_abs",
+      "lobe_balance_ratio",
+      "ROI_parity_sign"
+    ],
+    "phase_diagnostic_only_not_gate_replacement": true,
+    "near_wall_stress_sidecar_not_score_bonus": true,
+    "required_main660_cluster_fields": [
+      "route_id",
+      "interface_state",
+      "mesh_level",
+      "mesh_level_role",
+      "particle_id",
+      "polarization_state",
+      "full_wave_cross_term_signed_W",
+      "surrogate_cross_term_signed_W",
+      "abs_full_wave_cross_term_W",
+      "abs_surrogate_cross_term_W",
+      "median_abs_full_wave_cross_term_for_route_particle",
+      "sign_reliability_threshold_W",
+      "sign_reliability_threshold_source",
+      "sign_reliability_band",
+      "sign_preserved_after_global_flip",
+      "sign_ambiguous_due_to_near_zero",
+      "review_refined_agreement",
+      "fine_confirm_agreement",
+      "coarse_screen_conflict"
+    ]
+  },
+  "decision_criteria": {
+    "fine_confirm_main660_fraction_min": 0.8,
+    "review_refined_main660_fraction_min": 0.8,
+    "fine_confirm_agrees_with_review_refined_min": 0.9,
+    "coarse_screen_disagreement_warning_only": true,
+    "validation_grade_rows_exclude_coarse_screen": true,
+    "no_route_role_change_required": true,
+    "no_context_route_promotion_required": true,
+    "no_main_660_redefinition_required": true,
+    "possible_future_gate_after_success": "PASS_R4_2_RESULTS_PREPARE_R5_PLAN_ONLY",
+    "R5_execution_authorized_by_success": false,
+    "failure_if_route_specific_sign_flip_needed": true
+  },
+  "required_outputs_if_executed_after_review": [
+    "R4_2_case_manifest.csv",
+    "R4_2_observable_summary.csv",
+    "main660_fine_confirm_sign_summary.csv",
+    "mesh_level_role_adjudication_summary.csv",
+    "BFP_lobe_resolved_cross_term_summary.csv",
+    "mode_overlap_phase_summary.csv",
+    "ROI_parity_sanity_summary.csv",
+    "coarse_screen_conflict_summary.csv",
+    "R4_2_guardrail_summary.csv",
+    "R4_2_cost_estimate.csv",
+    "run_manifest.json",
+    "R4_2_main660_nearwall_mesh_adjudication_report.md"
+  ],
+  "stop_gates": [
+    "R5_plan_or_full_grid_v2_started",
+    "R4_2_execution_without_external_authorization",
+    "v1_full_grid_output_overwritten",
+    "Tsuyama_paper_fit_continued",
+    "selected_annulus_bounds_changed",
+    "selected_annulus_replaces_all_crossing_ranking",
+    "context_route_promotion_attempted",
+    "main_660_redefinition_attempted",
+    "route_specific_manual_sign_flip_attempted",
+    "calibrated_SNR_or_event_probability_claim_emitted",
+    "ET2030_direct_current_input_unlocked_without_measured_bench_artifact",
+    "thermal_sidecar_used_to_increase_NODI_score",
+    "finite_zero_event_blank_safety_claim_emitted",
+    "legacy_detector_SNR_output_header_emitted",
+    "legacy_calibrated_detector_SNR_output_header_emitted"
+  ],
+  "manifest_expectations": {
+    "R4_representative_full_wave_validation_run": true,
+    "R4_revised_rerun_run": true,
+    "R4_2_main660_nearwall_mesh_adjudication_run": false,
+    "R5_full_grid_v2_run": false,
+    "v1_full_grid_overwritten": false,
+    "Tsuyama_paper_fit_continued": false,
+    "selected_annulus_bounds_changed": false,
+    "calibrated_SNR_claim_emitted": false,
+    "ET2030_direct_current_input_unlocked": false
+  },
+  "claim_boundaries": {
+    "SNR_claim_level": "absolute_blocked",
+    "event_probability_claim_level": "absolute_blocked",
+    "p_detect_mapping_claim_level": "relative_with_priors",
+    "legacy_detector_SNR_output_header_authorized": false,
+    "legacy_calibrated_detector_SNR_output_header_authorized": false,
+    "absolute_LOD_claim_authorized": false,
+    "true_EV_concentration_claim_authorized": false,
+    "biological_specificity_claim_authorized": false
+  }
+}
