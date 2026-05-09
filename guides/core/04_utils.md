@@ -1,4 +1,4 @@
-# utils.py — 共享工具函数
+# nodi_simulator/utils.py — 共享工具函数
 
 ## 文件职责
 

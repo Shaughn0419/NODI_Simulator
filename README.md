@@ -92,27 +92,31 @@ Run standard checks:
 ```bash
 ruff check .
 python -m pyright
-pytest -q
+python -m mypy
+python tests/run_tests.py --workers 7
 ```
 
 The latest local cleanup/review baseline was:
 
 - `ruff check .` -> pass
-- `python -m pyright` -> `0 errors, 0 warnings`
-- `python -m mypy` -> pass
-- `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q` -> `984 passed`
-- AppleDouble `._*` metadata files -> cleaned outside `.git/` and `.claude/`
+- `python -m pyright` -> `0 errors, 0 warnings` on the transitional typed seed allowlist in `pyrightconfig.json`
+- `python -m mypy` -> pass on the same typed seed allowlist; full-repository type debt is not yet a release gate
+- AppTest lane after pruning full-page-only checks -> `5 passed` in `3.67s`
+- `python tests/run_tests.py --workers 7` is now bounded mostly by the non-AppTest xdist lane
+- AppleDouble `._*` metadata files -> cleaned outside `.git/` and local environment/vendor dirs
 
 ## Documentation Map
 
 - [文档导航.md](./文档导航.md): task-based navigation for active docs.
+- [docs/PROJECT_ORGANIZATION_ROADMAP_2026-05-09.md](./docs/PROJECT_ORGANIZATION_ROADMAP_2026-05-09.md): staged file-organization and package-migration roadmap.
 - [00_工程总指南.md](./00_工程总指南.md): engineering overview.
 - [25_核心计算逻辑与公式总说明.md](./25_核心计算逻辑与公式总说明.md): core calculation and formulas.
 - [34_完整全波理论推导与当前模型边界.md](./34_完整全波理论推导与当前模型边界.md): theory boundary.
 - [guides/operations/14_测试说明.md](./guides/operations/14_测试说明.md): test operation notes.
 - [guides/operations/15_无实测数据时如何接入未来校准数据.md](./guides/operations/15_无实测数据时如何接入未来校准数据.md): future calibration-data handoff boundary.
 - [reports/89_EV_NODI_post_v2_unmodeled_realism_register.md](./reports/89_EV_NODI_post_v2_unmodeled_realism_register.md): post-v2 realism gaps acknowledged but not solved inside v2.
-- [type_coerce.md](./type_coerce.md), [realism_v2_io.md](./realism_v2_io.md), and [optional_acceleration.md](./optional_acceleration.md): small shared helper modules introduced during the May 8 hardening pass.
+- [type_coerce.md](./type_coerce.md), [realism_v2_io.md](./realism_v2_io.md), and [optional_acceleration.md](./optional_acceleration.md): small shared helper modules introduced during the May 8 hardening pass. These helpers, plus realism-v2, data-object, utility, parameter-sweep, material, Mie, intrinsic-scattering, illumination, reference-field, trajectory, scattering-trace, interferometric-trace, pulse-analysis, population-trace, polarization-Jones, calibration, manifest, run-state, control, count, OOD, Bayesian, population, experimental-design, seed, geometry, fluidic, electrokinetic, optical-exposure, optical-hardware, objective-panel, wavelength-comparability, readout-transfer, BFP-detector, paper-aligned, Tsuyama phase-filter, count-generation, interface-correction, structured-particle, particle-design, design-metric, design-postprocess, design-claim, selection, reference-operating, particle-channel, NODI thermal, photothermal-POD, assay-control, event-QC, EV integrity, EV reporting, unit, detector-unit, and uncertainty helpers, are canonical under `nodi_simulator/`.
+- Public package exports are maintained in `nodi_simulator/_exports.py`; root package-module compatibility wrappers have been retired.
 
 The `docs/realism_v2/` files are contract/specification documents used by the
 test suite. They are retained for governance and regression checks even when

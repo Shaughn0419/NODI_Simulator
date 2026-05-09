@@ -204,7 +204,7 @@
 
 本轮没有改全局 `DEFAULT_SIM_CFG`，只做了两类局部修正：
 
-1. `tools/tsuyama_gold_validation_compare.py`
+1. `tools/audits/tsuyama_gold_validation_compare.py`
    - 新增 `validation_profile`
    - 当前默认 profile 改为 `paper_aligned`
    - 对应口径：

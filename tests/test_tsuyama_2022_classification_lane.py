@@ -3,7 +3,7 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
-from tools import tsuyama_2022_classification_lane as classification
+from tools.audits import tsuyama_2022_classification_lane as classification
 
 
 def test_extract_best_peak_feature_reports_missing_and_detected_peak():

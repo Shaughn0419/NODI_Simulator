@@ -1,4 +1,4 @@
-# intrinsic_scattering.py — 粒子本征散射模块
+# nodi_simulator/intrinsic_scattering.py — 粒子本征散射模块
 
 ## 文件职责
 
@@ -80,7 +80,7 @@ Esca_unit_amp(θ) = √(dCsca/dΩ(θ))
 ## 数据流位置
 
 ```
-materials.py → n_p, n_m
+nodi_simulator/materials.py → n_p, n_m
                   ↓
 本模块输出 → interpolate_at_theta(θ_det) → ÷ E_sca_ref → scattering_trace 模块
 ```

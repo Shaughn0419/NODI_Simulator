@@ -255,7 +255,9 @@ def test_R7_provenance_freeze_matches_current_R6_artifacts():
         "R6_next_stage_matrix_checksum": rv2.sha256_file(
             R6_DIR / "R6_next_stage_recommendation_matrix.csv"
         ),
-        "R6_run_manifest_checksum": rv2.sha256_file(R6_DIR / "run_manifest.json"),
+        "R6_run_manifest_checksum": rv2.run_manifest_provenance_checksum(
+            R6_DIR / "run_manifest.json"
+        ),
     }
 
     assert set(provenance["required_checksum_fields"]) == (

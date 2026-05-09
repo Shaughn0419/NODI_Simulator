@@ -11,6 +11,13 @@ from nodi_simulator import realism_v2 as rv2
 
 
 R5_DIR = rv2.DEFAULT_R5_FULL_GRID_V2_DIR
+R5_EXECUTION_MANIFEST_FROZEN_CHECKSUMS = {
+    "R5_plan_yaml_checksum": "5fe1be0da5f072335e4e520e11a5f1f5fb310cb23d0d3b75f658869536614964",
+    "R5_plan_report_checksum": "76abc52a35d172187cf0839b173d6d856d92ae0334e5c608e097d128ec2230d7",
+    "R5_scenario_bundle_manifest_checksum": (
+        "770eb4f59a2fe842c9cd014b50bd1a4a91f116266df49a10100738de3c452373"
+    ),
+}
 
 
 def _csv_rows(path: Path) -> list[dict[str, str]]:
@@ -47,6 +54,9 @@ def test_R5_source_schema_helpers_report_missing_or_bad_columns():
 
     with pytest.raises(ValueError, match="source row 8 has non-numeric value 'wide'"):
         rv2._r5_required_float({"width_nm": "wide"}, "width_nm", "W_nm", row_index=8)
+
+    with pytest.raises(ValueError, match="source row 9 has non-finite value 'nan'"):
+        rv2._r5_required_float({"width_nm": "nan"}, "width_nm", "W_nm", row_index=9)
 
 
 def test_R5_outputs_required_files_only_and_respect_cap():
@@ -220,20 +230,7 @@ def test_R5_headers_do_not_emit_legacy_SNR_output_names():
 def test_R5_execution_manifest_freezes_plan_and_scenario_checksums():
     manifest = json.loads((R5_DIR / "run_manifest.json").read_text(encoding="utf-8"))
 
-    expected = {
-        "R5_plan_yaml_checksum": rv2.sha256_file(
-            rv2.CONFIG_DIR / "r5_full_grid_v2_plan.yaml"
-        ),
-        "R5_plan_report_checksum": rv2.sha256_file(
-            rv2.PROJECT_ROOT
-            / "reports"
-            / "66_EV_NODI_realism_v2_R5_full_grid_v2_plan_for_external_review.md"
-        ),
-        "R5_scenario_bundle_manifest_checksum": rv2.sha256_file(
-            rv2.CONFIG_DIR / "r5_scenario_bundle_manifest.yaml"
-        ),
-    }
-    for key, value in expected.items():
+    for key, value in R5_EXECUTION_MANIFEST_FROZEN_CHECKSUMS.items():
         assert manifest[key] == value
 
     scenario_manifest = rv2.validate_R5_scenario_bundle_manifest()

@@ -11,10 +11,11 @@ Provides:
 import json
 import os
 import re
+from collections.abc import Mapping
 from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, Mapping
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -632,7 +633,7 @@ def build_heatmap_matrix(
     H_arr = np.sort(sub["depth_nm"].unique())
 
     matrix = np.full((len(H_arr), len(W_arr)), np.nan)
-    for _, row in sub.iterrows():
+    for row in sub.to_dict("records"):
         wi = np.searchsorted(W_arr, row["width_nm"])
         hi = np.searchsorted(H_arr, row["depth_nm"])
         if wi < len(W_arr) and hi < len(H_arr):

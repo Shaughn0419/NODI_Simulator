@@ -129,7 +129,7 @@ In the code, the Debye-length approximation is used only to size the EDL-like sh
 
 ## How the current simulator maps those sources into parameters
 
-The current defaults in `structured_particles.py` are:
+The current defaults in `nodi_simulator/structured_particles.py` are:
 
 - `core_n_real = 1.360`
 - `membrane_n_real = 1.460`

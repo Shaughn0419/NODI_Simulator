@@ -12,8 +12,7 @@ import re
 
 # Ensure the project remains importable even if the repo directory is renamed.
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_PARENT = os.path.dirname(PROJECT_ROOT)
-for candidate in (PROJECT_ROOT, PROJECT_PARENT):
+for candidate in (PROJECT_ROOT,):
     if candidate not in sys.path:
         sys.path.insert(0, candidate)
 

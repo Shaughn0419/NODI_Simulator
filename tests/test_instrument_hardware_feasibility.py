@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from tools import instrument_hardware_feasibility as hw
+from tools.audits import instrument_hardware_feasibility as hw
 
 
 def test_lockin_enbw_decreases_with_tau_and_filter_order():

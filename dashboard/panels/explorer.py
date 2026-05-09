@@ -899,7 +899,7 @@ def render_explorer():
 
     with st.expander("Top 3 候选点的 local_fine 入口", expanded=False):
         top3_raw = top.head(3).reset_index(drop=True)
-        for idx, row in top3_raw.iterrows():
+        for idx, row in enumerate(top3_raw.to_dict("records")):
             row_cols = st.columns([1.1, 1.2, 1.2, 1.4, 1.8])
             row_cols[0].markdown(f"**Rank {idx + 1}**")
             row_cols[1].metric("W", f"{int(row['width_nm'])} nm")

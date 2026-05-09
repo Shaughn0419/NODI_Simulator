@@ -10,7 +10,8 @@ Research-first dashboard pages:
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -333,7 +334,7 @@ def _format_window_family(
         if not wavelength_sub.empty:
             sub = wavelength_sub
     items: list[str] = []
-    for _, row in sub.head(top_k).iterrows():
+    for row in sub.head(top_k).to_dict("records"):
         geometry = f"{int(row['width_nm'])}×{int(row['depth_nm'])} nm"
         label = f"{int(row['wavelength_nm'])} nm + {geometry}" if include_wavelength else geometry
         if label not in items:

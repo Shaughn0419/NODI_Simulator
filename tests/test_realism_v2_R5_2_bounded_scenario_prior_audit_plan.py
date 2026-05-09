@@ -188,7 +188,9 @@ def test_R5_2_provenance_freeze_matches_current_R5_and_R5_1_artifacts():
         "R5_1_next_stage_options_checksum": rv2.sha256_file(
             R5_1_DIR / "R5_1_next_stage_options_matrix.csv"
         ),
-        "R5_1_run_manifest_checksum": rv2.sha256_file(R5_1_DIR / "run_manifest.json"),
+        "R5_1_run_manifest_checksum": rv2.run_manifest_provenance_checksum(
+            R5_1_DIR / "run_manifest.json"
+        ),
         "R5_case_manifest_checksum": rv2.sha256_file(
             R5_DIR / "full_grid_v2_case_manifest.csv"
         ),
@@ -202,7 +204,9 @@ def test_R5_2_provenance_freeze_matches_current_R5_and_R5_1_artifacts():
         "R5_scenario_sensitivity_checksum": rv2.sha256_file(
             R5_DIR / "scenario_bundle_sensitivity_summary.csv"
         ),
-        "R5_run_manifest_checksum": rv2.sha256_file(R5_DIR / "run_manifest.json"),
+        "R5_run_manifest_checksum": rv2.run_manifest_provenance_checksum(
+            R5_DIR / "run_manifest.json"
+        ),
     }
 
     assert set(provenance["required_checksum_fields"]) == (

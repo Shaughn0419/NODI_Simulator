@@ -1,4 +1,6 @@
-# `reference_field.py`
+# `nodi_simulator/reference_field.py`
+
+> 本文件为模块导航摘要；完整 API、边界条件与实现细节以源码 docstring 和测试为准。
 
 ## 文件定位
 - 类型：核心仿真模块
@@ -14,9 +16,9 @@
 - 直接维护建议：这里承载核心物理或仿真逻辑，修改时应优先保证数值口径稳定，并补充对应测试。
 
 ## 关联代码
-- `data_objects.py`（`Channel`、`OpticalSystem`、`SimulationConfig`）
-- `utils.py`（`build_collection_operator`、`collapse_angular_field_with_operator` 等）
-- `tsuyama_phase_filter.py`（BFP reference comparison lane）
+- `nodi_simulator/data_objects.py`（`Channel`、`OpticalSystem`、`SimulationConfig`）
+- `nodi_simulator/utils.py`（`build_collection_operator`、`collapse_angular_field_with_operator` 等）
+- `nodi_simulator/tsuyama_phase_filter.py`（BFP reference comparison lane）
 
 ## 当前 Tsuyama/BFP ROI 口径
 

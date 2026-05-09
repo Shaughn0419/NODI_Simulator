@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-import realism_v2 as rv2
+from nodi_simulator import realism_v2 as rv2
 
 
 R7_2_DIR = rv2.DEFAULT_R7_2_OPERATOR_ARTIFACT_GAP_REGISTER_DIR

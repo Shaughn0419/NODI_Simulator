@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+from nodi_simulator import mie_engine as mie_engine_module
 from nodi_simulator.mie_engine import (
     mie_angular,
     mie_coefficients,
@@ -46,3 +47,8 @@ def test_core_shell_matches_homogeneous_solution_when_indices_match():
 
     np.testing.assert_allclose(a_shell, a_homogeneous, rtol=1e-7, atol=1e-10)
     np.testing.assert_allclose(b_shell, b_homogeneous, rtol=1e-7, atol=1e-10)
+
+
+def test_private_riccati_bessel_fails_fast_at_zero():
+    with pytest.raises(ValueError, match="non-zero size parameter"):
+        mie_engine_module._riccati_bessel(0.0, 2)

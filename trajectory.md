@@ -1,4 +1,6 @@
-# `trajectory.py`
+# `nodi_simulator/trajectory.py`
+
+> 本文件为模块导航摘要；完整 API、边界条件与实现细节以源码 docstring 和测试为准。
 
 ## 文件定位
 - 类型：核心仿真模块
@@ -15,7 +17,7 @@
 - 直接维护建议：这里承载核心物理或仿真逻辑，修改时应优先保证数值口径稳定，并补充对应测试。
 
 ## 关联代码
-- `data_objects.py`（`Channel`、`OpticalSystem`、`SimulationConfig`）
+- `nodi_simulator/data_objects.py`（`Channel`、`OpticalSystem`、`SimulationConfig`）
 
 ## 专题补充
 - [`guides/core/07_trajectory.md`](guides/core/07_trajectory.md)

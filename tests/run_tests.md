@@ -1,27 +1,46 @@
 # `tests/run_tests.py`
 
-`tests/run_tests.py` is a compatibility wrapper for older local commands. It
-still supports:
+`tests/run_tests.py` is the canonical fast full-suite runner. It still supports
+the older local command:
 
 ```bash
 python tests/run_tests.py --workers 8
 ```
 
-For current development, prefer the direct verification commands:
+By default it starts two independent lanes at the same time:
+
+- non-AppTest pytest modules with `pytest-xdist`
+- real Streamlit `app_interactions` tests in one serial AppTest process
+
+Keep AppTest tests focused on routing/render smoke. Move content assertions and
+page-helper regressions into ordinary pytest tests so they stay in the xdist
+lane.
+
+For routine full regression checks, prefer:
+
+```bash
+python tests/run_tests.py --workers 7
+```
+
+For focused development, use the direct verification commands:
 
 ```bash
 ruff check .
 python -m pyright
-PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q
+python -m mypy
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest tests/test_targeted_module.py -q
 ```
 
-The latest local cleanup/review baseline was:
+`pyright` and `mypy` currently cover the typed seed allowlist in their config
+files. Treat that as a real but intentionally scoped type gate while the broader
+repository type debt is reduced.
+
+The latest local timing baseline was:
 
 ```text
-ruff check . -> pass
-python -m pyright -> 0 errors, 0 warnings
-python -m mypy -> pass
-PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q -> 984 passed
+pre-change serial full pytest -> 214.69s wall time
+two-lane full runner before AppTest pruning -> 101.80s wall time
+AppTest lane after pruning full-page-only checks -> 5 passed in 3.67s wall time
 ```
 
 `review_bundles/`, `.claude/`, virtual environments, caches, and generated

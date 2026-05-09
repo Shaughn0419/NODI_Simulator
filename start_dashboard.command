@@ -76,8 +76,8 @@ fi
 echo "Using Python: $($PYTHON --version 2>&1)"
 echo "  Path: $(which $PYTHON 2>/dev/null || echo $PYTHON)"
 
-# --- Set PYTHONPATH so nodi_simulator is importable even if folder is renamed ---
-export PYTHONPATH="$(pwd):$(dirname "$(pwd)"):$PYTHONPATH"
+# --- Set PYTHONPATH so nodi_simulator is importable from this project root ---
+export PYTHONPATH="$(pwd):$PYTHONPATH"
 
 # --- Report current dataset status without auto-running legacy precompute ---
 CURRENT_STANDARD_DATASET="results/ev_design_full_range_biomimetic_exosome_with_anchors_10000e_summary.csv"

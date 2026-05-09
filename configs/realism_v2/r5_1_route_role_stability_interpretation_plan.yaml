@@ -207,6 +207,7 @@
     "legacy_calibrated_detector_SNR_output_header_authorized": false
   },
   "provenance_freeze": {
+    "run_manifest_checksum_kind": "stable_content_v1",
     "required_R5_checksum_fields": [
       "R5_case_manifest_checksum",
       "R5_summary_checksum",
@@ -224,6 +225,6 @@
     "R5_context_no_promotion_checksum": "74402c6baa084a76afa8f7a3647d992c77f79d700cf573d124ffe75a4353f890",
     "R5_scenario_sensitivity_checksum": "475a1b80c1e9b8e9669acbeaa504810935d1123166fea49cc60c5ad4e14b2646",
     "R5_cost_estimate_checksum": "7b22e8b00483abf7707cfa88709bbca8aa1bd4e922b3573f56fcd7a28f262ce5",
-    "R5_run_manifest_checksum": "21fac8a93649e900304465e65ac49f8a15e50870ef2c8f1d7b3299f19f08d5e9"
+    "R5_run_manifest_checksum": "9965d7c2951b846a8fd518e28023ea615758e9b0dd7943708c8f396e5f27976f"
   }
 }

@@ -2,6 +2,13 @@
 
 Purpose: record every Markdown documentation file covered by the documentation cleanup/audit pass, including active docs and archived historical docs, so future readers can see which files are current entry points and which files are preserved provenance snapshots.
 
+2026-05-09 status note: package-module implementations and current companion
+docs now use canonical `nodi_simulator/<module>.py` paths; root
+package-module compatibility wrappers have been retired. Treat this audit as a
+file-coverage snapshot, not the latest migration-status source. Use
+`docs/PROJECT_ORGANIZATION_ROADMAP_2026-05-09.md` for current organization
+state.
+
 Scope excludes generated/runtime/vendor/extracted-text areas: `.venv*`, `.venv-tests/`, `.codex_pdf_venv/`, `.pytest_cache/`, `.pytest_vendor/`, `.omx/`, `.claude/`, `.pdf_output/`, `results/`, and `review_bundles/`. AppleDouble `._*.md` metadata files are not documentation and are deleted when found.
 
 Current interpretation anchors:

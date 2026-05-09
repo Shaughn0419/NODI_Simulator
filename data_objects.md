@@ -1,4 +1,6 @@
-# `data_objects.py`
+# `nodi_simulator/data_objects.py`
+
+> 本文件为模块导航摘要；完整 API、边界条件与实现细节以源码 docstring 和测试为准。
 
 ## 文件定位
 - 类型：核心仿真模块
@@ -14,7 +16,7 @@
 - 直接维护建议：这里承载核心物理或仿真逻辑，修改时应优先保证数值口径稳定，并补充对应测试。
 
 ## 关联代码
-- `materials.py`（延迟导入：`get_n_complex`，在 `n_complex_at` / `refractive_index_at` 方法内按需调用）
+- `nodi_simulator/materials.py`（延迟导入：`get_n_complex`，在 `n_complex_at` / `refractive_index_at` 方法内按需调用）
 
 ## 专题补充
 - [`guides/core/01_data_objects.md`](guides/core/01_data_objects.md)
@@ -24,5 +26,5 @@
 - 当前 `SimulationConfig` 也已把 `illumination_mode`、`flow_profile_model`、`coupling_model`、`include_diffusion`、`reflecting_boundary` 等输运/照明开关冻结为统一配置字段。
 - `SimulationConfig` 还包含事件块执行配置：`vectorized_event_engine`、`event_block_size`、`event_block_rng_order`。基础包和正式 dashboard/precompute 默认均为 `vectorized_event_engine="off"`，以保持最保守的 scalar event loop；`event_block_v3 / 32 / event_loop_order` 保留为显式性能实验/回归对照。
 - `Particle.model_type` 当前支持 homogeneous `"mie"` 与 `"mie_core_shell"`；core-shell 粒子必须提供 `structure_key`。
-- 需要注意两层默认值：基础包里的 `data_objects.py::DEFAULT_SIM_CFG` 仍是最小审计链；dashboard / precompute / single-case 主默认则以 `dashboard/config.py::DEFAULT_SIM_CFG` 为准。
+- 需要注意两层默认值：基础包里的 `nodi_simulator/data_objects.py::DEFAULT_SIM_CFG` 仍是最小审计链；dashboard / precompute / single-case 主默认则以 `dashboard/config.py::DEFAULT_SIM_CFG` 为准。
 - 本说明文件使用 UTF-8 编写，并与同名 Python 文件保持一一对应。

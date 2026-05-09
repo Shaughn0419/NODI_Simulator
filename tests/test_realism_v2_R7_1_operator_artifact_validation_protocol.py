@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-import realism_v2 as rv2
+from nodi_simulator import realism_v2 as rv2
 
 
 R7_1_DIR = rv2.DEFAULT_R7_1_OPERATOR_ARTIFACT_VALIDATION_DIR

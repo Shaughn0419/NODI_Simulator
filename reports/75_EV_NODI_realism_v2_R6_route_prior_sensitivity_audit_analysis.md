@@ -163,8 +163,8 @@ Local validation performed:
 
 ```text
 python -m json.tool configs/realism_v2/r6_route_prior_sensitivity_plan.yaml
-python tools/ev_nodi_realism_v2_R6_route_prior_sensitivity_audit.py
-ruff check realism_v2.py tools/ev_nodi_realism_v2_R6_route_prior_sensitivity_audit.py tests/test_realism_v2_R6_plan.py tests/test_realism_v2_R6_route_prior_sensitivity_audit.py
+python tools/one_shot/ev_nodi_realism_v2_R6_route_prior_sensitivity_audit.py
+ruff check realism_v2.py tools/one_shot/ev_nodi_realism_v2_R6_route_prior_sensitivity_audit.py tests/test_realism_v2_R6_plan.py tests/test_realism_v2_R6_route_prior_sensitivity_audit.py
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q tests/test_realism_v2_R6_plan.py tests/test_realism_v2_R6_route_prior_sensitivity_audit.py
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q \
   tests/test_realism_v2_R6_route_prior_sensitivity_audit.py \

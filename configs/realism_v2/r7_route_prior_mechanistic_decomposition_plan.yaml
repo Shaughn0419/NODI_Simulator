@@ -453,6 +453,7 @@
     "legacy_calibrated_detector_SNR_output_header_authorized": false
   },
   "provenance_freeze": {
+    "run_manifest_checksum_kind": "stable_content_v1",
     "required_checksum_fields": [
       "R6_manifest_checksum",
       "R6_candidate_registry_checksum",
@@ -467,7 +468,7 @@
       "R6_next_stage_matrix_checksum",
       "R6_run_manifest_checksum"
     ],
-    "R6_manifest_checksum": "e7bcd839447b31314ebb5d8cd0b48cbc6c9c4cfa0795629a809400847b21177d",
+    "R6_manifest_checksum": "1bb8da591e077710a4836b8d14c8fe76a14b9b659adc965b393c7ad26c92811d",
     "R6_candidate_registry_checksum": "cc8c8b5279134cd2b5b0583143c95a6e117fe4b79f177bca79487a4366dc2c9f",
     "R6_candidate_sensitivity_matrix_checksum": "c9504e8c550e72fcfe7ab7a0aa7071680937b4a57637516dccc27c1f45003455",
     "R6_route_prior_factor_checksum": "d0aa50c657c3a9aea530cd31495808a06962f14e11743d705115ddba796178f5",
@@ -478,6 +479,6 @@
     "R6_claim_guardrail_checksum": "a2eb13517897b9981e95fa299d5a3ef6a2d5a558e705f531f617bf161e9b19c8",
     "R6_stop_gate_checksum": "24efd12645eb56cd95325fe4e60494c3d4f53af2e6251209513fe92ba01f696b",
     "R6_next_stage_matrix_checksum": "a39f4b7100ace6fe74970f88aeff3c747fc134bc7923cb9a52f9794d8ffd8f2f",
-    "R6_run_manifest_checksum": "c7e0990b9a06a49406a758bf60df64f4bfa89bd210efd3707dd07f8111b51ebf"
+    "R6_run_manifest_checksum": "6405979e8906ece3b996db6d54550f45ec59c564137f1667816415cf72c12c9e"
   }
 }

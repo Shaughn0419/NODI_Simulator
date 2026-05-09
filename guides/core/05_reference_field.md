@@ -1,4 +1,4 @@
-# reference_field.py — 纳米通道参考场模块
+# nodi_simulator/reference_field.py — 纳米通道参考场模块
 
 ## 文件职责
 
@@ -142,9 +142,9 @@ phi_ref = ref_phi0_rad
 
 当前正确分工是：
 
-- `reference_field.py::_channel_diffraction_field_surrogate(...)`
+- `nodi_simulator/reference_field.py::_channel_diffraction_field_surrogate(...)`
   只负责生成通道本身的最小角谱复场 surrogate
-- `utils.py::build_collection_operator(...)`
+- `nodi_simulator/utils.py::build_collection_operator(...)`
   与 `collapse_angular_field_with_operator(...)`
   统一负责 detector acceptance、slit/pinhole、theta/phi 权重和 throughput
 
@@ -311,7 +311,7 @@ width_sinc = sinc(W_eff * kx / 2π)
 compute_reference_field_from_tsuyama_bfp(...)
 ```
 
-把 `tsuyama_phase_filter.py` 产生的 BFP 复场经 ROI / detector operator 口径折叠成 reference comparison diagnostic。它的职责是让 BFP-level reference 与 ROI/operator 对照进入结果，而不是替代 measured calibration 或 detector-unit voltage / photon chain。
+把 `nodi_simulator/tsuyama_phase_filter.py` 产生的 BFP 复场经 ROI / detector operator 口径折叠成 reference comparison diagnostic。它的职责是让 BFP-level reference 与 ROI/operator 对照进入结果，而不是替代 measured calibration 或 detector-unit voltage / photon chain。
 
 ### reference route 与 solver route
 
@@ -373,7 +373,7 @@ W_min = λ / NA
 在 `compute_reference_field()` 的所有模型计算完成之后、偏振投影之前，加入统一截止检查：
 
 ```python
-# reference_field.py，compute_reference_field() 中
+# nodi_simulator/reference_field.py，compute_reference_field() 中
 _diff_ratio = optical.wavelength_m / (n_medium * channel.width_m)
 _na_ratio   = optical.NA_collection / n_medium
 _na_cutoff_active = bool(_diff_ratio > _na_ratio or _diff_ratio >= 1.0)
@@ -395,7 +395,7 @@ if _na_cutoff_active:
 #### 新增 `OpticalSystem` 字段
 
 ```python
-# data_objects.py → OpticalSystem
+# nodi_simulator/data_objects.py → OpticalSystem
 NA_collection: float = 0.9  # 收集物镜数值孔径，用于 NA 截止检查
 ```
 

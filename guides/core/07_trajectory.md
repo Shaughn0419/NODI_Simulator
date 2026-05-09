@@ -1,4 +1,4 @@
-# trajectory.py — 粒子轨迹模块
+# nodi_simulator/trajectory.py — 粒子轨迹模块
 
 ## 文件职责
 
@@ -136,7 +136,7 @@ z_{i+1} = z_i + Δz_i → 反射回 [-(H/2-a), +(H/2-a)]
 
 ## 扩散系数的计算
 
-扩散系数 D 不在 trajectory.py 内部计算，而是在 `parameter_sweep.py` 的 `simulate_one_event` 中通过 Stokes-Einstein 公式计算后传入：
+扩散系数 D 不在 nodi_simulator/trajectory.py 内部计算，而是在 `nodi_simulator/parameter_sweep.py` 的 `simulate_one_event` 中通过 Stokes-Einstein 公式计算后传入：
 
 ```
 D = kB·T / (6π·η·a)
@@ -232,5 +232,5 @@ compute_illumination_envelope
 - `initial_position_confinement_ratio`
 - `initial_position_x_norm / initial_position_z_norm`
 
-这些量随后会被 `parameter_sweep.py` 带入事件级、batch 级和 `observation_signature`
+这些量随后会被 `nodi_simulator/parameter_sweep.py` 带入事件级、batch 级和 `observation_signature`
 审计链，而不是只停留在 utils 内部。

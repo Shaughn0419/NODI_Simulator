@@ -28,6 +28,7 @@
     "ET2030_highZ_voltage_with_warning",
     "ET2030_direct_current_input_forbidden_without_bench_validation",
     "bare_photodiode_current_input",
+    "bare_photodiode_to_external_TIA",
     "external_TIA_voltage"
   ],
   "instrument_to_connection_path": [
@@ -49,6 +50,11 @@
     {
       "instrument_path_id": "bare_photodiode_current_input",
       "connection_readout_path": "lockin_current_input",
+      "detector_source": "bare_photodiode"
+    },
+    {
+      "instrument_path_id": "bare_photodiode_to_external_TIA",
+      "connection_readout_path": "external_TIA",
       "detector_source": "bare_photodiode"
     },
     {

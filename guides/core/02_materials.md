@@ -1,4 +1,4 @@
-# materials.py — 材料数据库模块
+# nodi_simulator/materials.py — 材料数据库模块
 
 ## 文件职责
 
@@ -131,19 +131,19 @@
 ## 与其他模块的交互
 
 ```
-materials.py
+nodi_simulator/materials.py
     │
-    ├──→ Particle.n_complex_at(wavelength_m)      [data_objects.py]
+    ├──→ Particle.n_complex_at(wavelength_m)      [nodi_simulator/data_objects.py]
     │       用于 intrinsic_scattering 中的粒子折射率查询
     │
-    ├──→ Medium.refractive_index_at(wavelength_m)  [data_objects.py]
+    ├──→ Medium.refractive_index_at(wavelength_m)  [nodi_simulator/data_objects.py]
     │       用于 intrinsic_scattering 中的介质折射率查询
     │
-    └──→ Channel.wall_refractive_index_at(wavelength_m) [data_objects.py]
+    └──→ Channel.wall_refractive_index_at(wavelength_m) [nodi_simulator/data_objects.py]
             为后续 Phase（near-wall correction）预留
 ```
 
-**关键约束**：materials.py 本身不依赖工程中的任何其他模块（只依赖 numpy），处于依赖链最底层。数据类通过延迟导入（`from .materials import get_n_complex`）调用它，避免循环依赖。
+**关键约束**：nodi_simulator/materials.py 本身不依赖工程中的任何其他模块（只依赖 numpy），处于依赖链最底层。数据类通过延迟导入（`from .materials import get_n_complex`）调用它，避免循环依赖。
 
 ---
 

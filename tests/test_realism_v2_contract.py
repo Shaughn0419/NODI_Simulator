@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 from nodi_simulator import realism_v2 as rv2
@@ -93,6 +95,8 @@ def test_run_manifest_schema_and_checksum_fields(tmp_path):
     )
     rv2.validate_run_manifest(manifest)
     assert manifest["manifest_schema_version"] == "1"
+    schema = rv2.load_json_yaml("run_manifest_schema.yaml")
+    assert "manifest_schema_version" in schema["required_fields"]
     checksum_fields = [key for key in manifest if key.endswith("_checksum")]
     assert "scenario_registry_checksum" in checksum_fields
     assert "detector_state_machine_checksum" in checksum_fields
@@ -106,6 +110,55 @@ def test_run_manifest_schema_and_checksum_fields(tmp_path):
     assert manifest["ET2030_direct_current_input_unlocked"] is False
     assert manifest["base_v1_summary_path_relative"]
     assert manifest["output_directory_relative"]
+
+
+def test_run_manifest_checksum_fields_must_be_hex(tmp_path):
+    manifest = rv2.build_run_manifest(
+        output_directory=tmp_path,
+        event_budget={"stage": "test", "R2_anchor_smoke_started": False},
+        scenario_budget={"scenario_bundle": "micro_anchor_nominal_sanity"},
+    )
+    manifest["scenario_registry_checksum"] = "z" * 64
+
+    with pytest.raises(ValueError, match="run_manifest checksum field is not sha256-like"):
+        rv2.validate_run_manifest(manifest)
+
+
+def test_R5_plan_provenance_checksums_must_be_hex():
+    plan = copy.deepcopy(rv2.load_R5_full_grid_v2_plan())
+    field = sorted(rv2.R5_REQUIRED_SOURCE_CHECKSUM_FIELDS)[0]
+    plan["provenance_freeze"][field] = "z" * 64
+
+    with pytest.raises(ValueError, match="R5 provenance checksum is not sha256-like"):
+        rv2.validate_R5_full_grid_v2_plan(plan)
+
+
+def test_load_json_yaml_prefers_config_dir_for_bare_names(monkeypatch, tmp_path):
+    (tmp_path / "run_manifest_schema.yaml").write_text('{"shadow": true}', encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+
+    payload = rv2.load_json_yaml("run_manifest_schema.yaml")
+
+    assert payload["schema_id"] == "realism_v2_run_manifest_schema_R0"
+    assert "shadow" not in payload
+
+
+def test_bfp_roi_operator_masks_outside_unit_disk_before_jacobian():
+    shape = (2, 2)
+    result = rv2.bfp_roi_intensity_operator(
+        E_ref=np.ones(shape, dtype=complex),
+        E_sca=np.zeros(shape, dtype=complex),
+        weight=np.ones(shape),
+        du=0.1,
+        dv=0.1,
+        u=np.array([[0.0, 1.2], [0.1, 0.2]]),
+        v=np.zeros(shape),
+        NA=0.5,
+        n_medium=1.0,
+    )
+
+    assert result["P_ref_ROI_W"] > 0.0
+    assert result["valid_uv_fraction"] == pytest.approx(0.75)
 
 
 def test_calibration_artifact_registry_schema_is_active():
@@ -200,13 +253,23 @@ def test_detector_connection_state_machine_allows_valid_paths():
 def test_detector_path_schema_maps_to_state_machine_paths():
     rv2.validate_detector_path_schema_maps_to_state_machine()
     schema = rv2.detector_path_schema()
+    mapped_connection_paths = {
+        str(item["connection_readout_path"]) for item in schema["instrument_to_connection_path"]
+    }
 
     assert rv2.connection_readout_path_for_instrument_path(
         "ET2030_50ohm_voltage", schema
     ) == "voltage_input_50ohm"
     assert rv2.connection_readout_path_for_instrument_path(
+        "bare_photodiode_to_external_TIA", schema
+    ) == "external_TIA"
+    assert rv2.connection_readout_path_for_instrument_path(
         "external_TIA_voltage", schema
     ) == "lockin_voltage_input"
+    assert set(schema["connection_readout_path_enum"]) <= mapped_connection_paths
+    assert rv2.canonical_instrument_path_id(
+        "external_TIA", schema
+    ) == "bare_photodiode_to_external_TIA"
     assert rv2.canonical_instrument_path_id(
         "voltage_input_50ohm", schema
     ) == "ET2030_50ohm_voltage"
@@ -227,6 +290,18 @@ def test_claim_level_matrix_references_valid_enums():
         "detector_unit",
         "blank_false_positive",
     }
+
+
+def test_scenario_registry_contract_matches_python_constants():
+    registry = rv2.load_json_yaml("scenario_registry.yaml")
+    caps = registry["scenario_bundle_caps"]
+
+    assert tuple(registry["module_status_enum"]) == rv2.MODULE_STATES
+    assert tuple(registry["claim_level_enum"]) == rv2.CLAIM_LEVELS
+    assert caps["max_anchor_scenario_bundles"] == rv2.MAX_ANCHOR_SCENARIO_BUNDLES
+    assert caps["max_anchor_routes"] == rv2.MAX_ANCHOR_ROUTES
+    assert caps["max_stochastic_seeds"] == rv2.MAX_STOCHASTIC_SEEDS
+    assert caps["max_event_level_runs_before_review"] == rv2.MAX_EVENT_LEVEL_RUNS_BEFORE_REVIEW
 
 
 def test_config_files_are_json_compatible_yaml():

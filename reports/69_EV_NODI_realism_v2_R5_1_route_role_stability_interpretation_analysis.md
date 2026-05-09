@@ -218,10 +218,10 @@ ET2030_direct_current_input_unlocked = false
 Commands run:
 
 ```text
-python tools/ev_nodi_realism_v2_R5_1_interpretation.py
+python tools/one_shot/ev_nodi_realism_v2_R5_1_interpretation.py
 
 ruff check realism_v2.py \
-  tools/ev_nodi_realism_v2_R5_1_interpretation.py \
+  tools/one_shot/ev_nodi_realism_v2_R5_1_interpretation.py \
   tests/test_realism_v2_R5_1_interpretation.py \
   tests/test_realism_v2_R5_1_next_stage_plan.py
 

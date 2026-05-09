@@ -1,11 +1,93 @@
 from __future__ import annotations
 
+import json
 import math
 
 import numpy as np
 import pytest
 
 from nodi_simulator import realism_v2 as rv2
+
+
+def test_run_manifest_provenance_checksum_ignores_created_at(tmp_path):
+    assert rv2.RUN_MANIFEST_VOLATILE_FIELDS == frozenset({"created_at"})
+    assert rv2.RUN_MANIFEST_PROVENANCE_CHECKSUM_KIND == "stable_content_v1"
+
+    manifest = {
+        "created_at": "2026-05-08T00:00:00+00:00",
+        "run_id": "stable-content",
+        "event_budget": {"new_case_rows": 0},
+    }
+    first = tmp_path / "first.json"
+    second = tmp_path / "second.json"
+    changed = tmp_path / "changed.json"
+
+    first.write_text(json.dumps(manifest), encoding="utf-8")
+    second_manifest = dict(manifest)
+    second_manifest["created_at"] = "2026-05-09T00:00:00+00:00"
+    second.write_text(json.dumps(second_manifest), encoding="utf-8")
+    changed_manifest = dict(second_manifest)
+    changed_manifest["run_id"] = "changed-content"
+    changed.write_text(json.dumps(changed_manifest), encoding="utf-8")
+
+    assert rv2.run_manifest_provenance_checksum(first) == (
+        rv2.run_manifest_provenance_checksum(second)
+    )
+    assert rv2.run_manifest_provenance_checksum(first) != (
+        rv2.run_manifest_provenance_checksum(changed)
+    )
+
+
+def test_run_manifest_checksum_kind_accepts_legacy_raw_hash_during_migration():
+    required_fields = {"upstream_run_manifest_checksum"}
+
+    rv2._validate_run_manifest_checksum_kind(
+        {"upstream_run_manifest_checksum": "0" * 64},
+        required_fields,
+        "legacy-missing-kind",
+    )
+    rv2._validate_run_manifest_checksum_kind(
+        {
+            "upstream_run_manifest_checksum": "0" * 64,
+            "run_manifest_checksum_kind": "raw_sha256_file",
+        },
+        required_fields,
+        "legacy-raw-kind",
+    )
+
+    with pytest.raises(ValueError, match="checksum kind mismatch"):
+        rv2._validate_run_manifest_checksum_kind(
+            {
+                "upstream_run_manifest_checksum": "0" * 64,
+                "run_manifest_checksum_kind": "unknown_kind",
+            },
+            required_fields,
+            "unknown-kind",
+        )
+
+
+def test_realism_v2_migration_preserves_legacy_public_helpers():
+    dcs = np.array([1.0, 2.0, 3.0])
+    weights = np.array([0.1, 0.2, 0.3])
+
+    assert rv2.integrate_cross_section_m2(dcs, weights) == pytest.approx(1.4)
+    assert rv2.lockin_pulse_attenuation(
+        pulse_width_s=1.0e-3,
+        tau_s=2.0e-3,
+        filter_order=2,
+    ) == pytest.approx((1.0 - math.exp(-0.5)) ** 0.5)
+    assert rv2.representative_full_wave_R4_route_panel()
+
+
+def test_correlation_pair_rejects_effectively_constant_or_nonfinite_inputs():
+    assert rv2._correlation_pair([1.0, 2.0, 3.0], [2.0, 4.0, 6.0]) == pytest.approx(1.0)
+    assert math.isnan(
+        rv2._correlation_pair(
+            [1.0, 1.0 + 1.0e-14, 1.0 - 1.0e-14],
+            [1.0, 2.0, 3.0],
+        )
+    )
+    assert math.isnan(rv2._correlation_pair([1.0, math.nan, 3.0], [1.0, 2.0, 3.0]))
 
 
 def test_mie_to_power_has_watts_and_no_watt_square_meter_error():

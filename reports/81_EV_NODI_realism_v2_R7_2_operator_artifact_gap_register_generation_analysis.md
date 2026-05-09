@@ -65,7 +65,7 @@ Any real artifact collection, bench measurement, solver export, or experimental 
 ## Verification
 
 ```bash
-python tools/ev_nodi_realism_v2_R7_2_operator_artifact_gap_register.py
+python tools/one_shot/ev_nodi_realism_v2_R7_2_operator_artifact_gap_register.py
 ```
 
 Result: generated the R7.2 output directory with 6 artifact gaps and 30 required fields.

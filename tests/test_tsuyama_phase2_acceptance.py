@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import pandas as pd
 
-from tools import tsuyama_paper_target_audit as target_audit
-from tools import tsuyama_phase2_acceptance_report as acceptance
-from tools import tsuyama_selected_annulus_joint_fit as joint
+from tools.audits import tsuyama_paper_target_audit as target_audit
+from tools.one_shot import tsuyama_phase2_acceptance_report as acceptance
+from tools.audits import tsuyama_selected_annulus_joint_fit as joint
 
 
 def _best_candidate_row() -> dict[str, object]:

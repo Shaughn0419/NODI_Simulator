@@ -23,7 +23,7 @@
 - 默认不允许 partial result：case 失败会让 precompute 失败，而不是保存一个看起来完成的偏置库。只有显式 `--allow-partial` 才会记录 partial policy 并保存成功子集。
 - checkpoint 默认批量 flush 为 `--checkpoint-batch-size 100`，用于降低全量重算 checkpoint I/O；中断后仍可用同一命令 `--resume --checkpoint` 补跑缺失 case。
 - `build_precompute_sim_cfg(...)` 会先调用 `make_ev_nodi_design_sweep_config(...)`，把正式预计算主线固定到 EV/NODI relative design 语义：`readout_preset="EV_NODI_only_design"`、`readout_observable_mode="magnitude"`、`nodi_readout_semantics="bandpass_envelope_surrogate"`、`readout_internal_demod_route="analytic_lockin_surrogate"`、`initial_position_distribution_mode="flux_weighted"`，并把 particle-induced channel perturbation 保持为 diagnostic-only。
-- metadata 会完整记录 `SimulationConfig`，并新增 `analysis_lanes` / `schema_feature_inventory.route_contract` 中的 all-crossing 与 selected-annulus traceability；selected-annulus 会记录 `edge_norm_min/max`、source、claim level 与 paper alignment target，避免下游只从 CSV 文件名推断口径。claim/target 值统一引用 `design_claim_governance.py` registry，当前 selected-annulus target 为 `tsuyama_2022_nodi_table_s1`；paper-fit 工具会进一步校验 target metadata 与 claim compatibility，因此 stale/mismatched readout 或 annulus 口径不能被静默拼成同一 selected-annulus paper claim。
+- metadata 会完整记录 `SimulationConfig`，并新增 `analysis_lanes` / `schema_feature_inventory.route_contract` 中的 all-crossing 与 selected-annulus traceability；selected-annulus 会记录 `edge_norm_min/max`、source、claim level 与 paper alignment target，避免下游只从 CSV 文件名推断口径。claim/target 值统一引用 `nodi_simulator/design_claim_governance.py` registry，当前 selected-annulus target 为 `tsuyama_2022_nodi_table_s1`；paper-fit 工具会进一步校验 target metadata 与 claim compatibility，因此 stale/mismatched readout 或 annulus 口径不能被静默拼成同一 selected-annulus paper claim。
 - metadata 会记录 `model_semantics_version`、`result_library_role`、`schema_feature_inventory` 与
   `legacy_current_code_library_compatible=False`，避免旧 current-code 结果库被误当成现行结果库。
 - metadata 会记录 `reference_calibration_health`，汇总 blank-reference 标定是否启用、`A_ref` 是否覆盖、是否退回 `g_ref * rho`、是否外推以及 phase source 覆盖。
@@ -45,7 +45,7 @@
 
 ## 关联代码
 - `dashboard/config.py`
-- `parameter_sweep.py`
+- `nodi_simulator/parameter_sweep.py`
 
 ## 设计原则
 1. 标准主库直接重算，不再走旧的合并过渡链路。

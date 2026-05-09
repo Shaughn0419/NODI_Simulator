@@ -253,10 +253,10 @@ finite_zero_event_blank_safety_claim_emitted = false
 Commands run:
 
 ```text
-python tools/ev_nodi_realism_v2_R5_2_bounded_scenario_prior_audit.py
+python tools/one_shot/ev_nodi_realism_v2_R5_2_bounded_scenario_prior_audit.py
 
 ruff check realism_v2.py \
-  tools/ev_nodi_realism_v2_R5_2_bounded_scenario_prior_audit.py \
+  tools/one_shot/ev_nodi_realism_v2_R5_2_bounded_scenario_prior_audit.py \
   tests/test_realism_v2_R5_2_bounded_scenario_prior_audit.py \
   tests/test_realism_v2_R5_2_bounded_scenario_prior_audit_plan.py
 

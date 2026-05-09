@@ -1,4 +1,4 @@
-# pulse_analysis.py — 脉冲分析模块
+# nodi_simulator/pulse_analysis.py — 脉冲分析模块
 
 ## 文件职责
 

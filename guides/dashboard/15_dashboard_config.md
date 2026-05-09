@@ -20,7 +20,7 @@
 
 整个可视化面板的**唯一配置来源**。precompute.py（预计算）和 backend.py（面板后端）都从这里读取物理参数、网格定义、粒子工厂和 UI 文本。修改此文件等于修改整个面板的物理假设。
 
-从 2026-04-12 这一轮开始，`single_case_calculator.py` 的页面默认值也直接从这里取，不再单独回退到基础包 `data_objects.py::DEFAULT_SIM_CFG`。
+从 2026-04-12 这一轮开始，`single_case_calculator.py` 的页面默认值也直接从这里取，不再单独回退到基础包 `nodi_simulator/data_objects.py::DEFAULT_SIM_CFG`。
 
 本轮需要特别注意的是：这里已经不再只定义“频率 + 串扰”的最小 lock-in surrogate，而是额外承载了：
 

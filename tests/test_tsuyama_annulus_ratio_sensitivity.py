@@ -5,8 +5,8 @@ import json
 import pandas as pd
 import pytest
 
-from tools import tsuyama_annulus_ratio_sensitivity as sensitivity
-from tools import tsuyama_selected_annulus_joint_fit as joint
+from tools.audits import tsuyama_annulus_ratio_sensitivity as sensitivity
+from tools.audits import tsuyama_selected_annulus_joint_fit as joint
 from nodi_simulator.design_claim_governance import (
     CLAIM_LEVEL_PAPER_ALIGNED_2022_NODI_PROXY_LENS,
     PAPER_ALIGNMENT_TARGET_TSUYAMA_2022_NODI_TABLE_S1,

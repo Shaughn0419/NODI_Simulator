@@ -1,4 +1,4 @@
-# mie_engine.py — Mie 散射理论引擎
+# nodi_simulator/mie_engine.py — Mie 散射理论引擎
 
 ## 文件职责
 

@@ -1,4 +1,4 @@
-# scattering_trace.py — 时域散射场模块
+# nodi_simulator/scattering_trace.py — 时域散射场模块
 
 ## 文件职责
 
@@ -193,7 +193,7 @@ return exp(-(x0/wcx)² - (z0/wcz)²)
 
 #### ⚠️ Gouy 相位去重（2026-04-12 修正）
 
-`illumination.py` 输出的 `phi_beam` 包含两项：
+`nodi_simulator/illumination.py` 输出的 `phi_beam` 包含两项：
 
 ```
 phi_beam = phi_gouy_surrogate + phi_curv
@@ -271,7 +271,7 @@ amplitude/coupling 去表达。
 
 需要特别注意：
 
-- `phi_ref` 仍然由 `reference_field.py` 的 `E_ref_complex / E_ref_trace_complex`
+- `phi_ref` 仍然由 `nodi_simulator/reference_field.py` 的 `E_ref_complex / E_ref_trace_complex`
   在干涉层体现
 - 本模块不会把 `phi_ref` 重复乘进散射场
 - 但现在会显式输出：

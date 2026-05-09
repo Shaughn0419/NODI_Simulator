@@ -157,6 +157,7 @@
     "biological_specificity_claim_authorized": false
   },
   "provenance_freeze": {
+    "run_manifest_checksum_kind": "stable_content_v1",
     "required_checksum_fields": [
       "base_v1_summary_checksum",
       "R4_2_observable_summary_checksum",
@@ -174,7 +175,7 @@
     "R4_2_main660_sign_summary_checksum": "f904aec1507194fcf1635308e006ee3d0d6657f4848109c932c599e1fccabe92",
     "R4_2_mesh_role_summary_checksum": "fbc23c4d51b05d8ef033da1739b93e3f00fb2a693cb85b9382de41973f75ed7d",
     "R4_2_guardrail_summary_checksum": "e6cd59bbbee436065f998d8dacc2bd61c814d896865c41b9dbea6e56796527de",
-    "R4_2_run_manifest_checksum": "9521914f8141b46309074a38d01b4b365fa4e1d7af24f2d45d91e9971fe1f8ab"
+    "R4_2_run_manifest_checksum": "858a51983dd3144ea5ad00206be17f7258f643c3b68c24768dbc5ba2f1c3ffbf"
   },
   "manifest_expectations": {
     "R4_2_main660_nearwall_mesh_adjudication_run": true,

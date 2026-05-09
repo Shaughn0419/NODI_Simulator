@@ -1,4 +1,6 @@
-# `mie_engine.py`
+# `nodi_simulator/mie_engine.py`
+
+> 本文件为模块导航摘要；完整 API、边界条件与实现细节以源码 docstring 和测试为准。
 
 ## 文件定位
 - 类型：核心仿真模块

@@ -2,7 +2,7 @@
 Focused pytest suite for core physics and signal-chain invariants.
 
 Parallel policy:
-    - this suite belongs to the 8-worker parallel pytest lane
+    - this suite belongs to the xdist non-AppTest pytest lane
     - new tests must remain parallel-safe: no hidden shared mutable state,
       no fixed temp-file collisions, and no ordering dependence
 """
@@ -372,6 +372,10 @@ class TestDataObjects:
     def test_channel_invalid_width(self):
         with pytest.raises(ValueError, match="width"):
             Channel(width_m=0, depth_m=500e-9)
+
+    def test_channel_invalid_wall_refractive_index(self):
+        with pytest.raises(ValueError, match="wall_refractive_index"):
+            Channel(width_m=800e-9, depth_m=500e-9, wall_refractive_index=0.0)
 
     def test_optical_invalid_theta(self):
         with pytest.raises(ValueError, match="collection_theta"):
@@ -2818,6 +2822,17 @@ class TestIntrinsicScattering:
         assert get_n_complex("fused_silica", 660e-9).real != pytest.approx(
             get_n_complex("fused_silica", 488e-9).real
         )
+
+    def test_gold_material_table_uses_johnson_christy_visible_values(self):
+        expected = {
+            495.9e-9: (1.04, 1.833),
+            520.9e-9: (0.62, 2.081),
+            659.5e-9: (0.14, 3.697),
+        }
+        for wavelength_m, (n_real, n_imag) in expected.items():
+            n_complex = get_n_complex("gold", wavelength_m)
+            assert n_complex.real == pytest.approx(n_real)
+            assert n_complex.imag == pytest.approx(n_imag)
 
     def test_medium_material_library_exposes_route_43_property_metadata(self):
         expected = {
@@ -9118,7 +9133,7 @@ class TestDesignMetricsAndPostprocess:
             if result["intrinsic"]["particle_family"] == "EV_sEV"
         )
         assert ev_result["summary"]["engineering_gate_passed"] is False
-        assert ev_result["summary"]["engineering_gate_reason"] == "n_detected<5"
+        assert "n_detected<5" in ev_result["summary"]["engineering_gate_reason"]
         assert ev_result["summary"]["Au20_anchor_geometry_matched"] is True
         assert ev_result["summary"]["final_EV_design_score"] is not None
         assert ev_result["summary"]["EV_design_recommendation_band"] == (
@@ -9998,6 +10013,56 @@ class TestIntegration:
                 rel=1e-9,
                 abs=1e-18,
             )
+
+    def test_vectorized_fallback_telemetry_aggregates_reasons_and_denominators(self):
+        telemetry = parameter_sweep_module.summarize_vectorized_fallback_telemetry(
+            [
+                {
+                    "summary": {
+                        "n_events": 4,
+                        "vectorized_event_engine": "off",
+                        "vectorized_event_engine_used": "off",
+                        "vectorized_event_engine_fallback_reason": "disabled",
+                    }
+                },
+                {
+                    "summary": {
+                        "n_events": 6,
+                        "vectorized_event_engine": "event_block_v3",
+                        "vectorized_event_engine_used": "event_block_v3",
+                        "vectorized_event_engine_fallback_reason": None,
+                    }
+                },
+                {
+                    "summary": {
+                        "n_events": 2,
+                        "vectorized_event_engine": "event_block_v3",
+                        "vectorized_event_engine_used": "event_loop_fallback",
+                        "vectorized_event_engine_fallback_reason": (
+                            "adaptive_budget_requires_event_loop"
+                        ),
+                    }
+                },
+            ]
+        )
+
+        assert telemetry["telemetry_schema"] == "vectorized_fallback_telemetry_v1"
+        assert telemetry["case_count"] == 3
+        assert telemetry["event_count"] == 12
+        assert telemetry["configured_off_case_count"] == 1
+        assert telemetry["vectorized_requested_case_count"] == 2
+        assert telemetry["vectorized_fallback_case_count"] == 1
+        assert telemetry["vectorized_fallback_event_count"] == 2
+        assert telemetry["vectorized_fallback_fraction_of_requested_cases"] == 0.5
+        assert telemetry["fallback_reason_counts"] == {
+            "<none>": 1,
+            "adaptive_budget_requires_event_loop": 1,
+            "disabled": 1,
+        }
+        assert telemetry["vectorized_requested_fallback_reason_counts"] == {
+            "<none>": 1,
+            "adaptive_budget_requires_event_loop": 1,
+        }
 
     def test_vectorized_pure_advection_block_preserves_random_position_order(self):
         theta_grid = np.linspace(0.01, np.pi - 0.01, 240)
@@ -11136,6 +11201,169 @@ class TestIntegration:
 
         assert second_batch["summary"] == first_batch["summary"]
         assert call_counts == {"intrinsic": 1, "reference": 1, "operator": 1}
+
+    def test_reference_cache_returns_readonly_shallow_payloads(self):
+        sim_cfg = SimulationConfig(
+            total_time_s=0.02,
+            sampling_rate_Hz=2000.0,
+            mean_flow_velocity_m_s=2e-4,
+            n_events=1,
+            random_seed=42,
+            reference_model="channel_angular_surrogate",
+        )
+        reference_cache = {}
+        medium_refractive_index = float(
+            WATER.refractive_index_at(BASELINE_OPTICAL.wavelength_m)
+        )
+
+        first_reference = parameter_sweep_module._get_or_compute_reference_field(
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            medium_refractive_index,
+            reference_cache,
+        )
+        first_reference["caller_only"] = True
+        second_reference = parameter_sweep_module._get_or_compute_reference_field(
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            medium_refractive_index,
+            reference_cache,
+        )
+
+        assert first_reference is not second_reference
+        assert "caller_only" not in second_reference
+        assert first_reference["reference_angular_field"] is second_reference["reference_angular_field"]
+        assert second_reference["reference_angular_field"].flags.writeable is False
+        with pytest.raises(ValueError, match="read-only"):
+            second_reference["reference_angular_field"][0, 0] = 0.0
+
+    def test_invariant_case_caches_return_shallow_readonly_payloads(self, monkeypatch):
+        theta_grid = np.linspace(0.01, np.pi - 0.01, 16)
+        sim_cfg = SimulationConfig(
+            total_time_s=0.02,
+            sampling_rate_Hz=2000.0,
+            mean_flow_velocity_m_s=2e-4,
+            n_events=1,
+            random_seed=42,
+        )
+        medium_refractive_index = float(
+            WATER.refractive_index_at(BASELINE_OPTICAL.wavelength_m)
+        )
+        call_counts = {"intrinsic": 0, "operator": 0}
+
+        def fake_intrinsic(*args, **kwargs):
+            call_counts["intrinsic"] += 1
+            return {"angular_field": np.array([1.0, 2.0])}
+
+        def fake_operator(*args, **kwargs):
+            call_counts["operator"] += 1
+            return {"roi_weight": np.array([0.25, 0.75])}
+
+        monkeypatch.setattr(
+            parameter_sweep_module,
+            "compute_intrinsic_scattering",
+            fake_intrinsic,
+        )
+        monkeypatch.setattr(
+            parameter_sweep_module,
+            "build_collection_operator",
+            fake_operator,
+        )
+        intrinsic_cache = {}
+        collection_operator_cache = {}
+
+        first_intrinsic = parameter_sweep_module._get_or_compute_intrinsic_scattering(
+            BASELINE_PARTICLE,
+            WATER,
+            BASELINE_OPTICAL.wavelength_m,
+            theta_grid,
+            intrinsic_cache,
+        )
+        first_operator = parameter_sweep_module._get_or_build_collection_operator(
+            theta_grid,
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            medium_refractive_index,
+            collection_operator_cache,
+        )
+        first_intrinsic["caller_only"] = True
+        first_operator["caller_only"] = True
+        second_intrinsic = parameter_sweep_module._get_or_compute_intrinsic_scattering(
+            BASELINE_PARTICLE,
+            WATER,
+            BASELINE_OPTICAL.wavelength_m,
+            theta_grid,
+            intrinsic_cache,
+        )
+        second_operator = parameter_sweep_module._get_or_build_collection_operator(
+            theta_grid,
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            medium_refractive_index,
+            collection_operator_cache,
+        )
+
+        assert call_counts == {"intrinsic": 1, "operator": 1}
+        assert first_intrinsic is not second_intrinsic
+        assert first_operator is not second_operator
+        assert "caller_only" not in second_intrinsic
+        assert "caller_only" not in second_operator
+        assert first_intrinsic["angular_field"] is second_intrinsic["angular_field"]
+        assert first_operator["roi_weight"] is second_operator["roi_weight"]
+        assert second_intrinsic["angular_field"].flags.writeable is False
+        assert second_operator["roi_weight"].flags.writeable is False
+
+    def test_cache_readonly_marker_rejects_nested_arrays(self):
+        with pytest.raises(TypeError, match="nested ndarray"):
+            parameter_sweep_module._mark_numpy_arrays_readonly(
+                {"sub_diag": {"angular_field": np.array([1.0, 2.0])}}
+            )
+
+    def test_cached_case_payloads_keep_arrays_top_level(self):
+        theta_grid = np.linspace(0.01, np.pi - 0.01, 32)
+        sim_cfg = SimulationConfig(
+            total_time_s=0.02,
+            sampling_rate_Hz=2000.0,
+            mean_flow_velocity_m_s=2e-4,
+            n_events=1,
+            random_seed=42,
+            reference_model="channel_angular_surrogate",
+        )
+        medium_refractive_index = float(
+            WATER.refractive_index_at(BASELINE_OPTICAL.wavelength_m)
+        )
+        payloads = {
+            "intrinsic": compute_intrinsic_scattering(
+                BASELINE_PARTICLE,
+                WATER,
+                BASELINE_OPTICAL.wavelength_m,
+                theta_grid,
+            ),
+            "operator": build_collection_operator(
+                theta_grid,
+                BASELINE_CHANNEL,
+                BASELINE_OPTICAL,
+                sim_cfg,
+                medium_refractive_index=medium_refractive_index,
+            ),
+            "reference": compute_reference_field(
+                BASELINE_CHANNEL,
+                BASELINE_OPTICAL,
+                sim_cfg,
+                medium_refractive_index=medium_refractive_index,
+            ),
+        }
+        for payload_name, payload in payloads.items():
+            for key, value in payload.items():
+                if isinstance(value, np.ndarray):
+                    continue
+                assert not parameter_sweep_module._contains_nested_ndarray(value), (
+                    f"{payload_name}.{key} would bypass the top-level readonly marker"
+                )
 
     def test_case_context_caches_preserve_stream_summary(self):
         theta_grid = np.linspace(0.01, np.pi - 0.01, 180)

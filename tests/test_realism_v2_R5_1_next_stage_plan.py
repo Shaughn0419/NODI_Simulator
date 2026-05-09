@@ -146,7 +146,9 @@ def test_R5_1_provenance_freeze_matches_current_R5_artifacts():
             R5_DIR / "scenario_bundle_sensitivity_summary.csv"
         ),
         "R5_cost_estimate_checksum": rv2.sha256_file(R5_DIR / "full_grid_v2_cost_estimate.csv"),
-        "R5_run_manifest_checksum": rv2.sha256_file(R5_DIR / "run_manifest.json"),
+        "R5_run_manifest_checksum": rv2.run_manifest_provenance_checksum(
+            R5_DIR / "run_manifest.json"
+        ),
     }
 
     assert set(provenance["required_R5_checksum_fields"]) == (

@@ -4,8 +4,9 @@ dashboard/panels/common.py — Shared dashboard guidance helpers
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from copy import deepcopy
-from typing import Mapping, Any
+from typing import Any
 
 import streamlit as st
 

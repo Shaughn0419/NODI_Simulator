@@ -27,7 +27,7 @@
 - `dashboard/config.py`
 - `dashboard/panels/common.py`
 - `dashboard/signal_backend.py`
-- `data_objects.py`
+- `nodi_simulator/data_objects.py`
 
 ## 页面定位
 **这页回答：** 给定一个具体 case，当前完整计算链为什么会得到这样的 detect / miss 与最终判断。

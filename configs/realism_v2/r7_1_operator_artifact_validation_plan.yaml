@@ -252,6 +252,7 @@
     "legacy_calibrated_detector_SNR_output_header_authorized": false
   },
   "provenance_freeze": {
+    "run_manifest_checksum_kind": "stable_content_v1",
     "required_checksum_fields": [
       "R7_manifest_checksum",
       "R7_candidate_registry_checksum",
@@ -281,6 +282,6 @@
     "R7_claim_guardrail_checksum": "a2eb13517897b9981e95fa299d5a3ef6a2d5a558e705f531f617bf161e9b19c8",
     "R7_stop_gate_checksum": "a7ee1427d0a49f47d50d0f0637a89a9f663a57afd3e3a7d27dd67b821ab77fc3",
     "R7_next_stage_matrix_checksum": "eed71d814b72606fc617ec0b1c3d3651059d273f2929841c16e98122878df176",
-    "R7_run_manifest_checksum": "36173eeb6268e847f85e5a36ecf7fd9b6cfe37538405907e294ac1c7f4dc1fcf"
+    "R7_run_manifest_checksum": "c6b63789714286e6c6f8624e1355a9db538b52c5bb967746d17c76d4c4920c45"
   }
 }

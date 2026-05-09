@@ -1,4 +1,4 @@
-# interferometric_trace.py — 干涉信号生成模块
+# nodi_simulator/interferometric_trace.py — 干涉信号生成模块
 
 ## 文件职责
 

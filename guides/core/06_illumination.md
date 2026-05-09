@@ -1,4 +1,4 @@
-# illumination.py — 激光照明包络模块
+# nodi_simulator/illumination.py — 激光照明包络模块
 
 ## 文件职责
 
@@ -44,7 +44,7 @@ NODI 实验中存在两种截然不同的照明策略，对检测率有显著影
 在 `compute_illumination_envelope()` 中，在高斯包络计算之后、强度计算之前加入分支：
 
 ```python
-# illumination.py
+# nodi_simulator/illumination.py
 _active_illumination_mode = (
     sim_cfg.illumination_mode if sim_cfg is not None else "tight_focus"
 )
@@ -55,7 +55,7 @@ if _active_illumination_mode == "overfill":
 `SimulationConfig` 中新增字段：
 
 ```python
-# data_objects.py → SimulationConfig
+# nodi_simulator/data_objects.py → SimulationConfig
 illumination_mode: str = "overfill"  # "overfill" 或 "tight_focus"
 ```
 

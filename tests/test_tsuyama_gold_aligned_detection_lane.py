@@ -8,11 +8,13 @@ from dataclasses import replace
 from pathlib import Path
 
 import pandas as pd
+import pytest
 
-from tools import tsuyama_detection_rate_calibration as calib
-from tools import tsuyama_detection_rule_sensitivity as rule_sens
-from tools import tsuyama_gold_aligned_detection_lane as lane
+from tools.audits import tsuyama_detection_rate_calibration as calib
+from tools.audits import tsuyama_detection_rule_sensitivity as rule_sens
+from tools.audits import tsuyama_gold_aligned_detection_lane as lane
 from nodi_simulator.data_objects import Particle
+from nodi_simulator.materials import get_n_complex
 from nodi_simulator.parameter_sweep import summarize_batch
 
 
@@ -91,6 +93,20 @@ def test_tsuyama_2022_table_s1_particle_uses_fixed_paper_index():
     assert particle.material_key == "silver"
     assert particle.use_material_model is False
     assert particle.n_complex_at(660e-9) == complex(0.05, 4.483)
+
+
+def test_tsuyama_gold_table_s1_matches_material_db_johnson_christy_points():
+    source_wavelength_by_nominal_nm = {
+        488: 495.9e-9,
+        532: 520.9e-9,
+        660: 659.5e-9,
+    }
+
+    for nominal_nm, source_wavelength_m in source_wavelength_by_nominal_nm.items():
+        n_real, n_imag = lane.TSUYAMA_2022_TABLE_S1_NK["gold"][nominal_nm]
+        n_complex = get_n_complex("gold", source_wavelength_m)
+        assert n_complex.real == pytest.approx(n_real)
+        assert n_complex.imag == pytest.approx(n_imag)
 
 
 def test_explicit_sweep_uses_case_geometry_for_baseline_channel(monkeypatch):

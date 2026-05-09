@@ -84,3 +84,69 @@ def test_block_trajectory_matches_scalar_pure_advection_for_same_initial_positio
         np.testing.assert_allclose(block["y_m"][idx], scalar["y_m"])
         np.testing.assert_allclose(block["z_m"][idx], scalar["z_m"])
         np.testing.assert_allclose(block["v_y_m_s"][idx], scalar["v_y_m_s"])
+
+
+def test_seeded_diffusion_is_reproducible_without_explicit_rng():
+    channel = _channel()
+    optical = _optical()
+    cfg = SimulationConfig(
+        total_time_s=1.0e-3,
+        sampling_rate_Hz=10_000.0,
+        mean_flow_velocity_m_s=2.0e-4,
+        include_diffusion=True,
+        random_seed=123,
+    )
+
+    first = simulate_particle_trajectory(
+        channel,
+        optical,
+        cfg,
+        initial_x_m=0.0,
+        initial_z_m=0.0,
+        diffusion_coefficient=1.0e-12,
+    )
+    second = simulate_particle_trajectory(
+        channel,
+        optical,
+        cfg,
+        initial_x_m=0.0,
+        initial_z_m=0.0,
+        diffusion_coefficient=1.0e-12,
+    )
+
+    np.testing.assert_array_equal(first["x_m"], second["x_m"])
+    np.testing.assert_array_equal(first["z_m"], second["z_m"])
+
+
+def test_seeded_block_diffusion_is_reproducible_without_explicit_rng():
+    channel = _channel()
+    optical = _optical()
+    cfg = SimulationConfig(
+        total_time_s=1.0e-3,
+        sampling_rate_Hz=10_000.0,
+        mean_flow_velocity_m_s=2.0e-4,
+        include_diffusion=True,
+        random_seed=456,
+    )
+    initial_x = np.array([0.0, 40e-9])
+    initial_z = np.array([0.0, -50e-9])
+
+    first = simulate_particle_trajectory_block(
+        channel,
+        optical,
+        cfg,
+        initial_x_m=initial_x,
+        initial_z_m=initial_z,
+        diffusion_coefficient=1.0e-12,
+    )
+    second = simulate_particle_trajectory_block(
+        channel,
+        optical,
+        cfg,
+        initial_x_m=initial_x,
+        initial_z_m=initial_z,
+        diffusion_coefficient=1.0e-12,
+    )
+
+    np.testing.assert_array_equal(first["x_m"], second["x_m"])
+    np.testing.assert_array_equal(first["z_m"], second["z_m"])

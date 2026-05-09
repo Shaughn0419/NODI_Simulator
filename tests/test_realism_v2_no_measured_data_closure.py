@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-import realism_v2 as rv2
+from nodi_simulator import realism_v2 as rv2
 
 
 V2_CLOSURE_DIR = rv2.DEFAULT_V2_NO_MEASURED_DATA_CLOSURE_DIR
@@ -132,7 +132,9 @@ def test_v2_closure_plan_route_claim_and_provenance_boundaries():
         "R7_2_next_stage_matrix_checksum": rv2.sha256_file(
             R7_2_DIR / "R7_2_next_stage_recommendation_matrix.csv"
         ),
-        "R7_2_run_manifest_checksum": rv2.sha256_file(R7_2_DIR / "run_manifest.json"),
+        "R7_2_run_manifest_checksum": rv2.run_manifest_provenance_checksum(
+            R7_2_DIR / "run_manifest.json"
+        ),
         "v2_consolidated_roadmap_checksum": rv2.sha256_file(
             rv2.PROJECT_ROOT
             / "reports"

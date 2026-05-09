@@ -1,4 +1,6 @@
-# `interface_correction.py`
+# `nodi_simulator/interface_correction.py`
+
+> 本文件为模块导航摘要；完整 API、边界条件与实现细节以源码 docstring 和测试为准。
 
 ## 文件定位
 - 类型：核心物理诊断模块

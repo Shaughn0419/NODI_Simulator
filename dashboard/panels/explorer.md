@@ -17,7 +17,7 @@
 - `dashboard/backend.py`
 - `dashboard/config.py`
 - `dashboard/panels/common.py`
-- `utils.py`
+- `nodi_simulator/utils.py`
 
 ## 页面定位
 **这页回答：** 在标准结果库里，哪些 λ / W / H 组合更像稳定平台，而不是偶然尖峰。

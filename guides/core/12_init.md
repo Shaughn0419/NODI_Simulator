@@ -8,16 +8,16 @@
 
 ## 导出内容
 
-### 数据类（来自 data_objects.py）
+### 数据类（来自 nodi_simulator/data_objects.py）
 - `Particle`、`Medium`、`Channel`、`OpticalSystem`、`SimulationConfig`
 - `DesignObjectiveConfig`
 - 默认实例：`BASELINE_PARTICLE`、`PBS_1X`、`WATER`、`BASELINE_CHANNEL`、`BASELINE_OPTICAL`、`DEFAULT_SIM_CFG`
 - EV/NODI design helper：`make_ev_nodi_design_sweep_config`、`make_gold_baseline_particle`、`DEFAULT_DESIGN_OBJECTIVE_CONFIG`
 
-### 材料数据库（来自 materials.py）
+### 材料数据库（来自 nodi_simulator/materials.py）
 - `get_n_complex`、`list_materials`、`material_property_summary`、`MATERIAL_DB`
 
-### Mie 引擎（来自 mie_engine.py）
+### Mie 引擎（来自 nodi_simulator/mie_engine.py）
 - `mie_compute`、`mie_angular`
 
 ### 物理计算（来自各功能模块）
@@ -41,10 +41,10 @@
 - readout / units / wavelength / hardware safety：`build_nodi_readout_transfer_diagnostics`、`build_unit_axis_convention_diagnostics`、`build_mie_validation_diagnostics`、`build_wavelength_comparability_diagnostics`、`build_optical_exposure_safety_diagnostics`、`evaluate_objective_panel`
 - run / selection / event QC / seed robustness：`build_run_state_diagnostics`、`build_selection_function_diagnostics`、`build_event_quality_control_diagnostics`、`run_seed_replicates`
 
-### 信号处理（来自 pulse_analysis.py）
+### 信号处理（来自 nodi_simulator/pulse_analysis.py）
 - `estimate_threshold_robust`、`extract_pulse_features`
 
-### 编排与扫描（来自 parameter_sweep.py）
+### 编排与扫描（来自 nodi_simulator/parameter_sweep.py）
 - `add_detector_noise`
 - `simulate_one_event`、`summarize_batch`
 - `run_single_case_batch`、`compute_case_score`
@@ -52,7 +52,7 @@
 - `compute_robust_scores`
 - `run_parameter_sweep`
 
-### 工具函数（来自 utils.py）
+### 工具函数（来自 nodi_simulator/utils.py）
 - `interpolate_at_theta`、`validate_simulation_config`
 - `sample_initial_position`、`min_max_normalize`
 - `compute_baseline_normalization`、`compute_baseline_normalization_per_wavelength`

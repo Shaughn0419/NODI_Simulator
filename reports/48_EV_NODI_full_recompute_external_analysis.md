@@ -241,7 +241,7 @@ NODI 的核心机制是纳米通道衍射参考场与粒子散射场发生干涉
 
 ## 7. EV 粒径分布：小 EV 偏置会如何改变判断
 
-本节使用仓库正式输出 `results/ev_size_weighted_route_analysis.csv`，其默认分析范围为 **60–300 nm** EV 尺寸点。注意它与第 3–4 节的 raw EV route mean 不完全同一口径：第 3–4 节按 **40–300 nm 的 27 个 EV 尺寸模型等权** 聚合；本节按 `tools/ev_size_weighted_route_analysis.py` 的 60–300 nm priors 聚合。因此 `uniform` 列不会等于第 3.1 节的 raw mean，例如 `532 / 600×1500` 在 27-size raw mean 下是 1345/10000，在 60–300 nm uniform 下是 1441/10000。这不是矛盾，而是分母不同。
+本节使用仓库正式输出 `results/ev_size_weighted_route_analysis.csv`，其默认分析范围为 **60–300 nm** EV 尺寸点。注意它与第 3–4 节的 raw EV route mean 不完全同一口径：第 3–4 节按 **40–300 nm 的 27 个 EV 尺寸模型等权** 聚合；本节按 `tools/audits/ev_size_weighted_route_analysis.py` 的 60–300 nm priors 聚合。因此 `uniform` 列不会等于第 3.1 节的 raw mean，例如 `532 / 600×1500` 在 27-size raw mean 下是 1345/10000，在 60–300 nm uniform 下是 1441/10000。这不是矛盾，而是分母不同。
 
 四个权重场景为：`uniform`、`small_ev_literature`、`broad_ev_literature`、`sharp_msc_sev_empirical`。它们是 sensitivity scenario，不是实际样品分布。真实样品仍需要 NTA/TRPS/EM/orthogonal characterization；不同 EV isolation method 也会改变 EV 的 cargo、蛋白和功能，不应只用粒径权重替代样品表征。
 

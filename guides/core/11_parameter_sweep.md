@@ -1,4 +1,4 @@
-# parameter_sweep.py — 参数扫描与编排模块
+# nodi_simulator/parameter_sweep.py — 参数扫描与编排模块
 
 ## 文件职责
 

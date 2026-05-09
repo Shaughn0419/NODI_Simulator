@@ -1,4 +1,6 @@
-# `parameter_sweep.py`
+# `nodi_simulator/parameter_sweep.py`
+
+> 本文件为模块导航摘要；完整 API、边界条件与实现细节以源码 docstring 和测试为准。
 
 ## 文件定位
 - 类型：核心仿真模块
@@ -14,9 +16,9 @@
 - 直接维护建议：这里承载核心物理或仿真逻辑，修改时应优先保证数值口径稳定，并补充对应测试。
 
 ## 关联代码
-- `data_objects.py`、`intrinsic_scattering.py`、`reference_field.py`
-- `illumination.py`、`trajectory.py`、`scattering_trace.py`
-- `interferometric_trace.py`、`pulse_analysis.py`、`utils.py`
+- `nodi_simulator/data_objects.py`、`nodi_simulator/intrinsic_scattering.py`、`nodi_simulator/reference_field.py`
+- `nodi_simulator/illumination.py`、`nodi_simulator/trajectory.py`、`nodi_simulator/scattering_trace.py`
+- `nodi_simulator/interferometric_trace.py`、`nodi_simulator/pulse_analysis.py`、`nodi_simulator/utils.py`
 
 ## 专题补充
 - [`guides/core/11_parameter_sweep.md`](guides/core/11_parameter_sweep.md)
@@ -30,7 +32,7 @@
 - `run_parameter_sweep(...)` 现在会在开始执行 case 前验证 `theta_grid_rad`；缺失或非 1D 空网格会立即抛错。
 - sweep case 失败不会再被静默保存成“完成的部分结果”。默认 `allow_partial=False` 会在任意 case 失败后抛出 `SweepCaseFailureError`；只有调用方显式传 `allow_partial=True` 时，才允许返回成功子集，并由 precompute metadata 记录 partial policy。
 - `numba` 仍是可选加速依赖；缺失时 parameter-sweep kernel 会发出 runtime warning，并退回无 JIT 路径。
-- `run_single_case_batch` 会为每个 case 构建一次 trajectory/readout/pulse context，并传入每个 event；其中 `TrajectoryContext` 来自 `trajectory.py`，负责复用时间网格、可达半跨和 `rect_series` 系数。
+- `run_single_case_batch` 会为每个 case 构建一次 trajectory/readout/pulse context，并传入每个 event；其中 `TrajectoryContext` 来自 `nodi_simulator/trajectory.py`，负责复用时间网格、可达半跨和 `rect_series` 系数。
 - `_BatchSummaryAccumulator` 现在同时输出 raw all-crossing 和 selected detector-mode 条件诊断：`detection_rate` / `all_crossing_detection_rate` 保持全穿越事件分母；`selected_detector_mode_candidate_*` 使用 width gate 前 `event_max_margin_z >= 0` 的事件分母；`selected_detector_mode_annulus_*` 使用初始位置 `edge_norm = max(abs(x_norm), abs(z_norm))` 落在 `SimulationConfig.selected_annulus_edge_norm_min/max` 的事件分母，默认仍为 `0.5-0.8`。这些字段不参与 `compute_case_score` 或工程 ranking，只供 Tsuyama selected detector-mode 语义解释和报告诊断；当 annulus 分母为空时，conditional rate / Wilson LB / mean edge norm 输出 `NaN`，并在 gold-lane flatten / 下游 route analysis 中继续保留 unavailable/NaN 语义；`dashboard.precompute` 已把它们贯通到 summary / compact / diagnostics-long，`results/selected_annulus_fullchain_dryrun_20260501_v2/` 的小型全链路试算已确认下游 route analysis 能直接消费这些列；旧 CSV 缺源列时仍必须显式标记 unavailable/null/NaN。
 - BFP ROI mask 字段会从 collection operator 贯通到 summary、intrinsic、reference、precompute 和 dashboard：`bfp_roi_mask_source/status/data_role/gate_passed` 只说明 ROI mask contract 状态，不会单独解锁 detector-unit quantitative claim。
 - 当前 `observation_signature` 不只冻结 reference / phase / readout，也会把 material model/uncertainty status、Mie-to-power chain status、detector field units、calibration design rank、held-out validation status、superposition validity / channel-particle coupling model、interface output sensitivity / full-wave escalation、POD quantitative route / wavelength grouping / heat-source blockers、count-generation boundary / Poisson arrival / crossing-conditioned transport status、`K_sca_uncertainty_status`、standard-particle uncertainty budget、`coupling_model`、`illumination_mode`、`flow_profile_model`、`include_diffusion`、`diffusion_hindrance_model`、`reflecting_boundary` 这些材料、单位链、calibration、界面、POD、弱叠加、计数、输运与照明 provenance 一并串入审计签名。

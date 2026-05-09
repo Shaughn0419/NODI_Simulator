@@ -1,4 +1,6 @@
-# `photothermal_pod.py`
+# `nodi_simulator/photothermal_pod.py`
+
+> 本文件为模块导航摘要；完整 API、边界条件与实现细节以源码 docstring 和测试为准。
 
 Thermal POD provenance helper.
 

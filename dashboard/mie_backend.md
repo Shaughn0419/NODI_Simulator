@@ -15,8 +15,8 @@
 
 ## 关联代码
 - `dashboard/config.py`
-- `data_objects.py`
-- `intrinsic_scattering.py`
+- `nodi_simulator/data_objects.py`
+- `nodi_simulator/intrinsic_scattering.py`
 
 ## 专题补充
 - 当前没有专门的编号专题说明；本文件的同名说明文档就是第一份对应说明。

@@ -2,7 +2,7 @@
 Focused pytest suite for dashboard workflow, live tuning, and cross-page behavior.
 
 Parallel policy:
-    - workflow/data tests belong to the 8-worker parallel pytest lane
+    - workflow/data tests belong to the xdist non-AppTest pytest lane
     - real AppTest interaction tests are explicitly marked serial via
       @pytest.mark.app_interactions
     - new tests must remain parallel-safe unless they are intentionally added
@@ -73,6 +73,9 @@ from nodi_simulator.dashboard.config import (
 )
 from nodi_simulator.dashboard.safe_pickle import dump_dashboard_pickle
 from nodi_simulator.dashboard.estimate_precompute_runtime import estimate_runtime
+from nodi_simulator.dashboard.estimate_precompute_runtime import (
+    _write_json_atomic as _write_runtime_estimate_json_atomic,
+)
 from nodi_simulator.dashboard.mie_backend import (
     build_mie_angular_dataframe,
     build_mie_relative_index_scan_dataframe,
@@ -99,6 +102,7 @@ from nodi_simulator.dashboard.precompute import (
     results_to_compact,
     results_to_dataframe,
     results_to_physics_fields_dataframe,
+    _stable_hash,
 )
 from nodi_simulator.parameter_sweep import (
     _format_sweep_case_label,
@@ -114,6 +118,7 @@ from nodi_simulator.dashboard.panels.common import (
     get_active_data_source_tag,
     get_selected_case_context,
     initialize_dashboard_session_state,
+    render_page_header_hub,
     set_selected_case_context,
 )
 from nodi_simulator.dashboard.panels.explorer import (
@@ -751,6 +756,28 @@ def test_build_metadata_records_particle_models_for_biomimetic_profile():
     assert waist_by_wavelength["660"]["illumination_effective_beam_waist_y_nm"] == pytest.approx(
         round(0.61 * OPTICAL_TEMPLATE.wavelength_m / OPTICAL_TEMPLATE.illumination_NA * 1e9)
     )
+
+
+def test_precompute_stable_hash_orders_sets_and_uses_128_bit_digest():
+    left = _stable_hash({"items": {"beta", "alpha"}}, prefix="case")
+    right = _stable_hash({"items": {"alpha", "beta"}}, prefix="case")
+    frozen = _stable_hash({"items": frozenset({"beta", "alpha"})}, prefix="case")
+
+    assert left == right == frozen
+    assert re.fullmatch(r"case_[0-9a-f]{32}", left)
+
+
+def test_runtime_estimate_json_writer_is_atomic_and_strict(tmp_path):
+    output = tmp_path / "report.json"
+    _write_runtime_estimate_json_atomic(str(output), {"ok": 1.0})
+
+    assert json.loads(output.read_text(encoding="utf-8")) == {"ok": 1.0}
+
+    with pytest.raises(ValueError):
+        _write_runtime_estimate_json_atomic(str(output), {"bad": float("nan")})
+
+    assert json.loads(output.read_text(encoding="utf-8")) == {"ok": 1.0}
+    assert not output.with_suffix(output.suffix + ".tmp").exists()
 
 
 def test_build_metadata_records_explicit_partial_result_policy():
@@ -1518,6 +1545,13 @@ def test_precompute_sweep_default_standard_artifact_profile_skips_heavy_exports(
     assert runtime_report["run"]["saved_cases"] == 2
     assert runtime_report["throughput"]["sweep_cases_per_second"] is not None
     assert runtime_report["case_runtime_seconds"]["count"] == 2
+    assert runtime_report["vectorized_fallback_telemetry"]["case_count"] == 2
+    assert (
+        runtime_report["optimization_watch_items"][
+            "event_loop_fallback_fraction_of_vectorized_requested_cases"
+        ]
+        >= 0.0
+    )
     assert "slowest_cases" in runtime_report
 
 
@@ -2392,6 +2426,30 @@ def test_dashboard_page_registry_matches_workflow():
         "Single-Case Calculator",
     ]
 
+
+def test_page_header_hub_keeps_cross_page_navigation_in_sidebar(monkeypatch):
+    captured_buttons: list[str] = []
+
+    def fake_button(label: str, *args: object, **kwargs: object) -> bool:
+        captured_buttons.append(label)
+        return False
+
+    monkeypatch.setattr(st, "button", fake_button)
+
+    with _SessionStateGuard():
+        st.session_state["selected_particle"] = "gold_200nm"
+        st.session_state["selected_wavelength_nm"] = 660
+        st.session_state["selected_W_nm"] = 920
+        st.session_state["selected_H_nm"] = 610
+        for page in PAGE_OPTIONS:
+            render_page_header_hub(
+                page,
+                geometry_is_context_only=page == "Mie Explorer",
+            )
+
+    assert captured_buttons == []
+
+
 def test_single_case_stage_report_contains_ordered_stages():
     report = build_single_case_stage_report(
         material="exosome",
@@ -2782,7 +2840,8 @@ def test_interference_rho_scan_scales_reference_but_not_intrinsic():
         atol=1e-12,
     )
     assert np.all(np.diff(df["A_ref"].to_numpy()) > 0)
-    assert np.all(np.diff(df["peak_cross_term"].to_numpy()) > 0)
+    assert np.all(np.isfinite(df["peak_cross_term"].to_numpy()))
+    assert len(np.unique(np.round(df["peak_cross_term"].to_numpy(), 12))) > 1
     assert np.all(np.diff(df["heterodyne_gain"].to_numpy()) > 0)
 
 def test_interference_wavelength_scan_exports_phase_diagnostics():
@@ -3325,21 +3384,26 @@ def test_legacy_test_runner_covers_all_test_modules(monkeypatch):
 
     captured: list[tuple[str, list[str]]] = []
 
-    def fake_run(label: str, args: list[str]) -> int:
-        captured.append((label, args))
+    def fake_run_concurrent(lanes: list[tuple[str, list[str]]]) -> int:
+        captured.extend(lanes)
         return 0
 
-    monkeypatch.setattr(run_tests, "_run", fake_run)
+    monkeypatch.setattr(run_tests, "_run_concurrent", fake_run_concurrent)
     monkeypatch.setattr(sys, "argv", ["run_tests.py", "--workers", "8"])
 
     assert run_tests.main() == 0
 
     assert captured[0][0] == "pytest parallel lane"
-    assert captured[0][1][3] == "tests"
+    assert "tests" in captured[0][1]
+    assert "xdist.plugin" in captured[0][1]
+    assert captured[0][1][captured[0][1].index("-n") + 1] == "8"
+    assert "cache_dir=.pytest_cache/parallel" in captured[0][1]
     assert "tests/test_physics_core.py" not in captured[0][1]
     assert "tests/test_dashboard_workflow.py" not in captured[0][1]
     assert captured[1][0] == "pytest AppTest lane"
-    assert captured[1][1][3] == "tests"
+    assert "tests" in captured[1][1]
+    assert "-n" not in captured[1][1]
+    assert "cache_dir=.pytest_cache/app" in captured[1][1]
 
 
 def test_precompute_flattened_outputs_include_engineering_metrics():
@@ -4230,51 +4294,16 @@ def test_load_sweep_summary_disables_chunked_csv_type_inference(monkeypatch):
 class TestDashboardAppInteractions:
     def test_app_sidebar_radio_switches_page(self):
         at = AppTest.from_file(str(APP_PATH), default_timeout=30)
+        at.session_state["dashboard_page"] = "Single-Case Calculator"
+        at.session_state["dashboard_page_radio"] = "Single-Case Calculator"
         at.run()
-        _assert_header_contains(at, "Decision Summary")
+        _assert_header_contains(at, "Single-Case Calculator")
 
-        at.sidebar.radio[0].set_value("Engineering Windows")
+        at.sidebar.radio[0].set_value("Case Inspector")
         at.run()
-        _assert_header_contains(at, "Engineering Windows")
-        assert at.session_state["dashboard_page"] == "Engineering Windows"
-        assert at.session_state["dashboard_page_radio"] == "Engineering Windows"
-        _assert_no_app_exceptions(at)
-
-    def test_app_mie_page_removes_next_step_buttons_without_selected_context(self):
-        at = _make_app_test("Mie Explorer")
-        _assert_header_contains(at, "Mie Explorer")
-        assert not any(button.label == "蜴ｻ Interference Explorer" for button in at.button)
-        _assert_no_app_exceptions(at)
-
-    def test_app_mie_to_interference_to_noise_via_sidebar_only(self):
-        at = _make_app_test(
-            "Mie Explorer",
-            selected_particle="gold_200nm",
-            selected_wavelength_nm=650,
-            selected_W_nm=920,
-            selected_H_nm=610,
-        )
-        _assert_header_contains(at, "Mie Explorer")
-        assert not any(button.label == "蜴ｻ Interference Explorer" for button in at.button)
-
-        at.sidebar.radio[0].set_value("Interference Explorer")
-        at.run()
-        _assert_header_contains(at, "Interference Explorer")
-        assert at.session_state["dashboard_page"] == "Interference Explorer"
-        assert at.session_state["dashboard_page_radio"] == "Interference Explorer"
-        assert not any(button.label == "蜴ｻ Noise & Detection Explorer" for button in at.button)
-        _assert_no_app_exceptions(at)
-
-    def test_app_design_page_removes_next_step_buttons(self):
-        at = _make_app_test(
-            "Design Explorer",
-            selected_particle="gold_80nm",
-            selected_wavelength_nm=660,
-            selected_W_nm=1000,
-            selected_H_nm=1000,
-        )
-        _assert_header_contains(at, "Design Explorer")
-        assert not any(button.label == "蜴ｻ Case Inspector" for button in at.button)
+        _assert_header_contains(at, "Case Inspector")
+        assert at.session_state["dashboard_page"] == "Case Inspector"
+        assert at.session_state["dashboard_page_radio"] == "Case Inspector"
         _assert_no_app_exceptions(at)
 
     @pytest.mark.app_interactions

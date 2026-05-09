@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from tools import tsuyama_selected_annulus_joint_fit as joint
+from tools.audits import tsuyama_selected_annulus_joint_fit as joint
 
 
 def test_selected_annulus_real_sweep_is_count_subset_across_lambda_and_geometry():

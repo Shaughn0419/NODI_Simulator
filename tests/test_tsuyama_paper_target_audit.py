@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from tools import tsuyama_paper_target_audit as audit
+from tools.audits import tsuyama_paper_target_audit as audit
 
 
 def test_target_audit_separates_hard_and_diagnostic_targets():

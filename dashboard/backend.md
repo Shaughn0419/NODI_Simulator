@@ -34,9 +34,9 @@
 ## 关联代码
 - `dashboard/config.py`
 - `dashboard/precompute.py`
-- `data_objects.py`
-- `parameter_sweep.py`
-- `utils.py`
+- `nodi_simulator/data_objects.py`
+- `nodi_simulator/parameter_sweep.py`
+- `nodi_simulator/utils.py`
 
 ## 设计原则
 1. 标准结果库优先于 live 数据。

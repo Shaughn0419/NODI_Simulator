@@ -182,7 +182,7 @@ Static check:
 
 ```text
 ruff check realism_v2.py \
-  tools/ev_nodi_realism_v2_R7_route_prior_mechanistic_decomposition_audit.py \
+  tools/one_shot/ev_nodi_realism_v2_R7_route_prior_mechanistic_decomposition_audit.py \
   tests/test_realism_v2_R7_route_prior_mechanistic_decomposition_audit.py \
   tests/test_realism_v2_R7_plan.py
 

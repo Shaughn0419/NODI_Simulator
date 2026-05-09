@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from tools import tsuyama_phase2_parameter_inverse as inverse
+from tools.one_shot import tsuyama_phase2_parameter_inverse as inverse
 
 
 def test_family_plan_keeps_transfer_size_in_final_family():

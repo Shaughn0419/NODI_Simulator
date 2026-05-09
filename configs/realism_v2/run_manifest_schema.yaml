@@ -5,6 +5,7 @@
     "git_commit",
     "roadmap_version",
     "schema_version",
+    "manifest_schema_version",
     "created_at",
     "base_v1_summary_path",
     "base_v1_summary_checksum",

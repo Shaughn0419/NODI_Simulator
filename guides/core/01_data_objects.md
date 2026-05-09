@@ -1,4 +1,4 @@
-# data_objects.py — 数据对象定义
+# nodi_simulator/data_objects.py — 数据对象定义
 
 ## 文件职责
 
@@ -32,7 +32,7 @@
 def n_complex_at(self, wavelength_m: float) -> complex
 ```
 
-- `use_material_model=True` 时：从 `materials.py` 查询该波长下的真实光学常数
+- `use_material_model=True` 时：从 `nodi_simulator/materials.py` 查询该波长下的真实光学常数
 - `use_material_model=False` 时：返回固定的 `n_complex`
 
 **使用说明**：
@@ -59,7 +59,7 @@ def n_complex_at(self, wavelength_m: float) -> complex
 def refractive_index_at(self, wavelength_m: float) -> float
 ```
 
-- `use_material_model=True` 时：从 `materials.py` 查询，取实部
+- `use_material_model=True` 时：从 `nodi_simulator/materials.py` 查询，取实部
 - `use_material_model=False` 时：返回固定的 `refractive_index`
 
 **注意**：当前介质语义已经按粒子分流：金粒子计算使用 `water`，exosome 计算使用 `1x PBS`。启用材料模型时，`water` 走 visible Cauchy nominal surrogate，`pbs_1x` 走 water Cauchy + nominal PBS offset；固定值字段只作为 legacy fallback。
@@ -84,7 +84,7 @@ def refractive_index_at(self, wavelength_m: float) -> float
 def wall_refractive_index_at(self, wavelength_m: float) -> float
 ```
 
-- `wall_material_key` 非 None 时：从 `materials.py` 查询，取实部
+- `wall_material_key` 非 None 时：从 `nodi_simulator/materials.py` 查询，取实部
 - `wall_material_key` 为 None 时：返回固定的 `wall_refractive_index`
 
 **注意**：当前默认壁材已经切到熔融石英。`wall_material_key="fused_silica"` 时走 Malitson Sellmeier nominal dispersion；`wall_refractive_index` 固定值只在 `wall_material_key=None` 的 legacy fallback 中使用。接口也为后续 near-wall correction / full-wave escalation 保留。
@@ -453,7 +453,7 @@ def wall_refractive_index_at(self, wavelength_m: float) -> float
 
 这里要特别区分两层默认：
 
-- `data_objects.py::DEFAULT_SIM_CFG` 是基础包最小默认链，仍偏保守、便于审计
+- `nodi_simulator/data_objects.py::DEFAULT_SIM_CFG` 是基础包最小默认链，仍偏保守、便于审计
 - `dashboard/config.py::DEFAULT_SIM_CFG` 是 dashboard / precompute 主默认链，当前已切到 `rect_series + diffusion + gaussian_xy`
 
 所以如果你在单案例页、预计算 metadata 或 dashboard 结果里看到默认输运口径比基础包更“重”，这是当前设计，而不是文档或代码漂移。

@@ -4,23 +4,23 @@ version = "0.2.1"
 description = "Semi-physical interferometric simulator for NODI nanochannel detection."
 requires-python = ">=3.13"
 dependencies = [
-  "numpy",
-  "pandas",
+  "numpy>=2.4",
+  "pandas>=3.0",
   "pillow>=12.2.0",
-  "plotly",
-  "scipy",
-  "streamlit",
+  "plotly>=6.6",
+  "scipy>=1.17",
+  "streamlit>=1.56",
 ]
 
 [project.optional-dependencies]
 acceleration = [
-  "numba",
+  "numba>=0.65",
 ]
 dev = [
-  "mypy",
-  "pyright",
-  "pytest",
-  "ruff",
+  "mypy>=1.20",
+  "pyright>=1.1.409",
+  "pytest>=9.0",
+  "ruff>=0.15",
 ]
 
 [tool.ruff]
@@ -55,7 +55,6 @@ select = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401", "F403"]
 "nodi_simulator/__init__.py" = ["F401", "F403"]
 "tests/test_*.py" = ["F401"]
 
@@ -64,30 +63,12 @@ python_version = "3.13"
 namespace_packages = true
 explicit_package_bases = true
 files = [
-  "__init__.py",
-  "dashboard",
-  "data_objects.py",
-  "illumination.py",
-  "interferometric_trace.py",
-  "intrinsic_scattering.py",
-  "materials.py",
-  "mie_engine.py",
-  "nodi_simulator",
-  "optional_acceleration.py",
-  "paper_aligned_profiles.py",
-  "parameter_sweep.py",
-  "pulse_analysis.py",
-  "reference_field.py",
-  "realism_v2.py",
-  "realism_v2_io.py",
-  "scattering_trace.py",
-  "structured_particles.py",
-  "tests",
-  "tools",
-  "trajectory.py",
-  "tsuyama_phase_filter.py",
-  "type_coerce.py",
-  "utils.py",
+  "nodi_simulator/optional_acceleration.py",
+  "nodi_simulator/realism_v2_io.py",
+  "nodi_simulator/recompute_manifest.py",
+  "nodi_simulator/type_coerce.py",
+  "tools/_common.py",
+  "tools/_legacy_entrypoint.py",
 ]
 exclude = [
   "^\\._",
@@ -106,14 +87,20 @@ exclude = [
   "^tmp/",
 ]
 ignore_missing_imports = true
-ignore_errors = true
-follow_imports = "silent"
-check_untyped_defs = false
+follow_imports = "normal"
+check_untyped_defs = true
 warn_unused_ignores = true
 warn_redundant_casts = true
 warn_unreachable = true
 no_implicit_optional = true
 pretty = true
+
+[[tool.mypy.overrides]]
+module = [
+  "nodi_simulator",
+  "nodi_simulator.*",
+]
+follow_imports = "skip"
 
 [[tool.mypy.overrides]]
 module = [

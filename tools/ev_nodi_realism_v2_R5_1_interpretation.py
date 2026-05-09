@@ -1,44 +1,20 @@
+"""Compatibility wrapper for ``tools.one_shot.ev_nodi_realism_v2_R5_1_interpretation``."""
+
 from __future__ import annotations
 
-import argparse
-import json
 import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-PARENT = PROJECT_ROOT.parent
-for candidate in (PROJECT_ROOT, PARENT):
-    if str(candidate) not in sys.path:
-        sys.path.insert(0, str(candidate))
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
-try:
-    from nodi_simulator import realism_v2 as rv2
-except ModuleNotFoundError:  # pragma: no cover - direct bundle fallback
-    import realism_v2 as rv2
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Execute R5.1 route-role stability interpretation only."
-    )
-    parser.add_argument(
-        "--output-dir",
-        default=str(rv2.DEFAULT_R5_1_INTERPRETATION_DIR),
-        help="Directory for R5.1 interpretation outputs.",
-    )
-    parser.add_argument(
-        "--write-root-manifest",
-        action="store_true",
-        help="Also update the repository-root run_manifest.json.",
-    )
-    args = parser.parse_args()
-
-    summary = rv2.run_R5_1_route_role_stability_interpretation(
-        args.output_dir,
-        write_root_manifest=args.write_root_manifest,
-    )
-    print(json.dumps(summary, indent=2, sort_keys=True))
+from tools._legacy_entrypoint import run_legacy_tool
 
 
 if __name__ == "__main__":
-    main()
+    run_legacy_tool(
+        "tools.one_shot.ev_nodi_realism_v2_R5_1_interpretation",
+        safe_help=True,
+        require_execute=True,
+    )

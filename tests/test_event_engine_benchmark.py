@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import subprocess
+import sys
+from pathlib import Path
+
 import pandas as pd
 import pytest
 
-from tools.event_engine_benchmark import (
+from tools.benchmarks.event_engine_benchmark import (
     _aggregate_comparisons,
     _aggregate_records,
     _build_benchmark_grid_config,
@@ -11,6 +15,21 @@ from tools.event_engine_benchmark import (
     _select_spread_values,
     _select_recommendation,
 )
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_legacy_event_engine_benchmark_entrypoint_help_still_works():
+    result = subprocess.run(
+        [sys.executable, str(PROJECT_ROOT / "tools" / "event_engine_benchmark.py"), "--help"],
+        cwd=PROJECT_ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert "Run a short 8-worker precompute benchmark" in result.stdout
 
 
 def _benchmark_frame(*, peak_width_ms: float) -> pd.DataFrame:

@@ -383,6 +383,7 @@
     "legacy_calibrated_detector_SNR_output_header_authorized": false
   },
   "provenance_freeze": {
+    "run_manifest_checksum_kind": "stable_content_v1",
     "required_checksum_fields": [
       "R5_1_manifest_checksum",
       "R5_1_decision_table_checksum",
@@ -402,12 +403,12 @@
     "R5_1_context_warning_table_checksum": "a47a128f2b16f6fa331c607b0c757667487b77a97e3dd46327de91a594172327",
     "R5_1_weak_reference_checksum": "8eb95c8abf1a2a1c58c5b4c9402678fe88881f97c8c6c0f66920c8722c914cbd",
     "R5_1_next_stage_options_checksum": "da37e4ddd0472b72d5b102a53f6e297cd6de11d001f28bab1ae8789af2a53199",
-    "R5_1_run_manifest_checksum": "34a825e194069f6114f69392df66518132042dc87fecb6552df24c2a66c656fc",
+    "R5_1_run_manifest_checksum": "db4abaa790663bca8b676dfe015e3f92f5bae4e4a63c0ce9e75bb856e3d33b61",
     "R5_case_manifest_checksum": "0d5669a285b2a2160b833a7b4afd5035c5026c27918f6179b45248f21160447c",
     "R5_summary_checksum": "850e6f9edc67f3d0fdeb18cea18a3b5910bcf0e7995e98651cf1e990a4423d4f",
     "R5_context_no_promotion_checksum": "74402c6baa084a76afa8f7a3647d992c77f79d700cf573d124ffe75a4353f890",
     "R5_route_role_stability_checksum": "fd3c65c1cf0d5c5a851a96b58534a274f61dd37255b62c5405e4741f254b2c32",
     "R5_scenario_sensitivity_checksum": "475a1b80c1e9b8e9669acbeaa504810935d1123166fea49cc60c5ad4e14b2646",
-    "R5_run_manifest_checksum": "21fac8a93649e900304465e65ac49f8a15e50870ef2c8f1d7b3299f19f08d5e9"
+    "R5_run_manifest_checksum": "9965d7c2951b846a8fd518e28023ea615758e9b0dd7943708c8f396e5f27976f"
   }
 }

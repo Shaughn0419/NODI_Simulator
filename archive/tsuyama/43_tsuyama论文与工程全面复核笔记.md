@@ -51,7 +51,7 @@
 - `interferometric_trace.py`
 - `pulse_analysis.py`
 - `parameter_sweep.py`
-- `tools/tsuyama_gold_validation_compare.py`
+- `tools/audits/tsuyama_gold_validation_compare.py`
 - `results/tsuyama_gold_validation_tau1ms_1000e_report.json`
 
 ---

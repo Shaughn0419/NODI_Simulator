@@ -23,8 +23,7 @@ import time
 import numpy as np
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_PARENT = os.path.dirname(PROJECT_ROOT)
-for candidate in (PROJECT_ROOT, PROJECT_PARENT):
+for candidate in (PROJECT_ROOT,):
     if candidate not in sys.path:
         sys.path.insert(0, candidate)
 
@@ -82,6 +81,21 @@ def _seconds_to_readable(seconds: float) -> str:
         return f"{hours:.2f} h"
     days = hours / 24.0
     return f"{days:.2f} d"
+
+
+def _write_json_atomic(path: str, payload: dict) -> None:
+    """Atomically replace a JSON report, rejecting NaN/Inf payloads."""
+    output_dir = os.path.dirname(os.path.abspath(path))
+    os.makedirs(output_dir, exist_ok=True)
+    tmp_path = f"{path}.tmp"
+    try:
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2, allow_nan=False)
+        os.replace(tmp_path, path)
+    except Exception:
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+        raise
 
 
 def _build_benchmark_subset(
@@ -336,8 +350,7 @@ def main() -> None:
     print(f"  estimated_readable: {report['target']['estimated_readable']}")
 
     if args.output_json:
-        with open(args.output_json, "w", encoding="utf-8") as f:
-            json.dump(report, f, indent=2)
+        _write_json_atomic(args.output_json, report)
         print()
         print(f"Saved JSON report to: {args.output_json}")
 

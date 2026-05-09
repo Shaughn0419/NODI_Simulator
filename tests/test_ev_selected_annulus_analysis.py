@@ -4,8 +4,8 @@ import json
 
 import pandas as pd
 
-from tools import ev_size_weighted_route_analysis as route_analysis
-from tools import tsuyama_gold_aligned_detection_lane as lane
+from tools.audits import ev_size_weighted_route_analysis as route_analysis
+from tools.audits import tsuyama_gold_aligned_detection_lane as lane
 
 
 def test_ev_size_weighted_route_analysis_emits_selected_annulus_lens():

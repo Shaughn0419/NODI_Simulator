@@ -15,18 +15,18 @@ import re
 import shutil
 import time
 from collections import Counter
+from collections.abc import Callable, Mapping
 from copy import deepcopy
 from dataclasses import asdict, dataclass, field, is_dataclass, replace
 from datetime import datetime, timedelta
-from typing import Any, Callable, Mapping
+from typing import Any, cast
 
 import numpy as np
 import pandas as pd
 
 import sys
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_PARENT = os.path.dirname(PROJECT_ROOT)
-for candidate in (PROJECT_ROOT, PROJECT_PARENT):
+for candidate in (PROJECT_ROOT,):
     if candidate not in sys.path:
         sys.path.insert(0, candidate)
 
@@ -70,7 +70,11 @@ from nodi_simulator.ev_reporting_metadata import EV_REPORTING_DIAGNOSTIC_FIELDS
 from nodi_simulator.fluidic_network_model import FLUIDIC_NETWORK_DIAGNOSTIC_FIELDS
 from nodi_simulator.fluidic_resistance import FLUIDIC_RESISTANCE_DIAGNOSTIC_FIELDS
 from nodi_simulator.materials import MATERIAL_DB
-from nodi_simulator.parameter_sweep import build_sweep_case_key, run_parameter_sweep
+from nodi_simulator.parameter_sweep import (
+    build_sweep_case_key,
+    run_parameter_sweep,
+    summarize_vectorized_fallback_telemetry,
+)
 from nodi_simulator.count_likelihood import COUNT_LIKELIHOOD_DIAGNOSTIC_FIELDS
 from nodi_simulator.ood_detection import OOD_DIAGNOSTIC_FIELDS
 from nodi_simulator.bayesian_calibration import (
@@ -921,15 +925,21 @@ def _parquet_engine_available() -> bool:
 
 def _stable_jsonable(value: Any) -> Any:
     """Convert dataclasses/numpy values into stable JSON-friendly structures."""
-    if is_dataclass(value):
-        return _stable_jsonable(asdict(value))
+    if not isinstance(value, type) and is_dataclass(value):
+        return _stable_jsonable(asdict(cast(Any, value)))
     if isinstance(value, Mapping):
-        return {str(key): _stable_jsonable(value[key]) for key in sorted(value)}
+        return {str(key): _stable_jsonable(value[key]) for key in sorted(value, key=str)}
     if isinstance(value, np.ndarray):
         return _stable_jsonable(value.tolist())
     if isinstance(value, np.generic):
         return _stable_jsonable(value.item())
-    if isinstance(value, (list, tuple, set)):
+    if isinstance(value, (set, frozenset)):
+        items = [_stable_jsonable(item) for item in value]
+        return sorted(
+            items,
+            key=lambda item: json.dumps(item, sort_keys=True, separators=(",", ":"), default=str),
+        )
+    if isinstance(value, (list, tuple)):
         return [_stable_jsonable(item) for item in value]
     if isinstance(value, complex):
         return {"real": float(value.real), "imag": float(value.imag)}
@@ -943,7 +953,7 @@ def _stable_hash(payload: Any, *, prefix: str) -> str:
         separators=(",", ":"),
         default=str,
     )
-    digest = hashlib.sha256(stable.encode("utf-8")).hexdigest()[:16]
+    digest = hashlib.sha256(stable.encode("utf-8")).hexdigest()[:32]
     return f"{prefix}_{digest}"
 
 
@@ -4549,8 +4559,9 @@ def build_engineering_gate_calibration_report(
 
     failure_label_counter: Counter[str] = Counter()
     failed_df = df.loc[~current_pass].copy()
-    for _, row in failed_df.iterrows():
-        failure_label_counter[str(row["_engineering_gate_primary_blocker_label"])] += 1
+    failure_label_counter.update(
+        str(label) for label in failed_df["_engineering_gate_primary_blocker_label"].tolist()
+    )
 
     candidate_variants = [
         {
@@ -4588,7 +4599,7 @@ def build_engineering_gate_calibration_report(
         phase_cap = float(variant["engineering_max_phase_flip_fraction"])
         variant_pass = current_pass.copy()
 
-        for idx, row in df.loc[~current_pass].iterrows():
+        for idx, row in df.loc[~current_pass].to_dict("index").items():
             unresolved: list[str] = []
             for token in row["_engineering_gate_tokens"]:
                 token_category = _engineering_gate_token_category(token)
@@ -4953,7 +4964,7 @@ def build_result_health_report(
             "observation_freeze_status": str(row.get("observation_freeze_status", "")),
             "final_engineering_score": float(row.get("final_engineering_score", 0.0) or 0.0),
         }
-        for _, row in caution_df.head(max(int(top_k), 1)).iterrows()
+        for row in caution_df.head(max(int(top_k), 1)).to_dict("records")
     ]
 
     return ResultHealthReportPayload(
@@ -5144,7 +5155,7 @@ def build_runtime_performance_report(
     slowest_cases = []
     if not df.empty and "case_runtime_seconds" in df.columns:
         slowest_df = df.sort_values("case_runtime_seconds", ascending=False).head(20)
-        for _, row in slowest_df.iterrows():
+        for row in slowest_df.to_dict("records"):
             slowest_cases.append(
                 {
                     "particle_name": str(row.get("particle_name", "")),
@@ -5173,9 +5184,8 @@ def build_runtime_performance_report(
                 }
             )
 
-    fallback_count = 0
-    if "vectorized_event_engine_used" in df.columns:
-        fallback_count = int((df["vectorized_event_engine_used"] == "event_loop_fallback").sum())
+    fallback_telemetry = summarize_vectorized_fallback_telemetry(results)
+    fallback_count = int(fallback_telemetry["vectorized_fallback_case_count"])
     report = {
         "runtime_performance_schema": "precompute_runtime_performance_v1",
         "monitoring_intent": (
@@ -5247,6 +5257,7 @@ def build_runtime_performance_report(
                 df.get("event_sampling_policy", pd.Series(dtype=object)).tolist()
             ),
         },
+        "vectorized_fallback_telemetry": fallback_telemetry,
         "slowest_cases": slowest_cases,
         "slowest_groups": {
             "by_particle_material": _runtime_group_summary(df, ["particle_material"]),
@@ -5276,6 +5287,11 @@ def build_runtime_performance_report(
         },
         "optimization_watch_items": {
             "event_loop_fallback_count": fallback_count,
+            "event_loop_fallback_fraction_of_vectorized_requested_cases": (
+                fallback_telemetry[
+                    "vectorized_fallback_fraction_of_requested_cases"
+                ]
+            ),
             "checkpoint_share_of_sweep_time": (
                 float(checkpoint_elapsed / sweep_elapsed) if sweep_elapsed > 0.0 else None
             ),
@@ -5466,7 +5482,7 @@ def build_freeze_probe_report(
         ["final_engineering_score", "score"],
         ascending=[False, False],
     ).head(max(int(top_k), 1))
-    for _, row in top_df.iterrows():
+    for row in top_df.to_dict("records"):
         top_cases.append(
             {
                 "particle_name": str(row["particle_name"]),

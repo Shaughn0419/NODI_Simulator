@@ -78,14 +78,12 @@ for /f "tokens=*" %%v in ('%PYTHON% --version 2^>^&1') do echo Using %%v
 echo.
 
 REM ============================================================
-REM 2. Set PYTHONPATH so "import nodi_simulator" works
-REM    Prefer the current project root, and keep the parent as fallback.
+REM 2. Set PYTHONPATH so "import nodi_simulator" works from this project root.
 REM ============================================================
 for %%i in ("%~dp0.") do set "PROJ_ROOT=%%~fi"
-for %%i in ("%~dp0..") do set "PROJ_PARENT=%%~fi"
-set "PYTHONPATH=%PROJ_ROOT%;%PROJ_PARENT%;%PYTHONPATH%"
+set "PYTHONPATH=%PROJ_ROOT%;%PYTHONPATH%"
 set "PYTHONUTF8=1"
-echo [INFO] PYTHONPATH set to: %PROJ_ROOT%;%PROJ_PARENT%
+echo [INFO] PYTHONPATH set to: %PROJ_ROOT%
 echo [INFO] PYTHONUTF8=1 (force UTF-8 I/O, avoids cp932 decode errors)
 echo.
 

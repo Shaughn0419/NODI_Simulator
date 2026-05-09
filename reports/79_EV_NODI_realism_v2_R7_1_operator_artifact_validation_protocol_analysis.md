@@ -170,7 +170,7 @@ Static check:
 
 ```text
 ruff check realism_v2.py \
-  tools/ev_nodi_realism_v2_R7_1_operator_artifact_validation_protocol.py \
+  tools/one_shot/ev_nodi_realism_v2_R7_1_operator_artifact_validation_protocol.py \
   tests/test_realism_v2_R7_1_operator_artifact_validation_protocol.py \
   tests/test_realism_v2_R7_1_operator_artifact_validation_plan.py
 

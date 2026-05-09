@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-import realism_v2 as rv2
+from nodi_simulator import realism_v2 as rv2
 
 
 R7_1_DIR = rv2.DEFAULT_R7_1_OPERATOR_ARTIFACT_VALIDATION_DIR
@@ -161,7 +161,9 @@ def test_R7_2_provenance_freeze_matches_current_R7_1_artifacts():
         "R7_1_next_stage_matrix_checksum": rv2.sha256_file(
             R7_1_DIR / "R7_1_next_stage_recommendation_matrix.csv"
         ),
-        "R7_1_run_manifest_checksum": rv2.sha256_file(R7_1_DIR / "run_manifest.json"),
+        "R7_1_run_manifest_checksum": rv2.run_manifest_provenance_checksum(
+            R7_1_DIR / "run_manifest.json"
+        ),
     }
 
     assert set(provenance["required_checksum_fields"]) == (

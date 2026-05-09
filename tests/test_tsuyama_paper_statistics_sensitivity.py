@@ -5,7 +5,7 @@ import math
 
 import pandas as pd
 
-from tools import tsuyama_paper_statistics_sensitivity as stats
+from tools.audits import tsuyama_paper_statistics_sensitivity as stats
 
 
 def _decomposition_row(*, slope: float = 3.2532795199816804) -> dict[str, object]:
