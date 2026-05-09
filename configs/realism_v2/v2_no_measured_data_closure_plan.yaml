@@ -173,6 +173,7 @@
     "legacy_calibrated_detector_SNR_output_header"
   ],
   "provenance_freeze": {
+    "run_manifest_checksum_kind": "stable_content_v1",
     "required_checksum_fields": [
       "R7_2_manifest_checksum",
       "R7_2_artifact_gap_registry_checksum",
@@ -183,12 +184,12 @@
       "v2_consolidated_roadmap_checksum",
       "v2_target_alignment_self_review_checksum"
     ],
-    "R7_2_manifest_checksum": "f62b9cc0e18987dc923e838c96562e32f95034933de96545c95a61cfdb3e7dd7",
+    "R7_2_manifest_checksum": "f693883ebf912cd409f9b6e4f007afa5b1ea3375850f55347e8e51e5aed51d7d",
     "R7_2_artifact_gap_registry_checksum": "bd1fbe33025c86b1e326f39081d160814dc560914e324f8528498e1f7b6d4e2d",
     "R7_2_claim_guardrail_checksum": "a2eb13517897b9981e95fa299d5a3ef6a2d5a558e705f531f617bf161e9b19c8",
     "R7_2_stop_gate_checksum": "8e1b3f06c073bf8271bd74c64891700daaff3b8adf9e149cedd40eef4a674768",
     "R7_2_next_stage_matrix_checksum": "8fb5d0c236f865eaeb0ae2b62426d15dc8562e04e57a045ef1645e797df4852e",
-    "R7_2_run_manifest_checksum": "6c1fa8104b2f9c4da8e40055329e69cca062cf3cc87e5a144f8d0a81f8afb508",
+    "R7_2_run_manifest_checksum": "73eb0262e641c4a6bfa6b14f427781d904e2dbfe13d05f3b0f17b4653620135c",
     "v2_consolidated_roadmap_checksum": "8f47b719d73f6484004b54ebfac14b002142f6df2ade79d556133a9c76a79e3e",
     "v2_target_alignment_self_review_checksum": "0560d43110fc14afef5d9b1258b7992127f67ab51b84ffce6ce59018f73b97ee"
   }
