@@ -2,8 +2,8 @@
 
 This directory stores older notes that remain useful for methods, performance,
 or historical comparison. It is not the current reader-facing entry point. Start
-with `reports/88_*` for the current v1/v2 consolidated analysis and `reports/87_*`
-for the v2 no-measured-data closure boundary.
+with `reports/88_*` for the current v3.0 full-data consolidated analysis and
+`reports/87_*` for the v2 no-measured-data closure boundary.
 
 Current status:
 
@@ -12,6 +12,13 @@ Current status:
 - `46_全量计算性能优化复核.md` — current performance notes for the recompute path, including artifact profiles, summary-only streaming, trajectory context, worker-local invariant caches, the 16C/32T switch back to scalar/off defaults, and the rejected `block_lane_order` default switch.
 - `47_EV_NODI全量结果分层分析报告.md` — historical 32032-case four-wavelength all-crossing reader-facing analysis from an earlier reader-report lane. It remains useful for comparison, but current v1/v2 interpretation is report 88.
 - `47_ev_design_full_grid_analysis/` — historical derived CSV tables backing report 47, including mechanism-chain, wavelength-ratio, geometry-effect, candidate-detection, 404-vs-660 decomposition, deep-channel usability, gold-gate sensitivity, PEG geometry scenarios, and EV size-weighted ranking tables.
+
+2026-05-11 status update: report 47 is historical. Current formal reader
+interpretation is `reports/88_*` v3.0, which merges v1 full-grid evidence,
+realism v2 closure, P0 review-ready relative audit, and P1-P18 bounded
+physical-ceiling / trace-governance evidence. The post-v2 lanes remain
+no-measured-data relative audit and trace-only artifacts; they do not authorize
+calibrated claims, route promotion, or main-660 redefinition.
 
 2026-05-08 status update: report 47 is historical. Current formal v1/v2 reader interpretation has moved to `reports/88_*`; v2 has closed as a no-measured-data realism supplement, not an experimental acquisition lane.
 
@@ -31,4 +38,4 @@ Deleted current-result reports:
 
 - `35.4_最新全量数据库全面复核与选型报告.md`
 
-That file was tied to deleted or stale full-library results. New current-result reporting should now continue from report 88 unless a deliberately historical comparison is needed.
+That file was tied to deleted or stale full-library results. New current-result reporting should now continue from report 88 v3.0 unless a deliberately historical comparison is needed.

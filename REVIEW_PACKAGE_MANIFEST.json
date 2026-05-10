@@ -6,8 +6,8 @@
           "path": "README.md",
           "path_status": "exists",
           "role": "repo_readme",
-          "sha256": "c2b67e1816e6249b7006f00e3758733aa7fb9d1b5ba58885c4dbfb8d3cb086ea",
-          "size_bytes": 7454,
+          "sha256": "760cf32e11adf45dd483156c6ed991151461fc2aae1aaf16061aea98659e8a3b",
+          "size_bytes": 8948,
           "source_lane": "docs"
         },
         {
@@ -461,8 +461,8 @@
           "path": "reports/89_EV_NODI_post_v2_unmodeled_realism_register.md",
           "path_status": "exists",
           "role": "unmodeled_realism_register",
-          "sha256": "812cd5cedba14f12ca3fff78eca7a6d27561a09eb865b799ee0f8c2eadb0fdae",
-          "size_bytes": 4395,
+          "sha256": "a5a891bf5cee358490432cc68c5826849512b95b8b48bb94cd18ede923aabe8a",
+          "size_bytes": 5154,
           "source_lane": "post-v2 register"
         },
         {
@@ -593,8 +593,8 @@
           "path": "HISTORICAL_REPORT_SUPERSESSION.md",
           "path_status": "exists",
           "role": "historical_report_supersession",
-          "sha256": "e77c589c66a71a7eb78531ed9655f2019f6ceade77252372e809c45355766c91",
-          "size_bytes": 558,
+          "sha256": "e7f322282eea200567c6b7c628e5b0d7257f4d9aaab1b75d1209c61cf4f0828a",
+          "size_bytes": 1235,
           "source_lane": "P1.governance"
         }
       ],
@@ -792,11 +792,11 @@
   ],
   "calibrated_claim_allowed": false,
   "deferred_p0b_roles": [],
-  "generated_at": "2026-05-10T06:18:59+00:00",
-  "git_commit": "e03d3f31e84ddc0bf27e31e264ace363380e472a",
+  "generated_at": "2026-05-10T16:43:08+00:00",
+  "git_commit": "8dd07f5b7c42bfac3bd69e7f6660d2637b806c93",
   "git_dirty": false,
   "hashes_manifest_path": "REVIEW_PACKAGE_HASHES.sha256",
-  "hashes_manifest_sha256": "e49c8ed123d862edac3a9bfdb31410d4342561b9da056caf72dd228a490f8e7a",
+  "hashes_manifest_sha256": "a33e2b4d561c3ec1ccbb39cd018d8014808525ca260853c3e17386f027680c6a",
   "package_id": "ev_nodi_post_v2_review_package_20260510_p0b",
   "package_role": "external_review_relative_audit",
   "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",

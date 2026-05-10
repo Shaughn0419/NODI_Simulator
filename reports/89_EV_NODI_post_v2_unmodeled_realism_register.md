@@ -1,6 +1,6 @@
 # EV NODI post-v2 unmodeled realism register
 
-> Status: post-v2 boundary register. This file does not reopen v2, add scenarios, add stochastic seeds, run solver cases, authorize experiments, or change route governance.
+> Status: post-v2 boundary register. This file does not reopen v2, add scenarios, add stochastic seeds, run solver cases, authorize experiments, or change route governance. As of 2026-05-11, report 88 v3.0 is the current full-data reader report and includes the P0-P18 post-v2 audit/trace conclusions.
 
 ## Purpose
 
@@ -28,6 +28,17 @@ Forbidden current claim:
 - route promotion;
 - main-660 redefinition;
 - selected-annulus replacing all-crossing ranking.
+- treating P6-P16 trace-only rank order as route promotion or as a single main-660 champion.
+
+## P0-P18 status note
+
+P0-P18 refine this register rather than closing it. P0 provides a
+review-ready relative audit package and keeps `main_660_W800_D1400` plus
+`main_660_W800_D1500` as conditional relative-main candidates. P6/P8/P10/P12/P14/P16
+then run six bounded trace-only lanes over the same three-route set; the two
+main-660 candidates swap rank across lanes, while the 404 probe remains a
+shortwave probe. P18 therefore stops mechanical lane roll-forward pending a P19
+evidence-strategy gate with explicit acceptance criteria.
 
 ## Post-v2 realism gaps
 

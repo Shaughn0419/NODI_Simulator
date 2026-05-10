@@ -2,6 +2,14 @@
 
 Purpose: record every Markdown documentation file covered by the documentation cleanup/audit pass, including active docs and archived historical docs, so future readers can see which files are current entry points and which files are preserved provenance snapshots.
 
+2026-05-11 status note: the current reader-facing single source of truth is now
+`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`
+v3.0. It merges the v1 full-grid analysis, realism v2 no-measured-data closure,
+P0 review-ready relative audit, and P1-P18 bounded physical-ceiling /
+trace-governance conclusions. Use
+`reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md` for the 2026-05-11
+code-review and documentation-update ledger.
+
 2026-05-09 status note: package-module implementations and current companion
 docs now use canonical `nodi_simulator/<module>.py` paths; root
 package-module compatibility wrappers have been retired. Treat this audit as a
@@ -17,8 +25,10 @@ Current interpretation anchors:
 - `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md` for reader-facing v1/v2 interpretation.
 - `reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` and `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` for v2 no-measured-data boundary.
 - `reports/89_EV_NODI_post_v2_unmodeled_realism_register.md` for post-v2 realism gaps that are acknowledged but not solved inside v2.
+- `reports/90-120` for post-v2 P0-P18 provenance; their current conclusions are consolidated into report 88 v3.0.
+- `reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md` for this later audit/update pass.
 
-Forbidden-current-claim reminder: v2 has no measured data and does not authorize calibrated SNR, calibrated event probability, absolute LOD, true EV concentration, biological specificity, route promotion, main-660 redefinition, or selected-annulus replacement of all-crossing ranking.
+Forbidden-current-claim reminder: v2 and P0-P18 have no measured data and do not authorize calibrated SNR, calibrated event probability, absolute LOD, true EV concentration, biological specificity, measured blank safety, route promotion, main-660 redefinition, selected-annulus replacement of all-crossing ranking, or use of P6-P16 trace ordering as a single main-660 champion.
 
 Covered active Markdown files: 117
 Covered archived Markdown files: 56

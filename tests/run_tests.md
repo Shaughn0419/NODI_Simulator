@@ -48,6 +48,12 @@ artifact directories are excluded from normal collection. This prevents external
 review packages and local agent scratch files from being interpreted as project
 tests.
 
+On mounted macOS storage, AppleDouble `._*` metadata files can reappear beside
+tracked files. They are ignored by git and should be excluded from ad hoc
+recursive compile/static checks; the canonical runner works from pytest's normal
+collection and the repository's ignore rules instead of treating those metadata
+forks as source.
+
 The wrapper should remain broad. Do not narrow it to a small subset of test
 files, because the project relies on cross-cutting regression coverage for the
 dashboard, full-grid result processing, selected-annulus side lanes, Tsuyama
