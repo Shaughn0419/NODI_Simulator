@@ -1,0 +1,147 @@
+{
+  "calibrated_claim_allowed": false,
+  "lane_id": "full_wave_green_tensor_spot_check_minimal_pilot_design",
+  "manifest_role": "pilot_design_schema_manifest_no_solver_execution",
+  "measured_data_ingest_authorized": false,
+  "mesh_boundary_unit_preflight_schema": {
+    "audit_bfp_jacobian_applied": true,
+    "execution_authority": {
+      "measured_data_ingest_authorized": false,
+      "new_mesh_generation_authorized": false,
+      "operator_export_generation_authorized": false,
+      "physical_solver_execution_authorized": false,
+      "solver_output_generation_authorized": false
+    },
+    "required_fields": [
+      "preflight_manifest_id",
+      "lane_id",
+      "coordinate_system",
+      "length_unit",
+      "wavelength_unit",
+      "material_index_unit_convention",
+      "boundary_condition_family",
+      "normalization_convention",
+      "mesh_manifest_path",
+      "mesh_manifest_sha256",
+      "unit_registry_binding",
+      "v1_bfp_to_angle_jacobian_applied",
+      "audit_bfp_jacobian_applied",
+      "physical_solver_execution_authorized",
+      "new_mesh_generation_authorized"
+    ],
+    "schema_name": "ev_nodi_p3_full_wave_green_tensor_minimal_pilot_mesh_boundary_unit_preflight_v1",
+    "schema_role": "future_preflight_contract_only_no_mesh_generation",
+    "v1_bfp_to_angle_jacobian_applied": false
+  },
+  "output_schema_placeholder": {
+    "allowed_claim_level": "pilot_design_output_schema_placeholder_only",
+    "allowed_interpretability_families": [
+      "rank",
+      "rank_percentile",
+      "pairwise_inversion"
+    ],
+    "artifact_status": "output_schema_placeholder_no_solver_output",
+    "calibrated_claim_allowed": false,
+    "future_required_fields_if_later_authorized": [
+      "solver_run_id",
+      "input_manifest_sha256",
+      "selected_route_ids",
+      "rank_interpretability_summary",
+      "pairwise_inversion_summary",
+      "raw_solver_native_values_trace_only",
+      "calibrated_claim_allowed",
+      "physical_solver_execution_authorized",
+      "measured_data_ingest_authorized",
+      "solver_output_generated",
+      "raw_magnitude_final_gate_allowed",
+      "route_promotion_authorized"
+    ],
+    "measured_data_ingest_authorized": false,
+    "p0_release_conclusion_changed": false,
+    "p1_surrogate_risk_role_preserved": true,
+    "p2_readiness_scope_preserved": true,
+    "physical_solver_execution_authorized": false,
+    "raw_magnitude_final_gate_allowed": false,
+    "route_promotion_authorized": false,
+    "schema_name": "ev_nodi_p3_full_wave_green_tensor_minimal_pilot_output_placeholder_v1",
+    "solver_output_generated": false
+  },
+  "p0_release_conclusion_changed": false,
+  "p1_surrogate_risk_role_preserved": true,
+  "p2_readiness_scope_preserved": true,
+  "physical_solver_execution_authorized": false,
+  "rank_pairwise_interpretability_requirement": {
+    "allowed_gate_metric_families": [
+      "rank",
+      "rank_percentile",
+      "pairwise_inversion"
+    ],
+    "decision_authority": "pilot_design_only_no_route_promotion",
+    "raw_arbitrary_unit_magnitude_final_gate_allowed": false,
+    "required_before_any_future_gate": true,
+    "solver_native_raw_magnitude_final_gate_allowed": false
+  },
+  "required_false_fields": [
+    "calibrated_claim_allowed",
+    "p0_release_conclusion_changed",
+    "physical_solver_execution_authorized",
+    "measured_data_ingest_authorized",
+    "solver_output_generated"
+  ],
+  "required_gate_metric_families": [
+    "pairwise_inversion",
+    "rank",
+    "rank_percentile"
+  ],
+  "schema_version": "ev_nodi_p3_bounded_solver_authorization_pilot_design_schema_manifest_v1",
+  "solver_input_manifest_schema": {
+    "calibrated_claim_allowed": false,
+    "measured_data_ingest_authorized": false,
+    "p0_release_conclusion_changed": false,
+    "p1_surrogate_risk_role_preserved": true,
+    "p2_readiness_scope_preserved": true,
+    "physical_solver_execution_authorized": false,
+    "raw_magnitude_final_gate_allowed": false,
+    "required_false_fields": [
+      "calibrated_claim_allowed",
+      "p0_release_conclusion_changed",
+      "physical_solver_execution_authorized",
+      "measured_data_ingest_authorized",
+      "solver_output_generated",
+      "raw_magnitude_final_gate_allowed"
+    ],
+    "required_fields": [
+      "input_manifest_id",
+      "lane_id",
+      "p2_route_universe_manifest_path",
+      "p2_route_universe_manifest_sha256",
+      "selected_route_ids",
+      "geometry_source_binding",
+      "material_model_placeholder_id",
+      "wavelength_nm_source",
+      "unit_registry_binding",
+      "mesh_boundary_unit_preflight_manifest_path",
+      "execution_authorization_record_path",
+      "rank_pairwise_interpretability_declared",
+      "calibrated_claim_allowed",
+      "p0_release_conclusion_changed",
+      "p1_surrogate_risk_role_preserved",
+      "p2_readiness_scope_preserved",
+      "physical_solver_execution_authorized",
+      "measured_data_ingest_authorized",
+      "solver_output_generated",
+      "raw_magnitude_final_gate_allowed"
+    ],
+    "required_true_fields": [
+      "p1_surrogate_risk_role_preserved",
+      "p2_readiness_scope_preserved",
+      "rank_pairwise_interpretability_declared"
+    ],
+    "schema_name": "ev_nodi_p3_full_wave_green_tensor_minimal_pilot_input_manifest_v1",
+    "schema_role": "future_input_contract_only_no_solver_execution",
+    "solver_output_generated": false,
+    "source_manifest_path_required": "results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_route_universe_manifest.json"
+  },
+  "solver_output_generated": false,
+  "stage": "P3_bounded_solver_authorization_pilot_design_phase1"
+}
