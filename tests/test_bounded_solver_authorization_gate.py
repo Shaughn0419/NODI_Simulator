@@ -9,7 +9,9 @@ import pytest
 
 from nodi_simulator import realism_v2 as rv2
 from nodi_simulator.post_v2_bounded_solver_authorization_gate import (
+    MINIMUM_LATER_PHASE_REQUIREMENTS,
     REQUIRED_P4_PATHS,
+    REQUIRED_NEXT_AUTHORIZATION_PHRASE,
     build_artifact_manifest,
     build_authorization_gate_record,
     build_p4_binding_manifest,
@@ -145,8 +147,9 @@ def test_p5_authorization_gate_record_denies_execution_until_explicit_request() 
     assert manifest["explicit_solver_execution_request_required"] is True
     assert (
         manifest["required_next_authorization_phrase"]
-        == "authorize minimal bounded solver execution"
+        == REQUIRED_NEXT_AUTHORIZATION_PHRASE
     )
+    assert tuple(manifest["minimum_later_phase_requirements"]) == MINIMUM_LATER_PHASE_REQUIREMENTS
     assert manifest["physical_solver_execution_authorized"] is False
     assert manifest["new_mesh_generation_authorized"] is False
     assert manifest["operator_export_generation_authorized"] is False
@@ -172,6 +175,13 @@ def test_p5_registry_rejects_execution_and_scope_tampering() -> None:
     with pytest.raises(ValueError, match="authorization gate decision drifted"):
         validate_gate_registry(registry)
 
+    registry = deepcopy(_registry())
+    registry["authorization_gate_record_contract"][
+        "required_next_authorization_phrase"
+    ] = "authorize minimal bounded solver execution and calibrate"
+    with pytest.raises(ValueError, match="registry authorization phrase drifted"):
+        validate_gate_registry(registry)
+
 
 def test_p5_manifests_reject_execution_and_binding_tampering() -> None:
     manifest = build_authorization_gate_record(root_path("."))
@@ -180,8 +190,15 @@ def test_p5_manifests_reject_execution_and_binding_tampering() -> None:
         validate_authorization_gate_record(manifest)
 
     manifest = build_authorization_gate_record(root_path("."))
-    manifest["required_next_authorization_phrase"] = "run it"
+    manifest["required_next_authorization_phrase"] = (
+        "authorize minimal bounded solver execution and calibrate"
+    )
     with pytest.raises(ValueError, match="authorization phrase drifted"):
+        validate_authorization_gate_record(manifest)
+
+    manifest = build_authorization_gate_record(root_path("."))
+    manifest["minimum_later_phase_requirements"] = []
+    with pytest.raises(ValueError, match="later-phase requirements drifted"):
         validate_authorization_gate_record(manifest)
 
     manifest = build_p4_binding_manifest(root_path("."))

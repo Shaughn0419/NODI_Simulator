@@ -51,6 +51,13 @@ P5_TEXT_PATHS: tuple[str, ...] = (
 
 P5_GATE_STAGE = "P5_bounded_solver_authorization_gate_complete"
 P5_GATE_SCHEMA_VERSION = "ev_nodi_p5_bounded_solver_authorization_gate_registry_v1"
+REQUIRED_NEXT_AUTHORIZATION_PHRASE = "authorize minimal bounded solver execution"
+MINIMUM_LATER_PHASE_REQUIREMENTS: tuple[str, ...] = (
+    "explicit user request to authorize minimal bounded solver execution",
+    "separate branch or commit that changes execution_authorization_decision",
+    "solver runtime implementation review",
+    "claim-boundary review before any generated solver output is interpreted",
+)
 
 TOP_LEVEL_FALSE_FIELDS: tuple[str, ...] = (
     "calibrated_claim_allowed",
@@ -158,6 +165,8 @@ def validate_gate_registry(registry: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("P5 authorization gate decision drifted")
     if record["explicit_solver_execution_request_required"] is not True:
         raise ValueError("P5 must require an explicit solver execution request")
+    if record["required_next_authorization_phrase"] != REQUIRED_NEXT_AUTHORIZATION_PHRASE:
+        raise ValueError("P5 registry authorization phrase drifted")
     _require_false(record, TOP_LEVEL_FALSE_FIELDS, "P5 authorization record contract")
     _require_true(record, TOP_LEVEL_TRUE_FIELDS, "P5 authorization record contract")
 
@@ -270,16 +279,10 @@ def build_authorization_gate_record(project_root: Path = PROJECT_ROOT) -> dict[s
         "record_role": "authorization_gate_record_denies_execution_until_explicit_later_phase",
         "authorization_gate_decision": "not_authorized_pending_explicit_later_phase_execution_request",
         "explicit_solver_execution_request_required": True,
-        "required_next_authorization_phrase": "authorize minimal bounded solver execution",
+        "required_next_authorization_phrase": REQUIRED_NEXT_AUTHORIZATION_PHRASE,
         "p4_binding_manifest_path": P5_P4_BINDING_MANIFEST.as_posix(),
-        "p4_binding_manifest_sha256_when_written": None,
         "bound_p4_manifest_count": p4_binding["bound_manifest_count"],
-        "minimum_later_phase_requirements": [
-            "explicit user request to authorize minimal bounded solver execution",
-            "separate branch or commit that changes execution_authorization_decision",
-            "solver runtime implementation review",
-            "claim-boundary review before any generated solver output is interpreted",
-        ],
+        "minimum_later_phase_requirements": list(MINIMUM_LATER_PHASE_REQUIREMENTS),
         "calibrated_claim_allowed": False,
         "p0_release_conclusion_changed": False,
         "p1_surrogate_risk_role_preserved": True,
@@ -305,8 +308,10 @@ def validate_authorization_gate_record(manifest: dict[str, Any]) -> dict[str, An
         raise ValueError("P5 authorization gate decision drifted")
     if manifest["explicit_solver_execution_request_required"] is not True:
         raise ValueError("P5 explicit solver execution request requirement drifted")
-    if "authorize minimal bounded solver execution" not in manifest["required_next_authorization_phrase"]:
+    if manifest["required_next_authorization_phrase"] != REQUIRED_NEXT_AUTHORIZATION_PHRASE:
         raise ValueError("P5 authorization phrase drifted")
+    if tuple(manifest["minimum_later_phase_requirements"]) != MINIMUM_LATER_PHASE_REQUIREMENTS:
+        raise ValueError("P5 later-phase requirements drifted")
     return manifest
 
 
