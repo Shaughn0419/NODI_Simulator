@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 import json
 import subprocess
 import sys
@@ -249,6 +250,38 @@ def test_p2_route_universe_manifest_bounds_future_solver_preflight() -> None:
         key.startswith("raw_") and key != "raw_magnitude_final_gate_allowed"
         for key in first
     )
+
+
+def test_p2_registry_rejects_solver_authority_tampering() -> None:
+    registry = deepcopy(_registry())
+    registry["implementation_authority"]["full_wave_solver_execution_authorized"] = True
+
+    with pytest.raises(ValueError, match="execution authority drifted"):
+        validate_readiness_registry(registry)
+
+
+def test_p2_registry_rejects_p1_role_tampering() -> None:
+    registry = deepcopy(_registry())
+    registry["p1_surrogate_risk_role_preserved"] = False
+
+    with pytest.raises(ValueError, match="P1 surrogate-risk role"):
+        validate_readiness_registry(registry)
+
+
+def test_p2_route_universe_rejects_raw_proxy_tampering() -> None:
+    manifest = build_readiness_route_universe_manifest(root_path("."))
+    manifest["routes"][0]["raw_complex_field_proxy_diagnostic_only"] = "0.1"
+
+    with pytest.raises(ValueError, match="must not carry raw proxy fields"):
+        validate_readiness_route_universe_manifest(manifest)
+
+
+def test_p2_route_universe_rejects_route_promotion_tampering() -> None:
+    manifest = build_readiness_route_universe_manifest(root_path("."))
+    manifest["routes"][0]["route_promotion_authorized"] = True
+
+    with pytest.raises(ValueError, match="route promotion drifted"):
+        validate_readiness_route_universe_manifest(manifest)
 
 
 def test_p2_text_artifacts_use_blocker_language() -> None:

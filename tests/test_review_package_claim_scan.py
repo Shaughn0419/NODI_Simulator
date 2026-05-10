@@ -18,6 +18,7 @@ def test_hard_claim_scan_scope_includes_post_v2_and_package_docs() -> None:
     assert "REVIEW_PACKAGE_README.md" in paths
     assert "papers/README.md" in paths
     assert "results/post_v2_physical_ceiling/README.md" in paths
+    assert "results/post_v2_bounded_physical_solver_readiness/README.md" in paths
 
 
 def test_hard_claim_scan_has_no_unblocked_forbidden_claims() -> None:

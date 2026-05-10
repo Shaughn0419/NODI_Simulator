@@ -927,6 +927,7 @@ def claim_scan_paths(project_root: Path = PROJECT_ROOT) -> list[Path]:
         "reports/post_v2_*.md",
         "results/post_v2_mandatory_audit/*.md",
         "results/post_v2_physical_ceiling/*.md",
+        "results/post_v2_bounded_physical_solver_readiness/*.md",
         "REVIEW_PACKAGE_README.md",
         "papers/README.md",
     )
