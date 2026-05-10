@@ -165,6 +165,7 @@ NON_P0_SIDECAR_P0_PACKAGE_EXCLUDED_CONFIGS: tuple[str, ...] = (
     "configs/realism_v2/bounded_physical_solver_readiness_registry.yaml",
     "configs/realism_v2/bounded_solver_authorization_pilot_design_registry.yaml",
     "configs/realism_v2/bounded_solver_dry_run_preflight_registry.yaml",
+    "configs/realism_v2/bounded_solver_authorization_gate_registry.yaml",
 )
 
 REASON_CODE_VOCABULARY: tuple[dict[str, str], ...] = (
@@ -928,12 +929,14 @@ def claim_scan_paths(project_root: Path = PROJECT_ROOT) -> list[Path]:
         "reports/9[0-9]_*.md",
         "reports/100_*.md",
         "reports/101_*.md",
+        "reports/102_*.md",
         "reports/post_v2_*.md",
         "results/post_v2_mandatory_audit/*.md",
         "results/post_v2_physical_ceiling/*.md",
         "results/post_v2_bounded_physical_solver_readiness/*.md",
         "results/post_v2_bounded_solver_authorization_pilot_design/*.md",
         "results/post_v2_bounded_solver_dry_run_preflight/*.md",
+        "results/post_v2_bounded_solver_authorization_gate/*.md",
         "REVIEW_PACKAGE_README.md",
         "papers/README.md",
     )

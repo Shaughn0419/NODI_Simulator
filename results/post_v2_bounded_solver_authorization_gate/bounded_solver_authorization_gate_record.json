@@ -1,0 +1,30 @@
+{
+  "authorization_gate_decision": "not_authorized_pending_explicit_later_phase_execution_request",
+  "bound_p4_manifest_count": 5,
+  "calibrated_claim_allowed": false,
+  "calibration_data_ingest_authorized": false,
+  "explicit_solver_execution_request_required": true,
+  "measured_data_ingest_authorized": false,
+  "minimum_later_phase_requirements": [
+    "explicit user request to authorize minimal bounded solver execution",
+    "separate branch or commit that changes execution_authorization_decision",
+    "solver runtime implementation review",
+    "claim-boundary review before any generated solver output is interpreted"
+  ],
+  "new_mesh_generation_authorized": false,
+  "operator_export_generation_authorized": false,
+  "p0_release_conclusion_changed": false,
+  "p1_surrogate_risk_role_preserved": true,
+  "p2_readiness_scope_preserved": true,
+  "p3_pilot_design_scope_preserved": true,
+  "p4_binding_manifest_path": "results/post_v2_bounded_solver_authorization_gate/bounded_solver_authorization_gate_p4_binding_manifest.json",
+  "p4_binding_manifest_sha256_when_written": null,
+  "p4_dry_run_preflight_scope_preserved": true,
+  "physical_solver_execution_authorized": false,
+  "record_role": "authorization_gate_record_denies_execution_until_explicit_later_phase",
+  "required_next_authorization_phrase": "authorize minimal bounded solver execution",
+  "route_promotion_authorized": false,
+  "schema_version": "ev_nodi_p5_bounded_solver_authorization_gate_record_v1",
+  "solver_output_generated": false,
+  "stage": "P5_bounded_solver_authorization_gate_complete"
+}
