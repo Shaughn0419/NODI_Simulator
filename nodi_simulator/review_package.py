@@ -167,6 +167,7 @@ NON_P0_SIDECAR_P0_PACKAGE_EXCLUDED_CONFIGS: tuple[str, ...] = (
     "configs/realism_v2/bounded_solver_dry_run_preflight_registry.yaml",
     "configs/realism_v2/bounded_solver_authorization_gate_registry.yaml",
     "configs/realism_v2/minimal_bounded_solver_execution_registry.yaml",
+    "configs/realism_v2/second_lane_authorization_design_registry.yaml",
 )
 
 REASON_CODE_VOCABULARY: tuple[dict[str, str], ...] = (
@@ -932,6 +933,7 @@ def claim_scan_paths(project_root: Path = PROJECT_ROOT) -> list[Path]:
         "reports/101_*.md",
         "reports/102_*.md",
         "reports/103_*.md",
+        "reports/104_*.md",
         "reports/post_v2_*.md",
         "results/post_v2_mandatory_audit/*.md",
         "results/post_v2_physical_ceiling/*.md",
@@ -940,6 +942,7 @@ def claim_scan_paths(project_root: Path = PROJECT_ROOT) -> list[Path]:
         "results/post_v2_bounded_solver_dry_run_preflight/*.md",
         "results/post_v2_bounded_solver_authorization_gate/*.md",
         "results/post_v2_minimal_bounded_solver_execution/*.md",
+        "results/post_v2_second_lane_authorization_design/*.md",
         "REVIEW_PACKAGE_README.md",
         "papers/README.md",
     )
