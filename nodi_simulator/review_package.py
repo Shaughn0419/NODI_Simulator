@@ -181,6 +181,8 @@ NON_P0_SIDECAR_P0_PACKAGE_EXCLUDED_CONFIGS: tuple[str, ...] = (
     "configs/realism_v2/fifth_bounded_solver_lane_closure_registry.yaml",
     "configs/realism_v2/sixth_bounded_lane_authorization_design_registry.yaml",
     "configs/realism_v2/sixth_bounded_solver_lane_execution_registry.yaml",
+    "configs/realism_v2/sixth_bounded_solver_lane_closure_registry.yaml",
+    "configs/realism_v2/seventh_bounded_lane_authorization_design_registry.yaml",
 )
 
 REASON_CODE_VOCABULARY: tuple[dict[str, str], ...] = (
@@ -960,6 +962,8 @@ def claim_scan_paths(project_root: Path = PROJECT_ROOT) -> list[Path]:
         "reports/115_*.md",
         "reports/116_*.md",
         "reports/117_*.md",
+        "reports/118_*.md",
+        "reports/119_*.md",
         "reports/post_v2_*.md",
         "results/post_v2_mandatory_audit/*.md",
         "results/post_v2_physical_ceiling/*.md",
@@ -982,6 +986,8 @@ def claim_scan_paths(project_root: Path = PROJECT_ROOT) -> list[Path]:
         "results/post_v2_fifth_bounded_solver_lane_closure/*.md",
         "results/post_v2_sixth_bounded_lane_authorization_design/*.md",
         "results/post_v2_sixth_bounded_solver_lane_execution/*.md",
+        "results/post_v2_sixth_bounded_solver_lane_closure/*.md",
+        "results/post_v2_seventh_bounded_lane_authorization_design/*.md",
         "REVIEW_PACKAGE_README.md",
         "papers/README.md",
     )
