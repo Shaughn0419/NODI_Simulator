@@ -1,43 +1,60 @@
 from __future__ import annotations
 
-import csv
-
 import pytest
 
-from ._review_package_test_helpers import root_path
+from nodi_simulator.post_v2_audit import severity_to_final_decision
 
 
 pytestmark = pytest.mark.review_package_required
 
 
-def test_final_audit_decision_maps_consistently_to_route_role_final() -> None:
-    with root_path("results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv").open(
-        encoding="utf-8",
-        newline="",
-    ) as handle:
-        rows = list(csv.DictReader(handle))
+def test_rank_inversion_severity_truth_table_for_blocking_cases() -> None:
+    assert severity_to_final_decision(
+        "audit_incomplete",
+        role_initial="main_locked",
+    )[0] == "audit_incomplete_blocked"
+    assert severity_to_final_decision(
+        "critical",
+        role_initial="main_locked",
+        missing_bfp_score=True,
+    )[0] == "audit_incomplete_blocked"
+    assert severity_to_final_decision(
+        "critical",
+        role_initial="main_locked",
+        optional_probe_redefinition_attempted=True,
+    )[0] == "audit_incomplete_blocked"
+    assert severity_to_final_decision(
+        "critical",
+        role_initial="main_locked",
+        main_control_reversal=True,
+    )[0] == "surrogate_sensitive_not_promoted"
 
-    allowed = {
-        "conditional_relative_main": "relative_main_candidate",
-        "weak_reference_control_only": "relative_control_candidate",
-        "optional_robustness_probe_only": "optional_robustness_probe_only",
-        "shortwave_probe_only": "probe_only",
-        "paper_sanity_only": "paper_sanity_only",
-        "surrogate_sensitive_not_promoted": "surrogate_sensitive_not_promoted",
-    }
-    assert rows
-    for row in rows:
-        assert row["route_role_final"] == allowed[row["final_audit_decision"]]
+
+def test_rank_inversion_severity_truth_table_for_candidate_outcomes() -> None:
+    assert severity_to_final_decision(
+        "major",
+        role_initial="main_locked",
+    )[0] in {"conditional_relative_main", "surrogate_sensitive_not_promoted"}
+    assert severity_to_final_decision(
+        "minor",
+        role_initial="main_locked",
+        all_clean_gates_pass=True,
+    )[0] == "clean_relative_main"
+    assert severity_to_final_decision(
+        "none",
+        role_initial="main_locked",
+        all_clean_gates_pass=True,
+    )[0] == "clean_relative_main"
+    assert severity_to_final_decision(
+        "none",
+        role_initial="main_locked",
+        all_clean_gates_pass=False,
+    )[0] == "conditional_relative_main"
 
 
-def test_optional_660_probe_never_redefines_main_660() -> None:
-    with root_path("results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv").open(
-        encoding="utf-8",
-        newline="",
-    ) as handle:
-        rows = list(csv.DictReader(handle))
-
-    optional = [row for row in rows if row["candidate_id"] == "optional_660_W900_D1400"]
-    assert len(optional) == 1
-    assert optional[0]["route_role_final"] == "optional_robustness_probe_only"
-    assert optional[0]["main_660_redefinition_authorized"] == "False"
+def test_audit_only_not_ranked_paper_sanity_rows_do_not_get_promotion_labels() -> None:
+    assert severity_to_final_decision(
+        "critical",
+        role_initial="paper_sanity_audit_only",
+        main_control_reversal=True,
+    ) == ("paper_sanity_only", "paper_sanity_only")

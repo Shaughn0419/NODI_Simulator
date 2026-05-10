@@ -34,9 +34,9 @@ def test_p0a_audit_manifest_pins_rank_and_aggregation_schema() -> None:
     }.issubset(set(manifest["required_aggregation_fields"]))
 
 
-def test_p0b_candidate_universe_is_deferred_not_backfilled_from_raw_rows() -> None:
+def test_p0b_candidate_universe_artifacts_are_registered_as_produced() -> None:
     manifest = load_json("results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json")
-    deferred = {artifact["role"]: artifact for artifact in manifest["p0b_artifacts_deferred_until_evidence_chain"]}
+    produced = {artifact["role"]: artifact for artifact in manifest["p0b_artifacts_produced_from_evidence_chain"]}
 
-    assert deferred["candidate_universe_manifest"]["generation_task_id"] == "P0b.candidate_universe"
-    assert "top_candidate_mandatory_audit" in deferred
+    assert produced["candidate_universe_manifest"]["generation_task_id"] == "P0b.candidate_universe"
+    assert "top_candidate_mandatory_audit" in produced

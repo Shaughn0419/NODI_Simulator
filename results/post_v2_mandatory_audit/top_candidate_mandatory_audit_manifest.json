@@ -4,7 +4,7 @@
   "calibrated_claim_allowed": false,
   "claim_scope": "no_measured_data_relative_audit_only",
   "milestone": "P0a_schema_scaffold",
-  "p0b_artifacts_deferred_until_evidence_chain": [
+  "p0b_artifacts_produced_from_evidence_chain": [
     {
       "generation_task_id": "P0b.candidate_universe",
       "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",

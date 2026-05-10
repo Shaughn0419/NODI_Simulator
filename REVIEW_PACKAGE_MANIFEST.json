@@ -14,16 +14,16 @@
           "path": "reports/90_EV_NODI_post_v2_review_ready_relative_audit_roadmap.md",
           "path_status": "exists",
           "role": "roadmap",
-          "sha256": "68e059cec371e4adc8ff128888648f685fd4df1213123643f728db6663044354",
-          "size_bytes": 91180,
+          "sha256": "862cff5ccb9d559a30912998fb3268cbc9b6183156940a24aed26ab77d7496a3",
+          "size_bytes": 92480,
           "source_lane": "reports"
         },
         {
           "path": "reports/91_EV_NODI_post_v2_P0_release_completion_note.md",
           "path_status": "exists",
           "role": "p0_release_completion_note",
-          "sha256": "2a57ca72a02d35ab1a65059e9b1dc7a62fc07626e1a48c311bf68531b3db8e9b",
-          "size_bytes": 1907,
+          "sha256": "1932d45e14d942d691367921355d9a5957bd19fb80ed53a9942af7b2c5be5217",
+          "size_bytes": 2370,
           "source_lane": "reports"
         },
         {
@@ -506,8 +506,8 @@
           "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
           "path_status": "exists",
           "role": "top_candidate_mandatory_audit_manifest",
-          "sha256": "79f411b7bc9aff7a990401882cda88c76d0c5c08ab4c48f98d9dab01354deb22",
-          "size_bytes": 6342,
+          "sha256": "53be4fabb7b011f11458fb0d19f2a5ec0c094ebf74dbbd081b0d7bc648a66ef8",
+          "size_bytes": 6341,
           "source_lane": "P0a.v1_v2_artifact_mapping"
         }
       ],
@@ -705,7 +705,7 @@
           "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
           "path_status": "exists",
           "role": "top_candidate_mandatory_audit",
-          "sha256": "91dca15066f9dd970d15c108b1526a6e9f9a5adeb62a2c57ff1aa9e085890300",
+          "sha256": "e1cc4556ac13e4906206cfc7365a631037963c0f6154db05c1e206752c67c41c",
           "source_lane": "post-v2 mandatory audit"
         },
         {
@@ -774,15 +774,29 @@
         }
       ],
       "group": "post_v2_mandatory_audit_artifacts"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+          "path_status": "exists",
+          "role": "top_candidate_extended_pairwise_stability",
+          "sha256": "4bde32e8c5446e5c9fd5f3636a756846b4e1a5b3ec6bbeb2b5870601c202e5f3",
+          "size_bytes": 4508,
+          "source_lane": "P1.extended_pairwise_stability"
+        }
+      ],
+      "group": "post_v2_optional_diagnostic_artifacts",
+      "release_blocker": false
     }
   ],
   "calibrated_claim_allowed": false,
   "deferred_p0b_roles": [],
-  "generated_at": "2026-05-10T05:32:18+00:00",
-  "git_commit": "ea232e9d1fcd90111fbb9e7c4c8c9e6659bc3bcd",
+  "generated_at": "2026-05-10T05:59:42+00:00",
+  "git_commit": "1de27099a1cc0ddb78e63e48ce14893ec3f80856",
   "git_dirty": false,
   "hashes_manifest_path": "REVIEW_PACKAGE_HASHES.sha256",
-  "hashes_manifest_sha256": "32e48b45c327ade5e8ce97cfdb92db560ce4cc1ef95f3ac51e1e21ed78e0467c",
+  "hashes_manifest_sha256": "0152f5b2bdb60fb236f8fd1562e5d468904810cdf63a52447d73f3c66b0093ab",
   "package_id": "ev_nodi_post_v2_review_package_20260510_p0b",
   "package_role": "external_review_relative_audit",
   "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",

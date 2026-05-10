@@ -148,6 +148,14 @@ POST_V2_GENERATED_ROLES: tuple[tuple[str, str, str], ...] = (
     ),
 )
 
+POST_V2_DIAGNOSTIC_ROLES: tuple[tuple[str, str, str], ...] = (
+    (
+        "top_candidate_extended_pairwise_stability",
+        "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+        "P1.extended_pairwise_stability",
+    ),
+)
+
 REASON_CODE_VOCABULARY: tuple[dict[str, str], ...] = (
     {"code": "BFP.RANK_SHIFT_MAJOR", "module": "BFP", "meaning": "BFP rank-percentile shift exceeds the pinned major threshold."},
     {"code": "PAIRWISE.RELATIVE_ORDER_DISAGREEMENT", "module": "PAIRWISE", "meaning": "One or more relative audit lenses disagree with scalar ordering."},
@@ -414,7 +422,7 @@ def build_audit_schema_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, 
         },
         "v1_bfp_to_angle_jacobian_applied_expected": False,
         "audit_bfp_jacobian_applied_layer": "post_v2_audit_sidecar_not_v1_fact",
-        "p0b_artifacts_deferred_until_evidence_chain": [
+        "p0b_artifacts_produced_from_evidence_chain": [
             {"role": role, "path": path, "generation_task_id": task}
             for role, path, task in POST_V2_GENERATED_ROLES
         ],
@@ -1187,6 +1195,19 @@ def _artifact_groups(project_root: Path, *, include_generated_missing: bool) -> 
                     for role, path, task in POST_V2_GENERATED_ROLES
                     if include_generated_missing or (project_root / path).exists()
                 ],
+            }
+        )
+    diagnostic_artifacts = [
+        file_entry(project_root, path, role=role, source_lane=task)
+        for role, path, task in POST_V2_DIAGNOSTIC_ROLES
+        if (project_root / path).exists()
+    ]
+    if diagnostic_artifacts:
+        groups.append(
+            {
+                "group": "post_v2_optional_diagnostic_artifacts",
+                "release_blocker": False,
+                "artifacts": diagnostic_artifacts,
             }
         )
     return groups

@@ -873,18 +873,38 @@ def _static_by_route_key() -> dict[str, dict[str, Any]]:
     }
 
 
-def _final_decision_for_role(role: str) -> tuple[str, str]:
-    if role == "main_locked":
-        return "conditional_relative_main", "relative_main_candidate"
-    if role == "weak_reference_control":
+def severity_to_final_decision(
+    severity: str,
+    *,
+    role_initial: str,
+    missing_bfp_score: bool = False,
+    optional_probe_redefinition_attempted: bool = False,
+    main_control_reversal: bool = False,
+    all_clean_gates_pass: bool = False,
+) -> tuple[str, str]:
+    if role_initial == "weak_reference_control":
         return "weak_reference_control_only", "relative_control_candidate"
-    if role == "optional_robustness_probe":
+    if role_initial == "optional_robustness_probe":
         return "optional_robustness_probe_only", "optional_robustness_probe_only"
-    if role == "shortwave_probe":
+    if role_initial == "shortwave_probe":
         return "shortwave_probe_only", "probe_only"
-    if role == "paper_proxy_sanity":
+    if role_initial in {"paper_proxy_sanity", "paper_sanity_audit_only"}:
         return "paper_sanity_only", "paper_sanity_only"
-    if role == "historical_v1_main":
+    if severity == "audit_incomplete":
+        return "audit_incomplete_blocked", "audit_incomplete_blocked"
+    if severity == "critical" and (
+        missing_bfp_score or optional_probe_redefinition_attempted
+    ):
+        return "audit_incomplete_blocked", "audit_incomplete_blocked"
+    if severity == "critical" and main_control_reversal:
+        return "surrogate_sensitive_not_promoted", "surrogate_sensitive_not_promoted"
+    if severity == "critical":
+        return "surrogate_sensitive_not_promoted", "surrogate_sensitive_not_promoted"
+    if severity in {"none", "minor"} and all_clean_gates_pass:
+        return "clean_relative_main", "relative_main_candidate"
+    if role_initial == "main_locked":
+        return "conditional_relative_main", "relative_main_candidate"
+    if role_initial == "historical_v1_main":
         return "surrogate_sensitive_not_promoted", "surrogate_sensitive_not_promoted"
     return "surrogate_sensitive_not_promoted", "surrogate_sensitive_not_promoted"
 
@@ -943,7 +963,6 @@ def build_top_candidate_mandatory_audit(project_root: Path = PROJECT_ROOT) -> li
         static_row = static.get(route_key)
         role_initial = static_row["route_role_initial"] if static_row else "context_route"
         candidate_id = static_row["candidate_id"] if static_row else f"v1_route_{route_key.replace('/', '_')}"
-        decision, role_final = _final_decision_for_role(role_initial)
         bfp_row = bfp[route_key]
         tsuyama_row = tsuyama[route_key]
         ev_row = ev[route_key]
@@ -955,6 +974,14 @@ def build_top_candidate_mandatory_audit(project_root: Path = PROJECT_ROOT) -> li
             severity = "minor"
         if role_initial == "context_route" and severity == "none":
             severity = "minor"
+        decision, role_final = severity_to_final_decision(
+            severity,
+            role_initial=role_initial,
+            missing_bfp_score=False,
+            optional_probe_redefinition_attempted=False,
+            main_control_reversal=False,
+            all_clean_gates_pass=False,
+        )
         required_artifact, artifact_priority, artifact_blocks = _required_next_artifact(
             role_initial,
             severity,

@@ -24,11 +24,19 @@ relative audit, not a calibrated physical prediction.
   decision table, and P0 pairwise adjudication artifacts.
 - `exports/ev_nodi_post_v2_review_package_20260510_p0b_review_package.zip`
   was generated without `__MACOSX/` or resource-fork entries.
+- Post-review hardening packages
+  `top_candidate_extended_pairwise_stability.csv` as a non-blocking P1
+  diagnostic artifact when present, renames the audit-internal P0b artifact
+  registry from deferred to produced, and records the per-row claim-field
+  schema errata in the roadmap.
 
 ## Verification
 
 - `python tools/verify_review_package.py --package-root . --mode local-dev`
   passed all package gates.
+- `python tools/verify_review_package.py --package-root . --mode
+  external-review` passed all package gates after the P0 freeze metadata was
+  regenerated on a clean worktree.
 - `python -m pytest -q -m "review_package_required and not
   requires_measured_data and not requires_fullwave and not
   requires_fullgrid_recompute"` passed the P0/P1/P2 review-package lane.

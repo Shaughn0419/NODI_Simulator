@@ -237,6 +237,11 @@ This list is authoritative for post-v2 audit artifacts. Later sections may add
 schema requirements, but they must reference these filenames rather than
 silently introducing extra required files.
 
+Post-P0 hardening erratum: the generated package may also include
+`top_candidate_extended_pairwise_stability.csv` as a P1 diagnostic artifact.
+It is packaged, hashed, and exported when present, but it is not a P0 release
+blocker and does not change any P0 route decision.
+
 The core table is:
 
 ```text
@@ -1600,6 +1605,26 @@ calibrated_claim_allowed == false
 route_promotion_claim_allowed == false
 selected_annulus_primary_allowed == false
 ```
+
+Post-P0 hardening erratum: the implementation keeps the package-level aggregate
+claim flag in `REVIEW_PACKAGE_MANIFEST.json`, then decomposes per-row claim
+governance into narrower blocker booleans in `top_candidate_mandatory_audit.csv`.
+The per-row schema mapping is:
+
+```text
+calibrated_claim_allowed -> calibrated_snr_claim_allowed
+calibrated_claim_allowed -> absolute_lod_claim_allowed
+calibrated_claim_allowed -> true_ev_concentration_claim_allowed
+calibrated_claim_allowed -> biological_specificity_claim_allowed
+calibrated_claim_allowed -> detector_voltage_prediction_claim_allowed
+selected_annulus_primary_allowed -> selected_annulus_primary_gate_switch_blocked
+route_promotion_claim_allowed -> main_660_redefinition_authorized
+relative_main_governance_allowed -> final_audit_decision + route_role_final
+```
+
+All listed per-row claim booleans remain blocker fields for this no-measured-data
+relative audit; they do not authorize calibrated, absolute, concentration,
+biological-specificity, or detector-voltage claims.
 
 `final_audit_decision` is a relative-evidence governance label. It is not a
 calibrated route claim in either direction.
