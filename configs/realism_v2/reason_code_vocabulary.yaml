@@ -1,0 +1,37 @@
+{
+  "code_pattern": "^[A-Z_]+\\.[A-Z0-9_]+$",
+  "legacy_underscore_codes_allowed": false,
+  "reason_codes": [
+    {
+      "code": "BFP.RANK_SHIFT_MAJOR",
+      "meaning": "BFP rank-percentile shift exceeds the pinned major threshold.",
+      "module": "BFP"
+    },
+    {
+      "code": "PAIRWISE.RELATIVE_ORDER_DISAGREEMENT",
+      "meaning": "One or more relative audit lenses disagree with scalar ordering.",
+      "module": "PAIRWISE"
+    },
+    {
+      "code": "TSUYAMA.EXTRAPOLATED_GEOMETRY",
+      "meaning": "Tsuyama phase-filter lane is outside paper geometry.",
+      "module": "TSUYAMA"
+    },
+    {
+      "code": "NOISE.RELATIVE_FRAGILE",
+      "meaning": "Route rank-percentile is unstable versus the nominal R5 scenario.",
+      "module": "NOISE"
+    },
+    {
+      "code": "EV.SAMPLE_UNKNOWN",
+      "meaning": "EV sample profile is unknown and cannot support clean-main promotion.",
+      "module": "EV"
+    },
+    {
+      "code": "CLAIM.CALIBRATED_BLOCKED",
+      "meaning": "Calibrated or absolute claim remains blocked.",
+      "module": "CLAIM"
+    }
+  ],
+  "schema": "ev_nodi_reason_code_vocabulary_v1"
+}

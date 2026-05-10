@@ -1,0 +1,26 @@
+{
+  "claim_level": "relative_sample_uncertainty_profiles_only",
+  "profiles": {
+    "IEX_MSC_EV": {
+      "biological_specificity_claim_allowed": false,
+      "min_risk_label": "medium"
+    },
+    "PEG_like": {
+      "biological_specificity_claim_allowed": false,
+      "min_risk_label": "high"
+    },
+    "SEC_like": {
+      "biological_specificity_claim_allowed": false,
+      "min_risk_label": "medium"
+    },
+    "UF_MSC_EV": {
+      "biological_specificity_claim_allowed": false,
+      "min_risk_label": "medium"
+    },
+    "unknown": {
+      "biological_specificity_claim_allowed": false,
+      "min_risk_label": "medium"
+    }
+  },
+  "schema": "ev_nodi_ev_sample_profiles_v1"
+}

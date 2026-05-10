@@ -1,0 +1,19 @@
+{
+  "extends_scenario_bundle_id": "R5_scenario_bundle_manifest_v1",
+  "forked_scenario_ids_allowed": false,
+  "pass_criterion_id": "relative_rank_percentile_stability_vs_nominal_v1",
+  "required_scenario_ids": [
+    "nominal_instrument_clean_blank",
+    "detector_50ohm_pessimistic",
+    "external_TIA_optimistic",
+    "blank_bursty_RIN_high",
+    "BFP_slit_offset_leakage",
+    "PEG_pessimistic_wall_loss",
+    "404_thermal_high_low_power",
+    "DAQ_low_resolution_sampling"
+  ],
+  "scenario_alias_map": {},
+  "schema": "ev_nodi_noise_readout_scenario_bundle_v1",
+  "source_scenario_manifest_path": "configs/realism_v2/r5_scenario_bundle_manifest.yaml",
+  "source_scenario_manifest_sha256": "770eb4f59a2fe842c9cd014b50bd1a4a91f116266df49a10100738de3c452373"
+}

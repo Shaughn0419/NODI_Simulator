@@ -1,0 +1,23 @@
+{
+  "route_role_final": [
+    "relative_main_candidate",
+    "relative_control_candidate",
+    "optional_robustness_probe_only",
+    "probe_only",
+    "paper_sanity_only",
+    "surrogate_sensitive_not_promoted",
+    "audit_incomplete_blocked"
+  ],
+  "route_role_initial": [
+    "main_locked",
+    "weak_reference_control",
+    "optional_robustness_probe",
+    "historical_v1_main",
+    "shortwave_probe",
+    "paper_proxy_sanity",
+    "paper_sanity_audit_only",
+    "context_route",
+    "warning_route"
+  ],
+  "schema": "ev_nodi_route_role_vocabulary_v1"
+}

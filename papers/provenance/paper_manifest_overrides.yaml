@@ -1,0 +1,151 @@
+{
+  "notes": "Claim-bearing rows require explicit manual_override or verified_source metadata. Default rows are not claim-bearing.",
+  "papers": {
+    "De_Rond_2020_A_systematic_approach_to_improve_sc_0a9f0b7f65aa": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Malvicini_2024_Influence_of_the_isolation_method_38805759fc68": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Mitra_2012_Real_time_optical_detection_of_single_486ac0a45ee3": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Ortega_Arroyo_Kukura_2012_Interferometric_scatte_286d48fb7aaa": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Pleet_2023_Extracellular_vesicle_refractive_inde_8fde80c0e5d5": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "S_pac_kova_2022_Label_free_nanofluidic_scatterin_c880babad55b": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Tsuyama_Mawatari_2019_Nonfluorescent_Molecule_De_888387f2091e": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Tsuyama_Mawatari_2020_Characterization_of_optica_c50e30793c4a": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Tsuyama_Mawatari_2020_Concentration_Determinatio_5b3c05c3a097": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Tsuyama_Mawatari_2020_Detection_and_Characteriza_a53722070435": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Tsuyama_Mawatari_2022_Nanofluidic_optical_diffra_c74d3908825d": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Tsuyama_Mawatari_2022_Supplementary_file1_13b2c26ed2fa": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Tsuyama_Mawatari_2024_Nanofluidic_detection_plat_d49f665a971a": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Welsh_2024_Minimal_information_for_studies_of_ex_44d3cff7e306": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Welsh_Jones_2020_Small_particle_fluorescence_and_b60585a2e22c": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    },
+    "Young_Kukura_2019_Interferometric_scattering_mic_79e7dd73e4c7": {
+      "authors": "",
+      "doi": "",
+      "license_or_access_note": "local_reference_copy_not_relicensed",
+      "metadata_source": "not_claim_bearing_not_used_for_claim_area",
+      "title": "",
+      "used_for_claim_area": "",
+      "year": ""
+    }
+  },
+  "schema": "ev_nodi_paper_manifest_overrides_v1",
+  "unavailable_or_not_packaged_papers": []
+}

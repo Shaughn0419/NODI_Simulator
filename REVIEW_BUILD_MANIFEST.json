@@ -1,0 +1,789 @@
+{
+  "artifact_groups": [
+    {
+      "artifacts": [
+        {
+          "path": "README.md",
+          "path_status": "exists",
+          "role": "repo_readme",
+          "sha256": "c2b67e1816e6249b7006f00e3758733aa7fb9d1b5ba58885c4dbfb8d3cb086ea",
+          "size_bytes": 7454,
+          "source_lane": "docs"
+        },
+        {
+          "path": "reports/90_EV_NODI_post_v2_review_ready_relative_audit_roadmap.md",
+          "path_status": "exists",
+          "role": "roadmap",
+          "sha256": "68e059cec371e4adc8ff128888648f685fd4df1213123643f728db6663044354",
+          "size_bytes": 91180,
+          "source_lane": "reports"
+        },
+        {
+          "path": "reports/91_EV_NODI_post_v2_P0_release_completion_note.md",
+          "path_status": "exists",
+          "role": "p0_release_completion_note",
+          "sha256": "2a57ca72a02d35ab1a65059e9b1dc7a62fc07626e1a48c311bf68531b3db8e9b",
+          "size_bytes": 1907,
+          "source_lane": "reports"
+        },
+        {
+          "path": "tools/generate_review_package_manifest.py",
+          "path_status": "exists",
+          "role": "review_package_manifest_generator",
+          "sha256": "a5643fc8bd46775a1d3e152ab530973301b4906abc462704604d627259f59e2d",
+          "size_bytes": 479,
+          "source_lane": "tools"
+        },
+        {
+          "path": "tools/generate_paper_provenance.py",
+          "path_status": "exists",
+          "role": "paper_provenance_generator",
+          "sha256": "8cebe805685f55ef0a3ad85116ca12cc8ce3efb9db1774c64623113477be1837",
+          "size_bytes": 485,
+          "source_lane": "tools"
+        },
+        {
+          "path": "tools/verify_review_package.py",
+          "path_status": "exists",
+          "role": "review_package_verifier",
+          "sha256": "f3452fb91cc32530c21f5db9e2d2432be93b796e0446d2acaa91c6c1e4f476dc",
+          "size_bytes": 1236,
+          "source_lane": "tools"
+        },
+        {
+          "path": "tools/export_review_package.py",
+          "path_status": "exists",
+          "role": "review_package_exporter",
+          "sha256": "0f317d8161a4bf56241be989fed09366cfac8462a8299bdc30e760f0af6043c7",
+          "size_bytes": 449,
+          "source_lane": "tools"
+        }
+      ],
+      "group": "code_tests_tools_docs_reports"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "configs/realism_v2/calibration_artifact_registry.yaml",
+          "path_status": "exists",
+          "role": "calibration_artifact_registry.yaml",
+          "sha256": "dd9545acc89d860b07cf27eceeb7a294b9dddc6c8887c61853e3a3a871085ab2",
+          "size_bytes": 1228,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/claim_level_matrix.csv",
+          "path_status": "exists",
+          "role": "claim_level_matrix.csv",
+          "sha256": "0b521fafefa2d1c929141199a478f25b369b7c0a9e70ae8a287556e3cc33abc2",
+          "size_bytes": 1162,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/detector_connection_state_machine.yaml",
+          "path_status": "exists",
+          "role": "detector_connection_state_machine.yaml",
+          "sha256": "553fd3d88ddc8e00a80ee38ac8c5a02d6a2cd2423b643908cbe6cffb610d3e8b",
+          "size_bytes": 3083,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/detector_path_schema.yaml",
+          "path_status": "exists",
+          "role": "detector_path_schema.yaml",
+          "sha256": "4c36bf1a4b590a84102165b472ddf4e415c34cc4811b220d0b0178cf73c4b40b",
+          "size_bytes": 2177,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/ev_sample_profiles.yaml",
+          "path_status": "exists",
+          "role": "ev_sample_profiles.yaml",
+          "sha256": "898456a4f4f9fd262d82050cb64568d05e5af717cd24c0f1e9030685c7f1a539",
+          "size_bytes": 684,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+          "path_status": "exists",
+          "role": "forbidden_claims_lexicon.yaml",
+          "sha256": "f44aee4806d68f198a46c280d471e8ad3c3f3e5b7d267f4cc016c2ca43aa7edd",
+          "size_bytes": 1951,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/laser_daq_schema.yaml",
+          "path_status": "exists",
+          "role": "laser_daq_schema.yaml",
+          "sha256": "67475405a0c6ef24e5e9c7f01accf09428acc3bc4a7383dd75f856b086406d72",
+          "size_bytes": 1153,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+          "path_status": "exists",
+          "role": "noise_readout_scenario_bundle.yaml",
+          "sha256": "7897bd57b0e26df2a688f06a0ab347f79442d39bd94feac0e0c03ae97b53f126",
+          "size_bytes": 760,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r3b_uncertainty_prior_table.yaml",
+          "path_status": "exists",
+          "role": "r3b_uncertainty_prior_table.yaml",
+          "sha256": "5d2a9fa2ee8877c473476523aa19028a93b63488484358194405b172e5f0f60f",
+          "size_bytes": 14181,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r4_2_main660_nearwall_mesh_adjudication_plan.yaml",
+          "path_status": "exists",
+          "role": "r4_2_main660_nearwall_mesh_adjudication_plan.yaml",
+          "sha256": "1415de3ea55a71df2cbd95aa263798598c930d0e708524f3f5e85969a315fa5d",
+          "size_bytes": 9190,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r4_representative_full_wave_plan.yaml",
+          "path_status": "exists",
+          "role": "r4_representative_full_wave_plan.yaml",
+          "sha256": "2f501161afcfa904606805af802aef983d641cdbb6a780479bbb826c1c9f5bac",
+          "size_bytes": 24417,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r4_revised_rerun_plan.yaml",
+          "path_status": "exists",
+          "role": "r4_revised_rerun_plan.yaml",
+          "sha256": "5839b5d73662829ecebdf7dc12102c3e6154c80356e9ddcf97a4389889707a26",
+          "size_bytes": 11925,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r4_route_model_revision_plan.yaml",
+          "path_status": "exists",
+          "role": "r4_route_model_revision_plan.yaml",
+          "sha256": "30e6b61194ca00d8c87960555f98f3aa8b0127f2eec91d9bac599f069ef18830",
+          "size_bytes": 9553,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r5_1_route_role_stability_interpretation_plan.yaml",
+          "path_status": "exists",
+          "role": "r5_1_route_role_stability_interpretation_plan.yaml",
+          "sha256": "2bf58aa8d6d40340ff1f7a195c44a92959c5cc86160d3e3621298b20696e32c8",
+          "size_bytes": 10440,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r5_2_bounded_scenario_prior_audit_plan.yaml",
+          "path_status": "exists",
+          "role": "r5_2_bounded_scenario_prior_audit_plan.yaml",
+          "sha256": "c341f7d56f21e65de7bd212f00b10ab609338187ee3465ee1c351a1b6225e12d",
+          "size_bytes": 17092,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r5_3_route_prior_model_revision_plan.yaml",
+          "path_status": "exists",
+          "role": "r5_3_route_prior_model_revision_plan.yaml",
+          "sha256": "97443a3d4fdb8436d88caa0c15ac4c3b29637e532ca69483c30c2a8c64a2a862",
+          "size_bytes": 12888,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r5_full_grid_v2_plan.yaml",
+          "path_status": "exists",
+          "role": "r5_full_grid_v2_plan.yaml",
+          "sha256": "e262e6f32045106fa96d5413145a2710c6f99f982bb26c319a08cdf0612a2620",
+          "size_bytes": 8588,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r5_scenario_bundle_manifest.yaml",
+          "path_status": "exists",
+          "role": "r5_scenario_bundle_manifest.yaml",
+          "sha256": "770eb4f59a2fe842c9cd014b50bd1a4a91f116266df49a10100738de3c452373",
+          "size_bytes": 5061,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r6_route_prior_sensitivity_plan.yaml",
+          "path_status": "exists",
+          "role": "r6_route_prior_sensitivity_plan.yaml",
+          "sha256": "ded5ce41f74f5bc7300f834d2811271a5e2635da77cf729094b056498f980d51",
+          "size_bytes": 25677,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r7_1_operator_artifact_validation_plan.yaml",
+          "path_status": "exists",
+          "role": "r7_1_operator_artifact_validation_plan.yaml",
+          "sha256": "8fbc32051468e5b544f990378c81fa41567aa11673f91881f511eb90bb7f74ec",
+          "size_bytes": 13214,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r7_2_operator_artifact_gap_register_plan.yaml",
+          "path_status": "exists",
+          "role": "r7_2_operator_artifact_gap_register_plan.yaml",
+          "sha256": "59c5c8b9d5ea9191ad40d67a142a73e38d13f8d9503c75168261c5ec39b0528d",
+          "size_bytes": 14059,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/r7_route_prior_mechanistic_decomposition_plan.yaml",
+          "path_status": "exists",
+          "role": "r7_route_prior_mechanistic_decomposition_plan.yaml",
+          "sha256": "99616978a2c48a3606be0cb248dc2a21fee6d89bcebbc565ba893ba4206bea33",
+          "size_bytes": 22446,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+          "path_status": "exists",
+          "role": "reason_code_vocabulary.yaml",
+          "sha256": "fe5520a2588b2b4de6021ee66135bfef372558294f2277a2c9568ab2b3faef52",
+          "size_bytes": 1123,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/route_key_schema.yaml",
+          "path_status": "exists",
+          "role": "route_key_schema.yaml",
+          "sha256": "a465c730d559366f07e114e82621d42c6de95a2b19f82f416d76cb704bc22152",
+          "size_bytes": 568,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/route_role_vocabulary.yaml",
+          "path_status": "exists",
+          "role": "route_role_vocabulary.yaml",
+          "sha256": "7e8ecfc935a1a1407d16ba455559f011c2fbf1b1053ce4cae1d839f7c2a88ab9",
+          "size_bytes": 556,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/run_manifest_schema.yaml",
+          "path_status": "exists",
+          "role": "run_manifest_schema.yaml",
+          "sha256": "3ce97c550705dce0c0f6ef9cd3dede3bc0c556264872ec4ca806024bc64e4338",
+          "size_bytes": 760,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/scenario_registry.yaml",
+          "path_status": "exists",
+          "role": "scenario_registry.yaml",
+          "sha256": "b56ffb4af1f092a3aadac64e0db990f5ff0b6689c03afd918b01ac0b4fab116c",
+          "size_bytes": 5090,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/unit_registry.yaml",
+          "path_status": "exists",
+          "role": "unit_registry.yaml",
+          "sha256": "6a9d7244b926496661f36f7df491c0ffd791e1c5457527c5e4abd07b946df0df",
+          "size_bytes": 876,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/v1_summary_hash_pin.json",
+          "path_status": "exists",
+          "role": "v1_summary_hash_pin.json",
+          "sha256": "39cb79297b43144649fc357977dac8590ca7aa4ac57034d415dddf0176a3e2d1",
+          "size_bytes": 345,
+          "source_lane": "configs_realism_v2"
+        },
+        {
+          "path": "configs/realism_v2/v2_no_measured_data_closure_plan.yaml",
+          "path_status": "exists",
+          "role": "v2_no_measured_data_closure_plan.yaml",
+          "sha256": "08320f9e9cb9941ca7f17ba0fbc15f90d43484019612f403d64f60f0fb2a5129",
+          "size_bytes": 8931,
+          "source_lane": "configs_realism_v2"
+        }
+      ],
+      "group": "configs_realism_v2"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "calibration/bfp_roi_mask_template.json",
+          "path_status": "exists",
+          "role": "bfp_roi_mask_template.json",
+          "sha256": "8d9caa5490f546055a0a4150018b0a8e845b7424e724078eaff20549771ae0f5",
+          "size_bytes": 627,
+          "source_lane": "calibration_scaffold"
+        },
+        {
+          "path": "calibration/blank_false_positive_template.csv",
+          "path_status": "exists",
+          "role": "blank_false_positive_template.csv",
+          "sha256": "b2a732eac490aef0c9221bed0498701a270b19541cfd77b1ad8a49814e88dab4",
+          "size_bytes": 425,
+          "source_lane": "calibration_scaffold"
+        },
+        {
+          "path": "calibration/blank_false_positive_template_manifest.json",
+          "path_status": "exists",
+          "role": "blank_false_positive_template_manifest.json",
+          "sha256": "606c58d8b1e95d2e96730dc69aee49f6d9c2a6e91051c494d46b06b842d8e1b2",
+          "size_bytes": 643,
+          "source_lane": "calibration_scaffold"
+        },
+        {
+          "path": "calibration/calibration_manifest_template.json",
+          "path_status": "exists",
+          "role": "calibration_manifest_template.json",
+          "sha256": "67a7a4dec8fa823d064d27ed6a0ba07cf655c86d5796c8d06945243f758778a4",
+          "size_bytes": 495,
+          "source_lane": "calibration_scaffold"
+        },
+        {
+          "path": "calibration/collection_operator_template.csv",
+          "path_status": "exists",
+          "role": "collection_operator_template.csv",
+          "sha256": "7c92ca0ceb6a7fca100b17d36aa3409c970ba5821da0b2efabf7329aa3279d74",
+          "size_bytes": 318,
+          "source_lane": "calibration_scaffold"
+        },
+        {
+          "path": "calibration/collection_operator_template_manifest.json",
+          "path_status": "exists",
+          "role": "collection_operator_template_manifest.json",
+          "sha256": "825e5241f156328e184518a34406ebf1b1ede53c7439867b69a8cf63c13b4e4e",
+          "size_bytes": 561,
+          "source_lane": "calibration_scaffold"
+        },
+        {
+          "path": "calibration/raw_blank_trace_manifest_template.json",
+          "path_status": "exists",
+          "role": "raw_blank_trace_manifest_template.json",
+          "sha256": "3180083dbed37a6777c3c8ed810891bd4398dff47cfafc86a2f8738212c9dcd6",
+          "size_bytes": 498,
+          "source_lane": "calibration_scaffold"
+        },
+        {
+          "path": "calibration/reference_blank_channel_template.csv",
+          "path_status": "exists",
+          "role": "reference_blank_channel_template.csv",
+          "sha256": "35c6b649fb72b57afe1905d69b2f3db857d30802d4bf48c4c9d47b320e4a04fb",
+          "size_bytes": 1493,
+          "source_lane": "calibration_scaffold"
+        },
+        {
+          "path": "calibration/reference_blank_channel_template_manifest.json",
+          "path_status": "exists",
+          "role": "reference_blank_channel_template_manifest.json",
+          "sha256": "de3c80ebaeba9867cbd4bd127018417cf8869d46c220ff726b9af4b8e7369f49",
+          "size_bytes": 525,
+          "source_lane": "calibration_scaffold"
+        },
+        {
+          "path": "calibration/standard_particle_template.csv",
+          "path_status": "exists",
+          "role": "standard_particle_template.csv",
+          "sha256": "44493417bf0fd214bbba14092a28378d722dd48a8b281ff61ca74b5406cd1613",
+          "size_bytes": 270,
+          "source_lane": "calibration_scaffold"
+        },
+        {
+          "path": "calibration/standard_particle_template_manifest.json",
+          "path_status": "exists",
+          "role": "standard_particle_template_manifest.json",
+          "sha256": "534e61cbd1870fc33a82a4fd0f561535af092b0a3b2ef71b56507292b23363b7",
+          "size_bytes": 399,
+          "source_lane": "calibration_scaffold"
+        }
+      ],
+      "calibration_template_role": "schema_placeholder_no_measured_data",
+      "group": "calibration_scaffold_all_files"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "results/ev_design_full_range_biomimetic_exosome_with_anchors_10000e_summary.csv",
+          "path_status": "exists",
+          "role": "v1_summary_csv",
+          "sha256": "f7455efd4c4a48c817f9078a19f40b24668ac433ba7673a6352f35af55309d2c",
+          "size_bytes": 1754089049,
+          "source_lane": "v1"
+        }
+      ],
+      "contract": {
+        "approved_v1_summary_drift_evidence_path": null,
+        "n_cases": 32032,
+        "required_v1_boundary_fields_present": true,
+        "summary_csv_hash_matches_pin": true,
+        "summary_csv_path": "results/ev_design_full_range_biomimetic_exosome_with_anchors_10000e_summary.csv",
+        "summary_csv_pinned_sha256": "f7455efd4c4a48c817f9078a19f40b24668ac433ba7673a6352f35af55309d2c",
+        "summary_csv_sha256": "f7455efd4c4a48c817f9078a19f40b24668ac433ba7673a6352f35af55309d2c",
+        "summary_csv_sha256_pinned_in_manifest": true,
+        "v1_boundary_expected": {
+          "bfp_to_angle_jacobian_applied": false,
+          "detector_field_units": "arbitrary_relative_field_units",
+          "field_coordinate_measure": "theta_phi_surrogate",
+          "operator_route": "pupil_slit_surrogate",
+          "output_claim_level_resolved": "engineering_ranking"
+        }
+      },
+      "group": "v1_key_result_artifacts",
+      "v1_summary_mode": "existing_single_summary_csv"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "results/ev_nodi_realism_v2_no_measured_data_closure/v2_final_claim_boundary_summary.csv",
+          "path_status": "exists",
+          "role": "claim_boundary_summary",
+          "sha256": "73f51552a8140041a63818fbfba714c9d84a22afa23f750634eab5259d338707",
+          "size_bytes": 748,
+          "source_lane": "v2 closure"
+        },
+        {
+          "path": "results/ev_nodi_realism_v2_no_measured_data_closure/v2_route_governance_closure_summary.csv",
+          "path_status": "exists",
+          "role": "route_governance_summary",
+          "sha256": "efd9f8c2380587c6ddc90babd6d7fcf96fd051fcf4b8b06ea85b8202009fee3f",
+          "size_bytes": 464,
+          "source_lane": "v2 closure"
+        },
+        {
+          "path": "results/ev_nodi_realism_v2_no_measured_data_closure/v2_artifact_gap_closure_register.csv",
+          "path_status": "exists",
+          "role": "artifact_gap_register",
+          "sha256": "1c21a2fea8d545fd3a6b955a31cce309b9f8918ced02fe4f21f469bd81947d37",
+          "size_bytes": 1526,
+          "source_lane": "v2 closure"
+        },
+        {
+          "path": "reports/89_EV_NODI_post_v2_unmodeled_realism_register.md",
+          "path_status": "exists",
+          "role": "unmodeled_realism_register",
+          "sha256": "812cd5cedba14f12ca3fff78eca7a6d27561a09eb865b799ee0f8c2eadb0fdae",
+          "size_bytes": 4395,
+          "source_lane": "post-v2 register"
+        },
+        {
+          "path": "results/ev_nodi_realism_v2_anchor_smoke/mie_to_power_unit_check.csv",
+          "path_status": "exists",
+          "role": "mie_to_power_guardrail_summary",
+          "sha256": "9ea2e1c6f4a8c260abb93514d341b68dc1df61e333e34739338e956a2a7bb165",
+          "size_bytes": 182261,
+          "source_lane": "upstream v2 evidence"
+        },
+        {
+          "path": "configs/realism_v2/r5_scenario_bundle_manifest.yaml",
+          "path_status": "exists",
+          "role": "noise_readout_scenario_manifest",
+          "sha256": "770eb4f59a2fe842c9cd014b50bd1a4a91f116266df49a10100738de3c452373",
+          "size_bytes": 5061,
+          "source_lane": "R5 v2 evidence"
+        },
+        {
+          "path": "results/ev_nodi_realism_v2_full_grid_R5_v2/scenario_bundle_sensitivity_summary.csv",
+          "path_status": "exists",
+          "role": "noise_readout_scenario_summary",
+          "sha256": "475a1b80c1e9b8e9669acbeaa504810935d1123166fea49cc60c5ad4e14b2646",
+          "size_bytes": 1803,
+          "source_lane": "R5 v2 evidence"
+        },
+        {
+          "path": "results/ev_nodi_realism_v2_full_grid_R5_v2/selected_annulus_parallel_lens_summary.csv",
+          "path_status": "exists",
+          "role": "selected_annulus_summary",
+          "sha256": "121dde149c31237c9d04c784595b170f8288bfdecf74bf7ec172a18cf40408f8",
+          "size_bytes": 1719,
+          "source_lane": "R5 v2 evidence"
+        }
+      ],
+      "group": "v2_closure_artifacts"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+          "path_status": "exists",
+          "role": "top_candidate_mandatory_audit_manifest",
+          "sha256": "79f411b7bc9aff7a990401882cda88c76d0c5c08ab4c48f98d9dab01354deb22",
+          "size_bytes": 6342,
+          "source_lane": "P0a.v1_v2_artifact_mapping"
+        }
+      ],
+      "group": "post_v2_mandatory_audit_schema"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "papers/provenance/paper_bibliography.bib",
+          "path_status": "exists",
+          "role": "paper_bibliography.bib",
+          "sha256": "f8b3d66e8e298bdd9a11328e4efcb314c96dd6e66ca62865d9581e8ba7d47f88",
+          "size_bytes": 63,
+          "source_lane": "paper_provenance"
+        },
+        {
+          "path": "papers/provenance/paper_hashes.sha256",
+          "path_status": "exists",
+          "role": "paper_hashes.sha256",
+          "sha256": "3e41bea945a8a35cd634e7557f5f5cc2efb92311ae005e029129f85898952af3",
+          "size_bytes": 2946,
+          "source_lane": "paper_provenance"
+        },
+        {
+          "path": "papers/provenance/paper_manifest.csv",
+          "path_status": "exists",
+          "role": "paper_manifest.csv",
+          "sha256": "5107ca7b7759516b8a60616b05c2982f5832242a9c645771800627f9103b0768",
+          "size_bytes": 5469,
+          "source_lane": "paper_provenance"
+        },
+        {
+          "path": "papers/provenance/paper_manifest_overrides.yaml",
+          "path_status": "exists",
+          "role": "paper_manifest_overrides.yaml",
+          "sha256": "f9d1f08de5573ec26e50330cdf96d903184fa3fa8ec13d10c1bf1d53e6408e16",
+          "size_bytes": 5455,
+          "source_lane": "paper_provenance"
+        },
+        {
+          "path": "papers/provenance/paper_provenance_notes.md",
+          "path_status": "exists",
+          "role": "paper_provenance_notes.md",
+          "sha256": "defe4d6595e9b76668991ccd02bd3ec8fc3185cb393132c56342493d7e3e7bab",
+          "size_bytes": 240,
+          "source_lane": "paper_provenance"
+        },
+        {
+          "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+          "path_status": "exists",
+          "role": "unavailable_or_not_packaged_papers.csv",
+          "sha256": "70980743abaded6a6943797e6f7d653e9f1cd4897afeb9fb28e476d1bb08a4e2",
+          "size_bytes": 102,
+          "source_lane": "paper_provenance"
+        }
+      ],
+      "group": "paper_provenance"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+          "path_status": "exists",
+          "role": "forbidden_claims_lexicon",
+          "sha256": "f44aee4806d68f198a46c280d471e8ad3c3f3e5b7d267f4cc016c2ca43aa7edd",
+          "size_bytes": 1951,
+          "source_lane": "claim_language_lexicon"
+        }
+      ],
+      "group": "claim_language_lexicon"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "REVIEW_PACKAGE_README.md",
+          "path_status": "exists",
+          "role": "review_package_readme",
+          "sha256": "ded332211e1daea4df353242346e865430ead494beada82478c382fa02182963",
+          "size_bytes": 680,
+          "source_lane": "review_package_root"
+        },
+        {
+          "path": "HISTORICAL_REPORT_SUPERSESSION.md",
+          "path_status": "exists",
+          "role": "historical_report_supersession",
+          "sha256": "e77c589c66a71a7eb78531ed9655f2019f6ceade77252372e809c45355766c91",
+          "size_bytes": 558,
+          "source_lane": "P1.governance"
+        }
+      ],
+      "group": "review_package_root"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+          "path_status": "exists",
+          "role": "reason_code_vocabulary",
+          "sha256": "fe5520a2588b2b4de6021ee66135bfef372558294f2277a2c9568ab2b3faef52",
+          "size_bytes": 1123,
+          "source_lane": "P1.governance"
+        },
+        {
+          "path": "configs/realism_v2/route_role_vocabulary.yaml",
+          "path_status": "exists",
+          "role": "route_role_vocabulary",
+          "sha256": "7e8ecfc935a1a1407d16ba455559f011c2fbf1b1053ce4cae1d839f7c2a88ab9",
+          "size_bytes": 556,
+          "source_lane": "P1.governance"
+        },
+        {
+          "path": "configs/realism_v2/ev_sample_profiles.yaml",
+          "path_status": "exists",
+          "role": "ev_sample_profiles",
+          "sha256": "898456a4f4f9fd262d82050cb64568d05e5af717cd24c0f1e9030685c7f1a539",
+          "size_bytes": 684,
+          "source_lane": "P1.governance"
+        },
+        {
+          "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+          "path_status": "exists",
+          "role": "noise_readout_scenario_bundle_config",
+          "sha256": "7897bd57b0e26df2a688f06a0ab347f79442d39bd94feac0e0c03ae97b53f126",
+          "size_bytes": 760,
+          "source_lane": "P1.governance"
+        },
+        {
+          "path": "configs/realism_v2/v1_summary_hash_pin.json",
+          "path_status": "exists",
+          "role": "v1_summary_hash_pin",
+          "sha256": "39cb79297b43144649fc357977dac8590ca7aa4ac57034d415dddf0176a3e2d1",
+          "size_bytes": 345,
+          "source_lane": "P1.governance"
+        }
+      ],
+      "group": "p1_governance_configs"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "docs/schemas/post_v2_mandatory_audit_schema.md",
+          "path_status": "exists",
+          "role": "post_v2_mandatory_audit_schema",
+          "sha256": "68b78816413e5393b67fa9b8a0aef0e7fc624c133cd8902fe8755032fbcd60a8",
+          "size_bytes": 295,
+          "source_lane": "P2.schema_docs"
+        },
+        {
+          "path": "docs/schemas/review_package_manifest_schema.md",
+          "path_status": "exists",
+          "role": "review_package_manifest_schema",
+          "sha256": "208cec87e48527faba8f13972e8a81b54b2a01cd78bcdd3fa8fd4cfc4e8a6f82",
+          "size_bytes": 309,
+          "source_lane": "P2.schema_docs"
+        },
+        {
+          "path": "docs/schemas/noise_readout_scenario_bundle_schema.md",
+          "path_status": "exists",
+          "role": "noise_readout_scenario_bundle_schema",
+          "sha256": "8c6d841267208852b8e4e747442cfd7753579fba1df8289a8e8cc3e19d964033",
+          "size_bytes": 273,
+          "source_lane": "P2.schema_docs"
+        },
+        {
+          "path": "docs/schemas/ev_sample_profiles_schema.md",
+          "path_status": "exists",
+          "role": "ev_sample_profiles_schema",
+          "sha256": "087b3220ee557f1e5f28b30ceeaf7fb48c91f776a4f4e552fbab36e6c4ec0d4b",
+          "size_bytes": 197,
+          "source_lane": "P2.schema_docs"
+        },
+        {
+          "path": "docs/schemas/forbidden_claims_lexicon_schema.md",
+          "path_status": "exists",
+          "role": "forbidden_claims_lexicon_schema",
+          "sha256": "991d747ec390807217b5052ec3f9ff0ea01a55e1a088b4a6c8e52b22976a4459",
+          "size_bytes": 251,
+          "source_lane": "P2.schema_docs"
+        }
+      ],
+      "group": "schema_docs"
+    },
+    {
+      "artifacts": [
+        {
+          "generation_task_id": "",
+          "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+          "path_status": "exists",
+          "role": "candidate_universe_manifest",
+          "sha256": "e860082f32134af31122bb2a24446464690fb823a1b416af2ffb118725158f61",
+          "source_lane": "post-v2 mandatory audit"
+        },
+        {
+          "generation_task_id": "",
+          "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+          "path_status": "exists",
+          "role": "top_candidate_mandatory_audit",
+          "sha256": "91dca15066f9dd970d15c108b1526a6e9f9a5adeb62a2c57ff1aa9e085890300",
+          "source_lane": "post-v2 mandatory audit"
+        },
+        {
+          "generation_task_id": "",
+          "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+          "path_status": "exists",
+          "role": "top_candidate_particle_panel_audit",
+          "sha256": "2f756b7423996d6176c8304e71c3783c12c6363145698d3e5f71f2343fca9323",
+          "source_lane": "post-v2 mandatory audit"
+        },
+        {
+          "generation_task_id": "",
+          "path": "results/post_v2_mandatory_audit/top_candidate_pairwise_rank_inversion.csv",
+          "path_status": "exists",
+          "role": "top_candidate_pairwise_rank_inversion",
+          "sha256": "dec3925f0bd69a49c2fcdbf01cc6b2efe2469c892123cb277a44ea3a89eecdf4",
+          "source_lane": "post-v2 mandatory audit"
+        },
+        {
+          "generation_task_id": "",
+          "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+          "path_status": "exists",
+          "role": "bfp_roi_operator_summary",
+          "sha256": "fb923b947bd26b15ee2ccf00f28261d4ce728eb82fd49aef1dc2fc53890f1c38",
+          "source_lane": "post-v2 mandatory audit"
+        },
+        {
+          "generation_task_id": "",
+          "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+          "path_status": "exists",
+          "role": "tsuyama_bfp_reference_summary",
+          "sha256": "1435537a428aa8825b22703e86b0bad7c0e6391dd5f9927b08ce9de90623be7d",
+          "source_lane": "post-v2 mandatory audit"
+        },
+        {
+          "generation_task_id": "",
+          "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+          "path_status": "exists",
+          "role": "ev_prior_contaminant_summary",
+          "sha256": "5e3bb10b9e6079cbad32144ba7720dd156c14b15b7170c5bcefc70121328f9b8",
+          "source_lane": "post-v2 mandatory audit"
+        },
+        {
+          "generation_task_id": "",
+          "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+          "path_status": "exists",
+          "role": "noise_readout_scenario_bundle",
+          "sha256": "b73a6d5e7c1e6d97db16f20b5e97e6b3609bb13125d49257736bdfb9018d99b8",
+          "source_lane": "post-v2 mandatory audit"
+        },
+        {
+          "generation_task_id": "",
+          "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+          "path_status": "exists",
+          "role": "noise_readout_route_sensitivity",
+          "sha256": "13efecfd83d9b00d871bc8108db9e40602fbee50365005712a322944c780c51c",
+          "source_lane": "post-v2 mandatory audit"
+        },
+        {
+          "generation_task_id": "",
+          "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_readme.md",
+          "path_status": "exists",
+          "role": "top_candidate_mandatory_audit_readme",
+          "sha256": "775fc31adabef420efbc87de153cde926d2ccded8f41b5d91001101ddf510ea6",
+          "source_lane": "post-v2 mandatory audit"
+        }
+      ],
+      "group": "post_v2_mandatory_audit_artifacts"
+    }
+  ],
+  "calibrated_claim_allowed": false,
+  "generated_at": "2026-05-10T05:32:18+00:00",
+  "git_commit": "ea232e9d1fcd90111fbb9e7c4c8c9e6659bc3bcd",
+  "git_dirty": false,
+  "hashes_manifest_path": "REVIEW_PACKAGE_HASHES.sha256",
+  "hashes_manifest_sha256": "32e48b45c327ade5e8ce97cfdb92db560ce4cc1ef95f3ac51e1e21ed78e0467c",
+  "package_id": "ev_nodi_post_v2_review_package_20260510_p0b",
+  "package_role": "internal_build_tracking",
+  "release_manifest_path": "REVIEW_PACKAGE_MANIFEST.json",
+  "review_build_manifest_schema": "ev_nodi_review_build_manifest_v1"
+}

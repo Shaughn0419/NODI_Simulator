@@ -1,0 +1,179 @@
+{
+  "audit_bfp_jacobian_applied_layer": "post_v2_audit_sidecar_not_v1_fact",
+  "audit_manifest_schema": "ev_nodi_post_v2_mandatory_audit_manifest_v1",
+  "calibrated_claim_allowed": false,
+  "claim_scope": "no_measured_data_relative_audit_only",
+  "milestone": "P0a_schema_scaffold",
+  "p0b_artifacts_deferred_until_evidence_chain": [
+    {
+      "generation_task_id": "P0b.candidate_universe",
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "role": "candidate_universe_manifest"
+    },
+    {
+      "generation_task_id": "P0b.candidate_universe",
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "role": "top_candidate_mandatory_audit"
+    },
+    {
+      "generation_task_id": "P0b.ev_prior_contaminant_audit",
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "role": "top_candidate_particle_panel_audit"
+    },
+    {
+      "generation_task_id": "P0b.pairwise_rank_audit",
+      "path": "results/post_v2_mandatory_audit/top_candidate_pairwise_rank_inversion.csv",
+      "role": "top_candidate_pairwise_rank_inversion"
+    },
+    {
+      "generation_task_id": "P0b.bfp_roi_audit",
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "role": "bfp_roi_operator_summary"
+    },
+    {
+      "generation_task_id": "P0b.tsuyama_bfp_audit",
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "role": "tsuyama_bfp_reference_summary"
+    },
+    {
+      "generation_task_id": "P0b.ev_prior_contaminant_audit",
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "role": "ev_prior_contaminant_summary"
+    },
+    {
+      "generation_task_id": "P0b.noise_readout_audit",
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "role": "noise_readout_scenario_bundle"
+    },
+    {
+      "generation_task_id": "P0b.noise_readout_audit",
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "role": "noise_readout_route_sensitivity"
+    },
+    {
+      "generation_task_id": "P0b.pairwise_rank_audit",
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_readme.md",
+      "role": "top_candidate_mandatory_audit_readme"
+    }
+  ],
+  "rank_policy": {
+    "primary_inversion_stratum": "all_ranked_routes",
+    "rank_direction": "higher_score_better",
+    "rank_method": "average_tie_rank",
+    "rank_percentile_definition": "1.0_best_0.0_worst",
+    "raw_magnitude_final_gate_allowed": false
+  },
+  "required_aggregation_fields": [
+    "aggregation_scope",
+    "aggregation_particle_family",
+    "aggregation_particle_filter_id",
+    "aggregation_weighting_id",
+    "aggregation_metric_id",
+    "aggregation_quantile"
+  ],
+  "required_core_columns": [
+    "audit_schema_version",
+    "audit_run_id",
+    "audit_generated_at",
+    "source_v1_library_id",
+    "source_v1_library_path",
+    "source_v1_library_sha256",
+    "source_v2_closure_id",
+    "candidate_id",
+    "candidate_source",
+    "route_role_initial",
+    "route_role_final",
+    "wavelength_nm",
+    "width_nm",
+    "depth_nm",
+    "comparison_stratum",
+    "ranking_participation",
+    "particle_panel_summary_id",
+    "missing_v1_reason",
+    "aggregation_scope",
+    "aggregation_particle_family",
+    "aggregation_particle_filter_id",
+    "aggregation_weighting_id",
+    "aggregation_metric_id",
+    "aggregation_quantile",
+    "anchor_particles_included",
+    "contaminants_included_in_route_score"
+  ],
+  "source_v1_library_path": "results/ev_design_full_range_biomimetic_exosome_with_anchors_10000e_summary.csv",
+  "unprefixed_forbidden_audit_columns": [
+    "bfp_to_angle_jacobian_applied"
+  ],
+  "v1_bfp_to_angle_jacobian_applied_expected": false,
+  "v1_source_field_mapping": [
+    {
+      "audit_field": "v1_scalar_score",
+      "derivation_rule": "direct_copy",
+      "source_column": "score"
+    },
+    {
+      "audit_field": "v1_engineering_score",
+      "derivation_rule": "direct_copy",
+      "source_column": "engineering_score"
+    },
+    {
+      "audit_field": "v1_stable_detection_rate_proxy",
+      "derivation_rule": "direct_copy_relative_proxy_only",
+      "source_column": "engineering_basis_stable_detection_rate"
+    },
+    {
+      "audit_field": "v1_mean_peak_margin_z_proxy",
+      "derivation_rule": "direct_copy_relative_proxy_not_calibrated_snr",
+      "source_column": "engineering_basis_mean_peak_margin_z"
+    },
+    {
+      "audit_field": "v1_mean_peak_height_proxy",
+      "derivation_rule": "direct_copy_arbitrary_relative_units_only",
+      "source_column": "mean_peak_height"
+    },
+    {
+      "audit_field": "v1_output_claim_level",
+      "derivation_rule": "direct_copy_expected_engineering_ranking",
+      "source_column": "output_claim_level_resolved"
+    },
+    {
+      "audit_field": "v1_field_coordinate_measure",
+      "derivation_rule": "direct_copy_expected_theta_phi_surrogate",
+      "source_column": "field_coordinate_measure"
+    },
+    {
+      "audit_field": "v1_operator_route",
+      "derivation_rule": "direct_copy_expected_pupil_slit_surrogate",
+      "source_column": "operator_route"
+    },
+    {
+      "audit_field": "v1_detector_field_units",
+      "derivation_rule": "direct_copy_expected_arbitrary_relative_field_units",
+      "source_column": "detector_field_units"
+    },
+    {
+      "audit_field": "v1_bfp_to_angle_jacobian_applied",
+      "derivation_rule": "rename_on_ingest_expected_false_unprefixed_forbidden",
+      "source_column": "bfp_to_angle_jacobian_applied"
+    },
+    {
+      "audit_field": "v1_reference_operating_point_status",
+      "derivation_rule": "direct_copy_relative_reference_status_only",
+      "source_column": "reference_operating_point_status"
+    },
+    {
+      "audit_field": "v1_reference_route_consensus_status",
+      "derivation_rule": "direct_copy",
+      "source_column": "reference_route_consensus_status"
+    },
+    {
+      "audit_field": "v1_reference_solver_status",
+      "derivation_rule": "direct_copy_expected_engineering_surrogate_language",
+      "source_column": "reference_solver_status"
+    },
+    {
+      "audit_field": "v1_reference_design_validity",
+      "derivation_rule": "direct_copy",
+      "source_column": "reference_design_validity"
+    }
+  ]
+}

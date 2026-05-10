@@ -1,0 +1,7 @@
+{
+  "approved_v1_summary_drift_evidence_path": null,
+  "drift_without_evidence_blocks_release": true,
+  "schema": "ev_nodi_v1_summary_hash_pin_v1",
+  "summary_csv_path": "results/ev_design_full_range_biomimetic_exosome_with_anchors_10000e_summary.csv",
+  "summary_csv_sha256": "f7455efd4c4a48c817f9078a19f40b24668ac433ba7673a6352f35af55309d2c"
+}
