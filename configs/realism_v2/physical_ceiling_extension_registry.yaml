@@ -1,0 +1,554 @@
+{
+  "schema_version": "ev_nodi_physical_ceiling_extension_registry_v1",
+  "stage": "P1_physical_ceiling_extensions_no_solver_rank_diagnostics_complete",
+  "topic": "physical-ceiling extensions",
+  "p0_release_conclusion_changed": false,
+  "calibrated_claim_allowed": false,
+  "physical_ceiling_role": "surrogate_risk_reduction_only",
+  "implementation_authority": {
+    "planning_schema_and_risk_register_authorized": true,
+    "heavy_physics_solver_execution_authorized": false,
+    "new_full_wave_case_generation_authorized": false,
+    "new_vector_solver_case_generation_authorized": false,
+    "new_roughness_or_leakage_simulation_authorized": false,
+    "new_transport_simulation_authorized": false,
+    "v1_event_count_expansion_authorized": false,
+    "route_promotion_authorized": false,
+    "main_660_redefinition_authorized": false,
+    "optional_660_W900_D1400_redefines_main_660": false,
+    "no_solver_rank_diagnostic_generation_authorized": true
+  },
+  "claim_governance": {
+    "calibrated_snr_claim_allowed": false,
+    "absolute_lod_claim_allowed": false,
+    "true_ev_concentration_claim_allowed": false,
+    "biological_specificity_claim_allowed": false,
+    "detector_voltage_prediction_claim_allowed": false,
+    "absolute_event_probability_claim_allowed": false,
+    "measured_blank_safety_claim_allowed": false,
+    "allowed_claim_level": "relative_candidate_audit_diagnostic_only",
+    "required_language": "diagnostic role only; no calibrated or absolute claims"
+  },
+  "score_governance": {
+    "final_gate_metric_family": [
+      "rank",
+      "rank_percentile",
+      "pairwise_inversion"
+    ],
+    "raw_arbitrary_unit_magnitude_final_gate_allowed": false,
+    "raw_arbitrary_unit_magnitude_role": "diagnostic_only_not_final_gate",
+    "comparison_stratum_primary": "all_ranked_routes"
+  },
+  "jacobian_governance": {
+    "v1_bfp_to_angle_jacobian_applied": false,
+    "audit_bfp_jacobian_applied": true,
+    "layering_rule": "v1 source library remains theta_phi_surrogate without BFP-to-angle Jacobian; post-v2 audit sidecar may record audited Jacobian diagnostics only."
+  },
+  "artifact_manifest_schema": {
+    "schema_name": "ev_nodi_physical_ceiling_p1_artifact_manifest_v1",
+    "required_artifact_fields": [
+      "artifact_id",
+      "lane_id",
+      "artifact_role",
+      "path",
+      "status",
+      "claim_level",
+      "calibrated_claim_allowed",
+      "p0_release_conclusion_changed",
+      "physical_ceiling_role",
+      "rank_evidence_required",
+      "raw_magnitude_final_gate_allowed"
+    ],
+    "allowed_status_values": [
+      "planned_schema_only",
+      "planned_not_generated",
+      "generated_manifest_only",
+      "future_authorization_required",
+      "generated_no_solver_rank_diagnostic"
+    ],
+    "required_false_fields": [
+      "calibrated_claim_allowed",
+      "p0_release_conclusion_changed",
+      "raw_magnitude_final_gate_allowed"
+    ],
+    "required_role_value": "surrogate_risk_reduction_only"
+  },
+  "planned_artifacts": [
+    {
+      "artifact_id": "p1_physical_ceiling_extension_registry",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "registry_schema_and_risk_register",
+      "path": "configs/realism_v2/physical_ceiling_extension_registry.yaml",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_extensions_plan",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "planning_report",
+      "path": "reports/92_EV_NODI_P1_physical_ceiling_extensions_plan.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_full_wave_green_tensor_diagnostic_contract",
+      "lane_id": "full_wave_green_tensor_physical_ceiling_diagnostic",
+      "artifact_role": "lane_contract_schema_only",
+      "path": "configs/realism_v2/full_wave_green_tensor_diagnostic_contract.yaml",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_full_wave_green_tensor_diagnostic_contract_report",
+      "lane_id": "full_wave_green_tensor_physical_ceiling_diagnostic",
+      "artifact_role": "lane_contract_report",
+      "path": "reports/93_EV_NODI_P1_full_wave_green_tensor_diagnostic_contract.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_vector_jones_polarization_diagnostic_contract",
+      "lane_id": "vector_jones_polarization_diagnostic",
+      "artifact_role": "lane_contract_schema_only",
+      "path": "configs/realism_v2/vector_jones_polarization_diagnostic_contract.yaml",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_vector_jones_polarization_diagnostic_contract_report",
+      "lane_id": "vector_jones_polarization_diagnostic",
+      "artifact_role": "lane_contract_report",
+      "path": "reports/94_EV_NODI_P1_vector_jones_polarization_diagnostic_contract.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_roughness_leakage_diagnostic_contract",
+      "lane_id": "roughness_leakage_diagnostic",
+      "artifact_role": "lane_contract_schema_only",
+      "path": "configs/realism_v2/roughness_leakage_diagnostic_contract.yaml",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_roughness_leakage_diagnostic_contract_report",
+      "lane_id": "roughness_leakage_diagnostic",
+      "artifact_role": "lane_contract_report",
+      "path": "reports/95_EV_NODI_P1_roughness_leakage_diagnostic_contract.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_transport_residence_time_diagnostic_contract",
+      "lane_id": "transport_residence_time_diagnostic",
+      "artifact_role": "lane_contract_schema_only",
+      "path": "configs/realism_v2/transport_residence_time_diagnostic_contract.yaml",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_transport_residence_time_diagnostic_contract_report",
+      "lane_id": "transport_residence_time_diagnostic",
+      "artifact_role": "lane_contract_report",
+      "path": "reports/96_EV_NODI_P1_transport_residence_time_diagnostic_contract.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_contract_manifest",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "contract_registry_and_no_solver_output_guard",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_diagnostic_schema_manifest",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "planned_output_schema_registry_and_no_solver_output_guard",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_input_binding_manifest",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "p0_source_binding_registry_and_no_solver_output_guard",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_route_coverage_manifest",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "p0_route_coverage_registry_and_no_solver_output_guard",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_results_readme",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "human_readable_no_solver_output_guard",
+      "path": "results/post_v2_physical_ceiling/README.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_contract_verifier",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "pure_verifier_no_solver_execution",
+      "path": "tools/verify_post_v2_physical_ceiling_contracts.py",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_contract_manifest_schema_doc",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "schema_documentation",
+      "path": "docs/schemas/physical_ceiling_contract_manifest_schema.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_diagnostic_schema_manifest_schema_doc",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "schema_documentation",
+      "path": "docs/schemas/physical_ceiling_diagnostic_schema_manifest_schema.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_input_binding_manifest_schema_doc",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "schema_documentation",
+      "path": "docs/schemas/physical_ceiling_input_binding_manifest_schema.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_route_coverage_manifest_schema_doc",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "schema_documentation",
+      "path": "docs/schemas/physical_ceiling_route_coverage_manifest_schema.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_physical_ceiling_contract_manifest_completion_note",
+      "lane_id": "cross_lane_governance",
+      "artifact_role": "completion_note",
+      "path": "reports/97_EV_NODI_P1_physical_ceiling_contract_manifest_completion_note.md",
+      "status": "generated_manifest_only",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_full_wave_green_tensor_diagnostic_output",
+      "lane_id": "full_wave_green_tensor_physical_ceiling_diagnostic",
+      "artifact_role": "generated_no_solver_rank_diagnostic_output",
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "status": "generated_no_solver_rank_diagnostic",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_vector_jones_polarization_diagnostic_output",
+      "lane_id": "vector_jones_polarization_diagnostic",
+      "artifact_role": "generated_no_solver_rank_diagnostic_output",
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "status": "generated_no_solver_rank_diagnostic",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_roughness_leakage_diagnostic_output",
+      "lane_id": "roughness_leakage_diagnostic",
+      "artifact_role": "generated_no_solver_rank_diagnostic_output",
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "status": "generated_no_solver_rank_diagnostic",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_id": "p1_transport_residence_time_diagnostic_output",
+      "lane_id": "transport_residence_time_diagnostic",
+      "artifact_role": "generated_no_solver_rank_diagnostic_output",
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "status": "generated_no_solver_rank_diagnostic",
+      "claim_level": "diagnostic_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "rank_evidence_required": true,
+      "raw_magnitude_final_gate_allowed": false
+    }
+  ],
+  "extension_lanes": [
+    {
+      "lane_id": "full_wave_green_tensor_physical_ceiling_diagnostic",
+      "title": "full-wave / Green-tensor physical-ceiling diagnostic",
+      "phase_1_status": "complete",
+      "phase_2_status": "generated_no_solver_rank_diagnostic_no_heavy_solver",
+      "lane_contract_path": "configs/realism_v2/full_wave_green_tensor_diagnostic_contract.yaml",
+      "claim_boundary": {
+        "calibrated_claim_allowed": false,
+        "p0_release_conclusion_changed": false,
+        "physical_ceiling_role": "surrogate_risk_reduction_only",
+        "route_promotion_authorized": false,
+        "absolute_detector_or_lod_claim_authorized": false
+      },
+      "inputs": [
+        "P0 route keys and comparison strata",
+        "P0 rank-percentile and pairwise inversion evidence",
+        "BFP ROI audit sidecar metadata",
+        "future bounded Green-tensor solver configuration, if separately authorized"
+      ],
+      "outputs": [
+        "generated no-solver rank-shift diagnostic by route",
+        "generated no-solver surrogate-risk flags for scalar-vs-full-wave disagreements",
+        "generated no-solver operator-limit notes without detector calibration"
+      ],
+      "required_tests": [
+        "manifest declares calibrated_claim_allowed false",
+        "outputs use rank or rank-percentile as gates",
+        "raw arbitrary-unit fields remain diagnostic only",
+        "P0 release conclusion remains unchanged"
+      ]
+    },
+    {
+      "lane_id": "vector_jones_polarization_diagnostic",
+      "title": "vector / Jones polarization diagnostic",
+      "phase_1_status": "complete",
+      "phase_2_status": "generated_no_solver_rank_diagnostic_no_heavy_solver",
+      "lane_contract_path": "configs/realism_v2/vector_jones_polarization_diagnostic_contract.yaml",
+      "claim_boundary": {
+        "calibrated_claim_allowed": false,
+        "p0_release_conclusion_changed": false,
+        "physical_ceiling_role": "surrogate_risk_reduction_only",
+        "route_promotion_authorized": false,
+        "biological_specificity_claim_authorized": false
+      },
+      "inputs": [
+        "P0 candidate route list",
+        "existing polarization_jones_operator code boundary",
+        "BFP Jacobian audit provenance",
+        "future bounded vector basis sweep, if separately authorized"
+      ],
+      "outputs": [
+        "generated no-solver polarization sensitivity rank deltas",
+        "generated no-solver Jones-basis operator-risk flags",
+        "generated no-solver lane-level uncertainty notes without specificity claims"
+      ],
+      "required_tests": [
+        "Jones diagnostics cannot replace P0 route decisions",
+        "specificity and concentration claims remain forbidden",
+        "audit_bfp_jacobian_applied remains distinct from v1_bfp_to_angle_jacobian_applied"
+      ]
+    },
+    {
+      "lane_id": "roughness_leakage_diagnostic",
+      "title": "roughness / leakage diagnostic",
+      "phase_1_status": "complete",
+      "phase_2_status": "generated_no_solver_rank_diagnostic_no_heavy_solver",
+      "lane_contract_path": "configs/realism_v2/roughness_leakage_diagnostic_contract.yaml",
+      "claim_boundary": {
+        "calibrated_claim_allowed": false,
+        "p0_release_conclusion_changed": false,
+        "physical_ceiling_role": "surrogate_risk_reduction_only",
+        "route_promotion_authorized": false,
+        "measured_blank_safety_claim_authorized": false
+      },
+      "inputs": [
+        "P0 route geometry keys",
+        "R7 artifact gap registry concepts for fabrication and BFP alignment",
+        "future bounded roughness/leakage perturbation grid, if separately authorized"
+      ],
+      "outputs": [
+        "generated no-solver leakage vulnerability rank flags",
+        "generated no-solver roughness sensitivity bins",
+        "generated no-solver artifact-gap escalation notes"
+      ],
+      "required_tests": [
+        "roughness/leakage outputs cannot claim blank safety",
+        "final gates remain rank-percentile or pairwise inversion based",
+        "P1 diagnostics stay outside P0 release conclusions"
+      ]
+    },
+    {
+      "lane_id": "transport_residence_time_diagnostic",
+      "title": "transport / residence-time diagnostic",
+      "phase_1_status": "complete",
+      "phase_2_status": "generated_no_solver_rank_diagnostic_no_heavy_solver",
+      "lane_contract_path": "configs/realism_v2/transport_residence_time_diagnostic_contract.yaml",
+      "claim_boundary": {
+        "calibrated_claim_allowed": false,
+        "p0_release_conclusion_changed": false,
+        "physical_ceiling_role": "surrogate_risk_reduction_only",
+        "route_promotion_authorized": false,
+        "true_ev_concentration_claim_authorized": false
+      },
+      "inputs": [
+        "P0 EV/sample and coincidence relative proxies",
+        "existing electrokinetic and fluidic model boundaries",
+        "future bounded residence-time perturbation grid, if separately authorized"
+      ],
+      "outputs": [
+        "generated no-solver residence-time fragility rank flags",
+        "generated no-solver transport-risk register rows",
+        "generated no-solver notes on proxy adequacy without concentration claims"
+      ],
+      "required_tests": [
+        "transport outputs do not expand v1 event counts",
+        "transport outputs cannot claim true EV concentration",
+        "coincidence and residence-time quantities remain relative diagnostics"
+      ]
+    }
+  ],
+  "risk_register": [
+    {
+      "risk_id": "P1.RISK.CALIBRATION_DRIFT",
+      "risk": "Physical-ceiling language could be misread as calibration.",
+      "mitigation": "Every lane and artifact repeats calibrated_claim_allowed=false and uses diagnostic-only language.",
+      "owner_lane": "cross_lane_governance",
+      "status": "registered"
+    },
+    {
+      "risk_id": "P1.RISK.RAW_MAGNITUDE_GATE",
+      "risk": "Arbitrary-unit magnitudes could leak into final decisions.",
+      "mitigation": "Final gates are restricted to rank, rank-percentile, and pairwise inversion evidence.",
+      "owner_lane": "cross_lane_governance",
+      "status": "registered"
+    },
+    {
+      "risk_id": "P1.RISK.MAIN_660_REDEFINITION",
+      "risk": "optional_660_W900_D1400 could be mistaken for a main-660 replacement.",
+      "mitigation": "Registry keeps optional_660_W900_D1400_redefines_main_660=false.",
+      "owner_lane": "cross_lane_governance",
+      "status": "registered"
+    },
+    {
+      "risk_id": "P1.RISK.JACOBIAN_LAYER_CONFUSION",
+      "risk": "The v1 source-library Jacobian flag could be conflated with the audit-sidecar Jacobian diagnostic.",
+      "mitigation": "Registry pins v1_bfp_to_angle_jacobian_applied=false and audit_bfp_jacobian_applied=true.",
+      "owner_lane": "cross_lane_governance",
+      "status": "registered"
+    }
+  ]
+}

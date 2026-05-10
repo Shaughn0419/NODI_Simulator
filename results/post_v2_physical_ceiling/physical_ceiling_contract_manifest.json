@@ -1,0 +1,102 @@
+{
+  "calibrated_claim_allowed": false,
+  "claim_boundary": {
+    "absolute_event_probability_claim_allowed": false,
+    "absolute_lod_claim_allowed": false,
+    "biological_specificity_claim_allowed": false,
+    "calibrated_snr_claim_allowed": false,
+    "detector_voltage_prediction_claim_allowed": false,
+    "true_ev_concentration_claim_allowed": false
+  },
+  "contract_count": 4,
+  "contract_paths": [
+    "configs/realism_v2/full_wave_green_tensor_diagnostic_contract.yaml",
+    "configs/realism_v2/vector_jones_polarization_diagnostic_contract.yaml",
+    "configs/realism_v2/roughness_leakage_diagnostic_contract.yaml",
+    "configs/realism_v2/transport_residence_time_diagnostic_contract.yaml"
+  ],
+  "contracts": [
+    {
+      "artifact_status": "generated_no_solver_rank_diagnostic",
+      "calibrated_claim_allowed": false,
+      "contract_path": "configs/realism_v2/full_wave_green_tensor_diagnostic_contract.yaml",
+      "contract_sha256": "caea92a9cc0a1deb45449bd5302c8c04cbb75610eb4c9a3ea762ea569af67faf",
+      "contract_stage": "P1_full_wave_green_tensor_diagnostic_contract_only",
+      "decision_authority": "diagnostic_flag_only_no_route_promotion",
+      "lane_id": "full_wave_green_tensor_physical_ceiling_diagnostic",
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "planned_output_exists": true,
+      "planned_output_path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_status": "generated_no_solver_rank_diagnostic",
+      "calibrated_claim_allowed": false,
+      "contract_path": "configs/realism_v2/vector_jones_polarization_diagnostic_contract.yaml",
+      "contract_sha256": "9d949bbb1ae0a62097ab62df9911b7df380dec0876b47529980d80817139166c",
+      "contract_stage": "P1_vector_jones_polarization_diagnostic_contract_only",
+      "decision_authority": "diagnostic_flag_only_no_route_promotion",
+      "lane_id": "vector_jones_polarization_diagnostic",
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "planned_output_exists": true,
+      "planned_output_path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_status": "generated_no_solver_rank_diagnostic",
+      "calibrated_claim_allowed": false,
+      "contract_path": "configs/realism_v2/roughness_leakage_diagnostic_contract.yaml",
+      "contract_sha256": "d5f3275f064a17cd9cd8eb17a6e5994f90899b91bc6eae4c54548321cb3e103a",
+      "contract_stage": "P1_roughness_leakage_diagnostic_contract_only",
+      "decision_authority": "diagnostic_flag_only_no_route_promotion",
+      "lane_id": "roughness_leakage_diagnostic",
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "planned_output_exists": true,
+      "planned_output_path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "raw_magnitude_final_gate_allowed": false
+    },
+    {
+      "artifact_status": "generated_no_solver_rank_diagnostic",
+      "calibrated_claim_allowed": false,
+      "contract_path": "configs/realism_v2/transport_residence_time_diagnostic_contract.yaml",
+      "contract_sha256": "06be3d96ac68062c985c56e190b0367f1a9aa6e5f2e049b7b5324aea2851ccd2",
+      "contract_stage": "P1_transport_residence_time_diagnostic_contract_only",
+      "decision_authority": "diagnostic_flag_only_no_route_promotion",
+      "lane_id": "transport_residence_time_diagnostic",
+      "p0_release_conclusion_changed": false,
+      "physical_ceiling_role": "surrogate_risk_reduction_only",
+      "planned_output_exists": true,
+      "planned_output_path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "raw_magnitude_final_gate_allowed": false
+    }
+  ],
+  "diagnostic_output_count": 4,
+  "diagnostic_output_existing_count": 4,
+  "diagnostic_output_paths": [
+    "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+    "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+    "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+    "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv"
+  ],
+  "diagnostic_outputs_generated": true,
+  "lane_report_paths": [
+    "reports/93_EV_NODI_P1_full_wave_green_tensor_diagnostic_contract.md",
+    "reports/94_EV_NODI_P1_vector_jones_polarization_diagnostic_contract.md",
+    "reports/95_EV_NODI_P1_roughness_leakage_diagnostic_contract.md",
+    "reports/96_EV_NODI_P1_transport_residence_time_diagnostic_contract.md"
+  ],
+  "manifest_role": "contract_registry_and_generated_no_solver_output_guard",
+  "p0_release_conclusion_changed": false,
+  "physical_ceiling_role": "surrogate_risk_reduction_only",
+  "required_false_fields": [
+    "calibrated_claim_allowed",
+    "p0_release_conclusion_changed",
+    "solver_or_simulation_execution_authorized"
+  ],
+  "schema_version": "ev_nodi_p1_physical_ceiling_contract_manifest_v1",
+  "solver_or_simulation_execution_authorized": false,
+  "stage": "P1_no_solver_rank_diagnostics_complete"
+}

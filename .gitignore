@@ -36,7 +36,18 @@ review_bundles/
 
 # Local scratch/output artifacts
 tmp/
-results/
+results/*
+!results/post_v2_physical_ceiling/
+results/post_v2_physical_ceiling/*
+!results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json
+!results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json
+!results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json
+!results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json
+!results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv
+!results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv
+!results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv
+!results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv
+!results/post_v2_physical_ceiling/README.md
 exports/
 .pdf_output/
 

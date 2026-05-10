@@ -17,6 +17,7 @@ def test_hard_claim_scan_scope_includes_post_v2_and_package_docs() -> None:
     assert "reports/90_EV_NODI_post_v2_review_ready_relative_audit_roadmap.md" in paths
     assert "REVIEW_PACKAGE_README.md" in paths
     assert "papers/README.md" in paths
+    assert "results/post_v2_physical_ceiling/README.md" in paths
 
 
 def test_hard_claim_scan_has_no_unblocked_forbidden_claims() -> None:

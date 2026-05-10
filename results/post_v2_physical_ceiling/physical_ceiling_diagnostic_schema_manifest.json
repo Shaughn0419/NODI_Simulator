@@ -1,0 +1,193 @@
+{
+  "calibrated_claim_allowed": false,
+  "diagnostic_outputs_generated": true,
+  "manifest_role": "generated_output_schema_registry_and_no_solver_guard",
+  "p0_release_conclusion_changed": false,
+  "physical_ceiling_role": "surrogate_risk_reduction_only",
+  "required_false_fields": [
+    "calibrated_claim_allowed",
+    "p0_release_conclusion_changed",
+    "solver_or_simulation_execution_authorized"
+  ],
+  "required_gate_metric_families": [
+    "rank_percentile",
+    "pairwise_inversion"
+  ],
+  "schema_count": 4,
+  "schema_version": "ev_nodi_p1_physical_ceiling_diagnostic_schema_manifest_v1",
+  "schemas": [
+    {
+      "artifact_status": "generated_no_solver_rank_diagnostic",
+      "contract_path": "configs/realism_v2/full_wave_green_tensor_diagnostic_contract.yaml",
+      "decision_authority": "diagnostic_flag_only_no_route_promotion",
+      "lane_id": "full_wave_green_tensor_physical_ceiling_diagnostic",
+      "planned_output_exists": true,
+      "planned_output_path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "primary_gate_metrics": [
+        "green_tensor_rank_percentile_in_stratum",
+        "green_tensor_vs_v1_rank_percentile_delta",
+        "green_tensor_pairwise_inversion_flag"
+      ],
+      "raw_magnitude_final_gate_allowed": false,
+      "required_column_count": 16,
+      "required_columns": [
+        "diagnostic_schema_version",
+        "candidate_id",
+        "route_key",
+        "comparison_stratum",
+        "v1_scalar_rank_percentile_in_stratum",
+        "bfp_roi_rank_percentile_in_stratum",
+        "green_tensor_rank_percentile_in_stratum",
+        "green_tensor_vs_v1_rank_percentile_delta",
+        "green_tensor_pairwise_inversion_flag",
+        "surrogate_risk_label",
+        "surrogate_risk_reason_codes",
+        "raw_complex_field_proxy_diagnostic_only",
+        "raw_magnitude_final_gate_allowed",
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed",
+        "physical_ceiling_role"
+      ],
+      "required_false_columns": [
+        "raw_magnitude_final_gate_allowed",
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed"
+      ],
+      "required_role_column_value": "surrogate_risk_reduction_only",
+      "row_granularity": "one_row_per_candidate_route_per_comparison_stratum"
+    },
+    {
+      "artifact_status": "generated_no_solver_rank_diagnostic",
+      "contract_path": "configs/realism_v2/vector_jones_polarization_diagnostic_contract.yaml",
+      "decision_authority": "diagnostic_flag_only_no_route_promotion",
+      "lane_id": "vector_jones_polarization_diagnostic",
+      "planned_output_exists": true,
+      "planned_output_path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "primary_gate_metrics": [
+        "jones_rank_percentile_in_stratum",
+        "jones_vs_v1_rank_percentile_delta",
+        "jones_pairwise_inversion_flag"
+      ],
+      "raw_magnitude_final_gate_allowed": false,
+      "required_column_count": 17,
+      "required_columns": [
+        "diagnostic_schema_version",
+        "candidate_id",
+        "route_key",
+        "comparison_stratum",
+        "jones_basis_family_id",
+        "v1_scalar_rank_percentile_in_stratum",
+        "bfp_roi_rank_percentile_in_stratum",
+        "jones_rank_percentile_in_stratum",
+        "jones_vs_v1_rank_percentile_delta",
+        "jones_pairwise_inversion_flag",
+        "polarization_surrogate_risk_label",
+        "polarization_surrogate_risk_reason_codes",
+        "raw_jones_amplitude_proxy_diagnostic_only",
+        "raw_magnitude_final_gate_allowed",
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed",
+        "physical_ceiling_role"
+      ],
+      "required_false_columns": [
+        "raw_magnitude_final_gate_allowed",
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed"
+      ],
+      "required_role_column_value": "surrogate_risk_reduction_only",
+      "row_granularity": "one_row_per_candidate_route_per_comparison_stratum_per_basis_family"
+    },
+    {
+      "artifact_status": "generated_no_solver_rank_diagnostic",
+      "contract_path": "configs/realism_v2/roughness_leakage_diagnostic_contract.yaml",
+      "decision_authority": "diagnostic_flag_only_no_route_promotion",
+      "lane_id": "roughness_leakage_diagnostic",
+      "planned_output_exists": true,
+      "planned_output_path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "primary_gate_metrics": [
+        "roughness_leakage_rank_percentile_in_stratum",
+        "roughness_leakage_vs_v1_rank_percentile_delta",
+        "roughness_leakage_pairwise_inversion_flag"
+      ],
+      "raw_magnitude_final_gate_allowed": false,
+      "required_column_count": 18,
+      "required_columns": [
+        "diagnostic_schema_version",
+        "candidate_id",
+        "route_key",
+        "comparison_stratum",
+        "perturbation_family_id",
+        "v1_scalar_rank_percentile_in_stratum",
+        "bfp_roi_rank_percentile_in_stratum",
+        "roughness_leakage_rank_percentile_in_stratum",
+        "roughness_leakage_vs_v1_rank_percentile_delta",
+        "roughness_leakage_pairwise_inversion_flag",
+        "roughness_leakage_surrogate_risk_label",
+        "roughness_leakage_surrogate_risk_reason_codes",
+        "raw_leakage_proxy_diagnostic_only",
+        "raw_magnitude_final_gate_allowed",
+        "measured_blank_safety_claim_allowed",
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed",
+        "physical_ceiling_role"
+      ],
+      "required_false_columns": [
+        "raw_magnitude_final_gate_allowed",
+        "measured_blank_safety_claim_allowed",
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed"
+      ],
+      "required_role_column_value": "surrogate_risk_reduction_only",
+      "row_granularity": "one_row_per_candidate_route_per_comparison_stratum_per_perturbation_family"
+    },
+    {
+      "artifact_status": "generated_no_solver_rank_diagnostic",
+      "contract_path": "configs/realism_v2/transport_residence_time_diagnostic_contract.yaml",
+      "decision_authority": "diagnostic_flag_only_no_route_promotion",
+      "lane_id": "transport_residence_time_diagnostic",
+      "planned_output_exists": true,
+      "planned_output_path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "primary_gate_metrics": [
+        "transport_residence_rank_percentile_in_stratum",
+        "transport_residence_vs_v1_rank_percentile_delta",
+        "transport_residence_pairwise_inversion_flag"
+      ],
+      "raw_magnitude_final_gate_allowed": false,
+      "required_column_count": 20,
+      "required_columns": [
+        "diagnostic_schema_version",
+        "candidate_id",
+        "route_key",
+        "comparison_stratum",
+        "transport_family_id",
+        "v1_scalar_rank_percentile_in_stratum",
+        "transport_residence_rank_percentile_in_stratum",
+        "transport_residence_vs_v1_rank_percentile_delta",
+        "transport_residence_pairwise_inversion_flag",
+        "transport_surrogate_risk_label",
+        "transport_surrogate_risk_reason_codes",
+        "coincidence_proxy_diagnostic_only",
+        "raw_residence_time_proxy_diagnostic_only",
+        "raw_magnitude_final_gate_allowed",
+        "true_ev_concentration_claim_allowed",
+        "sample_count_claim_allowed",
+        "absolute_event_probability_claim_allowed",
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed",
+        "physical_ceiling_role"
+      ],
+      "required_false_columns": [
+        "raw_magnitude_final_gate_allowed",
+        "true_ev_concentration_claim_allowed",
+        "sample_count_claim_allowed",
+        "absolute_event_probability_claim_allowed",
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed"
+      ],
+      "required_role_column_value": "surrogate_risk_reduction_only",
+      "row_granularity": "one_row_per_candidate_route_per_comparison_stratum_per_transport_family"
+    }
+  ],
+  "solver_or_simulation_execution_authorized": false,
+  "stage": "P1_diagnostic_schema_manifest_generated_no_solver_outputs"
+}

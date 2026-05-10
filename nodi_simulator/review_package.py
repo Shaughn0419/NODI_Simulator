@@ -156,6 +156,14 @@ POST_V2_DIAGNOSTIC_ROLES: tuple[tuple[str, str, str], ...] = (
     ),
 )
 
+P1_PHYSICAL_CEILING_P0_PACKAGE_EXCLUDED_CONFIGS: tuple[str, ...] = (
+    "configs/realism_v2/physical_ceiling_extension_registry.yaml",
+    "configs/realism_v2/full_wave_green_tensor_diagnostic_contract.yaml",
+    "configs/realism_v2/vector_jones_polarization_diagnostic_contract.yaml",
+    "configs/realism_v2/roughness_leakage_diagnostic_contract.yaml",
+    "configs/realism_v2/transport_residence_time_diagnostic_contract.yaml",
+)
+
 REASON_CODE_VOCABULARY: tuple[dict[str, str], ...] = (
     {"code": "BFP.RANK_SHIFT_MAJOR", "module": "BFP", "meaning": "BFP rank-percentile shift exceeds the pinned major threshold."},
     {"code": "PAIRWISE.RELATIVE_ORDER_DISAGREEMENT", "module": "PAIRWISE", "meaning": "One or more relative audit lenses disagree with scalar ordering."},
@@ -917,6 +925,7 @@ def claim_scan_paths(project_root: Path = PROJECT_ROOT) -> list[Path]:
         "reports/9[0-9]_*.md",
         "reports/post_v2_*.md",
         "results/post_v2_mandatory_audit/*.md",
+        "results/post_v2_physical_ceiling/*.md",
         "REVIEW_PACKAGE_README.md",
         "papers/README.md",
     )
@@ -977,6 +986,7 @@ def write_review_package_readme(project_root: Path = PROJECT_ROOT) -> Path:
 
 def _config_entries(project_root: Path) -> list[dict[str, Any]]:
     paths = sorted((project_root / "configs/realism_v2").glob("*"))
+    excluded = set(P1_PHYSICAL_CEILING_P0_PACKAGE_EXCLUDED_CONFIGS)
     return [
         file_entry(
             project_root,
@@ -985,7 +995,9 @@ def _config_entries(project_root: Path) -> list[dict[str, Any]]:
             source_lane="configs_realism_v2",
         )
         for path in paths
-        if path.is_file() and not path.name.startswith("._")
+        if path.is_file()
+        and not path.name.startswith("._")
+        and normalize_relpath(path.relative_to(project_root)) not in excluded
     ]
 
 

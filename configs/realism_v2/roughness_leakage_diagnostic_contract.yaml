@@ -1,0 +1,178 @@
+{
+  "schema_version": "ev_nodi_p1_roughness_leakage_diagnostic_contract_v1",
+  "stage": "P1_roughness_leakage_diagnostic_contract_only",
+  "lane_id": "roughness_leakage_diagnostic",
+  "lane_title": "roughness / leakage diagnostic",
+  "p0_release_conclusion_changed": false,
+  "calibrated_claim_allowed": false,
+  "physical_ceiling_role": "surrogate_risk_reduction_only",
+  "execution_authority": {
+    "contract_artifact_created": true,
+    "no_solver_rank_diagnostic_generation_authorized": true,
+    "roughness_simulation_authorized": false,
+    "leakage_simulation_authorized": false,
+    "new_roughness_case_generation_authorized": false,
+    "new_leakage_case_generation_authorized": false,
+    "measured_data_ingest_authorized": false,
+    "blank_trace_ingest_authorized": false,
+    "v1_event_count_expansion_authorized": false,
+    "route_promotion_authorized": false,
+    "p0_release_reinterpretation_authorized": false,
+    "main_660_redefinition_authorized": false,
+    "optional_660_W900_D1400_redefines_main_660": false
+  },
+  "claim_boundary": {
+    "claim_blocker_language": "SNR blocked; LOD blocked; EV concentration blocked; biological specificity blocked; detector-voltage prediction blocked; blank safety blocked.",
+    "allowed_claim_level": "relative_candidate_audit_diagnostic_only",
+    "calibrated_snr_claim_allowed": false,
+    "absolute_lod_claim_allowed": false,
+    "true_ev_concentration_claim_allowed": false,
+    "biological_specificity_claim_allowed": false,
+    "detector_voltage_prediction_claim_allowed": false,
+    "absolute_event_probability_claim_allowed": false,
+    "measured_blank_safety_claim_allowed": false,
+    "allowed_interpretation": "roughness_leakage_ceiling_may_flag_surrogate_fragility_only",
+    "forbidden_interpretations": [
+      "roughness_or_leakage_response_as_blank_safety",
+      "calibrated_detector_response",
+      "absolute_lod_readiness",
+      "true_ev_concentration_estimate",
+      "biological_specificity_evidence",
+      "detector_voltage_prediction",
+      "p0_route_promotion_or_reinterpretation"
+    ]
+  },
+  "input_contract": {
+    "required_sources": [
+      {
+        "source_id": "p0_top_candidate_mandatory_audit",
+        "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+        "required_fields": [
+          "candidate_id",
+          "route_key",
+          "comparison_stratum",
+          "width_nm",
+          "depth_nm",
+          "v1_scalar_rank_percentile_in_stratum",
+          "bfp_roi_rank_percentile_in_stratum",
+          "rank_inversion_flag",
+          "calibrated_snr_claim_allowed",
+          "absolute_lod_claim_allowed",
+          "true_ev_concentration_claim_allowed",
+          "biological_specificity_claim_allowed",
+          "main_660_redefinition_authorized"
+        ]
+      },
+      {
+        "source_id": "p0_pairwise_rank_inversion",
+        "path": "results/post_v2_mandatory_audit/top_candidate_pairwise_rank_inversion.csv",
+        "required_fields": [
+          "comparison_stratum",
+          "candidate_a",
+          "candidate_b",
+          "pairwise_inversion_flag",
+          "pairwise_inversion_reason"
+        ]
+      },
+      {
+        "source_id": "r7_2_operator_artifact_gap_register_plan",
+        "path": "configs/realism_v2/r7_2_operator_artifact_gap_register_plan.yaml",
+        "required_fields": [
+          "artifact_gap_registry",
+          "claim_boundaries",
+          "stop_gates"
+        ]
+      }
+    ],
+    "future_optional_sources_require_separate_authorization": [
+      "bounded_fabrication_roughness_manifest",
+      "bounded_leakage_perturbation_manifest",
+      "bounded_wall_or_bfp_alignment_operator_export"
+    ],
+    "forbidden_inputs": [
+      "measured_blank_trace",
+      "blank_false_positive_calibration_curve",
+      "detector_gain_calibration",
+      "route_specific_manual_multiplier",
+      "raw_leakage_amplitude_as_final_gate"
+    ]
+  },
+  "output_schema": {
+    "planned_output_path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+    "artifact_status": "generated_no_solver_rank_diagnostic",
+    "row_granularity": "one_row_per_candidate_route_per_comparison_stratum_per_perturbation_family",
+    "required_columns": [
+      "diagnostic_schema_version",
+      "candidate_id",
+      "route_key",
+      "comparison_stratum",
+      "perturbation_family_id",
+      "v1_scalar_rank_percentile_in_stratum",
+      "bfp_roi_rank_percentile_in_stratum",
+      "roughness_leakage_rank_percentile_in_stratum",
+      "roughness_leakage_vs_v1_rank_percentile_delta",
+      "roughness_leakage_pairwise_inversion_flag",
+      "roughness_leakage_surrogate_risk_label",
+      "roughness_leakage_surrogate_risk_reason_codes",
+      "raw_leakage_proxy_diagnostic_only",
+      "raw_magnitude_final_gate_allowed",
+      "measured_blank_safety_claim_allowed",
+      "calibrated_claim_allowed",
+      "p0_release_conclusion_changed",
+      "physical_ceiling_role"
+    ],
+    "required_false_columns": [
+      "raw_magnitude_final_gate_allowed",
+      "measured_blank_safety_claim_allowed",
+      "calibrated_claim_allowed",
+      "p0_release_conclusion_changed"
+    ],
+    "required_role_column_value": "surrogate_risk_reduction_only"
+  },
+  "gate_policy": {
+    "primary_gate_metrics": [
+      "roughness_leakage_rank_percentile_in_stratum",
+      "roughness_leakage_vs_v1_rank_percentile_delta",
+      "roughness_leakage_pairwise_inversion_flag"
+    ],
+    "raw_arbitrary_unit_magnitude_final_gate_allowed": false,
+    "raw_leakage_proxy_role": "diagnostic_trace_only",
+    "small_strata_policy": "all_ranked_routes_primary_small_strata_secondary_notes_only",
+    "decision_authority": "diagnostic_flag_only_no_route_promotion"
+  },
+  "jacobian_layering": {
+    "v1_bfp_to_angle_jacobian_applied": false,
+    "audit_bfp_jacobian_applied": true,
+    "roughness_contract_must_not_rewrite_v1_jacobian_flag": true,
+    "roughness_contract_may_reference_audit_jacobian_provenance": true
+  },
+  "required_tests": [
+    "contract_is_json_compatible_yaml",
+    "execution_authority_all_roughness_leakage_generation_flags_false",
+    "claim_boundary_all_calibrated_absolute_biological_concentration_blank_safety_flags_false",
+    "output_schema_requires_false_guard_columns",
+    "gate_policy_uses_rank_percentile_or_pairwise_inversion",
+    "raw_magnitude_final_gate_allowed_false",
+    "jacobian_layering_preserves_v1_false_and_audit_true",
+    "claim_language_scan_passes"
+  ],
+  "stop_gates": [
+    "roughness_simulation_started",
+    "leakage_simulation_started",
+    "new_roughness_case_generated",
+    "new_leakage_case_generated",
+    "measured_data_ingested",
+    "blank_trace_ingested",
+    "measured_blank_safety_claim_emitted",
+    "calibrated_snr_claim_emitted",
+    "absolute_lod_claim_emitted",
+    "true_ev_concentration_claim_emitted",
+    "biological_specificity_claim_emitted",
+    "detector_voltage_prediction_claim_emitted",
+    "route_promotion_attempted",
+    "main_660_redefinition_attempted",
+    "raw_magnitude_used_as_final_gate",
+    "v1_event_count_expansion_attempted"
+  ],
+  "next_allowed_step": "complete; future heavy solver stages require separate authorization"
+}
