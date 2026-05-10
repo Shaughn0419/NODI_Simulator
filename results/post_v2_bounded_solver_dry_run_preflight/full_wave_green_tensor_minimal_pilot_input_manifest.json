@@ -1,0 +1,68 @@
+{
+  "allowed_interpretability_families": [
+    "pairwise_inversion",
+    "rank",
+    "rank_percentile"
+  ],
+  "calibrated_claim_allowed": false,
+  "calibration_data_ingest_authorized": false,
+  "execution_authorization_record_path": "results/post_v2_bounded_solver_dry_run_preflight/full_wave_green_tensor_execution_authorization_record.json",
+  "geometry_source_binding": "p2_route_geometry_keys_via_p3_subset_no_new_cases",
+  "lane_id": "full_wave_green_tensor_spot_check_dry_run_preflight",
+  "manifest_role": "dry_run_solver_input_manifest_no_execution",
+  "material_model_placeholder_id": "phase4_dry_run_material_placeholder_no_material_solution",
+  "measured_data_ingest_authorized": false,
+  "mesh_boundary_unit_preflight_manifest_path": "results/post_v2_bounded_solver_dry_run_preflight/full_wave_green_tensor_mesh_boundary_unit_preflight_manifest.json",
+  "new_mesh_generation_authorized": false,
+  "operator_export_generation_authorized": false,
+  "p0_release_conclusion_changed": false,
+  "p1_surrogate_risk_role_preserved": true,
+  "p2_readiness_scope_preserved": true,
+  "p3_lane_id": "full_wave_green_tensor_spot_check_minimal_pilot_design",
+  "p3_pilot_design_scope_preserved": true,
+  "p3_route_subset_manifest_path": "results/post_v2_bounded_solver_authorization_pilot_design/bounded_solver_authorization_pilot_design_route_subset_manifest.json",
+  "p3_route_subset_manifest_sha256": "e5b9e7e71133ce9cb7fbd572fece4650042b9a8e3800c43faf226d9ee20b4312",
+  "physical_solver_execution_authorized": false,
+  "rank_pairwise_interpretability_declared": true,
+  "raw_arbitrary_unit_magnitude_final_gate_allowed": false,
+  "route_promotion_authorized": false,
+  "schema_version": "ev_nodi_p4_full_wave_green_tensor_minimal_pilot_input_manifest_v1",
+  "selected_route_ids": [
+    "main_660_W800_D1400",
+    "main_660_W800_D1500",
+    "probe_404_W600_D1300"
+  ],
+  "selected_routes": [
+    {
+      "candidate_id": "main_660_W800_D1400",
+      "comparison_stratum": "all_ranked_routes",
+      "full_wave_green_tensor_pairwise_inversion_flag": true,
+      "route_key": "660/W800/D1400",
+      "route_role_final": "relative_main_candidate"
+    },
+    {
+      "candidate_id": "main_660_W800_D1500",
+      "comparison_stratum": "all_ranked_routes",
+      "full_wave_green_tensor_pairwise_inversion_flag": true,
+      "route_key": "660/W800/D1500",
+      "route_role_final": "relative_main_candidate"
+    },
+    {
+      "candidate_id": "probe_404_W600_D1300",
+      "comparison_stratum": "all_ranked_routes",
+      "full_wave_green_tensor_pairwise_inversion_flag": true,
+      "route_key": "404/W600/D1300",
+      "route_role_final": "probe_only"
+    }
+  ],
+  "solver_native_raw_magnitude_final_gate_allowed": false,
+  "solver_output_generated": false,
+  "stage": "P4_bounded_solver_dry_run_preflight_complete",
+  "unit_registry_binding": {
+    "detector_unit": "not_available_no_detector_prediction",
+    "length_unit": "nm",
+    "solver_field_unit": "not_generated_no_solver_output",
+    "wavelength_unit": "nm"
+  },
+  "wavelength_nm_source": "route_key_wavelength_component_from_p2_subset"
+}

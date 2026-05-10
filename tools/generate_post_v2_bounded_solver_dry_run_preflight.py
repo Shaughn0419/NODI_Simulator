@@ -1,0 +1,22 @@
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+PROJECT_ROOT_PATH = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT_PATH) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT_PATH))
+
+from nodi_simulator.post_v2_bounded_solver_dry_run_preflight import (
+    write_preflight_package,
+)
+from nodi_simulator.review_package import PROJECT_ROOT
+
+
+def main() -> None:
+    for path in write_preflight_package(PROJECT_ROOT):
+        print(path.relative_to(PROJECT_ROOT))
+
+
+if __name__ == "__main__":
+    main()

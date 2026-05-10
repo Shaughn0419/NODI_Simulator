@@ -1,0 +1,26 @@
+{
+  "calibrated_claim_allowed": false,
+  "calibration_data_ingest_authorized": false,
+  "execution_authorization_decision": "not_authorized_phase4_dry_run_only",
+  "explicit_later_phase_required": true,
+  "lane_id": "full_wave_green_tensor_spot_check_dry_run_preflight",
+  "later_phase_minimum_required_artifacts": [
+    "reviewed_solver_input_manifest",
+    "reviewed_mesh_boundary_unit_preflight_manifest",
+    "separate_execution_authorization_record",
+    "separate_solver_output_claim_boundary_review"
+  ],
+  "measured_data_ingest_authorized": false,
+  "new_mesh_generation_authorized": false,
+  "operator_export_generation_authorized": false,
+  "p0_release_conclusion_changed": false,
+  "p1_surrogate_risk_role_preserved": true,
+  "p2_readiness_scope_preserved": true,
+  "p3_pilot_design_scope_preserved": true,
+  "physical_solver_execution_authorized": false,
+  "record_role": "execution_authorization_record_denies_execution",
+  "route_promotion_authorized": false,
+  "schema_version": "ev_nodi_p4_full_wave_green_tensor_execution_authorization_record_v1",
+  "solver_output_generated": false,
+  "stage": "P4_bounded_solver_dry_run_preflight_complete"
+}

@@ -1,0 +1,32 @@
+{
+  "calibrated_claim_allowed": false,
+  "calibration_data_ingest_authorized": false,
+  "manifest_role": "p3_pilot_design_binding_no_solver_execution",
+  "measured_data_ingest_authorized": false,
+  "new_mesh_generation_authorized": false,
+  "operator_export_generation_authorized": false,
+  "p0_release_conclusion_changed": false,
+  "p1_surrogate_risk_role_preserved": true,
+  "p2_readiness_scope_preserved": true,
+  "p3_artifact_manifest_path": "results/post_v2_bounded_solver_authorization_pilot_design/bounded_solver_authorization_pilot_design_artifact_manifest.json",
+  "p3_artifact_manifest_schema_version": "ev_nodi_p3_bounded_solver_authorization_pilot_design_artifact_manifest_v1",
+  "p3_artifact_manifest_sha256": "0bd394759423421d7c0f19efd0ed47af4937d20f3767fcb3b16770521e52d869",
+  "p3_pilot_design_scope_preserved": true,
+  "p3_route_subset_manifest_path": "results/post_v2_bounded_solver_authorization_pilot_design/bounded_solver_authorization_pilot_design_route_subset_manifest.json",
+  "p3_route_subset_manifest_sha256": "e5b9e7e71133ce9cb7fbd572fece4650042b9a8e3800c43faf226d9ee20b4312",
+  "p3_route_subset_schema_version": "ev_nodi_p3_bounded_solver_authorization_pilot_design_route_subset_manifest_v1",
+  "p3_schema_manifest_path": "results/post_v2_bounded_solver_authorization_pilot_design/bounded_solver_authorization_pilot_design_schema_manifest.json",
+  "p3_schema_manifest_schema_version": "ev_nodi_p3_bounded_solver_authorization_pilot_design_schema_manifest_v1",
+  "p3_schema_manifest_sha256": "5f0ec591375c48a82ea449c2cc37f3102f9d9a12c6056eb5906cbd877e04d5b5",
+  "physical_solver_execution_authorized": false,
+  "route_promotion_authorized": false,
+  "schema_version": "ev_nodi_p4_bounded_solver_dry_run_preflight_p3_binding_manifest_v1",
+  "selected_route_count": 3,
+  "selected_route_ids": [
+    "main_660_W800_D1400",
+    "main_660_W800_D1500",
+    "probe_404_W600_D1300"
+  ],
+  "solver_output_generated": false,
+  "stage": "P4_bounded_solver_dry_run_preflight_complete"
+}
