@@ -156,7 +156,7 @@ POST_V2_DIAGNOSTIC_ROLES: tuple[tuple[str, str, str], ...] = (
     ),
 )
 
-P1_PHYSICAL_CEILING_P0_PACKAGE_EXCLUDED_CONFIGS: tuple[str, ...] = (
+NON_P0_SIDECAR_P0_PACKAGE_EXCLUDED_CONFIGS: tuple[str, ...] = (
     "configs/realism_v2/physical_ceiling_extension_registry.yaml",
     "configs/realism_v2/full_wave_green_tensor_diagnostic_contract.yaml",
     "configs/realism_v2/vector_jones_polarization_diagnostic_contract.yaml",
@@ -991,7 +991,7 @@ def write_review_package_readme(project_root: Path = PROJECT_ROOT) -> Path:
 
 def _config_entries(project_root: Path) -> list[dict[str, Any]]:
     paths = sorted((project_root / "configs/realism_v2").glob("*"))
-    excluded = set(P1_PHYSICAL_CEILING_P0_PACKAGE_EXCLUDED_CONFIGS)
+    excluded = set(NON_P0_SIDECAR_P0_PACKAGE_EXCLUDED_CONFIGS)
     return [
         file_entry(
             project_root,

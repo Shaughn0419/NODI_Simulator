@@ -133,7 +133,7 @@
       "path": "nodi_simulator/post_v2_bounded_solver_authorization_pilot_design.py",
       "path_exists": true,
       "physical_solver_execution_authorized": false,
-      "sha256": "f935d45a3127754a1ab32660230ac10154d4223b9b3970ed7a3fb9779d6d642d",
+      "sha256": "dedeb76903bb4f493affc727e695810241af03d65ca4b54129757bc1058846d2",
       "solver_output_generated": false,
       "status": "pure_verifier_no_solver_execution"
     },
@@ -184,7 +184,7 @@
       "path": "tests/test_bounded_solver_authorization_pilot_design.py",
       "path_exists": true,
       "physical_solver_execution_authorized": false,
-      "sha256": "9e15a3bf5f49b9e4034ac51235400d5f57c602b0b7602dc90e3b2c7a80b317ed",
+      "sha256": "77404738fce8b95efe38a39244a7b4c4651a3cb993f1dbd635bbc741cfe051cd",
       "solver_output_generated": false,
       "status": "test_guard"
     }

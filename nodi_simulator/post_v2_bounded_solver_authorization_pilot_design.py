@@ -59,6 +59,9 @@ P3_PILOT_STAGE = "P3_bounded_solver_authorization_pilot_design_phase1"
 P3_PILOT_SCHEMA_VERSION = (
     "ev_nodi_p3_bounded_solver_authorization_pilot_design_registry_v1"
 )
+P2_ROUTE_UNIVERSE_SCHEMA_VERSION = (
+    "ev_nodi_p2_bounded_physical_solver_readiness_route_universe_manifest_v1"
+)
 
 TOP_LEVEL_FALSE_FIELDS: tuple[str, ...] = (
     "calibrated_claim_allowed",
@@ -183,6 +186,8 @@ def validate_pilot_registry(registry: dict[str, Any]) -> dict[str, Any]:
     p2_binding = registry["p2_route_universe_binding"]
     if p2_binding["source_manifest_path"] != P2_READINESS_ROUTE_UNIVERSE_MANIFEST.as_posix():
         raise ValueError("P3 pilot must reference the P2 route-universe manifest")
+    if p2_binding["source_manifest_schema_version_required"] != P2_ROUTE_UNIVERSE_SCHEMA_VERSION:
+        raise ValueError("P3 P2 route-universe schema-version requirement drifted")
     if p2_binding["binding_role"] != "future_solver_preflight_scope_only":
         raise ValueError("P2 route-universe binding role drifted")
     _require_false(p2_binding, TOP_LEVEL_FALSE_FIELDS, "P3 P2 binding")
@@ -296,6 +301,8 @@ def build_p2_route_binding_manifest(project_root: Path = PROJECT_ROOT) -> dict[s
     p2_manifest_path = project_root / P2_READINESS_ROUTE_UNIVERSE_MANIFEST
     p2_manifest = _p2_route_universe(project_root)
     binding = registry["p2_route_universe_binding"]
+    if binding["source_manifest_schema_version_required"] != p2_manifest["schema_version"]:
+        raise ValueError("P3 P2 route-universe schema-version binding drifted")
     return {
         "schema_version": (
             "ev_nodi_p3_bounded_solver_authorization_pilot_design_p2_route_binding_manifest_v1"
@@ -332,6 +339,8 @@ def validate_p2_route_binding_manifest(manifest: dict[str, Any]) -> dict[str, An
         raise ValueError("unexpected P3 P2 route binding manifest schema")
     if manifest.get("bound_source_manifest_path") != P2_READINESS_ROUTE_UNIVERSE_MANIFEST.as_posix():
         raise ValueError("P3 pilot must bind the P2 route-universe manifest")
+    if manifest.get("bound_source_manifest_schema_version") != P2_ROUTE_UNIVERSE_SCHEMA_VERSION:
+        raise ValueError("P3 P2 route binding schema version drifted")
     _require_false(manifest, TOP_LEVEL_FALSE_FIELDS, "P3 P2 route binding manifest")
     _require_true(manifest, TOP_LEVEL_TRUE_FIELDS, "P3 P2 route binding manifest")
     if manifest["route_promotion_authorized"] is not False:

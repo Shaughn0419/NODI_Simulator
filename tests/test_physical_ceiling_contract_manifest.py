@@ -30,7 +30,7 @@ from nodi_simulator.post_v2_physical_ceiling import (
     write_physical_ceiling_manifests,
 )
 from nodi_simulator.review_package import (
-    P1_PHYSICAL_CEILING_P0_PACKAGE_EXCLUDED_CONFIGS,
+    NON_P0_SIDECAR_P0_PACKAGE_EXCLUDED_CONFIGS,
     _config_entries,
 )
 
@@ -203,7 +203,7 @@ def test_physical_ceiling_route_coverage_manifest_covers_primary_routes() -> Non
 def test_physical_ceiling_contracts_are_not_p0_review_package_configs() -> None:
     config_paths = {entry["path"] for entry in _config_entries(root_path("."))}
 
-    assert set(P1_PHYSICAL_CEILING_P0_PACKAGE_EXCLUDED_CONFIGS).isdisjoint(config_paths)
+    assert set(NON_P0_SIDECAR_P0_PACKAGE_EXCLUDED_CONFIGS).isdisjoint(config_paths)
     assert "configs/realism_v2/r5_scenario_bundle_manifest.yaml" in config_paths
 
 

@@ -275,6 +275,13 @@ def test_p3_registry_rejects_missing_p2_binding_and_scope_drift() -> None:
         validate_pilot_registry(registry)
 
     registry = deepcopy(_registry())
+    registry["p2_route_universe_binding"][
+        "source_manifest_schema_version_required"
+    ] = "ev_nodi_p2_wrong_schema_v9"
+    with pytest.raises(ValueError, match="schema-version requirement drifted"):
+        validate_pilot_registry(registry)
+
+    registry = deepcopy(_registry())
     registry["p2_readiness_scope_preserved"] = False
     with pytest.raises(ValueError, match="p2_readiness_scope_preserved=true"):
         validate_pilot_registry(registry)
