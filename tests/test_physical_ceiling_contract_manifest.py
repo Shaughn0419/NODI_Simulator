@@ -352,3 +352,4 @@ def test_physical_ceiling_completion_note_preserves_boundaries() -> None:
     assert "physical_ceiling_role = surrogate_risk_reduction_only" in text
     assert "Generated no-solver rank diagnostic CSVs" in text
     assert "P1 physical-ceiling config artifacts are excluded from P0" in text
+    assert "empty-output" not in text

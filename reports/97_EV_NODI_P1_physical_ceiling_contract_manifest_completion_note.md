@@ -30,7 +30,7 @@ results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json
 results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json
 ```
 
-The human-readable empty-output guard is:
+The human-readable no-solver-output guard is:
 
 ```text
 results/post_v2_physical_ceiling/README.md
