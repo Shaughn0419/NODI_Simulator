@@ -48,3 +48,9 @@ P1 physical-ceiling extensions are intentionally not part of this P0 release
 line. A later `physical-ceiling extensions` branch or task may split full-wave,
 vector/Jones, roughness/leakage, and transport work into separate tracks, but
 that work does not change the P0 release conclusion.
+
+Known P2 delivery note: the external-review zip currently includes the full v1
+summary CSV so that a one-command verifier can check every manifest path and
+hash locally. A later delivery-optimization task may replace that with a compact
+projection plus a separate large-file download, but that would be a packaging
+mode change rather than a P0 audit conclusion change.

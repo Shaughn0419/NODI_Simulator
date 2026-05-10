@@ -31,3 +31,12 @@ def test_tsuyama_summary_records_tolerance_and_extrapolation_policy() -> None:
     }
     assert {row["tsuyama_paper_reproduction_claim_allowed"] for row in rows} == {"False"}
     assert {row["clean_relative_main_supported_by_tsuyama_alone"] for row in rows} == {"False"}
+
+
+def test_roadmap_declares_generated_tsuyama_tolerance_profile() -> None:
+    roadmap = root_path(
+        "reports/90_EV_NODI_post_v2_review_ready_relative_audit_roadmap.md"
+    ).read_text(encoding="utf-8")
+
+    assert "tsuyama_signed_phase_relative_v1_tight_no_measured_data" in roadmap
+    assert "not a calibrated Tsuyama tolerance" in roadmap

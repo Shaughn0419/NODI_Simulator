@@ -272,6 +272,13 @@ def build_candidate_universe_manifest(project_root: Path = PROJECT_ROOT) -> dict
             "all_static_mandatory_routes_plus_all_unique_v1_route_aggregates; "
             "BFP/Tsuyama dynamic top-K remains blocked until sidecar pre-scoring"
         ),
+        "candidate_universe_context_route_inclusion_policy": (
+            "include_all_unique_v1_route_aggregates_as_context_routes_after_prescore; "
+            "dynamic_topk_candidates_are_selected_only_from_unique_route_aggregates"
+        ),
+        "context_route_final_decision_policy": (
+            "conservative_surrogate_sensitive_not_promoted_unless_static_role_overrides"
+        ),
         "candidate_universe_case_rows": sum(int(row["case_rows"]) for row in route_aggregates),
         "candidate_universe_unique_routes": len(route_aggregates),
         "candidate_universe_route_dedup_key": "wavelength_nm,width_nm,depth_nm",

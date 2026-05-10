@@ -1,6 +1,7 @@
 {
   "bfp_roi_scoring_coverage": "pending_P0b_2_no_dynamic_topk_selected",
   "candidate_universe_case_rows": 32032,
+  "candidate_universe_context_route_inclusion_policy": "include_all_unique_v1_route_aggregates_as_context_routes_after_prescore; dynamic_topk_candidates_are_selected_only_from_unique_route_aggregates",
   "candidate_universe_coverage_by_route_family": {
     "lambda_404_mid_deep": 6,
     "lambda_404_mid_mid": 8,
@@ -66,10 +67,11 @@
   "candidate_universe_route_dedup_key": "wavelength_nm,width_nm,depth_nm",
   "candidate_universe_scope_claim_level": "relative_engineering_prescore_only",
   "candidate_universe_scope_label": "all_unique_v1_routes_for_prescore_seed",
-  "candidate_universe_sha256": "0f86082a73cfec4147d97285963a46a91d05e136449113922c1f0128830b7493",
+  "candidate_universe_sha256": "0188b388d15b6bbc7a0ff6d4b9563b41b1881bb1c6c6bd8915119771857061d2",
   "candidate_universe_source": "all_static_mandatory_routes_plus_all_unique_v1_route_aggregates; BFP/Tsuyama dynamic top-K remains blocked until sidecar pre-scoring",
   "candidate_universe_unique_route_sha256": "3cbaecd60d6daafee3c55860124e4486bc077fc07b5b48960166f713a18a5830",
   "candidate_universe_unique_routes": 572,
+  "context_route_final_decision_policy": "conservative_surrogate_sensitive_not_promoted_unless_static_role_overrides",
   "dynamic_selection_stage": "P0b_1_unique_route_universe_before_BFP_Tsuyama_prescore",
   "dynamic_topk_source_granularity": "unique_route_aggregates_only",
   "mandatory_static_routes_missing": [],

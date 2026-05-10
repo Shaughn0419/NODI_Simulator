@@ -321,6 +321,12 @@ all routes with route_role in {main_locked, weak_reference_control, optional_rob
 all routes with previous_report_mention = true
 ```
 
+Post-P0 hardening erratum: the generated candidate universe may carry every
+unique v1 `(wavelength_nm, width_nm, depth_nm)` route aggregate as a
+`context_route` after pre-scoring. This full-universe context layer is
+conservative review evidence only; dynamic BFP/Tsuyama top-K selection remains
+restricted to unique route aggregates and never uses route x particle raw rows.
+
 `previous_report_mention = true` means the `(wavelength_nm, width_nm, depth_nm)`
 tuple appears in a numbered report or review roadmap. The dynamic-selection
 manifest must include:
@@ -1123,6 +1129,16 @@ If no Tsuyama lane is available for a ranked candidate, use:
 ```text
 tsuyama_tolerance_profile_id = lane_unavailable_v1
 ```
+
+Post-P0 hardening erratum: the generated audit also permits:
+
+```text
+tsuyama_tolerance_profile_id = tsuyama_signed_phase_relative_v1_tight_no_measured_data
+```
+
+This profile records a signed-complex, no-measured-data, tight relative
+diagnostic tolerance. It is not a calibrated Tsuyama tolerance, not measured
+validation, and not a paper-reproduction claim.
 
 and the route cannot be `clean_relative_main`.
 

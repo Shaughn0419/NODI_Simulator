@@ -30,3 +30,9 @@ def test_candidate_universe_requires_prescore_before_dynamic_bfp_tsuyama_topk() 
     assert manifest["tsuyama_scoring_coverage"] == "pending_P0b_3_no_dynamic_topk_selected"
     assert manifest["dynamic_topk_source_granularity"] == "unique_route_aggregates_only"
     assert manifest["raw_route_x_particle_dynamic_topk_forbidden"] is True
+    assert manifest["candidate_universe_context_route_inclusion_policy"].startswith(
+        "include_all_unique_v1_route_aggregates_as_context_routes_after_prescore"
+    )
+    assert manifest["context_route_final_decision_policy"] == (
+        "conservative_surrogate_sensitive_not_promoted_unless_static_role_overrides"
+    )
