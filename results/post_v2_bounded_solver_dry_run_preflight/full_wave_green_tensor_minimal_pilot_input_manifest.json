@@ -27,6 +27,7 @@
   "raw_arbitrary_unit_magnitude_final_gate_allowed": false,
   "route_promotion_authorized": false,
   "schema_version": "ev_nodi_p4_full_wave_green_tensor_minimal_pilot_input_manifest_v1",
+  "selected_route_count": 3,
   "selected_route_ids": [
     "main_660_W800_D1400",
     "main_660_W800_D1500",

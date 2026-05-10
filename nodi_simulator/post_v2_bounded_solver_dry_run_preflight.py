@@ -308,6 +308,7 @@ def build_input_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
         "p3_lane_id": P3_PILOT_LANE_ID,
         "p3_route_subset_manifest_path": P3_PILOT_ROUTE_SUBSET_MANIFEST.as_posix(),
         "p3_route_subset_manifest_sha256": sha256_file(project_root / P3_PILOT_ROUTE_SUBSET_MANIFEST),
+        "selected_route_count": len(selected_routes),
         "selected_route_ids": [row["candidate_id"] for row in selected_routes],
         "selected_routes": selected_routes,
         "geometry_source_binding": "p2_route_geometry_keys_via_p3_subset_no_new_cases",
@@ -355,7 +356,7 @@ def validate_input_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("P4 input manifest preflight path drifted")
     if manifest["execution_authorization_record_path"] != P4_EXECUTION_AUTHORIZATION_RECORD.as_posix():
         raise ValueError("P4 input manifest authorization record path drifted")
-    if len(manifest["selected_route_ids"]) != 3:
+    if manifest["selected_route_count"] != 3 or len(manifest["selected_route_ids"]) != 3:
         raise ValueError("P4 input manifest selected route count drifted")
     for row in manifest["selected_routes"]:
         if any(

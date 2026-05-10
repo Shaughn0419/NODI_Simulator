@@ -18,10 +18,14 @@ Required mesh non-generation declarations:
 mesh_manifest_path = null
 mesh_manifest_sha256 = null
 mesh_manifest_status = not_generated_no_mesh_generation
+calibrated_claim_allowed = false
 new_mesh_generation_authorized = false
 operator_export_generation_authorized = false
 physical_solver_execution_authorized = false
+measured_data_ingest_authorized = false
+calibration_data_ingest_authorized = false
 solver_output_generated = false
+route_promotion_authorized = false
 ```
 
 The Jacobian layer distinction remains pinned:

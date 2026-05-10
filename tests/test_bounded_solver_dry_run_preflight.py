@@ -56,6 +56,13 @@ ARTIFACT_MANIFEST_PATH = (
     "results/post_v2_bounded_solver_dry_run_preflight/"
     "bounded_solver_dry_run_preflight_artifact_manifest.json"
 )
+SCHEMA_DOC_PATHS = (
+    "docs/schemas/bounded_solver_dry_run_preflight_p3_binding_manifest_schema.md",
+    "docs/schemas/bounded_solver_dry_run_preflight_input_manifest_schema.md",
+    "docs/schemas/bounded_solver_dry_run_preflight_mesh_boundary_unit_preflight_manifest_schema.md",
+    "docs/schemas/bounded_solver_dry_run_preflight_execution_authorization_record_schema.md",
+    "docs/schemas/bounded_solver_dry_run_preflight_artifact_manifest_schema.md",
+)
 P3_ROUTE_SUBSET_MANIFEST_PATH = (
     "results/post_v2_bounded_solver_authorization_pilot_design/"
     "bounded_solver_authorization_pilot_design_route_subset_manifest.json"
@@ -169,6 +176,7 @@ def test_p4_input_manifest_is_dry_run_only() -> None:
     assert manifest["mesh_boundary_unit_preflight_manifest_path"] == MESH_PREFLIGHT_MANIFEST_PATH
     assert manifest["execution_authorization_record_path"] == EXECUTION_AUTHORIZATION_RECORD_PATH
     assert manifest["rank_pairwise_interpretability_declared"] is True
+    assert manifest["selected_route_count"] == 3
     assert set(manifest["selected_route_ids"]) == {
         "main_660_W800_D1400",
         "main_660_W800_D1500",
@@ -249,6 +257,24 @@ def test_p4_text_artifacts_use_blocker_language() -> None:
 
     for path in (REGISTRY_PATH, PLAN_PATH, README_PATH):
         assert claim_text_passes(root_path(path).read_text(encoding="utf-8"), lexicon), path
+
+
+def test_p4_manifest_schema_docs_preserve_boundaries() -> None:
+    required_snippets = [
+        "calibrated_claim_allowed = false",
+        "physical_solver_execution_authorized = false",
+        "measured_data_ingest_authorized = false",
+        "calibration_data_ingest_authorized = false",
+        "new_mesh_generation_authorized = false",
+        "operator_export_generation_authorized = false",
+        "solver_output_generated = false",
+        "route_promotion_authorized = false",
+    ]
+
+    for path in SCHEMA_DOC_PATHS:
+        text = root_path(path).read_text(encoding="utf-8")
+        for snippet in required_snippets:
+            assert snippet in text, f"{path} missing {snippet}"
 
 
 def test_p4_verifier_cli_passes() -> None:
