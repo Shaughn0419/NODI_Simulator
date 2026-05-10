@@ -5,14 +5,14 @@ Date: 2026-05-10
 Status:
 
 ```text
-P2 phase 1 readiness/schema/governance only; physical solver execution blocked
+P2 bounded physical-solver readiness complete; physical solver execution blocked
 ```
 
-This P2 phase does not change the P0 release conclusion. P0 remains a
+This P2 work does not change the P0 release conclusion. P0 remains a
 no-measured-data relative audit package, not a calibrated physical prediction
 package.
 
-This P2 phase also preserves the P1 role:
+This P2 work also preserves the P1 role:
 
 ```text
 P1 physical-ceiling extensions = surrogate_risk_reduction_only
@@ -22,7 +22,7 @@ P2 does not convert P1 or P2 sidecars into calibration.
 
 ## 1. Boundary
 
-P2 phase 1 has one role:
+P2 has one role:
 
 ```text
 bounded_solver_readiness_only
@@ -50,7 +50,7 @@ blocked. Detector-voltage prediction claims remain blocked. Sample-count claims
 remain blocked. Measured blank-safety claims remain blocked. Route-promotion
 claims remain blocked.
 
-## 2. Phase-1 Artifacts
+## 2. Readiness Artifacts
 
 Create and verify:
 
@@ -58,6 +58,8 @@ Create and verify:
 configs/realism_v2/bounded_physical_solver_readiness_registry.yaml
 reports/98_EV_NODI_P2_bounded_physical_solver_readiness_plan.md
 results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_schema_manifest.json
+results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_source_binding_manifest.json
+results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_route_universe_manifest.json
 results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_artifact_manifest.json
 results/post_v2_bounded_physical_solver_readiness/README.md
 tools/verify_post_v2_bounded_physical_solver_readiness.py
@@ -66,6 +68,11 @@ tools/verify_post_v2_bounded_physical_solver_readiness.py
 These are readiness artifacts only. They do not contain solver outputs, new
 case generation, measured data, detector-unit predictions, route promotions, or
 calibration evidence.
+
+The source-binding manifest proves that P2 uses only P0 mandatory-audit and P1
+no-solver diagnostic sources. The route-universe manifest bounds future solver
+preflight to existing candidate IDs, route keys, comparison strata, and P1
+surrogate-risk labels; it carries no raw proxy fields.
 
 ## 3. Cross-Lane Governance
 
@@ -153,7 +160,11 @@ It must also fail when any lane authorizes calibrated SNR, absolute LOD, true
 EV concentration, biological specificity, detector-voltage prediction,
 sample-count, measured blank-safety, or route-promotion claims.
 
+It must also fail when P2 source bindings are missing, when the bounded route
+universe does not cover the P0 primary route universe, or when the route
+universe carries raw proxy fields instead of bounded rank/risk labels.
+
 ## 6. Stop Rule
 
-P2 phase 1 stops after readiness schema, registry, manifests, verifier, and
+P2 stops after readiness schema, registry, manifests, verifier, and
 tests pass. It does not proceed into heavy solver implementation.

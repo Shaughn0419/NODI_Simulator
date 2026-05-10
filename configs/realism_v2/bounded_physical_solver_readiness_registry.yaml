@@ -1,6 +1,6 @@
 {
   "schema_version": "ev_nodi_p2_bounded_physical_solver_readiness_registry_v1",
-  "stage": "P2_bounded_physical_solver_readiness_phase_1",
+  "stage": "P2_bounded_physical_solver_readiness_complete",
   "topic": "bounded physical-solver readiness",
   "p0_release_conclusion_changed": false,
   "p1_surrogate_risk_role_preserved": true,
@@ -12,6 +12,8 @@
     "readiness_schema_and_governance_authorized": true,
     "artifact_manifest_generation_authorized": true,
     "schema_manifest_generation_authorized": true,
+    "source_binding_manifest_generation_authorized": true,
+    "route_universe_manifest_generation_authorized": true,
     "verifier_authorized": true,
     "physical_solver_execution_authorized": false,
     "full_wave_solver_execution_authorized": false,
@@ -410,6 +412,30 @@
       "measured_data_ingest_authorized": false
     },
     {
+      "artifact_id": "p2_bounded_physical_solver_readiness_source_binding_manifest",
+      "artifact_role": "source_binding_manifest_no_solver_execution",
+      "path": "results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_source_binding_manifest.json",
+      "status": "generated_manifest_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_route_universe_manifest",
+      "artifact_role": "bounded_route_universe_manifest_no_solver_execution",
+      "path": "results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_route_universe_manifest.json",
+      "status": "generated_manifest_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
       "artifact_id": "p2_bounded_physical_solver_readiness_artifact_manifest",
       "artifact_role": "artifact_manifest_no_solver_execution",
       "path": "results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_artifact_manifest.json",
@@ -449,6 +475,30 @@
       "artifact_id": "p2_bounded_physical_solver_readiness_artifact_manifest_schema_doc",
       "artifact_role": "schema_documentation",
       "path": "docs/schemas/bounded_physical_solver_readiness_artifact_manifest_schema.md",
+      "status": "readiness_schema_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_source_binding_manifest_schema_doc",
+      "artifact_role": "schema_documentation",
+      "path": "docs/schemas/bounded_physical_solver_readiness_source_binding_manifest_schema.md",
+      "status": "readiness_schema_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_route_universe_manifest_schema_doc",
+      "artifact_role": "schema_documentation",
+      "path": "docs/schemas/bounded_physical_solver_readiness_route_universe_manifest_schema.md",
       "status": "readiness_schema_only",
       "claim_level": "bounded_solver_readiness_only",
       "calibrated_claim_allowed": false,

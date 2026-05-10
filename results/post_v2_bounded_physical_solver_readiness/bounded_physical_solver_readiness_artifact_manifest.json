@@ -1,5 +1,5 @@
 {
-  "artifact_count": 12,
+  "artifact_count": 16,
   "artifacts": [
     {
       "artifact_id": "p2_bounded_physical_solver_readiness_registry",
@@ -13,7 +13,7 @@
       "path": "configs/realism_v2/bounded_physical_solver_readiness_registry.yaml",
       "path_exists": true,
       "physical_solver_execution_authorized": false,
-      "sha256": "571952d223d9c56c58b947d2655004b61d20e12b3b4fffa95730d4a3585fd200",
+      "sha256": "8e4e67f41d834faa930666850ee9bfefc2924ab4c4a7be3d919fb6880bcb03b0",
       "status": "readiness_schema_only"
     },
     {
@@ -28,7 +28,7 @@
       "path": "reports/98_EV_NODI_P2_bounded_physical_solver_readiness_plan.md",
       "path_exists": true,
       "physical_solver_execution_authorized": false,
-      "sha256": "8e8b25aeb3825847b7ab16534bb5f7a5c972ad5537a1ed2c41917a3e687ce772",
+      "sha256": "c0984866ddbc301d87ba2c1f9000aca9778d9daef70c725e114ce47108d5b983",
       "status": "readiness_schema_only"
     },
     {
@@ -43,7 +43,37 @@
       "path": "results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_schema_manifest.json",
       "path_exists": true,
       "physical_solver_execution_authorized": false,
-      "sha256": "19df63eae2ef7ceb8993bf37d643560effde8d616309b706abfca790c4f7c4be",
+      "sha256": "c2f2c13780d0f9fe81df3a71b4765d2ec87d4bd0366f44b35e9195de45864df0",
+      "status": "generated_manifest_only"
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_source_binding_manifest",
+      "artifact_role": "source_binding_manifest_no_solver_execution",
+      "calibrated_claim_allowed": false,
+      "claim_level": "bounded_solver_readiness_only",
+      "hash_role": "content_sha256",
+      "measured_data_ingest_authorized": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "path": "results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_source_binding_manifest.json",
+      "path_exists": true,
+      "physical_solver_execution_authorized": false,
+      "sha256": "1cf35f57e2bcaa33bdf38edf4f87696bac6faa7e56a74aecf9e5aab8439880b7",
+      "status": "generated_manifest_only"
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_route_universe_manifest",
+      "artifact_role": "bounded_route_universe_manifest_no_solver_execution",
+      "calibrated_claim_allowed": false,
+      "claim_level": "bounded_solver_readiness_only",
+      "hash_role": "content_sha256",
+      "measured_data_ingest_authorized": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "path": "results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_route_universe_manifest.json",
+      "path_exists": true,
+      "physical_solver_execution_authorized": false,
+      "sha256": "1e9041cc66c4f3201ae55dffcab69f5e4f818045bdbc379500bbc4cd72d0fa5a",
       "status": "generated_manifest_only"
     },
     {
@@ -73,7 +103,7 @@
       "path": "results/post_v2_bounded_physical_solver_readiness/README.md",
       "path_exists": true,
       "physical_solver_execution_authorized": false,
-      "sha256": "3b8a4f75157868df228977f1d42ebee509461054e10a757f4c5b8f8340bb7599",
+      "sha256": "632ab5de2d10cb4ede4dc32fcd4b3d34566abb763b97ab926cfd43c04f0918a3",
       "status": "readiness_schema_only"
     },
     {
@@ -103,7 +133,37 @@
       "path": "docs/schemas/bounded_physical_solver_readiness_artifact_manifest_schema.md",
       "path_exists": true,
       "physical_solver_execution_authorized": false,
-      "sha256": "8af5e54846cb4f092c175ba9ae2b36cb7e67f5015c7ecc1c6e7f54753be77ee7",
+      "sha256": "67125385f7076a9b4ba9b379a205fe8526a094ebda199fe67c327e4c40b7168b",
+      "status": "readiness_schema_only"
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_source_binding_manifest_schema_doc",
+      "artifact_role": "schema_documentation",
+      "calibrated_claim_allowed": false,
+      "claim_level": "bounded_solver_readiness_only",
+      "hash_role": "content_sha256",
+      "measured_data_ingest_authorized": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "path": "docs/schemas/bounded_physical_solver_readiness_source_binding_manifest_schema.md",
+      "path_exists": true,
+      "physical_solver_execution_authorized": false,
+      "sha256": "e820b80f301b0896c1cade0511f20e36fa328a605cef4a6e1cffb4d1ae5c97d8",
+      "status": "readiness_schema_only"
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_route_universe_manifest_schema_doc",
+      "artifact_role": "schema_documentation",
+      "calibrated_claim_allowed": false,
+      "claim_level": "bounded_solver_readiness_only",
+      "hash_role": "content_sha256",
+      "measured_data_ingest_authorized": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "path": "docs/schemas/bounded_physical_solver_readiness_route_universe_manifest_schema.md",
+      "path_exists": true,
+      "physical_solver_execution_authorized": false,
+      "sha256": "96701345d8e06f8adb72afdbd427c266377a6034a221eb9941664de5f5bb600f",
       "status": "readiness_schema_only"
     },
     {
@@ -118,7 +178,7 @@
       "path": "reports/99_EV_NODI_P2_bounded_physical_solver_readiness_completion_note.md",
       "path_exists": true,
       "physical_solver_execution_authorized": false,
-      "sha256": "495c2a3ec639d91ea2c7a8b48bc9c6bf523df4130a7c4bd68e6651532fac1bba",
+      "sha256": "7a7133b00bf739eede7b275bd039258a889509f42c66cc0d31587ca2948e5866",
       "status": "readiness_schema_only"
     },
     {
@@ -133,7 +193,7 @@
       "path": "nodi_simulator/post_v2_bounded_physical_solver_readiness.py",
       "path_exists": true,
       "physical_solver_execution_authorized": false,
-      "sha256": "64524d3f00a6d863b5b44d4b29d13185686569e95ffa84dfa8067a242bd973ab",
+      "sha256": "db45704889d4b3b00ba4c84db46b8eff57e108d69be42e6f5fc5c891a480f63b",
       "status": "pure_verifier_no_solver_execution"
     },
     {
@@ -178,7 +238,7 @@
       "path": "tests/test_bounded_physical_solver_readiness.py",
       "path_exists": true,
       "physical_solver_execution_authorized": false,
-      "sha256": "dd26c5c9c48994b6a7e9878430d0d18003b5ce6d79f3ca08c8311127ff686bcf",
+      "sha256": "a7379d489caa4b859d5e71cc5f9e4d37021f5099c755994e1e4d0b79e602eac2",
       "status": "test_guard"
     }
   ],
@@ -207,5 +267,5 @@
     "measured_data_ingest_authorized"
   ],
   "schema_version": "ev_nodi_p2_bounded_physical_solver_readiness_artifact_manifest_v1",
-  "stage": "P2_bounded_physical_solver_readiness_phase_1"
+  "stage": "P2_bounded_physical_solver_readiness_complete"
 }

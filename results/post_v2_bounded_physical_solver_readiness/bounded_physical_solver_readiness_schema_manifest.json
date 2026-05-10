@@ -150,5 +150,5 @@
     "pairwise_inversion"
   ],
   "schema_version": "ev_nodi_p2_bounded_physical_solver_readiness_schema_manifest_v1",
-  "stage": "P2_bounded_physical_solver_readiness_phase_1"
+  "stage": "P2_bounded_physical_solver_readiness_complete"
 }

@@ -10,8 +10,12 @@ from nodi_simulator import realism_v2 as rv2
 from nodi_simulator.post_v2_bounded_physical_solver_readiness import (
     EXPECTED_LANE_IDS,
     build_readiness_artifact_manifest,
+    build_readiness_route_universe_manifest,
     build_readiness_schema_manifest,
+    build_readiness_source_binding_manifest,
+    validate_readiness_route_universe_manifest,
     validate_readiness_registry,
+    validate_readiness_source_binding_manifest,
 )
 from nodi_simulator.review_package import (
     _config_entries,
@@ -35,6 +39,14 @@ SCHEMA_MANIFEST_PATH = (
     "results/post_v2_bounded_physical_solver_readiness/"
     "bounded_physical_solver_readiness_schema_manifest.json"
 )
+SOURCE_BINDING_MANIFEST_PATH = (
+    "results/post_v2_bounded_physical_solver_readiness/"
+    "bounded_physical_solver_readiness_source_binding_manifest.json"
+)
+ROUTE_UNIVERSE_MANIFEST_PATH = (
+    "results/post_v2_bounded_physical_solver_readiness/"
+    "bounded_physical_solver_readiness_route_universe_manifest.json"
+)
 ARTIFACT_MANIFEST_PATH = (
     "results/post_v2_bounded_physical_solver_readiness/"
     "bounded_physical_solver_readiness_artifact_manifest.json"
@@ -44,6 +56,12 @@ SCHEMA_MANIFEST_SCHEMA_DOC = (
 )
 ARTIFACT_MANIFEST_SCHEMA_DOC = (
     "docs/schemas/bounded_physical_solver_readiness_artifact_manifest_schema.md"
+)
+SOURCE_BINDING_MANIFEST_SCHEMA_DOC = (
+    "docs/schemas/bounded_physical_solver_readiness_source_binding_manifest_schema.md"
+)
+ROUTE_UNIVERSE_MANIFEST_SCHEMA_DOC = (
+    "docs/schemas/bounded_physical_solver_readiness_route_universe_manifest_schema.md"
 )
 
 
@@ -62,7 +80,7 @@ def test_p2_registry_is_bounded_readiness_only() -> None:
         registry["schema_version"]
         == "ev_nodi_p2_bounded_physical_solver_readiness_registry_v1"
     )
-    assert registry["stage"] == "P2_bounded_physical_solver_readiness_phase_1"
+    assert registry["stage"] == "P2_bounded_physical_solver_readiness_complete"
     assert registry["calibrated_claim_allowed"] is False
     assert registry["p0_release_conclusion_changed"] is False
     assert registry["p1_surrogate_risk_role_preserved"] is True
@@ -73,12 +91,16 @@ def test_p2_registry_is_bounded_readiness_only() -> None:
     assert authority["readiness_schema_and_governance_authorized"] is True
     assert authority["artifact_manifest_generation_authorized"] is True
     assert authority["schema_manifest_generation_authorized"] is True
+    assert authority["source_binding_manifest_generation_authorized"] is True
+    assert authority["route_universe_manifest_generation_authorized"] is True
     assert authority["verifier_authorized"] is True
     for key, value in authority.items():
         if key.endswith("_authorized") and key not in {
             "readiness_schema_and_governance_authorized",
             "artifact_manifest_generation_authorized",
             "schema_manifest_generation_authorized",
+            "source_binding_manifest_generation_authorized",
+            "route_universe_manifest_generation_authorized",
             "verifier_authorized",
         }:
             assert value is False, key
@@ -170,9 +192,62 @@ def test_p2_artifact_manifest_schema_requires_guard_fields() -> None:
 
 
 def test_p2_generated_manifests_are_current() -> None:
+    assert _load_json(SOURCE_BINDING_MANIFEST_PATH) == build_readiness_source_binding_manifest(
+        root_path(".")
+    )
+    assert _load_json(ROUTE_UNIVERSE_MANIFEST_PATH) == build_readiness_route_universe_manifest(
+        root_path(".")
+    )
     assert _load_json(SCHEMA_MANIFEST_PATH) == build_readiness_schema_manifest(root_path("."))
     assert _load_json(ARTIFACT_MANIFEST_PATH) == build_readiness_artifact_manifest(
         root_path(".")
+    )
+
+
+def test_p2_source_binding_manifest_uses_only_p0_p1_sources() -> None:
+    manifest = validate_readiness_source_binding_manifest(
+        build_readiness_source_binding_manifest(root_path("."))
+    )
+
+    assert manifest["source_count"] == 5
+    assert manifest["calibrated_claim_allowed"] is False
+    assert manifest["p0_release_conclusion_changed"] is False
+    assert manifest["p1_surrogate_risk_role_preserved"] is True
+    assert manifest["physical_solver_execution_authorized"] is False
+    assert manifest["measured_data_ingest_authorized"] is False
+    for binding in manifest["bindings"]:
+        assert binding["source_exists"] is True
+        assert binding["source_sha256"]
+        assert binding["required_fields_present"] is True
+        assert binding["missing_required_fields"] == []
+        assert binding["source_row_count"] > 0
+        assert binding["measured_data_ingest_authorized"] is False
+
+
+def test_p2_route_universe_manifest_bounds_future_solver_preflight() -> None:
+    manifest = validate_readiness_route_universe_manifest(
+        build_readiness_route_universe_manifest(root_path("."))
+    )
+
+    assert manifest["route_universe_row_count"] == 572
+    assert manifest["comparison_strata"] == ["all_ranked_routes"]
+    assert manifest["high_surrogate_risk_route_count"] > 0
+    assert manifest["pairwise_inversion_route_count"] > 0
+    assert manifest["calibrated_claim_allowed"] is False
+    assert manifest["p0_release_conclusion_changed"] is False
+    assert manifest["p1_surrogate_risk_role_preserved"] is True
+    assert manifest["physical_solver_execution_authorized"] is False
+    assert manifest["measured_data_ingest_authorized"] is False
+
+    first = manifest["routes"][0]
+    assert first["bounded_route_universe_role"] == "future_solver_preflight_only"
+    assert first["physical_solver_execution_authorized"] is False
+    assert first["measured_data_ingest_authorized"] is False
+    assert first["raw_magnitude_final_gate_allowed"] is False
+    assert first["route_promotion_authorized"] is False
+    assert not any(
+        key.startswith("raw_") and key != "raw_magnitude_final_gate_allowed"
+        for key in first
     )
 
 
@@ -199,6 +274,16 @@ def test_p2_manifest_schema_docs_preserve_boundaries() -> None:
             build_readiness_artifact_manifest(root_path(".")),
             ["schema_governance_artifact_manifest_no_solver_execution"],
         ),
+        (
+            root_path(SOURCE_BINDING_MANIFEST_SCHEMA_DOC),
+            build_readiness_source_binding_manifest(root_path(".")),
+            ["source_exists = true", "required_fields_present = true"],
+        ),
+        (
+            root_path(ROUTE_UNIVERSE_MANIFEST_SCHEMA_DOC),
+            build_readiness_route_universe_manifest(root_path(".")),
+            ["bounded_route_universe_role = future_solver_preflight_only"],
+        ),
     ]
 
     for path, manifest, expected_snippets in manifest_docs:
@@ -223,6 +308,7 @@ def test_p2_completion_note_preserves_stop_rule() -> None:
     assert "p1_surrogate_risk_role_preserved = true" in text
     assert "physical_solver_execution_authorized = false" in text
     assert "measured_data_ingest_authorized = false" in text
+    assert "bounded route-universe manifest" in text
     assert "Heavy solver implementation remains unauthorized" in text
 
 
@@ -240,6 +326,14 @@ def test_p2_verifier_cli_passes() -> None:
     )
 
     assert "PASS bounded_physical_solver_readiness_registry" in result.stdout
+    assert (
+        "PASS bounded_physical_solver_readiness_source_binding_manifest_current"
+        in result.stdout
+    )
+    assert (
+        "PASS bounded_physical_solver_readiness_route_universe_manifest_current"
+        in result.stdout
+    )
     assert "PASS bounded_physical_solver_execution_blocked" in result.stdout
     assert "PASS bounded_physical_solver_measured_data_ingest_blocked" in result.stdout
 

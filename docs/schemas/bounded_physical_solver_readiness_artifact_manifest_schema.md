@@ -36,6 +36,6 @@ physical_solver_execution_authorized = false
 measured_data_ingest_authorized = false
 ```
 
-The manifest blocks calibrated SNR, absolute LOD, true EV concentration,
-biological specificity, detector-voltage prediction, sample-count, measured
-blank-safety, and route-promotion claims.
+The following claims remain blocked: calibrated SNR, absolute LOD, true EV
+concentration, biological specificity, detector-voltage prediction,
+sample-count, measured blank-safety, and route-promotion claims.
