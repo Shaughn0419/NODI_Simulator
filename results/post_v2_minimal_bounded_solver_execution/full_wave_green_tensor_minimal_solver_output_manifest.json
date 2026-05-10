@@ -1,0 +1,38 @@
+{
+  "allowed_final_gate_metric_families": [
+    "rank",
+    "rank_percentile",
+    "pairwise_inversion"
+  ],
+  "calibrated_claim_allowed": false,
+  "calibration_data_ingest_authorized": false,
+  "full_wave_solver_execution_authorized": false,
+  "green_tensor_minimal_solver_execution_authorized": true,
+  "manifest_role": "minimal_bounded_solver_output_manifest_trace_only",
+  "measured_data_ingest_authorized": false,
+  "minimal_bounded_solver_execution_authorized": true,
+  "new_mesh_generation_authorized": false,
+  "operator_export_generation_authorized": false,
+  "output_path": "results/post_v2_minimal_bounded_solver_execution/full_wave_green_tensor_minimal_solver_output.csv",
+  "output_row_count": 3,
+  "output_sha256": "c7df91231601ada21ea570c88fb9dfee9403af99da084272c8fac9caf55c1ff1",
+  "p0_release_conclusion_changed": false,
+  "p1_surrogate_risk_role_preserved": true,
+  "p2_readiness_scope_preserved": true,
+  "p3_pilot_design_scope_preserved": true,
+  "p4_dry_run_preflight_scope_preserved": true,
+  "p5_authorization_gate_scope_preserved": true,
+  "physical_solver_execution_authorized": true,
+  "raw_magnitude_final_gate_allowed": false,
+  "raw_solver_native_fields_role": "trace_only_not_final_gate",
+  "route_promotion_authorized": false,
+  "schema_version": "ev_nodi_p6_minimal_bounded_solver_execution_output_manifest_v1",
+  "selected_route_ids": [
+    "main_660_W800_D1400",
+    "main_660_W800_D1500",
+    "probe_404_W600_D1300"
+  ],
+  "solver_native_raw_magnitude_final_gate_allowed": false,
+  "solver_output_generated": true,
+  "stage": "P6_minimal_bounded_solver_execution_complete"
+}
