@@ -1,0 +1,154 @@
+{
+  "calibrated_claim_allowed": false,
+  "lane_count": 4,
+  "lanes": [
+    {
+      "allowed_gate_metric_families": [
+        "rank",
+        "rank_percentile",
+        "pairwise_inversion"
+      ],
+      "artifact_status": "planned_readiness_schema_only",
+      "calibrated_claim_allowed": false,
+      "lane_id": "full_wave_green_tensor_spot_check_readiness",
+      "measured_data_ingest_authorized": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "raw_magnitude_final_gate_allowed": false,
+      "readiness_status": "schema_governance_only_not_executable",
+      "required_false_fields": [
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed",
+        "physical_solver_execution_authorized",
+        "measured_data_ingest_authorized",
+        "raw_magnitude_final_gate_allowed"
+      ],
+      "required_readiness_fields": [
+        "lane_id",
+        "solver_config_manifest_path",
+        "solver_config_manifest_sha256",
+        "bounded_route_universe_path",
+        "unit_registry_binding",
+        "rank_interpretability_declared",
+        "pairwise_inversion_interpretability_declared"
+      ],
+      "solver_output_path": null
+    },
+    {
+      "allowed_gate_metric_families": [
+        "rank",
+        "rank_percentile",
+        "pairwise_inversion"
+      ],
+      "artifact_status": "planned_readiness_schema_only",
+      "calibrated_claim_allowed": false,
+      "lane_id": "vector_jones_basis_sweep_readiness",
+      "measured_data_ingest_authorized": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "raw_magnitude_final_gate_allowed": false,
+      "readiness_status": "schema_governance_only_not_executable",
+      "required_false_fields": [
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed",
+        "physical_solver_execution_authorized",
+        "measured_data_ingest_authorized",
+        "raw_magnitude_final_gate_allowed"
+      ],
+      "required_readiness_fields": [
+        "lane_id",
+        "jones_basis_manifest_path",
+        "jones_basis_manifest_sha256",
+        "normalization_convention_id",
+        "rank_interpretability_declared",
+        "pairwise_inversion_interpretability_declared",
+        "governance_distinct_not_independent_vector_evidence"
+      ],
+      "solver_output_path": null
+    },
+    {
+      "allowed_gate_metric_families": [
+        "rank",
+        "rank_percentile",
+        "pairwise_inversion"
+      ],
+      "artifact_status": "planned_readiness_schema_only",
+      "calibrated_claim_allowed": false,
+      "lane_id": "roughness_leakage_perturbation_readiness",
+      "measured_data_ingest_authorized": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "raw_magnitude_final_gate_allowed": false,
+      "readiness_status": "schema_governance_only_not_executable",
+      "required_false_fields": [
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed",
+        "physical_solver_execution_authorized",
+        "measured_data_ingest_authorized",
+        "raw_magnitude_final_gate_allowed"
+      ],
+      "required_readiness_fields": [
+        "lane_id",
+        "perturbation_grid_manifest_path",
+        "perturbation_grid_manifest_sha256",
+        "bounded_parameter_range_declared",
+        "rank_interpretability_declared",
+        "pairwise_inversion_interpretability_declared"
+      ],
+      "solver_output_path": null
+    },
+    {
+      "allowed_gate_metric_families": [
+        "rank",
+        "rank_percentile",
+        "pairwise_inversion"
+      ],
+      "artifact_status": "planned_readiness_schema_only",
+      "calibrated_claim_allowed": false,
+      "lane_id": "transport_residence_time_perturbation_readiness",
+      "measured_data_ingest_authorized": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "raw_magnitude_final_gate_allowed": false,
+      "readiness_status": "schema_governance_only_not_executable",
+      "required_false_fields": [
+        "calibrated_claim_allowed",
+        "p0_release_conclusion_changed",
+        "physical_solver_execution_authorized",
+        "measured_data_ingest_authorized",
+        "raw_magnitude_final_gate_allowed"
+      ],
+      "required_readiness_fields": [
+        "lane_id",
+        "transport_grid_manifest_path",
+        "transport_grid_manifest_sha256",
+        "bounded_parameter_range_declared",
+        "rank_interpretability_declared",
+        "pairwise_inversion_interpretability_declared"
+      ],
+      "solver_output_path": null
+    }
+  ],
+  "manifest_role": "lane_readiness_schema_manifest_no_solver_execution",
+  "measured_data_ingest_authorized": false,
+  "p0_release_conclusion_changed": false,
+  "p1_surrogate_risk_role_preserved": true,
+  "physical_solver_execution_authorized": false,
+  "required_false_fields": [
+    "calibrated_claim_allowed",
+    "p0_release_conclusion_changed",
+    "physical_solver_execution_authorized",
+    "measured_data_ingest_authorized"
+  ],
+  "required_gate_metric_families": [
+    "rank",
+    "rank_percentile",
+    "pairwise_inversion"
+  ],
+  "schema_version": "ev_nodi_p2_bounded_physical_solver_readiness_schema_manifest_v1",
+  "stage": "P2_bounded_physical_solver_readiness_phase_1"
+}

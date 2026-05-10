@@ -1,0 +1,521 @@
+{
+  "schema_version": "ev_nodi_p2_bounded_physical_solver_readiness_registry_v1",
+  "stage": "P2_bounded_physical_solver_readiness_phase_1",
+  "topic": "bounded physical-solver readiness",
+  "p0_release_conclusion_changed": false,
+  "p1_surrogate_risk_role_preserved": true,
+  "calibrated_claim_allowed": false,
+  "physical_solver_execution_authorized": false,
+  "measured_data_ingest_authorized": false,
+  "readiness_role": "schema_governance_and_preflight_contract_only",
+  "implementation_authority": {
+    "readiness_schema_and_governance_authorized": true,
+    "artifact_manifest_generation_authorized": true,
+    "schema_manifest_generation_authorized": true,
+    "verifier_authorized": true,
+    "physical_solver_execution_authorized": false,
+    "full_wave_solver_execution_authorized": false,
+    "green_tensor_solver_execution_authorized": false,
+    "vector_solver_execution_authorized": false,
+    "jones_basis_sweep_execution_authorized": false,
+    "roughness_leakage_simulation_authorized": false,
+    "transport_residence_time_simulation_authorized": false,
+    "new_solver_case_generation_authorized": false,
+    "new_mesh_generation_authorized": false,
+    "measured_data_ingest_authorized": false,
+    "calibration_data_ingest_authorized": false,
+    "v1_event_count_expansion_authorized": false,
+    "no_solver_rank_diagnostic_generation_authorized": false,
+    "route_promotion_authorized": false,
+    "main_660_redefinition_authorized": false,
+    "optional_660_W900_D1400_redefines_main_660": false
+  },
+  "claim_governance": {
+    "calibrated_snr_claim_allowed": false,
+    "absolute_lod_claim_allowed": false,
+    "true_ev_concentration_claim_allowed": false,
+    "biological_specificity_claim_allowed": false,
+    "detector_voltage_prediction_claim_allowed": false,
+    "absolute_event_probability_claim_allowed": false,
+    "sample_count_claim_allowed": false,
+    "measured_blank_safety_claim_allowed": false,
+    "route_promotion_authorized": false,
+    "allowed_claim_level": "bounded_solver_readiness_only",
+    "required_language": "readiness contract only; calibrated and absolute claims remain blocked"
+  },
+  "score_governance": {
+    "final_gate_metric_family": [
+      "rank",
+      "rank_percentile",
+      "pairwise_inversion"
+    ],
+    "raw_arbitrary_unit_magnitude_final_gate_allowed": false,
+    "raw_arbitrary_unit_magnitude_role": "preflight_diagnostic_trace_only_not_final_gate",
+    "comparison_stratum_primary": "all_ranked_routes"
+  },
+  "jacobian_governance": {
+    "v1_bfp_to_angle_jacobian_applied": false,
+    "audit_bfp_jacobian_applied": true,
+    "layering_rule": "P2 readiness may reference the audit-sidecar Jacobian provenance but must not rewrite the v1 source-library Jacobian flag."
+  },
+  "artifact_manifest_schema": {
+    "schema_name": "ev_nodi_p2_bounded_physical_solver_readiness_artifact_manifest_v1",
+    "required_artifact_fields": [
+      "artifact_id",
+      "artifact_role",
+      "path",
+      "status",
+      "claim_level",
+      "calibrated_claim_allowed",
+      "p0_release_conclusion_changed",
+      "p1_surrogate_risk_role_preserved",
+      "physical_solver_execution_authorized",
+      "measured_data_ingest_authorized"
+    ],
+    "allowed_status_values": [
+      "readiness_schema_only",
+      "generated_manifest_only",
+      "pure_verifier_no_solver_execution",
+      "test_guard"
+    ],
+    "required_false_fields": [
+      "calibrated_claim_allowed",
+      "p0_release_conclusion_changed",
+      "physical_solver_execution_authorized",
+      "measured_data_ingest_authorized"
+    ],
+    "required_true_fields": [
+      "p1_surrogate_risk_role_preserved"
+    ]
+  },
+  "readiness_lanes": [
+    {
+      "lane_id": "full_wave_green_tensor_spot_check_readiness",
+      "readiness_status": "schema_governance_only_not_executable",
+      "readiness_goal": "Define bounded spot-check preflight requirements for a future full-wave or Green-tensor lane without executing a solver.",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false,
+      "execution_authority": {
+        "solver_execution_authorized": false,
+        "new_green_tensor_mesh_authorized": false,
+        "new_full_wave_case_generation_authorized": false,
+        "operator_export_generation_authorized": false,
+        "measured_data_ingest_authorized": false,
+        "route_promotion_authorized": false
+      },
+      "claim_boundary": {
+        "calibrated_snr_claim_allowed": false,
+        "absolute_lod_claim_allowed": false,
+        "true_ev_concentration_claim_allowed": false,
+        "biological_specificity_claim_allowed": false,
+        "detector_voltage_prediction_claim_allowed": false,
+        "absolute_event_probability_claim_allowed": false,
+        "sample_count_claim_allowed": false,
+        "measured_blank_safety_claim_allowed": false,
+        "route_promotion_authorized": false,
+        "allowed_claim_level": "bounded_solver_readiness_only"
+      },
+      "required_preflight_inputs": [
+        "P0 route keys and comparison strata",
+        "P1 generated no-solver rank diagnostics as surrogate-risk context",
+        "future solver configuration manifest with units and boundary conditions",
+        "future mesh and operator manifest hashes"
+      ],
+      "readiness_checks": [
+        "solver inputs declare units and source lineage",
+        "spot-check route universe is bounded before execution",
+        "outputs must be rank or pairwise-comparison interpretable before any gate is allowed",
+        "raw complex field values remain trace-only"
+      ],
+      "gate_policy": {
+        "allowed_gate_metric_families": [
+          "rank",
+          "rank_percentile",
+          "pairwise_inversion"
+        ],
+        "raw_arbitrary_unit_magnitude_final_gate_allowed": false,
+        "decision_authority": "readiness_only_no_route_promotion"
+      },
+      "readiness_output_contract": {
+        "artifact_status": "planned_readiness_schema_only",
+        "solver_output_path": null,
+        "required_readiness_fields": [
+          "lane_id",
+          "solver_config_manifest_path",
+          "solver_config_manifest_sha256",
+          "bounded_route_universe_path",
+          "unit_registry_binding",
+          "rank_interpretability_declared",
+          "pairwise_inversion_interpretability_declared"
+        ],
+        "required_false_fields": [
+          "calibrated_claim_allowed",
+          "p0_release_conclusion_changed",
+          "physical_solver_execution_authorized",
+          "measured_data_ingest_authorized",
+          "raw_magnitude_final_gate_allowed"
+        ]
+      }
+    },
+    {
+      "lane_id": "vector_jones_basis_sweep_readiness",
+      "readiness_status": "schema_governance_only_not_executable",
+      "readiness_goal": "Define bounded preflight requirements for a future vector or Jones basis sweep without treating P1 Jones governance as independent vector evidence.",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false,
+      "execution_authority": {
+        "vector_solver_execution_authorized": false,
+        "new_jones_basis_sweep_authorized": false,
+        "new_polarization_case_generation_authorized": false,
+        "operator_export_generation_authorized": false,
+        "measured_data_ingest_authorized": false,
+        "route_promotion_authorized": false
+      },
+      "claim_boundary": {
+        "calibrated_snr_claim_allowed": false,
+        "absolute_lod_claim_allowed": false,
+        "true_ev_concentration_claim_allowed": false,
+        "biological_specificity_claim_allowed": false,
+        "detector_voltage_prediction_claim_allowed": false,
+        "absolute_event_probability_claim_allowed": false,
+        "sample_count_claim_allowed": false,
+        "measured_blank_safety_claim_allowed": false,
+        "route_promotion_authorized": false,
+        "allowed_claim_level": "bounded_solver_readiness_only"
+      },
+      "required_preflight_inputs": [
+        "P0 candidate route list",
+        "P1 vector/Jones governance-distinct diagnostic context",
+        "future Jones basis manifest with normalization convention",
+        "future vector operator export manifest"
+      ],
+      "readiness_checks": [
+        "basis definitions are versioned before execution",
+        "Jones amplitudes are declared trace-only before execution",
+        "audit BFP Jacobian provenance remains distinct from v1 source flag",
+        "specificity interpretations remain blocked"
+      ],
+      "gate_policy": {
+        "allowed_gate_metric_families": [
+          "rank",
+          "rank_percentile",
+          "pairwise_inversion"
+        ],
+        "raw_arbitrary_unit_magnitude_final_gate_allowed": false,
+        "decision_authority": "readiness_only_no_route_promotion"
+      },
+      "readiness_output_contract": {
+        "artifact_status": "planned_readiness_schema_only",
+        "solver_output_path": null,
+        "required_readiness_fields": [
+          "lane_id",
+          "jones_basis_manifest_path",
+          "jones_basis_manifest_sha256",
+          "normalization_convention_id",
+          "rank_interpretability_declared",
+          "pairwise_inversion_interpretability_declared",
+          "governance_distinct_not_independent_vector_evidence"
+        ],
+        "required_false_fields": [
+          "calibrated_claim_allowed",
+          "p0_release_conclusion_changed",
+          "physical_solver_execution_authorized",
+          "measured_data_ingest_authorized",
+          "raw_magnitude_final_gate_allowed"
+        ]
+      }
+    },
+    {
+      "lane_id": "roughness_leakage_perturbation_readiness",
+      "readiness_status": "schema_governance_only_not_executable",
+      "readiness_goal": "Define bounded preflight requirements for future roughness or leakage perturbations without measured blank-safety claims.",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false,
+      "execution_authority": {
+        "roughness_simulation_authorized": false,
+        "leakage_simulation_authorized": false,
+        "new_perturbation_grid_authorized": false,
+        "blank_trace_ingest_authorized": false,
+        "measured_data_ingest_authorized": false,
+        "route_promotion_authorized": false
+      },
+      "claim_boundary": {
+        "calibrated_snr_claim_allowed": false,
+        "absolute_lod_claim_allowed": false,
+        "true_ev_concentration_claim_allowed": false,
+        "biological_specificity_claim_allowed": false,
+        "detector_voltage_prediction_claim_allowed": false,
+        "absolute_event_probability_claim_allowed": false,
+        "sample_count_claim_allowed": false,
+        "measured_blank_safety_claim_allowed": false,
+        "route_promotion_authorized": false,
+        "allowed_claim_level": "bounded_solver_readiness_only"
+      },
+      "required_preflight_inputs": [
+        "P0 route geometry keys",
+        "P1 roughness/leakage no-solver diagnostic context",
+        "future perturbation grid manifest with bounded parameter ranges",
+        "future artifact-gap escalation mapping"
+      ],
+      "readiness_checks": [
+        "roughness and leakage parameter ranges are bounded before execution",
+        "blank-trace ingest remains blocked",
+        "raw leakage amplitudes are trace-only",
+        "final interpretation remains rank or pairwise based"
+      ],
+      "gate_policy": {
+        "allowed_gate_metric_families": [
+          "rank",
+          "rank_percentile",
+          "pairwise_inversion"
+        ],
+        "raw_arbitrary_unit_magnitude_final_gate_allowed": false,
+        "decision_authority": "readiness_only_no_route_promotion"
+      },
+      "readiness_output_contract": {
+        "artifact_status": "planned_readiness_schema_only",
+        "solver_output_path": null,
+        "required_readiness_fields": [
+          "lane_id",
+          "perturbation_grid_manifest_path",
+          "perturbation_grid_manifest_sha256",
+          "bounded_parameter_range_declared",
+          "rank_interpretability_declared",
+          "pairwise_inversion_interpretability_declared"
+        ],
+        "required_false_fields": [
+          "calibrated_claim_allowed",
+          "p0_release_conclusion_changed",
+          "physical_solver_execution_authorized",
+          "measured_data_ingest_authorized",
+          "raw_magnitude_final_gate_allowed"
+        ]
+      }
+    },
+    {
+      "lane_id": "transport_residence_time_perturbation_readiness",
+      "readiness_status": "schema_governance_only_not_executable",
+      "readiness_goal": "Define bounded preflight requirements for future transport or residence-time perturbations without concentration or sample-count claims.",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false,
+      "execution_authority": {
+        "transport_simulation_authorized": false,
+        "residence_time_simulation_authorized": false,
+        "new_transport_grid_authorized": false,
+        "sample_count_estimation_authorized": false,
+        "measured_data_ingest_authorized": false,
+        "route_promotion_authorized": false
+      },
+      "claim_boundary": {
+        "calibrated_snr_claim_allowed": false,
+        "absolute_lod_claim_allowed": false,
+        "true_ev_concentration_claim_allowed": false,
+        "biological_specificity_claim_allowed": false,
+        "detector_voltage_prediction_claim_allowed": false,
+        "absolute_event_probability_claim_allowed": false,
+        "sample_count_claim_allowed": false,
+        "measured_blank_safety_claim_allowed": false,
+        "route_promotion_authorized": false,
+        "allowed_claim_level": "bounded_solver_readiness_only"
+      },
+      "required_preflight_inputs": [
+        "P0 EV/sample and coincidence relative proxies",
+        "P1 transport/residence-time no-solver diagnostic context",
+        "future transport perturbation manifest with bounded ranges",
+        "future residence-time interpretation manifest"
+      ],
+      "readiness_checks": [
+        "transport ranges are bounded before execution",
+        "residence-time values are not treated as concentration estimates",
+        "sample-count interpretation remains blocked",
+        "final interpretation remains rank or pairwise based"
+      ],
+      "gate_policy": {
+        "allowed_gate_metric_families": [
+          "rank",
+          "rank_percentile",
+          "pairwise_inversion"
+        ],
+        "raw_arbitrary_unit_magnitude_final_gate_allowed": false,
+        "decision_authority": "readiness_only_no_route_promotion"
+      },
+      "readiness_output_contract": {
+        "artifact_status": "planned_readiness_schema_only",
+        "solver_output_path": null,
+        "required_readiness_fields": [
+          "lane_id",
+          "transport_grid_manifest_path",
+          "transport_grid_manifest_sha256",
+          "bounded_parameter_range_declared",
+          "rank_interpretability_declared",
+          "pairwise_inversion_interpretability_declared"
+        ],
+        "required_false_fields": [
+          "calibrated_claim_allowed",
+          "p0_release_conclusion_changed",
+          "physical_solver_execution_authorized",
+          "measured_data_ingest_authorized",
+          "raw_magnitude_final_gate_allowed"
+        ]
+      }
+    }
+  ],
+  "planned_artifacts": [
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_registry",
+      "artifact_role": "readiness_registry",
+      "path": "configs/realism_v2/bounded_physical_solver_readiness_registry.yaml",
+      "status": "readiness_schema_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_plan",
+      "artifact_role": "readiness_plan",
+      "path": "reports/98_EV_NODI_P2_bounded_physical_solver_readiness_plan.md",
+      "status": "readiness_schema_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_schema_manifest",
+      "artifact_role": "schema_manifest_no_solver_execution",
+      "path": "results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_schema_manifest.json",
+      "status": "generated_manifest_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_artifact_manifest",
+      "artifact_role": "artifact_manifest_no_solver_execution",
+      "path": "results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_artifact_manifest.json",
+      "status": "generated_manifest_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_readme",
+      "artifact_role": "human_readable_no_solver_guard",
+      "path": "results/post_v2_bounded_physical_solver_readiness/README.md",
+      "status": "readiness_schema_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_schema_manifest_schema_doc",
+      "artifact_role": "schema_documentation",
+      "path": "docs/schemas/bounded_physical_solver_readiness_schema_manifest_schema.md",
+      "status": "readiness_schema_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_artifact_manifest_schema_doc",
+      "artifact_role": "schema_documentation",
+      "path": "docs/schemas/bounded_physical_solver_readiness_artifact_manifest_schema.md",
+      "status": "readiness_schema_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_completion_note",
+      "artifact_role": "completion_note",
+      "path": "reports/99_EV_NODI_P2_bounded_physical_solver_readiness_completion_note.md",
+      "status": "readiness_schema_only",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_helper",
+      "artifact_role": "manifest_builder_and_validator",
+      "path": "nodi_simulator/post_v2_bounded_physical_solver_readiness.py",
+      "status": "pure_verifier_no_solver_execution",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_verifier",
+      "artifact_role": "cli_verifier_no_solver_execution",
+      "path": "tools/verify_post_v2_bounded_physical_solver_readiness.py",
+      "status": "pure_verifier_no_solver_execution",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_generator",
+      "artifact_role": "manifest_generator_no_solver_execution",
+      "path": "tools/generate_post_v2_bounded_physical_solver_readiness.py",
+      "status": "pure_verifier_no_solver_execution",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    },
+    {
+      "artifact_id": "p2_bounded_physical_solver_readiness_tests",
+      "artifact_role": "test_guard",
+      "path": "tests/test_bounded_physical_solver_readiness.py",
+      "status": "test_guard",
+      "claim_level": "bounded_solver_readiness_only",
+      "calibrated_claim_allowed": false,
+      "p0_release_conclusion_changed": false,
+      "p1_surrogate_risk_role_preserved": true,
+      "physical_solver_execution_authorized": false,
+      "measured_data_ingest_authorized": false
+    }
+  ]
+}

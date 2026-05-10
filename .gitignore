@@ -48,6 +48,11 @@ results/post_v2_physical_ceiling/*
 !results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv
 !results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv
 !results/post_v2_physical_ceiling/README.md
+!results/post_v2_bounded_physical_solver_readiness/
+results/post_v2_bounded_physical_solver_readiness/*
+!results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_schema_manifest.json
+!results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readiness_artifact_manifest.json
+!results/post_v2_bounded_physical_solver_readiness/README.md
 exports/
 .pdf_output/
 

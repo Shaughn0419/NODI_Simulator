@@ -162,6 +162,7 @@ P1_PHYSICAL_CEILING_P0_PACKAGE_EXCLUDED_CONFIGS: tuple[str, ...] = (
     "configs/realism_v2/vector_jones_polarization_diagnostic_contract.yaml",
     "configs/realism_v2/roughness_leakage_diagnostic_contract.yaml",
     "configs/realism_v2/transport_residence_time_diagnostic_contract.yaml",
+    "configs/realism_v2/bounded_physical_solver_readiness_registry.yaml",
 )
 
 REASON_CODE_VOCABULARY: tuple[dict[str, str], ...] = (
