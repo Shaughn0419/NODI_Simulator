@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+from copy import deepcopy
 import json
 import subprocess
 import sys
 
 import pytest
 
+from nodi_simulator import realism_v2 as rv2
 from nodi_simulator.post_v2_physical_ceiling import (
     CONTRACT_CONFIG_PATHS,
     PHYSICAL_CEILING_CONTRACT_MANIFEST,
@@ -17,8 +19,10 @@ from nodi_simulator.post_v2_physical_ceiling import (
     build_physical_ceiling_diagnostic_schema_manifest,
     build_physical_ceiling_input_binding_manifest,
     build_physical_ceiling_route_coverage_manifest,
+    validate_physical_ceiling_contract,
     validate_physical_ceiling_contract_manifest,
     validate_physical_ceiling_diagnostic_schema_manifest,
+    validate_physical_ceiling_diagnostic_rows,
     validate_physical_ceiling_input_binding_manifest,
     validate_physical_ceiling_route_coverage_manifest,
     verify_physical_ceiling_contract_package,
@@ -226,12 +230,41 @@ def test_physical_ceiling_generated_outputs_preserve_guard_columns() -> None:
 
     assert {len(rows) for rows in outputs.values()} == {572}
     for rows in outputs.values():
-        assert rows
+        validate_physical_ceiling_diagnostic_rows(rows, "unit-test generated rows")
         for row in rows:
             assert row["calibrated_claim_allowed"] is False
             assert row["p0_release_conclusion_changed"] is False
             assert row["raw_magnitude_final_gate_allowed"] is False
             assert row["physical_ceiling_role"] == "surrogate_risk_reduction_only"
+
+
+def test_physical_ceiling_diagnostic_row_validation_rejects_claim_drift() -> None:
+    rows = build_physical_ceiling_diagnostic_outputs(root_path("."))[
+        PHYSICAL_CEILING_CONTRACT_MANIFEST.parent / "full_wave_green_tensor_diagnostic.csv"
+    ]
+    tampered = [dict(row) for row in rows]
+    tampered[0]["calibrated_claim_allowed"] = True
+
+    with pytest.raises(ValueError, match="calibrated_claim_allowed"):
+        validate_physical_ceiling_diagnostic_rows(tampered, "tampered full-wave rows")
+
+
+def test_physical_ceiling_contract_validation_rejects_solver_authority_drift() -> None:
+    contract = rv2.load_json_yaml(root_path(CONTRACT_CONFIG_PATHS[0]))
+    tampered = deepcopy(contract)
+    tampered["execution_authority"]["solver_execution_authorized"] = True
+
+    with pytest.raises(ValueError, match="solver_execution_authorized"):
+        validate_physical_ceiling_contract(tampered)
+
+
+def test_physical_ceiling_contract_validation_rejects_role_drift() -> None:
+    contract = rv2.load_json_yaml(root_path(CONTRACT_CONFIG_PATHS[0]))
+    tampered = deepcopy(contract)
+    tampered["physical_ceiling_role"] = "calibrated_physical_prediction"
+
+    with pytest.raises(ValueError, match="role drifted"):
+        validate_physical_ceiling_contract(tampered)
 
 
 def test_verify_physical_ceiling_contract_package_passes_with_no_solver_outputs() -> None:
@@ -270,20 +303,41 @@ def test_verify_physical_ceiling_contract_package_cli() -> None:
 
 
 def test_physical_ceiling_manifest_schema_docs_preserve_boundaries() -> None:
-    docs = [
-        root_path("docs/schemas/physical_ceiling_contract_manifest_schema.md"),
-        root_path("docs/schemas/physical_ceiling_diagnostic_schema_manifest_schema.md"),
-        root_path("docs/schemas/physical_ceiling_input_binding_manifest_schema.md"),
-        root_path("docs/schemas/physical_ceiling_route_coverage_manifest_schema.md"),
+    manifest_docs = [
+        (
+            root_path("docs/schemas/physical_ceiling_contract_manifest_schema.md"),
+            build_physical_ceiling_contract_manifest(root_path(".")),
+            ["planned_output_exists = true"],
+        ),
+        (
+            root_path("docs/schemas/physical_ceiling_diagnostic_schema_manifest_schema.md"),
+            build_physical_ceiling_diagnostic_schema_manifest(root_path(".")),
+            ["planned_output_exists = true"],
+        ),
+        (
+            root_path("docs/schemas/physical_ceiling_input_binding_manifest_schema.md"),
+            build_physical_ceiling_input_binding_manifest(root_path(".")),
+            ["diagnostic_output_generated = true"],
+        ),
+        (
+            root_path("docs/schemas/physical_ceiling_route_coverage_manifest_schema.md"),
+            build_physical_ceiling_route_coverage_manifest(root_path(".")),
+            ["planned_output_exists = true", "diagnostic_output_generated = true"],
+        ),
     ]
 
-    for path in docs:
+    for path, manifest, expected_snippets in manifest_docs:
         text = path.read_text(encoding="utf-8")
+        assert manifest["manifest_role"] in text
         assert "calibrated_claim_allowed = false" in text
         assert "p0_release_conclusion_changed = false" in text
         assert "physical_ceiling_role = surrogate_risk_reduction_only" in text
         assert "diagnostic_outputs_generated = true" in text
         assert "solver_or_simulation_execution_authorized = false" in text
+        for snippet in expected_snippets:
+            assert snippet in text
+        assert "empty_output_guard" not in text
+        assert "does not generate" not in text
 
 
 def test_physical_ceiling_completion_note_preserves_boundaries() -> None:

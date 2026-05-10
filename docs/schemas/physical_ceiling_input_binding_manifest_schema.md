@@ -9,15 +9,16 @@ ev_nodi_p1_physical_ceiling_input_binding_manifest_v1
 Role:
 
 ```text
-p0_source_binding_registry_and_empty_output_guard
+p0_source_binding_registry_and_no_solver_output_guard
 ```
 
 This P1 manifest checks that each physical-ceiling lane contract binds to
 existing P0 source files and required source fields. It records source hashes
 and row counts for review traceability.
 
-It does not compute diagnostic scores, does not generate diagnostic CSVs, and
-does not change the P0 release conclusion.
+It supports generated no-solver rank diagnostics. It does not run a solver, use
+measured data, calibrate detector response, or change the P0 release
+conclusion.
 
 Required top-level guard fields:
 
@@ -42,7 +43,7 @@ source_exists = true
 required_fields
 missing_required_fields = []
 required_fields_present = true
-diagnostic_output_generated = false
+diagnostic_output_generated = true
 ```
 
 The manifest is a source-binding guard only. It does not authorize calibrated

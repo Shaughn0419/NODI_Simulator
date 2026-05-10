@@ -1,3 +1,5 @@
+"""Generate legacy post-v2 P0b extension artifacts, not P1 physical-ceiling outputs."""
+
 from __future__ import annotations
 
 import sys

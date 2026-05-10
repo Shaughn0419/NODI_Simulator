@@ -9,12 +9,13 @@ ev_nodi_p1_physical_ceiling_diagnostic_schema_manifest_v1
 Role:
 
 ```text
-planned_output_schema_registry_and_empty_output_guard
+generated_output_schema_registry_and_no_solver_guard
 ```
 
-This P1 manifest records the planned output schemas for the four physical-ceiling
-diagnostic CSVs. It does not generate those CSVs and does not contain diagnostic
-results.
+This P1 manifest records the generated no-solver output schemas for the four
+physical-ceiling diagnostic CSVs. Those CSVs are rank-based surrogate-risk
+diagnostics only; they do not contain calibrated solver, measured-data, or
+detector-unit results.
 
 Required top-level guard fields:
 
@@ -32,7 +33,7 @@ Each schema row must include:
 lane_id
 contract_path
 planned_output_path
-planned_output_exists = false
+planned_output_exists = true
 artifact_status = generated_no_solver_rank_diagnostic
 required_columns
 required_false_columns
@@ -42,6 +43,8 @@ raw_magnitude_final_gate_allowed = false
 decision_authority = diagnostic_flag_only_no_route_promotion
 ```
 
-Allowed future gate families are rank-percentile and pairwise-inversion
-diagnostics only. Raw arbitrary-unit magnitude fields may be diagnostic traces,
-not final gates.
+Allowed gate families are rank-percentile and pairwise-inversion diagnostics
+only. Raw arbitrary-unit or normalized proxy fields may be diagnostic traces,
+not final gates. In P1, the Jones lane reuses the BFP ROI Jacobian-audit proxy
+without a vector solver and therefore must not be cited as independent vector
+physical evidence.

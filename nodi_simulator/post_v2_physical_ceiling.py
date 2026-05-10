@@ -157,8 +157,51 @@ def _reason_codes(
     return ";".join(codes)
 
 
+def validate_physical_ceiling_contract(contract: dict[str, Any]) -> dict[str, Any]:
+    """Validate one lane contract before using it in generated P1 artifacts."""
+    if contract.get("calibrated_claim_allowed") is not False:
+        raise ValueError(f"contract calibration authority drifted: {contract.get('lane_id')}")
+    if contract.get("p0_release_conclusion_changed") is not False:
+        raise ValueError(f"contract P0 boundary drifted: {contract.get('lane_id')}")
+    if contract.get("physical_ceiling_role") != "surrogate_risk_reduction_only":
+        raise ValueError(f"contract role drifted: {contract.get('lane_id')}")
+
+    authority = contract.get("execution_authority", {})
+    if authority.get("contract_artifact_created") is not True:
+        raise ValueError(f"contract artifact flag drifted: {contract.get('lane_id')}")
+    if authority.get("no_solver_rank_diagnostic_generation_authorized") is not True:
+        raise ValueError(f"no-solver diagnostic authority drifted: {contract.get('lane_id')}")
+    for key, value in authority.items():
+        if key in {
+            "contract_artifact_created",
+            "no_solver_rank_diagnostic_generation_authorized",
+        }:
+            continue
+        if value is not False:
+            raise ValueError(f"contract execution authority drifted: {contract['lane_id']} {key}")
+
+    for key, value in contract.get("claim_boundary", {}).items():
+        if key.endswith("_allowed") and value is not False:
+            raise ValueError(f"contract claim boundary drifted: {contract['lane_id']} {key}")
+
+    output = contract["output_schema"]
+    if output["artifact_status"] != "generated_no_solver_rank_diagnostic":
+        raise ValueError(f"contract output status drifted: {contract['lane_id']}")
+    if output["required_role_column_value"] != "surrogate_risk_reduction_only":
+        raise ValueError(f"contract output role drifted: {contract['lane_id']}")
+    if "raw_magnitude_final_gate_allowed" not in output["required_false_columns"]:
+        raise ValueError(f"contract output raw gate guard missing: {contract['lane_id']}")
+
+    gate = contract["gate_policy"]
+    if gate["raw_arbitrary_unit_magnitude_final_gate_allowed"] is not False:
+        raise ValueError(f"contract raw gate drifted: {contract['lane_id']}")
+    if gate["decision_authority"] != "diagnostic_flag_only_no_route_promotion":
+        raise ValueError(f"contract decision authority drifted: {contract['lane_id']}")
+    return contract
+
+
 def _load_contract(project_root: Path, relpath: str) -> dict[str, Any]:
-    return load_json_yaml(project_root / relpath)
+    return validate_physical_ceiling_contract(load_json_yaml(project_root / relpath))
 
 
 def build_full_wave_green_tensor_diagnostic_rows(
@@ -940,9 +983,9 @@ def _assert_csv_current(path: Path, expected_rows: list[dict[str, Any]], label: 
         raise ValueError(f"stale {label}: regenerate P1 physical-ceiling package")
 
 
-def _assert_diagnostic_rows_preserve_boundaries(
-    rows: list[dict[str, str]], label: str
-) -> None:
+def validate_physical_ceiling_diagnostic_rows(
+    rows: list[dict[str, Any]], label: str
+) -> list[dict[str, Any]]:
     if not rows:
         raise ValueError(f"empty physical-ceiling diagnostic: {label}")
     for row in rows:
@@ -951,12 +994,19 @@ def _assert_diagnostic_rows_preserve_boundaries(
             "p0_release_conclusion_changed",
             "raw_magnitude_final_gate_allowed",
         ):
-            if row[key] != "False":
+            if row[key] is not False and row[key] != "False":
                 raise ValueError(f"{label} guard failed: {key}")
         if row["physical_ceiling_role"] != "surrogate_risk_reduction_only":
             raise ValueError(f"{label} role drifted")
         if "rank_percentile" not in " ".join(row):
             raise ValueError(f"{label} row missing rank-percentile schema")
+    return rows
+
+
+def _assert_diagnostic_rows_preserve_boundaries(
+    rows: list[dict[str, str]], label: str
+) -> None:
+    validate_physical_ceiling_diagnostic_rows(rows, label)
 
 
 def verify_physical_ceiling_contract_package(

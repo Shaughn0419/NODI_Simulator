@@ -74,6 +74,13 @@ Raw arbitrary-unit magnitude fields remain diagnostic traces only and are not
 final gates. Allowed future gate families remain rank-percentile and
 pairwise-inversion diagnostics.
 
+The generated `raw_*_diagnostic_only` columns are rank-percentile,
+relative-stability, or normalized-geometry blends. They are not physical field,
+Jones-amplitude, leakage-amplitude, residence-time, detector-voltage, SNR, LOD,
+EV-concentration, or biological-specificity quantities. In P1, the Jones lane
+uses the BFP ROI Jacobian-audit proxy without a vector solver, so it is a
+governance-distinct lane but not independent vector physical evidence.
+
 The input-binding manifest checks that declared P0 source files and source
 fields exist. It does not authorize calibrated physical-ceiling claims.
 

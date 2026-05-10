@@ -9,14 +9,13 @@ ev_nodi_p1_physical_ceiling_route_coverage_manifest_v1
 Role:
 
 ```text
-p0_route_coverage_registry_and_empty_output_guard
+p0_route_coverage_registry_and_no_solver_output_guard
 ```
 
 This P1 manifest checks that each physical-ceiling lane has route-key coverage
-against the P0 mandatory audit primary route universe.
-
-It does not compute diagnostic scores, does not generate diagnostic CSVs, and
-does not change the P0 release conclusion.
+against the P0 mandatory audit primary route universe and that each generated
+diagnostic output exists. It does not run a physical solver or change the P0
+release conclusion.
 
 Required top-level guard fields:
 
@@ -34,12 +33,12 @@ Each lane row must include:
 lane_id
 contract_path
 planned_output_path
-planned_output_exists = false
+planned_output_exists = true
 primary_source_path
 primary_route_key_count
 route_key_source_count
 route_key_sources_with_full_primary_coverage
-diagnostic_output_generated = false
+diagnostic_output_generated = true
 ```
 
 Each route-key source row must have:
@@ -52,4 +51,4 @@ missing_primary_route_keys = []
 
 Non-route-key context sources are allowed, but at least one route-key source per
 lane must cover the P0 primary route universe. This manifest is a coverage guard
-only and does not authorize physical-ceiling result claims.
+only and does not authorize calibrated physical-ceiling result claims.
