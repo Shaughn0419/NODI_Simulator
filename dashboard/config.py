@@ -16,7 +16,7 @@ for candidate in (PROJECT_ROOT,):
     if candidate not in sys.path:
         sys.path.insert(0, candidate)
 
-from nodi_simulator import (
+from nodi_simulator._exports import (
     Particle, Medium, OpticalSystem, SimulationConfig, WATER,
     PBS_1X,
     make_gold_baseline_particle,

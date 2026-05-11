@@ -16,7 +16,7 @@ for candidate in (str(PROJECT_ROOT),):
     if candidate not in sys.path:
         sys.path.insert(0, candidate)
 
-from nodi_simulator import (  # noqa: E402
+from nodi_simulator._exports import (  # noqa: E402
     BASELINE_PARTICLE,
     Channel,
     WATER,

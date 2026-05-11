@@ -5,6 +5,7 @@ import sys
 import time
 from copy import deepcopy
 from pathlib import Path
+from typing import cast
 
 import numpy as np
 import pandas as pd
@@ -519,13 +520,18 @@ def _build_arg_parser() -> argparse.ArgumentParser:
 def main() -> None:
     args = _build_arg_parser().parse_args()
     profile = VALIDATION_PROFILES[args.validation_profile]
-    readout_observable_mode = (
-        args.readout_observable_mode or profile["readout_observable_mode"]
+    readout_observable_mode = cast(
+        str,
+        (
+            args.readout_observable_mode
+            if args.readout_observable_mode is not None
+            else profile["readout_observable_mode"]
+        ),
     )
     engineering_max_phase_flip_fraction = (
-        args.engineering_max_phase_flip_fraction
+        cast(float, args.engineering_max_phase_flip_fraction)
         if args.engineering_max_phase_flip_fraction is not None
-        else float(profile["engineering_max_phase_flip_fraction"])
+        else cast(float, profile["engineering_max_phase_flip_fraction"])
     )
     output_prefix = args.output_prefix
     if output_prefix is None:

@@ -30,7 +30,7 @@ for candidate in (PROJECT_ROOT,):
     if candidate not in sys.path:
         sys.path.insert(0, candidate)
 
-from nodi_simulator import (
+from nodi_simulator._exports import (
     BASELINE_CHANNEL,
     classify_design_recommendation,
     classify_engineering_gate_explanation,

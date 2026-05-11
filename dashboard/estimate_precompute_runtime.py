@@ -45,7 +45,7 @@ from nodi_simulator.optional_acceleration import warn_numba_unavailable
 
 def _get_numba_info() -> dict:
     try:
-        import numba  # type: ignore
+        import numba
     except (ImportError, OSError, RuntimeError):
         warn_numba_unavailable("precompute runtime estimates")
         return {"available": False, "version": None}

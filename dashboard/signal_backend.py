@@ -13,7 +13,7 @@ from copy import deepcopy
 import numpy as np
 import pandas as pd
 
-from nodi_simulator import (
+from nodi_simulator._exports import (
     BASELINE_CHANNEL,
     Channel,
     build_case_decision_summary,
