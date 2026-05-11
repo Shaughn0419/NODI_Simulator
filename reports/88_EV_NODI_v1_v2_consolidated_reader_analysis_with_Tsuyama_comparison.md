@@ -1,826 +1,1588 @@
-# EV/NODI v1+v2 综合分析报告：无实测、面向真实仪器约束的模拟补强与 Tsuyama 文献对照
+# EV/NODI 综合分析报告 v5.0：从物理链到工程推荐的读者向重构
 
-日期：2026-05-11
-版本：v4.0（双口径并立：合并 realism v2 收口 + post-v2 P0-P18 + selected-annulus paper-audit 全量并入）
-报告性质：读者向综合分析报告
-适用口径：无实测数据、合成相对先验模型、面向真实仪器约束的模拟补强，以及 post-v2 审计/有界 trace 证据
-口径并立：本文同时承载 **all-crossing 工程主排序口径**（§1–§13）与 **selected-annulus paper-audit 口径**（§14），两者在本报告中是同等优先的读者入口；§15 为双口径综合分析与共同收口
-
----
-
-## 0. 读者须知
-
-这份报告不是实验报告，也不是仪器校准报告。
-
-它从 v4.0 起改为 **双口径并立**：
-
-```text
-口径 A：all-crossing 全局工程口径
-       回答 “在 32,032 基础设计组合 + 8 仪器情景的全量库内，
-              EV/NODI 工程路线如何相对排序，主路线如何治理”
-       证据来源：v1 全量库、realism v2 R0-R7.2、post-v2 P0-P18
-       当前状态：main-660 conditional_relative_main 集合
-                 {800x1400, 800x1500} 已收口，
-                 P19 evidence strategy gate 之前不再机械式滚 lane。
-
-口径 B：selected-annulus paper-audit 口径
-       回答 “在 selected-annulus 0.5-0.8 固定窗口下，
-              Tsuyama 论文 proxy 数值能否被估计参数自然复现”
-       证据来源：Tsuyama Phase 2 / Phase 2.5-2.11 reproduction lens 链、
-                 R5.2 bounded scenario-prior audit、
-                 instrument-aware feasibility、paper-statistics sensitivity
-       当前状态：当前参数集已冻结为口径 B 选型
-                 (D2.1 best + gamma 0.749 + global SNR scale 0.728
-                  + SNR response exp 0.812 + selected-annulus 0.5-0.8
-                  + 660/800x550 与 660/1200x550 主对照
-                  + ET-2030 + LI5640 current input/TIA 接法)；
-                 release_status = negative_or_diagnostic_result_only；
-                 详细参数 §14.12，对论文对比 §14.13，选型推荐 §14.14。
-```
-
-两个口径回答的是不同问题，不是主辅关系。本文 §1–§13 是口径 A 的完整分析；§14 是口径 B 的完整分析；§15 做双口径综合对照、共同 forbidden claim 和共同收口。两个口径的 forbidden claim **包含**一条共同对称约束：
-
-```text
-口径 A 不替代口径 B 的 paper-audit 结论；
-口径 B 不替代口径 A 的工程主排序。
-```
-
-任何后续 realism v2 / post-v2 P19+ 阶段证据并入本文时，必须同时评估并写入两个口径下的对应结论；某口径下若没有等价证据，必须显式标注 "另一口径下未扩展"，不得只写一边。详见 §15.5。
-
-下面继续口径 A（all-crossing）的完整分析。口径 B（selected-annulus）的完整分析在 §14。
-
-这里的 v2 指的是一条 **没有实测数据、但把真实仪器和真实工程约束考虑得更充分的模拟补强线**。2026-05-11 之后，本报告还合并了 post-v2 P0-P18 的审计、物理上限诊断、solver-readiness、六条有界 trace lane 和停止/继续裁决。它们共同把原有两条结果口径接起来：
-
-1. 原来的工程逻辑：从散射、参考场、干涉增强、读出、事件级 pulse 到设计筛选。
-2. 原来的全量模拟结果：`32,032` 个基础设计组合、每个组合 `10,000` 次合成事件的相对设计筛选库。
-
-v2 增加的是仪器情景约束、路线角色锁定、空白样本和热效应旁路保护、近壁网格判据、窄通道运输风险先验，以及后续仍缺哪些物理证据的清单。post-v2 P0-P18 增加的是可审计的相对路线裁决链、review package provenance、P1/P2 readiness scaffold、P3-P5/P7/P9/P11/P13/P15/P17 授权门、P6/P8/P10/P12/P14/P16 六条窄范围 deterministic trace，以及 P18 的 stop-or-continue synthesis。它们没有增加真实采集数据，也没有把任何结果升级为校准后的信噪比、校准后的事件概率、绝对检出限、真实 EV 浓度或生物特异性。
-
-数据覆盖范围：
-
-```text
-v1 full-grid library = 32,032 基础设计组合，每个组合 10,000 次合成事件
-v2 supplement = R0/R2/R3/R4/R5/R6/R7/R7.1/R7.2/no-measured-data closure
-post-v2 P0 audit = 572 个路线聚合审计行，覆盖 404/488/532/660 nm 各 143 个唯一 route aggregate
-post-v2 P6-P16 bounded traces = 6 条 trace-only lane，均只覆盖 P4/P6 选定的 3 条路线
-实测数据 = 0
-```
-
-因此，本文所有“更可信”“更真实”的意思都是：
-
-```text
-更符合仪器和工程约束的相对模拟判断
-```
-
-不是：
-
-```text
-已经被真实仪器采集或真实样品实验验证
-```
+- 日期：2026-05-11
+- 版本：**v5.0（reader-centric full restructure）**——本版以问题 → 物理 → 变量 → 数据 → 分析 → 推荐 → 边界 → 出处的顺序重新组织 v3.0 / v4.0 / v4.1 / v4.2 的内容，把层层叠加的修订序列改写为一条可跟进的叙事线；同时把代码层的 ID（如 `tau_2ms_global_refphi_plus_collection_narrow`、`conditional_relative_main`、`gamma`）替换为可读的科学命名（保留代码 ID 作为括号补注），并在附录 A 给出对照表。
+- **所有数值结论、forbidden claim、release status 和冻结参数与 v4.2 完全一致**；本版只重排叙事并改名，不引入新计算、新候选、新 lane、新随机种子、新 solver case、新 experiment、新 measured artifact ingest。
+- 报告性质：读者向综合分析报告
+- 适用口径：无实测数据 + 合成相对先验模型 + post-v2 审计 / 有界 trace
+- 预计阅读时间：完整 60–90 分钟；按 §0.3 路径建议跳读 25–40 分钟
 
 ---
 
-执行摘要（双口径）：
+## §0 阅读须知
 
-这份报告并立回答 8 个问题，前 6 个属于口径 A（all-crossing），后 2 个属于口径 B（selected-annulus）。
+### 0.1 这份报告是什么、不是什么
 
-口径 A — all-crossing 全局工程口径：
+**是**：在没有任何实测采集数据的前提下，把物理推导、surrogate 模型、估计参数与多轮审计证据按读者直觉串起来，给出 EV / NODI 工程主线推荐 + Tsuyama 论文审计推荐 + 边界声明的读者向综合分析。
 
-1. 原工程主线和原全量模拟做完后，还差什么？答：差仪器现实约束、空白样本风险、读出语义、路线角色边界、窄通道风险先验和证据缺口清单。
-2. v2 在不引入实测的前提下能补到哪一步？答：补到"当前模型还缺哪些物理或仪器证据"的登记表；不能补到任何校准或绝对量级结论。
-3. 660 nm 主路线在 v2 之后还成立吗？答：在当前无实测、受限先验模型内仍成立，锁定为 660 nm、800 nm 宽、1400/1500 nm 深的两条主路线。
-4. 弱参考场路线和窄深上下文路线为什么一度看起来更高？答：更可能是窄通道工程风险在原模型中被低估；本报告用低自由度宽度风险先验解释，不把它升级为物理定律。
-5. Tsuyama 论文支持到了什么程度？答：3 篇对当前 NODI 主线约束强，3 篇主要提供 POD/热效应边界；当前是趋势和固定条件对齐，不是论文数值的完整校准复现。
-6. post-v2 P0-P18 改变了什么？答：P0 把路线裁决做成可复核的相对审计包；P1/P2 把后续物理上限/solver readiness 做成不执行 solver 的合同；P6-P16 的六条有界 trace 没有支持 route promotion，反而显示 `main_660_W800_D1400` 与 `main_660_W800_D1500` 的 trace-only 首位在不同 lane 间切换；P18 因此停止机械式继续滚 lane，要求先做 P19 evidence-strategy gate。
+**不是**：
 
-口径 B — selected-annulus paper-audit 口径：
+- 不是实验报告（没有实测）
+- 不是仪器校准报告（没有 calibrated SNR / LOD / 浓度）
+- 不是论文完整复现（Tsuyama 数值的复现只到 reproduction-lens partial，没有 accepted paper-calibrated candidate）
+- 不是生物学论证（没有 biological specificity claim）
 
-7. selected-annulus 0.5-0.8 固定窗口下，Tsuyama paper proxy 数值能否被自然复现？答：**negative_or_diagnostic_result_only；没有 accepted paper-calibrated candidate**。Phase 2 family-ladder full inverse 完成 `52` candidates × `3` seeds × `10000 events/case`；formula-consistent Ag/Au signal 已通过；raw Au size-response 仍偏陡（D2.1 局部 smoke raw Au exponent 范围约 `3.05–3.19`，full inverse / 3000-event size-only raw peak-height exponent 约 `3.17–3.25`，目标 `2.3`，limiting pair `40-60` nm）。**v4.0 起口径 B 已把当前参数集冻结为选型**：候选 `tau_2ms_global_refphi_plus_collection_narrow`（D2.1 best）+ single global response compression `gamma=0.749` + global SNR scale `0.728` + SNR response exponent `0.812`，total reproduction score `2.033`（descriptive partial）。冻结理由是再降分需要 per-diameter / per-geometry / per-case correction，越过 estimated-parameter 复现边界；当前选型已是 reproduction lens 框架内可交付的最佳低自由度解。详细参数集见 §14.12，逐论文对比表见 §14.13，选型推荐见 §14.14。
-8. selected-annulus 与 all-crossing 在 R5 全量库 shadow 上是什么关系？答：`selected_all_uplift_median ≈ 1.384x`、`max ≈ 1.557x`，未越过 `1.6x` warning；同时 R5.2 bounded scenario-prior audit 把 sidecar 治理写成 `selected_annulus_replaces_all_crossing_ranking = false`、`selected_annulus_bound_change_authorized = false`。两个口径并立、互不替代。
+### 0.2 双口径并立
 
-读完整份报告大约需要 50-60 分钟。如果只想看口径 A 结论，请读第 1 节、第 8 节、第 12 节和第 13 节；只想看口径 B 结论与冻结选型，请读 §14.12 / §14.13 / §14.14；想看双口径综合与共同收口，请读 §15。
+本报告同时回答两个并立问题，**互不替代**：
+
+```text
+口径 A — 工程主排序
+        问题：在 32,032 设计组合 × 8 仪器情景的合成相对先验模型内，
+              EV / NODI 工程路线如何排序、主路线选哪一组几何？
+        主分母：全 back-focal-plane 全 crossing
+        颗粒：EV biomimetic + Au20/Au30 anchors
+        当前推荐：660 nm + 通道宽 800 nm × 通道深 1400 / 1500 nm 的双 main 集合
+
+口径 B — 论文审计
+        问题：在 selected-annulus 0.5–0.8 固定窗口下，
+              当前 simulator 的低自由度估计参数能否自然复现 Tsuyama 论文数值？
+        主分母：selected-annulus 0.5–0.8
+        颗粒：Au 20 / 30 / 40 / 60 nm + Ag 40 / 60 nm
+        当前推荐：两步框架——
+                step 1 用 Tsuyama 数据校准估计参数（γ ≈ 0.749 等），
+                step 2 在校准 lens 内选几何 = 660 / 800 × 550 + 660 / 1200 × 550
+```
+
+把口径 A 的工程几何当作口径 B 的论文审计结论、或把口径 B 的估计参数当作物理常数推广到口径 A 工程库，都属于 §15 forbidden claim。
+
+### 0.3 阅读路径建议
+
+| 你的角色 | 建议路径 | 大致用时 |
+|---|---|---:|
+| 第一次阅读 | §0 → §1 → §2 → §6 → §10 或 §11（按你的口径）→ §15 | 25–40 分钟 |
+| 工程评审 / 审计 | §1 → §3 → §4 → §5 → §7 → §9 → §10 → §15 → §17 | 50–70 分钟 |
+| 论文对照 | §6 → §11 → §14 → §15 | 30–40 分钟 |
+| 边界与治理 | §12 → §13 → §15 → §16 → §18 | 25–35 分钟 |
+| 出处溯源 | §17 → 附录 A → §18 | 15–25 分钟 |
+| 完整通读 | §0 → §18 → 附录 A/B/C | 60–90 分钟 |
+
+### 0.4 v5.0 与之前版本的关系
+
+- v3.0：仅口径 A，selected-annulus 仅一处指针提及
+- v4.0：双口径并立、§14 selected-annulus 等规模并入、§15 双口径综合
+- v4.1：新增 §16 读者向解读层
+- v4.2：§16 改两步框架 + §16.3 / §16.4 改 ms / % 多表
+- **v5.0**：**全文 reader-centric 重构**。把 v3 → v4.2 的叠加痕迹清掉，按问题 → 物理 → 变量 → 数据 → 分析 → 推荐 → 边界 → 出处的顺序重排；把代码层参数 ID 改名为可读科学命名（附录 A 给出对照表）。**数值与 forbidden 完全继承 v4.2，没有放宽任何边界**。
+
+### 0.5 v5.0 重构的不变量（invariants，不会被改名 / 改顺序改变的事实）
+
+```text
+1. 全部数值结论与 v4.2 一致
+2. 全部 forbidden claim 与 v4.2 一致（§15）
+3. 口径 B 冻结参数集与 v4.2 一致（§11.7）
+4. 双口径并立、互不替代的治理原则与 v4.0 起一致
+5. selected-annulus 0.5–0.8 固定不可移动
+6. raw provenance 来源不变：reports/49（口径 B Phase 2 / 2.5–2.11）+ reports/71（R5.2 sidecar）
+```
 
 ---
 
-## 1. 总结结论（口径 A：all-crossing）
+## §1 项目要解决的两个并立问题
 
-> 本节是口径 A（all-crossing 全局工程口径）下的总结结论。口径 B（selected-annulus paper-audit 口径）的总结结论在 §14.1。双口径并立的对照见 §15。
+### 1.1 问题 A — EV / NODI 工程主线推荐
 
-当前 v2 已经完成其无实测数据范围内的修改和收口。最强结论可以写成：
+在以下候选范围内挑出最适合作为 EV / NODI 工程主线的几何 + 波长组合：
 
 ```text
-在受限的无实测合成先验模型内，
-660 nm 主路线仍保持为治理锁定的主路线集合；
-弱参考场路线和窄深上下文路线一度高分的现象，
-可以被低自由度的窄通道工程风险先验稳定解释；
-post-v2 P0-P18 没有支持任何 route promotion 或 calibration claim；
-这些结论是相对模拟/相对审计判断，不是实测校准。
+波长候选：404 / 488 / 532 / 660 nm
+通道宽度候选：11 个值（500 / 600 / 700 / 800 / 900 / 1000 / 1100 / 1200 / 1300 / 1400 / 1500 nm）
+通道深度候选：13 个值（覆盖 500–1500 nm）
+颗粒类型候选：56 种（EV biomimetic 系列 + Au 20–300 nm anchors）
+合计：32,032 个基础设计组合
 ```
 
-主路线状态：
+**"最适合"在本报告内的精确意思**：在合成相对先验模型 + 8 个仪器情景下，detection 数字稳定、近壁条件下网格证据充分、对低自由度风险先验解释鲁棒、并且没有被路线治理审计降级到对替代量级敏感 (`surrogate_sensitive_not_promoted`) 状态。
 
-| 项目 | 当前结论 | 技术证据来源 |
+**它不是**：不是"detection 数字绝对最高"。§10.4 会显示，detection 数字最高的反而是 500 nm 宽窄通道路线（19.6% 在 660 / 500 × 1500 nm），但它们在路线治理裁决后被标为 `surrogate_sensitive_not_promoted`——原因是窄通道工程风险在原模型中被低估（§10.4 详解 width-prior 风险先验）。
+
+### 1.2 问题 B — Tsuyama 论文数值能否被估计参数复现
+
+Tsuyama 等 2019 / 2020 / 2022 / 2024 共 6 篇论文给出了 NODI / POD 检测的若干**论文数值**：
+
+```text
+Table S1 Ag40 / Au40 signal ratio（按散射截面开方列）
+Au 粒径响应斜率 ≈ 2.3
+Au30 / Au20 SNR 比 ≈ 33 / 12 ≈ 2.75
+Au20 / Au30 / Au40 / Au60 selected-annulus detection 带
+selected-annulus 几何 guardrail
+classification accuracy 71.9 ± 4.0%（diagnostic only）
+```
+
+**问题 B 的边界条件**：
+
+```text
+不修改 selected-annulus 0.5–0.8 窗口
+不回写 EV 工程主线
+不开 per-diameter / per-geometry / per-case correction
+只允许低自由度全局估计参数
+```
+
+在这组边界内回答：能否自然复现？
+
+**当前结论（详见 §11）**：partial。formula-consistent Ag / Au signal 已通过；raw Au peak-height exponent 最低 3.0335（target 2.3，limiting size pair 40–60 nm）；total reproduction score 2.033（bounded partial 阈值 2.0）。所以 v4.0 起把当前参数集冻结为口径 B 选型，**不再追更低分**，要继续推进必须靠实测 artifact。
+
+### 1.3 为什么是两个并立问题、不是一个？
+
+| 维度 | 口径 A：工程主排序 | 口径 B：论文审计 |
 |---|---|---|
-| 660 nm 主路线 | 800 nm 宽、1400 nm 深；800 nm 宽、1500 nm 深 | v2 路线治理收口表 |
-| post-v2 后的主路线裁决 | 两条 main-660 仍是 `conditional_relative_main`；二者不能被 P6-P16 trace 分出单一冠军 | P0 audit + P18 synthesis |
-| 是否允许其它路线直接升级为主路线 | 否 | v2 closure + P0 audit + P18 synthesis |
-| 是否允许重新定义 660 nm 主路线 | 否 | 同上 |
-| 660 nm、900 nm 宽、1400 nm 深路线 | 只作为 `optional_robustness_probe_only`，不作为主路线替代 | v2 路线治理收口表 + P0 audit |
-| 404 nm、600 nm 宽、1300 nm 深路线 | 只作为 `probe_only` 短波机制路线；P6-P16 trace 中始终排第 3 | P0 audit + P6/P8/P10/P12/P14/P16 trace |
-| 弱参考场 660 nm、700 nm 宽、1500 nm 深路线 | 只作为 `relative_control_candidate` / weak-reference control | P0 audit |
-| 局部环带窗口 | 只作为并行诊断视角，不替代全局路线排序 | 同上 |
-| 404 nm 热效应旁路 | 只作为安全和机制风险提示，不给 NODI 光学分数加分 | 404 nm 热效应旁路汇总表 |
-| 当前最终模型类别 | 无实测、合成相对先验 + post-v2 relative-audit / trace-only scaffold | v2 结论边界收口表 + P0-P18 |
-| 实测数据 | 未使用 | 同上 |
-| 校准信噪比 / 校准事件概率 | 禁止 | 同上 |
+| 目标 | EV / NODI 工程整体路线排序 | Tsuyama 论文数值复现可行性 |
+| 主分母窗口 | 全 BFP 全 crossing | selected-annulus 0.5–0.8 |
+| 候选规模 | 32,032 设计 × 8 情景 = 256,256 行 | 约 52 paper-audit candidates × 3 seeds |
+| 颗粒 panel | EV biomimetic + Au20 / Au30 anchors | Au 20 / 30 / 40 / 60 + Ag 40 / 60 nm |
+| 主推几何 | 660 nm + 800 × 1400 + 800 × 1500 nm | 660 nm + 800 × 550 + 1200 × 550 nm |
+| 当前 release | `conditional_relative_main` 集合 | `negative_or_diagnostic_result_only` |
+| 主 No-Go | 无（已收口）| `raw_size_response_alignment_not_met` |
 
-Tsuyama 文献对照的最终判断：
-
-1. **2020 diffraction、2022 NODI、2024 POD+NODI** 对当前 NODI/EV 工程主线有直接约束。当前模型在参考场、660 nm 主波长、读出口径和事件级脉冲方向上与这些论文趋势明显趋同。
-2. **2019 POD、2020 counting POD、2020 solvent-enhanced POD** 对 POD thermal / photothermal / solvent / heat-diffusion 支线有重要边界意义，但不能直接拿来校准 EV NODI scattering detectability。
-3. 当前模型对 Tsuyama 的对齐是 **机制与趋势对齐、固定论文条件下的对照、以及部分金颗粒读出口径对照**。它不是所有论文图表的逐式复现，也不是论文数值的校准复现。
+两套候选不一样、分母不一样、回答不一样的问题，所以**不能把一边的结论搬到另一边**。后面 §10 / §11 各自展开。
 
 ---
 
-## 2. 原始模拟做了什么，v2 为什么需要补
+## §2 物理链：粒子如何变成一个 detection event
 
-原来的主工程线已经完成了大规模相对模拟计算。它的价值是：
+本节回答"信号是从哪里来的、经过哪些环节"。读完本节，读者应该能跟着一条公式链算下来，并理解 §11.2 关键问题"**本征散射 |E_sca|² 与干涉项 2|E_ref||E_sca|cos(Δφ) 是相加还是相乘？**"的答案为什么是相加。
 
-- 枚举大量波长、通道宽度、通道深度、颗粒类型和读出口径；
-- 给出设计筛选用的相对排序；
-- 保留全局交叉判据作为主工程排序口径；
-- 用局部环带窗口作为并行交叉检查，而不是替代全局排序；
-- 用接近 Tsuyama 条件的金颗粒对照和论文条件对照做文献趋势复核。
-
-但原来的模拟也有天然边界：
-
-1. 探测器、锁相放大器、后焦面、狭缝和针孔读出仍有近似成分；
-2. 空白样本、相对强度噪声、50 欧姆读出路径、外置跨阻放大器、采集分辨率和热效应旁路等现实仪器问题没有充分进入主判断；
-3. 近壁条件、网格精度和粗筛结果在路线决策中的角色需要裁决；
-4. 某些上下文路线偶尔高于锁定主路线时，需要区分真实物理趋势、先验模型偏差和路线治理边界；
-5. 没有实测空白样本、金颗粒阶梯、后焦面读出算子、制程计量或 EV 样品数据，所以不能输出绝对量级结论。
-
-v2 的目的正是补这些 **工程现实性**，而不是重新做一个“看起来更贴论文的过拟合版本”。
-
----
-
-## 3. v2 相比原模拟新增了什么
-
-### 3.1 仪器链路显式化
-
-v2 把原来比较抽象的读出和探测器部分拆成更接近实验系统的约束：
-
-| 新增层 | 作用 |
-|---|---|
-| 从散射截面到实际光功率和局部照度 | 避免只在散射截面层做判断 |
-| 后焦面、狭缝、针孔和读出区域 | 把论文里的衍射光区域和孔径选择纳入模型 |
-| 探测器连接状态 | 防止把未知接线方式当作已校准通道 |
-| 锁相放大器读出约束 | 限制时间常数、等效噪声带宽、满量程和饱和等解释空间 |
-| 激光调制、强度噪声、光束和采集链路 | 把现实噪声和采集链路风险作为情景先验 |
-| 空白样本和罕见假阳性先验 | 防止把有限空白样本误写成安全性证明 |
-
-这些新增层没有提供真实测量值，但它们能约束原模型不要越过仪器现实边界。
-
-### 3.2 路线角色治理和结论边界
-
-v2 最重要的一条治理线是：模拟分数高不等于路线升级。
-
-v2 全量仪器情景扩展发现：
-
-| 路线类别 | 合成评估行数 | 平均相对可检测性分数 |
-|---|---:|---:|
-| 弱参考场控制路线 | 448 | 0.152257 |
-| 锁定的 660 nm 主路线 | 896 | 0.126095 |
-| 可选的 660 nm 稳健性探针 | 448 | 0.123041 |
-| 长波局部环带交叉检查路线 | 1344 | 0.100906 |
-| 中波基线路线 | 896 | 0.077653 |
-| 大范围上下文路线 | 250432 | 0.070901 |
-| 短波机制候选路线 | 448 | 0.044475 |
-| 短波局部环带交叉检查路线 | 1344 | 0.040433 |
-
-这里最容易被误读的是：弱参考场控制路线的平均分高于锁定的 660 nm 主路线。v2 没有把它升级成主路线，而是把它作为一个需要解释的警告，进入后续的路线角色稳定性、情景先验和宽度风险敏感性分析。
-
-### 3.3 660 nm 主路线的近壁粗筛裁决
-
-前一轮近壁复核曾暴露出：660 nm 主路线在粗网格筛查、近壁应力条件下没有达到全部判据。随后只针对两条锁定主路线做细网格复核：660 nm、800 nm 宽、1400 nm 深；以及 660 nm、800 nm 宽、1500 nm 深。
-
-近壁细网格复核结论：
+### 2.1 链条总览（7 阶段）
 
 ```text
-细网格确认通过比例 = 1.0
-复核级网格通过比例 = 1.0
-细网格与复核级网格一致性 = 1.0
+[阶段 1] 粒子本征散射（Mie 散射）
+            产物：散射截面 Csca、角度散射振幅 S1(θ), S2(θ)、收集前场幅值 |E_sca,unit|
+            源代码：nodi_simulator/mie_engine.py + intrinsic_scattering.py
+                ↓
+[阶段 2] 角度收集（探测算子 L_det）
+            产物：被收集的检测端散射场 E_sca,detected
+            源代码：nodi_simulator/utils.py 中 build_collection_operator + collapse_angular_field_with_operator
+                ↓
+[阶段 3] 照明 + 路径相位 + 耦合 → 事件级散射场
+            产物：事件随时间的散射场 E_sca(t)
+            源代码：nodi_simulator/scattering_trace.py + illumination.py
+                ↓
+[阶段 4] 通道参考场（Tsuyama BFP / channel-angular surrogate）
+            产物：事件随时间的参考场 E_ref(t)
+            源代码：nodi_simulator/reference_field.py
+                ↓
+[阶段 5] 干涉叠加 → signal_trace
+            产物：signal_trace(t) = |E_ref + E_sca|² - |E_ref|²
+            源代码：nodi_simulator/interferometric_trace.py
+                ↓
+[阶段 6] 噪声 + 锁相读出
+            产物：post-readout 信号
+            源代码：nodi_simulator/pulse_analysis.py (与 reference 的 lock-in surrogate 部分)
+                ↓
+[阶段 7] 阈值 + 脉冲提取 + batch 统计
+            产物：detection_rate, mean_peak_margin_z, phase_flip_fraction, ...
+            源代码：nodi_simulator/pulse_analysis.py + count_generation.py
+                ↓
+[最终] 按 lens 分组：
+       口径 A 看 all_crossing_detection_rate
+       口径 B 看 selected_annulus_detection_rate
 ```
 
-因此，粗网格筛查结果被保留为“只提示风险”的筛查警告，不再作为降低路线角色的证据。660 nm 主路线在复核级网格上的证据得到恢复。
+### 2.2 每个阶段的公式与物理量含义
 
-### 3.4 全量仪器情景扩展
-
-v2 没有重新做随机事件级扩展，而是把原有基础设计组合放入 8 个受限仪器情景中做确定性扩展：
+**阶段 1 — Mie 本征散射**
 
 ```text
-基础设计组合 = 32,032
-仪器情景 = 8
-随机种子 = 0
-扩展后的合成评估行 = 256,256
+散射截面：Csca = Qsca · π a²    （a = 粒径半径）
+角度散射场幅值（非偏振平均）：dCsca / dΩ = (|S1|² + |S2|²) / (2 k²)
+场幅值代理：|E_sca,unit(θ)| = √(dCsca / dΩ)
 ```
 
-8 个仪器情景分别代表：
+读法：粒子越大、折射率反差越大、波长越短（在 Rayleigh 区），Csca 越大。对 EV biomimetic 这种低反差颗粒，Csca ≈ 1 / λ⁴（Rayleigh 极限）；对 Au plasmonic 颗粒，Csca 在等离激元共振附近（约 520 nm）局部增强，所以 Au 在 660 nm 的 Csca 反而比 488 nm 大。
 
-- 标称仪器和干净空白样本；
-- 50 欧姆探测器路径的悲观情况；
-- 外置跨阻放大器的乐观情况；
-- 空白样本中存在突发强度噪声的情况；
-- 后焦面/狭缝偏移带来的泄漏风险；
-- PEG 或近壁损失更悲观的情况；
-- 404 nm 热效应风险较高、功率较低的情况；
-- 数据采集分辨率较低的情况。
+证据档位（§13 6 档来源谱）：**Mie 推导值（第 2 档）**，由物理常数 n、k、λ、π 直接算出。
 
-这些情景是为了观察路线角色稳定性和仪器先验敏感性，不是为了生成真实事件概率。
-
-### 3.5 弱参考场和窄深路线警告，以及宽度风险解释
-
-受限情景先验审计发现：
+**阶段 2 — 角度收集**
 
 ```text
-弱参考场控制路线在 8 / 8 个仪器情景中高于 660 nm 主路线
-20 / 20 条高分上下文路线在全部 8 个仪器情景中高于 660 nm 主路线
+E_sca,detected = L_det[ field_sca(θ, φ) ]    （L_det = 当前 surrogate 收集算子）
 ```
 
-这说明警告是系统性的，不是某个仪器情景的偶然异常。
+`L_det` 在 v4.0 / v4.2 / v5.0 内仍是 surrogate（默认 `channel_diffraction + pupil_slit_surrogate + parallel projection`），它把完整角度散射图压成一个由 BFP / slit / pinhole 决定的收集场。它**不是**完整 pupil integral，所以收集量级是 surrogate 估计，不是 calibrated detector unit chain。
 
-后续测试进一步追问：这些警告是否必须靠“逐条路线手工调参”才能解释。结果是，不需要。一个低自由度的窄通道风险先验已经足够解释：
+证据档位：**Surrogate 估值（第 3 档）**。
 
-下面这张表的读法：
-
-- **主路线保留比例**：引入宽度风险先验后，660 nm 主路线平均分相对原结果的保留比例。`1.000` 表示没有被压低，`0.886` 表示保留到原值的 88.6%。
-- **上下文路线越线数**：20 条高分上下文路线在引入先验后仍高于 660 nm 主路线的条数。`0` 表示这类警告完全消失。
-- **弱参考场是否仍越线**：弱参考场控制路线在引入先验后是否仍高于 660 nm 主路线。`0` 表示已不再越线。
-
-我们要找的是同时满足“主路线不被明显压低”“高分上下文路线不再越线”“弱参考场控制路线不再越线”的低自由度先验。这样的先验既能解释系统性警告，又不会人为打压主路线。
-
-| 宽度风险解释模型 | 解释等级 | 参考宽度 | 惩罚强度 | 主路线保留比例 | 上下文路线越线数 | 弱参考场越线数 |
-|---|---|---:|---:|---:|---:|---:|
-| 以 800 nm 为参考、1.5 次方的温和宽度惩罚 | 可接受解释 | 800 nm | 1.5 | 1.000 | 0 | 0 |
-| 以 800 nm 为参考、2.0 次方的二次宽度惩罚 | 可接受解释 | 800 nm | 2.0 | 1.000 | 0 | 0 |
-| 以 850 nm 为参考、2.0 次方的稍强宽度惩罚 | 可接受但需谨慎 | 850 nm | 2.0 | 0.886 | 0 | 0 |
-
-宽度风险敏感性分析同时说明：
-
-- 以 800 nm 为参考的线性惩罚太弱；
-- 以 750 nm 为参考的二次惩罚太弱；
-- 以 900 nm 为参考的二次惩罚能压掉弱参考场和上下文路线警告，但代价有两个：
-  - （a）660 nm 主路线保留比例从 `1.0` 降到 `0.79`，对主路线惩罚明显；
-  - （b）压低后的 660 nm 主路线反而被 660 nm、900 nm 宽、1400 nm 深的可选探针路线越过，路线治理边界会被动摇。
-  - 因此本报告把 900 nm 参考宽度的二次惩罚视为过强模型，不作为可接受解释；
-- 单独使用参考场工作带惩罚或后焦面/狭缝对准风险，均不足以解释警告。
-
-这支持的科学解释是：
+**阶段 3 — 照明 + 路径相位 + 耦合 → 事件级散射场**
 
 ```text
-弱参考场和窄深路线的高分警告，很可能来自原模型低估了窄通道工程风险。
+E_sca(t) = E_env(t) · E_sca,unit · f_coupling(t) · exp(i · φ_extra(t))
 ```
 
-它不支持：
+其中 `E_env(t)` 是照明场（默认 `overfill` 模式），`f_coupling(t)` 是 Gaussian xy 耦合，`φ_extra(t)` 包括路径 OPD 与焦点穿过相位。这一步把"静态散射场"转成"事件随时间的散射场"。
+
+证据档位：第 3 档（surrogate 估值）。
+
+**阶段 4 — 通道参考场**
 
 ```text
-(W / 800)^2 就是真实物理定律。
+E_ref(t) ~ L_det[ E_diff,ch ]
 ```
 
-### 3.6 机制分解与证据缺口
+当前默认参考场模型是 `channel_angular_surrogate`（通道角谱 surrogate）。NODI 主链看的是参考场和散射场的**干涉**，不是单独的 `|E_sca|²`。
 
-后续机制分解把宽度风险先验拆成更像物理机制的候选解释：
+证据档位：第 3 档（surrogate）。在 reports/49 / 71 / Phase 2 lane 内有 `paper_aligned_phase_filter` 与 `tsuyama_bfp_roi_mode` 等更接近论文条件的 reference 变体；当前主报告 reference 模型对论文条件做相位滤波对照，相对误差 ≈ 2–9%（§6.3 表）。
 
-| 机制家族 | 当前 v2 内状态 |
-|---|---|
-| 颗粒与壁面的间隙、PEG 层和近壁运输 | 可用已有模拟字段做相对先验近似 |
-| 运输存活、堵塞和样品通量风险 | 可用已有模拟字段做相对先验近似 |
-| 参考场工作范围、饱和和噪声裕度 | 需要后续独立的仪器或算子证据 |
-| 后焦面、狭缝和读出区域对准 | 需要后续独立的算子输出或扫描证据 |
-| 制程和计量裕度 | 需要后续独立的计量或工艺窗口证据 |
-| 不同颗粒类别的残余差异 | 只能报告残余，不能做逐颗粒经验拟合 |
-
-最终收口把这些整理为 6 类证据缺口、共 30 个必需字段。v2 closure 明确：这些是后续独立项目才可能解决的依赖，不是 v2 内的采集计划。
-
----
-
-## 4. v1+v2 现在怎样接回原口径
-
-v2 并没有推翻 v1。更准确地说：
+**阶段 5 — 干涉叠加**（**关键公式，§2.3 / §11.4 都引用它**）
 
 ```text
-v1 = 大规模相对设计筛选库
-v2 = 面向真实仪器和工程约束的模拟补强
+E_det(t)       = E_ref(t) + E_sca(t)
+I_det(t)       = |E_det(t)|²
+signal_trace(t)= I_det(t) - |E_ref(t)|²
+              = |E_sca|² + 2 · Re( E_ref · E_sca* )
+                  ↑        ↑
+              本征二次项   参考场放大的一次干涉项
 ```
 
-接回后的读法如下：
+**这一行就是问题"本征 vs 干涉是相加还是相乘"的答案**：**严格意义上是相加**——两项简单叠加，不是相乘。但量级关系按 |E_ref| / |E_sca| 的比值分三个极限：
 
-| 原始口径 | v2 后的读法 |
-|---|---|
-| 全局交叉排序 | 仍是主工程排序，不被局部环带窗口替代 |
-| 局部环带窗口 | 只作为并行诊断视角，不能替代全局排序 |
-| 660 nm 主路线 | 仍锁定 800 nm 宽、1400/1500 nm 深两条路线 |
-| 404 / 532 / 488 nm 路线 | 作为机制、上下文或旁路对照，不直接升级为主路线 |
-| Tsuyama 论文条件对照 | 用于文献趋势和读出口径复核，不等于论文数值校准复现 |
-| 可检测性分数 | 相对先验分数，不是事件概率 |
-| 类似计数的字段 | 合成代理计数，不是实际观察到的检测事件 |
-
-660 nm 主路线两条几何的 v2 汇总：
-
-| 路线 | 近壁细网格证据 | 细网格通过比例 | 复核网格通过比例 | 合成评估行数 | 平均相对可检测性分数 |
-|---|---|---:|---:|---:|---:|
-| 660 nm、800 nm 宽、1400 nm 深 | 已继承 | 1.0 | 1.0 | 448 | 0.125190 |
-| 660 nm、800 nm 宽、1500 nm 深 | 已继承 | 1.0 | 1.0 | 448 | 0.127001 |
-
-这不是说 800x1400 / 800x1500 是物理上唯一正确路线，而是说：在当前无实测、受限 v2 先验模型内，它们仍是治理锁定的 660 nm 主路线比较基准。
-
----
-
-## 5. Tsuyama 文献对照总览
-
-本项目共纳入 6 篇 Tsuyama / Mawatari 相关论文。它们对当前模型的约束强度并不相同。
-
-| 论文 | 对当前主线的约束强度 | 当前对照方式 | 结论 |
+| 极限 | \|E_ref\| / \|E_sca\| | 主导项 | peak 量级 |
 |---|---|---|---|
-| 2019 POD 分子检测 | 中 | POD 热效应边界和衍射光读出区域 | 支持衍射光区域与小通道 POD 可行性；不直接校准 EV NODI |
-| 2020 单纳米通道衍射 | 高 | 固定 633 nm 的衍射和参考场对照 | 参考场、宽度和深度趋势强对齐 |
-| 2020 POD 纳米颗粒计数 | 中 | POD 计数边界和流动/读出时间尺度 | 支持毫秒级瞬态和金颗粒 POD 可检测性；不能外推为 NODI 散射校准 |
-| 2020 溶剂增强 POD | 中 | 热效应和溶剂边界 | 支持溶剂、光热和符号翻转边界；当前 v2 不做热效应 POD 定量 |
-| 2022 NODI | 高 | 接近论文条件的 NODI 对照 + 金颗粒对照 | 660 nm 主波长、读出口径、事件级脉冲趋势趋同 |
-| 2024 POD+NODI | 高 | 双频读出和 POD/NODI 配对语义 | 配对读出方向对齐；未复现完整电子链路和分类器 |
+| 弱参考场 | ≪ 1 | 本征二次项 \|E_sca\|² | peak ∝ Csca |
+| 平衡 | ≈ 1 | 两项可比 | peak ≈ \|E_sca\|² + 2\|E_ref\|\|E_sca\|cos(Δφ) |
+| **强参考场**（当前模型 + Tsuyama 论文条件） | ≫ 1 | **干涉一次项** | **peak ≈ 2 · \|E_ref\| · \|E_sca\| · cos(Δφ) ≈ \|E_ref\| · √Csca** |
 
-最简洁的结论是：
+所以"参考场放大 N 倍 × 本征 Csca 翻 M 倍 = 总放大 N · M"是**错的直觉**。在当前强参考场口径下，peak 大致跟 |E_ref| · √Csca，**不是** |E_ref| · Csca。
+
+**阶段 6 — 噪声 + 锁相读出**
+
+噪声进入位置：
 
 ```text
-当前模型和 Tsuyama 的关系是“趋势一致、固定论文条件下已检查”，
-不是“已按论文数值完成校准”。
+干涉 signal_trace
+    ↓
+[pre-readout 噪声] 高斯 + 散粒 (shot-noise surrogate) + 漂移 surrogate
+                 默认: noise_std = 0.01, shot_noise_scale = 0.001
+    ↓
+锁相读出 lock-in surrogate（时间常数 1–2 ms；in-phase / magnitude / phase-gated）
+    ↓
+[post-readout 噪声] 默认: post_readout_noise_std = 0.002
+    ↓
+输入到阈值
 ```
+
+**关键观察**：参考场放大的是相干一次项（signal 端），**不放大噪声**（噪声没有相干相位）。但 noise floor 不是常数：
+
+- 阈值用背景的 MAD 估计；noise↑ → 阈值↑ → detection↓
+- 短波长 transit 时间窗变小 → 锁相有效样本数变少 → margin z 变小
+- phase flip fraction 在短波长更高（OPD 抖动相对 λ 占比更大）
+
+这就是 §8 / §11.4 / 用户曾问"为什么参考场放大那么多倍噪声还重要"的答案：noise 不被放大，但 noise 决定阈值，阈值决定 detection；transit 与 phase flip 还会进一步压低短波长的 detection。
+
+**阶段 7 — 阈值 + 脉冲提取 + batch 统计**
+
+```text
+threshold = median(background[:n_bg]) + threshold_sigma · 1.4826 · MAD(background[:n_bg])
+默认: threshold_sigma ∈ {5, 10}, n_bg = first 20% samples
+
+find_peaks(signal_post_readout):
+    height   ≥ threshold
+    width    ≥ min_peak_width   （Phase 2 paper-audit lane: 2.0–3.0 ms）
+    distance ≥ min_peak_interval
+
+batch 输出:
+    detection_rate / stable_detection_rate / mean_peak_height / mean_peak_margin_z
+    phase_flip_fraction / roc_auc_event_vs_background / d_prime_event_vs_background
+```
+
+最后按 lens 分母选择是 all-crossing 还是 selected-annulus（§4 详解）。
+
+### 2.3 关键问题答覆：本征散射 + 干涉项 是相加还是相乘？
+
+直接答：**相加**（§2.2 阶段 5 公式）。
+
+但在强参考场极限（**当前模型 + Tsuyama 论文条件就在这里**）下，干涉一次项 `2|E_ref||E_sca|cos(Δφ)` 主导，本征二次项 `|E_sca|²` 被淹没。所以读者直觉中的"参考场放大 × 本征 Csca 翻倍 → 总倍数相乘"是错的；正确量级关系是：
+
+```text
+peak ≈ 2 · |E_ref| · |E_sca| · cos(Δφ)
+     ≈ |E_ref| · √Csca · (cos Δφ 的运行平均)
+```
+
+注意 √Csca 不是 Csca。所以波长把 EV biomimetic 颗粒 Csca 翻 7.1x 时（404 vs 660 nm，Rayleigh 1/λ⁴），peak 大致只放大 √7.1 ≈ 2.66x（再乘 |E_ref| 的几何因子约 1.04x 与 cos Δφ 平均），实际只约 2x。这就是为什么 404 nm 的 peak 增益远比 Csca 增益小。
+
+### 2.4 强参考场极限下的具体放大表（404 vs 660 nm，EV biomimetic + 相同几何）
+
+| 量 | 660 nm 基线 | 404 nm 相对值 | 物理 / 推导来源 |
+|---|---:|---:|---|
+| Mie 散射截面 Csca | 1.00× | 7.10× | EV Rayleigh: (660/404)⁴ = 7.10 |
+| 收集场幅值 \|E_sca\| | 1.00× | 2.66× | √Csca |
+| 参考场幅值 \|E_ref\| | 1.00× | ≈ 1.04× | §6.3 衍射对照（404/500×800 = 0.968×，660/800×550 = 1.000×；倒着读 404 比 660 略大）|
+| 干涉一次项 2\|E_ref\|\|E_sca\| | 1.00× | ≈ 5.5× | 1.04 × 2.66 × 2 |
+| 实际 peak（含 cos Δφ 平均，约 0.4 量级）| 1.00× | ≈ 2.0× | 用户曾给出的示例表 2.01× 同 order |
+| transit 时间窗（与几何无关，只看 λ） | 8.94 ms | 5.48 ms (≈ 0.61×) | beam waist ∝ λ/NA → 短波 transit 短 |
+| 综合 detection | 1.00× | ≈ 0.4× | §6.4 表 B / §7.1：peak 翻倍但 transit↓、phase flip↑、margin↓ → detection 反而下降 |
+
+读法：peak 放大 2×、detection 反而降到 0.4× —— 这就是问题 Q4（"peak 放大 N 倍，detection 是否同步放大"）的答案：**不同步**，原因详见 §8 噪声归因。
 
 ---
 
-## 6. 分论文固定条件对比
+## §3 可调变量与它们的物理含义
 
-### 6.1 Tsuyama 2019 POD：Nonfluorescent Molecule Detection in 10^2 nm Nanofluidic Channels by POD
+本节给变量做一次正名 + 解释。读完本节，读者应该能把后面 §7 / §10 / §11 出现的每个变量映射回它在 §2 物理链上的位置。
 
-论文重点：
+### 3.1 颗粒变量
 
-- 目标是非荧光分子 POD detection；
-- 信号集中在衍射光区域；
-- 约 `400 x 400 nm` channel 下 LOD 约 `5.0 uM`，对应约 `500 molecules / 0.23 fL`；
-- 到 `200 x 200 nm` channel 时，按 detection volume 看 sensitivity 没有明显恶化。
+| 变量 | 单位 | 默认 / 主推范围 | 在 §2 物理链上的位置 | 影响 |
+|---|---|---|---|---|
+| 颗粒材料 | 折射率 n, k 谱 | EV biomimetic（生物拟态低反差）/ Au（金 plasmonic）/ Ag | 阶段 1 Mie | **影响最大的变量**（§9 排名 1）；EV 与 Au 在 488–660 nm 的 Csca 走向**相反** |
+| 颗粒粒径 | nm | EV biomimetic 50–150 nm；Au 20 / 30 / 40 / 60 nm（口径 B 主 panel） | 阶段 1 Mie | Csca ∝ a⁶ 在 Rayleigh 区；Au20 vs Au60 Csca 差 ≈ 1200× |
 
-与当前模型的同条件关系：
+### 3.2 光学变量
 
-| 项目 | 论文 | 当前模型 |
+| 变量 | 单位 | 默认 / 主推范围 | 在 §2 物理链上的位置 | 影响 |
+|---|---|---|---|---|
+| 探测波长 λ | nm | 候选 404 / 488 / 532 / 660 | 阶段 1、2、3、4 | EV Rayleigh 颗粒：短波 Csca↑；Au plasmonic：长波 Csca↑（共振红移到约 520 nm）|
+| 收集 NA | — | 0.9（Tsuyama 2020 / 2022 论文条件，本报告对照口径） | 阶段 2 探测算子 | 影响 \|E_sca\|；当前 surrogate 不是绝对 NA 校准 |
+| 照明 NA | — | 0.45（Tsuyama 2020 物镜，沿用至 2022） | 阶段 3 照明 | 决定 beam waist → transit time |
+| 流速 | mm/s | 0.2（Tsuyama 2022 NODI 论文条件） | 阶段 3 / transit | 与照明 NA 一起决定 transit 时间 |
+| 参考场模型 | — | `channel_angular_surrogate`（主线）/ `paper_aligned_phase_filter`（论文条件对照）| 阶段 4 | 与论文条件相对差异 ≈ 2–9%（§6.3）|
+
+### 3.3 几何变量
+
+| 变量 | 单位 | 候选范围 | 在 §2 物理链上的位置 | 影响 |
+|---|---|---|---|---|
+| 通道宽度 W | nm | 500 / 600 / 700 / **800 (main)** / 900 / 1000–1500 | 阶段 4 参考场、阶段 3 路径相位 | 窄通道 Csca 数字高但工程风险也高（§10.4 width-prior）|
+| 通道深度 H | nm | 550 (Tsuyama 论文 depth) / 800 / 1200 / 1300 / **1400 (main)** / **1500 (main)** | 阶段 4 参考场、阶段 3 路径 | H 在 1200–1500 nm 区间内 detection 已基本饱和 |
+
+### 3.4 电子学变量
+
+| 变量 | 单位 | 默认 | 在 §2 物理链上的位置 | 影响 |
+|---|---|---|---|---|
+| 锁相时间常数 τ | ms | 1–2（Tsuyama 2022 NODI / 2020 counting POD 论文）| 阶段 6 锁相 | 决定有效锁相样本数；transit / τ ≈ 锁相 bin 数 |
+| 读出方式 | — | in-phase（默认）/ magnitude / in-phase + phase-gated | 阶段 6 | 在 pass / fail 边界上影响巨大，但 mean detection 几乎不变（§6.4）|
+| 阈值倍数 threshold_sigma | — | {5, 10}（Phase 2 paper-audit 限定） | 阶段 7 | 阈值 = median + threshold_sigma · 1.4826 · MAD |
+| 最小 peak 宽度 min_peak_width | ms | 2.0–3.0（Phase 2 paper-audit 限定） | 阶段 7 | metadata guardrail，不一致就 fail fast |
+| 相位翻转硬剔除 phase_flip_hard_reject | — | false | 阶段 7 / batch | 当前不硬剔除负 peak，但极性保存为字段 |
+
+### 3.5 仪器情景变量（v2 受限仪器情景先验，无实测）
+
+v2 在原 v1 基础设计组合之上，把每个 case 放入 8 个**受限仪器情景**里做确定性扩展。它**不是**真实采集，**不引入任何 measured artifact**——是 noise / blank / readout 路径的先验分布扫描，用于看路线角色稳定性。
+
+```text
+情景 1：标称仪器 + 干净空白样本
+情景 2：50 Ω 探测器路径的悲观情况
+情景 3：外置 TIA（current input + low-noise transimpedance amplifier）的乐观情况
+情景 4：空白样本中存在突发强度噪声
+情景 5：后焦面 / 狭缝偏移带来的泄漏风险
+情景 6：PEG 或近壁损失更悲观的情况
+情景 7：404 nm 热效应风险较高、功率较低的情况
+情景 8：数据采集分辨率较低的情况
+```
+
+8 个情景 × 32,032 设计 = 256,256 合成评估行。
+
+### 3.6 估计参数（口径 B 复现 lens 估计项）
+
+这些不是物理常数，不是 surrogate，是用 Tsuyama 论文 target 反推出的低自由度全局参数；§11.2 给出它们的具体校准过程。
+
+| 估计参数 | 描述名 | 代码 ID | 数值 | 含义 |
+|---|---|---|---|---|
+| γ | 全局响应压缩因子 | `paper_reproduction_response_compression_gamma` | 0.749 | 把 raw 模型 peak 高度按 (peak)^γ 重映射，让 Au 粒径响应斜率从 raw 3.05–3.19 落到 Tsuyama 论文的 2.3 |
+| s_SNR | 全局 SNR 缩放因子 | `paper_reproduction_global_snr_scale` | 0.728 | 把 Au20 / Au30 局部 SNR 平移到 Tsuyama 论文 anchor |
+| e_SNR | 全局 SNR 响应指数 | `paper_reproduction_snr_response_exponent` | 0.812 | Phase 2.7 引入；调节 SNR ratio 的相对 scaling |
+| 选定算子 | 2 ms 锁相 + 全局参考相位正向位移 + 窄收集窗 | `tau_2ms_global_refphi_plus_collection_narrow`（D2.1 局部 smoke 内最优）| — | 选定的探测算子配置；不是物理仪器接法，是 surrogate operator |
+
+**重要边界**（§13 / §15 重申）：这 4 项都是**复现 lens 估计项（第 4 档证据）**，禁止解读为仪器物理常数。
+
+---
+
+## §4 检测率有 4 种含义
+
+读者最容易踩的坑：同一个"detection %"在本报告里其实可能是 4 种不同的量。本节把它们一次性厘清。
+
+### 4.1 all-crossing detection rate（口径 A 主排序）
+
+```text
+all_crossing_events     = { event i | event 横穿模拟检测区 }
+all_crossing_detection_rate = n_detected(all_crossing_events) / n(all_crossing_events)
+```
+
+- 分母：横穿检测区的所有 event（不挑分母 condition）
+- 用途：口径 A 主排序、工程 gate、main-660 治理
+- 典型数字：12.5–20% 范围（EV biomimetic + 8-scenario avg）
+- 出现位置：§6.4 表 6.4.A、§7.2 各表等
+
+### 4.2 selected-annulus detection rate（口径 B 主审计）
+
+```text
+edge_norm_i = max( |x_norm_i|, |z_norm_i| )       # 粒子横截面位置归一化
+selected_annulus_events = { event i | 0.5 ≤ edge_norm_i ≤ 0.8 }
+selected_annulus_detection_rate = n_detected(selected_annulus_events) / n(selected_annulus_events)
+```
+
+- 分母：横穿检测区且初始位置在通道边缘 0.5–0.8 比例环带的 event
+- 用途：Tsuyama 2022 NODI 论文有效采样区语义、口径 B paper-audit lane
+- 典型数字：分子分母同步缩小，平均 uplift ≈ 1.384× 相对 all-crossing
+- 关键 forbidden：不替代 all-crossing 主排序（§15）
+
+### 4.3 NODI engineering lens stable detection rate
+
+来自 §6.4 表 6.4.B 的 NODI engineering lens（17 strict-pass cases）mean stable detection；它是"通过 strict NODI engineering gate 的 case 子集上的平均稳定 detection"。和 all-crossing 主排序的 8-scenario avg 不可直接比较（分母不同）。
+
+- 典型数字：33–47%
+- 出现位置：§6.4 表 6.4.B、§7.1.1 / §7.1.2 / §7.1.3 等
+
+### 4.4 paper-audit reproduction score（口径 B Phase 2.6+ 复现 lens）
+
+这**不是 detection 量**，是 paper-audit lane 的 lower-is-better penalty score（多个 loss 项加权）：
+
+```text
+reproduction_score = SNR_ratio_loss + SNR_anchor_loss + formula_signal_loss
+                   + size_response_loss + detection_loss + complexity_penalty + strict_residual
+```
+
+- 用途：口径 B Phase 2.6–2.11 选 candidate
+- 阈值：bounded partial 阈值 ≤ 2.0；当前 best 2.033（partial reproduction descriptive 级别）
+- 关键 forbidden：不能按"分数越高越好"解读；不能当作物理量
+
+### 4.5 4 种数字何时可比 / 何时不可比
+
+| 比较 | 是否可比 | 注 |
 |---|---|---|
-| 检测机制 | 光热光学衍射 | 当前主线是 NODI 散射干涉 |
-| 通道尺度 | 10^2 nm 级 POD 通道 | v1/v2 覆盖 500-900 nm 宽度范围内的主路线、诊断路线和上下文路线 |
-| 热扩散到玻璃基底 | 核心机制之一 | v2 不做完整的热效应 POD 源项模型 |
-| 衍射光区域 | 核心读出区域 | v2 用后焦面、狭缝和读出区域约束 |
+| 同一 lens 不同几何 | ✅ 可比 | 例：660 / 800 × 1400 vs 660 / 800 × 1500 都在 all-crossing |
+| 同一 lens 不同波长 | ✅ 可比（前提是同一颗粒 panel）| 例：488 / 532 / 660 都在同一 selected-annulus Au panel |
+| 同一 lens 不同颗粒 | ⚠️ 谨慎 | EV biomimetic vs Au 是不同 panel |
+| all-crossing vs selected-annulus | ❌ 不直接可比 | 分母不同；只能看 uplift ratio |
+| all-crossing vs NODI engineering lens | ❌ 不直接可比 | 不同 lens 不同分母 |
+| reproduction score vs detection % | ❌ 不直接可比 | 一个是 loss、一个是 rate |
 
-结论：
+所以表里每个 detection 数字必须显式标 lens；同一表里**只能**放同 lens 的数字；不同 lens 数字并排出现时必须分列。
 
-2019 POD 支持的是 **衍射光区域作为读出区域** 和 **小通道不是天然不可用** 的趋势。它不能直接把 POD 分子检出限外推成 EV NODI 的事件概率。v2 正确地把热效应和光热相关结论放在旁路风险或后续证据缺口中，而不是写成 NODI 分数加成。
+---
 
-### 6.2 Tsuyama 2020 diffraction：Characterization of optical diffraction by single nanochannel
+## §5 计算与审计 study design
 
-论文固定条件：
+本节回答"我们到底做了什么计算和审计"。读完本节，读者应该能回答"这些数字是怎么生成的、用了多少 events、跑了多少种子"。
 
-```text
-probe = 633 nm He-Ne
-illumination objective = 20x, NA = 0.45
-collection NA = 0.9
-lock-in modulation = 1.1 kHz
-time constant = 1 s
-channel width/depth varied
-```
-
-本地对照方式：
+### 5.1 v1 全量库（基础计算）
 
 ```text
-使用更接近论文的空白通道相位滤波参考场；
-比较不同宽度和深度下的参考场强度。
+扫描参数空间：32,032 个基础设计组合
+每个组合的随机事件数：10,000 events
+合计事件级 case 量：3.2 × 10⁸ events
+单 case 跑随机种子：1 (precompute 用 case_keyed_independent 随机流)
 ```
 
-固定条件下的参考场振幅对比：
+v1 给出：每个 case 的 detection_rate / mean_peak_height / phase_flip_fraction / ROC AUC 等。这是后续所有 lens 的原料。
 
-| 波长 | 通道几何 | 当前参考场 / 论文条件参考场 | 判断 |
+### 5.2 v2 仪器情景扩展（不重新跑随机事件）
+
+```text
+v1 基础设计组合 × 8 仪器情景 = 256,256 合成评估行
+新增随机种子：0（确定性扩展，不重 sample）
+```
+
+8 情景见 §3.5。v2 的作用是**看路线角色稳定性**，不是生成新事件概率。
+
+### 5.3 post-v2 P0–P18 审计 + 6 条有界 trace（口径 A）
+
+| 阶段 | 类型 | 关键数字 |
+|---|---|---|
+| P0 | mandatory audit | 572 个路线聚合审计行；563 surrogate-sensitive_not_promoted；2 main candidates；1 weak control；1 optional probe；1 shortwave probe |
+| P1 | physical-ceiling diagnostic contracts | 4 条合同（full-wave、vector/Jones、roughness、transport）；surrogate-risk reduction only，不跑 solver |
+| P2 | bounded physical-solver readiness | route universe + source binding + schema manifest + verifier；solver execution blocked |
+| P3 | minimal pilot design | 选 P4 / P6 后续使用的 3 条路线子集 |
+| P4 | dry-run preflight | mesh 标记 `not_generated_no_mesh_generation` |
+| P5 | authorization gate | 默认 `not_authorized_pending_explicit_later_phase_execution_request` |
+| P6 | bounded trace 1（minimal bounded Green kernel）| 顺序：800 × 1400 > 800 × 1500 > 404 probe |
+| P8 | bounded trace 2（phase-gradient）| 同上顺序 |
+| P10 | bounded trace 3（curvature-balance）| 800 × 1500 > 800 × 1400 > 404 probe（main-660 首位反转）|
+| P12 | bounded trace 4（resonance-compactness）| 同 P10 |
+| P14 | bounded trace 5（phase-curvature residual）| 800 × 1400 > 800 × 1500 > 404 probe（再反转）|
+| P16 | bounded trace 6（phase-curvature residual）| 800 × 1500 > 800 × 1400 > 404 probe |
+| P17 | 第七 lane 授权设计 | 记录 P12→P14 与 P14→P16 都出现 rank delta [−1, +1, 0] |
+| P18 | synthesis stop / continue | `bounded_lanes_sufficient_for_route_promotion = false`；停止机械式 lane 滚动；要求 P19 evidence-strategy gate |
+
+### 5.4 Phase 2 Tsuyama 论文审计 lane（口径 B）
+
+```text
+Phase 2 family-ladder full inverse:
+    52 candidates × 3 seeds × 10,000 events / case
+    156 summary rows、5616 raw rows、runtime ≈ 6.94 h
+Phase 2.5 D2 raw-operator (operator family D2):
+    20 candidates × 3 seeds × 1,500 events / case = 60 summary rows
+Phase 2.5 D2.1 local smoke (D2.1 局部 12 variants):
+    12 candidates × 3 seeds × 2,000 events / case = 36 summary rows
+Phase 2.6–2.11 reproduction lens 链:
+    单 size-only F-family 3,000 events / case (12 summary rows)
+    其余为 read-only rescore（不重跑 simulation）
+```
+
+Phase 2 / 2.5 / 2.6 / 2.7 / 2.8 / 2.9 / 2.10 / 2.11 的具体作用见 §11.2。
+
+### 5.5 仪器可行性估算 + 论文统计敏感性
+
+```text
+ET-2030 + LI5640 instrument-aware feasibility:
+    216 配置（responsivity × NEP × 0.4 mm 有效面 × time constant × filter-order 先验）
+    输出：current input/TIA 与 50 Ω voltage path 双列 verdict
+
+Paper-statistics sensitivity (Phase 2.10 limiting-pair 只读估算):
+    288 行
+    输出：paper_statistics_unlikely_alone / paper_statistics_borderline
+```
+
+**重要边界**：这两组数据是**量级估计 + 只读估算**，不是 calibrated SNR / LOD。
+
+---
+
+## §6 物理量级与核心数据
+
+本节集中放整份报告的核心数据，按"transit → Csca → \|E_ref\| → detection"顺序排。这些数字会在 §7 / §10 / §11 反复引用。
+
+### 6.1 transit 时间随波长（物理推导）
+
+```text
+公式: transit ≈ 2 · w_0 / v_flow
+推导假设: w_0 = 0.61 · λ / NA  (Airy radius)
+          NA = 0.45 (Tsuyama 2020 / 2022 illumination objective)
+          v_flow = 0.2 mm/s = 200 nm/ms (Tsuyama 2022 NODI 流速)
+```
+
+| 探测波长 λ (nm) | beam waist w_0 (nm) | transit 时间 (ms) | 相对 660 nm |
+|---:|---:|---:|---:|
+| 404 | 547.7 | 5.48 | 0.61× |
+| 488 | 661.4 | 6.61 | 0.74× |
+| 532 | 721.2 | 7.21 | 0.81× |
+| 660 | 894.4 | 8.94 | 1.00× |
+
+证据档位：**Mie / 物理推导（第 2 档）**。
+
+读法：短波长 transit 短，意味着锁相在同一 τ = 1–2 ms 下的有效采样数变少（404 nm 的 transit / τ ≈ 2.7–5.5，660 nm ≈ 4.5–8.9）；这是 detection 不能跟 peak 同步放大的根本原因之一。
+
+### 6.2 Csca 随波长（EV biomimetic vs Au，两种颗粒走向相反）
+
+#### 6.2.1 EV biomimetic（Rayleigh 区，低反差）
+
+```text
+近似: Csca ∝ 1 / λ⁴
+基线: 660 nm = 1.00×
+```
+
+| λ (nm) | EV Csca 相对 660 | 推导 |
+|---:|---:|---|
+| 404 | 7.10× | (660 / 404)⁴ |
+| 488 | 3.34× | (660 / 488)⁴ |
+| 532 | 2.37× | (660 / 532)⁴ |
+| 660 | 1.00× | 基准 |
+
+#### 6.2.2 Au plasmonic（共振红移到 ≈ 520 nm，方向相反）
+
+| λ (nm) | Au Csca (m²) | Au Csca 相对 660 | 来源 |
+|---:|---:|---:|---|
+| 488 | 2.86 × 10⁻¹⁶ | 0.43× | §7 直接行（4 几何 mean）|
+| 532 | 3.93 × 10⁻¹⁶ | 0.59× | 同上 |
+| 660 | 6.66 × 10⁻¹⁶ | 1.00× | 同上 |
+
+**Au 颗粒粒径阶梯**（660 / 800 × 500 nm）：
+
+| 粒径 a (nm) | Au Csca (m²) | 相对 a = 20 nm |
+|---:|---:|---:|
+| 20 | 2.019 × 10⁻¹⁸ | 1× |
+| 30 | 2.499 × 10⁻¹⁷ | ≈ 12× |
+| 40 | 1.577 × 10⁻¹⁶ | ≈ 78× |
+| 50 | 6.956 × 10⁻¹⁶ | ≈ 345× |
+| 60 | 2.449 × 10⁻¹⁵ | ≈ 1213× |
+
+**关键观察**：Au 颗粒 Csca 在 20→60 nm 跨 1200×，但后面 §6.4 / §7.3 表会显示 detection 只从 0% 升到 31.5%（**没有同步翻 1200×**）。原因是 Au20 远低于阈值、Au40+ 已接近 detection 上限饱和；详见 §8。
+
+### 6.3 \|E_ref\| 随几何（§6.2 衍射对照已有数据）
+
+来自原 §6.2 Tsuyama 2020 diffraction 论文条件对照，按 660 / 800 × 550 nm 为基线归一：
+
+| 探测波长 λ | 通道几何 W × H (nm) | \|E_ref\| 相对 660 / 800 × 550 | 解读 |
 |---|---|---:|---|
-| 404 nm | 500 nm 宽、800 nm 深 | 0.968x | 差异小 |
-| 404 nm | 500 nm 宽、900 nm 深 | 0.960x | 差异小 |
-| 404 nm | 500 nm 宽、1200 nm 深 | 0.930x | 深通道偏差开始明显 |
-| 404 nm | 500 nm 宽、1400 nm 深 | 0.908x | 深窄短波偏差最大 |
-| 660 nm | 800 nm 宽、550 nm 深 | 1.000x | 基本重合 |
-| 660 nm | 800 nm 宽、1400 nm 深 | 0.963x | 差异小 |
-| 660 nm | 900 nm 宽、1200 nm 深 | 0.976x | 差异小 |
+| 404 | 500 × 800 | 0.968× | 差异小 |
+| 404 | 500 × 900 | 0.960× | 差异小 |
+| 404 | 500 × 1200 | 0.930× | 深通道偏差开始明显 |
+| 404 | 500 × 1400 | 0.908× | 深窄短波偏差最大 |
+| 660 | 800 × 550 | 1.000× | 基准（Tsuyama 论文几何）|
+| 660 | 800 × 1400 | 0.963× | 差异小 |
+| 660 | 900 × 1200 | 0.976× | 差异小 |
 
-统计：
+平均绝对差异 ≈ 2.13%，最大绝对差异 ≈ 9.20%。
 
-```text
-平均绝对差异 ≈ 2.13%
-最大绝对差异 ≈ 9.20%
-```
+读法：**\|E_ref\| 在所考察范围内几乎不随波长 / 几何剧烈变化**（差异 < 10%）。所以波长引起的 peak 放大主要来自 \|E_sca\| 项（即 √Csca），不是 \|E_ref\| 项。
 
-结论：
+### 6.4 detection 数字大表（按 lens 分组的 v4.2 已直接发布行）
 
-这篇论文是当前模型最强的参考场约束。它支持：空白通道不是背景常数，而是会形成参考场的相位滤波结构。当前模型在固定条件下与论文条件对照的差异多数为几百分点，因此可以说 **机制和趋势强对齐**。但它不支持“所有绝对衍射强度已逐图复现”。
+下面把 v4.2 / v5.0 报告涉及的所有直接发布 detection 行汇总在一张大表，按 lens 分组。**禁止跨 lens 直接比较**（详见 §4.5）。每行的 detection 数值都是 v4.2 已公开的（仅做 0.xxx → x.xx% 单位换算）。
 
-### 6.3 Tsuyama 2020 counting POD：Detection and Characterization of Individual Nanoparticles in a Liquid by POD
+#### 表 6.4.A — 口径 A 主排序：EV biomimetic + all-crossing 8-scenario avg (mean relative-prior detection score)
 
-论文固定条件和实验语义：
+| 几何 (λ / W × H, nm) | events 来源 | detection (%) | 路线最终角色（P0 audit） | 来源 |
+|---|---|---:|---|---|
+| 660 / 500 × 1200 | R5.2 audit (660_500x1200) | 17.39 | context, surrogate_sensitive_not_promoted | §12.2 |
+| 660 / 500 × 1300 | R5.2 audit | 18.26 | context, surrogate_sensitive_not_promoted | §12.2 |
+| 660 / 500 × 1400 | R5.2 audit | 18.97 | context, surrogate_sensitive_not_promoted | §12.2 |
+| 660 / 500 × 1500 | R5.2 audit | 19.64 | context, surrogate_sensitive_not_promoted（ratio_vs_main 1.557）| §12.2 |
+| 660 / 600 × 1500 | R5.2 audit | 16.55 | context, surrogate_sensitive_not_promoted | §12.2 |
+| 660 / 700 × 1500 | R5.2 audit | 15.23 | **weak_reference_control_only** | v2 路线类 / §12.2 |
+| **660 / 800 × 1400** | main route (448 rows) | **12.52** | **conditional_relative_main** | v1 main-660 直接行 |
+| **660 / 800 × 1500** | main route (448 rows) | **12.70** | **conditional_relative_main** | v1 main-660 直接行 |
+| 660 / 900 × 1400 | optional probe (448 rows) | 12.30 | **optional_robustness_probe_only** | v2 路线类 |
+| 404 / 600 × 1300 | shortwave probe class | 4.45 | **shortwave_probe_only** | v2 路线类 + §5.3 P0/P6 trace |
+| 路线类 mean: 弱参考场控制 | 448 rows | 15.23 | — | v2 路线类 |
+| 路线类 mean: main-660 | 896 rows | 12.61 | — | v2 路线类 |
+| 路线类 mean: optional probe | 448 rows | 12.30 | — | v2 路线类 |
+| 路线类 mean: long-wave selected-annulus probe | 1344 rows | 10.09 | — | v2 路线类 |
+| 路线类 mean: mid-wave baseline (488/532) | 896 rows | 7.77 | — | v2 路线类 |
+| 路线类 mean: large context | 250,432 rows | 7.09 | — | v2 路线类 |
+| 路线类 mean: shortwave probe | 448 rows | 4.45 | — | v2 路线类 |
+| 路线类 mean: shortwave selected-annulus probe | 1344 rows | 4.04 | — | v2 路线类 |
 
-```text
-channel ≈ 800 x 710 nm
-pressure = 100 kPa
-flow velocity ≈ 0.17 mm/s
-lock-in frequency ≈ 1.1 kHz
-lock-in time constant ≈ 2 ms
-particle = 20 nm Au
-POD counting mode shows near-100% detection under its photothermal setup
-```
+#### 表 6.4.B — NODI engineering lens stable detection（NODI engineering gate 通过的 17 strict-pass case 子集平均；与表 6.4.A 不同 lens）
 
-本地同类对照：
+| 几何 | lens 1: NODI engineering (%) | lens 2: 2020 paper-条件 (%) | lens 3: 2022 NODI paper-条件 (%) |
+|---|---:|---:|---:|
+| 404 / 500 × 800 | 33.65 | 34.50 | 35.40 |
+| 660 / 800 × 550 | 47.15 | 43.50 | 46.70 |
+| 660 / 800 × 1400 | 45.15 | 41.00 | 42.90 |
+| 660 / 900 × 1200 | 42.60 | 44.20 | 47.05 |
 
-| 项目 | 论文 | 当前模型 |
-|---|---|---|
-| 通道 | `800 x 710 nm` | 本地金颗粒对照覆盖 `800x500`, `800x600`, `1200x500`, `1200x600` |
-| 锁相时间常数 | `2 ms` | 本地近论文金颗粒对照使用 `1 ms`，v2 读出同样位于毫秒级瞬态范围 |
-| 颗粒 | `20 nm Au` | 本地金颗粒对照覆盖 `20/30/40/50/60 nm Au` |
-| 检测机制 | POD 光热计数 | 当前是 NODI 金颗粒散射/干涉对照，不直接等同 |
+#### 表 6.4.C — Au paper-audit selected-annulus lens（跨 4 几何 mean: 800×500/600 + 1200×500/600）
 
-在 660 nm、800 nm 宽、500 nm 深的近 Tsuyama 条件金颗粒对照中：
+| λ (nm) | mean stable detection (%) | mean pulse peak (相对) | pass 比例（strict NODI gate）|
+|---:|---:|---:|---:|
+| 488 | 5.95 | 0.0525 | 0.00 |
+| 532 | 8.51 | 0.0773 | 0.00 |
+| 660 | 17.74 | 0.1564 | 0.45 |
 
-| Au 直径 | 判据 | 合成检出比例 | 稳定检出比例 | 平均脉冲峰值 | 散射截面 |
-|---|---|---:|---:|---:|---:|
-| 20 nm | fail | 0.000 | 0.000 | 0.00000 | `2.019e-18` |
-| 30 nm | fail | 0.146 | 0.140 | 0.04414 | `2.499e-17` |
-| 40 nm | pass | 0.266 | 0.265 | 0.10954 | `1.577e-16` |
-| 50 nm | pass | 0.305 | 0.300 | 0.23239 | `6.956e-16` |
-| 60 nm | pass | 0.315 | 0.308 | 0.44681 | `2.449e-15` |
+#### 表 6.4.D — Au paper-audit selected-annulus lens, 粒径阶梯（660 / 800 × 500 nm，近 Tsuyama 2020 counting POD 条件 Au gold 对照）
 
-结论：
+| Au 粒径 (nm) | mean detection (%) | mean stable detection (%) | mean pulse peak (相对) |
+|---:|---:|---:|---:|
+| 20 | 0.00 | 0.00 | 0.000 |
+| 30 | 14.6 | 14.0 | 0.044 |
+| 40 | 26.6 | 26.5 | 0.110 |
+| 50 | 30.5 | 30.0 | 0.232 |
+| 60 | 31.5 | 30.8 | 0.447 |
 
-这篇论文说明 20 nm 金颗粒在 POD 光热计数条件下可以被检测，但当前 NODI 散射对照不应把这个 POD 结论直接外推为“20 nm 金颗粒在 NODI 中必然通过”。当前金颗粒对照中，20 nm 仍是边界或失败，40 nm 以上明显增强；这与“粒径变大、信号增强”的趋势同向，也保持了 POD 到 NODI 外推边界的诚实。
+#### 表 6.4.E — 660 nm 读出方式对照（60 cases，NODI 2024 readout mode calibration lane）
 
-### 6.4 Tsuyama 2020 solvent-enhanced POD：Concentration Determination at a Countable Molecular Level
+| 读出方式 | strict gate 通过比例 | mean detection (%) | mean stable detection (%) |
+|---|---:|---:|---:|
+| in-phase + phase-gated (基线) | 0.00 | 18.28 | 17.89 |
+| in-phase no gate | 0.45 | 18.28 | 17.89 |
+| magnitude（脉冲幅值）| 0.45 | 18.15 | 17.74 |
 
-论文固定条件和结论：
+读法：strict gate 通过比例从 0 跳到 0.45 是边界判据切换，**不是** detection 本身改变。mean detection 几乎不变。
 
-```text
-excitation = 532 nm
-probe = 633 nm
-channel = about 400 x 400 nm
-modulation optimum ≈ 1.1 kHz
-PD optimum ≈ 15 mV
-solvent enhancement can exceed 30x
-LOD = 75 nM
-equivalent molecules ≈ 10 / 0.23 fL
-signal sign can flip when solvent RI relation changes
-```
-
-当前模型边界：
-
-| 项目 | 论文 | 当前 v2 |
-|---|---|---|
-| solvent `dn/dT` | 核心变量 | 未作为 NODI 主模型物理项 |
-| 光热源项 | 核心变量 | 404 nm 热效应旁路只做风险/机制提示，不做加分 |
-| sign flip | POD thermal/diffraction coupling | v2 不把它当成 NODI sign-preservation 替代指标 |
-| 浓度和检出限 | 实验论文目标 | v2 明确禁止真实浓度和绝对检出限结论 |
-
-结论：
-
-这篇论文对当前报告最重要的作用是 **边界控制**。它提醒我们：POD 热效应和溶剂增强可以很强，但这不是 EV NODI 散射可检测性的直接校准来源。v2 正确地禁止热效应旁路增加 NODI 光学分数，也禁止输出绝对检出限或真实 EV 浓度。
-
-### 6.5 Tsuyama 2022 NODI：Nanofluidic optical diffraction interferometry for detection and classification
-
-论文相关固定条件：
+### 6.5 雷区警告：禁止跨 lens 直接比较
 
 ```text
-illumination objective ≈ 20x, NA = 0.45  # 沿用 2020 diffraction 同一物镜
-collection NA ≈ 0.9
-slit ≈ 1 mm
-pinhole ≈ 400 um
-time constant ≈ 1-2 ms
-pressure = 100 kPa
-flow velocity ≈ 0.2 mm/s
-channel near 800 x 550 nm
-NODI 读出以 660 nm 为中心
+表 6.4.A 行 660 / 800 × 1400 = 12.52% (口径 A all-crossing 8-scenario avg)
+表 6.4.B 行 660 / 800 × 1400 = 45.15% (NODI engineering lens stable detection)
+
+12.52 与 45.15 同是 "660 / 800 × 1400 detection"，但分母不同、aggregation 不同；
+直接读 "detection 从 12.52% 跳到 45.15% 因为换了 lens" 是错的；
+正确读法是 "这两个数字回答两个不同问题，不可比"。
 ```
 
-本地历史审查记录只显式记录 2022 NODI 的收集数值孔径、狭缝、针孔、时间常数、压力/流速、几何与读出中心波长；照明物镜在论文里沿用 2020 diffraction 的 `20x / NA=0.45` 设置，但本报告不依赖这条做任何对照判断。
+---
 
-本地接近 2022 NODI 论文条件的对照方式：
+## §7 变量隔离分析（固定其他，看一个变量）
+
+本节用 §6 的数据回答"固定 X，看 Y 改变了什么"。它是 §1 → §10 / §11 推荐之间的桥梁——读者能在这里直接看到每个变量的影响幅度。
+
+公共约定（全 §7 适用）：
 
 ```text
-使用更接近论文的空白通道相位滤波参考场；
-采用近似过填充照明；
-读出使用脉冲幅值而不是只看同相信号；
-锁相时间常数为 1 ms；
-NODI 读出频率为 3 kHz；
-按单通道 NODI 判据做比较。
+- transit 列用 ms（按 §6.1 物理推导；只依赖 λ）
+- detection 列用 %（按 v4.2 / v5.0 已发布数字单位换算）
+- 每张表显式标 lens 分母 + 颗粒口径
+- "—" = v4.2 / v5.0 未直接覆盖该 cell；禁止读为 0%
 ```
 
-固定条件路线对照：
+### 7.1 固定几何，看波长（5 张表）
 
-| 对照口径 | 路线 | 严格通过数 | 平均合成检出比例 | 平均稳定检出比例 | 小 EV 加权稳定检出比例 |
-|---|---|---:|---:|---:|---:|
-| 当前工程口径 | 404 nm，500 nm 宽，800 nm 深 | 16 | 0.3425 | 0.3365 | 0.2162 |
-| 当前工程口径 | 660 nm，800 nm 宽，550 nm 深 | 16 | 0.4830 | 0.4715 | 0.4090 |
-| 当前工程口径 | 660 nm，800 nm 宽，1400 nm 深 | 19 | 0.4580 | 0.4515 | 0.3727 |
-| 当前工程口径 | 660 nm，900 nm 宽，1200 nm 深 | 14 | 0.4350 | 0.4260 | 0.3672 |
-| 2020 衍射论文口径 | 404 nm，500 nm 宽，800 nm 深 | 16 | 0.3535 | 0.3450 | 0.2188 |
-| 2020 衍射论文口径 | 660 nm，800 nm 宽，550 nm 深 | 23 | 0.4505 | 0.4350 | 0.4128 |
-| 2020 衍射论文口径 | 660 nm，800 nm 宽，1400 nm 深 | 17 | 0.4160 | 0.4100 | 0.3421 |
-| 2020 衍射论文口径 | 660 nm，900 nm 宽，1200 nm 深 | 13 | 0.4485 | 0.4420 | 0.3616 |
-| 2022 NODI 论文口径 | 404 nm，500 nm 宽，800 nm 深 | 21 | 0.3600 | 0.3540 | 0.2334 |
-| 2022 NODI 论文口径 | 660 nm，800 nm 宽，550 nm 深 | 25 | 0.4875 | 0.4670 | 0.4593 |
-| 2022 NODI 论文口径 | 660 nm，800 nm 宽，1400 nm 深 | 25 | 0.4395 | 0.4290 | 0.3748 |
-| 2022 NODI 论文口径 | 660 nm，900 nm 宽，1200 nm 深 | 25 | 0.4775 | 0.4705 | 0.3972 |
+#### 7.1.1 几何 = 660 / 800 × 1400（口径 A main 第一）；颗粒 EV biomimetic；lens = NODI engineering stable detection
 
-结论：
+| λ (nm) | transit (ms) | EV Csca× (相对 660) | detection (%) | 数据来源 |
+|---:|---:|---:|---:|---|
+| 404 | 5.48 | 7.10 | — | v4.2 未直接覆盖（最近邻 404 / 500 × 800 = 33.65%）|
+| 488 | 6.61 | 3.34 | — | v4.2 未直接覆盖 |
+| 532 | 7.21 | 2.37 | — | v4.2 未直接覆盖 |
+| 660 | 8.94 | 1.00 | **45.15** | §6.4 表 B 直接行 |
 
-1. 固定到 2022 NODI 语义后，`660` 仍然强于 `404`。
-2. 最优几何会向论文器件附近的 `800x550` 收缩。
-3. 这说明原工程主线的 660 nm 主波长趋势没有丢，但默认深通道主路线和接近论文浅通道器件的优化目标并不完全相同。
+#### 7.1.2 几何 = 800 × 550 nm（Tsuyama 论文 depth）；颗粒 EV biomimetic；lens = NODI engineering stable detection
 
-这个 `800x550` 结果只是论文固定条件下的 cross-check 观察，不是路线治理候选；当前 main-660 仍锁定为 `660 nm，800 nm 宽，1400 nm 深` 与 `660 nm，800 nm 宽，1500 nm 深`，不因本表发生 route promotion 或 main-660 重定义。
+| λ (nm) | transit (ms) | EV Csca× | detection (%) | 数据来源 |
+|---:|---:|---:|---:|---|
+| 404 | 5.48 | 7.10 | — | 未覆盖 |
+| 488 | 6.61 | 3.34 | — | 未覆盖 |
+| 532 | 7.21 | 2.37 | — | 未覆盖 |
+| 660 | 8.94 | 1.00 | **47.15** | §6.4 表 B 直接行 |
 
-关于论文数值复现的边界：
+#### 7.1.3 几何 = 500 × 800 nm（404 nm 短波 lens 几何）；颗粒 EV biomimetic；lens = NODI engineering stable detection
 
-此前的 Tsuyama 论文数值复核曾尝试对 2022 NODI 论文目标做更严格复现。结果是：
+| λ (nm) | transit (ms) | EV Csca× | detection (%) | 数据来源 |
+|---:|---:|---:|---:|---|
+| **404** | 5.48 | 7.10 | **33.65** | §6.4 表 B 直接行 |
+| 488 | 6.61 | 3.34 | — | 未覆盖 |
+| 532 | 7.21 | 2.37 | — | 未覆盖 |
+| 660 | 8.94 | 1.00 | — | 未覆盖（最近邻 800 × 550 = 47.15%）|
 
-```text
-按论文公式计算的银/金信号关系基本成立；
-金颗粒随粒径变化的原始响应斜率仍未完全解释；
-用一个全局响应压缩因子可以接近论文数值，但没有正式通过受限复现判据；
-没有任何候选模型被签发为“论文数值已校准复现”。
-```
+#### 7.1.4 几何 = 800 × 500 nm（Au paper-audit 主对照 + counting POD 论文几何）；颗粒 Au panel 20–60 nm；lens = selected-annulus
 
-所以本文只能说 2022 NODI 的趋势和固定条件对照是同向的，不能说已经完整复现论文表格或分类准确率。这段总结对应口径 B 的 Phase 2 / 2.5–2.11 reproduction-lens 链，详细可审计 score（包括 D2.1 best `gamma ≈ 0.749` / `score 2.033`、size delta、SNR scale 等估计项）见 §14.5。
+| λ (nm) | transit (ms) | Au Csca× | Au20 det (%) | Au30 det (%) | Au40 det (%) | Au50 det (%) | Au60 det (%) | 数据来源 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 488 | 6.61 | 0.43 | — | — | — | — | — | 未在此 cell 直接覆盖 |
+| 532 | 7.21 | 0.59 | — | — | — | — | — | 未在此 cell 直接覆盖 |
+| **660** | 8.94 | 1.00 | **0.0** | **14.6** | **26.6** | **30.5** | **31.5** | §6.4 表 D 直接行 |
 
-### 6.6 Tsuyama 2024 POD+NODI：Simultaneous light absorption and scattering measurement
+#### 7.1.5 几何 = 跨 4 几何 mean（800 × 500/600 + 1200 × 500/600）；颗粒 Au panel mean；lens = selected-annulus
 
-论文固定条件与语义：
+| λ (nm) | transit (ms) | Au Csca (m²) | mean stable detection (%) | mean pulse peak (相对) | 数据来源 |
+|---:|---:|---:|---:|---:|---|
+| 488 | 6.61 | 2.86 × 10⁻¹⁶ | 5.95 | 0.0525 | §6.4 表 C |
+| 532 | 7.21 | 3.93 × 10⁻¹⁶ | 8.51 | 0.0773 | §6.4 表 C |
+| 660 | 8.94 | 6.66 × 10⁻¹⁶ | 17.74 | 0.1564 | §6.4 表 C |
 
-```text
-probe wavelength = 660 nm
-excitation wavelength = 532 nm
-time constant ≈ 1-2 ms
-frequency split ≈ 1.2 / 4.1 kHz
-channel width roughly 800-1200 nm
-depth roughly 550 nm
-paired POD + NODI pulse observables
-```
+### 7.2 固定波长，看几何（5 张表）
 
-当前可对标部分：
+#### 7.2.1 λ = 660 nm + H = 1500 nm；颗粒 EV biomimetic；lens = all-crossing 8-scenario avg
 
-| 对标层 | 当前模型状态 |
-|---|---|
-| 660 nm 探测光 | NODI 和金颗粒对照中 660 nm 保持主导趋势 |
-| 532 nm 激发光 / POD 侧信号 | 只作为热效应或 POD 旁路对照，不进入 NODI 光学分数 |
-| 双频读出语义 | v2 有幅值读出和同相读出的对照 |
-| 配对分类 | 当前不复现完整电子链路和分类器协议 |
+| W (nm) | transit (ms) | detection (%) | 路线最终角色 |
+|---:|---:|---:|---|
+| 500 | 8.94 | 19.64 | context, surrogate_sensitive_not_promoted |
+| 600 | 8.94 | 16.55 | context, surrogate_sensitive_not_promoted |
+| 700 | 8.94 | 15.23 | weak_reference_control_only |
+| **800 (main)** | 8.94 | **12.70** | **conditional_relative_main** |
+| 900 | 8.94 | — | 未在 H=1500 直接覆盖（最近邻 900 × 1400 = 12.30%）|
 
-读出口径固定对照：
+#### 7.2.2 λ = 660 nm + H = 1400 nm；颗粒 EV biomimetic；lens = all-crossing 8-scenario avg
 
-| 读出口径 | 通过数 | 平均合成检出比例 | 平均稳定检出比例 | 平均相位翻转比例 | 平均脉冲峰值 |
+| W (nm) | transit (ms) | detection (%) | 路线最终角色 |
+|---:|---:|---:|---|
+| 500 | 8.94 | 18.97 | context, surrogate_sensitive_not_promoted |
+| 600 | 8.94 | — | 未覆盖 |
+| 700 | 8.94 | — | 未覆盖 |
+| **800 (main)** | 8.94 | **12.52** | **conditional_relative_main** |
+| 900 | 8.94 | 12.30 | optional_robustness_probe_only |
+
+#### 7.2.3 λ = 660 nm + W = 500 nm，看 H 阶梯；lens = all-crossing 8-scenario avg
+
+| H (nm) | transit (ms) | detection (%) | ratio vs main 660 | 路线最终角色 |
+|---:|---:|---:|---:|---|
+| 1200 | 8.94 | 17.39 | 1.379× | context, surrogate_sensitive_not_promoted |
+| 1300 | 8.94 | 18.26 | 1.448× | context, surrogate_sensitive_not_promoted |
+| 1400 | 8.94 | 18.97 | 1.504× | context, surrogate_sensitive_not_promoted |
+| 1500 | 8.94 | 19.64 | 1.557× | context, surrogate_sensitive_not_promoted |
+
+读法：W=500 在 H=1200→1500 内 detection 单调上升，但 4 行均被治理裁决降级为 `surrogate_sensitive_not_promoted`——这是 §10.4 width-prior + P0 audit 的典型例子。
+
+#### 7.2.4 λ = 660 nm + W = 800 nm，看 H 阶梯；多 lens 同时排（仅 v4.2 已直接覆盖行）
+
+| H (nm) | transit (ms) | NODI engineering stable det (%) | 2020 paper lens (%) | 2022 NODI paper lens (%) | all-crossing 8-scen avg (%) | 几何角色 |
+|---:|---:|---:|---:|---:|---:|---|
+| 550 | 8.94 | 47.15 | 43.50 | 46.70 | — | Tsuyama 论文 depth（cross-check）|
+| 1400 (**main**) | 8.94 | **45.15** | 41.00 | 42.90 | **12.52** | **conditional_relative_main** |
+| 1500 (**main**) | 8.94 | — | — | — | **12.70** | **conditional_relative_main** |
+
+#### 7.2.5 λ = 660 nm + W = 900 nm，看 H；多 lens 同时排
+
+| H (nm) | transit (ms) | NODI engineering stable det (%) | all-crossing 8-scen avg (%) | 几何角色 |
+|---:|---:|---:|---:|---|
+| 1200 | 8.94 | **42.60** | — | NODI lens 直接行 |
+| 1400 | 8.94 | — | **12.30** | optional_robustness_probe_only |
+| 1500 | 8.94 | — | — | 未覆盖 |
+
+### 7.3 固定颗粒粒径，看几何（口径 B paper-audit）
+
+#### 7.3.1 Au 颗粒 + selected-annulus + D2.1 算子；按 case-level raw Au peak-height exponent 排序（数据来自 §11.2.1 第 Phase 2.10 行：raw Au size-response 残差分解）
+
+| λ (nm) | 几何 W × H (nm) | transit (ms) | raw Au peak-height exponent | residual vs Tsuyama 2.3 | 几何角色（§11.3 step 2）|
+|---:|---|---:|---:|---:|---|
+| 660 | 1200 × 550 | 8.94 | **3.0335** | **+0.73** | **口径 B 主对照（residual 全 6 case 最低）**|
+| 660 | 800 × 550 | 8.94 | 3.0456 | +0.75 | **口径 B 主对照**|
+| 532 | 800 × 550 | 7.21 | 3.1563 | +0.86 | wavelength 对照 |
+| 488 | 800 × 550 / 1200 × 550 | 6.61 | — | — | v4.2 D2.1 case-level 未直接覆盖 |
+| 532 | 1200 × 550 | 7.21 | — | — | 未直接覆盖 |
+
+读法：在 step 1（§11.2）校准过的 reproduction lens 内，660 / 1200 × 550 与 660 / 800 × 550 的 raw Au peak-height exponent residual 最低——这是 step 2 选这两个几何为口径 B 主对照的**直接数据根据**（§11.3 / §11.4）。
+
+### 7.4 三 lens 同时排列对照（同一波长 / 几何在不同 lens 下的 detection 差异有多大）
+
+| 几何 | NODI engineering lens stable det (%) | 2020 paper lens (%) | 2022 NODI paper lens (%) | EV all-crossing 8-scen avg (%) | lens 间最大差 |
 |---|---:|---:|---:|---:|---:|
-| 基线：同相读出且使用相位门控 | `0/60` | 0.11075 | 0.10850 | 0.44738 | 0.095283 |
-| 同相读出但不使用相位门控 | `9/60` | 0.11075 | 0.10850 | 0.44738 | 0.095283 |
-| 幅值读出 | `9/60` | 0.10967 | 0.10732 | 0.00000 | 0.095390 |
+| 660 / 800 × 1400 | 45.15 | 41.00 | 42.90 | 12.52 | 32.6 pp |
+| 660 / 800 × 550 | 47.15 | 43.50 | 46.70 | — | 3.6 pp |
+| 660 / 900 × 1200 | 42.60 | 44.20 | 47.05 | — | 4.5 pp |
+| 404 / 500 × 800 | 33.65 | 34.50 | 35.40 | — | 1.7 pp |
 
-对 `660 nm`：
+读法：**lens 切换造成的差异（最大 32.6 pp）远大于同 lens 内波长 / 几何切换造成的差异（同 lens 内最大约 6 pp）**。这就是 §4.5 的实证根据——禁止跨 lens 比较不是过度谨慎，是数字本身就告诉你不能。
 
-| 读出口径 | 通过比例 | 平均合成检出比例 | 平均稳定检出比例 | 平均脉冲峰值 |
+### 7.5 §7 的 6 条读法（总结）
+
+```text
+读法 1: 表 7.1.x 显示 v4.2 / v5.0 在 EV biomimetic + 跨波长几何对照上数据稀疏；
+        660 nm 行通常有直接数据，404 / 488 / 532 行多数为 "—"。
+        要补这些 cell，必须新跑 case，不是 v5.0 范围内能完成。
+
+读法 2: 表 7.2.x 在 660 nm 下数据密；其它波长在 W、H 阶梯上稀疏。
+        v4.2 / v5.0 没有按 "波长 × W × H" 三维全扫，而是以 660 nm 为主路线 +
+        404 nm 为短波探针的单点对照。
+
+读法 3: transit (ms) 只依赖 λ，几何不变它就不变。同一 λ 在所有 §7.2 表里 transit 一致。
+        这是物理推导，§13 第 2 档证据。
+
+读法 4: §7.3.1 是 §11.3 / §11.4 几何选型的直接数据根据。660 / 1200 × 550 与
+        660 / 800 × 550 之所以是口径 B 主对照，不是因为它们最像 Tsuyama 器件，
+        而是因为在 step 1 校准过的 lens 内 raw exponent residual 最低。
+
+读法 5: §7.4 显示 lens 切换 > 波长切换 > 几何切换。颗粒切换（EV vs Au）的
+        影响在 §9 排第 1，比 lens 切换还大（§9 详解）。
+
+读法 6: 表 7.2.1 / 7.2.2 显示窄通道 (W=500) detection 数字最高，但都被治理裁决降级
+        为 surrogate_sensitive_not_promoted。详细解释见 §10.4。
+```
+
+---
+
+## §8 噪声归因（为什么参考场放大不消除噪声）
+
+读完 §2 / §6 / §7，读者会问：
+
+```text
+既然参考场放大 |E_sca| 把 peak 放大了，
+而噪声 (noise_std = 0.01 + post_readout = 0.002) 这么小，
+detection 不应该接近 100% 吗？
+```
+
+答案：不是。本节用 3 个理由解释。
+
+### 8.1 理由 1 — 参考场放大相干一次项，不放大噪声
+
+回看 §2.2 阶段 5：
+
+```text
+signal_trace = |E_sca|² + 2 · Re(E_ref · E_sca*)
+```
+
+参考场放大的是 `2 · Re(E_ref · E_sca*)`——一个**相干项**（含相对相位）。噪声没有相干相位，所以参考场不放大它。
+
+```text
+信号 amplification: × |E_ref| (与 λ 几乎无关)
+噪声 amplification: × 1
+```
+
+SNR 确实增加。但 detection 不只是 SNR 的单调函数——它还要过**阈值**和**采样数**两关。
+
+### 8.2 理由 2 — 阈值随噪声同步抬高
+
+阈值公式：
+
+```text
+threshold = median(背景前 20%) + threshold_sigma · 1.4826 · MAD(背景前 20%)
+threshold_sigma = 5 或 10
+```
+
+所以 noise↑ → MAD↑ → threshold↑ → detection↓。换句话说：阈值是 noise-aware 的，参考场放大 signal 后阈值也变。但 signal / noise ratio 改善确实让 detection 上升——这就是 main-660 lens 下 detection 能到 12.5–47% 的原因。
+
+### 8.3 理由 3 — 短波长 transit↓ + phase flip↑ → 有效采样数↓ + margin↓
+
+参考 §2.4 表与 §6.1 transit 表，404 nm 比 660 nm：
+
+```text
+transit:  5.48 ms  vs  8.94 ms (≈ 0.61×)
+锁相 τ:   1–2 ms (二者同)
+有效采样: transit / τ ≈ 0.61× (404 比 660 少约 40% 有效样本)
+phase flip fraction: 短波长更高（OPD 抖动相对 λ 占比更大，正负翻转更频繁）
+```
+
+短波长虽然 peak 放大，但：
+
+- 有效采样数变少 → margin z 不能跟 peak 同步放大（mean_peak_margin_z 在 404 nm ≈ 1.2–1.6× 660 nm 的水平，不是 2×）
+- phase flip 把一些事件分到负 peak（在 `pulse_detection_mode="absolute"` 下负 peak 可被检出，但极性记录会拖累 stable detection rate）
+- Wilson 下界 (`detection_rate_wilson_lb`) 在有限事件数 + 高方差下进一步压低
+
+### 8.4 数值版（noise 影响的具体量级）
+
+| 场景 | peak（相对 660 / 800 × 1400 main）| pre + post noise std (相对) | mean_peak_margin_z 估计 | 综合 detection % (8-scen avg) | 解释 |
+|---|---:|---:|---|---:|---|
+| 660 / 800 × 1400 main | 1.00× | 0.012 | 数 σ 量级 | 12.52 | 主路线基线 |
+| 404 / 600 × 1300 短波探针 | 2× peak 但 transit ≈ 0.61× | 0.012（相同噪声） | 偏小（margin z ≈ 1.2–1.6× 但被 phase flip 拖累）| 4.45 | shortwave_probe_only |
+| 660 / 700 × 1500 weak-ref | 偏低（\|E_ref\| 弱）| 0.012 | 中 | 15.23（在 selected-annulus 反而看似高）| 弱参考场，分子分母同步缩小，看似比 main 还高，但参考场太弱不是物理优势 |
+
+### 8.5 一句话总结噪声归因
+
+```text
+参考场放大相干一次项 → signal 端确实放大；
+噪声不被放大 → SNR_amplitude 上升；
+但 detection = P(peak > 阈值) 这一概率还要看：
+  (a) 阈值（随噪声同步上抬）
+  (b) 有效采样数（随 transit 与 τ 决定）
+  (c) phase flip（短波长更频繁）
+所以 detection ≠ SNR_amplitude 的单调函数；
+peak 翻倍不等于 detection 翻倍（§2.4 数值证据）。
+```
+
+---
+
+## §9 变量影响排序（哪个变量对 detection 影响最大）
+
+按 |Δ detection| / |Δ variable| 量级估算，把所有可调变量排序：
+
+| 排名 | 变量 | 量化影响（v4.2 / v5.0 现有数据估算）| 出处 | 解读 |
+|---:|---|---|---|---|
+| 1 | **颗粒材料**（EV biomimetic vs Au plasmonic）| 同 660 / 800 × 550 几何：Au mean stable det 17.74% vs EV NODI lens 47.15%；488/532/660 上 Csca 方向完全相反 | §6.4 表 C vs 表 B；§7 | 最大影响。不分材料的"波长 / 几何 → detection"结论会误导。 |
+| 2 | **lens 切换**（all-crossing vs NODI engineering vs selected-annulus vs 2022 NODI paper） | 同 660 / 800 × 1400：NODI eng = 45.15%、all-crossing 8-scen = 12.52%（差 32.6 pp）| §7.4 | 第 2 大。这是为什么 §4.5 明令禁止跨 lens 比较的实证。 |
+| 3 | **探测波长 λ**（在固定材料 + 几何）| EV biomimetic：detection 大致 0.4 / 0.7 / 0.7 / 1.0× (404 / 488 / 532 / 660)；Au plasmonic：0.34 / 0.49 / 1.0× (488 / 532 / 660) | §6.4 表 C；§7.1 | 大。方向与材料绑定。 |
+| 4 | **颗粒粒径**（在固定 Au）| 660 / 800 × 500：0 / 14.6 / 26.6 / 30.5 / 31.5% (20 / 30 / 40 / 50 / 60 nm) | §6.4 表 D | 大。Au20 是 weak-SNR / not-all-detected 的物理边界。 |
+| 5 | **通道宽度 W**（在 660 nm，H = 1400–1500）| 500 → 18.97%；800 (main) → 12.52%；900 → 12.30% | §7.2.1 / 7.2.2 | 中。窄通道分数高但被 §10.4 width-prior + 治理压住。 |
+| 6 | **通道深度 H**（在 660 nm，W = 800）| 1400 → 12.52%；1500 → 12.70%（差 < 2%）| §7.2.4 | 中-小。1400 / 1500 已饱和。 |
+| 7 | **收集算子配置**（D2.1 best 内 `collection_narrow` vs control）| raw Au exponent 3.071 vs 3.190；joint score 2.377 vs 2.635 | §11.3 step 2 | 中-小（口径 B paper-audit lane 内可量化的中等改进）。 |
+| 8 | **读出方式**（in-phase / magnitude / in-phase + phase-gated）| 660 nm：mean stable det 几乎一致（17.74–17.89%），但 strict gate 通过比例从 0.00 跳到 0.45 | §6.4 表 E | 在 pass / fail 边界上影响巨大；mean detection 几乎不变。 |
+| 9 | **参考场模型**（`channel_angular_surrogate` vs `paper_aligned_phase_filter` vs `calibrated_lookup`）| 平均绝对差异 ≈ 2.13%，最大 ≈ 9.20% | §6.3 | 小（在波长 / 几何固定后，参考场模型差异约 1–9%）。 |
+| 10 | **selected-annulus 窗口 (0.5–0.8)** | shadow uplift median 1.384×、max 1.557× | §12.2 R5.2 sidecar | 中（分母层面），但**禁止移动**（§15）。 |
+| 11 | **threshold_sigma + min_peak_width** metadata guardrail | 不一致就 fail fast | §5.4 / §3.4 | 小（量化上），但 fail-fast 判据 |
+
+读者结论：**排前 4 都是"颗粒侧 / lens 侧"变量**；几何（W、H）位列 5-6，量级中等且在 main-660 锁定后已基本饱和；7-10 都是计算 / 算子 / 读出层级，量化影响小但在路线治理和 metadata guardrail 层是 fail-fast 判据。
+
+---
+
+## §10 口径 A 工程主线推荐（EV / NODI engineering main route）
+
+### 10.1 推荐参数（总览）
+
+```text
+探测波长 λ          = 660 nm
+通道宽度 W          = 800 nm
+通道深度 H          ∈ {1400 nm, 1500 nm}     # 双 main 集合，不挑单一冠军
+颗粒目标            = EV biomimetic (含 Au20 / Au30 anchors)
+排序窗口            = all-crossing (全 BFP 全 crossing)
+路线最终角色        = conditional_relative_main
+release status      = (口径 A 已收口；后续依赖 P19 evidence-strategy gate)
+```
+
+为什么是双 main 而不是单一推荐？P6–P16 六条 trace 在 (800 × 1400, 800 × 1500) 之间首位反复切换（§5.3 表 P6–P16 行），所以保留两条为集合，不挑单一冠军；详细出处见 §10.5 与 §5.3。
+
+### 10.2 因果链：物理 → 工程 → 治理（5 步推导）
+
+**第 1 步 — 颗粒材料锁定为 EV biomimetic**
+
+项目目标即 EV / NODI 检测；§9 排名 1 决定波长方向：EV biomimetic 在 Rayleigh 区段，Csca ≈ 1 / λ⁴；同时强参考场下 peak ≈ |E_ref| · √Csca。
+
+**第 2 步 — 波长 → 660 nm**
+
+- §6.4 表 6.4.B：660 / 800 × 1400 在 NODI engineering lens stable det 45.15%
+- §6.4 表 6.4.B：404 / 500 × 800 在同 lens 只有 33.65%
+- §6.4 表 6.4.A 短波探针类（404 / 600 × 1300）mean 4.45% << main-660 12.61%
+- §5.3 P6–P16 trace：404 probe 始终排第 3
+- 404 nm 热效应旁路 §15 forbidden 中明令不得加分
+
+**第 3 步 — 通道宽度 → 800 nm**
+
+- §6.4 表 6.4.A：500 / 1500 detection 19.64%、500 / 1400 detection 18.97%（context routes 分数最高）
+- §10.4 width-prior 给出"窄通道工程风险被低估"的低自由度解释
+- §12.2 R5.2 sidecar：`context_route_promotion_authorized = false`
+- §5.3 P0 audit 把 563 条 surrogate-sensitive 路线降级
+
+所以 W = 800 是**治理意义上的稳定基准**，不是数字最高。详细见 §10.4。
+
+**第 4 步 — 通道深度 → 1400 或 1500 nm（双 main 集合）**
+
+- §6.4 表 6.4.A：800 × 1400 vs 800 × 1500 在 all-crossing 8-scen avg 上差 < 2%（12.52% vs 12.70%）
+- §5.3 post-v2 近壁细网格证据：两条 main-660 在细网格上通过比例 = 1.0
+- §5.3 P6–P16 trace 首位反复切换 → P18 stop_mechanical_lane_roll_forward
+- 两条 main-660 同时保留为 conditional_relative_main 集合
+
+**第 5 步 — 路线治理边界（不可越过）**
+
+```text
+main_660_redefinition_authorized = false        # 不得重新定义 main-660
+route_promotion_authorized       = false        # 不得直接路线晋升
+calibrated_claim_allowed         = false        # 仍 surrogate-relative
+P19 evidence-strategy gate 之前不再机械式滚 lane
+```
+
+### 10.3 detection 增益数字（口径 A 视角）
+
+| 对比 | detection 差 | 倍数 |
+|---|---:|---:|
+| main-660 (12.52%) vs short-wave probe (4.45%) | +8.07 pp | ≈ 2.81× |
+| main-660 (12.52%) vs large context class (7.09%) | +5.43 pp | ≈ 1.77× |
+| main-660 (12.52%) vs mid-wave baseline (7.77%) | +4.75 pp | ≈ 1.61× |
+
+读法：**这些倍数不是绝对 detection 改善**，是合成相对先验分数下的相对改进。在 v5.0 内不解锁 calibration（§13 / §15）。
+
+### 10.4 为什么不挑数字最高的几何（深度解释）
+
+**现象**：表 6.4.A / 7.2.1 / 7.2.2 / 7.2.3 显示 660 / 500 × 1500 detection 19.64% > 600 / 1500 16.55% > 700 / 1500 15.23% > 800 / 1500 12.70% (main) > 900 / 1400 12.30%（optional probe）——**窄通道反而数字最高**。
+
+**关键提问**：那 main-660 为什么不是 500 × 1500？
+
+**答案 1（width-prior 解释 + R5.2 sidecar）**
+
+引入"窄通道工程风险被低估"的低自由度先验后，2 种 width-prior 模型能同时满足"main 路线保留 + context 路线越线消失 + weak-ref 越线消失"：
+
+| width-prior 模型 | main 保留比例 | context 越线数 | weak-ref 越线数 | 解释等级 |
+|---|---:|---:|---:|---|
+| (W / 800)^1.5 | 1.000 | 0 | 0 | 可接受 |
+| (W / 800)^2.0 | 1.000 | 0 | 0 | 可接受 |
+| (W / 850)^2.0 | 0.886 | 0 | 0 | 可接受但需谨慎 |
+| (W / 900)^2.0 | 0.79 | 0 | 0 | **过强**（main 压损太多）|
+
+所以"窄通道高分"很可能不是物理真的更好，而是**原模型低估了窄通道工程风险**（颗粒-壁面间隙、PEG、近壁运输、堵塞、通量风险等）。
+
+但本报告同时声明：
+
+```text
+width-prior (W / 800)^1.5 / ^2 是可接受解释模型，
+不是真实物理定律（§13 第 5 档：可接受解释先验）；
+推到 (W / 900)^2 会过度打压主路线。
+```
+
+**答案 2（多轮审计裁决）**
+
+| 审计 | 对 660 / 500 × 1500 等窄通道高分路线的裁决 |
+|---|---|
+| P0 audit | surrogate_sensitive_not_promoted（563 条之一）|
+| R5.2 bounded scenario-prior audit | context_route_promotion_authorized = false |
+| P18 synthesis | bounded_lanes_sufficient_for_route_promotion = false |
+| width-prior 解释 | 窄通道工程风险被低估，分数高不等于物理优势 |
+
+所以 main-660 锁在 800 × 1400 / 1500 是 **width-prior + 多轮独立审计 + 治理边界**的一致结果，不是单一指标决定。
+
+### 10.5 路线治理裁决总表（每条路线最终角色 + 主要理由）
+
+| 几何 (660 nm) | all-crossing detection (%) | P0 audit 最终角色 | 主要理由 |
+|---|---:|---|---|
+| 800 × 1400 | 12.52 | **conditional_relative_main** | §5.3 post-v2 近壁细网格通过 1.0 + §5.3 P6 / P8 / P14 trace 首位 |
+| 800 × 1500 | 12.70 | **conditional_relative_main** | §5.3 post-v2 近壁细网格通过 1.0 + §5.3 P10 / P12 / P16 trace 首位 |
+| 700 × 1500 | 15.23 | weak_reference_control_only | §12.2 R5.2：weak ref 8 / 8 scenarios above main，但 \|E_ref\| 偏低不是物理优势 |
+| 900 × 1400 | 12.30 | optional_robustness_probe_only | §6.4 表 6.4.A + §5.3 P0 audit；不得 redefine main-660 |
+| 500 × 1200–1500 | 17.39–19.64 | context, surrogate_sensitive_not_promoted | §10.4 width-prior + §12.2 sidecar |
+| 600 × 1500 | 16.55 | context, surrogate_sensitive_not_promoted | 同上 |
+| 800 × 550 | (NODI lens 47.15%) | paper-sanity / cross-check（仅作为 §14 Tsuyama 对照）| 不替代 main-660；详 §14.6（口径 B Tsuyama 2022 NODI 对照）|
+
+---
+
+## §11 口径 B 论文审计推荐（两步框架）
+
+### 11.1 两步框架总览
+
+口径 B 的核心逻辑是**先校准估计参数，再选几何**，不是"挑哪个几何最像 Tsuyama"。
+
+```text
+Step 1 — Tsuyama 数据校准估计参数
+   target: Tsuyama Table S1 Ag/Au signal、Au size exponent 2.3、Au30/Au20 SNR 33/12
+        ↓
+   反推: 全局响应压缩 γ + 全局 SNR 缩放 + 全局 SNR 响应指数 + 选定算子 (D2.1 best)
+        ↓
+   产物: 一组低自由度复现 lens 估计参数（§3.6 / §11.2）
+
+Step 2 — 在校准 lens 内选几何 / 波长 / 颗粒 / 读出
+   在 step 1 估计参数固定的条件下扫几何 × 波长 × 颗粒 × 读出
+        ↓
+   选 residual 最低的组合
+        ↓
+   产物: 几何 = 660 / 1200 × 550 + 660 / 800 × 550；
+         颗粒 panel = Au 20 / 30 / 40 / 60 nm；
+         硬件接法 = ET-2030 + LI5640 + current input / TIA
+```
+
+**关键澄清**（§11.4 详解）：几何 800 × 550 / 1200 × 550 之所以被选中，**不是因为它们最像 Tsuyama 论文器件**（虽然 Tsuyama 2022 NODI 器件确实在 800 × 550 附近），**而是因为在 step 1 校准过的 lens 内 raw Au peak-height exponent residual 最低**。
+
+### 11.2 Step 1 — 用 Tsuyama 数据校准估计参数
+
+#### 11.2.1 Phase 2 / 2.5 / 2.6 / 2.7 / 2.8 / 2.9 / 2.10 / 2.11 链做了什么
+
+| Phase | 角色 | 关键产物 |
+|---|---|---|
+| 2 | family-ladder full inverse | 52 candidates × 3 seeds × 10,000 events；main No-Go = `raw_size_response_alignment_not_met` |
+| 2.5 D2 | raw-operator family search | 20 candidates × 3 seeds × 1,500 events；最优 raw Au exponent 3.090（仍偏陡）|
+| 2.5 D2.1 | D2 局部 smoke 加密 | 12 variants × 3 seeds × 2,000 events；选出 **D2.1 best = `tau_2ms_global_refphi_plus_collection_narrow`** |
+| 2.6 | size-only F-family 单确认 + paper-reproduction formula | 12 rows × 3 seeds × 3,000 events；只允许全局 size delta + 全局 SNR scale |
+| 2.7 | 加 SNR 响应指数 | 同一 best candidate；SNR ratio loss 从 1.4053 降到 0.4235 |
+| 2.8 | reviewed / descriptive rescore | bounded_reproduction_partial_descriptive；release status 仍 negative |
+| 2.9 | maximal upper-bound rescore | 给可映射上限，不签 accepted |
+| 2.10 | raw Au size-response 残差分解 | 按 wavelength × geometry × observable × adjacent size pair 拆，**limiting pair 全为 40-60 nm** |
+| 2.11 | single global response compression rescore | 最终 best: **γ = 0.749，total reproduction score 2.033** |
+
+#### 11.2.2 校准产物（3 个全局估计参数 + 1 个选定算子）
+
+| 描述名 | 符号 / 代码 ID | 数值 | 物理意义 |
+|---|---|---:|---|
+| 全局响应压缩因子 | γ (`paper_reproduction_response_compression_gamma`) | 0.749 | 把 raw peak 高度按 peak^γ 重映射，让 Au 粒径响应斜率落到论文 2.3 |
+| 全局 SNR 缩放因子 | s_SNR (`paper_reproduction_global_snr_scale`) | 0.728 | 把 Au20 / Au30 局部 SNR 平移到 Tsuyama 论文 anchor |
+| 全局 SNR 响应指数 | e_SNR (`paper_reproduction_snr_response_exponent`) | 0.812 | Phase 2.7 引入，调节 SNR ratio 的相对 scaling |
+| 选定探测算子 (D2.1 best) | `tau_2ms_global_refphi_plus_collection_narrow` | — | lock-in τ = 2 ms + 全局参考相位正向位移 + 窄收集窗 |
+
+**这 4 项（3 个全局估计参数 + 1 个选定算子）的证据档位都是第 4 档（reproduction-lens 估计项）**——不是物理常数、不是仪器物理量。详见 §13。
+
+#### 11.2.3 校准 score 的具体分解（D2.1 best + γ = 0.749）
+
+```text
+formula-consistent Ag/Au loss  ≈ 0.041   (pass，已通过 raw signal-ratio target)
+SNR-ratio loss                 ≈ 0.387
+SNR-anchor loss                ≈ 0.0146
+detection loss                 ≈ 0.65
+complexity penalty             ≈ 0.818
+strict Table S1 residual       ≈ 0.12    (Ag-anchor + Ag 行歧义，保留为 diagnostic warning)
+total reproduction score       ≈ 2.033   (bounded partial 阈值 2.0)
+```
+
+raw Au peak-height exponent 在 D2.1 best 上 case-level decomposition：
+
+```text
+660 / 1200 × 550  →  3.0335    (residual 全 6 case 最低)
+660 / 800 × 550   →  3.0456
+532 / 800 × 550   →  3.1563
+limiting size pair: 40–60 nm (全 6 case 一致)
+```
+
+#### 11.2.4 Phase 2.6+ 不再降分的边界（**重要**）
+
+Phase 2.11 后再追更低 reproduction score 必须引入 per-diameter / per-geometry / per-case correction 或 detection logistic remap，**越过 estimated-parameter 复现边界**。所以 v4.0 起把当前参数集冻结，不再扩大算法自由度。
+
+```text
+这 0.033 不应通过调权重抹掉。
+剩余项来自真实的 SNR ratio residual、γ complexity 与 detection warning。
+要继续推进必须靠实测 artifact，不是更多 reproduction-lens 自由度。
+```
+
+### 11.3 Step 2 — 在校准 lens 内选几何 / 波长 / 颗粒 / 读出
+
+固定 step 1 的 γ / s_SNR / e_SNR / D2.1 best 算子，在 step 1 lens 内扫候选范围，选 residual 最低的组合：
+
+| 选型维度 | 候选范围 | step 1 lens 内最优 | step 2 residual 理由（出处） |
+|---|---|---|---|
+| 几何 | {488 / 532 / 660 nm} × {800 × 550, 1200 × 550, ...} | **660 / 1200 × 550** + **660 / 800 × 550** | §7.3.1 / §11.2.3：raw Au peak-height exponent 3.0335 / 3.0456 全 6 case 最低 |
+| 探测波长 | 488 / 532 / 660 nm | **660 nm（主对照）**，488 / 532 保留作 wavelength 对照 | §6.4 表 C：660 mean stable det 17.74% > 532 8.51% > 488 5.95% |
+| 颗粒 panel | Ag / Au 组合 | **Au 20 / 30 / 40 / 60 + Ag 40 / 60 nm** | §1.3 / §3.1：与 Tsuyama Table S1 + paper anchor 集合一致 |
+| 收集算子 | D2 raw operator 全 family + D2.1 局部 12 variants | **`tau_2ms_global_refphi_plus_collection_narrow`** | §11.2.1：D2.1 内 collection_narrow 把 raw exponent 从 3.190（control）压到 3.071，joint score 从 2.635 压到 2.377 |
+| 硬件接法 | ET-2030 + LI5640 × {current input/TIA, 50 Ω voltage path} × 216 配置 | **current input + low-noise TIA** | §11.6：current input / TIA 216 / 216 comfortable；50 Ω voltage path 211 / 216 below sensitivity → 黑名单 |
+
+### 11.4 关键澄清（用户反馈点）
+
+```text
+几何选 660/800x550 与 660/1200x550，不是因为 "它们最像 Tsuyama 2022 NODI 论文器件"。
+它们之所以被选中，是因为在 step 1 校准过的 reproduction-lens 口径下，
+   raw Au peak-height exponent 3.05 / 3.03 在所有候选几何中 residual vs 2.3 最低。
+
+这两件事方向重叠（Tsuyama 2022 NODI 器件确实在 800x550 附近），
+是物理一致性的体现，不是选型逻辑的根据。
+
+如果未来 measured artifact 把 step 1 校准从 reproduction-lens 推进到 calibrated lens，
+那么 step 2 的 "最适合几何" 可能会改变 —— 因为 estimated parameters 变了。
+
+但 v5.0 仍没有 measured artifact，所以 step 1 + step 2 在当前 estimated-parameter 边界内
+已是最优低自由度解；这就是 v4.0 把当前参数集冻结为口径 B 选型的逻辑根据。
+```
+
+### 11.5 reproduction 增益（口径 B 视角）
+
+| 对比 | reproduction score | 含义 |
+|---|---:|---|
+| Phase 2 family-ladder baseline median | ≈ 2.6–2.9 | raw inverse search 起点 |
+| D2.1 best + γ = 0.749 (Phase 2.11) | **2.033** | bounded partial 阈值 2.0；当前选型 |
+| 改善幅度 | 22–30% | step 1 校准成果 |
+
+formula-consistent Ag / Au loss ≈ 0.041 已 pass；strict Table S1 residual 保留为 diagnostic（target-mode 歧义）；total score 仍高于 partial 阈值 2.0，差距约 0.033（score 是 lower-is-better penalty，无量纲），不应通过调权重抹掉。
+
+### 11.6 硬件接法推荐（ET-2030 + LI5640 + current input / TIA）
+
+来自 §5.5 instrument-aware feasibility：
+
+| 接法 | 配置数 | comfortable margin | near minimum | below minimum sensitivity |
 |---|---:|---:|---:|---:|
-| 基线：同相读出且使用相位门控 | 0.00 | 0.18275 | 0.17890 | 0.15637 |
-| 同相读出但不使用相位门控 | 0.45 | 0.18275 | 0.17890 | 0.15637 |
-| 幅值读出 | 0.45 | 0.18145 | 0.17735 | 0.15641 |
+| current input + low-noise TIA | 216 | **216 / 216 (100%)** | 0 | 0 |
+| 50 Ω voltage path | 216 | 0 | 5 / 216 | **211 / 216 (97.7%)** |
 
-结论：
+**推荐**：current input + low-noise TIA。**黑名单**：50 Ω voltage path（量级估计就已 below sensitivity）。
 
-这说明读出口径会显著改变“是否通过”的解释，但合成检出比例、稳定检出比例和脉冲峰值本身几乎不变。这个结果与 Tsuyama 2022 / 2024 使用脉冲观测量、最大信号值和配对读出的方向一致。它不等于完整复现 2024 的配对电子链路、热通道或分类协议。
+注意这是 instrument-aware feasibility 量级估计，不解锁 calibrated SNR / LOD。
 
----
-
-## 7. 近 Tsuyama 条件的金颗粒固定参数总表
-
-为了避免只讲论文摘要，这里单独列出本地近 Tsuyama 条件金颗粒对照的固定条件：
+### 11.7 口径 B 冻结参数集（v4.0 起冻结，v5.0 继承）
 
 ```text
-波长 = 488 / 532 / 660 nm
-通道几何 = 800x500, 800x600, 1200x500, 1200x600 nm
-金颗粒直径 = 20 / 30 / 40 / 50 / 60 nm
-每个组合的合成事件数 = 1000
-锁相时间常数 = 1 ms
-读出方式 = 脉冲幅值读出
-相位翻转不作为硬剔除条件
+chosen_lens_id      = single_global_response_compression_with_d2p1_base_v1
+chosen_candidate_id = tau_2ms_global_refphi_plus_collection_narrow   # D2.1 best
+chosen_response_compression_gamma γ  = 0.749
+chosen_global_snr_scale s_SNR        = 0.728
+chosen_global_snr_response_exp e_SNR = 0.812
+selected_annulus_window              = 0.5–0.8     # 固定，不可移动
+lock_in_time_constant τ              = 1–2 ms
+readout_observable                   = pulse peak height (脉冲幅值)
+phase_flip_hard_reject               = false
+hardware_silicon_detector            = ET-2030 (responsivity / NEP / 0.4 mm active area)
+hardware_lock_in                     = LI5640
+hardware_connection                  = current_input_with_low_noise_TIA  # 推荐
+hardware_connection_blacklist        = 50_ohm_voltage_path
+au_diameter_panel                    = 20 / 30 / 40 / 60 nm
+geometry_paper_audit_primary         = 660 / 1200 × 550, 660 / 800 × 550
+geometry_paper_audit_secondary       = 488 / 800 × 550, 532 / 800 × 550, 488 / 1200 × 550, 532 / 1200 × 550
 ```
 
-按波长聚合：
-
-| 波长 | 通过比例 | 平均合成检出比例 | 平均稳定检出比例 | 平均脉冲峰值 | 平均散射截面 |
-|---|---:|---:|---:|---:|---:|
-| 488 | 0.00 | 0.0608 | 0.0595 | 0.05245 | `2.856e-16` |
-| 532 | 0.00 | 0.0868 | 0.0851 | 0.07730 | `3.932e-16` |
-| 660 | 0.45 | 0.1815 | 0.1774 | 0.15641 | `6.658e-16` |
-
-这张表是当前和 Tsuyama gold 语义最直观的连接点：
+冻结后的 release：
 
 ```text
-660 > 532 > 488
-```
-
-它说明 660 nm 主波长在近论文金颗粒对照里没有被计算链条翻掉。
-
----
-
-## 8. 哪些话现在可以说，哪些话不能说（口径 A：all-crossing）
-
-> 本节是口径 A 下的允许 / 禁止结论。口径 B 的对应清单在 §14.11；双口径合并的 unified forbidden claim 在 §15.3。本节与 §14.11 / §15.3 之间不冲突：§8 与 §14.11 是各自口径内的具体说法，§15.3 收口于双口径不互相替代等共同约束。
-
-### 8.1 可以说
-
-可以说：
-
-```text
-v2 是对原工程逻辑和原全量模拟结果的“面向真实仪器约束”补强。
-```
-
-可以说：
-
-```text
-在无实测、受限合成先验模型内，660 nm 主路线仍保持治理锁定。
-```
-
-可以说：
-
-```text
-弱参考场路线和窄深上下文路线高于主路线的警告，
-可以被低自由度的宽度风险先验稳定解释。
-```
-
-可以说：
-
-```text
-Tsuyama 2020 衍射论文、2022 NODI 论文、2024 POD+NODI 论文的若干固定条件和趋势，
-与当前模型的参考场、660 nm 主波长、事件级脉冲和读出口径趋同。
-```
-
-### 8.2 不能说
-
-不能说：
-
-```text
-v2 使用了真实采集数据。
-```
-
-不能说：
-
-```text
-v2 校准了信噪比、事件概率、检出限或真实 EV 浓度。
-```
-
-不能说：
-
-```text
-Tsuyama 论文的全部图表和数值已逐式复现。
-```
-
-不能说：
-
-```text
-宽度风险先验已被证明是真实物理定律。
-```
-
-不能说：
-
-```text
-上下文路线或 660 nm、900 nm 宽、1400 nm 深的可选路线已经可以升级为主路线。
-```
-
-不能说：
-
-```text
-404 nm 热效应旁路可以提高 NODI 光学分数。
+release_status                          = negative_or_diagnostic_result_only
+no_accepted_paper_calibrated_candidate  = true
+chosen_lens_total_reproduction_score    = 2.033
+detection_status                        = partial_pass_with_Au20_low_warning
+formula_consistent_signal               = pass
+strict_table_s1_signal                  = unresolved (target-mode 歧义, diagnostic-only)
+raw_au_size_response                    = unresolved (limiting pair 40-60 nm)
+classification_accuracy                 = no_accuracy_claim (本地 sklearn 不可用)
 ```
 
 ---
 
-## 9. 读者向最终解释（口径 A：all-crossing）
+## §12 双口径同时存在的意义
 
-> 本节是口径 A 的读者向叙事。口径 B 的等价叙事是 §14.1 + §14.12（lens 定义 + 最终收口）；双口径合并的读者向叙事见 §15.4。
+### 12.1 两套推荐为什么不冲突
 
-如果把整个项目讲给不看阶段报告的读者，最合适的叙事是：
+| 维度 | 口径 A 推荐 | 口径 B 推荐 |
+|---|---|---|
+| 颗粒 | EV biomimetic (含 Au20 / Au30 anchors) | Au 20 / 30 / 40 / 60 nm + Ag 40 / 60 nm |
+| 主波长 | 660 nm | 660 nm (含 488/532 wavelength 对照) |
+| 主几何 | 800 × 1400 + 800 × 1500 nm | 800 × 550 + 1200 × 550 nm |
+| 主目标 | EV route role + main-660 治理集合 | Tsuyama 2022 paper-audit proxy 复现 |
+| 排序 lens | all-crossing 全 BFP 全 crossing | selected-annulus 0.5–0.8 |
+| release | conditional_relative_main 集合 | negative_or_diagnostic_result_only |
+| 下一步硬依赖 | P19 evidence-strategy gate | measured Au raw trace + blank + BFP/slit/ROI + lock-in/logger |
 
-1. 第一阶段建立了一个相对模拟库，用来比较不同波长、通道宽深和颗粒条件下的 NODI 可检测性。
-2. 这个库本身不是实验校准，所以不能直接给出真实浓度、真实 LOD 或真实检测概率。
-3. v2 在不引入实测数据的前提下，把仪器链、读出链、空白样本风险、后焦面/狭缝/针孔、近壁网格、热效应旁路、路线治理和宽度风险先验加进来，检查原结论是否经得起更现实的约束。
-4. 检查后，660 nm、800 nm 宽、1400 nm 深和 660 nm、800 nm 宽、1500 nm 深这两条路线仍作为主路线比较基准保持锁定。
-5. v2 也发现了一个重要警告：一些弱参考场路线或窄深上下文路线在原仪器情景先验下看起来更高。
-6. 后续宽度风险和机制分解分析说明，这个警告可以由“窄通道工程风险被低估”这一低自由度先验解释，而不需要逐条路线手动调参。
-7. Tsuyama 论文对这个结论的支持主要是趋势级和固定条件级：参考场机制、660 nm 主波长、毫秒级读出、脉冲观测量和读出口径与当前模型方向一致。
-8. 但 Tsuyama POD thermal / solvent / molecule-detection 论文不能直接拿来校准 EV NODI scattering detectability；2022/2024 的分类准确率也没有被当前模型严格复现。
+**两套推荐回答不同问题，分母不同、颗粒不同、几何不同，所以不冲突**。
 
-最终结论：
+### 12.2 同一证据在两个 lens 下的对照
 
-```text
-v2 已经完成了“无实测、偏真实模拟补强”的任务。
-它提升了原工程逻辑和原模拟结果的可信度，
-但没有把模型升级成实测校准模型。
-下一步如果要继续提高物理确定性，
-必须作为 v2 之后的独立研究计划，另行解决参考场工作范围、
-后焦面/狭缝/读出区域算子、制程与计量窗口、壁面/PEG/运输风险、
-颗粒类别残余，以及 900 nm 宽可选路线的治理诊断证据。
-```
+| 证据 | 口径 A 下的结论 | 口径 B 下的结论 |
+|---|---|---|
+| main-660 (800 × 1400 / 1500) | conditional_relative_main 集合；P6–P16 trace 首位反复切换 | reference-useful long-wave candidate；**不是** paper-audit geometry 复现 |
+| weak-reference control (660 / 700 × 1500) | weak_reference_control_only；§6.4 表 6.4.A mean 15.23% | weak-reference / NA boundary control |
+| 660 nm 高分 context (660 / 500 × 1200–1500) | R5.2 ratio_vs_main 1.31–1.56×；context, surrogate_sensitive_not_promoted | selected-annulus uplift median 1.384×；同样 surrogate_sensitive |
+| 404 nm probe (404 / 600 × 1300) | shortwave_probe_only；P6–P16 trace 排第 3 | short-wave engineering sanity；**不是** Tsuyama direct target |
+| optional (660 / 900 × 1400) | optional_robustness_probe_only | 未独立扩展 |
+| width-prior (W / 800)^1.5 / ^2 | 可接受解释；main 保留 1.000 + 越线 0 | sidecar 解释，不影响 paper-audit candidate score |
+| 404 nm 热效应旁路 | 旁路提示，不加分 | 仍 forbidden（双口径共同）|
+| Au panel 20–60 nm | 用作 anchor + Au-equivalent risk 解释 | paper-audit 主对照 |
+| Tsuyama 2022 NODI paper 几何 (800 × 550) | 工程口径 cross-check，不替代 main-660 | step 2 paper-audit 几何子集（在 step 1 校准 lens 内 raw exponent residual 最低）|
+| classification accuracy 71.9 ± 4.0% | 仅引用，不复现 | diagnostic_only target；本地 sklearn 不可用 |
 
----
+### 12.3 双口径并立治理原则（going forward）
 
-## 10. 对分析报告体系的影响（口径 A：all-crossing）
-
-> 本节是口径 A 视角下的报告体系建议。口径 B（selected-annulus）报告体系建议合并入 §14（已等规模并入），口径 B 不另起独立读者向报告；双口径同时在 §15 整合。
-
-加入 v2 后，原来的读者向报告需要全面改写口径，但不需要推翻原全量计算：
-
-| 原报告容易写成 | v2 后应改成 |
+| 原则 | 描述 |
 |---|---|
-| "模拟找到了最优路线" | "相对模拟给出主工程候选，v2 检查其在真实仪器约束先验下的稳定性" |
-| "检测率 / 事件数" | "相对先验分数 / 合成代理计数，不是实际观察到的事件数" |
-| "SNR 足够" | "只能讨论不同仪器情景下的相对探测器风险，不能写成已校准信噪比" |
-| "404 灵敏度高所以可能更好" | "404 nm 是机制、旁路或上下文对照；热效应旁路不得加分" |
-| "局部环带窗口支持某路线" | "局部环带窗口是并行诊断视角，不能替代全局交叉排序" |
-| "Tsuyama 已复现" | "Tsuyama 固定条件和趋势对齐；论文数值校准复现未签发" |
-| "下一步做采集" | "v2 内不做采集；采集只能作为 v2 之后的独立研究计划另行设计" |
-
-因此，现在最适合保留以下报告分层：
-
-1. **读者向综合报告**：就是本文。v4.0 起以双口径并立形式同时承载 all-crossing（§1–§13）与 selected-annulus paper-audit（§14），并在 §15 做综合收口。
-2. **技术附录/阶段报告**：保留阶段门控、运行清单、校验和测试证据，供审计而非普通读者阅读。
-3. **post-v2 P0-P18 审计/有界 trace 证据**：作为本文第 13 节（口径 A）的增量证据，不另起读者版结论口径；selected-annulus 口径下的对应反映在 §14.10。
-4. **selected-annulus paper-audit raw provenance**：[reports/49](49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md) 与 [reports/71](71_EV_NODI_realism_v2_R5_2_bounded_scenario_prior_audit_analysis.md) 仍作为 raw provenance 保留；本文 §14 是它们的读者级合并。
+| 1 | 任何后续 realism v2 / post-v2 P19+ 阶段证据并入本报告时，必须**同时**评估两个口径，不允许只写一边 |
+| 2 | 某口径下若没有等价证据，必须**显式标注 gap**："selected-annulus 口径下未扩展" 或 "all-crossing 口径下未扩展" |
+| 3 | 新证据若改变了 §15 共同 forbidden claim 中的任意一条，必须先在 §15 显式更新，不允许通过新阶段表述间接推翻 |
+| 4 | P19 evidence-strategy gate 必须为两个口径分别给出 acceptance criteria（详 §16.3）|
+| 5 | 每次 P19+ 并入时，§12.2 对照表与共同收口段必须同步更新 |
+| 6 | raw provenance 保留：reports/49 + 71 仍是口径 B 主源；不允许仅更新它们就声称报告 88 已同步 |
 
 ---
 
-## 11. 本报告使用的本地证据（双口径）
+## §13 估计值的 6 档来源谱
 
-> 本节列出双口径在本报告中使用的本地证据。口径 A、口径 B 的证据各自分组；§14 还会在自己的段落里给出 selected-annulus 专属的工具/输出清单。
+读者最常被误读的：v5.0 报告里的每个数字属于哪一档证据？6 档总表如下：
 
-核心 v2 证据（口径 A）：
+| 档位 | 含义 | v5.0 报告中代表 | 可外推到 calibrated claim？ |
+|---:|---|---|---|
+| 1 | **物理常数 / 教科书参数** | λ, π, NA, n_water, c | ✅ 是 |
+| 2 | **Mie 推导值**（由 1 直接计算）| Csca, Cext, Cabs, S1, S2, transit time (§6.1)、Au Csca (§6.2) | ✅ 是（受输入折射率精度限制）|
+| 3 | **Surrogate 模型估值**（明确标 surrogate）| `channel_angular_surrogate` 参考场、`pupil_slit_surrogate` 收集、`lockin_surrogate` 读出、`relative_surrogate` 相位、Wilson LB | ❌ 否（方向有效，绝对量级不解锁）|
+| 4 | **Reproduction-lens 估计项**（口径 B Phase 2.6–2.11）| γ = 0.749, s_SNR = 0.728, e_SNR = 0.812, D2.1 best 算子, Au size delta ≈ −0.80, Phase 2.11 reproduction score 2.033 | ❌ 否（明确禁止视为物理常数 / 仪器物理量）|
+| 5 | **可接受解释先验**（口径 A 路线治理）| width-prior `(W/800)^1.5 / ^2`、`0.5–0.8` selected-annulus 边界、threshold_sigma `5 / 10`、noise_std `0.01`、shot_noise_scale `0.001`、post_readout_noise_std `0.002`、路线角色分类 | ❌ 否（解释模型，不是物理定律）|
+| 6 | **校准 / 实测值** | **当前 0 个**；v5.0 全文 `calibrated_claim_allowed = false`、`measured_data_ingest_authorized = false` | — |
+
+读者结论：**v5.0 报告所有可视化数字至多到第 5 档**。任何把 3–5 档当作第 6 档的解读都违反 §15 共同 forbidden claim。
+
+高频被误读数字的正确档位：
+
+| 数字 | 出处 | 档位 | 容易被误读为 | 正确读法 |
+|---|---|---:|---:|---|
+| EV Csca× 7.10x | §6.2 | 2 | 6 | Mie 推导，不解锁 calibration |
+| peak× 2× (404 vs 660 nm) | §2.4 | 2 (Mie) × 3 (surrogate) | 6 | surrogate 相对放大，不解锁 absolute peak unit |
+| detection 12.52% / 47.15% | §6.4 / §7 | 3 (synthetic relative-prior) | 6 (event probability) | 合成相对先验代理计数比例，**不是事件概率** |
+| γ = 0.749, s_SNR = 0.728 | §11.7 | 4 | 5 或 6 | reproduction-lens 估计项，不是物理常数 |
+| (W / 800)^2 width-prior | §10.4 | 5 | 6 | 解释模型，不是物理定律 |
+| 0.5–0.8 selected-annulus 窗口 | §4 / §11 | 5 (canonical) | 5 但**不可移动**（§15）| canonical default，移动需另起 sensitivity 流程 |
+| Wilson LB | §2.2 阶段 7 | 3 | 3（被误读为"安全下界"）| finite-event statistical lower bound，**不是** safety bound |
+
+---
+
+## §14 Tsuyama 6 篇论文逐篇对照
+
+按论文角色总览 → 6 篇分论文条件对照 → 整体结论顺序展开。这里数值已经在 §6 / §7 / §11.3 引用过，本节只把它们组织成论文条件 → 当前模型对照 → 判定的形式。
+
+### 14.1 6 篇论文角色总览
+
+| 论文 | 年份 | 对当前主线的约束强度 | 当前对照方式 | 主要作用 |
+|---|---|---|---|---|
+| Tsuyama 2019 POD | 2019 | 中 | POD 热效应边界 + 衍射光读出区域 | 支持衍射光读出与小通道 POD 可行性；不直接校准 EV NODI |
+| Tsuyama 2020 单纳米通道衍射 | 2020 | 高 | 固定 633 nm 衍射与参考场对照 | 参考场、宽度与深度趋势强对齐 |
+| Tsuyama 2020 POD 纳米颗粒计数 | 2020 | 中 | POD 计数边界 + 流动 / 读出时间尺度 | 支持毫秒级瞬态与金颗粒 POD 可检测性 |
+| Tsuyama 2020 溶剂增强 POD | 2020 | 中 | 热效应与溶剂边界 | 边界控制；不做 NODI 热效应定量 |
+| **Tsuyama 2022 NODI** | 2022 | **高** | 接近论文条件的 NODI 对照 + 金颗粒对照 | **口径 B 中心对照论文** |
+| Tsuyama 2024 POD + NODI | 2024 | 高 | 双频读出与 POD / NODI 配对语义 | 配对读出方向对齐；未复现完整电子链路 |
+
+### 14.2 Tsuyama 2019 POD (Nonfluorescent Molecule Detection)
+
+**论文重点**：非荧光分子 POD 检测；信号在衍射光区域；约 400 × 400 nm 通道下 LOD ≈ 5.0 µM；200 × 200 nm 下按 detection volume 不显著恶化。
+
+**当前模型对照**：
+
+| 项 | 论文 | 当前模型 | 判定 |
+|---|---|---|---|
+| 检测机制 | 光热衍射 POD（分子级）| NODI 散射干涉（颗粒级）| out-of-scope |
+| 通道尺度 | 200×200 至 400×400 nm² 截面 | EV / NODI 主路线 500–900 nm 宽，论文对照 800 × 550 nm | out-of-scope |
+| 衍射光读出区域 | 核心机制 | v2 用 BFP / slit / pinhole 显式约束 | match（方向）|
+| 小通道 LOD | 论文给绝对值 | 当前禁止 absolute LOD claim | out-of-scope |
+| 热扩散到玻璃基底 | 核心物理项 | v2 不做完整热源；旁路只作 boundary | boundary |
+
+**结论**：支持衍射光区域作为读出区域 + 小通道不天然不可用的趋势；**不能**把 POD 分子 LOD 外推为 EV NODI 事件概率。
+
+### 14.3 Tsuyama 2020 diffraction (Characterization of Optical Diffraction by Single Nanochannel)
+
+**论文条件**：633 nm He-Ne 探测 + 照明物镜 NA 0.45（20×）+ 收集 NA 0.9 + lock-in 1.1 kHz + time constant 1 s + 通道宽 / 深变化。
+
+**当前模型与论文条件参考场振幅对比**（§6.3 已给）：平均绝对差异 ≈ 2.13%、最大 ≈ 9.20%。
+
+**结论**：当前模型最强的参考场约束来源；支持"空白通道是相位滤波结构 + 参考场幅值方向"；**不**支持"所有绝对衍射强度已逐图复现"。
+
+### 14.4 Tsuyama 2020 counting POD (Detection of Individual Nanoparticles)
+
+**论文条件**：通道 ≈ 800 × 710 nm；压力 100 kPa；流速 0.17 mm/s；lock-in 1.1 kHz + τ = 2 ms；颗粒 20 nm Au；POD counting 下接近 100% 检测。
+
+**当前模型对照**（§6.4 表 D）：
+
+| Au 粒径 | 当前 NODI 散射检出 (660 / 800 × 500) | 论文 POD 热计数 | 判定 |
+|---:|---:|---|---|
+| 20 | 0.0% | ≈ 100% | out-of-scope（POD → NODI 不可外推）|
+| 30 | 14.6% | — | partial（同向）|
+| 40 | 26.6% | — | match（同向）|
+| 50 | 30.5% | — | match（同向）|
+| 60 | 31.5% | — | match（同向）|
+
+**结论**：POD 100% Au20 检出**不能**外推为 NODI 散射 100%；当前 Au20 在 NODI 上 0% 与 §14.4 Au20 weak-SNR / not-all-detected 描述相容。
+
+### 14.5 Tsuyama 2020 solvent-enhanced POD (Concentration Determination)
+
+**论文条件**：532 nm 激发 + 633 nm 探测 + 通道 ≈ 400 × 400 nm；solvent dn/dT 主导；solvent enhancement > 30×；LOD = 75 nM；sign flip 可发生。
+
+**当前模型对照**：
+
+| 项 | 论文 | 当前 v5.0 | 判定 |
+|---|---|---|---|
+| solvent dn / dT | 核心变量 | 不在 NODI 主模型 | out-of-scope |
+| solvent enhancement | > 30× | 不评估 | out-of-scope |
+| LOD | 绝对值 75 nM | 禁止 absolute LOD claim | out-of-scope |
+| sign flip | POD 特征 | NODI 不当作 sign-preservation 替代指标 | boundary |
+
+**结论**：边界控制——POD 热效应与溶剂增强可以很强，但**不是** EV NODI 散射可检测性的直接校准来源。
+
+### 14.6 Tsuyama 2022 NODI (Nanofluidic Optical Diffraction Interferometry — 口径 B 中心对照)
+
+**论文条件**：探测 660 nm；收集 NA 0.9；slit 1 mm；pinhole 400 µm；time constant 1–2 ms；压力 100 kPa；流速 0.2 mm/s；通道 ≈ 800 × 550 nm。
+
+**当前模型对照（多种 lens 下的同 lens 比较）**（§6.4 表 B）：
+
+| Lens | 404 / 500 × 800 | 660 / 800 × 550 | 660 / 800 × 1400 | 660 / 900 × 1200 |
+|---|---:|---:|---:|---:|
+| NODI engineering stable det (%) | 33.65 | **47.15** | 45.15 | 42.60 |
+| 2020 paper lens (%) | 34.50 | 43.50 | 41.00 | 44.20 |
+| 2022 NODI paper lens (%) | 35.40 | **46.70** | 42.90 | 47.05 |
+
+**结论**：
+
+1. 固定到 2022 NODI 语义后，660 nm 仍强于 404 nm
+2. 最优几何向论文器件附近 800 × 550 收缩（在 NODI engineering lens 与 2022 paper lens 下都是 47% 左右）
+3. 工程主线 660 / 800 × 1400 / 1500 与 paper 几何 800 × 550 在多 lens 下方向一致；但 main-660 锁的是工程几何，**不**因 paper geometry cross-check 发生 route promotion 或 main-660 redefinition
+
+口径 B reproduction lens 链（Phase 2 / 2.5 / 2.6–2.11）已经在 §11.2 详细展开。
+
+### 14.7 Tsuyama 2024 POD + NODI (Simultaneous Light Absorption and Scattering)
+
+**论文条件**：探测 660 nm + 激发 532 nm；time constant 1–2 ms；frequency split 1.2 / 4.1 kHz；通道宽 800–1200 nm + 深 ~550 nm；POD + NODI 配对脉冲读出。
+
+**当前模型对照**（§6.4 表 E）：
+
+| 读出方式 | strict gate 通过比例 | mean detection (%) |
+|---|---:|---:|
+| in-phase + phase-gated | 0.00 | 18.28 |
+| in-phase no gate | 0.45 | 18.28 |
+| magnitude | 0.45 | 18.15 |
+
+**结论**：读出方式切换显著改变 pass / fail 判定，但 mean detection 几乎不变。配对 POD + NODI 电子链路与分类协议**不**复现。
+
+### 14.8 整体结论：趋势对齐，未完成数值校准
 
 ```text
-reports/51_EV_NODI_realism_v2_instrument_aware_roadmap.md
-reports/75_EV_NODI_realism_v2_R6_route_prior_sensitivity_audit_analysis.md
-reports/77_EV_NODI_realism_v2_R7_route_prior_mechanistic_decomposition_audit_analysis.md
-reports/81_EV_NODI_realism_v2_R7_2_operator_artifact_gap_register_generation_analysis.md
-reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md
-reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md
-results/ev_nodi_realism_v2_full_grid_R5_v2/
-results/ev_nodi_realism_v2_R6_route_prior_sensitivity_audit/
-results/ev_nodi_realism_v2_R7_route_prior_mechanistic_decomposition_audit/
-results/ev_nodi_realism_v2_R7_2_operator_artifact_gap_register/
-results/ev_nodi_realism_v2_no_measured_data_closure/
+当前模型和 Tsuyama 的关系是 "趋势一致、固定论文条件下已检查"，
+不是 "已按论文数值完成校准"。
+
+强约束: 2020 diffraction、2022 NODI、2024 POD + NODI（参考场 + 660 nm 主波长 +
+        毫秒级读出 + 脉冲观测量 + 读出口径 方向对齐）
+边界控制: 2019 POD、2020 counting POD、2020 solvent-enhanced POD（POD 热效应 / 溶剂 /
+        分子检测论文不能直接校准 EV NODI 散射）
 ```
 
-post-v2 P0-P18 证据：
+**不可签发**：accepted paper-calibrated candidate；classification accuracy 已复现；论文全部数值已逐图复现。
+
+---
+
+## §15 当前可发布与禁止的结论清单（unified forbidden claim）
+
+### 15.1 可以发布的（双口径分别 + 共同）
+
+**双口径共同可发布**：
 
 ```text
-reports/90_EV_NODI_post_v2_review_ready_relative_audit_roadmap.md
-reports/91_EV_NODI_post_v2_P0_release_completion_note.md
-reports/92_EV_NODI_P1_physical_ceiling_extensions_plan.md
-reports/98_EV_NODI_P2_bounded_physical_solver_readiness_plan.md
-reports/99_EV_NODI_P2_bounded_physical_solver_readiness_completion_note.md
-reports/100_EV_NODI_P3_bounded_solver_authorization_pilot_design_plan.md
-reports/101_EV_NODI_P4_bounded_solver_dry_run_preflight_plan.md
-reports/102_EV_NODI_P5_bounded_solver_authorization_gate_plan.md
-reports/103_EV_NODI_P6_minimal_bounded_solver_execution_plan.md
-reports/104_EV_NODI_P7_second_lane_authorization_design_plan.md
-reports/105_EV_NODI_P8_second_bounded_solver_lane_execution_plan.md
-reports/106_EV_NODI_P8_second_bounded_solver_lane_closure_note.md
-reports/107_EV_NODI_P9_next_bounded_lane_authorization_design_plan.md
-reports/108_EV_NODI_P10_third_bounded_solver_lane_execution_plan.md
-reports/109_EV_NODI_P10_third_bounded_solver_lane_closure_note.md
-reports/110_EV_NODI_P11_fourth_bounded_lane_authorization_design_plan.md
-reports/111_EV_NODI_P12_fourth_bounded_solver_lane_execution_plan.md
-reports/112_EV_NODI_P12_fourth_bounded_solver_lane_closure_note.md
-reports/113_EV_NODI_P13_fifth_bounded_lane_authorization_design_plan.md
-reports/114_EV_NODI_P14_fifth_bounded_solver_lane_execution_plan.md
-reports/115_EV_NODI_P14_fifth_bounded_solver_lane_closure_note.md
-reports/116_EV_NODI_P15_sixth_bounded_lane_authorization_design_plan.md
-reports/117_EV_NODI_P16_sixth_bounded_solver_lane_execution_plan.md
-reports/118_EV_NODI_P16_sixth_bounded_solver_lane_closure_note.md
-reports/119_EV_NODI_P17_seventh_bounded_lane_authorization_design_plan.md
-reports/120_EV_NODI_P18_bounded_lane_synthesis_stop_continue_design.md
-results/post_v2_mandatory_audit/
-results/post_v2_minimal_bounded_solver_execution/
-results/post_v2_second_bounded_solver_lane_execution/
-results/post_v2_third_bounded_solver_lane_execution/
-results/post_v2_fourth_bounded_solver_lane_execution/
-results/post_v2_fifth_bounded_solver_lane_execution/
-results/post_v2_sixth_bounded_solver_lane_execution/
-results/post_v2_bounded_lane_synthesis_stop_continue/
+- 合成相对先验证据；
+- 受限仪器情景下的相对先验判断；
+- 锁定路线在合成模型内的稳定性；
+- 近壁网格、路线角色和窄通道风险先验的审计结论；
+- P0 相对审计与 P6 / P8 / P10 / P12 / P14 / P16 trace-only 排名不稳定结论；
+- ET-2030 + LI5640 instrument-aware feasibility 量级估计；
+- 未来进入实测或校准前必须补齐的 artifact 清单。
 ```
 
-Tsuyama 对照证据（双口径共用）：
+**口径 A 可发布**：
+
+```text
+- 在合成相对先验模型内，660 nm + 800 × 1400 + 800 × 1500 nm 为 conditional_relative_main 集合；
+- 窄通道 context 路线高分由 width-prior 与多轮审计降级为 surrogate_sensitive_not_promoted；
+- main-660 不能从 trace-only lane 中挑单一冠军。
+```
+
+**口径 B 可发布**：
+
+```text
+- 当前选型已冻结（§11.7）；按 D2.1 best + γ = 0.749 + 选定几何 + 推荐硬件接法出最终结果；
+- formula-consistent Ag / Au signal proxy 已通过 raw signal-ratio target；
+- ET-2030 + LI5640 + current input / TIA 是推荐接法（216 / 216 comfortable）；
+- 50 Ω voltage path 不被推荐（211 / 216 below sensitivity）。
+```
+
+### 15.2 不能发布的（unified forbidden claim）
+
+```text
+- 校准信噪比；
+- 校准事件概率；
+- 绝对检出限 (LOD)；
+- 真实 EV 浓度；
+- 生物特异性；
+- 实测空白样本安全性；
+- 探测器电压 / 样品计数预测；
+- 路线直接升级（口径 A）或 accepted paper-calibrated candidate（口径 B）；
+- main-660 重新定义；
+- selected-annulus 替代 all-crossing 主排序，反之亦然（**双向并立 forbidden**）；
+- selected-annulus 边界变更（0.5–0.8 固定）；
+- P6–P16 trace 排名当作路线升级或单一冠军结论；
+- estimated-parameter reproduction lens 当作 raw physical calibration；
+- classification accuracy 已本地复现（本地 sklearn 不可用，仍 no_accuracy_claim）；
+- γ response compression 当作真实物理定律；
+- 当前 γ / SNR scale / SNR response exponent 当作仪器物理常数（reproduction-lens 估计项）；
+- 404 nm 热效应旁路加分；
+- Tsuyama 论文 Table S1 / classification 数值已被 raw 参数自然复现；
+- 把 §13 第 3 / 4 / 5 档证据数字当作第 6 档校准 / 实测值。
+```
+
+---
+
+## §16 Open dependencies 与下一步需要的实测
+
+### 16.1 P19 evidence-strategy gate 必须做什么
+
+P19 是双口径共同下一步硬依赖。任何 P19 计划必须：
+
+1. **同时**为两个口径声明 acceptance criteria，不允许只覆盖一边
+2. 口径 A 至少包含：`measured_blank_bfp` / standard particle transfer / slit-ROI scan / full-wave spot-check
+3. 口径 B 至少包含：measured Au raw trace + blank + BFP / slit / ROI 扫描 + lock-in / logger
+4. 把口径 B 冻结参数集（§11.7）当作 P19 baseline，**不允许**视为"过渡候选"再做新一轮 reproduction-score 搜索
+5. 引用 §12.3 going-forward 治理原则与本节 §16 全部条目
+
+P19 设计若只覆盖一个口径，**不是**合法 P19 计划（双口径并立的强一致约束）。
+
+### 16.2 实测 artifact 优先级清单
+
+```text
+优先级 1: measured Au raw trace（推进口径 B step 1 校准从 reproduction-lens 到 calibrated）
+优先级 1: measured blank / BFP / slit / ROI scan（推进口径 A main-660 与口径 B reference 模型）
+优先级 2: lock-in / logger 配置实测（验证硬件接法量级估计）
+优先级 2: PEG / fluidic 流体可行性数据（验证 width-prior 解释）
+优先级 3: EV polydispersity / non-sphericity / coincidence / blended pulses（v2 未建模现实因素）
+优先级 3: roughness / fabrication background / PEG fouling / drift（post-v2 validation）
+```
+
+### 16.3 P19 之前能做与不能做
+
+| 类别 | 能做 | 不能做 |
+|---|---|---|
+| 算法 / 参数 | 不再扩大 reproduction-lens 自由度；按 v5.0 / §11.7 冻结参数输出最终结果 | 在没有 measured artifact 之前重启 broad raw-parameter sweep |
+| 报告 | 修订表述 / 改善读者向解释（v5.0 即此类）| 把冻结参数当 calibration |
+| 路线 | 保留 main-660 conditional_relative_main 集合 | route promotion / main-660 redefinition |
+| 测量 | 设计 P19 实测计划（双口径同时覆盖）| 把任何单口径计划等同于 P19 |
+
+---
+
+## §17 Evidence trail / provenance
+
+### 17.1 口径 A 主线证据（v1 + v2 全量库 + post-v2 P0–P18）
+
+```text
+v1 全量库:
+    results/ev_nodi_realism_v2_full_grid_R5_v2/
+    （32,032 设计 × 8 情景 = 256,256 行）
+
+v2 收口报告:
+    reports/51_EV_NODI_realism_v2_instrument_aware_roadmap.md
+    reports/75_EV_NODI_realism_v2_R6_route_prior_sensitivity_audit_analysis.md
+    reports/77_EV_NODI_realism_v2_R7_route_prior_mechanistic_decomposition_audit_analysis.md
+    reports/81_EV_NODI_realism_v2_R7_2_operator_artifact_gap_register_generation_analysis.md
+    reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md
+    reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md
+    results/ev_nodi_realism_v2_R6_route_prior_sensitivity_audit/
+    results/ev_nodi_realism_v2_R7_route_prior_mechanistic_decomposition_audit/
+    results/ev_nodi_realism_v2_R7_2_operator_artifact_gap_register/
+    results/ev_nodi_realism_v2_no_measured_data_closure/
+
+post-v2 P0 audit + P1–P18 (审计 + 6 trace + synthesis):
+    reports/90 … 120
+    results/post_v2_mandatory_audit/
+    results/post_v2_minimal_bounded_solver_execution/
+    results/post_v2_second_bounded_solver_lane_execution/
+    results/post_v2_third_bounded_solver_lane_execution/
+    results/post_v2_fourth_bounded_solver_lane_execution/
+    results/post_v2_fifth_bounded_solver_lane_execution/
+    results/post_v2_sixth_bounded_solver_lane_execution/
+    results/post_v2_bounded_lane_synthesis_stop_continue/
+```
+
+### 17.2 口径 B 主线证据（Phase 2 / 2.5 / 2.6–2.11 + 仪器可行性 + 论文统计）
+
+```text
+口径 B paper-audit 主源（reports / 49 / 71 / 70）:
+    reports/49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md  (Phase 2 / 2.5–2.11)
+    reports/70_EV_NODI_realism_v2_R5_2_bounded_scenario_prior_audit_plan_for_external_review.md
+    reports/71_EV_NODI_realism_v2_R5_2_bounded_scenario_prior_audit_analysis.md  (sidecar)
+
+口径 B results 目录:
+    results/tsuyama_phase2_paper_target_audit_v1/
+    results/tsuyama_phase2_acceptance_baseline_v1/
+    results/tsuyama_phase2_parameter_inverse_full_v1/
+    results/tsuyama_phase2_acceptance_full_inverse_v1/
+    results/tsuyama_phase2p5_operator_phase_bfp_smoke_v1/
+    results/tsuyama_phase2p5_operator_phase_bfp_acceptance_smoke_v1/
+    results/tsuyama_phase2p5_d2p1_refphi_collection_smoke_v1/    # D2.1 best
+    results/tsuyama_phase2p5_d2p1_refphi_collection_acceptance_v1/
+    results/tsuyama_phase2p6_paper_reproduction_fit_d2p1_v1/
+    results/tsuyama_phase2p6_paper_reproduction_fit_full_inverse_v1/
+    results/tsuyama_phase2p6_paper_reproduction_fit_3000e_v1/
+    results/tsuyama_phase2p6_paper_reproduction_fit_3000e_acceptance_v1/
+    results/tsuyama_phase2p7_snr_response_rescore_3000e_v1/
+    results/tsuyama_phase2p8_reviewed_score_rescore_3000e_v1/
+    results/tsuyama_phase2p9_maximal_upper_rescore_3000e_v1/     # 与 d2p1 / full inverse 三套
+    results/tsuyama_phase2p10_size_response_decomposition_3000e_v1/
+    results/tsuyama_phase2p11_response_compression_rescore_d2p1_v1/  # γ = 0.749 最终
+    results/instrument_hardware_feasibility_v1/                  # ET-2030 + LI5640 216 配置
+    results/tsuyama_paper_statistics_sensitivity_v1/             # 288 行
+    results/ev_nodi_realism_v2_R5_2_bounded_scenario_prior_audit/
+```
+
+### 17.3 Tsuyama 文献证据（双口径共用）
 
 ```text
 archive/tsuyama/48_tsuyama六篇严格补读结论.md
@@ -828,1029 +1590,164 @@ archive/tsuyama/51_tsuyama_paper_aligned全论文闭环审查.md
 archive/tsuyama/56_tsuyama已解决与尚未解决问题_中英对照表.md
 archive/tsuyama/57_工程主线与Tsuyama论文结果趋势对照_中英对照.md
 archive/tsuyama/58_tsuyama固定条件对标与结果表.md
+
+papers/:
+    Tsuyama_Mawatari_2019_Nonfluorescent Molecule Detection.pdf
+    Tsuyama和Mawatari - 2020 - Characterization of optical diffraction by single nanochannel.pdf
+    Tsuyama_Mawatari_2020_Detection and Characterization of Individual Nanoparticles.pdf
+    Tsuyama_Mawatari_2020_Concentration Determination at a Countable Molecular Level.pdf
+    Tsuyama_Mawatari_2022_Nanofluidic optical diffraction interferometry for detection and classification.pdf
+    Tsuyama和Mawatari - 2024 - Nanofluidic detection platform.pdf
 ```
 
-selected-annulus 口径主源（口径 B）：
+### 17.4 v3.0 → v4.0 → v4.1 → v4.2 → v5.0 ledger
 
 ```text
-reports/49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md
-reports/70_EV_NODI_realism_v2_R5_2_bounded_scenario_prior_audit_plan_for_external_review.md
-reports/71_EV_NODI_realism_v2_R5_2_bounded_scenario_prior_audit_analysis.md
-results/tsuyama_phase2_paper_target_audit_v1/
-results/tsuyama_phase2_acceptance_baseline_v1/
-results/tsuyama_phase2_parameter_inverse_full_v1/
-results/tsuyama_phase2_acceptance_full_inverse_v1/
-results/tsuyama_phase2p5_operator_phase_bfp_smoke_v1/
-results/tsuyama_phase2p5_operator_phase_bfp_acceptance_smoke_v1/
-results/tsuyama_phase2p5_d2p1_refphi_collection_smoke_v1/
-results/tsuyama_phase2p5_d2p1_refphi_collection_acceptance_v1/
-results/tsuyama_phase2p6_paper_reproduction_fit_d2p1_v1/
-results/tsuyama_phase2p6_paper_reproduction_fit_full_inverse_v1/
-results/tsuyama_phase2p6_paper_reproduction_fit_3000e_v1/
-results/tsuyama_phase2p6_paper_reproduction_fit_3000e_acceptance_v1/
-results/tsuyama_phase2p7_snr_response_rescore_3000e_v1/
-results/tsuyama_phase2p8_reviewed_score_rescore_3000e_v1/
-results/tsuyama_phase2p9_maximal_upper_rescore_3000e_v1/
-results/tsuyama_phase2p9_maximal_upper_rescore_full_inverse_v1/
-results/tsuyama_phase2p9_maximal_upper_rescore_d2p1_v1/
-results/tsuyama_phase2p10_size_response_decomposition_3000e_v1/
-results/tsuyama_phase2p10_size_response_decomposition_full_inverse_v1/
-results/tsuyama_phase2p10_size_response_decomposition_d2p1_v1/
-results/tsuyama_phase2p11_response_compression_rescore_3000e_v1/
-results/tsuyama_phase2p11_response_compression_rescore_full_inverse_v1/
-results/tsuyama_phase2p11_response_compression_rescore_d2p1_v1/
-results/tsuyama_2022_classification_lane_phase2_smoke_v1/
-results/instrument_hardware_feasibility_v1/
-results/tsuyama_paper_statistics_sensitivity_v1/
-results/ev_nodi_realism_v2_R5_2_bounded_scenario_prior_audit/
-```
-
-本地论文文件：
-
-```text
-papers/Tsuyama_Mawatari_2019_Nonfluorescent Molecule Detection in 10^2 nm Nanofluidic Channels by.pdf
-papers/Tsuyama和Mawatari - 2020 - Characterization of optical diffraction by single nanochannel for aL–fL sample detection in nanoflui.pdf
-papers/Tsuyama_Mawatari_2020_Detection and Characterization of Individual Nanoparticles in a Liquid by.pdf
-papers/Tsuyama_Mawatari_2020_Concentration Determination at a Countable Molecular Level in Nanofluidics by.pdf
-papers/Tsuyama_Mawatari_2022_Nanofluidic optical diffraction interferometry for detection and classification.pdf
-papers/Tsuyama和Mawatari - 2024 - Nanofluidic detection platform for simultaneous light absorption and scattering measurement of indiv.pdf
+reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md  (v3.0 → v4.0 全量合并审计)
+reports/122_EV_NODI_report_88_v4_dual_lens_consolidation_ledger.md
+    包含: v4.0 dual-lens consolidation + v4.0 lens-B parameter freeze
+         v4.1 §16 reader-explainer layer
+         v4.2 two-step lens-B framing + ms / % many-table reformat
+         v5.0 reader-centric full restructure（本版本）
 ```
 
 ---
 
-## 12. 最终收口（口径 A：all-crossing）
+## §18 历史与版本演化
 
-> 本节是口径 A 的最终收口。selected-annulus 口径的最终收口在 §14.12。两个口径共同收口在 §15.4。
+### 18.1 supersession（这份报告替代了什么）
 
-v2 已经完成它应该完成的工作：在没有实测数据的情况下，把原工程逻辑和原模拟结果放进更现实的仪器约束、路线治理和先验敏感性框架中重新审视。post-v2 P0-P18 又完成了第二层收口：把路线裁决、证据包装、物理上限 readiness、授权门和窄范围 trace 证据全部约束在相对审计/trace-only 边界内。
+本报告 88（v5.0 reader-centric restructure）是**当前全量读者向报告**。如下旧报告的读者面结论已并入本报告：
 
-它带来的增量不是“更多漂亮分数”，而是：
-
-```text
-更清楚的结论边界
-更现实的仪器和 blank 约束
-更严格的 660 nm 主路线治理
-更清楚的 Tsuyama trend alignment
-更诚实的 artifact gap register
-```
-
-所以，当前可以把 v2 与 P0-P18 作为最终读者口径写入总报告；但必须同时保留这句双语边界：
-
-```text
-全部 v2 结论都是无实测数据的合成相对先验结论；
-不构成对任何实物仪器、实物样品或绝对量级的校准。
-
-All v2 conclusions are synthetic relative-prior conclusions
-without measured-data calibration.
-```
-
-## 13. post-v2 P0-P18 合并更新（口径 A：all-crossing）
-
-> 本节是口径 A 下的 post-v2 P0-P18 证据合并。selected-annulus 口径下 post-v2 阶段的反映情况在 §14.10。双口径下 P0-P18 的对照见 §15.2。
-
-本节是 2026-05-11 合并更新。它把 realism v2 之后新增的 P0-P18 结果并入本文；不另起新版读者报告。P0-P18 的共同边界是：
-
-```text
-calibrated_claim_allowed = false
-measured_data_ingest_authorized = false
-calibration_data_ingest_authorized = false
-route_promotion_authorized = false
-main_660_redefinition_authorized = false
-raw_magnitude_final_gate_allowed = false
-solver_native_raw_magnitude_final_gate_allowed = false
-```
-
-### 13.1 P0 mandatory audit 的结论
-
-P0 把 v2 sidecars 转换成强制路线审计链，并冻结可复核 review package。它的关键结果是：
-
-| 项目 | 数值 / 结论 |
-|---|---|
-| 审计行数 | `572` 个 route aggregate |
-| 波长覆盖 | 404 / 488 / 532 / 660 nm 各 `143` 个唯一 route aggregate |
-| `relative_main_candidate` | `2` 条：`main_660_W800_D1400`、`main_660_W800_D1500` |
-| main-660 最终裁决 | 两条均为 `conditional_relative_main` |
-| `probe_only` | `probe_404_W600_D1300`，最终为 `shortwave_probe_only` |
-| `relative_control_candidate` | `control_660_W700_D1500`，最终为 `weak_reference_control_only` |
-| `optional_robustness_probe_only` | `optional_660_W900_D1400`，不得重定义 main-660 |
-| `paper_sanity_only` | 4 条 Tsuyama/paper-sanity 路线 |
-| 被降级为 surrogate-sensitive | `563` 条，不允许按 v1 高分直接晋升 |
-| 必需下一证据 | main/control/optional 多数指向 `measured_blank_bfp` 或 `fullwave_spot_check` |
-
-P0 解决的冲突是：v1 全量库中大量 660 nm context routes 的 scalar 排名很高，但 P0 审计把 BFP ROI、Tsuyama BFP、noise/readout、EV/sample uncertainty、selected-annulus lens、pairwise inversion 和 forbidden-claim blockers 一起纳入后，绝大多数只能保留为 `surrogate_sensitive_not_promoted`。因此旧式“高分 = 主路线”的读法被废止。
-
-### 13.2 P1-P5 readiness / authorization 链
-
-P1-P5 没有产生 calibrated physical prediction；它们建立的是后续物理证据的门控合同。
-
-| 阶段 | 核心结论 | 仍未解决或存疑点 |
+| 历史报告 | 替代位置 | supersession_reason |
 |---|---|---|
-| P1 | 完成 full-wave/Green tensor、Vector/Jones、roughness/leakage、transport/residence-time 四条 physical-ceiling diagnostic contract；全部为 surrogate-risk reduction only。 | 只生成 no-solver rank diagnostics，不运行重型 solver。 |
-| P2 | 完成 bounded physical-solver readiness；source binding、route universe、schema manifest 和 verifier 均要求 solver execution blocked。 | 未来 solver 只能在有明确授权和可解释性标准后运行。 |
-| P3 | 完成最小 pilot design；只选 P4/P6 后续使用的 3 条路线子集。 | 只设计，不执行。 |
-| P4 | 完成 dry-run preflight；确认 input manifest、mesh/boundary/unit preflight、authorization record 的形状。 | mesh manifest 明确为 `not_generated_no_mesh_generation`。 |
-| P5 | 完成 authorization gate；默认 decision 是 `not_authorized_pending_explicit_later_phase_execution_request`。 | 只有明确短语才能开启后续最小 bounded execution；P5 自身仍不执行。 |
+| reports/47_EV_NODI全量结果分层分析报告.md | 本报告（v5.0）| 全量库 v1 历史分析；现在的读者面结论在本报告 §6 / §10 |
+| reports/49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md | 本报告 §11 / §11.2 | Phase 2 / 2.5–2.11 reader-facing 结论；49 仍为口径 B raw provenance |
+| reports/70 + 71 | 本报告 §12.2 | R5.2 sidecar reader-facing 结论；70 / 71 仍为 sidecar raw provenance |
+| reports/9[1-9] + 1[0-1][0-9] + 120 | 本报告 §5.3 / §10.5 | P1–P18 阶段报告 reader-facing 结论；阶段报告仍为 trace_only_provenance |
 
-### 13.3 P6-P18 有界 trace 结论
+### 18.2 v3.0 → v5.0 演化记录
 
-P6、P8、P10、P12、P14、P16 是六条 narrow deterministic trace lane，均只覆盖同一 3 条路线：
+| 版本 | 日期 | 主要内容 |
+|---|---|---|
+| v3.0 | （v4 之前）| 仅口径 A；selected-annulus 仅 §11 / §13 一处指针提及 |
+| v4.0 | 2026-05-11 | 双口径并立；§14 selected-annulus 等规模并入；§15 双口径综合；reports/49 + 71 等规模并入；reports/122 ledger 建立 |
+| v4.0 amendment | 2026-05-11 | 口径 B 当前参数集冻结为选型（在 v4.2 §14.12 / 14.13 / 14.14；在 v5.0 重新组织为 §11.7 冻结参数 + §14.6 Tsuyama 2022 NODI 对照 + §11.6 硬件接法）|
+| v4.1 | 2026-05-11 | 新增 §16 读者向解读层：物理链 + 估计值来源 + 变量影响排序 + 推荐因果链 |
+| v4.2 | 2026-05-11 | §16.9.2 改两步框架（用户反馈 1）；§16.3 / §16.4 改 ms / % 多表（用户反馈 2）|
+| **v5.0** | **2026-05-11** | **reader-centric 全文重构**：把层层叠加结构改为问题 → 物理 → 变量 → 数据 → 分析 → 推荐 → 边界 → 出处的一次性叙事；代码层 ID 改名为可读科学命名；附录给出对照 |
 
-```text
-main_660_W800_D1400
-main_660_W800_D1500
-probe_404_W600_D1300
-```
-
-它们的排序行为如下：
-
-| 阶段 | trace lane | 第 1 名 | 第 2 名 | 第 3 名 | 解读 |
-|---|---|---|---|---|---|
-| P6 | minimal bounded Green kernel | `main_660_W800_D1400` | `main_660_W800_D1500` | `probe_404_W600_D1300` | trace-only；不支持 promotion。 |
-| P8 | phase-gradient trace | `main_660_W800_D1400` | `main_660_W800_D1500` | `probe_404_W600_D1300` | 与 P6 同序。 |
-| P10 | curvature-balance trace | `main_660_W800_D1500` | `main_660_W800_D1400` | `probe_404_W600_D1300` | main-660 内部首位切换。 |
-| P12 | resonance-compactness trace | `main_660_W800_D1500` | `main_660_W800_D1400` | `probe_404_W600_D1300` | 与 P10 同序。 |
-| P14 | phase-curvature residual trace | `main_660_W800_D1400` | `main_660_W800_D1500` | `probe_404_W600_D1300` | 再次切回 800x1400。 |
-| P16 | phase-curvature residual trace | `main_660_W800_D1500` | `main_660_W800_D1400` | `probe_404_W600_D1300` | 再次切回 800x1500。 |
-| P18 | synthesis stop/continue | 不选单一冠军 | 不选单一冠军 | 404 probe 仍非主路线 | 停止机械式继续滚 lane，要求 P19 evidence strategy gate。 |
-
-P18 的结论是：
+### 18.3 v5.0 重构的不变量（不会被改名 / 改顺序改变的事实）
 
 ```text
-bounded_lanes_sufficient_for_route_promotion = false
-rank_instability_across_bounded_lanes_detected = true
-stop_continue_decision = stop_mechanical_lane_roll_forward_pending_p19_evidence_strategy
+1. 全部数值结论与 v4.2 一致；
+2. 全部 forbidden claim 与 v4.2 一致；
+3. 口径 B 冻结参数集 (γ = 0.749, s_SNR = 0.728, e_SNR = 0.812, D2.1 best 算子,
+   selected-annulus 0.5–0.8, lock-in τ = 1–2 ms, ET-2030 + LI5640,
+   current input / TIA, Au panel 20 / 30 / 40 / 60 nm,
+   geometry 660 / 1200 × 550 + 660 / 800 × 550) 与 v4.2 一致；
+4. 双口径并立、互不替代的治理原则与 v4.0 起一致；
+5. selected-annulus 0.5–0.8 固定不可移动；
+6. raw provenance 来源不变：reports / 49 (口径 B Phase 2 / 2.5–2.11) + reports / 71 (R5.2 sidecar)。
 ```
-
-这说明 P6-P16 不是“主路线更确定”的证据，而是“两个 main-660 候选仍应作为集合保留、不能从 trace-only lane 中挑单一 winner”的证据。
-
-### 13.4 p0-p18 单项合并记录
-
-| 阶段 | 核心结论 | 关键数据/证据 | 与前后阶段的衔接或冲突 | 未解决点 |
-|---|---|---|---|---|
-| p0 | P0 release package 从阶段报告上升为 review-ready mandatory audit 包，完成 P0 证据链闭环并对报告 88 合并生效。 | `REVIEW_PACKAGE_MANIFEST.json`、`REVIEW_PACKAGE_HASHES.sha256`、`results/post_v2_mandatory_audit/`；并通过 `python -m pytest tests/test_review_package_manifest.py` 与 `python tests/run_tests.py --workers 7`。 | 本阶段把 v2 sidecar 从阶段叙事中提取为主审计入口，并与 `reports/88` 的 P0-P18 边界统一；未变更 `v2 无实测校准` 约束。 | 证据传播仍在外部 review 打包层面有一次性优化空间；未提供 measured route calibration 前提下不改主路线晋升。 |
-| p1 | Physical-ceiling extensions 完成 no-solver rank diagnostic contracts。 | 四条 lane contract：full-wave/Green tensor、Vector/Jones、roughness/leakage、transport/residence-time。 | 为 P2 readiness 提供 surrogate-risk reduction 输入；不执行 solver。 | 缺真实 full-wave/vector/roughness/transport 输出。 |
-| p2 | Bounded physical-solver readiness 完成，但 solver execution blocked。 | bounded route universe、source binding、schema manifest、artifact manifest。 | 把 P1 诊断合同转成未来 preflight universe；为 P3 pilot design 提供边界。 | 仍无 mesh、operator、solver output 或 measured ingest。 |
-| p3 | Minimal pilot design 完成。 | 只选择 2 条 main-660 + 1 条 pairwise/full-wave spot-check 路线。 | 为 P4 dry-run preflight 定义固定 3-route subset。 | 只设计，不执行。 |
-| p4 | Dry-run preflight 完成。 | input manifest、mesh/boundary/unit preflight、execution authorization record。 | 明确 mesh 未生成、execution 未授权；为 P5 gate 提供证据。 | 仍不产生 solver output。 |
-| p5 | Authorization gate 完成但默认阻断执行。 | `required_next_authorization_phrase = authorize minimal bounded solver execution`。 | 将 p4 dry-run 绑定到后续授权门。 | 需要明确授权短语才能执行 p6。 |
-| p6 | 第 1 条 minimal bounded trace 已执行。 | 三路线排序：800x1400 > 800x1500 > 404 probe。 | 首次产生 trace-only solver output；不改变 P0/P1/P2/P3/P4/P5 边界。 | 非 full-wave solver；不能 route promotion。 |
-| p7 | 第二 lane 授权设计完成。 | future phrase: `authorize second bounded solver lane execution`。 | 绑定 p6 trace，但不解释为 calibration。 | 仍不执行。 |
-| p8 | 第二 bounded trace 已执行并通过 closure review。 | phase-gradient 排序同 p6；closure verdict `NO P8 BLOCKERS FOUND`。 | 与 p6 同序，但仍 trace-only。 | 不能证明主路线唯一性。 |
-| p9 | 第三 lane 授权设计完成。 | 绑定 p8 closure，future phrase for p10。 | 设计下一 gate，不新增 output。 | 仍需独立授权。 |
-| p10 | 第三 bounded trace 已执行并通过 closure review。 | 排序切换为 800x1500 > 800x1400 > 404 probe；closure verdict `NO P10 BLOCKERS FOUND`。 | 与 p6/p8 冲突：main-660 内部首位反转。 | 反转不能按 route preference 解读。 |
-| p11 | 第四 lane 授权设计完成。 | 绑定 p10 closure，future phrase for p12。 | 继续 gate 链，不执行。 | 仍缺接受准则。 |
-| p12 | 第四 bounded trace 已执行并通过 closure review。 | 排序继续为 800x1500 > 800x1400 > 404 probe；closure verdict `NO P12 BLOCKERS FOUND`。 | 支持 p10 的 trace 排序，但仍与 p6/p8 不一致。 | 仍不能 route promotion。 |
-| p13 | 第五 lane 授权设计完成。 | 绑定 p12 closure，future phrase for p14。 | 只设计下一 gate。 | 仍不执行。 |
-| p14 | 第五 bounded trace 已执行并通过 closure review。 | 排序切回 800x1400 > 800x1500 > 404 probe；closure verdict `NO P14 BLOCKERS FOUND`。 | 与 p10/p12 冲突；记录 trace rank instability。 | 需要停止机械式 lane 扩展并定义证据策略。 |
-| p15 | 第六 lane 授权设计完成。 | 记录 P12-to-P14 rank delta `[-1, +1, 0]`。 | 把 rank instability 明确升级为治理证据。 | 仍不是 final gate。 |
-| p16 | 第六 bounded trace 已执行并通过 closure review。 | 排序切回 800x1500 > 800x1400 > 404 probe；closure verdict `NO P16 BLOCKERS FOUND`。 | 再次确认 main-660 内部首位不稳定。 | 不支持第七 lane 机械延续。 |
-| p17 | 第七 lane 授权设计完成但未执行。 | 记录 P12-to-P14 与 P14-to-P16 都出现 `[-1,+1,0]`。 | 为 p18 synthesis 提供停止/继续问题。 | 需要 p19 evidence-strategy gate。 |
-| p18 | Synthesis-only stop/continue design 完成。 | top sequence = 800x1400, 800x1400, 800x1500, 800x1500, 800x1400, 800x1500。 | 裁决 P6-P16 不足以 route promotion；停止机械滚 lane。 | 下一步必须先定义 P19 evidence strategy 与 acceptance criteria。 |
-
-### 13.5 冲突点与取舍理由
-
-| 冲突点 | 取舍 |
-|---|---|
-| 旧 all-crossing/full-grid 报告曾把 488/532/404 深通道作为第一批实验候选；v2 与 P0 后把 main-660 锁定为 800x1400/1500。 | 保留旧报告作为历史全量库解释；当前主报告以 v2/P0 的仪器约束、路线治理和 mandatory audit 为准。理由是新证据显式纳入 BFP、noise/readout、route-role、artifact gap 和 forbidden-claim blockers。 |
-| v2 closure 锁定两条 main-660；P6-P16 trace 试图比较二者，但首位在 lane 间反复切换。 | 不选单一 winner。两条 main-660 维持 `conditional_relative_main` 集合；P18 判定 bounded traces 不足以 route promotion。 |
-| P0 audit 中许多 660 context routes 的 v1 scalar percentile 高于 main-660。 | 不按 v1 scalar 高分晋升。P0 将 563 条路线降为 `surrogate_sensitive_not_promoted`，因为 BFP rank shift、pairwise inversion、claim blockers 或后续证据需求仍未闭合。 |
-| P6/P8/P10/P12/P14/P16 已产生 solver-like trace output，但 v2 禁止 calibrated claims。 | trace output 只用于 rank、rank-percentile、pairwise order 与 rank delta；不允许原始 magnitude、detector unit、SNR、LOD、浓度或 route promotion。 |
-| P17 记录第七 lane 未来短语；P18 又停止机械式继续。 | 以 P18 为准。未来不能只凭 `authorize seventh bounded solver lane execution` 继续；必须先有 P19 evidence-strategy gate 和接受准则。 |
-
-### 13.6 当前未决事项
-
-1. P19 需要先定义 evidence strategy、acceptance criteria 和停止准则，而不是继续机械生成第七条 bounded lane。
-2. `measured_blank_bfp`、standard particle transfer、slit/ROI scan、full-wave spot-check 等仍是后续独立证据依赖。
-3. EV polydispersity、non-sphericity、coincidence/blended pulses、roughness/fabrication background、PEG fouling 和 drift 仍属于 post-v2 validation program，不应回写成 v2 内 calibration。
-4. 本报告仍禁止 calibrated SNR、absolute LOD、true EV concentration、biological specificity、detector voltage prediction、sample-count、measured blank safety、route promotion 和 main-660 redefinition。
 
 ---
 
-## 14. selected-annulus paper-audit 口径完整分析（口径 B）
+## 附录 A：术语表（描述名 ↔ 代码 ID 对照）
 
-> 本节是口径 B（selected-annulus paper-audit 口径）的完整分析，与 §1–§13 的口径 A 并立、规模相当。证据 provenance 来自 [reports/49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md](49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md) 与 [reports/71_EV_NODI_realism_v2_R5_2_bounded_scenario_prior_audit_analysis.md](71_EV_NODI_realism_v2_R5_2_bounded_scenario_prior_audit_analysis.md)。本节做读者级合并，不再要求读者回去翻 49/71 才能理解结论；49/71 仍作为 raw provenance 保留。
->
-> 与口径 A 的关系见 §15。本节末尾 §14.9–§14.10 显式列出 selected-annulus 口径下 realism v2 R0–R7.2 与 post-v2 P0–P18 的反映情况；不存在等价证据的阶段会被显式标注为 "selected-annulus 口径下未扩展"。
-
-### 14.1 selected-annulus 口径定义、问题域与边界
-
-selected-annulus 口径不是 all-crossing 全局排序的子集，而是另一个问题：
-
-```text
-口径 B 问题：
-在 selected-annulus 0.5-0.8 固定窗口下，
-若使用 Tsuyama paper-audit proxy target（Table S1 Ag/Au signal、
-Au size exponent 2.3、Au30/Au20 SNR ratio 33/12 等），
-当前 simulator 的低自由度估计参数能否自然复现这些数值？
-```
-
-它和口径 A 的关键差异如下：
-
-| 维度 | 口径 A：all-crossing | 口径 B：selected-annulus paper-audit |
+| 描述名（本报告主要用语）| 代码 ID / 短码 | 含义 |
 |---|---|---|
-| 比较窗口 | 全 BFP 全 crossing | 固定 selected-annulus `0.5-0.8` |
-| 评估对象 | EV/NODI 工程路线（404 / 488 / 532 / 660 nm 全 grid） | Tsuyama paper-audit candidate（Ag40/Au40，Au20/30/40/60） |
-| 主排序候选 | 32,032 基础设计组合 + 8 仪器情景 | `52` Phase 2 family-ladder candidates + D2.1 局部 12 variants + size-only F-family + reproduction rescore 系列 |
-| 主结论形式 | route role（main / context / probe / control / optional） | candidate release status（accepted / negative / diagnostic） |
-| 当前结论 | 660 nm `800x1400` / `800x1500` 双 main，conditional_relative_main | `negative_or_diagnostic_result_only`，无 accepted candidate |
-| 主 No-Go | 无（已收口） | `raw_size_response_alignment_not_met` |
-| 是否替代另一口径 | 否 | 否 |
-| 是否解锁 calibration | 否 | 否 |
-
-selected-annulus 口径不解锁任何 calibrated SNR / absolute LOD / true concentration / biological specificity claim；它的合法产物只有：
-
-```text
-paper-audit proxy candidate 的 release status
-estimated-parameter reproduction lens 的 score 与 fit term
-sidecar guardrail（不可修改 selected-annulus 边界、不可替代 all-crossing 排序）
-```
-
-### 14.2 G0/G1 — Target audit 与 baseline acceptance
-
-口径 B 的 Phase 2 把 Tsuyama paper side 信息拆成四类 target，避免把 diagnostic-only 当 hard target：
-
-| 类别 | 示例 | 是否 hard target |
-|---|---|---|
-| Direct / audit | Table S1 Ag40/Au40 `interferometric_column_ratio`（488/532/660 nm） | 保留 strict 审计，但因 Ag 行 vs "interferometric scattering = scattering 开方" 文字解释存在歧义，已不再是唯一 hard target |
-| Formula-consistent | Table S1 scattering cross-section 列的 `sqrt_scattering_column_ratio` | 当前推荐 hard signal-ratio mode |
-| Recomputed-Mie | 用 Table S1 fixed n,k 在本 simulator 内重算 `sqrt(Csca_Ag/Csca_Au)` | inferred / cross-check |
-| Inferred | Au size exponent `2.3`、Au30/Au20 SNR ratio `33/12 ≈ 2.75` | hard |
-| Operational | Au30/40/60 selected-annulus detection proxy bands、Au20 upper-detection guard、Au20 low-sensitivity warning、selected-annulus geometry guardrail | hard |
-| Diagnostic only | classification accuracy `71.9 ± 4.0%`、2020 POD Au20 near-100% counting、2024 paired POD+NODI classification | 仅诊断，不入 hard target |
-
-Baseline acceptance（read-only，不重跑 simulation）：
-
-| 指标 | 状态 | 解释 |
-|---|---|---|
-| best candidate | `baseline_current_estimates__paper_5sigma_signal_size_transfer_fit` | joint_fit_score `0.498779` |
-| paper_fit_status | `candidate_joint_fit_with_paper_transfer` | 依赖 transfer + size correction |
-| target audit | pass | hard target 不含 diagnostic_only |
-| detection alignment | `partial_pass_with_Au20_low_warning` | Au30/40/60 median pass；Au20 only-low miss |
-| signal ratio | pass | calibrated Ag/Au residual 很小 |
-| size exponent | pass | calibrated Au exponent = `2.3`，delta 在 guardrail 内 |
-| SNR ratio | pass | Au30/Au20 ratio = `3.36086`，在 log tolerance 内但偏高 |
-| classification | diagnostic_complete | feature export 对齐，但本地 `sklearn` 不可用，`no_accuracy_claim` |
-| no-go status | pass | baseline 不签 accepted；需要 family-ladder inverse confirmation |
-
-baseline 可作为 Phase 2 起点，但不能直接签为最终 accepted；原因不是 Au20 偏低，而是 baseline 还没有证明 raw / non-transfer 参数族能自然解释 signal ratio 与 size-response。
-
-### 14.3 G2 — Family-ladder inverse search 主结果
-
-`tools/one_shot/tsuyama_phase2_parameter_inverse.py` 把 inverse search 拆成 A–E 五族，Phase 2.5 又新增 raw-only `D2_operator_phase_bfp_raw`，Phase 2.6 再新增 size-only `F_paper_reproduction_fit`：
-
-| Family | 角色 |
-|---|---|
-| A | blank / threshold / colored noise / post-readout noise |
-| B | logger / lock-in / pulse width policy |
-| C | transport / event shape / fluxmix |
-| D | reference / collection / rho / BFP ROI |
-| D2 | paper-aligned reference phase / BFP ROI / collection operator raw search |
-| E | bounded Ag transfer / Au size-response（local paper-fit lens） |
-| F | size-only paper reproduction fit（global Au size flattening + global SNR scale） |
-
-`10000 events/case`、seeds `42 / 43 / 44`、`8 workers`、`52` candidates × `3` seeds = `156` summary rows、`5616` raw rows，runtime 约 `24968 s`（约 `6.94 h`）。
-
-整体排序：
-
-| 排名口径 | family | best candidate | median score | 解读 |
-|---|---|---|---:|---|
-| 全局 best | E | `baseline_current_estimates__paper_5sigma_signal_size_transfer_fit` | `0.496282` | signal ratio、size exponent、SNR proxy 都能被 local lens 拉齐 |
-| E 次优 | E | `low_noise_stack_uniform_accessible__paper_5sigma_signal_size_transfer_fit` | `0.519414` | 仍依赖 signal + size transfer |
-| raw best | B | `tau_2ms` | `2.641891` | 不触发 guardrail，但仍是 `candidate_needs_signal_transfer_or_phase_fit` |
-| D best | D | `refspace_0p25__paper_5sigma_sensitivity` | `2.855049` | reference-space 调整未解决 signal/size residual |
-| A best | A | `baseline_current_estimates__paper_5sigma_sensitivity` | `2.875281` | readout/noise family 不能独立对齐 |
-| C best | C | `low_noise_stack_fluxmix_0p10` | `2.915548` | transport/fluxmix family 不能独立对齐 |
-
-acceptance 触发当前唯一主 No-Go：
-
-```text
-raw_size_response_alignment_not_met
-```
-
-raw / non-transfer family 共 `38` 个可用 candidate；strict Table S1 target 下 `raw_strict_signal_aligned_count = 0`（标 `strict_table_s1_signal_unresolved_formula_signal_pass` diagnostic warning）；formula-consistent Table S1 target 下 `raw_formula_signal_aligned_count = 27`（说明 Ag/Au raw signal mismatch 很大一部分来自 target-mode 歧义）；但 `raw_size_aligned_count = 0`、`raw_joint_signal_size_aligned_count = 0`，因此不能签 accepted。
-
-detection side 状态为 `partial_pass_with_Au20_low_warning`：Au20 在 `6` 个 joint cases 中只有 `3` 个进入 operational band，且 miss 全部偏低，与论文 Au20 weak-SNR / not-all-detected 描述相容；Au30 为 `5/6` minor/borderline warning；Au40/Au60 为 `6/6`。
-
-最终签发：
-
-```text
-release_status = negative_or_diagnostic_result_only
-no_accepted_paper_calibrated_candidate = true
-```
-
-### 14.4 G2.5 — D2 raw-operator + D2.1 局部 smoke
-
-`D2_operator_phase_bfp_raw` 用 `1500 events/case`、3 seeds、8 workers，`20` candidates、`60` summary rows、`2160` raw rows、`12` guardrail failure rows，runtime `1827.9 s`：
-
-| 口径 | best candidate | 结果 | 解释 |
-|---|---|---:|---|
-| lowest joint score | `tau_2ms_global_refphi_plus` | median score `2.444` | 比 `tau_2ms_control` 略好，但仍需 signal transfer / phase fit |
-| formula-consistent Ag/Au signal | `tau_2ms_bfp_lobe_045` | formula signal score `0.0098` | Ag/Au signal 最好，但触发 hard guardrail 且 size exponent 更差 |
-| raw Au size exponent | `tau_2ms_global_refphi_plus` | exponent median `3.090` | D2 中最接近 `2.3` 的 raw size-response，但仍高出约 `0.79` |
-| promote rule | none | `0` candidates | 没有候选同时满足 formula signal、size exponent、guardrail 和 detection sanity |
-
-随后 D2.1 把搜索缩到 `tau_2ms_control`、`global_refphi_plus` 的 `+0.2 / +0.4 / +0.6` 小步长、`collection_narrow` 与组合，`2000 events/case`、3 seeds、8 workers：
-
-| candidate | joint score | formula joint score | formula signal score | raw Au exponent | size score | 判断 |
-|---|---:|---:|---:|---:|---:|---|
-| `tau_2ms_global_refphi_plus_collection_narrow` | 2.377 | 0.687 | 0.0286 | 3.071 | 1.212 | 全局 score 最低，guardrail pass，但 size 仍失败 |
-| `tau_2ms_global_refphi_plus_0p6` | 2.383 | 0.677 | 0.0322 | 3.050 | 1.149 | raw size 最好，但仍明显高于 2.3 |
-| `tau_2ms_global_refphi_plus` | 2.471 | 0.761 | 0.0334 | 3.097 | 1.297 | 比 control 改善，但不够 |
-| `tau_2ms_control` | 2.635 | 0.906 | 0.0328 | 3.190 | 1.616 | D2.1 baseline |
-
-D2.1 价值在于**确认趋势**：global reference phase 往正方向移动确实能稳定压低 raw Au exponent，窄 collection + `+0.4` 组合能进一步改善 joint score；但最好的 raw exponent 仍约 `3.05`，没达到 `<= 2.85` 的 promote floor，更没接近 `2.3`。因此 D2.1 后**不进入** raw-family `10000 events/case` confirm。下一步只能在两个目标里二选一：要 physical calibration 就需实测 blank、BFP/slit/ROI、lock-in/logger 与 Au raw trace；只要数值复现就转入显式 paper-reproduction rescore（即 G2.6+），不再扩大 raw 自由度。
-
-### 14.5 G2.6–G2.11 — 估计参数 reproduction lens 链
-
-口径 B 选了"用估计项尽量复现论文数值"的目标。Phase 2.6–2.11 全部是 read-only rescore + 一次 size-only `3000 events/case` 小确认；不修改 selected-annulus、不回写 EV full-grid、不开 per-diameter / per-geometry / per-case correction。
-
-#### 14.5.1 Phase 2.6 — paper-reproduction formula + size-only F-family confirm
-
-只允许两个全局 reproduction-only fit terms：一个 power-law size-response delta（作用于所有 Au 粒径、全部 wavelength/geometry），一个 single global SNR scale（把 Au20/Au30 local SNR 映射到论文 anchor）。
-
-| rescore source | best candidate | formula score | required Au size delta | SNR scale | status |
-|---|---|---:|---:|---:|---|
-| D2.1 local smoke | `tau_2ms_global_refphi_plus` | `3.7428` | `-0.7973` | `0.7279` | `bounded_reproduction_fit` / `reproduction_fit_not_met` |
-| full inverse | `refspace_0p25__paper_5sigma_sensitivity` | `4.6815` | `-0.9583` | `0.4138` | `bounded_reproduction_fit` / `reproduction_fit_not_met` |
-| full inverse E-family ref | `baseline_current_estimates__paper_5sigma_signal_size_transfer_fit` | `5.6926` | `-0.9632` | `0.4200` | `maximal_paper_fit` / `reproduction_fit_not_met` |
-
-最小可解释 correction 是全局 Au size-response flattening；D2.1 底座所需 delta 约 `-0.80`，比 full inverse / E-family 的约 `-0.96` 更温和。Phase 2.6 只发布 `paper_reproduction_fit_only_not_physical_calibration`。
-
-随后用 `F_paper_reproduction_fit`、`3000 events/case`、4 candidates × 3 seeds = 12 summary rows、8 workers 做 size-only 小确认：
-
-| candidate | formula joint score | reproduction score | required Au size delta | SNR scale | detection status | 判断 |
-|---|---:|---:|---:|---:|---|---|
-| `tau_2ms_global_refphi_plus_0p6__paper_5sigma_size_response_fit` | `0.2788` | `3.9541` | `-0.8782` | `0.7304` | pass + Au20 high-outlier warning + Au30 minor warning | size-only reproduction best；未过 bounded pass/partial |
-| `tau_2ms_global_refphi_plus_collection_narrow__paper_5sigma_size_response_fit` | `0.3000` | `16.4235` | `-0.8414` | `0.5062` | detection loss 高 | joint score 接近，但 reproduction score 被 detection/SNR 拉低 |
-| `tau_2ms_global_refphi_plus__paper_5sigma_size_response_fit` | `0.2983` | `15.6535` | `-0.8943` | `0.7266` | detection loss 高 | 不优于 `+0.6` |
-| `tau_2ms__paper_5sigma_size_response_fit` | `0.3337` | `16.0397` | `-0.9563` | `0.7193` | detection loss 高 | baseline reproduction 对照 |
-
-显式全局 size flattening 把 size exponent score 归零，formula-consistent signal 保持 pass；但综合 score 仍高于 `<= 2.0` 的 bounded partial threshold。不进入 10000-event confirmation，不签任何 accepted calibration。
-
-#### 14.5.2 Phase 2.7 — single global SNR response rescore
-
-新增 `paper_reproduction_snr_response` primary score mode：一个全局 SNR/readout power-law exponent + 一个全局 scale。同一 best candidate 不变：
-
-| rescore mode | best candidate | score | SNR response exponent | SNR ratio loss | detection loss | complexity loss | 判断 |
-|---|---|---:|---:|---:|---:|---:|---|
-| Phase 2.6 size-only | `..._global_refphi_plus_0p6__paper_5sigma_size_response_fit` | `3.9541` | none | `1.4053` | `1.0500` | `1.3400` | size-only best，未过 partial |
-| Phase 2.7 SNR response | 同上 | `3.8076` | `0.8120` | `0.4235` | `1.0500` | `1.9308` | SNR ratio 显著改善，复杂度抵消一部分；仍未过 partial |
-
-#### 14.5.3 Phase 2.8 — reviewed / descriptive rescore
-
-`paper_reproduction_reviewed`：strict Table S1 residual 仅报告不入 primary score（因为 Table S1 Ag 行 vs "interferometric scattering = 开方" 文字存在 target-mode 歧义）；detection warning 与 fit complexity 降权。
-
-| rescore mode | best candidate | score | SNR response exponent | detection loss | strict loss | complexity loss | status |
-|---|---|---:|---:|---:|---:|---:|---|
-| Phase 2.7 SNR response | 同上 | `3.8076` | `0.8120` | `1.0500` | `0.1788` | `1.9308` | `reproduction_fit_not_met` |
-| Phase 2.8 reviewed/descriptive | 同上 | `1.9385` | `0.8120` | `0.3500` | `0.0000` | `0.9654` | `bounded_reproduction_partial_descriptive` |
-
-读法非常严格：Phase 2.8 不是新的 acceptance pass，而是说明在"只求论文数值复现叙事"的 reader-facing score 下，当前低自由度估计项已达 partial reproduction；但 `candidate_release_status` 仍为 `negative_or_diagnostic_result_only`，No-Go 仍是 `raw_size_response_alignment_not_met`。
-
-#### 14.5.4 Phase 2.9 — maximal upper-bound rescore
-
-`paper_reproduction_maximal_upper`：允许 hypothetical strict Table S1 per-wavelength Ag transfer（受 `0.25-4.0` bounded gain guardrail 约束，单独记入 complexity / DOF）。
-
-| source | best candidate | maximal score | maximal status | size delta | strict Ag transfer gain range | 解读 |
-|---|---|---:|---|---:|---:|---|
-| 3000-event size-only | `..._global_refphi_plus_0p6__paper_5sigma_size_response_fit` | `1.2869` | `maximal_paper_fit_partial_upper_bound` | `-0.8782` | `1.810-3.070` | 仍 partial；低自由度候选不靠 strict Ag transfer 已可读 |
-| full inverse | `refspace_0p25__paper_5sigma_sensitivity` | `0.9814` | `maximal_paper_fit_upper_bound` | `-0.9583` | `1.902-3.116` | 上限 score 可过 `<=1`，但需要更强 size delta + strict Ag transfer |
-| D2.1 local smoke | `tau_2ms_global_refphi_plus_collection_narrow` | `0.9893` | `maximal_paper_fit_upper_bound` | `-0.7706` | `1.758-3.085` | 需要的 size delta 最温和，但仍是 high-DOF upper-bound lens |
-
-Phase 2.9 给出**可映射性上限**，不是 raw-family 自然复现。继续追更低分只能引入 per-diameter / per-geometry / per-case correction 或 detection logistic remap，越过本项目允许的 estimated-parameter 复现边界。
-
-#### 14.5.5 Phase 2.10 — raw Au size-response residual decomposition
-
-按 wavelength × geometry × observable × adjacent size pair 拆 raw Au exponent：
-
-| source / best | observable | median exponent | residual vs 2.3 | 最主要相邻粒径段 | 解读 |
-|---|---|---:|---:|---|---|
-| D2.1 `tau_2ms_global_refphi_plus_collection_narrow` | peak height | `3.0679` | `+0.7679` | `40-60` | 当前 raw 最优底座；仍明显偏陡 |
-| D2.1 best | local SNR | `3.0882` | `+0.7882` | `40-60` | local SNR 没有解决 size-response |
-| D2.1 best | peak margin z | `3.3165` | `+1.0165` | `40-60` | margin 口径更陡 |
-| D2.1 best | peak height × width | `3.9420` | `+1.6420` | `40-60` | width/area-like 口径更不适合作为 size target |
-| 3000-event size-only best | peak height | `3.1738` | `+0.8738` | `40-60` | size-only correction 前的 raw 底座更陡 |
-| full inverse maximal best | peak height | `3.2541` | `+0.9541` | `40-60` | full inverse 上限分低，但 raw size 底座更陡 |
-
-D2.1 best peak-height case-level decomposition：最接近的组合是 `660 / 1200x550`（exponent `3.0335`）和 `660 / 800x550`（`3.0456`）；最差是 `532 / 800x550`（`3.1563`）。**所有 6 个 peak-height case 的 limiting pair 都是 `40-60`**，不是 `20-30`。这关键地说明：继续调 Au20 检出率、Au20 lower band 或 Au20 SNR 解决不了 raw exponent 偏陡；真正需要解释的是大粒径段 readout / phase / trajectory / collection 是否存在全局压缩或饱和。
-
-只读估算：用单一 global pulse-height response compression `signal' = signal^gamma`，D2.1 best 需要 `gamma ≈ 0.749` 才能把 peak-height exponent 映射到 `2.3`；该 gamma 把 Au30/Au20 SNR ratio 从 `3.28` 压到约 `2.43`，formula-consistent Ag/Au loss 仍约 `0.041`，strict Table S1 loss 仍高。response compression 是比 per-diameter correction 更值得考虑的下一种估计项；不过它仍是 reproduction lens，不是 raw calibration。
-
-#### 14.5.6 Phase 2.11 — single global response-compression rescore
-
-`paper_reproduction_response_compression`：同一全局 `gamma` 同时作用于 Au size-response、Au20/Au30 SNR ratio、Ag/Au signal ratio；只允许一个 global SNR scale；不允许 per-wavelength / per-geometry / per-diameter / per-case gamma；不做 detection logistic remap。
-
-| 输入 | best candidate | gamma | response-compression score | status |
-|---|---|---:|---:|---|
-| D2.1 local smoke | `tau_2ms_global_refphi_plus_collection_narrow` | `0.749` | `2.033` | `response_compression_fit_not_met` |
-| full inverse | `low_noise_stack` | `0.703` | `2.651` | `response_compression_fit_not_met` |
-| 3000-event size-only confirmation | `..._global_refphi_plus_0p6__paper_5sigma_size_response_fit` | `0.724` | `3.722` | `response_compression_fit_not_met` |
-
-D2.1 best 的 score breakdown：SNR-ratio loss `0.387`、SNR-anchor loss `0.0146`、formula-consistent Ag/Au loss `0.0410`、complexity penalty `0.818`、detection loss `0.65`（合计约 `1.91`，与 total score `2.033` 的差额 ≈ `0.12` 来自尚未在 breakdown 中拆出的 strict Table S1 residual / Ag-anchor 等次要项；以 [reports/49](49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md) 原文 score 为准）。`gamma` 是按 target / raw Au exponent 反推出的全局 readout/pulse-height compression，因此 size loss 贴近 0 是该 reproduction lens 的定义结果；真正残差检验是 SNR ratio、paper-normalized SNR anchor、formula-consistent Ag/Au signal、detection warning 与 complexity。total score `2.033` 仍略高于 bounded partial 阈值 `2.0`。
-
-```text
-这 0.033 不应通过调权重抹掉。
-剩余项来自真实的 SNR ratio residual、gamma complexity 与 detection warning。
-```
-
-至此，计算路线已基本收口；再追更低分就需要 per-diameter / per-geometry / per-case / logistic remap 等过拟合项。
-
-### 14.6 G2.14–G2.15 — Stop-decision 后的边界检查
-
-#### 14.6.1 Instrument-aware feasibility（ET-2030 + LI5640）
-
-不是继续 paper-fit 搜索，而是检查实际读出链的量级边界。`tools/audits/instrument_hardware_feasibility.py` 用 ET-2030 silicon responsivity / NEP / 0.4 mm active area、LI5640 current/voltage sensitivity、time constant 与 filter-order prior 生成 `216` 个 feasibility rows；每行同时给出 current-input / low-noise TIA 与 50 Ω voltage path 两种接法的 verdict：
-
-| 接法（同 216 rows 内的列 verdict） | comfortable margin | near minimum | below minimum sensitivity |
-|---|---:|---:|---:|
-| current input / low-noise TIA | `216/216`（全部） | 0 | 0 |
-| 50 Ω voltage path | 0 | `5/216` | `211/216` |
-
-结论是硬件估计支持 current input / TIA 作为可行路线；50 Ω voltage path 几乎全部低于最小 voltage sensitivity（仅 `5/216` near minimum）。这只是 instrument feasibility estimate，不解锁 absolute SNR calibration。它支持第一轮实验**先核对 current-input / TIA 接法和量程**，而不是继续在 optical surrogate 里调相位。
-
-#### 14.6.2 Paper-statistics sensitivity boundary
-
-用 Phase 2.10 limiting-pair decomposition 只读估算 IQR trimming、finite-count sampling 或 vendor diameter distribution 各需贡献多大才能把 limiting pair slope 拉到 `2.3`：
-
-| 类别 | 行数 | 解读 |
-|---|---:|---|
-| `paper_statistics_unlikely_alone` | `274/288` | 单凭论文统计 / 粒径分布解释不通 |
-| `paper_statistics_borderline` | `14/288` | 边界 |
-
-最佳 D2.1 local-SNR case 仍需要对 high-diameter signal 做中位约 `30.6%` suppression，peak-height 需要约 `31.8%`。结论：paper statistics / size distribution 可以作为解释贡献项，但**没有 event-level pulses 或 measured size distribution 时，不能单独承担 raw Au size-response mismatch**。
-
-### 14.7 R5.2 — Bounded scenario-prior audit + selected-annulus sidecar guardrail
-
-来自 [reports/71](71_EV_NODI_realism_v2_R5_2_bounded_scenario_prior_audit_analysis.md)。R5.2 是 bounded、posthoc、existing-R5-artifact only 的审计：
-
-```text
-audited route IDs = 33
-audited existing R5 rows = 14784
-scenario bundles = 8 existing R5 bundles
-new case rows = 0
-new scenario bundles = 0
-new stochastic seeds = 0
-new solver cases = 0
-new experiments = 0
-```
-
-R5.2 在 selected-annulus 口径下产出 13 个 pre-registered outputs，其中与口径 B 直接相关的 sidecar guardrail 记录如下：
-
-```text
-selected_annulus_replaces_all_crossing_ranking = false
-selected_annulus_bound_change_authorized = false
-thermal_sidecar_used_to_increase_NODI_score = false
-```
-
-R5.2 的核心审计 finding：
-
-```text
-weak_reference_control 在 8/8 个 existing R5 scenario bundles 中超过 main_660
-20/20 个 above-main context routes 在全部 8 个 scenario bundles 中超过 main_660
-```
-
-均值：
-
-```text
-main_660 mean relative-prior score = 0.126095
-weak_reference_control mean relative-prior score = 0.152257
-above-main context-route family mean = 0.151919
-```
-
-Top context-route audit rows：
-
-```text
-660_500x1500 mean = 0.196396, ratio_vs_main = 1.557516
-660_500x1400 mean = 0.189745, ratio_vs_main = 1.504774
-660_500x1300 mean = 0.182575, ratio_vs_main = 1.447910
-660_500x1200 mean = 0.173859, ratio_vs_main = 1.378789
-660_600x1500 mean = 0.165472, ratio_vs_main = 1.312275
-```
-
-所有 context warning rows 仍记：
-
-```text
-context_route_promotion_authorized = false
-route_promotion_eligible = false
-interpretation = systematic_above_main_context_warning_not_route_promotion
-```
-
-R5.2 的最终决定：
-
-```text
-selected_future_recommendation_class = prepare_route_prior_model_revision_plan_only
-audit_decision = systematic_weak_reference_and_context_prior_warning_blocks_R6_plan
-```
-
-Main-660 仍锁定 `660_800x1400` 与 `660_800x1500`；不允许 R6 plan execution、route promotion、main-660 redefinition、optional `660 / 900x1400` redefining main-660、selected-annulus 边界变更、route-specific manual sign flips 或 calibrated/absolute claims。
-
-R5.2 用 `python -m pytest -q` 全套 853 passed in 206.47s 通过，review-bundle integrity / 提取 bundle 重测均 pass。
-
-### 14.8 selected-annulus 口径下的 Tsuyama 论文对照
-
-口径 B 的 paper geometry 与口径 A 的 EV engineering geometry 必须保持双栏 claim：
-
-| Lane | Geometry | Allowed claim |
-|---|---|---|
-| Tsuyama paper-audit（口径 B 主） | `660 / 800x550`、`660 / 1200x550`，并含 488/532 对照 | selected-annulus paper-audit proxy；本轮为 negative / diagnostic，不签 accepted candidate |
-| EV engineering（口径 A 主） | `660 / 800x1400`、`660 / 800x1500` | reference-useful long-wave candidate，不是 paper geometry 复现 |
-| Boundary control（双口径共用） | `660 / 700x1500` | weak-reference / NA boundary control |
-| Short-wave engineering（双口径共用） | `404 / 600x1300`、`404 / 800x700` sanity | short-wave mechanism / blank / exposure validation，不是 Tsuyama direct target |
-
-口径 B 不阻塞 660/404 第一轮实验准备；660/404 实验真正需要的是 blank、BFP、Au ladder、EV mimic、404 exposure/integrity 与 PEG/fluidic 数据。selected-annulus 口径只让 Tsuyama paper-audit 叙事更可审计。
-
-EV route shadow all-crossing dashboard（口径 B 内做的 sanity，不进入 Tsuyama paper score）：
-
-| 指标 | 数值 | 解释 |
-|---|---:|---|
-| route_count | 572 | EV route-level full-grid route 数 |
-| selected_all_uplift_median | `1.383647` | selected-annulus 系统性偏乐观，但仍在当前 uplift warning 上限内 |
-| selected_all_uplift_max | `1.556754` | 未超过 `1.6x` warning threshold |
-| selected_fraction_mean | `0.401984` | selected 子集约覆盖 40% 事件 |
-| selected_contribution_mean | `0.060904` | annulus 子区对全事件分母的平均贡献 |
-| all_crossing_detection_mean | `0.114024` | EV route all-crossing mean detection |
-| selected_detection_mean | `0.151295` | selected-annulus mean detection |
-| reference_useful_routes | `507` | 可作 selected cross-check |
-| weak_reference_boundary_routes | `65` | 只能作边界对照 |
-
-这组 shadow 指标支持继续使用 selected-annulus 作为 paper-audit lens；同时再次提醒：selected-annulus 不应替代 all-crossing 主工程口径（口径 A），反过来口径 A 的工程主排序也不能替代口径 B 的 paper-audit 结论。
-
-### 14.9 selected-annulus 口径下 realism v2 R0–R7.2 的反映
-
-| realism v2 阶段 | selected-annulus 口径下的反映 |
-|---|---|
-| R0 / R2 anchor smoke | selected-annulus 口径下未独立扩展；R5 全量库 selected dashboard 已覆盖 |
-| R3 reduced grid / R3b uncertainty | selected-annulus 口径下未独立扩展；R5 全量库 selected dashboard 已覆盖 |
-| R4 representative full-wave / R4 numerical solver / R4 route revision / R4.2 main-660 nearwall mesh | selected-annulus 口径下未独立扩展；R5.2 sidecar 仍记 `selected_annulus_replaces_all_crossing_ranking = false`，R4.2 nearwall 结论双口径共享 |
-| R5 full-grid v2 | EV route shadow all-crossing dashboard 即基于 R5 全量库；`selected_all_uplift_median ≈ 1.384x`、`max ≈ 1.557x`，未越过 `1.6x` warning |
-| R5.1 route-role stability | 与口径 A 共享结论：route role 在 R5 scenario bundles 内稳定；selected-annulus 不替代 ranking |
-| R5.2 bounded scenario-prior audit | **selected-annulus 口径主源**：见 §14.7 |
-| R5.3 route-prior model revision | selected-annulus 口径下未独立扩展；其结论以口径 A 为准 |
-| R6 route-prior sensitivity | selected-annulus 口径下未独立扩展；R5.2 已 block R6 plan |
-| R7 route-prior mechanistic decomposition / R7.1 operator artifact validation / R7.2 operator artifact gap register | selected-annulus 口径下未独立扩展；机制分解和 artifact gap register 在双口径共享，详见 §15.2 |
-| no-measured-data closure | 双口径共享 closure boundary：`calibrated_claim_allowed = false` |
-
-### 14.10 selected-annulus 口径下 post-v2 P0–P18 的反映
-
-| post-v2 阶段 | selected-annulus 口径下的反映 |
-|---|---|
-| P0 mandatory audit | P0 把 BFP ROI、Tsuyama BFP、noise/readout、EV/sample uncertainty、**selected-annulus lens**、pairwise inversion、forbidden-claim blockers 一起纳入审计；selected-annulus 是 P0 audit 的 lens 之一，不是路线晋升判据。详见 §13.1 |
-| P1 physical-ceiling diagnostic contracts | selected-annulus 口径下未独立扩展；4 条 contract 是 surrogate-risk reduction 通用 |
-| P2 bounded physical-solver readiness | selected-annulus 口径下未独立扩展；solver execution blocked |
-| P3 minimal pilot design | selected-annulus 口径下未独立扩展 |
-| P4 dry-run preflight | selected-annulus 口径下未独立扩展 |
-| P5 authorization gate | selected-annulus 口径下未独立扩展 |
-| P6 minimal bounded Green kernel trace | selected-annulus 口径下未独立扩展；P6–P16 是 all-crossing main-660 内部 trace lane |
-| P7 / P9 / P11 / P13 / P15 / P17 lane authorization design | selected-annulus 口径下未独立扩展 |
-| P8 phase-gradient trace | selected-annulus 口径下未独立扩展 |
-| P10 curvature-balance trace | selected-annulus 口径下未独立扩展 |
-| P12 resonance-compactness trace | selected-annulus 口径下未独立扩展 |
-| P14 phase-curvature residual trace | selected-annulus 口径下未独立扩展 |
-| P16 phase-curvature residual trace | selected-annulus 口径下未独立扩展 |
-| P18 synthesis stop/continue | 双口径共享：`bounded_lanes_sufficient_for_route_promotion = false`、`stop_mechanical_lane_roll_forward_pending_p19_evidence_strategy`；selected-annulus 口径下也不解锁 paper calibration |
-
-显式约束：P19 evidence strategy gate 必须在两个口径下都给出 acceptance criteria。selected-annulus 口径要求至少包含 measured Au raw trace、blank、BFP/slit/ROI、lock-in/logger，否则 paper-audit lane 仍只能停在 estimated-parameter reproduction lens。
-
-### 14.11 口径 B 的允许 / 禁止结论
-
-口径 B 允许说：
-
-```text
-selected-annulus 0.5-0.8 固定窗口下，
-Tsuyama paper-audit lane 已完成 G0-G5 + Phase 2.5-2.11 一遍闭环；
-当前选型已冻结，按现行参数出最终结果（详见 §14.12 / §14.14）。
-```
-
-```text
-formula-consistent Ag/Au signal proxy 已通过 raw signal-ratio target；
-strict Table S1 interferometric-column residual 保留为 diagnostic warning（target-mode 歧义）。
-```
-
-```text
-当前选定的低自由度复现 lens 是单一全局 response compression（gamma = 0.749），
-配合 D2.1 best 算子底座（tau_2ms_global_refphi_plus_collection_narrow），
-formula-consistent Ag/Au loss ≈ 0.041、SNR-ratio loss ≈ 0.387；
-total reproduction score = 2.033（descriptive partial reproduction 级别）。
-```
-
-```text
-ET-2030 + LI5640 instrument-aware feasibility 显示：
-current input / low-noise TIA 路径在 216/216 配置上具备 comfortable sensitivity margin；
-50 Ω voltage path 在 211/216 配置上低于最小 sensitivity（5/216 仅 near minimum），
-因此 voltage-path 不被推荐作为口径 B 的硬件接法。
-```
-
-```text
-EV route shadow dashboard 显示 selected/all uplift median ≈ 1.384x，
-max ≈ 1.557x，均未超 1.6x warning；
-selected-annulus 与 all-crossing 并立，不互相替代。
-```
-
-```text
-当前选型的几何主对照是 660 / 1200x550（raw Au peak-height exponent 3.0335）
-与 660 / 800x550（3.0456）；其余几何作为 488/532 wavelength 对照保留。
-```
-
-口径 B 不能说：
-
-```text
-存在 accepted paper-calibrated candidate（仍是 negative_or_diagnostic_result_only）。
-```
-
-```text
-Tsuyama paper 的 Table S1 / classification 数值已被 raw 参数自然复现。
-```
-
-```text
-selected-annulus 0.5-0.8 边界可以移动以"贴近"论文。
-```
-
-```text
-selected-annulus 排序可以替代 all-crossing 工程排序（与 §15.3 共同 forbidden 一致）。
-```
-
-```text
-ET-2030 / LI5640 instrument feasibility 已校准 absolute SNR / LOD / 浓度。
-```
-
-```text
-classification accuracy 已被本地复现（本地 sklearn 不可用，仍 no_accuracy_claim）。
-```
-
-```text
-gamma response compression 是真实物理定律。
-```
-
-```text
-当前 gamma / SNR scale / SNR response exponent 是仪器物理参数（它们是 reproduction lens 估计项）。
-```
-
-### 14.12 口径 B 最终收口（当前参数冻结为选型）
-
-口径 B 已经完成它应该完成的工作：在不修改 selected-annulus 边界、不回写 EV full-grid、不开 per-diameter / per-geometry / per-case correction 的前提下，完整跑通 Tsuyama paper-audit lane 的 G0–G5 + 2.5–2.11 + instrument-aware feasibility + paper-statistics sensitivity。
-
-**v4.0 起，口径 B 选型在以下参数集上冻结**，不再继续追更低 reproduction score；后续如需推进必须先有实测 artifact，否则按本节参数出结果即可。
-
-冻结的口径 B 选型参数集：
-
-```text
-chosen_lens_id      = single_global_response_compression_with_d2p1_base_v1
-chosen_candidate_id = tau_2ms_global_refphi_plus_collection_narrow   # D2.1 best
-chosen_response_compression_gamma = 0.749
-chosen_global_snr_scale           = 0.728
-chosen_global_snr_response_exp    = 0.812
-selected_annulus_window           = 0.5–0.8                          # 固定，不移动
-lock_in_time_constant             = 1–2 ms
-readout_observable                = pulse peak height (脉冲幅值)
-phase_flip_hard_reject            = false
-hardware_silicon_detector         = ET-2030 (responsivity / NEP / 0.4 mm active area)
-hardware_lock_in                  = LI5640
-hardware_connection               = current_input_with_low_noise_TIA  # 推荐
-hardware_connection_blacklist     = 50_ohm_voltage_path                # 几乎全部 below sensitivity
-au_diameter_panel                 = 20 / 30 / 40 / 60 nm
-geometry_paper_audit_primary      = 660 / 1200x550, 660 / 800x550
-geometry_paper_audit_secondary    = 488 / 800x550, 532 / 800x550, 488 / 1200x550, 532 / 1200x550
-```
-
-冻结后的 release status 与 score：
-
-```text
-release_status                          = negative_or_diagnostic_result_only
-no_accepted_paper_calibrated_candidate  = true
-chosen_lens_total_reproduction_score    = 2.033   # bounded partial 阈值 2.0
-detection_status                        = partial_pass_with_Au20_low_warning
-formula_consistent_signal               = pass
-strict_table_s1_signal                  = unresolved (target-mode 歧义，diagnostic-only)
-raw_au_size_response                    = unresolved (limiting pair 40-60 nm)
-classification_accuracy                 = no_accuracy_claim (本地 sklearn 不可用)
-selected_annulus_replaces_all_crossing  = false
-selected_annulus_bound_change           = not_authorized
-thermal_sidecar_used_to_increase_NODI   = false
-```
-
-冻结的判据是：再追更低 reproduction score 必须引入 per-diameter / per-geometry / per-case correction 或 detection logistic remap，越过 estimated-parameter 复现边界；当前参数已经把"在 reproduction lens 框架内能交付的 paper proxy alignment"全部做完。所以本报告不把"未达 score 2.0"读成"任务未完成"，而是读成"当前选型 = 当前参数集；进一步下降需要的不是计算自由度，而是实测 artifact"。
-
-口径 B 共同必须保留的双语边界：
-
-```text
-全部 selected-annulus 结论都是 estimated-parameter / reproduction-lens 结论；
-不构成对任何实物仪器、实物样品或绝对量级的校准；
-selected-annulus 不替代 all-crossing 工程主排序，
-all-crossing 不替代 selected-annulus paper-audit 结论。
-
-All selected-annulus conclusions are estimated-parameter / reproduction-lens
-results; they do not constitute calibration of any real instrument,
-real sample, or absolute magnitude. The selected-annulus lens does not
-replace the all-crossing engineering ranking, and vice versa.
-```
-
-口径 B 与口径 A 一起，构成本报告的双口径并立读者入口；任何后续阶段（P19+）的并入必须同时给出两个口径下的对应结论或显式 gap 标注（见 §15.5）。在 P19 evidence strategy gate 之前，**口径 B 输出 = 本节冻结参数 + §14.13 对照表 + §14.14 选型推荐**，不再做新一轮 reproduction-score 搜索。
-
-### 14.13 口径 B 当前参数与 Tsuyama 各论文数据的详细对比
-
-> 本节按 §14.12 冻结参数集（D2.1 best + gamma `0.749` + global SNR scale `0.728` + SNR response exponent `0.812` + selected-annulus `0.5-0.8` + 660/800x550 与 660/1200x550 主对照几何 + Au20/30/40/60 颗粒）输出当前 selected-annulus paper-audit 与 Tsuyama 6 篇论文的逐项对比。所有"当前选型值"列均使用上述冻结参数，不再做新拟合。
->
-> 判定语义：
-> - **match**：在当前 reproduction lens 内方向与量级一致；
-> - **partial**：方向一致、量级仍有 bounded residual；
-> - **boundary**：仅作为 boundary / safety / diagnostic 提示；
-> - **out-of-scope**：论文机制不在当前 NODI 散射 lane 内；
-> - **不复现**：明确不在本项目复现范围内（`no_accuracy_claim` 等）。
-
-#### 14.13.1 vs Tsuyama 2019 POD（Nonfluorescent Molecule Detection in 10² nm Nanofluidic Channels）
-
-| 论文项 | 论文值 / 结论 | 当前选型值 / 结论 | 判定 |
-|---|---|---|---|
-| 检测机制 | 光热衍射（POD），分子级 | NODI 散射干涉，颗粒级 | out-of-scope |
-| 通道尺度 | `400×400 nm` 至 `200×200 nm` | 主对照 `800×550 / 1200×550 nm`；EV engineering 覆盖 500–900 nm 宽 | out-of-scope（机制不同，几何只能并列对照） |
-| 衍射光区域作为读出区域 | 核心机制 | v2 用 BFP / slit / pinhole / readout region 显式约束 | match（方向） |
-| 小通道 LOD 不显著恶化 | `400×400 nm: ~5.0 µM`、`200×200 nm: 按 detection volume 不恶化` | 当前禁止 absolute LOD claim | out-of-scope |
-| 热扩散到玻璃基底 | 核心物理项 | v2 不做完整热效应 POD 源项；旁路只作 boundary | boundary |
-
-#### 14.13.2 vs Tsuyama 2020 diffraction（Characterization of Optical Diffraction by Single Nanochannel）
-
-| 论文项 | 论文值 / 结论 | 当前选型值 / 结论 | 判定 |
-|---|---|---|---|
-| Probe wavelength | `633 nm He-Ne` | 当前选型 paper-audit 主对照用 660 nm（最近对照点）| match（方向）|
-| Illumination NA | `0.45`（20×物镜）| 当前对照不依赖具体物镜 | 不评估 |
-| Collection NA | `0.9` | 当前 Phase 2 D2.1 best 用 `collection_narrow` 作为操作算子 | partial（方向一致；NA 数值非校准）|
-| Lock-in modulation | `1.1 kHz` | 当前选型 NODI 读出 3 kHz；time constant 1–2 ms 对齐 | partial（频率不同；time constant 与论文同 order）|
-| Time constant | `1 s`（论文连续测量）| 当前选型 1–2 ms（与 2022 NODI / 2020 counting POD 对齐）| partial（论文跨场景不同 time constant）|
-| 参考场振幅 / 论文条件参考场 比值 | 1.000x（基准）| 660/800x550 = `1.000x`，660/800x1400 = `0.963x`，660/900x1200 = `0.976x` | match（最大绝对差异 ≈ 9.20%，平均 ≈ 2.13%）|
-| 参考场是相位滤波结构 vs 背景常数 | 相位滤波结构 | v2 + 当前选型采用 paper-aligned phase filter 参考场 | match |
-
-#### 14.13.3 vs Tsuyama 2020 counting POD（Detection and Characterization of Individual Nanoparticles in a Liquid by POD）
-
-| 论文项 | 论文值 / 结论 | 当前选型值 / 结论 | 判定 |
-|---|---|---|---|
-| 检测机制 | POD 光热计数 | NODI 散射 / 干涉 | out-of-scope（机制不同，仅做趋势对照）|
-| 通道几何 | `800 × 710 nm` | 主对照 `800x550 / 1200x550 nm`，金颗粒对照覆盖 `800x500/600, 1200x500/600` | partial（同一 800 nm 宽 family，深度不同）|
-| 颗粒 | `20 nm Au` | 当前选型颗粒 panel = Au 20 / 30 / 40 / 60 nm | match（覆盖 paper 颗粒 + Table S1 集合）|
-| Au20 检出 | POD `near-100%` | 当前 NODI 选型：Au20 detection `partial_pass_with_Au20_low_warning`（6 个 joint cases 中 3 个进入 operational band，全部偏低）| boundary（与论文 Au20 weak-SNR 描述相容；NODI 散射不能外推 POD 100% 检出）|
-| 锁相时间常数 | `2 ms` | 当前选型 1–2 ms | match |
-| 流速 | `0.17 mm/s` | 当前选型流速近 0.2 mm/s（与 2022 NODI 同 order）| partial |
-| 660 nm，800 nm 宽，500 nm 深，Au20 通过 | `pass`（POD 光热）| `fail`（NODI 散射，合成检出 0.000）| out-of-scope（不可外推 POD → NODI）|
-| 660 nm，800 nm 宽，500 nm 深，Au40 通过 | — | `pass`（NODI 散射，合成检出 0.266）| match（粒径变大、信号增强趋势同向）|
-| 660 nm，800 nm 宽，500 nm 深，Au60 通过 | — | `pass`（NODI 散射，合成检出 0.315）| match |
-
-#### 14.13.4 vs Tsuyama 2020 solvent-enhanced POD（Concentration Determination at a Countable Molecular Level）
-
-| 论文项 | 论文值 / 结论 | 当前选型值 / 结论 | 判定 |
-|---|---|---|---|
-| Probe / excitation | `633 nm` probe + `532 nm` excitation | 当前 NODI 选型只在 660 nm 主对照 + 488/532 wavelength 对照；不做 thermo-optic excitation | out-of-scope |
-| Solvent thermo-optic `dn/dT` | 核心变量 | 不在当前 NODI 模型物理项中 | out-of-scope |
-| Solvent enhancement | `>30x` | 不评估 | out-of-scope |
-| LOD | `75 nM` 等价约 `10 / 0.23 fL` | 当前禁止 absolute LOD claim | out-of-scope |
-| Sign flip when solvent RI changes | POD thermal/diffraction coupling 特征 | 当前 NODI 不把 sign flip 当作 sign-preservation 替代指标 | boundary |
-
-#### 14.13.5 vs Tsuyama 2022 NODI（Nanofluidic Optical Diffraction Interferometry for Detection and Classification）
-
-> 这是口径 B 的中心对照论文。下表把 §14 冻结参数集与论文 Table S1 / 主要数值结论逐项对齐。
-
-| 论文项 | 论文值 / 结论 | 当前选型值 / 结论 | 判定 |
-|---|---|---|---|
-| Probe wavelength | `660 nm` | 当前选型主对照 `660 nm` | match |
-| 通道几何 | `≈ 800 × 550 nm` | 当前选型 paper-audit 主对照 `660/800x550` 与 `660/1200x550` | match |
-| Collection NA | `0.9` | D2.1 best 用 `collection_narrow` 算子；不做 absolute NA 校准 | partial（方向一致）|
-| Slit | `1 mm` | 当前 BFP / slit / pinhole 几何位于约束中；不复现绝对尺寸 | partial |
-| Pinhole | `400 µm` | 同上 | partial |
-| Time constant | `1–2 ms` | 当前选型 `1–2 ms` | match |
-| Pressure / flow velocity | `100 kPa / 0.2 mm/s` | 当前选型流速近 0.2 mm/s | match |
-| Table S1 Ag40/Au40 signal ratio（formula-consistent `sqrt_scattering_column_ratio` 模式）| paper 数值 | 当前选型：formula-consistent Ag/Au loss ≈ `0.041`（pass）| match |
-| Table S1 Ag40/Au40 signal ratio（strict `interferometric_column_ratio` 模式）| paper strict 数值 | 当前选型：strict residual unresolved（target-mode 歧义；保留为 diagnostic warning）| out-of-scope（target ambiguity，不入 hard target）|
-| Au size exponent | `2.3` | 当前选型 raw peak-height exponent：`660/1200x550 = 3.0335`、`660/800x550 = 3.0456`、`532/800x550 = 3.1563`；gamma `0.749` 之后映射到 `2.3`（lens 定义结果）| partial（reproduction lens 内对齐；raw 自然复现仍偏陡，limiting pair `40-60` nm）|
-| Au30 / Au20 SNR ratio | `33 / 12 ≈ 2.75` | 当前选型 raw `3.36`；gamma compression 后 ≈ `2.43`；SNR-ratio loss ≈ `0.387` | partial |
-| Au20 detection | weak-SNR / not-all-detected | 当前选型 `partial_pass_with_Au20_low_warning`（Au20 only-low miss）| match |
-| Au30 detection | minor / borderline | 当前选型 Au30 minor warning（5/6 joint cases pass）| match |
-| Au40 detection | full | 当前选型 6/6 pass | match |
-| Au60 detection | full | 当前选型 6/6 pass | match |
-| Classification accuracy | `71.9 ± 4.0%`（SVM）| 本地 sklearn 不可用：`no_accuracy_claim`；feature export 完整、`200` rows、min class count `24` | 不复现 |
-| 信号方向：660 强于 488/532 | 是 | 当前选型 488/532/660 对照中 660 通过比例 `0.45`，488/532 均 `0.00`；mean pulse peak 660 = `0.15641`、532 = `0.07730`、488 = `0.05245` | match |
-
-#### 14.13.6 vs Tsuyama 2024 POD+NODI（Nanofluidic detection platform for simultaneous light absorption and scattering measurement）
-
-| 论文项 | 论文值 / 结论 | 当前选型值 / 结论 | 判定 |
-|---|---|---|---|
-| Probe wavelength | `660 nm` | 当前选型主对照 `660 nm` | match |
-| Excitation wavelength（POD 侧）| `532 nm` | 不进入 NODI 选型；仅作 boundary 对照 | boundary |
-| Time constant | `1–2 ms` | `1–2 ms` | match |
-| Frequency split | `1.2 / 4.1 kHz` | 当前 NODI 单通道读出 3 kHz；不复现双频 split | partial |
-| 通道几何 | width `800–1200 nm`、depth `~550 nm` | 当前选型 paper-audit 主对照覆盖 `660/800x550` 与 `660/1200x550` | match |
-| Paired POD + NODI pulse observables | 核心读出语义 | 当前选型只输出 NODI 侧 pulse peak height + amplitude / in-phase 对照；不复现完整双频电子链路 | partial |
-| 同相读出 vs 幅值读出（660 nm 通过比例）| paper 用 paired pulses | 当前选型：基线（in-phase + phase-gated）通过 `0.00`、in-phase no-gate `0.45`、amplitude `0.45`；mean detection 几乎不变 | match（方向）|
-| 分类协议 | paired POD + NODI 分类器 | 不复现完整分类器协议 | 不复现 |
-
-### 14.14 口径 B 选型推荐
-
-> 本节是 P19 evidence strategy gate 之前 **口径 B 的最终选型**。任何 P19 plan 必须以此为口径 B 的 baseline，不允许在没有 measured artifact 的前提下把这组参数视为"过渡候选"再做新一轮搜索。
-
-#### 14.14.1 推荐计算侧选型（reproduction lens）
-
-```text
-chosen_lens_id      = single_global_response_compression_with_d2p1_base_v1
-chosen_candidate_id = tau_2ms_global_refphi_plus_collection_narrow
-
-# global reproduction-lens 估计项（不解读为物理常数）
-global_response_compression_gamma = 0.749
-global_snr_scale                  = 0.728
-global_snr_response_exponent      = 0.812
-
-# 算子 / 几何 / 颗粒
-selected_annulus_window           = 0.5 – 0.8                      # 固定，不移动
-geometry_primary                  = 660 / 1200x550, 660 / 800x550
-geometry_secondary_for_wavelength = 488 / 800x550, 532 / 800x550,
-                                    488 / 1200x550, 532 / 1200x550
-au_diameter_panel                 = 20 / 30 / 40 / 60 nm
-
-# 读出 / 数据采集
-lock_in_time_constant             = 1 – 2 ms
-readout_observable                = pulse peak height (脉冲幅值)
-phase_flip_hard_reject            = false
-events_per_case                   = D2.1 局部 smoke 用 2000；
-                                    paper-audit confirm 用 3000–10000
-```
-
-附核心 score 与 alignment：
-
-```text
-total_reproduction_score          = 2.033       # bounded partial 阈值 2.0；冻结，不再追低
-formula_consistent_Ag_Au_loss     ≈ 0.041
-SNR_ratio_loss                    ≈ 0.387
-SNR_anchor_loss                   ≈ 0.0146
-detection_loss                    ≈ 0.65
-complexity_penalty                ≈ 0.818
-
-raw_Au_peak_height_exponent_660_1200x550 = 3.0335
-raw_Au_peak_height_exponent_660_800x550  = 3.0456
-raw_Au_peak_height_exponent_532_800x550  = 3.1563
-limiting_size_pair                       = 40 – 60 nm
-```
-
-#### 14.14.2 推荐硬件接法（instrument-aware feasibility）
-
-```text
-silicon_detector       = ET-2030 (estimated responsivity / NEP / 0.4 mm active area)
-lock_in_amplifier      = LI5640
-recommended_connection = current_input_with_low_noise_TIA
-                         (216 / 216 配置 comfortable margin)
-blacklisted_connection = 50_ohm_voltage_path
-                         (211 / 216 below sensitivity, 5 / 216 near minimum)
-```
-
-#### 14.14.3 推荐对照颗粒与几何（paper-audit lane）
-
-| 用途 | 颗粒 | 几何 | 备注 |
-|---|---|---|---|
-| 主对照 | Au40 / Ag40 | `660 / 800x550`、`660 / 1200x550` | Table S1 中心；raw Au exponent 最优组合 |
-| Au size exponent 对照 | Au20 / Au30 / Au40 / Au60 | 同上 | Au20 保留 low-sensitivity warning，不视为 release blocker |
-| Wavelength 对照 | Au40 / Ag40 | `488 / 800x550`、`488 / 1200x550`、`532 / 800x550`、`532 / 1200x550` | 用于 660 > 532 > 488 趋势复核 |
-| Boundary control（双口径共用）| EV-like | `660 / 700x1500` | weak-reference / NA boundary |
-| Short-wave engineering（双口径共用）| EV-like | `404 / 600x1300`、`404 / 800x700` | sanity，不是 Tsuyama direct target |
-
-#### 14.14.4 推荐报告口径与禁止条目
-
-允许直接发布的口径：
-
-```text
-release_status          = negative_or_diagnostic_result_only
-chosen_lens             = single_global_response_compression_with_d2p1_base_v1
-chosen_lens_score       = 2.033 (descriptive partial reproduction)
-formula_consistent_pass = true
-detection_status        = partial_pass_with_Au20_low_warning
-hardware_recommendation = current_input_with_low_noise_TIA
-```
-
-禁止从本选型推导出的结论（与 §14.11 / §15.3 一致）：
-
-```text
-accepted_paper_calibrated_candidate
-absolute_SNR / LOD / 浓度
-biological specificity
-classification accuracy 已本地复现
-gamma / SNR scale / SNR exponent 是仪器物理常数
-selected_annulus 边界可移动
-selected_annulus 替代 all-crossing 工程排序
-```
-
-#### 14.14.5 推荐下一步（在 P19 evidence strategy gate 之前）
-
-1. **不再做新一轮 reproduction-score 搜索**：当前参数集已是 single global response compression lens 的最佳低自由度解；继续下降需要 per-diameter / per-geometry / per-case correction，越过本项目允许的复现边界。
-2. **以本节冻结参数为口径 B baseline**：任何 P19 plan 必须把这组参数 + §14.13 的 6 张对比表当作 baseline，不能把它们视为"过渡候选"。
-3. **第一轮硬件验证优先核 current input / TIA 接法**：不要再在 50 Ω voltage path 上调相位或调 annulus；voltage path 已被量级估计排除。
-4. **实测 artifact 优先级**：measured Au raw trace、blank、BFP / slit / ROI 扫描、lock-in / logger、PEG / fluidic 流体可行性数据，是把口径 B 从 `negative_or_diagnostic_result_only` 推进到 paper-calibrated candidate 的硬依赖。
-5. **classification accuracy** 要本地复现需在另一台具备 sklearn 的环境跑 svm；本报告仍 `no_accuracy_claim`。
+| 全局响应压缩因子 γ | `paper_reproduction_response_compression_gamma`, `gamma` | 把 raw 模型 peak 高度按 peak^γ 重映射，让 Au size exponent 从 ≈ 3.05–3.19 落到 Tsuyama 论文的 2.3；reproduction-lens 估计项，**不是**物理常数 |
+| 全局 SNR 缩放因子 s_SNR | `paper_reproduction_global_snr_scale`, `snr_scale` | 把 Au20 / Au30 局部 SNR 平移到 Tsuyama 论文 anchor |
+| 全局 SNR 响应指数 e_SNR | `paper_reproduction_snr_response_exponent`, `snr_response_exp` | Phase 2.7 引入，调节 SNR ratio 的相对 scaling |
+| 选定探测算子 | `tau_2ms_global_refphi_plus_collection_narrow`（D2.1 best）| 2 ms 锁相 + 全局参考相位正向位移 + 窄收集窗 |
+| 探测算子 family D2 | `D2_operator_phase_bfp_raw` | Phase 2.5 D2 raw-operator family |
+| 探测算子 family D2.1 | D2.1 局部 12 variants | D2 加密的局部 smoke，最优解 = D2.1 best |
+| 主路线 1 | `main_660_W800_D1400` | 660 nm + 800 nm 宽 + 1400 nm 深 |
+| 主路线 2 | `main_660_W800_D1500` | 660 nm + 800 nm 宽 + 1500 nm 深 |
+| 短波探针路线 | `probe_404_W600_D1300` | 404 nm + 600 nm 宽 + 1300 nm 深 |
+| 弱参考场对照路线 | `control_660_W700_D1500` | 660 nm + 700 nm 宽 + 1500 nm 深 |
+| 可选稳健性探针路线 | `optional_660_W900_D1400` | 660 nm + 900 nm 宽 + 1400 nm 深 |
+| 条件性相对主路线 | `conditional_relative_main` | 在合成相对先验框架内的主路线（不是绝对校准主路线）|
+| 对替代量级敏感、未晋升 | `surrogate_sensitive_not_promoted` | 被 P0 audit 降级；不允许按 v1 高分直接晋升 |
+| 仅作为弱参考场对照 | `weak_reference_control_only` | 不替代 main-660；不允许 route promotion |
+| 仅作为可选稳健性探针 | `optional_robustness_probe_only` | 同上 |
+| 仅作为短波探针 | `shortwave_probe_only` | 同上 |
+| 仅作为论文条件 sanity | `paper_sanity_only` | 仅论文条件 cross-check，不替代 main-660 |
+| 选定环带 | `selected_annulus` | 初始粒子位置在通道边缘 0.5–0.8 比例环带 |
+| 全 crossing 排序 | `all_crossing` / `all-crossing` | 不挑分母 condition，全 BFP 全 crossing |
+| 选定环带不替代全 crossing 主排序 | `selected_annulus_replaces_all_crossing_ranking = false` | 双向并立 forbidden 一条 |
+| 选定环带边界不可移动 | `selected_annulus_bound_change_authorized = false` | 0.5–0.8 固定 |
+| 路线晋升不许可 | `route_promotion_authorized = false` | 不得 route promotion |
+| main-660 重新定义不许可 | `main_660_redefinition_authorized = false` | 不得 redefine main-660 |
+| 校准声明不许可 | `calibrated_claim_allowed = false` | 全文 forbidden |
+| 实测数据未授权摄入 | `measured_data_ingest_authorized = false` | 全文 forbidden |
+| 公式自洽信号比 | `formula-consistent` | 论文 Csca 列开方比 vs interferometric 列比；当前 best loss ≈ 0.041 pass |
+| 总复现 score | `total_reproduction_score` / Phase 2.11 best | 多目标 lower-is-better penalty；当前 2.033 |
+| 候选 release 状态 | `release_status` | accepted / negative / diagnostic / **negative_or_diagnostic_result_only** |
+| raw 粒径响应未对齐 | `raw_size_response_alignment_not_met` | 口径 B 主 No-Go |
+| BFP | back focal plane | 后焦面 |
+| ROI | region of interest | 感兴趣区域 |
+| Wilson LB | Wilson lower bound | 有限事件数下 detection_rate 的统计下界 |
+| transit time | — | 粒子穿过 beam waist 的时间，按 beam_diameter / v_flow 估算（§6.1）|
 
 ---
 
-## 15. 双口径综合分析与共同收口
+## 附录 B：公式简表
 
-> 本节是双口径综合：把口径 A（§1–§13）与口径 B（§14）的结论摆在一起做对照，给出共同 forbidden claim、共同收口和后续阶段并入要求。它不修改任何口径内的结论，只做共同语义层。
-
-### 15.1 双口径并立治理原则
-
-| 维度 | 口径 A：all-crossing | 口径 B：selected-annulus paper-audit | 双口径关系 |
+| 阶段 | 公式 | 关键变量 | 证据档位 |
 |---|---|---|---|
-| 适用问题 | EV/NODI 工程整体路线排序与治理 | Tsuyama paper-audit proxy 数值能否被估计参数自然复现 | 互补，不是主辅 |
-| 主排序口径 | 全局 BFP 全 crossing | selected-annulus `0.5-0.8` 固定窗口 | 互不替代（双向 forbidden） |
-| 主结论形式 | route role + main-660 conditional_relative_main 集合 | candidate release status（negative_or_diagnostic_result_only） | 不能交叉解读（口径 A 的 route role 不能解释成口径 B 的 paper candidate；反之亦然） |
-| Tsuyama 关系 | 趋势对齐 + 固定条件对照 + 金颗粒读出口径对照 | paper-audit proxy + estimated-parameter reproduction lens | 共享文献来源（archive/tsuyama/*），结论形式不同 |
-| 结论边界 | 无实测 / 合成相对先验 / trace-only | 无实测 / estimated-parameter / reproduction-lens | 共享：calibrated_claim_allowed = false |
-| 后续依赖 | P19 evidence strategy gate | measured Au raw trace、blank、BFP/slit/ROI、lock-in/logger（详见 §14.6.1 实验排序） | P19 evidence strategy 必须同时给出两口径下的 acceptance criteria |
+| 1 | Csca = Qsca · π a²；dCsca/dΩ = (\|S1\|² + \|S2\|²) / (2 k²)；\|E_sca,unit\| = √(dCsca/dΩ) | a, n, k, λ | 2（Mie 推导）|
+| 2 | E_sca,detected = L_det[ field_sca(θ, φ) ] | 收集算子 L_det | 3（surrogate）|
+| 3 | E_sca(t) = E_env(t) · E_sca,unit · f_coupling(t) · exp(i · φ_extra(t)) | 照明 / 耦合 / 路径相位 | 3（surrogate）|
+| 4 | E_ref(t) ~ L_det[E_diff,ch] | channel-angular surrogate | 3（surrogate）|
+| 5 | signal_trace = \|E_sca\|² + 2 · Re(E_ref · E_sca*)  ← **相加，不相乘** | E_ref, E_sca, Δφ | 2 + 3（公式 + surrogate）|
+| 5 强参考场极限 | peak ≈ 2 \|E_ref\| \|E_sca\| cos(Δφ) ≈ \|E_ref\| · √Csca | — | 2 + 3 |
+| 6 | post-readout = lock-in(signal_trace + pre-noise) + post-noise | τ, in-phase / magnitude, noise_std | 3 |
+| 7 阈值 | threshold = median(bg) + threshold_sigma · 1.4826 · MAD(bg) | threshold_sigma, MAD | 5（可接受先验）|
+| 7 脉冲 | find_peaks(height ≥ threshold, width ≥ min_peak_width, distance ≥ min_peak_interval) | — | 3 |
+| 7 batch | detection_rate = n_detected / n_events；selected_annulus_detection_rate (§4) | edge_norm, annulus 0.5–0.8 | 3 + 5 |
+| Reproduction lens (口径 B) | (peak')^γ；SNR_obs = s_SNR · (SNR_raw)^e_SNR | γ = 0.749, s_SNR = 0.728, e_SNR = 0.812 | 4（reproduction-lens 估计项）|
 
-### 15.2 同一证据在两个口径下的差异对照
+---
 
-| 证据 / 主题 | 口径 A 下的结论 | 口径 B 下的结论 |
+## 附录 C：表格索引
+
+按变量类型分组找表：
+
+| 你想找的内容 | 去 § | 表 ID |
 |---|---|---|
-| main-660 路线 | `660 / 800x1400` 与 `660 / 800x1500` 双 conditional_relative_main；P6–P16 trace-only 首位在二者间反复切换 | `660 / 800x1400` 与 `660 / 800x1500` 是 reference-useful long-wave candidate；不是 paper geometry 复现，paper geometry 主对照是 `660 / 800x550` 与 `660 / 1200x550` |
-| 弱参考场 control（`660 / 700x1500`） | `relative_control_candidate` → `weak_reference_control_only`（P0 audit 裁决）；R5.2 中在 8/8 R5 scenario bundles 高于 main-660 | weak-reference / NA boundary control |
-| 660 nm 高分 context（`660 / 500x1300-1500`、`600x1500` 等） | 在 R5.2 bounded scenario-prior audit 中 ratio_vs_main 高达 `1.31-1.56x`，但 `context_route_promotion_authorized = false`，归类 `surrogate_sensitive_not_promoted` | selected-annulus uplift median `1.384x` 与 context 均值高度耦合，但同样 `selected_annulus_replaces_all_crossing_ranking = false` |
-| 404 nm probe（`404 / 600x1300`） | `probe_only` → `shortwave_probe_only`（P0 audit）；P6–P16 trace 中始终排第 3 | short-wave engineering sanity，不是 Tsuyama direct target |
-| optional `660 / 900x1400` | `optional_robustness_probe_only`，不得 redefine main-660 | selected-annulus 口径下未独立扩展 |
-| 4 条 paper-sanity routes | P0 audit 标 `paper_sanity_only` | 与 Phase 2 paper-audit candidate 不同：paper-sanity 是工程口径下的诊断，paper-audit 是 selected-annulus 口径下的 candidate |
-| width-prior 解释（W/800）^1.5 / ^2.0 | 可接受解释；主路线保留比例 1.000、context 越线 0、weak-reference 越线 0 | width-prior 是 R5.2 sidecar 提供的解释模型；不影响 Phase 2 paper-audit candidate score |
-| 404 nm 热效应 | 旁路提示，不给 NODI 光学分数加分 | `thermal_sidecar_used_to_increase_NODI_score = false` 在 R5.2 sidecar guardrail 中显式记 |
-| Au 颗粒散射对照（20–60 nm） | 660 > 532 > 488，660 nm 通过比例 0.45（其他 0.00），平均脉冲峰值 660 = `0.15641` | Phase 2 raw Au size exponent best 约 `3.05–3.19`（target `2.3`，limiting pair `40-60`） |
-| Tsuyama 2022 NODI 论文几何 `800x550` | 工程口径下是 cross-check 观察，不替代 main-660 路线治理 | paper geometry 主对照之一，是 Phase 2 paper-audit candidate 的几何子集 |
-| classification accuracy `71.9 ± 4.0%` | 引用为 Tsuyama 文献 anchor，不复现 | diagnostic_only target；本地 sklearn 不可用，`no_accuracy_claim` |
+| transit 时间随波长 | §6.1 | 表 6.1 |
+| EV biomimetic Csca 随波长 | §6.2.1 | 表 6.2.1 |
+| Au plasmonic Csca 随波长 | §6.2.2 | 表 6.2.2 |
+| Au 粒径阶梯 Csca | §6.2.2 | 表 6.2.2 第二张 |
+| \|E_ref\| 随几何 | §6.3 | 表 6.3 |
+| EV biomimetic all-crossing detection 总表 | §6.4 | 表 6.4.A |
+| NODI engineering lens stable detection | §6.4 | 表 6.4.B |
+| Au paper-audit selected-annulus 跨波长 | §6.4 | 表 6.4.C |
+| Au 粒径阶梯 detection | §6.4 | 表 6.4.D |
+| 660 nm 读出方式对照 | §6.4 | 表 6.4.E |
+| 固定几何看波长（5 张）| §7.1 | 表 7.1.1–7.1.5 |
+| 固定波长看几何（5 张）| §7.2 | 表 7.2.1–7.2.5 |
+| 口径 B 几何选型数据根据 | §7.3 | 表 7.3.1 |
+| 三 lens 同时排列 | §7.4 | 表 7.4 |
+| 噪声归因 | §8.4 | 表 8.4 |
+| 变量影响 10 项排序 | §9 | 表 9 |
+| 口径 A 推荐 detection 增益 | §10.3 | 表 10.3 |
+| 口径 A 路线治理裁决总表 | §10.5 | 表 10.5 |
+| 口径 A width-prior 模型对照 | §10.4 | 表 10.4 |
+| 口径 B Step 1 校准产物 | §11.2.2 | 表 11.2.2 |
+| 口径 B Step 1 score 分解 | §11.2.3 | 表 11.2.3 |
+| 口径 B Step 2 选型 5 维度 | §11.3 | 表 11.3 |
+| 口径 B 硬件接法 | §11.6 | 表 11.6 |
+| 口径 B 冻结参数集 | §11.7 | 表 11.7 |
+| 双口径同一证据对照 | §12.2 | 表 12.2 |
+| 估计值 6 档来源谱 | §13 | 表 13 |
+| 高频被误读数字读法 | §13 | 表 13（第二张）|
+| Tsuyama 6 篇角色总览 | §14.1 | 表 14.1 |
+| Tsuyama 2022 NODI 多 lens 对照 | §14.6 | 表 14.6 |
+| Forbidden claim 完整列表 | §15.2 | 表 15.2 |
 
-### 15.3 双口径共同 forbidden claim
+---
 
-下列禁止条目对两个口径同等适用（unified forbidden claim）：
-
-```text
-calibrated SNR
-calibrated event probability
-absolute LOD
-true EV concentration
-biological specificity
-measured blank safety
-detector voltage / sample-count prediction
-route promotion（针对 EV engineering）或 accepted paper-calibrated candidate（针对 Tsuyama paper-audit）
-main-660 redefinition
-selected-annulus 边界变更
-selected-annulus 替代 all-crossing 工程排序
-all-crossing 替代 selected-annulus paper-audit 结论
-404 nm 热效应旁路加分
-P6-P16 trace 排名当作路线升级或单一冠军结论
-estimated-parameter reproduction lens 当作 raw physical calibration
-classification accuracy 已本地复现
-gamma response compression 当作真实物理定律
-```
-
-### 15.4 双口径共同收口
-
-两个口径都已经完成各自范围内的工作：
-
-```text
-口径 A（all-crossing）已收口：
-  v2 + post-v2 P0-P18 在合成相对先验 / relative-audit / trace-only 范围内完成；
-  main-660 仍是 conditional_relative_main 集合 {800x1400, 800x1500}；
-  P18 已停止机械式 lane roll-forward；
-  下一步必须先做 P19 evidence strategy gate。
-
-口径 B（selected-annulus）已冻结选型：
-  Phase 2 + Phase 2.5-2.11 + instrument-aware feasibility + paper-statistics sensitivity
-  在 estimated-parameter / reproduction-lens 范围内完成；
-  release_status = negative_or_diagnostic_result_only；
-  当前参数集冻结为口径 B 选型（详见 §14.12 / §14.14）：
-    candidate_id = tau_2ms_global_refphi_plus_collection_narrow (D2.1 best)
-    gamma = 0.749, snr_scale = 0.728, snr_response_exp = 0.812
-    selected_annulus = 0.5-0.8 (固定)
-    geometry = 660/800x550, 660/1200x550 (主对照)
-    hardware = ET-2030 + LI5640, current_input/TIA (216/216 comfortable)
-  下一步是按本选型出最终结果（详细对比表见 §14.13）；
-  不再做新一轮 reproduction-score 搜索；
-  P19 evidence strategy 之前不重启 broad raw-parameter sweep。
-```
-
-共同收口边界（双语）：
-
-```text
-两个口径都不构成对任何实物仪器、实物样品或绝对量级的校准；
-两个口径相互并立，不互相替代；
-共同后续依赖是 P19 evidence strategy gate + 实测 artifact 集合。
-
-Both lenses are no-measured-data conclusions and do not constitute calibration of
-any real instrument, real sample, or absolute magnitude. The two lenses sit in
-parallel and do not replace each other. The shared next dependency is the P19
-evidence-strategy gate plus the measured-artifact set.
-```
-
-### 15.5 后续工作的双口径反映要求（going forward）
-
-任何后续 realism v2 / post-v2 P19+ 阶段证据并入本文（report 88）时，必须遵守：
-
-1. **同时评估两个口径**：写入两个口径下的对应结论；不允许只写一边。
-2. **显式标注 gap**：某口径下若没有等价证据，必须显式写入 "selected-annulus 口径下未扩展" 或 "all-crossing 口径下未扩展"。本节 §14.9 与 §14.10 的表是当前 gap 标注格式的范例。
-3. **双口径不互相替代**：新的证据若改变了 §15.3 共同 forbidden claim 中的任意一条，必须先在 §15.3 显式更新；不允许通过新阶段表述间接推翻共同 forbidden。
-4. **P19 evidence strategy gate** 必须为两个口径都给出 acceptance criteria。口径 A 至少含 `measured_blank_bfp` / standard particle transfer / slit-ROI scan / full-wave spot-check；口径 B 至少含 measured Au raw trace、blank、BFP/slit/ROI、lock-in/logger。
-5. **更新本节**：每次 P19+ 并入时，§15.2 对照表与 §15.4 收口段必须同步更新，确保两个口径在最新证据下仍可比较。
-6. **Provenance 保留**：[reports/49](49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md) 与 [reports/71](71_EV_NODI_realism_v2_R5_2_bounded_scenario_prior_audit_analysis.md) 仍是 selected-annulus 口径的 raw provenance；本文 §14 是它们的读者级合并，但不允许在不更新 §14 的情况下仅更新 49/71 就声称 88 已同步。
-
-### 15.6 当前未决事项（双口径）
-
-1. P19 evidence strategy gate 必须先定义两个口径下的 acceptance criteria 与停止准则，再继续任何 lane / family ladder。
-2. 实测 Au raw trace / blank / BFP / slit / ROI / lock-in / logger / 流体可行性数据，是两个口径共同的下一步硬依赖。
-3. EV polydispersity、non-sphericity、coincidence/blended pulses、roughness/fabrication background、PEG fouling 与 drift 仍属于 post-v2 validation program；既不应回写成口径 A 内 calibration，也不应回写成口径 B 内 paper-audit accepted candidate。
-4. 共同 forbidden claim（§15.3）在没有新实测证据前不得放宽。
-5. 口径 B 在 v4.0 已把当前参数集冻结为选型（§14.12 / §14.14）；任何 P19 plan 必须以此为口径 B baseline，不允许把这组冻结参数视为"过渡候选"再做新一轮搜索。
+（v5.0 报告主体结束。完整内容版次、不变量、保留 forbidden 与冻结参数列表见 §18.3。下一步硬依赖见 §16。）
