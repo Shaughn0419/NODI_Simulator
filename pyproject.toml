@@ -119,3 +119,15 @@ module = [
   "dashboard.signal_backend",
 ]
 ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+  "nodi_simulator.parameter_sweep",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+  "dashboard.precompute",
+]
+ignore_errors = true

@@ -250,6 +250,8 @@ def test_full_grid_decision_requires_feasible_artifact_and_no_runner(tmp_path):
     subparsers = next(
         action for action in parser._actions if getattr(action, "choices", None)
     )
+    assert subparsers.choices is not None
+    assert isinstance(subparsers.choices, dict)
     assert "full-grid" not in subparsers.choices
 
 
