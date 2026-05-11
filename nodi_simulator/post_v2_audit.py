@@ -224,12 +224,12 @@ def load_unique_route_aggregates(project_root: Path = PROJECT_ROOT) -> list[dict
             if row[index["particle_family"]] == "EV_sEV":
                 aggregates[key]["ev_prior_case_rows"] += 1
     rows = []
-    for key, row in aggregates.items():
-        row = dict(row)
-        row["v1_route_score_p10_ev_prior"] = _p10(ev_scores[key])
-        row["v1_route_score_p10_all_particles_diagnostic"] = _p10(all_scores[key])
-        row["route_aggregate_claim_level"] = "relative_engineering_prescore_only"
-        rows.append(row)
+    for key, aggregate_row in aggregates.items():
+        aggregate_row = dict(aggregate_row)
+        aggregate_row["v1_route_score_p10_ev_prior"] = _p10(ev_scores[key])
+        aggregate_row["v1_route_score_p10_all_particles_diagnostic"] = _p10(all_scores[key])
+        aggregate_row["route_aggregate_claim_level"] = "relative_engineering_prescore_only"
+        rows.append(aggregate_row)
     return sorted(rows, key=lambda row: (row["wavelength_nm"], row["width_nm"], row["depth_nm"]))
 
 
@@ -425,63 +425,69 @@ def build_bfp_roi_operator_summary(project_root: Path = PROJECT_ROOT) -> list[di
                     "anchor_particles_included": False,
                     "contaminants_included_in_route_score": False,
                 }
-    rows: list[dict[str, Any]] = []
-    for route_key, row in aggregates.items():
-        cross = _p10(cross_values[route_key])
-        self_term = _p10(self_values[route_key])
-        total = _p10(total_values[route_key])
-        scalar = _p10(scalar_values[route_key])
-        if cross is None or self_term is None or total is None or scalar is None:
+    bfp_rows: list[dict[str, Any]] = []
+    scalar_rows: list[dict[str, Any]] = []
+    for route_key, aggregate_row in aggregates.items():
+        cross_value = _p10(cross_values[route_key])
+        self_term_value = _p10(self_values[route_key])
+        total_value = _p10(total_values[route_key])
+        scalar_value = _p10(scalar_values[route_key])
+        if (
+            cross_value is None
+            or self_term_value is None
+            or total_value is None
+            or scalar_value is None
+        ):
             continue
+        cross = cross_value
+        self_term = self_term_value
+        total = total_value
+        scalar = scalar_value
         denominator = abs(cross) + abs(self_term)
-        rows.append(
-            {
-                **row,
-                "bfp_roi_score": total,
-                "bfp_roi_total_deltaI_proxy": total,
-                "bfp_roi_cross_term_proxy": cross,
-                "bfp_roi_self_term_proxy": self_term,
-                "bfp_roi_cross_term_fraction": abs(cross) / denominator if denominator else 0.0,
-                "bfp_roi_self_term_fraction": abs(self_term) / denominator if denominator else 0.0,
-                "bfp_roi_interference_dominant_flag": abs(cross) >= abs(self_term),
-                "bfp_roi_cross_term_sign": "positive" if cross > 0 else "negative" if cross < 0 else "zero",
-                "bfp_roi_scalar_sign": "positive" if scalar > 0 else "negative" if scalar < 0 else "zero",
-                "bfp_roi_sign_agreement_with_scalar": (cross >= 0 and scalar >= 0)
-                or (cross < 0 and scalar < 0),
-                "bfp_roi_negative_cross_term_flag": cross < 0,
-                "bfp_roi_cross_term_claim_level": "signed_relative_interference_audit_only",
-                "bfp_roi_operator_id": "v1_signed_detector_integral_route_aggregate",
-                "bfp_roi_mask_id": "calibration/bfp_roi_mask_template.json",
-                "audit_bfp_jacobian_applied": True,
-                "audit_bfp_coordinate_frame": "uv_direction_cosine",
-                "audit_bfp_jacobian_source_id": "closed_form_direction_cosine_solid_angle_weight_v1",
-                "audit_bfp_jacobian_formula_id": "dOmega_du_dv_eq_1_over_sqrt_1_minus_u2_minus_v2",
-                "audit_bfp_jacobian_unit_test_status": "pass",
-                "raw_roi_vs_scalar_score_ratio_diagnostic": total / scalar if scalar else None,
-                "raw_roi_vs_scalar_score_ratio_claim_level": "diagnostic_only_not_gate",
-            }
+        bfp_row: dict[str, Any] = {
+            **aggregate_row,
+            "bfp_roi_score": total,
+            "bfp_roi_total_deltaI_proxy": total,
+            "bfp_roi_cross_term_proxy": cross,
+            "bfp_roi_self_term_proxy": self_term,
+            "bfp_roi_cross_term_fraction": abs(cross) / denominator if denominator else 0.0,
+            "bfp_roi_self_term_fraction": abs(self_term) / denominator if denominator else 0.0,
+            "bfp_roi_interference_dominant_flag": abs(cross) >= abs(self_term),
+            "bfp_roi_cross_term_sign": "positive" if cross > 0 else "negative" if cross < 0 else "zero",
+            "bfp_roi_scalar_sign": "positive" if scalar > 0 else "negative" if scalar < 0 else "zero",
+            "bfp_roi_sign_agreement_with_scalar": (cross >= 0 and scalar >= 0) or (cross < 0 and scalar < 0),
+            "bfp_roi_negative_cross_term_flag": cross < 0,
+            "bfp_roi_cross_term_claim_level": "signed_relative_interference_audit_only",
+            "bfp_roi_operator_id": "v1_signed_detector_integral_route_aggregate",
+            "bfp_roi_mask_id": "calibration/bfp_roi_mask_template.json",
+            "audit_bfp_jacobian_applied": True,
+            "audit_bfp_coordinate_frame": "uv_direction_cosine",
+            "audit_bfp_jacobian_source_id": "closed_form_direction_cosine_solid_angle_weight_v1",
+            "audit_bfp_jacobian_formula_id": "dOmega_du_dv_eq_1_over_sqrt_1_minus_u2_minus_v2",
+            "audit_bfp_jacobian_unit_test_status": "pass",
+            "raw_roi_vs_scalar_score_ratio_diagnostic": total / scalar if scalar else None,
+            "raw_roi_vs_scalar_score_ratio_claim_level": "diagnostic_only_not_gate",
+        }
+        bfp_rows.append(bfp_row)
+        scalar_rows.append({"route_key": route_key, "score": scalar})
+    ranks = _rank_percentiles(bfp_rows, "bfp_roi_score")
+    scalar_ranks = _rank_percentiles(scalar_rows, "score")
+    for bfp_row in bfp_rows:
+        rank, percentile = ranks[bfp_row["route_key"]]
+        scalar_rank, scalar_percentile = scalar_ranks[bfp_row["route_key"]]
+        bfp_row["bfp_roi_rank_in_stratum"] = rank
+        bfp_row["bfp_roi_rank_percentile_in_stratum"] = percentile
+        bfp_row["v1_scalar_rank_in_stratum_for_bfp_audit"] = scalar_rank
+        bfp_row["v1_scalar_rank_percentile_in_stratum_for_bfp_audit"] = scalar_percentile
+        bfp_row["roi_vs_scalar_percentile_delta"] = percentile - scalar_percentile
+        bfp_row["rank_delta_bfp_minus_scalar"] = rank - scalar_rank
+        bfp_row["percentile_delta_bfp_minus_scalar"] = percentile - scalar_percentile
+        bfp_row["rank_inversion_flag"] = abs(percentile - scalar_percentile) >= 0.25
+        bfp_row["rank_inversion_severity"] = "major" if bfp_row["rank_inversion_flag"] else "none"
+        bfp_row["rank_inversion_reason_codes"] = (
+            "BFP.RANK_SHIFT_MAJOR" if bfp_row["rank_inversion_flag"] else ""
         )
-    ranks = _rank_percentiles(rows, "bfp_roi_score")
-    scalar_ranks = _rank_percentiles(
-        [{"route_key": row["route_key"], "score": _p10(scalar_values[row["route_key"]])} for row in rows],
-        "score",
-    )
-    for row in rows:
-        rank, percentile = ranks[row["route_key"]]
-        scalar_rank, scalar_percentile = scalar_ranks[row["route_key"]]
-        row["bfp_roi_rank_in_stratum"] = rank
-        row["bfp_roi_rank_percentile_in_stratum"] = percentile
-        row["v1_scalar_rank_in_stratum_for_bfp_audit"] = scalar_rank
-        row["v1_scalar_rank_percentile_in_stratum_for_bfp_audit"] = scalar_percentile
-        row["roi_vs_scalar_percentile_delta"] = percentile - scalar_percentile
-        row["rank_delta_bfp_minus_scalar"] = rank - scalar_rank
-        row["percentile_delta_bfp_minus_scalar"] = percentile - scalar_percentile
-        row["rank_inversion_flag"] = abs(percentile - scalar_percentile) >= 0.25
-        row["rank_inversion_severity"] = "major" if row["rank_inversion_flag"] else "none"
-        row["rank_inversion_reason_codes"] = (
-            "BFP.RANK_SHIFT_MAJOR" if row["rank_inversion_flag"] else ""
-        )
-    return sorted(rows, key=lambda row: (row["wavelength_nm"], row["width_nm"], row["depth_nm"]))
+    return sorted(bfp_rows, key=lambda row: (row["wavelength_nm"], row["width_nm"], row["depth_nm"]))
 
 
 def json_load(path: Path) -> dict[str, Any]:
@@ -976,6 +982,11 @@ def build_top_candidate_mandatory_audit(project_root: Path = PROJECT_ROOT) -> li
         noise_row = noise[route_key]
         selected_row = selected.get(route_key)
         selected_available = selected_row is not None
+        selected_annulus_boundary_policy = (
+            selected_row["selected_annulus_boundary_policy"]
+            if selected_row is not None
+            else "unchanged_v1_0p5_0p8_parallel_lens_only"
+        )
         severity = bfp_row["rank_inversion_severity"]
         if noise_row["noise_pass_fraction"] < 1.0 and severity == "none":
             severity = "minor"
@@ -1078,9 +1089,7 @@ def build_top_candidate_mandatory_audit(project_root: Path = PROJECT_ROOT) -> li
                     "coincidence_event_overlap_proxy_label"
                 ],
                 "selected_annulus_lane_status": "available" if selected_available else "lane_unavailable_v1",
-                "selected_annulus_boundary_policy": selected_row["selected_annulus_boundary_policy"]
-                if selected_available
-                else "unchanged_v1_0p5_0p8_parallel_lens_only",
+                "selected_annulus_boundary_policy": selected_annulus_boundary_policy,
                 "selected_annulus_replaces_all_crossing_ranking": False,
                 "selected_annulus_primary_gate_switch_blocked": True,
                 "selected_annulus_main_control_reversal": False,
