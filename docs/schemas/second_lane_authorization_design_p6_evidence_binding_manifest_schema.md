@@ -37,3 +37,13 @@ Required guards:
 - `solver_native_raw_magnitude_final_gate_allowed = false`
 
 The P6 trace is not calibrated prediction evidence, not physical calibration evidence, not route-promotion evidence, and not SNR, LOD, concentration, or specificity evidence.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `p6_trace_used_as_calibrated_prediction`
+- `p6_trace_used_as_physical_calibration`
+- `p6_trace_used_as_route_promotion_evidence`
+- `p6_trace_used_as_snr_lod_concentration_specificity_evidence`
+

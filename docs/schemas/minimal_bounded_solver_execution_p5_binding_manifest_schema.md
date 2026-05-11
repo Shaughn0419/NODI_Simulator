@@ -25,3 +25,13 @@ Required boundary fields:
 - `solver_native_raw_magnitude_final_gate_allowed = false`
 
 The manifest must bind the P5 authorization gate record and must record the exact phrase `authorize minimal bounded solver execution`. SNR and LOD claims remain blocked; true EV concentration and route-promotion claims remain blocked.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `p5_authorization_gate_decision`
+- `p5_authorization_gate_record_sha256`
+- `p5_p4_binding_manifest_sha256`
+- `user_authorization_phrase_received`
+

@@ -39,3 +39,10 @@ Required guards:
 - `additional_solver_output_generated = false`
 
 The manifest must carry the P12-to-P14 rank-instability governance object with delta `[-1, 1, 0]`. That object is trace-only and keeps route promotion blocked.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `rank_instability_governance`
+

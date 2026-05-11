@@ -28,3 +28,13 @@ operator_export_generation_authorized = false
 solver_output_generated = false
 route_promotion_authorized = false
 ```
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `p3_artifact_manifest_sha256`
+- `p3_route_subset_manifest_sha256`
+- `p3_schema_manifest_sha256`
+- `selected_route_ids`
+

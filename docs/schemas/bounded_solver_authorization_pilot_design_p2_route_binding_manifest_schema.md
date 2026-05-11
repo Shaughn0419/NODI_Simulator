@@ -28,3 +28,12 @@ route_promotion_authorized = false
 The bound source must be the P2 bounded route-universe manifest. The binding is
 future solver preflight scope only; it is not solver result evidence and not
 route-promotion evidence.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `bound_comparison_strata`
+- `bound_source_manifest_sha256`
+- `bound_source_manifest_stage`
+

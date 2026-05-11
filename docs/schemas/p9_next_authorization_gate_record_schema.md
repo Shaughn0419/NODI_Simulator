@@ -31,3 +31,13 @@ Required guards:
 - `solver_native_raw_magnitude_final_gate_allowed = false`
 - `additional_solver_execution_authorized = false`
 - `additional_solver_output_generated = false`
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `authorization_gate_decision`
+- `explicit_next_execution_request_required`
+- `future_authorization_phrase_already_received`
+- `minimum_later_phase_requirements`
+

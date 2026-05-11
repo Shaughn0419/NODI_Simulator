@@ -44,3 +44,11 @@ Required guards:
 The manifest must carry the recurring bounded-lane rank-instability governance object with delta `[-1, 1, 0]` for both `p12_to_p14_main_660_swap` and `p14_to_p16_main_660_swap`. That object is trace-only and keeps route promotion blocked.
 
 The manifest must also carry the report-numbering governance note for `reports/119_EV_NODI_P17_seventh_bounded_lane_authorization_design_plan.md`.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `rank_instability_governance`
+- `report_numbering_governance`
+

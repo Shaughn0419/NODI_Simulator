@@ -35,3 +35,12 @@ results/post_v2_bounded_physical_solver_readiness/bounded_physical_solver_readin
 Selected route rows may carry only bounded identifiers, route roles, comparison
 strata, P0 audit decision fields, P1 full-wave surrogate-risk labels, and
 pairwise flags. Raw proxy fields are not allowed.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `selected_routes`
+- `selection_rule`
+- `source_manifest_sha256`
+

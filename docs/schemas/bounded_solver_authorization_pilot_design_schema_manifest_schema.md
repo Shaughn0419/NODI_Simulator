@@ -35,3 +35,13 @@ full_wave_green_tensor_spot_check_minimal_pilot_design
 The input schema must bind the P2 route-universe manifest. The preflight schema
 must keep mesh generation unauthorized. The output schema placeholder is not
 solver output and must keep raw magnitude out of final gates.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `mesh_boundary_unit_preflight_schema`
+- `output_schema_placeholder`
+- `rank_pairwise_interpretability_requirement`
+- `solver_input_manifest_schema`
+

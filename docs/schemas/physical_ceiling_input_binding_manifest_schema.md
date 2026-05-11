@@ -50,3 +50,10 @@ The manifest is a source-binding guard only. It does not authorize calibrated
 SNR, absolute LOD, true EV concentration, biological specificity,
 detector-voltage prediction, sample-count, measured blank-safety, or route
 promotion claims.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `bindings`
+

@@ -60,3 +60,12 @@ route_promotion_authorized = false
 Raw proxy fields are intentionally excluded. Future solver outputs, if ever
 separately authorized, must be interpreted through rank, rank-percentile, or
 pairwise-inversion families rather than raw magnitude gates.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `comparison_strata`
+- `routes`
+- `source_sha256`
+

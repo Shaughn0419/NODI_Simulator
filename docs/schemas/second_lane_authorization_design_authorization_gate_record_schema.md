@@ -34,3 +34,12 @@ Required guards:
 - `solver_native_raw_magnitude_final_gate_allowed = false`
 
 Calibrated SNR, absolute LOD, true EV concentration, biological specificity, detector-voltage prediction, sample-count, measured blank safety, route-promotion, and main-660 redefinition claims remain blocked.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `authorization_gate_decision`
+- `explicit_second_lane_execution_request_required`
+- `minimum_later_phase_requirements`
+

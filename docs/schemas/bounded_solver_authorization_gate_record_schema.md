@@ -32,3 +32,10 @@ operator_export_generation_authorized = false
 solver_output_generated = false
 route_promotion_authorized = false
 ```
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `minimum_later_phase_requirements`
+

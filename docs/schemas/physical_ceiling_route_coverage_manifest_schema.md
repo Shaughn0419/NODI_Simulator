@@ -52,3 +52,11 @@ missing_primary_route_keys = []
 Non-route-key context sources are allowed, but at least one route-key source per
 lane must cover the P0 primary route universe. This manifest is a coverage guard
 only and does not authorize calibrated physical-ceiling result claims.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `lanes`
+- `source_bindings`
+

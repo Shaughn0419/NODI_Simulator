@@ -42,3 +42,10 @@ required_fields_present = true
 
 The allowed source set is limited to P0 mandatory route-audit fields and P1
 rank/risk diagnostic fields. No measured-data source is allowed in P2.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `bindings`
+
