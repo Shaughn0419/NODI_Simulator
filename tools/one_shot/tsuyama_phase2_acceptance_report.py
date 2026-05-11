@@ -2114,7 +2114,16 @@ def build_acceptance_report(
         _status_row("paper_reproduction_maximal_upper_status", best.get("paper_reproduction_status_maximal_upper"), best.get("paper_reproduction_score_maximal_upper"), "maximal upper-bound score with hypothetical strict Table S1 Ag transfer; not calibration"),
         _status_row("paper_reproduction_response_compression_status", best.get("paper_reproduction_status_response_compression"), best.get("paper_reproduction_score_response_compression"), "single global pulse-height/readout compression; descriptive reproduction-only lens"),
         _status_row("paper_reproduction_response_compression_gamma", best.get("paper_reproduction_response_compression_gamma_status"), best.get("paper_reproduction_applied_response_compression_gamma"), "global gamma shared across wavelength, geometry, and diameter"),
-        _status_row("primary_paper_reproduction_status", primary_reproduction.get("primary_paper_reproduction_status"), primary_reproduction.get("primary_paper_reproduction_score"), "status/score for the selected paper reproduction score mode"),
+        _status_row(
+            "primary_paper_reproduction_status",
+            str(
+                primary_reproduction.get(
+                    "primary_paper_reproduction_status", "unavailable"
+                )
+            ),
+            primary_reproduction.get("primary_paper_reproduction_score"),
+            "status/score for the selected paper reproduction score mode",
+        ),
         _status_row("paper_reproduction_strict_upper_ag_transfer_gain_range", best.get("paper_reproduction_strict_upper_ag_transfer_status"), json.dumps({"min": best.get("paper_reproduction_strict_upper_ag_transfer_gain_min"), "max": best.get("paper_reproduction_strict_upper_ag_transfer_gain_max")}), "hypothetical per-wavelength Ag transfer range used only for upper-bound scoring"),
         _status_row("paper_reproduction_score_strict_upper", "info", best.get("paper_reproduction_score_strict_upper"), "strict Table S1 upper-bound reproduction score"),
         _status_row("diagnostic_warnings", "info", json.dumps(diagnostic_warnings), "diagnostic warnings do not by themselves block release"),

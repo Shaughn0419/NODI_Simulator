@@ -664,16 +664,18 @@ def summarize_joint_candidate(
             summary[f"au_size_exponent_{observable}_{geometry_key}_median"] = (
                 float(np.median(geometry_values)) if geometry_values else float("nan")
             )
-    finite_observable_errors = {
-        observable: abs(value - AU_SIZE_EXPONENT_TARGET)
+    finite_observable_errors: dict[str, float] = {
+        observable: abs(float(value) - AU_SIZE_EXPONENT_TARGET)
         for observable, value in observable_medians.items()
         if np.isfinite(value)
     }
-    best_observable = (
-        min(finite_observable_errors, key=finite_observable_errors.get)
-        if finite_observable_errors
-        else "unavailable"
-    )
+    if finite_observable_errors:
+        best_observable, _ = min(
+            finite_observable_errors.items(),
+            key=lambda item: item[1],
+        )
+    else:
+        best_observable = "unavailable"
     raw_size_exponent = observable_medians.get("peak_height", float("nan"))
     required_size_delta = (
         float(AU_SIZE_EXPONENT_TARGET - raw_size_exponent)

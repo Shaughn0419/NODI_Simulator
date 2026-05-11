@@ -109,17 +109,19 @@ def attach_anchor_equivalent_metrics(
     anchors_by_key: dict[tuple[str, ...], MutableMapping[str, Any]] = {}
     for anchor in anchor_rows:
         key = design_metric_match_key(anchor)
-        current = anchors_by_key.get(key)
-        if current is None or _peak_height(anchor) > _peak_height(current):
+        current: MutableMapping[str, Any] | None = anchors_by_key.get(key)
+        if current is None:
+            anchors_by_key[key] = anchor
+        elif _peak_height(anchor) > _peak_height(current):
             anchors_by_key[key] = anchor
 
     any_anchor_available = bool(anchor_rows)
     for row in rows:
         key = design_metric_match_key(row)
-        anchor = anchors_by_key.get(key)
+        anchor_row = anchors_by_key.get(key)
         payload = _anchor_equivalent_payload(
             row,
-            anchor,
+            anchor_row,
             any_anchor_available=any_anchor_available,
         )
         write_result_metric_payload(row, payload)
@@ -263,7 +265,7 @@ def _anchor_equivalent_payload(
         finite_float_or_none(get_result_metric_value(row, "stable_detection_rate")),
         finite_float_or_none(get_result_metric_value(anchor, "stable_detection_rate")),
     )
-    if None in {peak_ratio, margin_ratio, stable_ratio}:
+    if peak_ratio is None or margin_ratio is None or stable_ratio is None:
         band = "anchor_metric_incomplete"
     elif peak_ratio >= 1.0 and margin_ratio >= 1.0 and stable_ratio >= 1.0:
         band = "anchor_matched_or_better"

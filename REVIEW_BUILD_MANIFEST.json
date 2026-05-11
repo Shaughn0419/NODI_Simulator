@@ -593,8 +593,8 @@
           "path": "HISTORICAL_REPORT_SUPERSESSION.md",
           "path_status": "exists",
           "role": "historical_report_supersession",
-          "sha256": "e7f322282eea200567c6b7c628e5b0d7257f4d9aaab1b75d1209c61cf4f0828a",
-          "size_bytes": 1235,
+          "sha256": "b2315fb1f9974c5be9f4be1d43b9044351589f1f917cf55cc9cc6a4f48f08b0c",
+          "size_bytes": 1613,
           "source_lane": "P1.governance"
         }
       ],
@@ -791,12 +791,12 @@
     }
   ],
   "calibrated_claim_allowed": false,
-  "generated_at": "2026-05-10T16:43:08+00:00",
-  "git_commit": "8dd07f5b7c42bfac3bd69e7f6660d2637b806c93",
-  "git_dirty": false,
+  "generated_at": "2026-05-11T04:30:46+00:00",
+  "git_commit": "d66ad95c6ffb4479c1c4620a9258154eec3818c4",
+  "git_dirty": true,
   "hashes_manifest_path": "REVIEW_PACKAGE_HASHES.sha256",
-  "hashes_manifest_sha256": "a33e2b4d561c3ec1ccbb39cd018d8014808525ca260853c3e17386f027680c6a",
-  "package_id": "ev_nodi_post_v2_review_package_20260510_p0b",
+  "hashes_manifest_sha256": "e6cda5d5c3139979629d61c043ba1da45a5a18855a2b9ca98afcc239ac43443c",
+  "package_id": "ev_nodi_post_v2_review_package_20260511_p0b",
   "package_role": "internal_build_tracking",
   "release_manifest_path": "REVIEW_PACKAGE_MANIFEST.json",
   "review_build_manifest_schema": "ev_nodi_review_build_manifest_v1"

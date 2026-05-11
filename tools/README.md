@@ -23,3 +23,14 @@ removal is acceptable if internal automation no longer references
 `tools/<name>.py`, external collaborators have had at least 30 days of
 migration notice, and the tiered paths remain covered by the wrapper
 completeness test.
+
+For documentation-contract hygiene, `tools/verify_schema_docs_manifest_fields.py`
+is available as a non-strict helper to report field-token drift between schema
+docs and matched JSON/YAML/CSV artifacts. It is intentionally advisory and does
+not replace schema-specific test suites.
+
+Suggested run in this ledger:
+
+- `python tools/verify_schema_docs_manifest_fields.py`
+- `python tools/verify_schema_docs_manifest_fields.py --strict` (CI-like failure mode; do not enable by default because matching heuristics still need allowlist cleanup)
+- `python -m pytest tests/test_*_schema.py`

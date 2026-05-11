@@ -53,12 +53,6 @@ def _run(label: str, args: list[str]) -> int:
     ).returncode
 
 
-def _popen_kwargs() -> dict[str, object]:
-    if os.name == "posix":
-        return {"start_new_session": True}
-    return {}
-
-
 def _terminate_process_tree(process: subprocess.Popen[bytes], *, force: bool = False) -> None:
     if process.poll() is not None:
         return
@@ -97,17 +91,18 @@ def _run_concurrent(lanes: list[tuple[str, list[str]]]) -> int:
         for label, args in lanes:
             print(f"\n== {label} ==", flush=True)
             print(" ".join(args), flush=True)
-            processes.append(
-                (
-                    label,
-                    subprocess.Popen(
-                        args,
-                        cwd=REPO_ROOT,
-                        env=_build_env(require_xdist="-n" in args),
-                        **_popen_kwargs(),
-                    ),
+            env = _build_env(require_xdist="-n" in args)
+            process = (
+                subprocess.Popen(
+                    args,
+                    cwd=REPO_ROOT,
+                    env=env,
+                    start_new_session=True,
                 )
+                if os.name == "posix"
+                else subprocess.Popen(args, cwd=REPO_ROOT, env=env)
             )
+            processes.append((label, process))
 
         first_failure = 0
         pending = {process for _, process in processes}

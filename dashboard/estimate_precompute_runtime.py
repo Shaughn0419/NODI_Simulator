@@ -46,7 +46,7 @@ from nodi_simulator.optional_acceleration import warn_numba_unavailable
 def _get_numba_info() -> dict:
     try:
         import numba  # type: ignore
-    except Exception:
+    except (ImportError, OSError, RuntimeError):
         warn_numba_unavailable("precompute runtime estimates")
         return {"available": False, "version": None}
     return {"available": True, "version": getattr(numba, "__version__", None)}
@@ -92,7 +92,7 @@ def _write_json_atomic(path: str, payload: dict) -> None:
         with open(tmp_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2, allow_nan=False)
         os.replace(tmp_path, path)
-    except Exception:
+    except (OSError, TypeError, ValueError):
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
         raise

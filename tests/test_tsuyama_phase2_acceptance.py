@@ -123,7 +123,7 @@ def test_acceptance_baseline_passes_guardrails_with_source_audited_targets():
 
 
 def test_acceptance_uses_seed_median_candidate_for_signing():
-    rows = []
+    rows: list[dict[str, object]] = []
     for score in (0.0, 10.0, 10.0):
         row = _best_candidate_row()
         row.update(

@@ -22,6 +22,7 @@ __path__ = [str(_PACKAGE_DIR), str(_PROJECT_ROOT)]
 
 # Reuse the canonical package exports defined inside the package.
 from . import _exports as _package_exports
+from ._exports import *  # noqa: F401,F403
 
 for _name, _value in vars(_package_exports).items():
     if _name.startswith("__") and _name != "__version__":

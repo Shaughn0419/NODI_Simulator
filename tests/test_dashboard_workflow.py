@@ -17,6 +17,7 @@ import re
 import subprocess
 import sys
 import importlib
+from typing import Any
 from copy import deepcopy
 from pathlib import Path
 
@@ -25,10 +26,13 @@ import pandas as pd
 import pytest
 import streamlit as st
 
+_StreamlitAppTest: Any = None
 try:
-    from streamlit.testing.v1 import AppTest
+    from streamlit.testing.v1 import AppTest as _StreamlitAppTest
 except Exception:  # pragma: no cover - optional test dependency
-    AppTest = None
+    pass
+
+AppTest: Any = _StreamlitAppTest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:

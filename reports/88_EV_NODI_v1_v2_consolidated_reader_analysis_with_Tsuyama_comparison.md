@@ -893,7 +893,7 @@ stop_continue_decision = stop_mechanical_lane_roll_forward_pending_p19_evidence_
 
 | 阶段 | 核心结论 | 关键数据/证据 | 与前后阶段的衔接或冲突 | 未解决点 |
 |---|---|---|---|---|
-| p0 | P0 release package 达到 review-ready relative-audit milestone。 | `REVIEW_PACKAGE_MANIFEST.json`、`REVIEW_PACKAGE_HASHES.sha256`、`results/post_v2_mandatory_audit/`、full regression passed 记录。 | 将 v2 sidecars 从“阶段报告”提升为 mandatory route-audit evidence chain；不改变 v2 无实测边界。 | 外部 review zip 仍包含完整 v1 summary，未来可优化包装模式。 |
+| p0 | P0 release package 从阶段报告上升为 review-ready mandatory audit 包，完成 P0 证据链闭环并对报告 88 合并生效。 | `REVIEW_PACKAGE_MANIFEST.json`、`REVIEW_PACKAGE_HASHES.sha256`、`results/post_v2_mandatory_audit/`；并通过 `python -m pytest tests/test_review_package_manifest.py` 与 `python tests/run_tests.py --workers 7`。 | 本阶段把 v2 sidecar 从阶段叙事中提取为主审计入口，并与 `reports/88` 的 P0-P18 边界统一；未变更 `v2 无实测校准` 约束。 | 证据传播仍在外部 review 打包层面有一次性优化空间；未提供 measured route calibration 前提下不改主路线晋升。 |
 | p1 | Physical-ceiling extensions 完成 no-solver rank diagnostic contracts。 | 四条 lane contract：full-wave/Green tensor、Vector/Jones、roughness/leakage、transport/residence-time。 | 为 P2 readiness 提供 surrogate-risk reduction 输入；不执行 solver。 | 缺真实 full-wave/vector/roughness/transport 输出。 |
 | p2 | Bounded physical-solver readiness 完成，但 solver execution blocked。 | bounded route universe、source binding、schema manifest、artifact manifest。 | 把 P1 诊断合同转成未来 preflight universe；为 P3 pilot design 提供边界。 | 仍无 mesh、operator、solver output 或 measured ingest。 |
 | p3 | Minimal pilot design 完成。 | 只选择 2 条 main-660 + 1 条 pairwise/full-wave spot-check 路线。 | 为 P4 dry-run preflight 定义固定 3-route subset。 | 只设计，不执行。 |

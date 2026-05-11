@@ -14,11 +14,14 @@ This ledger records the 2026-05-11 in-place consolidation of the current full-da
 
 - P0: none found.
 - P1: none found.
-- P2: Untracked AppleDouble metadata files detected outside ignored runtime folders: 1454. They are not tracked source, but naive recursive tools such as `compileall` can fail on null bytes unless they use tracked-file lists or exclude `._*`.
-- P3: No tracked-source blocking correctness/security defect found by per-file syntax scan, ruff, pyright, mypy, targeted tests, full test runner, and review-package verifier.
+- P2: Untracked AppleDouble metadata files detected outside ignored runtime folders. Reproducible counts depend on the command context:
+  - `find . -name '._*' -not -path './.git/*' | wc -l` -> `3822` (workspace scan)
+  - `git status --porcelain --ignored | grep '\\._' | wc -l` -> `426` (git-ignore-context count)
+  They are not tracked source, but naive recursive tools such as `compileall` can fail on null bytes unless they use tracked-file lists or explicitly exclude `._*`.
+- P3: No tracked-source blocking correctness/security defect found by this pass's **per-file static-tool scan** (syntax static check, ruff/pyright/mypy, manifest checks, and target test/verification execution); this is a tooling sweep, not a full semantic runtime review of all files.
 - P3: Historical supersession generator drift was found and fixed so generated supersession docs keep report 88 v3.0/P0-P18 rows.
 - P3: Generated post-v2 lane modules intentionally duplicate manifest/guardrail code; defer consolidation until P19 evidence strategy decides whether this lane family continues.
-- P3: Typed static checking remains scoped to the configured typed seed allowlist; full-repository type coverage is still a maintainability backlog.
+- P3: Full-repository static typing is still a backlog; `mypy` full-repo pass was executed and reports 774 errors across 43 files (348 checked), so the scope remains debt-tracked rather than release-gated.
 - P3: Review-package manifests and hashes are generated provenance files; they were refreshed to match updated hash-bearing docs and verified with the local-dev verifier.
 
 ## Verification evidence
@@ -28,14 +31,27 @@ This ledger records the 2026-05-11 in-place consolidation of the current full-da
 - `python tests/run_tests.py --workers 7`: 1342 non-AppTest tests passed and 5 AppTest tests passed through the canonical two-lane runner.
 - `python -m ruff check nodi_simulator dashboard tools tests --output-format=concise`: pass.
 - `python -m pyright`: 0 errors, 0 warnings.
-- `python -m mypy`: success, no issues in 6 source files.
-- `python tools/verify_review_package.py --package-root . --mode local-dev`: pass.
-- `python tools/verify_review_package.py --package-root . --mode external-review`: pass.
+- `python -m mypy --ignore-missing-imports nodi_simulator dashboard tools tests`: failed, 774 errors in 43 files (348 checked).
+- `python -m mypy`: success, no issues in 6 source files (seeded typed allowlist).
+- `python tools/verify_review_package.py --package-root . --mode local-dev --allow-dirty`: pass.
+- `python tools/verify_review_package.py --package-root . --mode external-review`: requires a clean worktree; was blocked as dirty-worktree in this working copy while applying updates.
 - Central Markdown links in README/navigation/report-current/audit/ledger: pass.
 - `git diff --check`: pass.
 - Naive recursive `compileall` over broad directories is not a release gate on this mounted volume because untracked AppleDouble `._*` metadata files contain null bytes; use tracked-file compilation instead.
+- Full-repository mypy pass was executed; details are recorded in "本轮工程债务" and in the verification evidence block above.
 
-## Source/config/test file-by-file ledger
+## Verification environment & evidence fingerprint
+
+- Audit timestamp: `2026-05-11T03:57:18Z` (UTC)
+- Git HEAD: `d66ad95`
+- Host/OS: `Darwin MacBookPro 25.4.0`
+- Python: `3.13.5`
+- Static/tool versions: `ruff 0.15.11`, `pyright 1.1.409`, `mypy 1.20.2`
+- Files under review in this ledger: `519` (source/config/test), `269` (doc), total repository objects (`git ls-files`) = `828`; remaining `40` are legacy/archival/quote-marked/non-review scope artifacts.
+
+## Source/config/test per-file static scan ledger
+
+Scope note: these 519 rows are a static-tool scan and manifest sweep, not a full semantic deep review of runtime behavior for every component. Semantic trade-offs are consolidated in `reports/88...` and conflict points are restated in the dedicated section below.
 
 Tracked files reviewed in git order: 519. Each row records the path, category, finding summary, recommended action, and whether this pass changed the file.
 
@@ -117,7 +133,7 @@ Tracked files reviewed in git order: 519. Each row records the path, category, f
 | `dashboard/app.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `dashboard/backend.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `dashboard/config.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
-| `dashboard/estimate_precompute_runtime.py` | source | P3 broad optional-dependency/write-cleanup exception handling is intentional fallback, but can hide unexpected runtime faults; P3 broad optional-dependency/write-cleanup exception handling is intentional fallback, but can hide unexpected runtime faults | Keep current behavior; address only if future lane execution or release-hardening scope requires it. | Not changed; recorded as review debt or intentional boundary. |
+| `dashboard/estimate_precompute_runtime.py` | source | Optional-dependency and temp-write cleanup exceptions narrowed to explicit classes to avoid masking unrelated runtime faults | Kept as defensive behavior; no functional change to precompute path, and no exception class broadening | Updated exception handling and preserved fallback behavior for optional dependency absence. |
 | `dashboard/mie_backend.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `dashboard/panels/__init__.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `dashboard/panels/common.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
@@ -131,7 +147,7 @@ Tracked files reviewed in git order: 519. Each row records the path, category, f
 | `dashboard/precompute.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `dashboard/safe_pickle.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `dashboard/signal_backend.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
-| `nodi_simulator/__init__.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
+| `nodi_simulator/__init__.py` | source | Package typing surface exposed to static consumers by importing `_exports` symbols directly, which resolves module-attribute visibility for downstream import sites like dashboard. | Keep current behavior; address only if future lane execution or release-hardening scope requires it. | Updated type visibility export (`from ._exports import *`). |
 | `nodi_simulator/_exports.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `nodi_simulator/assay_control_matrix.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `nodi_simulator/bayesian_calibration.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
@@ -196,7 +212,7 @@ Tracked files reviewed in git order: 519. Each row records the path, category, f
 | `nodi_simulator/post_v2_third_bounded_solver_lane_execution.py` | source | P3 generated post-v2 lane module repeats manifest/guardrail patterns; consider consolidation after P19 evidence-strategy stabilizes | Keep current behavior; address only if future lane execution or release-hardening scope requires it. | Not changed; recorded as review debt or intentional boundary. |
 | `nodi_simulator/pulse_analysis.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `nodi_simulator/readout_transfer_model.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
-| `nodi_simulator/realism_v2.py` | source | P3 provenance helper falls back to `unavailable` on broad git failures; acceptable for local runs, verifier remains the release gate | Keep current behavior; address only if future lane execution or release-hardening scope requires it. | Not changed; recorded as review debt or intentional boundary. |
+| `nodi_simulator/realism_v2.py` | source | P3 provenance helper now returns `unavailable` only on expected git/env lookup exceptions; unexpected exceptions remain to fail fast so hidden corruption is surfaced | Keep current behavior; address only if future lane execution or release-hardening scope requires it. | Updated `_git_commit()` to narrow exception coverage. |
 | `nodi_simulator/realism_v2_io.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `nodi_simulator/recompute_manifest.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
 | `nodi_simulator/reference_field.py` | source | No file-specific issue found by syntax/static/security-contract review. | No action. | No code change needed. |
@@ -830,6 +846,7 @@ Documentation/explanatory files reviewed in git order plus this ledger: 269. His
 | `results/post_v2_third_bounded_solver_lane_closure/README.md` | result-artifact-doc-preserved | Reviewed; result artifact README remains provenance for generated outputs, not reader entry point. |
 | `results/post_v2_third_bounded_solver_lane_execution/README.md` | result-artifact-doc-preserved | Reviewed; result artifact README remains provenance for generated outputs, not reader entry point. |
 | `scattering_trace.md` | current-or-companion-doc-reviewed | Reviewed; no direct content change needed after navigation/report updates. |
+| `文档导航.md` | updated-current | added report 121 ledger entry, switched v2 anchor to v3.0, added P0-audit + P6-P16 trace bullets, refreshed priority order |
 | `tests/run_tests.md` | updated-current | added AppleDouble mounted-storage verification caveat |
 | `tools/README.md` | current-or-companion-doc-reviewed | Reviewed; no direct content change needed after navigation/report updates. |
 | `trajectory.md` | current-or-companion-doc-reviewed | Reviewed; no direct content change needed after navigation/report updates. |
@@ -837,6 +854,55 @@ Documentation/explanatory files reviewed in git order plus this ledger: 269. His
 | `utils.md` | current-or-companion-doc-reviewed | Reviewed; no direct content change needed after navigation/report updates. |
 | `reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md` | updated-current | new ledger for full report merge, file-by-file code review, documentation review, and verification evidence |
 
-## Consistency conclusion
+## Schema contract verification
 
-Report 88 v3.0, README, navigation docs, report-current index, report 89, historical supersession generator/output, review-package manifests, and this ledger now agree that P0-P18 are no-measured-data relative-audit/trace-only evidence. The six bounded trace lanes are sufficient to show rank instability, not sufficient for route promotion. Remaining high-value work is P19 evidence strategy, measured blank/BFP artifacts, standard-particle calibration, full-wave spot checks, and future type-coverage expansion.
+- `docs/schemas/*` currently contains 138 markdown schema specs.
+- `tests/test_*_schema.py` currently covers 3 focused schema suites (`test_bfp_roi_self_cross_decomposition_schema.py`, `test_pairwise_rank_inversion_schema.py`, `test_post_v2_mandatory_audit_schema.py`); these were used as the validation anchor for schema/doc consistency where applicable.
+- For lane schema docs, a first-pass field drift check was executed as an explicit deferred-scope sanity run:
+  - `python tools/verify_schema_docs_manifest_fields.py` (non-strict)
+  - Result: `docs=138`, `with_artifact=69`, `fields_checked=1405`, `missing_hits=430`, plus many `MISSING_ARTIFACT_MATCH` entries because the script token-match heuristic is intentionally permissive and does not normalize naming/stub conventions across all result artifacts.
+  - This is treated as an advisory signal (not a hard gate in this pass) because the script is heuristic and not normalization-complete.
+- Dedicated schema tests executed in this pass remain:
+  - `python -m pytest tests/test_*_schema.py` (scoped to the three explicit schema suites in repository tests)
+- Next-pass target recorded here for handoff: in the next session, drive `missing_hits` down to `<= 300` with a curated allowlist + intent-to-test mapping, and keep the raw run attached in ledger evidence.
+
+## Updated-current documentation summary
+
+- `HISTORICAL_REPORT_SUPERSESSION.md`: synced to remove stale P1-specific glob and align row set with `nodi_simulator/review_package.py` supersession generator coverage.
+- `README.md`: updated current-report anchor to report 88 v3.0, preserved v1 historical scope callout, and added bounded-boundary caveats (AppleDouble tooling + measured/acquisition limits).
+- `docs/DOCUMENTATION_AUDIT_2026-05-08.md`: added supersession + current-anchor drift note for report 88 v3.0.
+- `文档导航.md`: added report 121 ledger entry and P0-audit / P6-P16 trace notes; switched v2 anchor guidance to v3.0.
+- `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`: refreshed in place to v3.0 with P0-P18 merged conclusions and trade-off trace evidence.
+- `reports/89_EV_NODI_post_v2_unmodeled_realism_register.md`: refreshed with P0-P18 status + P19 evidence-strategy boundary and completion notes.
+- `reports/current/README.md`: kept as current entrypoint with report 47 demoted to historical and v3.0 report 88 anchor.
+- `tests/run_tests.md`: added the AppleDouble mounted-storage reproducibility caveat and tool-safe compile path guidance.
+- `reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md`: this artifact now carries scope note, env fingerprint, open items split, and schema-drift intent.
+
+## Conflict and trade-off summary
+
+Report 88 §13.5 is the primary artifact for trade-off reasoning. This ledger stays aligned:
+- Legacy all-crossing/v1 claims are historical; v2 + P0 + bounded trace evidence now defines the active boundary.
+- Main-660 800x1400 / 800x1500 remain `conditional_relative_main` as a collection due to bounded-trace instability (`p6`-`p16` rank flips) with no route-promotion evidence.
+- P0 audit and P18 synthesis both conclude: relative-audit/trace-only evidence is sufficient for consolidation, but insufficient for route promotion.
+- This is a compressed summary; the complete five-item conflict matrix is in `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md §13.5`.
+
+## Open items / 待我确认
+
+Outstanding items from `reports/88...§13.6` and this pass's direct evidence carry-forward:
+
+### 外部证据待办（下一阶段明确验收）
+1. `measured_blank_bfp`、`standard particle` transfer、`slit/ROI` scan、`full-wave` spot-checks 仍需外部实验验证，当前结论不覆盖这些路径的实测增益。
+2. `EV polydispersity/non-sphericity/coincidence`、`roughness/fabrication background`、`PEG fouling`、`drift` 仍属于 post-v2 校准外扩验证域，不在当前 P0-P18 边界内。
+3. `report 88` 的长期边界仍生效：calibrated SNR / absolute LOD / true EV concentration / biological specificity / measured blank safety / route promotion / main-660 redefinition 均不可写入当前结论。
+4. `P19 evidence strategy`、`acceptance criteria`、`stop/continue` 条件仍需在下一会话形成文档化准入标准后再开启 P19。
+
+### 本轮工程债务（当前 pass 延后）
+1. 19 个 post_v2 lane 代码模块的 manifest/guardrail 样板仍可重构；已给出 RICE 估算（`~12,542 LOC`，20%–35% 可复用，`~1.0-1.5` 工程日；一批后续复用可摊销）。
+2. 全量 mypy 债务已测量：`774 errors in 43 files`（`python -m mypy --ignore-missing-imports nodi_simulator dashboard tools tests`）。
+   - 本轮已修复：`tests/test_tsuyama_phase2_acceptance.py` 中 `rows` 变量已显式标注为 `list[dict[str, object]]`。
+   - 本轮残留 top clusters：
+     - `nodi_simulator/post_v2_audit.py`: aggregate row/list typing conflation in multiple lanes
+     - `tests/test_tsuyama_gold_aligned_detection_lane.py`: static membership check shape for parser choices
+   - 下一会话目标：mypy 全量错误从 `774` 降到 `<= 700`（作为继续推进前置）。
+3. schema/docs 对齐核验尚未收敛：`verify_schema_docs_manifest_fields.py` 显示 `missing_hits=430`，仅先作为监控信号；下一会话优先目标 `missing_hits <= 300` 并形成意图排除清单。
+4. `P19` 设计与接收包仍明确 out-of-scope，本会话首交付项为 next session 的 P19 证据策略草案及验收准则。

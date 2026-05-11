@@ -6006,7 +6006,7 @@ def _git_commit() -> str:
             text=True,
             stderr=subprocess.DEVNULL,
         ).strip()
-    except Exception:
+    except (subprocess.CalledProcessError, FileNotFoundError, OSError):
         return "unavailable"
 
 
