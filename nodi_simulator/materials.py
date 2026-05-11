@@ -23,6 +23,7 @@ Note on medium/wall materials:
 """
 
 import numpy as np
+from typing import Any
 
 
 # ============================================================
@@ -112,7 +113,7 @@ _FUSED_SILICA_PROPERTIES = {
 }
 
 
-MATERIAL_DB = {
+MATERIAL_DB: dict[str, dict[str, Any]] = {
     "gold": {
         "source": "Johnson & Christy 1972",
         "type": "tabulated",

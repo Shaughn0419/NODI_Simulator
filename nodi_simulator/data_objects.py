@@ -593,8 +593,13 @@ class Particle:
         Otherwise, returns the fixed n_complex.
         """
         if self.use_material_model:
+            if self.material_key is None:
+                raise ValueError(
+                    "material_key must be set when use_material_model=True"
+                )
+            material_key = self.material_key
             from .materials import get_n_complex
-            return get_n_complex(self.material_key, wavelength_m)
+            return get_n_complex(material_key, wavelength_m)
         return self.n_complex
 
     def __post_init__(self):
@@ -1818,19 +1823,19 @@ class SimulationConfig:
                 "scattering_projection_mode must be 'intensity_proxy', "
                 f"'parallel', or 'perpendicular', got {self.scattering_projection_mode}"
             )
-        for name, value in {
+        for mode_name, mode_value in {
             "illumination_polarization_mode": self.illumination_polarization_mode,
             "reference_projection_mode": self.reference_projection_mode,
         }.items():
-            if value not in {
+            if mode_value not in {
                 "match_scattering",
                 "parallel",
                 "perpendicular",
                 "unpolarized",
             }:
                 raise ValueError(
-                    f"{name} must be 'match_scattering', 'parallel', "
-                    f"'perpendicular', or 'unpolarized', got {value}"
+                    f"{mode_name} must be 'match_scattering', 'parallel', "
+                    f"'perpendicular', or 'unpolarized', got {mode_value}"
                 )
         if not (0.0 <= self.cross_polarization_leakage <= 1.0):
             raise ValueError(
@@ -2308,25 +2313,29 @@ class SimulationConfig:
                 continue
             if not isinstance(mapping, dict):
                 raise ValueError(f"{map_name} must be a dict when provided")
-            for key, value in mapping.items():
-                if not str(key).strip():
+            for wavelength_key, wavelength_value in mapping.items():
+                if not str(wavelength_key).strip():
                     raise ValueError(f"{map_name} contains an empty wavelength key")
-                if float(value) < 0.0:
+                if float(wavelength_value) < 0.0:
                     raise ValueError(
-                        f"{map_name}[{key!r}] must be non-negative, got {value}"
+                        f"{map_name}[{wavelength_key!r}] must be non-negative, got"
+                        f" {wavelength_value}"
                     )
         if self.reference_calibration_by_wavelength is not None:
             if not isinstance(self.reference_calibration_by_wavelength, dict):
                 raise ValueError(
                     "reference_calibration_by_wavelength must be a dict when provided"
                 )
-            for key, value in self.reference_calibration_by_wavelength.items():
-                if not str(key).strip():
+            for (
+                reference_key,
+                reference_value,
+            ) in self.reference_calibration_by_wavelength.items():
+                if not str(reference_key).strip():
                     raise ValueError(
                         "reference_calibration_by_wavelength contains an empty "
                         "wavelength key"
                     )
-                if value is None or value == "":
+                if reference_value is None or str(reference_value) == "":
                     raise ValueError(
                         "reference_calibration_by_wavelength entries must be non-empty"
                     )
@@ -2589,7 +2598,10 @@ def apply_readout_preset(
     exposed through diagnostics as shared-threshold profiles.
     """
     overrides = get_readout_preset_overrides(readout_preset)
-    return replace(base_cfg, readout_preset=readout_preset, **overrides)
+    # Cast to Any so dataclasses.replace can apply per-field overrides explicitly
+    # typed in READOUT_PRESET_CONFIG_OVERRIDES.
+    typed_overrides: dict[str, Any] = overrides
+    return replace(base_cfg, readout_preset=readout_preset, **typed_overrides)
 
 
 # ============================================================
