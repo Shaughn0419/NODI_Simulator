@@ -243,7 +243,16 @@ def compute_scattering_field_trace(
     phi_focus_crossing = np.zeros_like(A_env, dtype=float)
     path_opd_diag = _resolve_path_opd_diagnostics(path_opd_model)
     path_reference_plane = str(path_opd_diag["path_reference_plane"])
-    path_z_geometry_factor = float(path_opd_diag["path_z_geometry_factor"])
+    path_z_geometry_factor_raw = path_opd_diag["path_z_geometry_factor"]
+    path_z_geometry_factor = (
+        float(path_z_geometry_factor_raw)
+        if isinstance(path_z_geometry_factor_raw, (int, float, np.integer, np.floating, np.number))
+        else float("nan")
+    )
+    if not isinstance(path_z_geometry_factor, float) or np.isnan(path_z_geometry_factor):
+        raise ValueError(
+            "path_opd_diagnostics.path_z_geometry_factor must be numeric and finite"
+        )
     path_z_reference_mode = str(path_opd_diag["path_z_reference_mode"])
     if phase_model == "constant":
         phi_extra = np.zeros_like(A_env)

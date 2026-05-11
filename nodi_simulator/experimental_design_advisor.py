@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 from .calibration_plan_advisor import build_calibration_plan_advisor
@@ -83,6 +83,12 @@ def _model_disagreement_pressure(diagnostics: Mapping[str, Any], text: str) -> f
     return 1.0 if any(flags) else 0.0
 
 
+def _as_str_sequence(value: object) -> list[str]:
+    if not isinstance(value, Sequence) or isinstance(value, (str, bytes, bytearray)):
+        return []
+    return [str(item) for item in value]
+
+
 def _calibration_gap_pressure(diagnostics: Mapping[str, Any], text: str) -> float:
     gap = 0.0
     if not bool(diagnostics.get("calibrated_quantitative_unlocked", False)):
@@ -123,12 +129,12 @@ def build_experimental_design_advisor(
 ) -> dict[str, object]:
     """Build deterministic next-experiment and VOI diagnostics."""
     calibration_plan = build_calibration_plan_advisor(diagnostics)
-    required_experiments = [
-        str(item) for item in calibration_plan.get("required_calibration_experiments", [])
-    ]
-    reason_codes = [
-        str(item) for item in calibration_plan.get("calibration_plan_reason_codes", [])
-    ]
+    required_experiments = _as_str_sequence(
+        calibration_plan.get("required_calibration_experiments", ())
+    )
+    reason_codes = _as_str_sequence(
+        calibration_plan.get("calibration_plan_reason_codes", ())
+    )
     text = _text_blob(diagnostics)
     blocker_pressure = _clamp01(len(reason_codes) / 5.0)
     sensitivity_pressure = _sensitivity_pressure(diagnostics, text)

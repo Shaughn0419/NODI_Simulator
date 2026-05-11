@@ -197,9 +197,28 @@ def compute_tsuyama_phase_filter_bfp_field(
     }
 
 
-def decompose_tsuyama_reference_field(**kwargs: object) -> dict[str, object]:
+def decompose_tsuyama_reference_field(
+    *,
+    channel_width_m: float,
+    channel_depth_m: float,
+    wavelength_m: float,
+    medium_refractive_index: float,
+    wall_refractive_index: float,
+    gaussian_waist_m: float,
+    n_grid: int = 4096,
+    grid_extent_factor: float = 8.0,
+) -> dict[str, object]:
     """Compatibility wrapper that returns total/no-channel/diffracted fields."""
-    return compute_tsuyama_phase_filter_bfp_field(**kwargs)
+    return compute_tsuyama_phase_filter_bfp_field(
+        channel_width_m=channel_width_m,
+        channel_depth_m=channel_depth_m,
+        wavelength_m=wavelength_m,
+        medium_refractive_index=medium_refractive_index,
+        wall_refractive_index=wall_refractive_index,
+        gaussian_waist_m=gaussian_waist_m,
+        n_grid=n_grid,
+        grid_extent_factor=grid_extent_factor,
+    )
 
 
 def integrate_bfp_roi(

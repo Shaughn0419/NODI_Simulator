@@ -134,7 +134,7 @@ def test_revised_R4_main_660_near_wall_coarse_cluster_is_explicit(
         revised_r4_output / "main_660_near_wall_coarse_sign_ambiguity_check.csv"
     )
     failures: Counter[tuple[str, str, str]] = Counter()
-    near_zero = Counter()
+    near_zero: Counter[str] = Counter()
 
     assert len(rows) == 80
     for row in rows:

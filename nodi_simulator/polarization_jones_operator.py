@@ -5,6 +5,7 @@ from __future__ import annotations
 from .data_objects import SimulationConfig
 from .type_coerce import blocker_summary as _blocker_summary
 from .utils import resolve_polarization_coupling
+import numpy as np
 
 
 POLARIZATION_JONES_DIAGNOSTIC_FIELDS = (
@@ -50,6 +51,12 @@ def _claim_level(mode: str, path_configured: bool) -> str:
     return "measured_jones_matrix_missing"
 
 
+def _coerce_numeric(value: object) -> float:
+    if isinstance(value, (int, float, np.integer, np.floating, np.number)):
+        return float(value)
+    raise TypeError(f"Expected numeric scalar, got {type(value)!r}")
+
+
 def build_polarization_jones_diagnostics(
     sim_cfg: SimulationConfig,
 ) -> dict[str, object]:
@@ -66,14 +73,14 @@ def build_polarization_jones_diagnostics(
     illumination = resolve_polarization_coupling(
         str(sim_cfg.illumination_polarization_mode),
         scattering_mode,
-        float(sim_cfg.cross_polarization_leakage),
+        _coerce_numeric(sim_cfg.cross_polarization_leakage),
     )
     reference = resolve_polarization_coupling(
         str(sim_cfg.reference_projection_mode),
         scattering_mode,
-        float(sim_cfg.cross_polarization_leakage),
+        _coerce_numeric(sim_cfg.cross_polarization_leakage),
     )
-    overlap_amplitude = float(illumination["amplitude_factor"]) * float(
+    overlap_amplitude = _coerce_numeric(illumination["amplitude_factor"]) * _coerce_numeric(
         reference["amplitude_factor"]
     )
     overlap_efficiency = max(0.0, min(1.0, overlap_amplitude * overlap_amplitude))
@@ -116,7 +123,7 @@ def build_polarization_jones_diagnostics(
         "polarization_reference_alignment_status": str(
             reference["alignment_status"]
         ),
-        "polarization_cross_polarization_leakage": float(
+        "polarization_cross_polarization_leakage": _coerce_numeric(
             illumination["cross_polarization_leakage"]
         ),
         "measured_jones_matrix_path_configured": path_configured,

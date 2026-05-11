@@ -2645,8 +2645,8 @@ def validate_uncertainty_R3b_prior_table(
 
 
 def R3b_effect_delta_log_score_ratio(
-    score_with_group_effect_by_route: dict[str, Iterable[float] | float],
-    nominal_score_by_route: dict[str, Iterable[float] | float],
+    score_with_group_effect_by_route: Mapping[str, Iterable[float] | float],
+    nominal_score_by_route: Mapping[str, Iterable[float] | float],
     *,
     eps: float = 1.0e-12,
 ) -> dict[str, float]:
@@ -2679,7 +2679,7 @@ def R3b_effect_delta_log_score_ratio(
 
 
 def R3b_effect_delta_from_group_component_log_multipliers(
-    group_component_log_multiplier_by_route: dict[str, Iterable[float] | float],
+    group_component_log_multiplier_by_route: Mapping[str, Iterable[float] | float],
 ) -> dict[str, float]:
     """R3b diagnostic convention when a group component is already a log multiplier."""
     deltas: dict[str, float] = {}
@@ -2692,7 +2692,7 @@ def R3b_effect_delta_from_group_component_log_multipliers(
 
 
 def R3b_group_component_log_multiplier_equivalence_check(
-    group_component_log_multiplier_by_route: dict[str, Iterable[float] | float],
+    group_component_log_multiplier_by_route: Mapping[str, Iterable[float] | float],
     *,
     tolerance: float = 1.0e-12,
 ) -> dict[str, Any]:

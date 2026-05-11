@@ -5,6 +5,7 @@ from __future__ import annotations
 from copy import copy
 from collections.abc import Sequence
 from dataclasses import replace
+from numbers import Real
 
 from .data_objects import OpticalSystem, Particle, SimulationConfig
 from .optical_exposure_safety import build_optical_exposure_safety_diagnostics
@@ -21,6 +22,12 @@ DEFAULT_OBJECTIVE_PANEL_IDS = (
     "high_NA_test",
     "large_spot_control",
 )
+
+
+def _as_float_or_zero(value: object) -> float:
+    if isinstance(value, Real):
+        return float(value)
+    return 0.0
 
 OBJECTIVE_PANEL_DIAGNOSTIC_FIELDS = (
     "objective_panel_status",
@@ -78,7 +85,7 @@ def _component_scores(record: dict[str, object]) -> dict[str, float]:
         "not_configured_claim_blocker": 0.70,
         "not_practical": 0.0,
     }.get(working_distance_status, 0.50)
-    position_sensitivity = float(record.get("position_sensitivity_score") or 0.0)
+    position_sensitivity = _as_float_or_zero(record.get("position_sensitivity_score"))
     position_score = max(0.0, 1.0 - 0.35 * position_sensitivity)
     return {
         "objective_panel_lockin_score": lockin_score,
@@ -103,7 +110,7 @@ def _recommendation_reason(record: dict[str, object]) -> str:
         f"lockin={record.get('lockin_bandwidth_margin')}",
         f"exposure={record.get('ev_photodamage_risk_band')}",
         f"working_distance={record.get('working_distance_compatibility')}",
-        f"position_sensitivity={float(record.get('position_sensitivity_score') or 0.0):.3f}",
+        f"position_sensitivity={_as_float_or_zero(record.get('position_sensitivity_score')):.3f}",
     ]
     return " / ".join(reasons)
 
@@ -159,7 +166,7 @@ def evaluate_objective_panel(
 
     ranked = sorted(
         records,
-        key=lambda item: float(item["objective_panel_score"]),
+        key=lambda item: _as_float_or_zero(item.get("objective_panel_score")),
         reverse=True,
     )
     best = ranked[0]
@@ -173,7 +180,9 @@ def evaluate_objective_panel(
             str(record["objective_candidate_id"]) for record in records
         ],
         "objective_panel_recommendation": best["objective_candidate_id"],
-        "objective_panel_recommended_score": float(best["objective_panel_score"]),
+        "objective_panel_recommended_score": _as_float_or_zero(
+            best.get("objective_panel_score")
+        ),
         "objective_panel_recommendation_reason": _recommendation_reason(best),
         "objective_panel_blocker_summary": (
             "working_distance_not_measured / BFP_mapping_not_measured / "

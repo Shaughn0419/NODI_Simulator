@@ -59,7 +59,7 @@ def test_governance_freeze_recurses_into_sequence_items():
     frozen = _freeze_mapping({"items": ({"nested": "value"},)})
 
     with pytest.raises(TypeError):
-        frozen["items"][0]["nested"] = "changed"  # type: ignore[index]
+        frozen["items"][0]["nested"] = "changed"
 
 
 def test_calibration_relative_traversal_is_rejected():

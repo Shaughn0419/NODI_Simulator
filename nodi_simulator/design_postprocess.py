@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from collections.abc import Iterable, Mapping, MutableMapping
+from collections.abc import Iterable, Mapping, MutableMapping, Sequence
 from typing import Any
 
 import numpy as np
@@ -236,7 +236,7 @@ def generate_claim_boundary_text(payload: Mapping[str, Any]) -> dict[str, str]:
 
 def _build_ev_group_payload(
     group_key: tuple[str, ...],
-    rows: list[Mapping[str, Any]],
+    rows: Sequence[Mapping[str, Any]],
 ) -> dict[str, Any]:
     scores = [_row_score(row) for row in rows]
     margins = [

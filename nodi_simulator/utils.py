@@ -13,7 +13,7 @@ Shared utilities used across multiple modules:
 """
 
 import math
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 from copy import copy, deepcopy
@@ -2013,7 +2013,11 @@ def build_calibration_state_diagnostics(
             float(E_sca_ref) if E_sca_ref is not None else None
         ),
         "K_sca_calibration_status": k_status,
-        "K_sca_value": float(k_sca_value) if k_sca_available else None,
+        "K_sca_value": (
+            float(k_sca_value)
+            if k_sca_available and k_sca_value is not None
+            else None
+        ),
         "K_sca_scope": (
             str(
                 _optional_calibration_string(
@@ -2424,7 +2428,9 @@ def build_readout_convention_diagnostics(
     upgrade the simulator to calibrated photodiode / lock-in voltage units.
     """
     readout_preset = str(sim_cfg.readout_preset)
-    preset_provenance = dict(READOUT_PRESET_PROVENANCE.get(readout_preset, {}))
+    preset_provenance = dict(
+        cast(dict[str, object], READOUT_PRESET_PROVENANCE.get(readout_preset, {}))
+    )
     mismatch_fields = _readout_preset_mismatch_fields(sim_cfg)
     observable = str(sim_cfg.readout_observable_mode)
     if observable == "magnitude":
@@ -3243,8 +3249,13 @@ def build_collection_operator(
     absolute_throughput_calibrated = (
         calibrated_throughput is not None and float(calibrated_throughput) > 0.0
     )
+    calibrated_throughput_float = (
+        float(calibrated_throughput)
+        if calibrated_throughput is not None
+        else None
+    )
     if absolute_throughput_calibrated:
-        throughput_scale = float(calibrated_throughput)
+        throughput_scale = float(cast(float, calibrated_throughput_float))
 
     if calibration_selected:
         operator_route = "calibrated_operator_table"
@@ -3949,6 +3960,7 @@ def sample_initial_position(
         )
 
     if use_flux_weighted_sampler:
+        assert sim_cfg is not None
         max_velocity = max(estimate_max_axial_velocity(sim_cfg), 1e-18)
         x0 = 0.0
         z0 = 0.0
@@ -4031,7 +4043,7 @@ def sample_initial_position(
     else:
         cross_section_event_bias_status = "legacy_uniform_over_accessible_particle_center_area"
 
-    diagnostics = {
+    diagnostics: dict[str, float | str | bool] = {
         "initial_position_distribution_mode": mode,
         "initial_position_distribution_active": bool(active),
         "initial_position_unit_sample_supplied": bool(

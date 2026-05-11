@@ -65,11 +65,13 @@ def _draw_expected_event_loop_order_randoms(
                 sim_cfg.post_readout_noise_std,
                 size=n_samples,
             )
+        if post_nodi_noise is not None:
             post_nodi_noise[offset] = rng.normal(
                 0,
                 sim_cfg.post_readout_noise_std,
                 size=n_samples,
             )
+        if post_pod_noise is not None:
             post_pod_noise[offset] = rng.normal(
                 0,
                 sim_cfg.post_readout_noise_std,
@@ -134,11 +136,27 @@ def test_block_lane_randoms_draw_only_retained_stream_summary_lanes():
         include_diffusion=True,
     )
 
-    assert actual["diffusion_draws"].shape == (5, 12)
-    assert actual["detector_noise"].shape == (5, 7)
-    assert actual["shot_standard"].shape == (5, 7)
-    assert actual["post_detect_noise"].shape == (5, 7)
-    assert actual["post_nodi_noise"] is None
-    assert actual["post_pod_noise"].shape == (5, 7)
-    assert actual["diffusion_draws"].dtype == np.float32
-    assert actual["detector_noise"].dtype == np.float32
+    diffusion_draws = actual["diffusion_draws"]
+    detector_noise = actual["detector_noise"]
+    shot_standard = actual["shot_standard"]
+    post_detect_noise = actual["post_detect_noise"]
+    post_nodi_noise = actual["post_nodi_noise"]
+    post_pod_noise = actual["post_pod_noise"]
+
+    assert diffusion_draws is not None
+    assert detector_noise is not None
+    assert shot_standard is not None
+    assert post_detect_noise is not None
+    assert post_nodi_noise is None
+    assert post_pod_noise is not None
+
+    assert diffusion_draws.shape == (5, 12)
+    assert detector_noise.shape == (5, 7)
+    assert shot_standard.shape == (5, 7)
+    assert post_detect_noise.shape == (5, 7)
+    assert post_pod_noise.shape == (5, 7)
+    assert diffusion_draws.dtype == np.float32
+    assert detector_noise.dtype == np.float32
+    assert shot_standard.dtype == np.float32
+    assert post_detect_noise.dtype == np.float32
+    assert post_pod_noise.dtype == np.float32

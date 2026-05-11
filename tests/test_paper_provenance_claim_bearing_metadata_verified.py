@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from typing import Any, cast
 from pathlib import Path
 
 import pytest
@@ -20,7 +21,7 @@ def test_claim_bearing_paper_metadata_requires_manual_or_verified_source(tmp_pat
     paper_path = papers / "Claim Paper.pdf"
     paper_path.write_bytes(b"claim-bearing bytes")
     paper_id = paper_id_for_path("papers/Claim Paper.pdf")
-    overrides = {
+    overrides: dict[str, Any] = {
         "schema": "ev_nodi_paper_manifest_overrides_v1",
         "papers": {
             paper_id: {
@@ -42,7 +43,8 @@ def test_claim_bearing_paper_metadata_requires_manual_or_verified_source(tmp_pat
     with pytest.raises(ValueError, match="manual_override or verified_source"):
         generate_paper_provenance(tmp_path)
 
-    overrides["papers"][paper_id]["metadata_source"] = "manual_override"
+    overridden_papers = cast(dict[str, dict[str, Any]], overrides["papers"])
+    overridden_papers[paper_id]["metadata_source"] = "manual_override"
     (provenance / "paper_manifest_overrides.yaml").write_text(
         json.dumps(overrides, sort_keys=True),
         encoding="utf-8",

@@ -30,6 +30,12 @@ except Exception:  # pragma: no cover - optional acceleration dependency
 _optional_numba_njit = optional_numba_njit(_numba_njit)
 
 
+def _coerce_numeric(value: object) -> float:
+    if isinstance(value, (int, float, np.integer, np.floating, np.number)):
+        return float(value)
+    raise TypeError(f"Expected numeric scalar, got {type(value)!r}")
+
+
 @_optional_numba_njit(cache=True, parallel=True)
 def _illumination_light_2d_kernel(
     x_rel: np.ndarray,
@@ -143,7 +149,7 @@ def compute_illumination_envelope(
             sim_cfg.scattering_projection_mode,
             sim_cfg.cross_polarization_leakage,
         )
-    amplitude_factor = float(polarization["amplitude_factor"])
+    amplitude_factor = _coerce_numeric(polarization["amplitude_factor"])
 
     # Field envelope exponent (coefficient is -1, not -2, because A_env = √(I/I₀)).
     # We keep the flow-axis (y) transit window explicit even in overfill mode:
@@ -253,7 +259,7 @@ def compute_illumination_envelope(
         "illumination_polarization_alignment_status": str(
             polarization["alignment_status"]
         ),
-        "illumination_cross_polarization_leakage": float(
+        "illumination_cross_polarization_leakage": _coerce_numeric(
             polarization["cross_polarization_leakage"]
         ),
         **build_projection_basis_diagnostics(

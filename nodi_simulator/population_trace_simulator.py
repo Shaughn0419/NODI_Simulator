@@ -75,27 +75,41 @@ class PopulationTraceConfig:
 
 
 def _peak_height(event: Mapping[str, object]) -> float:
+    def _as_float(value: object) -> float | None:
+        if isinstance(value, (int, float, np.integer, np.floating, np.number)):
+            return float(value)
+        return None
+
     for key in ("peak_height", "mean_peak_height", "event_peak_height"):
         value = event.get(key)
-        if value is not None:
-            return float(value)
+        peak_value = _as_float(value)
+        if peak_value is not None:
+            return peak_value
     features = event.get("features")
     if isinstance(features, Mapping):
         peaks = features.get("peaks")
         if isinstance(peaks, Sequence) and peaks:
             first_peak = peaks[0]
             if isinstance(first_peak, Mapping) and first_peak.get("peak_height") is not None:
-                return float(first_peak["peak_height"])
+                peak_value = _as_float(first_peak["peak_height"])
+                if peak_value is not None:
+                    return peak_value
     raise ValueError("Each isolated event must expose peak_height or mean_peak_height")
 
 
 def _event_width_s(event: Mapping[str, object], cfg: PopulationTraceConfig) -> float:
+    def _as_float(value: object) -> float | None:
+        if isinstance(value, (int, float, np.integer, np.floating, np.number)):
+            return float(value)
+        return None
+
     if cfg.event_width_s is not None:
         return float(cfg.event_width_s)
     for key in ("transit_time_s", "peak_width_s", "mean_transit_time_s"):
         value = event.get(key)
-        if value is not None and float(value) > 0.0:
-            return float(value)
+        width_value = _as_float(value)
+        if width_value is not None and width_value > 0.0:
+            return width_value
     return max(5.0 / float(cfg.sampling_rate_Hz), 1.0e-3)
 
 
@@ -113,21 +127,21 @@ def _scheduled_event_times(
     event_times_s: Sequence[float] | None,
 ) -> np.ndarray:
     if event_times_s is not None:
-        times = np.asarray(event_times_s, dtype=float)
-        return np.sort(times[(times >= 0.0) & (times < cfg.total_time_s)])
+        event_times = np.asarray(event_times_s, dtype=float)
+        return np.sort(event_times[(event_times >= 0.0) & (event_times < cfg.total_time_s)])
     if cfg.event_rate_Hz <= 0.0 or cfg.max_events == 0:
         return np.asarray([], dtype=float)
 
-    times: list[float] = []
+    event_time_values: list[float] = []
     current_time = 0.0
     while current_time < cfg.total_time_s:
         current_time += float(rng.exponential(1.0 / cfg.event_rate_Hz))
         if current_time >= cfg.total_time_s:
             break
-        times.append(current_time)
-        if cfg.max_events is not None and len(times) >= cfg.max_events:
+        event_time_values.append(current_time)
+        if cfg.max_events is not None and len(event_time_values) >= cfg.max_events:
             break
-    return np.asarray(times, dtype=float)
+    return np.asarray(event_time_values, dtype=float)
 
 
 def _add_gaussian_event(

@@ -107,7 +107,7 @@ def test_R5_case_manifest_uses_reviewed_source_rows_scenarios_and_no_seeds():
 
 
 def test_R5_summary_claim_boundaries_are_blocked_for_all_rows():
-    counters = {
+    counters: dict[str, Counter[str]] = {
         "SNR_claim_level": Counter(),
         "event_probability_claim_level": Counter(),
         "p_detect_mapping_claim_level": Counter(),

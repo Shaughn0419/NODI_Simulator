@@ -499,7 +499,7 @@ def paper_id_for_path(relpath: str) -> str:
 
 def scan_paper_files(project_root: Path = PROJECT_ROOT) -> list[tuple[str, str]]:
     paper_root = project_root / "papers"
-    paths = []
+    paths: list[Path] = []
     for suffix in ("*.pdf", "*.docx"):
         paths.extend(paper_root.glob(suffix))
     relpaths = sorted(

@@ -49,6 +49,12 @@ _HINDRANCE_TENSOR = 2
 _EMPTY_FLOAT_ARRAY = np.empty(0, dtype=float)
 
 
+def _as_scalar_float(value: object) -> float:
+    if isinstance(value, (int, float, np.integer, np.floating, np.number, np.generic)):
+        return float(value)
+    raise TypeError("expected numeric scalar")
+
+
 @dataclass(frozen=True)
 class TrajectoryContext:
     """Case-level trajectory constants reused across events."""
@@ -403,9 +409,11 @@ def axial_velocity_m_s(
     and faster centerline trajectories without making the simulator intractable.
     """
     if np.isscalar(x_m) and np.isscalar(z_m):
+        x_scalar = _as_scalar_float(x_m)
+        z_scalar = _as_scalar_float(z_m)
         return _axial_velocity_scalar(
-            float(x_m),
-            float(z_m),
+            x_scalar,
+            z_scalar,
             channel,
             sim_cfg,
             particle_radius_m=particle_radius_m,
@@ -492,9 +500,11 @@ def hindered_diffusion_factors(
     ad-hoc exponent.
     """
     if np.isscalar(x_m) and np.isscalar(z_m):
+        x_scalar = _as_scalar_float(x_m)
+        z_scalar = _as_scalar_float(z_m)
         return _hindered_diffusion_factors_scalar(
-            float(x_m),
-            float(z_m),
+            x_scalar,
+            z_scalar,
             channel,
             particle_radius_m,
             sim_cfg,
@@ -594,9 +604,11 @@ def axial_transport_velocity_m_s(
     near-wall transit speeds.
     """
     if np.isscalar(x_m) and np.isscalar(z_m):
+        x_scalar = _as_scalar_float(x_m)
+        z_scalar = _as_scalar_float(z_m)
         return _axial_transport_velocity_scalar(
-            float(x_m),
-            float(z_m),
+            x_scalar,
+            z_scalar,
             channel,
             sim_cfg,
             particle_radius_m=particle_radius_m,

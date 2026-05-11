@@ -87,6 +87,12 @@ STANDARD_PARTICLE_PRESETS: Mapping[str, StandardParticleSpec] = MappingProxyType
     ),
 })
 
+
+def _as_float(value: object) -> float:
+    if isinstance(value, (int, float, np.integer, np.floating, np.number)):
+        return float(value)
+    raise TypeError(f"Expected numeric scalar, got {type(value)!r}")
+
 PARTICLE_CONTAMINANT_PRESETS = {
     "HDL_like": {
         "family": "lipoprotein",
@@ -313,7 +319,7 @@ def _contaminant_detectability_score(family: str, is_ev: bool) -> float:
     if is_ev:
         return 0.5
     scores = [
-        float(item["detectability_score"])
+        _as_float(item["detectability_score"])
         for item in PARTICLE_CONTAMINANT_PRESETS.values()
         if item["family"] == family
     ]
@@ -366,7 +372,7 @@ def build_particle_design_library_diagnostics(
         "EV_to_contaminant_signal_overlap": overlap,
         "EV_specificity_risk": specificity_risk,
         "EV_sample_preparation_profile": str(sim_cfg.EV_sample_preparation_profile),
-        "EV_model_weight": float(prep["EV_model_weight"]),
+        "EV_model_weight": _as_float(prep["EV_model_weight"]),
     }
     payload.update(_anchor_payload(particle))
     if standard is not None:
