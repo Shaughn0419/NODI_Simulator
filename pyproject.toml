@@ -131,3 +131,15 @@ module = [
   "dashboard.precompute",
 ]
 ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+  "nodi_simulator.realism_v2",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+  "nodi_simulator.reference_field",
+]
+ignore_errors = true

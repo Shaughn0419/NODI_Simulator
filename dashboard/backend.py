@@ -268,10 +268,21 @@ def _maybe_backfill_gate_explanation(
 ) -> None:
     if all(target.get(col) is not None for col in _GATE_EXPLANATION_COLUMNS):
         return
+    if gate_failed_count is None:
+        gate_failed_count_int = 0
+    elif isinstance(gate_failed_count, (int, float)):
+        gate_failed_count_int = int(gate_failed_count)
+    elif isinstance(gate_failed_count, str):
+        try:
+            gate_failed_count_int = int(gate_failed_count)
+        except ValueError:
+            gate_failed_count_int = 0
+    else:
+        gate_failed_count_int = 0
     explanation = classify_engineering_gate_explanation(
         engineering_gate_passed=bool(gate_passed),
         engineering_gate_reason=str(gate_reason or "N/A"),
-        engineering_gate_failed_count=int(gate_failed_count or 0),
+        engineering_gate_failed_count=gate_failed_count_int,
     )
     for key, value in explanation.items():
         target.setdefault(key, value)
@@ -1765,7 +1776,7 @@ def _run_sweep_grid(sim_cfg, optical_template, particle, grid: dict):
         medium_for_particle,
     )
     from nodi_simulator.dashboard.precompute import results_to_compact, results_to_dataframe
-    from nodi_simulator import BASELINE_CHANNEL, run_parameter_sweep, validate_simulation_config
+    from nodi_simulator._exports import BASELINE_CHANNEL, run_parameter_sweep, validate_simulation_config
 
     sim_cfg_run = deepcopy(sim_cfg)
     sim_cfg_run.n_events = int(grid["n_events"])
@@ -1820,7 +1831,7 @@ def run_case_on_demand(particle_name, wavelength_nm, W_nm, H_nm):
         compute_baseline_normalization_per_wavelength,
         validate_simulation_config,
     )
-    from nodi_simulator import BASELINE_CHANNEL, DEFAULT_SIM_CFG
+    from nodi_simulator._exports import BASELINE_CHANNEL, DEFAULT_SIM_CFG
 
     if st.session_state.get("using_live_data"):
         sim_cfg = deepcopy(st.session_state.live_sim_cfg)
