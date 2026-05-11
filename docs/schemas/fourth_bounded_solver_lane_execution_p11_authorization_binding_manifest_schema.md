@@ -36,3 +36,15 @@ Required guards:
 - `route_promotion_authorized = false`
 - `raw_magnitude_final_gate_allowed = false`
 - `solver_native_raw_magnitude_final_gate_allowed = false`
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `bound_route_ids`
+- `p10_trace_context_sha256`
+- `p11_authorization_gate_record_sha256`
+- `p11_gate_prior_decision`
+- `p11_p10_closure_binding_manifest_sha256`
+- `route_subset_binding_sha256`
+- `user_authorization_phrase_received`

@@ -55,3 +55,14 @@ Report-numbering governance is required:
 
 - `note_id = stage_p17_uses_report_119_under_current_sequential_report_numbering`
 - `numbering_role = sequential_report_numbering_not_stage_numbering`
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `authorization_gate_decision`
+- `explicit_next_execution_request_required`
+- `future_authorization_phrase_already_received`
+- `minimum_later_phase_requirements`
+- `rank_instability_governance`
+- `report_numbering_governance`

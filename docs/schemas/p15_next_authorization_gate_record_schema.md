@@ -46,3 +46,13 @@ Rank-instability governance is required:
 - `rank_delta_vector = [-1, 1, 0]`
 - `governance_role = record_as_rank_instability_not_route_preference`
 - `interpretation_boundary = trace_only_instability_not_route_promotion_or_preference`
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `authorization_gate_decision`
+- `explicit_next_execution_request_required`
+- `future_authorization_phrase_already_received`
+- `minimum_later_phase_requirements`
+- `rank_instability_governance`
