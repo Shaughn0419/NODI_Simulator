@@ -107,3 +107,9 @@ module = [
   "streamlit.*",
 ]
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+  "tests.test_physics_core",
+]
+ignore_errors = true

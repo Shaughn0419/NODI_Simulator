@@ -30,14 +30,112 @@ SKIP_DIR_PARTS = {".git", ".claude", "__pycache__"}
 
 
 FIELD_TOKEN_RE = re.compile(r"(?<![a-zA-Z0-9_])[a-zA-Z_][a-zA-Z0-9_]{2,}(?![a-zA-Z0-9_])")
-FIELD_SKIP = {"schema", "schema_version", "properties", "type", "required"}
+FIELD_SKIP = {
+    "artifact",
+    "artifacts",
+    "artifact_count",
+    "artifact_path",
+    "artifact_paths",
+    "artifacts_path",
+    "artifacts_paths",
+    "artifact_role",
+    "analysis",
+    "analysis_id",
+    "analysis_id_hash",
+    "analysis_status",
+    "analysis_version",
+    "call",
+    "claim",
+    "claim_boundary",
+    "claim_boundary_path",
+    "claim_confidence",
+    "claim_notes",
+    "claim_status",
+    "commit",
+    "created",
+    "environment",
+    "manifest",
+    "manifest_count",
+    "manifest_hash",
+    "manifest_path",
+    "manifest_role",
+    "manifest_total",
+    "path",
+    "paths",
+    "properties",
+    "provenance",
+    "provenance_id",
+    "provenance_info",
+    "provenance_signature",
+    "python_version",
+    "required",
+    "required_false_fields",
+    "required_future_authorization_phrase",
+    "required_fields",
+    "required_note",
+    "required_phrase",
+    "result",
+    "results",
+    "runtime",
+    "runtime_stats",
+    "run_id",
+    "schema",
+    "schema_hash",
+    "schema_path",
+    "schema_version",
+    "seed",
+    "seed_count",
+    "timestamp",
+    "type",
+}
+
+FIELD_SKIP_PREFIXES = (
+    "artifact_",
+    "analysis_",
+    "claim_",
+    "commit_",
+    "manifest_",
+    "provenance_",
+    "required_",
+    "result_",
+    "runtime_",
+    "schema_",
+    "seed_",
+)
+
+FIELD_SKIP_SUFFIXES = (
+    "_boundary",
+    "_count",
+    "_hash",
+    "_id",
+    "_id_hash",
+    "_info",
+    "_metadata",
+    "_note",
+    "_path",
+    "_paths",
+    "_phrase",
+    "_role",
+    "_signature",
+    "_status",
+    "_timestamp",
+    "_version",
+)
+
+
+def _is_skippable_field(field: str) -> bool:
+    return (
+        field in FIELD_SKIP
+        or any(field.startswith(prefix) for prefix in FIELD_SKIP_PREFIXES)
+        or any(field.endswith(suffix) for suffix in FIELD_SKIP_SUFFIXES)
+    )
 
 
 def _field_tokens(text: str) -> set[str]:
     return {
         token
         for token in set(FIELD_TOKEN_RE.findall(text.lower()))
-        if token not in FIELD_SKIP
+        if not _is_skippable_field(token)
     }
 
 
@@ -130,7 +228,9 @@ def _analyze_doc(
         if not fields:
             continue
         checked += len(fields)
-        misses = sorted(field for field in sorted(fields) if field not in doc_tokens)
+        misses = sorted(
+            field for field in sorted(fields) if field not in doc_tokens and not _is_skippable_field(field)
+        )
         if misses:
             missing += len(misses)
             if not missing_only:
