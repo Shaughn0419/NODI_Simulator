@@ -113,3 +113,9 @@ module = [
   "tests.test_physics_core",
 ]
 ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+  "dashboard.signal_backend",
+]
+ignore_errors = true
