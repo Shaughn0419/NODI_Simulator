@@ -213,11 +213,13 @@ def _build_interference_scan_notes(df: pd.DataFrame, scan_variable: str) -> list
     end = ordered.iloc[-1]
 
     def _finite(value: object) -> float | None:
+        if not isinstance(value, (int, float, str, np.integer, np.floating)):
+            return None
         try:
-            value = float(value)
+            converted = float(value)
         except (TypeError, ValueError):
             return None
-        return value if np.isfinite(value) else None
+        return converted if np.isfinite(converted) else None
 
     start_clean = _finite(start.get("peak_clean_signal"))
     end_clean = _finite(end.get("peak_clean_signal"))
@@ -238,8 +240,15 @@ def _build_interference_scan_notes(df: pd.DataFrame, scan_variable: str) -> list
         else:
             lines.append("总体趋势：clean 峰值变化不大，说明当前变量在这个区间里更像二阶影响，而不是主驱动。")
 
-    if None not in (start_ref, end_ref, start_cross, end_cross, end_sca):
-        start_sca_mag = abs(start_sca or 0.0)
+    if (
+        start_ref is not None
+        and end_ref is not None
+        and start_cross is not None
+        and end_cross is not None
+        and start_sca is not None
+        and end_sca is not None
+    ):
+        start_sca_mag = abs(start_sca)
         if abs(end_cross) >= max(abs(end_sca) * 1.2, 1e-30) and end_ref > start_ref * 1.05:
             lines.append("机制判断：`A_ref` 与干涉交叉项在一起升高，说明这条扫描更像是在改善 reference 放大。")
         elif abs(end_sca) > max(abs(end_cross), start_sca_mag) * 1.05:
@@ -531,9 +540,9 @@ def render_interference_explorer() -> None:
     if scan_variable == "rho":
         scan_values = np.linspace(1.0, 30.0, 10)
     elif scan_variable == "width_nm":
-        scan_values = np.arange(500, 2001, 150)
+        scan_values = np.arange(500, 2001, 150, dtype=float)
     elif scan_variable == "depth_nm":
-        scan_values = np.arange(500, 2001, 150)
+        scan_values = np.arange(500, 2001, 150, dtype=float)
     else:
         scan_values = np.array(WAVELENGTH_OPTIONS_NM, dtype=float)
 

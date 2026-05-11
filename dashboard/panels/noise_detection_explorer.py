@@ -156,7 +156,7 @@ def _build_detection_scan_notes(df: pd.DataFrame, scan_variable: str) -> list[st
     end_cv = _finite(end, "CV")
 
     lines: list[str] = []
-    if None not in (start_det, end_det):
+    if start_det is not None and end_det is not None:
         if end_det > start_det + 0.10:
             lines.append("总体趋势：扫描末端的检出率更高，说明当前变量往这个方向推会让更多事件稳定越过阈值。")
         elif end_det < start_det - 0.10:
@@ -164,7 +164,12 @@ def _build_detection_scan_notes(df: pd.DataFrame, scan_variable: str) -> list[st
         else:
             lines.append("总体趋势：检出率变化不算大，说明当前变量在这段范围里不是唯一主导瓶颈。")
 
-    if None not in (start_peak, end_peak, start_thr, end_thr):
+    if (
+        start_peak is not None
+        and end_peak is not None
+        and start_thr is not None
+        and end_thr is not None
+    ):
         start_margin = start_peak - start_thr
         end_margin = end_peak - end_thr
         if end_margin > start_margin + max(abs(start_margin), 1e-12) * 0.10:
@@ -583,6 +588,8 @@ def render_noise_detection_explorer() -> None:
         st.selectbox("读出模型", ["raw", "lockin_surrogate"], key="nd_readout_model")
         st.slider("lock-in 时间常数 (ms)", 0.2, 5.0, value=float(st.session_state["nd_lockin_time_constant_ms"]), step=0.1, key="nd_lockin_time_constant_ms")
 
+    normalization_mode = str(defaults["normalization_mode"])
+
     case = _detection_case_cached(
         st.session_state["nd_material"],
         int(st.session_state["nd_diameter_nm"]),
@@ -616,7 +623,7 @@ def render_noise_detection_explorer() -> None:
         float(st.session_state["nd_pod_to_nodi_crosstalk"]),
         float(st.session_state["nd_nodi_to_pod_crosstalk"]),
         int(st.session_state["nd_beam_waist_y_nm"]),
-        defaults["normalization_mode"],
+        normalization_mode,
     )
     summary = case["summary"]
     event_df = case["event_df"]
@@ -801,7 +808,7 @@ def render_noise_detection_explorer() -> None:
         float(st.session_state["nd_pod_to_nodi_crosstalk"]),
         float(st.session_state["nd_nodi_to_pod_crosstalk"]),
         int(st.session_state["nd_beam_waist_y_nm"]),
-        defaults["normalization_mode"],
+        normalization_mode,
     )
     valid_scan_df = scan_df[scan_df["valid"]].copy()
     st.plotly_chart(_build_scan_figure(valid_scan_df, scan_variable), width="stretch")

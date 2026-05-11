@@ -4,6 +4,7 @@ dashboard/panels/common.py — Shared dashboard guidance helpers
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from collections.abc import Mapping
 from copy import deepcopy
 from typing import Any
@@ -75,7 +76,10 @@ CALCULATOR_PAGE_OPTIONS = [page["page"] for page in CALCULATOR_PAGES]
 PAGE_OPTIONS = WORKFLOW_PAGE_OPTIONS + EVIDENCE_PAGE_OPTIONS + CALCULATOR_PAGE_OPTIONS
 
 
-DASHBOARD_SESSION_DEFAULTS = (
+DashboardDefaultValue = object | Callable[[str], object]
+
+
+DASHBOARD_SESSION_DEFAULTS: tuple[tuple[str, DashboardDefaultValue], ...] = (
     ("dashboard_page", "Decision Summary"),
     ("dashboard_page_radio", "Decision Summary"),
     ("selected_particle", None),
@@ -321,20 +325,36 @@ def render_current_context_bar(
     if context is None:
         return
 
+    def _context_int_value(value: object) -> int | None:
+        if isinstance(value, bool):
+            return int(value)
+        if isinstance(value, (int, float)):
+            return int(round(value))
+        if isinstance(value, str):
+            try:
+                return int(round(float(value)))
+            except ValueError:
+                return None
+        return None
+
     particle_value = context["particle_label"] or "—"
+    wavelength_nm = _context_int_value(context.get("wavelength_nm"))
+    width_nm = _context_int_value(context.get("width_nm"))
+    depth_nm = _context_int_value(context.get("depth_nm"))
+
     wavelength_value = (
-        f"{int(round(float(context['wavelength_nm'])))} nm"
-        if context["wavelength_nm"] is not None
+        f"{wavelength_nm} nm"
+        if wavelength_nm is not None
         else "—"
     )
     width_value = (
-        f"{int(round(float(context['width_nm'])))} nm"
-        if context["width_nm"] is not None
+        f"{width_nm} nm"
+        if width_nm is not None
         else "—"
     )
     depth_value = (
-        f"{int(round(float(context['depth_nm'])))} nm"
-        if context["depth_nm"] is not None
+        f"{depth_nm} nm"
+        if depth_nm is not None
         else "—"
     )
     st.caption(

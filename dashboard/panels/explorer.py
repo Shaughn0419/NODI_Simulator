@@ -77,9 +77,16 @@ def _metric_label(metric: str) -> str:
 
 
 def _format_metric_value(metric: str, value: object) -> str:
-    try:
+    if isinstance(value, bool):
+        value = int(value)
+    if isinstance(value, (int, float, np.integer, np.floating)):
         numeric = float(value)
-    except (TypeError, ValueError):
+    elif isinstance(value, str):
+        try:
+            numeric = float(value)
+        except ValueError:
+            return str(value)
+    else:
         return str(value)
 
     if not np.isfinite(numeric):
@@ -139,7 +146,7 @@ def _resolve_default_design_material(materials: list[str], current_particle: str
 
 
 def _sort_cases_by_metric(
-    df: "np.ndarray | object",
+    df: pd.DataFrame,
     metric: str,
     metric_higher_is_better: bool,
 ):

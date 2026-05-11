@@ -360,14 +360,25 @@ def _render_stage(stage: dict[str, object], *, right_render=None) -> None:
     left, right = st.columns([0.42, 0.58])
     with left:
         st.markdown("**这个阶段在算什么**")
-        for line in stage["principle"]:
-            st.caption(f"- {line}")
+        principle = stage.get("principle")
+        if isinstance(principle, (list, tuple)):
+            for line in principle:
+                st.caption(f"- {line}")
     with right:
         st.markdown("**当前计算结果**")
-        metrics = stage.get("metrics", {})
-        if metrics:
-            _render_metric_grid(metrics)
-        _render_stage_reading(stage.get("reading"))
+        metrics = stage.get("metrics")
+        if isinstance(metrics, dict):
+            metrics_str = {str(key): value for key, value in metrics.items() if isinstance(key, str)}
+            if metrics_str:
+                _render_metric_grid(metrics_str)
+        reading = stage.get("reading")
+        if isinstance(reading, dict):
+            str_reading = {
+                str(key): str(value)
+                for key, value in reading.items()
+                if isinstance(key, str)
+            }
+            _render_stage_reading(str_reading if str_reading else None)
         if callable(right_render):
             right_render()
         st.info(str(stage["conclusion"]))

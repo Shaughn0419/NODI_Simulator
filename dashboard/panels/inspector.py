@@ -33,6 +33,21 @@ RESULTS_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
     "results",
 )
+
+
+def _coerce_float(value: object) -> float | None:
+    if isinstance(value, bool):
+        return float(value)
+    if isinstance(value, (int, float, np.integer, np.floating)):
+        return float(value)
+    if isinstance(value, str):
+        try:
+            return float(value)
+        except ValueError:
+            return None
+    return None
+
+
 def _build_case_trend_notes(case: dict, score_info: dict, outcome: dict) -> list[str]:
     lines: list[str] = []
 
@@ -114,6 +129,11 @@ def render_inspector():
         st.info("请先在 Design Explorer 页面选择一个参数点。建议先在热图里找平台型高分区，再回来这里看成因和单事件可检测性。")
         st.caption("当前页不再提供跨页跳转按钮；请直接用侧边栏切到 Design Explorer 先选候选点。")
         return
+    wavelength_value = _coerce_float(wavelength)
+    if wavelength_value is None:
+        st.error(f"当前波长值异常：{wavelength}")
+        return
+    wavelength_int = int(wavelength_value)
 
     try:
         data_bundle = load_dashboard_data_bundle(
@@ -121,8 +141,8 @@ def render_inspector():
             st.session_state,
             include_compact=True,
         )
-    except (FileNotFoundError, ValueError) as e:
-        st.error(str(e))
+    except (FileNotFoundError, ValueError) as error:
+        st.error(str(error))
         return
     source = data_bundle.source
     standard_workflow_active = (
@@ -200,34 +220,41 @@ def render_inspector():
         health_slices = health_report.get("health_slices", {})
         wavelength_rows = health_slices.get("by_wavelength_nm", [])
         material_rows = health_slices.get("by_particle_material", [])
-        wavelength_row = next(
-            (
-                row for row in wavelength_rows
-                if int(round(float(row.get("wavelength_nm", -1)))) == int(wavelength)
-            ),
-            None,
-        )
-        material_name = case.get("particle_material", infer_particle_material(particle))
-        material_row = next(
-            (
-                row for row in material_rows
-                if str(row.get("particle_material", "")) == str(material_name)
-            ),
-            None,
-        )
-        subgroup_bits = []
-        if wavelength_row:
+    wavelength_row = next(
+        (
+            row for row in wavelength_rows
+            if (row_wavelength := _coerce_float(row.get("wavelength_nm", -1))) is not None
+            and int(round(row_wavelength)) == wavelength_int
+        ),
+        None,
+    )
+    material_name = case.get("particle_material", infer_particle_material(particle))
+    material_row = next(
+        (
+            row for row in material_rows
+            if str(row.get("particle_material", "")) == str(material_name)
+        ),
+        None,
+    )
+    subgroup_bits = []
+    if wavelength_row:
+        default_ready_fraction = _coerce_float(wavelength_row.get("default_ready_fraction"))
+        gate_pass_fraction = _coerce_float(wavelength_row.get("engineering_gate_pass_fraction"))
+        if default_ready_fraction is not None and gate_pass_fraction is not None:
             subgroup_bits.append(
-                f"波长 {int(wavelength)}nm: ready={float(wavelength_row.get('default_ready_fraction', 0.0)):.1%}, "
-                f"gate通过={float(wavelength_row.get('engineering_gate_pass_fraction', 0.0)):.1%}"
+                f"波长 {wavelength_int}nm: ready={default_ready_fraction:.1%}, "
+                f"gate通过={gate_pass_fraction:.1%}"
             )
-        if material_row:
+    if material_row:
+        mat_ready_fraction = _coerce_float(material_row.get("default_ready_fraction"))
+        shared_beam_caution_fraction = _coerce_float(material_row.get("shared_beam_caution_fraction"))
+        if mat_ready_fraction is not None and shared_beam_caution_fraction is not None:
             subgroup_bits.append(
-                f"材料 {material_name}: ready={float(material_row.get('default_ready_fraction', 0.0)):.1%}, "
-                f"shared-beam caution={float(material_row.get('shared_beam_caution_fraction', 0.0)):.1%}"
+                f"材料 {material_name}: ready={mat_ready_fraction:.1%}, "
+                f"shared-beam caution={shared_beam_caution_fraction:.1%}"
             )
-        if subgroup_bits:
-            st.caption("当前子组健康：" + " | ".join(subgroup_bits))
+    if subgroup_bits:
+        st.caption("当前子组健康：" + " | ".join(subgroup_bits))
 
     # ==== Score auto-explanation + Trust indicator ====
     score_info = get_score_explanation(case)
