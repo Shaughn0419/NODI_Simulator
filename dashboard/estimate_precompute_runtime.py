@@ -27,7 +27,7 @@ for candidate in (PROJECT_ROOT,):
     if candidate not in sys.path:
         sys.path.insert(0, candidate)
 
-from nodi_simulator import run_parameter_sweep
+from nodi_simulator._exports import run_parameter_sweep
 from nodi_simulator.dashboard.config import (
     BASELINE_PARTICLE,
     GRID_CONFIGS,

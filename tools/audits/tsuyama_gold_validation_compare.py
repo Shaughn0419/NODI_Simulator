@@ -15,7 +15,7 @@ for candidate in (str(PROJECT_ROOT),):
     if candidate not in sys.path:
         sys.path.insert(0, candidate)
 
-from nodi_simulator import BASELINE_PARTICLE, WATER, run_parameter_sweep
+from nodi_simulator._exports import BASELINE_PARTICLE, WATER, run_parameter_sweep
 from nodi_simulator.dashboard.config import (
     DEFAULT_SIM_CFG,
     FULL_SWEEP_WAVELENGTHS_NM,
