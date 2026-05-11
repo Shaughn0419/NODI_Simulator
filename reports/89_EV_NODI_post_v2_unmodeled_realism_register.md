@@ -1,6 +1,6 @@
 # EV NODI post-v2 unmodeled realism register
 
-> Status: post-v2 boundary register. This file does not reopen v2, add scenarios, add stochastic seeds, run solver cases, authorize experiments, or change route governance. As of 2026-05-11, report 88 v3.0 is the current full-data reader report and includes the P0-P18 post-v2 audit/trace conclusions.
+> Status: post-v2 boundary register. This file does not reopen v2, add scenarios, add stochastic seeds, run solver cases, authorize experiments, or change route governance. As of 2026-05-11, report 88 v4.0 is the current full-data reader report; it carries two parallel reader lenses of equal priority — all-crossing (§1–§13) and selected-annulus paper-audit (§14) — with §15 as the integrated cross-lens analysis. This register applies to **both** lenses unless explicitly noted.
 
 ## Purpose
 
@@ -17,7 +17,7 @@ Allowed current claim:
 - route-governance stability inside the no-measured-data model;
 - explicit identification of post-v2 artifact gaps.
 
-Forbidden current claim:
+Forbidden current claim (applies to both lenses):
 
 - calibrated signal-to-noise ratio;
 - calibrated event probability;
@@ -25,10 +25,14 @@ Forbidden current claim:
 - true EV concentration;
 - biological specificity;
 - measured blank safety;
-- route promotion;
+- route promotion (all-crossing lens) / accepted paper-calibrated candidate (selected-annulus lens);
 - main-660 redefinition;
-- selected-annulus replacing all-crossing ranking.
-- treating P6-P16 trace-only rank order as route promotion or as a single main-660 champion.
+- **selected-annulus replacing all-crossing ranking, and all-crossing replacing selected-annulus paper-audit conclusions** (the two lenses sit in parallel and do not replace each other);
+- selected-annulus bound changes (`0.5-0.8` is fixed);
+- treating P6-P16 trace-only rank order as route promotion or as a single main-660 champion;
+- treating estimated-parameter reproduction lens as raw physical calibration (selected-annulus lens);
+- treating gamma response compression as a real physical law (selected-annulus lens);
+- claiming local classification accuracy reproduction (local sklearn unavailable, `no_accuracy_claim` still in force).
 
 ## P0-P18 status note
 
@@ -39,6 +43,17 @@ then run six bounded trace-only lanes over the same three-route set; the two
 main-660 candidates swap rank across lanes, while the 404 probe remains a
 shortwave probe. P18 therefore stops mechanical lane roll-forward pending a P19
 evidence-strategy gate with explicit acceptance criteria.
+
+P0-P18 are conducted under the all-crossing lens; the selected-annulus lens did
+not run independent P1-P18 stages. Selected-annulus evidence at the same time
+horizon is captured by the Tsuyama Phase 2 / Phase 2.5-2.11 reproduction-lens
+chain (release status `negative_or_diagnostic_result_only`, best low-DOF
+reproduction lens single global response compression `gamma ≈ 0.749` with score
+`2.033`) and by the R5.2 bounded scenario-prior audit sidecar guardrails
+(`selected_annulus_replaces_all_crossing_ranking = false`,
+`selected_annulus_bound_change_authorized = false`). The P19 evidence-strategy
+gate must therefore declare acceptance criteria for **both** lenses, not just
+the all-crossing lane.
 
 ## Post-v2 realism gaps
 
