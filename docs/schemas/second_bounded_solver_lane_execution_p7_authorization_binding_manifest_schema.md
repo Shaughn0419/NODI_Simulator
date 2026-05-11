@@ -38,3 +38,17 @@ Required guards:
 - `solver_native_raw_magnitude_final_gate_allowed = false`
 
 P7 and P6 artifacts are evidence bindings only; they do not authorize calibration, route promotion, or measured-data interpretation.
+
+## Artifact-field alignment note
+
+These fields are present in the paired artifact payload and are checked by schema drift audit:
+
+- `bound_route_ids`
+- `p7_authorization_gate_record_sha256`
+- `p7_candidate_lane_contract_manifest_sha256`
+- `p7_gate_prior_decision`
+- `p7_gate_prior_stage`
+- `p7_p6_evidence_binding_manifest_sha256`
+- `route_subset_binding_sha256`
+- `user_authorization_phrase_received`
+
