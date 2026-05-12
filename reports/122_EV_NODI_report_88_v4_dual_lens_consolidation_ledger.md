@@ -448,3 +448,78 @@ v5.1 amendment 仍是纯 reader-facing markdown 增补；未触及 simulator / s
 ### Open dependency unchanged
 
 P19 evidence-strategy gate must, when designed, declare acceptance criteria for **both lenses**. v5.0 §12.3 / §16 / §18.3 / §18.5 全部重申这条不变量。v5.1 reader table 增强不改变这条 dependency 的内容或紧迫性。
+
+## v5.1.1 + v5.2 amendment (2026-05-12): hotfix + reader comparison table pack (codex 第三轮反馈)
+
+User instruction (2026-05-12, codex 第三轮 review)：
+
+```text
+v5.1 方向正确，读者导航、阶段量解释、口径 B 流程、blocker/sensitivity 框架都补上了；
+但当前还不适合说"完全验收"。建议先做 v5.1.1 hotfix，再规划 v5.2 多表格增强。
+```
+
+Resolved: 拆为两个步骤：
+
+**v5.1.1 hotfix（codex 第三轮 P0 + P1 必修）**：
+
+| 修法 | 位置 | 来由 |
+|---|---|---|
+| 新增真实 §6.4.F 表（4 波长信号链汇总）| §6.4.E 后 | 修复 5 处先前引用 `§6.4.F` 但实际只到 §6.4.E 的悬空 |
+| §2.4 拆为块 A（strict 物理阶段量）+ 块 B（route-level evidence）| §2.4 内 | 防止读者把 detection 行误读为 strict λ-only 对照 |
+| §8.6 reference×2 行修正逻辑（option A：noise 不变 → threshold 不同步上抬）| §8.6 内 | 原写法"threshold 上抬抵消"在 noise×=1 假设下逻辑矛盾 |
+| §10.6 拆 mixed-lens cell 为 all-cross + NODI 两列 | §10.6 候选裁决表 | 防止跨 lens 直接百分比比较 |
+| 统一 detection 表头为 `synthetic detection score (%)` / `proxy (%)` | §6.4 / §7.1 / §7.2 多张表 | v5.0 二次精修术语口径继续清理 |
+| 修正 §8.5 / §8.6 takeaway 的表号引用 | §8.5 / §8.6 段末 | 原 v5.1 写成 "表 8.6" / "表 8.7" 应为 "表 8.5" / "表 8.6" |
+| 修复 `window-prior` → `width-prior` 拼写 | §10.6 裁决原则段 | 单处拼写错误 |
+| Header "不引入新计算" 改为精确表述 | header 说明段 | 把"派生重组、单位换算、物理近似解释"显式列出，避免误以为所有数字都是旧表原样搬运 |
+| §18.4 "完全验收"改为"第一层代表性补表" | §18.4 口径声明段 | 口径准确化，明确剩余 reader pack 在 v5.2 |
+
+**v5.2 reader comparison table pack（codex 第三轮 7 项核心扩展）**：
+
+| 新增 | 位置 | 数量 |
+|---|---|---|
+| 附录 D 固定 W × H vary λ 完整 reader tables | 附录 D | 5 张表（800×1400 / 800×1500 / 800×550 / 600×1300 / 500×1500）|
+| 附录 E 固定 λ vary W × H 完整 reader tables | 附录 E | 5 张表（660 H=1400 / 660 H=1500 / 660 W=800 / 660 W=500 / 404 sweep）|
+| 附录 F strict controlled vs route-level 对照矩阵 | 附录 F | 14 行总表 |
+| §18.6 v5.2 验收（codex 10 项）| §18.6 | 10 行验收映射 |
+| §18.7 旧 report 47 迁移决定修正 | §18.7 | codex claim "files exist" 经 find 验证不实，迁移延后 |
+
+### codex 第三轮验收映射（10 项）
+
+详见 [reports/88](88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md) §18.6 完整 10 行表（全部 ✅）。
+
+### Files updated for the v5.1.1 + v5.2 amendment
+
+| File | Change |
+|---|---|
+| [reports/88](88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md) | 头部 v5.1 → **v5.2 reader comparison table pack + v5.1.1 hotfix**；新增 §6.4.F + 附录 D / E / F + §18.6 + §18.7；修正 §2.4 / §8.6 / §10.6；统一 detection 表头；修正表号 / 拼写。从 2215 行 → 2455 行（+240 行）。 |
+| [reports/122](122_EV_NODI_report_88_v4_dual_lens_consolidation_ledger.md) | 本段落（v5.1.1 + v5.2 amendment ledger entry）。 |
+
+### What did **not** change in v5.1.1 + v5.2
+
+- `release_status` for lens B 仍 `negative_or_diagnostic_result_only`；冻结参数集 + γ=0.749 / s_SNR=0.728 / e_SNR=0.812 不变。
+- §15 forbidden claim 一条未放宽。
+- 全部 v5.0 / v5.1 数值结论（路线类、main-660、Au gold 阶梯、Tsuyama lens 对照、P0 audit、reproduction lens 等）。
+- 双口径并立、selected-annulus 0.5–0.8 固定、sidecar guardrails 全部维持。
+- 没有新计算 / 新 candidate / 新 lane / 新随机种子 / 新 solver case / 新 experiment / 新 measured artifact ingest。
+- 没有修改 `nodi_simulator/review_package.py` / `HISTORICAL_REPORT_SUPERSESSION.md` / `文档导航.md` / tests。
+
+### Verification evidence (v5.1.1 + v5.2)
+
+```text
+python -m pytest tests/test_paper_provenance_disjoint_and_supersession.py -q
+  → 2 passed in 0.04s (executed after merge to main)
+```
+
+v5.1.1 + v5.2 amendment 仍是纯 reader-facing markdown 增补 + 修正；未触及 simulator / schema / contract / fixture / generator string / nav doc，因此未触发额外 pytest。
+
+### Boundary preserved
+
+- 全部 v5.1 二次精修后的术语口径在 v5.1.1 + v5.2 内继续生效（detection → synthetic detection score / proxy；transit → ms 绝对值；倍数列只用于阶段量；附录 F 14 行对照矩阵硬性约束 strict vs route-level 不可混读）。
+- 口径 B 流程严格按 §11.8 step 1–6 顺序展开；几何选型不走"哪个最像 Tsuyama"捷径在 §11.4 + §11.8 + 附录 F 三重重申。
+- §15 共同 forbidden 全部继承。
+- 附录 D / E 中 detection cell **只在 v5.x 有 strict 直接行时填**——这是 v5.2 防止"最近邻塞进 cell 伪装成 strict 数据"的硬约束。
+
+### Open dependency unchanged
+
+P19 evidence-strategy gate must, when designed, declare acceptance criteria for **both lenses**. v5.x §12.3 / §16 / §18.3 / §18.5 全部重申。v5.2 reader comparison pack 不改变这条 dependency；附录 D / E 中大量 `—` cell 直接显示 P19 实测的优先级（§16.2）。
