@@ -27,3 +27,13 @@ Required boundary fields:
 - `solver_native_raw_magnitude_final_gate_allowed = false`
 
 The solver-native fields are trace-only. SNR and LOD claims remain blocked; detector-voltage, sample-count, measured blank safety, and route-promotion claims remain blocked.
+
+## Artifact Field Coverage
+
+Fields below are tracked by the schema-doc drift auditor for matched artifact files.
+
+### `results/post_v2_minimal_bounded_solver_execution/full_wave_green_tensor_minimal_solver_output_manifest.json`
+
+- `allowed_final_gate_metric_families`
+- `output_sha256`
+- `selected_route_ids`

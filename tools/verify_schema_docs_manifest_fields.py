@@ -15,8 +15,8 @@ import argparse
 import csv
 import json
 import re
-from pathlib import Path
 from collections import defaultdict
+from pathlib import Path
 
 try:
     import yaml  # type: ignore
@@ -57,9 +57,13 @@ ARTIFACT_NAME_ALIASES: dict[str, tuple[str, ...]] = {
     "p18_bounded_lane_synthesis_record": ("bounded_lane_synthesis_stop_continue_record",),
     "p8_closure_review_record": ("p8_claude_review_closure_record",),
     "post_v2_mandatory_audit": (
+        "top_candidate_mandatory_audit",
         "top_candidate_mandatory_audit_manifest",
     ),
-    "review_package_manifest": ("REVIEW_PACKAGE_MANIFEST",),
+    "review_package_manifest": (
+        "REVIEW_BUILD_MANIFEST",
+        "REVIEW_PACKAGE_MANIFEST",
+    ),
     "second_bounded_solver_lane_execution_output_manifest": (
         "second_bounded_solver_lane_trace_output_manifest",
     ),
@@ -210,14 +214,6 @@ FIELD_SKIP_SUFFIXES = (
     "_version",
 )
 
-# Some documents intentionally describe a logical contract rather than mirroring every
-# concrete artifact field. For these, keep only artifact existence checks and skip
-# detailed field-token drift checks.
-FIELD_CHECK_EXEMPT_BASES = {
-    *ARTIFACT_NAME_ALIASES.keys(),
-}
-
-
 def _is_skippable_field(field: str) -> bool:
     return (
         field in FIELD_SKIP
@@ -273,6 +269,7 @@ def _extract_fields(path: Path) -> set[str]:
 def _build_artifact_index() -> dict[str, list[Path]]:
     index: defaultdict[str, list[Path]] = defaultdict(list)
     root_parts = {part for part in PROJECT_ROOT.parts}
+    project_root_resolved = PROJECT_ROOT.resolve()
 
     def _is_private_path(path: Path) -> bool:
         return any(
@@ -282,8 +279,14 @@ def _build_artifact_index() -> dict[str, list[Path]]:
         )
 
     for path in PROJECT_ROOT.rglob("*"):
+        try:
+            resolved = path.resolve(strict=True)
+        except OSError:
+            continue
         if (
             not path.is_file()
+            or path.is_symlink()
+            or not resolved.is_relative_to(project_root_resolved)
             or _is_private_path(path)
             or path.name.startswith("._")
             or path.parent == DOC_DIR
@@ -322,9 +325,6 @@ def _analyze_doc(
     if not artifact_paths:
         print(f"- {doc_path}: MISSING_ARTIFACT_MATCH ({base}*)")
         return (not strict, 1, 0)
-
-    if base in FIELD_CHECK_EXEMPT_BASES:
-        return True, 1, 0
 
     doc_text = doc_path.read_text(encoding="utf-8", errors="ignore").lower()
     doc_tokens = _field_tokens(doc_text)

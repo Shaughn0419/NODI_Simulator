@@ -2,7 +2,12 @@ from __future__ import annotations
 
 import pytest
 
-from nodi_simulator.review_package import CALIBRATION_SCAFFOLD_FILES, verify_review_package
+from nodi_simulator.review_package import (
+    CALIBRATION_SCAFFOLD_FILES,
+    git_commit,
+    git_commit_is_ancestor,
+    verify_review_package,
+)
 
 from ._review_package_test_helpers import load_json, root_path
 
@@ -96,3 +101,12 @@ def test_local_verifier_passes_with_allow_dirty() -> None:
     assert "PASS required_paths" in result
     assert "PASS hashes" in result
     assert "PASS post_v2_audit_schema" in result
+
+
+def test_manifest_git_commit_is_reachable_from_current_head() -> None:
+    manifest = load_json("REVIEW_PACKAGE_MANIFEST.json")
+    current_commit = git_commit(root_path("."))
+
+    assert isinstance(manifest["git_commit"], str)
+    assert current_commit is not None
+    assert git_commit_is_ancestor(manifest["git_commit"], current_commit, root_path("."))

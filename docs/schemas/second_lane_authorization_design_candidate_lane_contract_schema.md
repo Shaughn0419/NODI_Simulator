@@ -40,3 +40,15 @@ Required guards:
 - `route_promotion_authorized = false`
 - `raw_magnitude_final_gate_allowed = false`
 - `solver_native_raw_magnitude_final_gate_allowed = false`
+
+## Artifact Field Coverage
+
+Fields below are tracked by the schema-doc drift auditor for matched artifact files.
+
+### `results/post_v2_second_lane_authorization_design/second_lane_authorization_design_candidate_lane_contract_manifest.json`
+
+- `authorization_gate_decision`
+- `candidate_lane_constraints`
+- `current_prompt_authorizes_second_lane_execution`
+- `explicit_second_lane_execution_request_required`
+- `future_authorization_phrase_already_received`

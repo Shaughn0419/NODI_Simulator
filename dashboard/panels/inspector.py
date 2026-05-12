@@ -209,6 +209,8 @@ def render_inspector():
             f"{case.get('engineering_gate_blocker_summary')} | "
             f"{case.get('engineering_gate_guidance', 'N/A')}"
         )
+    wavelength_rows = []
+    material_rows = []
     if health_report:
         monitoring = health_report.get("monitoring_summary", {})
         st.caption(

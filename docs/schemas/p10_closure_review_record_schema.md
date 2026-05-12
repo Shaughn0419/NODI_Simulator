@@ -33,3 +33,15 @@ Required guards:
 - `solver_native_raw_magnitude_final_gate_allowed = false`
 - `additional_solver_execution_authorized = false`
 - `additional_solver_output_generated = false`
+
+## Artifact Field Coverage
+
+Fields below are tracked by the schema-doc drift auditor for matched artifact files.
+
+### `results/post_v2_third_bounded_solver_lane_closure/p10_claude_review_closure_record.json`
+
+- `claude_review_verdict`
+- `closure_decision`
+- `p10_artifact_manifest_sha256`
+- `p10_execution_stage`
+- `p10_solver_output_manifest_sha256`

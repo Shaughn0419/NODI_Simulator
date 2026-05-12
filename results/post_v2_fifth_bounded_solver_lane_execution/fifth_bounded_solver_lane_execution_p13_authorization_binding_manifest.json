@@ -26,7 +26,7 @@
   "p13_authorization_gate_record_sha256": "c8928d294b859ee1cb0b3db27bddbaa00134b879a30e9fe4538bf086a465ef6b",
   "p13_gate_prior_decision": "not_authorized_pending_explicit_future_request",
   "p13_p12_closure_binding_manifest_path": "results/post_v2_fifth_bounded_lane_authorization_design/p13_p12_closure_binding_manifest.json",
-  "p13_p12_closure_binding_manifest_sha256": "5e14bcb24837b7b41511c0e63297ccd0765744380cfcd9bfb6944372779b93e9",
+  "p13_p12_closure_binding_manifest_sha256": "6bb821295df5357b12a46d83e9195fe3544026b785e27c97f2c6b00d21fbf23b",
   "p1_surrogate_risk_role_preserved": true,
   "p2_readiness_scope_preserved": true,
   "p3_pilot_design_scope_preserved": true,

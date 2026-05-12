@@ -360,6 +360,24 @@ def git_commit(project_root: Path = PROJECT_ROOT) -> str | None:
     return _git_value(["rev-parse", "HEAD"], project_root=project_root)
 
 
+def git_commit_is_ancestor(
+    ancestor_commit: str,
+    descendant_commit: str,
+    project_root: Path = PROJECT_ROOT,
+) -> bool:
+    try:
+        subprocess.run(
+            ["git", "merge-base", "--is-ancestor", ancestor_commit, descendant_commit],
+            cwd=project_root,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return False
+    return True
+
+
 def git_dirty(project_root: Path = PROJECT_ROOT) -> bool:
     status = _git_value(["status", "--short"], project_root=project_root)
     return bool(status)
@@ -842,6 +860,75 @@ def write_schema_docs(project_root: Path = PROJECT_ROOT) -> list[Path]:
             "The core table is `results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv`. "
             "Rows are unique relative route aggregates with declared particle scope, rank-percentile evidence, "
             "and explicit claim blockers. Raw arbitrary-unit ratios are diagnostic only.\n"
+            "\nTop-level columns tracked from `top_candidate_mandatory_audit.csv`:\n\n"
+            "- `absolute_lod_claim_allowed`\n"
+            "- `aggregation_particle_family`\n"
+            "- `aggregation_quantile`\n"
+            "- `aggregation_scope`\n"
+            "- `anchor_particles_included`\n"
+            "- `audit_bfp_jacobian_applied`\n"
+            "- `audit_generated_at`\n"
+            "- `bfp_roi_cross_term_proxy`\n"
+            "- `bfp_roi_rank_percentile_in_stratum`\n"
+            "- `bfp_roi_score`\n"
+            "- `bfp_roi_self_term_proxy`\n"
+            "- `biological_specificity_claim_allowed`\n"
+            "- `calibrated_snr_claim_allowed`\n"
+            "- `candidate_source`\n"
+            "- `coincidence_event_overlap_proxy_definition`\n"
+            "- `coincidence_event_overlap_proxy_label`\n"
+            "- `comparison_stratum`\n"
+            "- `contaminant_pass_fraction`\n"
+            "- `contaminant_risk_label`\n"
+            "- `contaminant_utilized_in_risk_policy`\n"
+            "- `contaminants_included_in_route_score`\n"
+            "- `depth_nm`\n"
+            "- `detector_voltage_prediction_claim_allowed`\n"
+            "- `ev_polydispersity_pass_fraction_proxy`\n"
+            "- `ev_sample_profile_min_risk_label`\n"
+            "- `ev_sample_profile_resolved`\n"
+            "- `final_audit_decision`\n"
+            "- `main_660_redefinition_authorized`\n"
+            "- `missing_v1_reason`\n"
+            "- `noise_max_abs_percentile_delta_vs_nominal`\n"
+            "- `noise_pass_fraction`\n"
+            "- `rank_inversion_flag`\n"
+            "- `rank_inversion_reason_codes`\n"
+            "- `rank_inversion_severity`\n"
+            "- `ranking_participation`\n"
+            "- `route_key`\n"
+            "- `route_role_final`\n"
+            "- `route_role_initial`\n"
+            "- `selected_annulus_boundary_policy`\n"
+            "- `selected_annulus_main_control_reversal`\n"
+            "- `selected_annulus_primary_gate_switch_blocked`\n"
+            "- `selected_annulus_replaces_all_crossing_ranking`\n"
+            "- `source_v1_library_sha256`\n"
+            "- `true_ev_concentration_claim_allowed`\n"
+            "- `tsuyama_geometry_relation`\n"
+            "- `tsuyama_signal_rank_percentile_in_stratum`\n"
+            "- `tsuyama_signal_score`\n"
+            "- `v1_bfp_to_angle_jacobian_applied`\n"
+            "- `v1_detector_field_units`\n"
+            "- `v1_field_coordinate_measure`\n"
+            "- `v1_operator_route`\n"
+            "- `v1_output_claim_level`\n"
+            "- `v1_scalar_rank_in_stratum`\n"
+            "- `v1_scalar_rank_percentile_in_stratum`\n"
+            "- `v1_scalar_score`\n"
+            "- `wavelength_nm`\n"
+            "- `width_nm`\n"
+            "\nTop-level manifest fields tracked from "
+            "`top_candidate_mandatory_audit_manifest.json`:\n\n"
+            "- `audit_bfp_jacobian_applied_layer`\n"
+            "- `audit_manifest_schema`\n"
+            "- `calibrated_claim_allowed`\n"
+            "- `milestone`\n"
+            "- `p0b_artifacts_produced_from_evidence_chain`\n"
+            "- `rank_policy`\n"
+            "- `unprefixed_forbidden_audit_columns`\n"
+            "- `v1_bfp_to_angle_jacobian_applied_expected`\n"
+            "- `v1_source_field_mapping`\n"
         ),
         "review_package_manifest_schema.md": (
             "# Review Package Manifest Schema\n\n"
@@ -849,6 +936,26 @@ def write_schema_docs(project_root: Path = PROJECT_ROOT) -> list[Path]:
             "`REVIEW_PACKAGE_MANIFEST.json` is the relative-audit release manifest and may not contain "
             "`must_be_generated`. `REVIEW_PACKAGE_HASHES.sha256` excludes itself and the "
             "release manifest to avoid hash recursion.\n"
+            "\nTop-level release-manifest fields tracked from "
+            "`REVIEW_PACKAGE_MANIFEST.json`:\n\n"
+            "- `calibrated_claim_allowed`\n"
+            "- `deferred_p0b_roles`\n"
+            "- `generated_at`\n"
+            "- `git_commit`\n"
+            "- `git_dirty`\n"
+            "- `hashes_manifest_sha256`\n"
+            "- `platform`\n"
+            "- `release_readiness`\n"
+            "- `review_package_manifest_schema`\n"
+            "- `v1_summary_mode`\n"
+            "\nTop-level build-manifest fields tracked from "
+            "`REVIEW_BUILD_MANIFEST.json`:\n\n"
+            "- `calibrated_claim_allowed`\n"
+            "- `generated_at`\n"
+            "- `git_commit`\n"
+            "- `git_dirty`\n"
+            "- `hashes_manifest_sha256`\n"
+            "- `review_build_manifest_schema`\n"
         ),
         "noise_readout_scenario_bundle_schema.md": (
             "# Noise/Readout Scenario Bundle Schema\n\n"
@@ -1443,6 +1550,11 @@ def verify_review_package(project_root: Path = PROJECT_ROOT, *, allow_dirty: boo
         raise ValueError("unexpected REVIEW_PACKAGE_MANIFEST schema")
     if not allow_dirty and manifest.get("git_dirty"):
         raise ValueError("dirty worktree cannot be verified as an external release")
+    recorded_commit = manifest.get("git_commit")
+    current_commit = git_commit(project_root)
+    if isinstance(recorded_commit, str) and recorded_commit and current_commit:
+        if not git_commit_is_ancestor(recorded_commit, current_commit, project_root):
+            raise ValueError("manifest git_commit is not reachable from current HEAD")
     encoded = json.dumps(manifest, ensure_ascii=False)
     if "must_be_generated" in encoded:
         raise ValueError("release manifest must not contain must_be_generated")

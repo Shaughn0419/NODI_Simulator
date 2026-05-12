@@ -461,8 +461,8 @@
           "path": "reports/89_EV_NODI_post_v2_unmodeled_realism_register.md",
           "path_status": "exists",
           "role": "unmodeled_realism_register",
-          "sha256": "a5a891bf5cee358490432cc68c5826849512b95b8b48bb94cd18ede923aabe8a",
-          "size_bytes": 5154,
+          "sha256": "a0d405dfa6f909a070f7e3a41f757ee78e2ea69e79b19e2544ebf5afdb3ca510",
+          "size_bytes": 6652,
           "source_lane": "post-v2 register"
         },
         {
@@ -593,8 +593,8 @@
           "path": "HISTORICAL_REPORT_SUPERSESSION.md",
           "path_status": "exists",
           "role": "historical_report_supersession",
-          "sha256": "b2315fb1f9974c5be9f4be1d43b9044351589f1f917cf55cc9cc6a4f48f08b0c",
-          "size_bytes": 1613,
+          "sha256": "944d1848000a0ac8297c68680b24bd1446a3350f7c80541a59461282dea89831",
+          "size_bytes": 4332,
           "source_lane": "P1.governance"
         }
       ],
@@ -651,16 +651,16 @@
           "path": "docs/schemas/post_v2_mandatory_audit_schema.md",
           "path_status": "exists",
           "role": "post_v2_mandatory_audit_schema",
-          "sha256": "68b78816413e5393b67fa9b8a0aef0e7fc624c133cd8902fe8755032fbcd60a8",
-          "size_bytes": 295,
+          "sha256": "e57116ccd3b4a9fe687d95ac1aa7d11d69bc91a1bb0547b483c1b6dd7429d295",
+          "size_bytes": 2496,
           "source_lane": "P2.schema_docs"
         },
         {
           "path": "docs/schemas/review_package_manifest_schema.md",
           "path_status": "exists",
           "role": "review_package_manifest_schema",
-          "sha256": "208cec87e48527faba8f13972e8a81b54b2a01cd78bcdd3fa8fd4cfc4e8a6f82",
-          "size_bytes": 309,
+          "sha256": "dcfd66bd720fb98dcd7e3efbf0151c20b815fba07eb05762d0a74bb621424feb",
+          "size_bytes": 817,
           "source_lane": "P2.schema_docs"
         },
         {
@@ -792,12 +792,12 @@
   ],
   "calibrated_claim_allowed": false,
   "deferred_p0b_roles": [],
-  "generated_at": "2026-05-11T07:53:47+00:00",
-  "git_commit": "ca54b73bd7e67fae6cbf91651d33c3059a343a1d",
-  "git_dirty": false,
+  "generated_at": "2026-05-12T03:46:34+00:00",
+  "git_commit": "c67c76862812032b42d495d7124fa30f51ffde8c",
+  "git_dirty": true,
   "hashes_manifest_path": "REVIEW_PACKAGE_HASHES.sha256",
-  "hashes_manifest_sha256": "5633d681967db798e49378b6f98053c15e3a60c7c3786b07eaedc204d45f75d3",
-  "package_id": "ev_nodi_post_v2_review_package_20260511_p0b",
+  "hashes_manifest_sha256": "cd7cd7e654a2220da8ef70e9f83a7d942be645a4d0ca88b6d173a13874695650",
+  "package_id": "ev_nodi_post_v2_review_package_20260512_p0b",
   "package_role": "external_review_relative_audit",
   "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
   "python_version": "3.13.5",

@@ -28,3 +28,15 @@ route_promotion_authorized = false
 ```
 
 Any later execution requires a separate authorization phase.
+
+## Artifact Field Coverage
+
+Fields below are tracked by the schema-doc drift auditor for matched artifact files.
+
+### `results/post_v2_bounded_solver_dry_run_preflight/full_wave_green_tensor_execution_authorization_record.json`
+
+- `later_phase_minimum_required_artifacts`
+- `p0_release_conclusion_changed`
+- `p1_surrogate_risk_role_preserved`
+- `p2_readiness_scope_preserved`
+- `p3_pilot_design_scope_preserved`

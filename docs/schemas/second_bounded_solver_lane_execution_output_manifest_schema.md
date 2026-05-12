@@ -39,3 +39,13 @@ Required guards:
 - `solver_native_raw_magnitude_final_gate_allowed = false`
 
 The output is not calibrated SNR, not absolute LOD, not true EV concentration, not biological specificity, not detector-voltage prediction, and not route-promotion evidence.
+
+## Artifact Field Coverage
+
+Fields below are tracked by the schema-doc drift auditor for matched artifact files.
+
+### `results/post_v2_second_bounded_solver_lane_execution/second_bounded_solver_lane_trace_output_manifest.json`
+
+- `allowed_final_gate_metric_families`
+- `output_sha256`
+- `selected_route_ids`

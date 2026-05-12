@@ -23,7 +23,7 @@
   "p11_authorization_gate_record_sha256": "30ec239dab45341ab354e54a866695a04de03c8906e6884aedd61d4430b7dc73",
   "p11_gate_prior_decision": "not_authorized_pending_explicit_future_request",
   "p11_p10_closure_binding_manifest_path": "results/post_v2_fourth_bounded_lane_authorization_design/p11_p10_closure_binding_manifest.json",
-  "p11_p10_closure_binding_manifest_sha256": "a11265d69d6bbe909d73f7f610f9094095b1a31f24567f6dd9a8d897c1e73a19",
+  "p11_p10_closure_binding_manifest_sha256": "152ac2ab502c6d6b2201c1ceca7367c1203f5bc896f135a9adc64d68a2555206",
   "p1_surrogate_risk_role_preserved": true,
   "p2_readiness_scope_preserved": true,
   "p3_pilot_design_scope_preserved": true,

@@ -34,3 +34,21 @@ The Jacobian layer distinction remains pinned:
 v1_bfp_to_angle_jacobian_applied = false
 audit_bfp_jacobian_applied = true
 ```
+
+## Artifact Field Coverage
+
+Fields below are tracked by the schema-doc drift auditor for matched artifact files.
+
+### `results/post_v2_bounded_solver_dry_run_preflight/full_wave_green_tensor_mesh_boundary_unit_preflight_manifest.json`
+
+- `boundary_condition_family`
+- `coordinate_system`
+- `length_unit`
+- `material_index_unit_convention`
+- `normalization_convention`
+- `p0_release_conclusion_changed`
+- `p1_surrogate_risk_role_preserved`
+- `p2_readiness_scope_preserved`
+- `p3_pilot_design_scope_preserved`
+- `unit_registry_binding`
+- `wavelength_unit`

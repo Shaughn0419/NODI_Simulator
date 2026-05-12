@@ -37,3 +37,13 @@ Required guards:
 - `route_promotion_authorized = false`
 - `raw_magnitude_final_gate_allowed = false`
 - `solver_native_raw_magnitude_final_gate_allowed = false`
+
+## Artifact Field Coverage
+
+Fields below are tracked by the schema-doc drift auditor for matched artifact files.
+
+### `results/post_v2_fifth_bounded_solver_lane_execution/fifth_bounded_solver_lane_trace_output_manifest.json`
+
+- `allowed_final_gate_metric_families`
+- `output_sha256`
+- `selected_route_ids`
