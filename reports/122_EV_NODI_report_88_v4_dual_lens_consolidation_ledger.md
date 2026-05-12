@@ -368,3 +368,83 @@ v5.0 amendment 仍是纯 reader-facing markdown 重组 + 同步更新 supersessi
 ### Open dependency unchanged
 
 P19 evidence-strategy gate must, when designed, declare acceptance criteria for **both lenses**. v5.0 §12.3 / §16 / §18.3 全部重申这条不变量。v5.0 重构不改变这条 dependency 的内容或紧迫性。
+
+## v5.1 amendment (2026-05-12): reader table supplement on top of v5.0 (codex 第二轮反馈吸收)
+
+User instruction (2026-05-12, via codex 第二轮 review):
+
+```text
+不要推翻 v5.0，而是在 c67c768 的基础上做 v5.1 读者表格增强 / 解释增强。
+核心目标不是再重构一次，而是补上"读者最想直接看懂的对比表"和
+"阶段量之间如何传导到结论"的解释。
+请尽量利用已有结果文件派生表格，不要新增 simulation；
+如果只是从既有 CSV 汇总、取中位数、取固定条件切片，
+可以明确标注为"derived reader table"。
+```
+
+Resolved: **v5.1 reader table supplement**——只补读者表格 / 增解释，不改变 v5.0 / v4.2 任何数值或 forbidden。新增 10 个章节小节 + 1 个章节扩展，按 codex 8 项验收问题映射。
+
+### v5.1 新增 / 扩展章节清单（10 项 + 1 扩展）
+
+| 改动 | 位置 | 类型 | codex 验收对应 |
+|---|---|---|---|
+| §0.3b 读者问题导航表（10 行） | §0 阅读须知 | 新增 | 验收 1–10 总览 |
+| §3.0a 阶段量级联（"是谁、归谁管、三条骨架公式、三条不保证"）| §3 可调变量 | 新增 | 验收 3 |
+| §2.4 扩展为 4 波长机制链（404 / 488 / 532 / 660）| §2 物理链 | 扩展 | 验收 1 / 5 |
+| §7.0 变量固定法 5 条（如何读 controlled comparison）| §7 变量隔离 | 新增 | 总原则一致性 |
+| §7.2.5a 信号链扩列对比（2 张代表性扩列表：800 × 1400 vary λ + 660 nm/H=1500 vary W）| §7 变量隔离 | 新增 | 验收 1 / 2 |
+| §8.5 blocker 分类表（10 类 detection blocker）| §8 噪声归因 | 新增 | 验收 4 |
+| §8.6 噪声 sensitivity 数值版（含 reference×2 / noise×2 假想）| §8 噪声归因 | 新增 | 验收 7 / 8 |
+| §10.6 多候选裁决表（why yes / why not 8 候选）| §10 口径 A 推荐 | 新增 | 验收 5 / 6 |
+| §11.8 口径 B step 流程表（input → output → what it is NOT）| §11 口径 B 推荐 | 新增 | 验收 7 |
+| §13.2 阶段量来源与置信等级映射（13 个阶段量）| §13 估计值来源 | 新增 | 验收 8 |
+| 旧有 §8.5 一句话总结改名为 §8.7（因 blocker / sensitivity 占用 §8.5 / §8.6） | §8 噪声归因 | 重编号 | 内部一致性 |
+
+### codex 验收清单映射
+
+| # | codex 验收问题 | v5.1 解决位置 |
+|--:|---|---|
+| 1 | 我能不能看到某个固定尺寸下 404/488/532/660 的完整对比？ | §2.4 + §7.2.5a.1 |
+| 2 | 我能不能看到固定 660 nm 时不同 W/H 为什么有差异？ | §7.2.5a.2 + §7.2.x + §10.4 + §10.6 |
+| 3 | 我能不能看懂 Csca / E_sca / reference / cross-term / peak / noise / detection 之间不是简单线性关系？ | §3.0a + §13.2 |
+| 4 | 我能不能知道 detection 低到底败在什么 blocker？ | §8.5 |
+| 5 | 我能不能理解为什么 404 peak 强但不一定推荐？ | §2.4 + §6.4.F + §10.6 + §8 |
+| 6 | 我能不能理解为什么 660 main route 被保留？ | §10.2 + §10.4 + §10.5 + §10.6 |
+| 7 | 我能不能理解口径 B 是"校准后选型"，不是"为了贴近 Tsuyama 而选型"？ | §11.4 + §11.8 + §10.6 |
+| 8 | 我能不能清楚知道哪些表是既有 artifact 派生 / simulation 原始输出 / 解释性诊断？ | §13.2 + §5 |
+
+### Files updated for the v5.1 amendment
+
+| File | Change |
+|---|---|
+| [reports/88](88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md) | 头部 v5.0 → **v5.1 reader table supplement**；新增 §0.3b / §3.0a / §7.0 / §7.2.5a / §8.5 / §8.6 / §10.6 / §11.8 / §13.2；扩展 §2.4 到 4 波长；§8 重编号；§13 拆 §13.1 / §13.2；附录 C 增列；§18 加 v5.0 二次精修行 + v5.1 行 + §18.4 验收映射 + §18.5 v5.1 不变量。从 1906 行 → 2215 行。 |
+| [reports/122](122_EV_NODI_report_88_v4_dual_lens_consolidation_ledger.md) | 本段落（v5.1 amendment ledger entry）。 |
+
+### What did **not** change in the v5.1 amendment
+
+- `release_status` for lens B 仍 `negative_or_diagnostic_result_only`；冻结参数集 + γ=0.749 / s_SNR=0.728 / e_SNR=0.812 不变。
+- §15 forbidden claim 一条未放宽。
+- 全部 v5.0 / v4.2 数值结论：所有 detection 表行（§3.2 路线类、§4 main-660、§6 NODI lens / Tsuyama / Au gold、§13.1 P0 audit 572/563、§14.5 reproduction lens γ=0.749 / score 2.033、§14.7 R5.2 sidecar、§14.6.1 instrument 216/216）。
+- 双口径并立、selected-annulus 0.5–0.8 固定、sidecar guardrails 全部维持。
+- 没有新计算 / 新 candidate / 新 lane / 新随机种子 / 新 solver case / 新 experiment / 新 measured artifact ingest。
+- 没有修改 `nodi_simulator/review_package.py` 生成字符串 / `HISTORICAL_REPORT_SUPERSESSION.md` / `文档导航.md`（v5.0 章节号在 v5.1 内仍有效；v5.1 新增小节都在 v5.0 已有大节内 / 之间）。
+- 没有修改 tests。
+
+### Verification evidence (v5.1 amendment)
+
+```text
+python -m pytest tests/test_paper_provenance_disjoint_and_supersession.py -q
+  → 2 passed in 0.03s
+```
+
+v5.1 amendment 仍是纯 reader-facing markdown 增补；未触及 simulator / schema / contract / fixture / generator string / nav doc，因此未触发额外 pytest。
+
+### Boundary preserved by the v5.1 amendment
+
+- 全部 v5.0 二次精修后的术语口径在 v5.1 内继续生效（detection → synthetic detection score / proxy；transit → ms 绝对值；倍数列只用于阶段量；不跨 lens / panel 直接百分比 ranking）。
+- 口径 B 流程严格按 §11.8 step 1–6 顺序展开；几何选型不走"哪个最像 Tsuyama"捷径在 §11.4 + §11.8 step 4/5 双重重申。
+- §15 共同 forbidden 全部继承。
+
+### Open dependency unchanged
+
+P19 evidence-strategy gate must, when designed, declare acceptance criteria for **both lenses**. v5.0 §12.3 / §16 / §18.3 / §18.5 全部重申这条不变量。v5.1 reader table 增强不改变这条 dependency 的内容或紧迫性。
