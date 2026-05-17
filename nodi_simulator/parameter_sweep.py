@@ -1495,17 +1495,11 @@ def _add_detector_noise_block_from_draws(
             raise ValueError("shot_standard draws are required when shot noise is enabled")
         shot_noise = shot_std.copy()
         np.multiply(shot_noise, shot_standard, out=shot_noise, casting="unsafe")
-        if noise is None:
-            noise = np.zeros_like(signal_arr, dtype=float)
-        else:
-            noise = noise.copy()
+        noise = np.zeros_like(signal_arr, dtype=float) if noise is None else noise.copy()
         noise += shot_noise
 
     if sim_cfg.noise_model == "gaussian_plus_drift":
-        if noise is None:
-            noise = np.zeros_like(signal_arr, dtype=float)
-        else:
-            noise = noise.copy()
+        noise = np.zeros_like(signal_arr, dtype=float) if noise is None else noise.copy()
         noise += sim_cfg.drift_slope * time_s
     elif sim_cfg.noise_model != "gaussian":
         raise ValueError(f"Unknown noise_model: {sim_cfg.noise_model}")
@@ -2384,7 +2378,7 @@ def _build_observation_signature(
         f"|phase_polarization_quantitative_claim_allowed={reference.get('phase_polarization_quantitative_claim_allowed', False)}"
         f"|incident_field_model_for_mie={reference.get('incident_field_model_for_mie', 'unknown')}"
         f"|local_plane_wave_validity={reference.get('local_plane_wave_validity', 'unknown')}"
-        f"|mie_radius_to_beam_waist_ratio={reference.get('mie_radius_to_beam_waist_ratio', None)}"
+        f"|mie_radius_to_beam_waist_ratio={reference.get('mie_radius_to_beam_waist_ratio')}"
         f"|scattering_normalization_route={reference.get('scattering_normalization_route', sim_cfg.scattering_normalization_route)}"
         f"|K_sca_calibration_status={reference.get('K_sca_calibration_status', sim_cfg.K_sca_calibration_status)}"
         f"|standard_particle_calibration_coverage_status={reference.get('standard_particle_calibration_coverage_status', 'unknown')}"
@@ -2946,7 +2940,6 @@ class _BatchSummaryAccumulator:
         pod_threshold: float,
         pod_threshold_robust_std: float,
         threshold_background_segment_samples: int,
-        pulse_detection_mode: str,
         trace: dict,
         noisy: dict,
         A_ref_trace: np.ndarray,
@@ -3776,10 +3769,9 @@ def _compute_diffusion_coefficient(
         return None
     if medium.viscosity_Pa_s <= 0 or medium.temperature_K <= 0:
         return None
-    D = _kB * medium.temperature_K / (
+    return _kB * medium.temperature_K / (
         6.0 * math.pi * medium.viscosity_Pa_s * particle.radius_m
     )
-    return D
 
 
 def _resolve_summary_metrics_for_engineering_basis(
@@ -3940,7 +3932,6 @@ def simulate_one_event(
     diffusion_coefficient: float | None = None,
     retain_full_payload: bool = True,
     readout_context: _ReadoutContext | None = None,
-    pulse_context: PulseExtractionContext | None = None,
     trajectory_context: TrajectoryContext | None = None,
     event_case_context: _EventCaseContext | None = None,
     unit_position_sample: tuple[float, float, float] | None = None,
@@ -4223,7 +4214,6 @@ def simulate_one_event(
             pod_threshold=pod_threshold_stats["threshold"],
             pod_threshold_robust_std=pod_threshold_stats["robust_std"],
             threshold_background_segment_samples=n_bg,
-            pulse_detection_mode=sim_cfg.pulse_detection_mode,
             trace=trace,
             noisy=noisy,
             A_ref_trace=A_ref_trace,
@@ -5068,7 +5058,6 @@ def _simulate_stream_event_block(
     unit_position_samples: np.ndarray | None,
     medium_refractive_index: float,
     readout_context: _ReadoutContext | None,
-    pulse_context: PulseExtractionContext | None,
     trajectory_context: TrajectoryContext,
     event_case_context: _EventCaseContext,
     summary_accumulator: _BatchSummaryAccumulator,
@@ -5575,7 +5564,6 @@ def _simulate_stream_event_block(
             pod_threshold=pod_threshold,
             pod_threshold_robust_std=float(pod_threshold_robust_stds[offset]),
             threshold_background_segment_samples=n_bg,
-            pulse_detection_mode=sim_cfg.pulse_detection_mode,
             trace={
                 "I_baseline": float(baseline_by_event[offset]),
                 **trace_diag,
@@ -5763,7 +5751,6 @@ def compute_d_prime(
 
 def _build_rho_physical_envelope_diagnostics(
     reference: dict,
-    E_sca_ref: float,
     sim_cfg: SimulationConfig,
 ) -> dict[str, object]:
     """
@@ -6130,12 +6117,6 @@ def run_single_case_batch(
         case_time_s,
         sim_cfg,
     )
-    pulse_context = build_pulse_extraction_context(
-        case_time_s,
-        sim_cfg.min_peak_width_s,
-        sim_cfg.min_peak_interval_s,
-    )
-
     # 2. Intrinsic scattering (pure, unnormalized)
     intrinsic = _get_or_compute_intrinsic_scattering(
         particle,
@@ -6310,7 +6291,6 @@ def run_single_case_batch(
     reference.update(
         _build_rho_physical_envelope_diagnostics(
             reference,
-            E_sca_ref,
             sim_cfg,
         )
     )
@@ -6558,7 +6538,6 @@ def run_single_case_batch(
                     unit_position_samples=unit_position_samples,
                     medium_refractive_index=medium_refractive_index,
                     readout_context=readout_context,
-                    pulse_context=pulse_context,
                     trajectory_context=trajectory_context,
                     event_case_context=event_case_context,
                     summary_accumulator=summary_accumulator,
@@ -6593,7 +6572,6 @@ def run_single_case_batch(
                 diffusion_coefficient=diffusion_coefficient,
                 retain_full_payload=retain_event_traces,
                 readout_context=readout_context,
-                pulse_context=pulse_context,
                 trajectory_context=trajectory_context,
                 event_case_context=event_case_context,
                 unit_position_sample=unit_position_sample,
@@ -6837,7 +6815,6 @@ def run_single_case_batch(
     ood_detection = build_ood_detection_diagnostics(
         particle,
         summary,
-        sim_cfg,
     )
     summary.update(ood_detection)
     reference.update(ood_detection)
@@ -8794,9 +8771,8 @@ def _log_sweep_case_failure(case_result: dict, *, detailed_case_logging: bool) -
 def _format_sweep_case_failure_summary(failures: list[dict], *, limit: int = 5) -> str:
     """Render failed case payloads into one actionable exception message."""
     total = len(failures)
-    examples = []
-    for failure in failures[:limit]:
-        examples.append(
+    examples = [
+        (
             "case "
             f"{failure.get('case_idx')}/{failure.get('total_cases')} "
             f"{failure.get('particle_name')} "
@@ -8805,6 +8781,8 @@ def _format_sweep_case_failure_summary(failures: list[dict], *, limit: int = 5) 
             f"H={float(failure.get('depth_m', 0.0)) * 1e9:.0f}nm: "
             f"{failure.get('error')}"
         )
+        for failure in failures[:limit]
+    ]
     suffix = "" if total <= limit else f"; {total - limit} more failure(s) omitted"
     return (
         f"{total} sweep case failure(s); refusing to return partial results. "
@@ -9318,10 +9296,7 @@ def compute_joint_score(
         mh = summary["mean_peak_height"]
         sh = summary["std_peak_height"]
         cv = sh / mh if mh > 0 else float("inf")
-        if cv != float("inf") and all_cvs:
-            CV_norm = min_max_normalize(cv, all_cvs)
-        else:
-            CV_norm = 1.0
+        CV_norm = min_max_normalize(cv, all_cvs) if cv != float("inf") and all_cvs else 1.0
         scores.append(compute_case_score(H_norm, R_norm, CV_norm, **score_weights))
 
     return alpha * scores[0] + (1.0 - alpha) * scores[1]
@@ -9363,9 +9338,9 @@ def compute_robust_scores(
     for r in results:
         score_map[_key(r)] = r.get("score", 0.0)
 
-    w_list = sorted(set(float(w) for w in width_list_m))
-    d_list = sorted(set(float(d) for d in depth_list_m))
-    lam_list = sorted(set(float(l) for l in wavelength_list_m))
+    w_list = sorted({float(w) for w in width_list_m})
+    d_list = sorted({float(d) for d in depth_list_m})
+    lam_list = sorted({float(l) for l in wavelength_list_m})
 
     def _neighbors(val, sorted_list):
         """Return val and its immediate neighbors in a sorted list."""

@@ -241,8 +241,8 @@ def _extract_fields(path: Path) -> set[str]:
             return set()
         if isinstance(payload, dict):
             if "properties" in payload and isinstance(payload["properties"], dict):
-                return {str(k).lower() for k in payload["properties"].keys()}
-            return {str(k).lower() for k in payload.keys()}
+                return {str(k).lower() for k in payload["properties"]}
+            return {str(k).lower() for k in payload}
         return set()
     if path.suffix in {".yaml", ".yml"}:
         if yaml is None:
@@ -254,8 +254,8 @@ def _extract_fields(path: Path) -> set[str]:
             return set()
         if isinstance(payload, dict):
             if "properties" in payload and isinstance(payload["properties"], dict):
-                return {str(k).lower() for k in payload["properties"].keys()}
-            return {str(k).lower() for k in payload.keys()}
+                return {str(k).lower() for k in payload["properties"]}
+            return {str(k).lower() for k in payload}
         return set()
     if path.suffix == ".csv":
         with path.open("r", encoding="utf-8", newline="", errors="ignore") as f:
@@ -268,7 +268,7 @@ def _extract_fields(path: Path) -> set[str]:
 
 def _build_artifact_index() -> dict[str, list[Path]]:
     index: defaultdict[str, list[Path]] = defaultdict(list)
-    root_parts = {part for part in PROJECT_ROOT.parts}
+    root_parts = set(PROJECT_ROOT.parts)
     project_root_resolved = PROJECT_ROOT.resolve()
 
     def _is_private_path(path: Path) -> bool:

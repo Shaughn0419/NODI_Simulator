@@ -17,19 +17,19 @@ class _SessionState(dict):
 
 
 class _FakeColumn:
-    def __enter__(self) -> "_FakeColumn":
+    def __enter__(self) -> _FakeColumn:
         return self
 
-    def __exit__(self, *args: object) -> None:
+    def __exit__(self, *_args: object) -> None:
         return None
 
-    def metric(self, *args: object, **kwargs: object) -> None:
+    def metric(self, *_args: object, **_kwargs: object) -> None:
         return None
 
-    def markdown(self, *args: object, **kwargs: object) -> None:
+    def markdown(self, *_args: object, **_kwargs: object) -> None:
         return None
 
-    def caption(self, *args: object, **kwargs: object) -> None:
+    def caption(self, *_args: object, **_kwargs: object) -> None:
         return None
 
 
@@ -48,11 +48,11 @@ class _FakeStreamlit:
         count = spec if isinstance(spec, int) else len(spec)
         return [_FakeColumn() for _ in range(count)]
 
-    def button(self, *args: object, **kwargs: object) -> bool:
+    def button(self, *_args: object, **_kwargs: object) -> bool:
         return False
 
     def __getattr__(self, name: str):
-        def _noop(*args: object, **kwargs: object) -> None:
+        def _noop(*_args: object, **_kwargs: object) -> None:
             return None
 
         return _noop

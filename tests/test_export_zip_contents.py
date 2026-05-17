@@ -35,5 +35,5 @@ def test_exported_review_package_zip_has_required_p0a_contents(tmp_path: Path) -
         "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv"
         in names
     )
-    assert not any(name.startswith("__MACOSX/") or "/._" in name or name.startswith("._") for name in names)
+    assert not any(name.startswith(("__MACOSX/", "._")) or "/._" in name for name in names)
     assert "REVIEW_BUILD_MANIFEST.json" not in names

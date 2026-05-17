@@ -27,7 +27,7 @@
   "p7_gate_prior_decision": "not_authorized_pending_explicit_future_request",
   "p7_gate_prior_stage": "P7_second_lane_authorization_design_complete",
   "p7_p6_evidence_binding_manifest_path": "results/post_v2_second_lane_authorization_design/second_lane_authorization_design_p6_evidence_binding_manifest.json",
-  "p7_p6_evidence_binding_manifest_sha256": "2bc72a2043e48153b0cae749a39d61976b4dfc4a491f35f91d32d1fe14238e57",
+  "p7_p6_evidence_binding_manifest_sha256": "c5f230e77c9355d8975c5ad169a5fe3752bd46fe90259dc630ec96e50eb3238a",
   "physical_solver_execution_authorized": true,
   "raw_magnitude_final_gate_allowed": false,
   "required_future_authorization_phrase": "authorize second bounded solver lane execution",

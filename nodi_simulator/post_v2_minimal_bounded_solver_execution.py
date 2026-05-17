@@ -370,29 +370,27 @@ def write_solver_output_csv(project_root: Path = PROJECT_ROOT) -> Path:
 def _read_solver_output_csv(path: Path) -> list[dict[str, Any]]:
     with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    parsed = []
-    for row in rows:
-        parsed.append(
-            {
-                **row,
-                "wavelength_nm": int(row["wavelength_nm"]),
-                "width_nm": int(row["width_nm"]),
-                "depth_nm": int(row["depth_nm"]),
-                "dimensionless_width_over_wavelength": float(row["dimensionless_width_over_wavelength"]),
-                "dimensionless_depth_over_wavelength": float(row["dimensionless_depth_over_wavelength"]),
-                "solver_native_real_trace_only": float(row["solver_native_real_trace_only"]),
-                "solver_native_imag_trace_only": float(row["solver_native_imag_trace_only"]),
-                "solver_native_response_trace_only": float(row["solver_native_response_trace_only"]),
-                "solver_response_rank": int(row["solver_response_rank"]),
-                "solver_response_rank_percentile": float(row["solver_response_rank_percentile"]),
-                **{
-                    key: row[key] == "True"
-                    for key in (*FALSE_FIELDS, *TRUE_FIELDS)
-                    if key in row
-                },
-            }
-        )
-    return parsed
+    return [
+        {
+            **row,
+            "wavelength_nm": int(row["wavelength_nm"]),
+            "width_nm": int(row["width_nm"]),
+            "depth_nm": int(row["depth_nm"]),
+            "dimensionless_width_over_wavelength": float(row["dimensionless_width_over_wavelength"]),
+            "dimensionless_depth_over_wavelength": float(row["dimensionless_depth_over_wavelength"]),
+            "solver_native_real_trace_only": float(row["solver_native_real_trace_only"]),
+            "solver_native_imag_trace_only": float(row["solver_native_imag_trace_only"]),
+            "solver_native_response_trace_only": float(row["solver_native_response_trace_only"]),
+            "solver_response_rank": int(row["solver_response_rank"]),
+            "solver_response_rank_percentile": float(row["solver_response_rank_percentile"]),
+            **{
+                key: row[key] == "True"
+                for key in (*FALSE_FIELDS, *TRUE_FIELDS)
+                if key in row
+            },
+        }
+        for row in rows
+    ]
 
 
 def build_p5_binding_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
@@ -539,9 +537,7 @@ def build_artifact_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]
         "manifest_role": "minimal_bounded_solver_execution_artifact_manifest",
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
-        "claim_boundary": {
-            key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS
-        }
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "minimal_bounded_solver_trace_only"},
         "calibrated_claim_allowed": False,
         "p0_release_conclusion_changed": False,

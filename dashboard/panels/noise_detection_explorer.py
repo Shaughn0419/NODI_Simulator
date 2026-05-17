@@ -389,7 +389,7 @@ def _build_trace_figure(trace_df) -> go.Figure:
                 x=trace_df["time_ms"],
                 y=trace_df["shot_noise"],
                 name="shot-noise surrogate",
-                line=dict(dash="dot"),
+                line={"dash": "dot"},
             )
         )
     if "signal_detect_pre_post" in trace_df:
@@ -397,16 +397,16 @@ def _build_trace_figure(trace_df) -> go.Figure:
     if "signal_pod" in trace_df and not np.allclose(trace_df["signal_pod"], 0.0):
         fig.add_trace(go.Scatter(x=trace_df["time_ms"], y=trace_df["signal_pod"], name="POD surrogate"))
     if "signal_nodi_q" in trace_df and not np.allclose(trace_df["signal_nodi_q"], 0.0):
-        fig.add_trace(go.Scatter(x=trace_df["time_ms"], y=trace_df["signal_nodi_q"], name="NODI Q", line=dict(dash="dot")))
+        fig.add_trace(go.Scatter(x=trace_df["time_ms"], y=trace_df["signal_nodi_q"], name="NODI Q", line={"dash": "dot"}))
     if "signal_nodi_mag" in trace_df and not np.allclose(trace_df["signal_nodi_mag"], trace_df["signal_noisy"]):
-        fig.add_trace(go.Scatter(x=trace_df["time_ms"], y=trace_df["signal_nodi_mag"], name="NODI magnitude", line=dict(dash="dash")))
+        fig.add_trace(go.Scatter(x=trace_df["time_ms"], y=trace_df["signal_nodi_mag"], name="NODI magnitude", line={"dash": "dash"}))
     fig.add_trace(go.Scatter(x=trace_df["time_ms"], y=trace_df["signal_noisy"], name="NODI 读出"))
     fig.add_trace(
         go.Scatter(
             x=trace_df["time_ms"],
             y=trace_df["threshold"],
             name="阈值",
-            line=dict(dash="dash"),
+            line={"dash": "dash"},
         )
     )
     fig.update_layout(
@@ -465,7 +465,7 @@ def _build_scan_figure(df: pd.DataFrame, scan_variable: str) -> go.Figure:
                 y=df["single_channel_detection_rate"],
                 mode="lines+markers",
                 name="单通道检出率",
-                line=dict(dash="dot"),
+                line={"dash": "dot"},
             ),
             row=1,
             col=1,
@@ -477,7 +477,7 @@ def _build_scan_figure(df: pd.DataFrame, scan_variable: str) -> go.Figure:
                 y=df["paired_channel_detection_rate"],
                 mode="lines+markers",
                 name="双通道检出率",
-                line=dict(dash="dash"),
+                line={"dash": "dash"},
             ),
             row=1,
             col=1,
@@ -517,7 +517,7 @@ def render_noise_detection_explorer() -> None:
 
     st.header("Noise & Detection Explorer \u2014 \u4ece clean signal \u5230\u80fd\u5426\u68c0\u51fa")
     st.caption("这一页解释标准结果库当前 case 的 clean signal，为什么最后会走向稳定检出、边缘可检，或者直接 miss。")
-    render_page_header_hub("Noise & Detection Explorer")
+    render_page_header_hub()
     linked_label = format_particle_label(defaults["material"], defaults["diameter_nm"])
     render_workflow_case_source_panel(
         anchor_row=anchor_row,
@@ -544,10 +544,12 @@ def render_noise_detection_explorer() -> None:
         st.header("噪声与检测参数")
         st.caption(defaults["source_label"])
         st.caption("这里只保留最常用的检出边界控制；相位、串扰和后级细节默认固定，避免页面重新膨胀。")
-        if st.session_state.get("selected_particle") is not None:
-            if st.button("同步当前选点到本页参数", key="nd_sync_from_selected"):
-                _apply_defaults(force=True)
-                st.rerun()
+        if st.session_state.get("selected_particle") is not None and st.button(
+            "同步当前选点到本页参数",
+            key="nd_sync_from_selected",
+        ):
+            _apply_defaults(force=True)
+            st.rerun()
         st.selectbox(
             "材料",
             MATERIAL_OPTIONS,

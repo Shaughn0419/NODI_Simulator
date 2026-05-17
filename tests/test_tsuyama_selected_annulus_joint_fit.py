@@ -99,33 +99,33 @@ def _joint_fixture_rows(*, good: bool) -> pd.DataFrame:
             and row["width_nm"] == width_nm
             and row["depth_nm"] == depth_nm
         ][0]
-        target_ratio = (
-            lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][wavelength_nm]
-            / lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][wavelength_nm]
+        target_ratio = joint.table_s1_signal_ratio_target(
+            wavelength_nm,
+            "interferometric_column_ratio",
         )
         observed_ratio = target_ratio if good else target_ratio * 0.2
-        for diameter_nm in joint.SILVER_DIAMETERS_NM:
-            rows.append(
-                {
-                    "particle_material": "silver",
-                    "particle_diameter_nm": diameter_nm,
-                    "wavelength_nm": wavelength_nm,
-                    "width_nm": width_nm,
-                    "depth_nm": depth_nm,
-                    "nodi_lockin_frequency_Hz": 3000.0,
-                    "threshold_sigma": 10.0,
-                    "min_peak_width_s": 0.0025,
-                    "readout_observable_mode": "magnitude",
-                    "pulse_detection_mode": "positive",
-                    "selected_detector_mode_annulus_detection_rate": 0.9,
-                    "selected_detector_mode_annulus_fraction": 0.40,
-                    "mean_peak_height": gold40_peak * observed_ratio,
-                    "mean_local_snr": 50.0,
-                    "reference_operating_band": "electronics_noise_limited_useful",
-                    "rho_physical_envelope_status": "within_envelope",
-                    "na_cutoff_active": False,
-                }
-            )
+        rows.extend(
+            {
+                "particle_material": "silver",
+                "particle_diameter_nm": diameter_nm,
+                "wavelength_nm": wavelength_nm,
+                "width_nm": width_nm,
+                "depth_nm": depth_nm,
+                "nodi_lockin_frequency_Hz": 3000.0,
+                "threshold_sigma": 10.0,
+                "min_peak_width_s": 0.0025,
+                "readout_observable_mode": "magnitude",
+                "pulse_detection_mode": "positive",
+                "selected_detector_mode_annulus_detection_rate": 0.9,
+                "selected_detector_mode_annulus_fraction": 0.40,
+                "mean_peak_height": gold40_peak * observed_ratio,
+                "mean_local_snr": 50.0,
+                "reference_operating_band": "electronics_noise_limited_useful",
+                "rho_physical_envelope_status": "within_envelope",
+                "na_cutoff_active": False,
+            }
+            for diameter_nm in joint.SILVER_DIAMETERS_NM
+        )
     return pd.DataFrame(rows)
 
 
@@ -150,9 +150,9 @@ def _set_gold_peak_exponent(rows: pd.DataFrame, exponent: float) -> pd.DataFrame
             & (rows["width_nm"] == row["width_nm"])
             & (rows["depth_nm"] == row["depth_nm"])
         ]["mean_peak_height"].iloc[0]
-        target_ratio = (
-            lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][wavelength_nm]
-            / lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][wavelength_nm]
+        target_ratio = joint.table_s1_signal_ratio_target(
+            wavelength_nm,
+            "interferometric_column_ratio",
         )
         rows.at[index, "mean_peak_height"] = gold40_peak * target_ratio
     return rows
@@ -203,7 +203,6 @@ def test_joint_summary_rewards_detection_and_signal_ratio_alignment():
     assert "joint_fit_score_recomputed_mie" in good
     assert good["ag40_to_au40_target_ratio_interferometric_column_ratio_660"] == pytest.approx(
         lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][660]
-        / lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][660]
     )
     assert good["ag40_to_au40_target_ratio_sqrt_scattering_column_ratio_660"] == pytest.approx(
         (joint.TABLE_S1_SCATTERING_CROSS_SECTION["silver"][660]
@@ -251,8 +250,8 @@ def test_joint_summary_can_apply_explicit_paper_transfer_gain():
         scenario_id="nodi_2022_10sigma_single",
     )
     assert transfer["signal_ratio_score"] < raw["signal_ratio_score"]
-    assert transfer["signal_ratio_score"] == 0.0
-    assert transfer["applied_silver_transfer_gain_660"] == 5.0
+    assert transfer["signal_ratio_score"] == pytest.approx(0.0)
+    assert transfer["applied_silver_transfer_gain_660"] == pytest.approx(5.0)
     assert transfer["transfer_gain_guardrail_penalty"] > 0.0
 
 

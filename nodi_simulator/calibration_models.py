@@ -137,10 +137,11 @@ def normalise_calibration_rows(raw: Any) -> list[dict[str, Any]]:
     else:
         raise ValueError("calibration payload must be a row list or mapping")
 
-    rows: list[dict[str, Any]] = []
-    for item in candidates:
-        if isinstance(item, Mapping):
-            rows.append({str(key): value for key, value in item.items()})
+    rows = [
+        {str(key): value for key, value in item.items()}
+        for item in candidates
+        if isinstance(item, Mapping)
+    ]
     if not rows:
         raise ValueError("calibration payload has no usable rows")
     return rows

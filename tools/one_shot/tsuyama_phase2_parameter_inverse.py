@@ -112,6 +112,15 @@ def family_specs() -> tuple[FamilySpec, ...]:
                 "tau_2ms_collection_wide",
                 "tau_2ms_bfp_lobe_045",
                 "tau_2ms_bfp_lobe_065",
+                "tau_1ms_control",
+                "tau_1ms_global_refphi_plus_0p2",
+                "tau_1ms_global_refphi_plus_0p4",
+                "tau_1ms_global_refphi_plus_0p6",
+                "tau_1ms_global_refphi_minus_0p4",
+                "tau_1ms_collection_narrow",
+                "tau_1ms_global_refphi_plus_collection_narrow",
+                "tau_1ms_collection_wide",
+                "tau_1ms_bfp_lobe_045",
             ),
             variant_ids=("paper_10sigma", "paper_5sigma_sensitivity"),
         ),
@@ -144,6 +153,9 @@ def family_specs() -> tuple[FamilySpec, ...]:
                 "tau_2ms_global_refphi_plus",
                 "tau_2ms_global_refphi_plus_0p6",
                 "tau_2ms_global_refphi_plus_collection_narrow",
+                "tau_1ms_control",
+                "tau_1ms_global_refphi_plus_0p4",
+                "tau_1ms_global_refphi_plus_collection_narrow",
             ),
             variant_ids=("paper_5sigma_size_response_fit",),
         ),
@@ -183,24 +195,24 @@ def build_family_plan(
             ]
         if max_candidates_per_family is not None:
             candidates = candidates[:max_candidates_per_family]
-        for candidate in candidates:
-            rows.append(
-                {
-                    "schema_id": SCHEMA_ID,
-                    "family_id": spec.family_id,
-                    "family_order": spec.family_order,
-                    "family_description": spec.description,
-                    "candidate_id": candidate.candidate_id,
-                    "base_candidate_id": candidate.base_candidate_id,
-                    "variant_signal_transfer_mode": candidate.signal_transfer_mode,
-                    "variant_size_response_mode": candidate.size_response_mode,
-                    "cfg_overrides_json": json.dumps(
-                        candidate.cfg_overrides,
-                        ensure_ascii=False,
-                        sort_keys=True,
-                    ),
-                }
-            )
+        rows.extend(
+            {
+                "schema_id": SCHEMA_ID,
+                "family_id": spec.family_id,
+                "family_order": spec.family_order,
+                "family_description": spec.description,
+                "candidate_id": candidate.candidate_id,
+                "base_candidate_id": candidate.base_candidate_id,
+                "variant_signal_transfer_mode": candidate.signal_transfer_mode,
+                "variant_size_response_mode": candidate.size_response_mode,
+                "cfg_overrides_json": json.dumps(
+                    candidate.cfg_overrides,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                ),
+            }
+            for candidate in candidates
+        )
     return pd.DataFrame(rows)
 
 

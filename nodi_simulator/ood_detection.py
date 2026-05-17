@@ -6,7 +6,7 @@ import math
 from collections.abc import Mapping
 from typing import Any
 
-from .data_objects import Particle, SimulationConfig
+from .data_objects import Particle
 from .type_coerce import blocker_summary as _blocker_summary
 from .type_coerce import clamp01 as _clamp01
 from .type_coerce import finite_float as _as_float
@@ -66,7 +66,6 @@ def _unknown_reason(
 def build_ood_detection_diagnostics(
     particle: Particle,
     summary: Mapping[str, Any],
-    sim_cfg: SimulationConfig,
 ) -> dict[str, object]:
     """
     Build OOD/rejection diagnostics from already-exported batch features.

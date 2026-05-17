@@ -2380,9 +2380,7 @@ def build_single_case_stage_report(
 
     human_headline = _resolve_human_headline(recommendation_status)
 
-    human_badge = " | ".join(
-        [recommendation_label, gate_label, freeze_label]
-    )
+    human_badge = f"{recommendation_label} | {gate_label} | {freeze_label}"
 
     stages = [
         {

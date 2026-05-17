@@ -174,21 +174,20 @@ def test_synthetic_blank_is_deterministic_and_higher_threshold_is_not_worse():
 
 
 def _gold_fixture_rows(scenario_id: str, *, reference_band: str = "ok") -> pd.DataFrame:
-    rows = []
-    for diameter in lane.GOLD_DIAMETERS_NM:
-        rows.append(
-            {
-                "scenario_config_id": scenario_id,
-                "scenario_kind": lane.SCENARIO_KIND[scenario_id],
-                "wavelength_nm": 488,
-                "width_nm": 800,
-                "depth_nm": 700,
-                "particle_diameter_nm": diameter,
-                "reference_operating_band": reference_band,
-                "rho_physical_envelope_status": "within_envelope",
-                "na_cutoff_active": False,
-            }
-        )
+    rows = [
+        {
+            "scenario_config_id": scenario_id,
+            "scenario_kind": lane.SCENARIO_KIND[scenario_id],
+            "wavelength_nm": 488,
+            "width_nm": 800,
+            "depth_nm": 700,
+            "particle_diameter_nm": diameter,
+            "reference_operating_band": reference_band,
+            "rho_physical_envelope_status": "within_envelope",
+            "na_cutoff_active": False,
+        }
+        for diameter in lane.GOLD_DIAMETERS_NM
+    ]
     return pd.DataFrame(rows)
 
 
@@ -482,32 +481,32 @@ def test_detection_rate_calibration_score_prefers_target_band_candidate():
 def test_ev_rows_export_selected_detector_mode_diagnostics_keeps_primary_rank_basis():
     rows = []
     for diameter_nm in lane.EV_DIAMETERS_NM:
-        for member in range(4):
-            rows.append(
-                {
-                    "scenario_config_id": "ev_nodi_5sigma_single_current_design",
-                    "particle_name": f"exosome_biomimetic_{diameter_nm}nm_member{member}",
-                    "particle_diameter_nm": diameter_nm,
-                    "wavelength_nm": 532,
-                    "width_nm": 600,
-                    "depth_nm": 1500,
-                    "detection_rate": float(diameter_nm) / 1000.0,
-                    "stable_detection_rate": 0.20,
-                    "all_crossing_detection_rate": float(diameter_nm) / 1000.0,
-                    "selected_detector_mode_candidate_fraction": 0.80,
-                    "selected_detector_mode_candidate_detection_rate": (
-                        float(diameter_nm) / 1000.0 + 0.05
-                    ),
-                    "selected_detector_mode_annulus_edge_norm_min": 0.50,
-                    "selected_detector_mode_annulus_edge_norm_max": 0.80,
-                    "selected_detector_mode_annulus_fraction": 0.40,
-                    "selected_detector_mode_annulus_detection_rate": (
-                        float(diameter_nm) / 1000.0 + 0.10
-                    ),
-                    "reference_operating_band": "ok",
-                    "engineering_gate_passed": True,
-                }
-            )
+        rows.extend(
+            {
+                "scenario_config_id": "ev_nodi_5sigma_single_current_design",
+                "particle_name": f"exosome_biomimetic_{diameter_nm}nm_member{member}",
+                "particle_diameter_nm": diameter_nm,
+                "wavelength_nm": 532,
+                "width_nm": 600,
+                "depth_nm": 1500,
+                "detection_rate": float(diameter_nm) / 1000.0,
+                "stable_detection_rate": 0.20,
+                "all_crossing_detection_rate": float(diameter_nm) / 1000.0,
+                "selected_detector_mode_candidate_fraction": 0.80,
+                "selected_detector_mode_candidate_detection_rate": (
+                    float(diameter_nm) / 1000.0 + 0.05
+                ),
+                "selected_detector_mode_annulus_edge_norm_min": 0.50,
+                "selected_detector_mode_annulus_edge_norm_max": 0.80,
+                "selected_detector_mode_annulus_fraction": 0.40,
+                "selected_detector_mode_annulus_detection_rate": (
+                    float(diameter_nm) / 1000.0 + 0.10
+                ),
+                "reference_operating_band": "ok",
+                "engineering_gate_passed": True,
+            }
+            for member in range(4)
+        )
 
     ev = lane._ev_rows_from_raw(pd.DataFrame(rows))
     equal_current = ev[ev["EV_size_distribution_profile"] == "equal_current"]

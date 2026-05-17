@@ -15,18 +15,29 @@ The current project state is:
   adds the P0 review-ready audit package plus six bounded trace-only lanes; it
   does not promote a route because the two locked main-660 candidates swap
   rank across P6/P8/P10/P12/P14/P16.
+- **Lens B is now a completed low-event Tsuyama-anchored application lane.**
+  B1 uses Tsuyama Au/Ag anchors to freeze an estimated parameter set; B2 has
+  two current `seed=42`, `1,000` events/case EV+gold full-grid reads: B6
+  per-wavelength gold normalization for Tsuyama-lineage geometry diagnostics,
+  and B7 fixed-660-gold normalization for cross-wavelength EV decision support.
+  EV recommendations use EV/exosome rows only; gold rows are diagnostic anchors
+  only. The old `10,000` events/case Lens-B full-grid is a 2 ms legacy
+  sensitivity/reference run, not the current 1 ms decision lane.
 - **The repository still has no measured acquisition data.** It does not
   authorize calibrated signal-to-noise ratio, calibrated event probability,
   absolute detection limit, true EV concentration, biological specificity,
   measured blank safety, route promotion, or main-660 redefinition.
 
-For readers, start with the consolidated analysis:
+For readers, start with the consolidated analysis, then read the Lens-B B7
+overlay for the latest Criterion-B cross-wavelength update:
 
 - [reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md](./reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md)
+- [reports/100_EV_NODI_lens_b_tau1ms_stage_b6_only_analysis.md](./reports/100_EV_NODI_lens_b_tau1ms_stage_b6_only_analysis.md)
 
-That report is now the v3.0 current full-data reader report dated 2026-05-11:
-it merges the v1 full-grid library, realism v2 closure, P0 review-ready
-relative audit, and P1-P18 bounded physical-ceiling / trace-governance record.
+Report 88 is the consolidated v1/v2/post-v2 reader report with the B6
+low-event Lens-B overlay. Report 100 is the newer Lens-B focused update: B6
+remains the per-wavelength gold-normalized Tsuyama-lineage comparison, while
+B7 is the fixed-660-gold cross-wavelength read.
 
 For the final v2 boundary, read:
 
@@ -55,8 +66,10 @@ Not supported:
 - biological specificity;
 - measured blank safety;
 - empirical route promotion;
-- replacing all-crossing ranking with selected-annulus ranking.
+- replacing all-crossing ranking with selected-annulus ranking, or the reverse;
 - treating P6-P16 trace ordering as route promotion.
+- treating Lens-B gold anchor geometry as an EV recommendation;
+- treating 488/532 raw or control wins as final recommendation wavelengths.
 
 ## Current Scientific Bottom Line
 
@@ -74,6 +87,15 @@ that the original model underweighted narrow-channel engineering risk. R6/R7
 show that this warning is explainable by low-dimensional width-family and
 mechanistic-prior hypotheses, but those hypotheses are not calibrated physical
 laws.
+
+Lens B does not override that engineering main ranking. Under B6
+per-wavelength gold normalization, its EV-only selected-annulus evidence points
+to a 660 nm / 800 nm-width Tsuyama-lineage comparison family. Under the newer
+B7 fixed-660-gold normalization, the current low-event cross-wavelength
+Criterion-B candidate shifts to the 404 nm / 500 nm-width family, centered on
+404 / 500x550 and 404 / 500x900. This is still one seed and 1,000 events/case,
+not measured calibration or 10,000-event final validation. 488/532 remain
+control/trend only.
 
 ## Quick Start
 
@@ -134,6 +156,8 @@ The latest local cleanup/review baseline was:
 - [reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md](./reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md): 2026-05-11 full report merge, code-review ledger, documentation ledger, and verification record.
 - [type_coerce.md](./type_coerce.md), [realism_v2_io.md](./realism_v2_io.md), and [optional_acceleration.md](./optional_acceleration.md): small shared helper modules introduced during the May 8 hardening pass. These helpers, plus realism-v2, data-object, utility, parameter-sweep, material, Mie, intrinsic-scattering, illumination, reference-field, trajectory, scattering-trace, interferometric-trace, pulse-analysis, population-trace, polarization-Jones, calibration, manifest, run-state, control, count, OOD, Bayesian, population, experimental-design, seed, geometry, fluidic, electrokinetic, optical-exposure, optical-hardware, objective-panel, wavelength-comparability, readout-transfer, BFP-detector, paper-aligned, Tsuyama phase-filter, count-generation, interface-correction, structured-particle, particle-design, design-metric, design-postprocess, design-claim, selection, reference-operating, particle-channel, NODI thermal, photothermal-POD, assay-control, event-QC, EV integrity, EV reporting, unit, detector-unit, and uncertainty helpers, are canonical under `nodi_simulator/`.
 - Public package exports are maintained in `nodi_simulator/_exports.py`; root package-module compatibility wrappers have been retired.
+- [docs/GENERATED_ARTIFACT_BOUNDARY.md](./docs/GENERATED_ARTIFACT_BOUNDARY.md): source-reviewed vs generated artifact boundary.
+- [docs/POST_V2_ENTRYPOINTS.md](./docs/POST_V2_ENTRYPOINTS.md): post-v2 module/tool lifecycle and deletion policy.
 
 The `docs/realism_v2/` files are contract/specification documents used by the
 test suite. They are retained for governance and regression checks even when

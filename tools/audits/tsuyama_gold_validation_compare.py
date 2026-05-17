@@ -151,7 +151,7 @@ def _spearman_detection(df: pd.DataFrame) -> dict[str, float]:
         "mean_transit_time_ms",
         "mean_nodi_transit_bandwidth_gain",
     ]
-    corr = df[metrics + ["detection_rate"]].corr(method="spearman")["detection_rate"]
+    corr = df[[*metrics, "detection_rate"]].corr(method="spearman")["detection_rate"]
     return {metric: float(corr.get(metric, np.nan)) for metric in metrics}
 
 

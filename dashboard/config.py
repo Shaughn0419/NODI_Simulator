@@ -126,7 +126,7 @@ def infer_particle_material(particle_name: str) -> str:
     """Infer UI-facing material label from a particle name."""
     if particle_name.startswith("gold_"):
         return "gold"
-    if particle_name.startswith("exosome_") or particle_name.startswith("exosome_uniform_"):
+    if particle_name.startswith(("exosome_", "exosome_uniform_")):
         return "exosome"
     return particle_name
 

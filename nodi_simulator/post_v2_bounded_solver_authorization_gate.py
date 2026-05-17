@@ -336,9 +336,7 @@ def build_artifact_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]
         "manifest_role": "authorization_gate_artifact_manifest_no_solver_execution",
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
-        "claim_boundary": {
-            key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS
-        }
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "bounded_solver_authorization_gate_only"},
         "calibrated_claim_allowed": False,
         "p0_release_conclusion_changed": False,

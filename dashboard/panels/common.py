@@ -112,7 +112,6 @@ DASHBOARD_SESSION_DEFAULTS: tuple[tuple[str, DashboardDefaultValue], ...] = (
 
 def inject_dashboard_theme() -> None:
     """Keep dashboard styling intentionally minimal."""
-    return None
 
 
 def render_display_banner(
@@ -138,7 +137,6 @@ def render_section_intro(
     *,
     title: str,
     body: str,
-    tone: str = "neutral",
 ) -> None:
     """Render a minimal section intro."""
     st.markdown(f"#### {title}")
@@ -286,20 +284,14 @@ def build_case_context(
     }
 
 
-def render_page_header_hub(
-    current_page: str,
-    *,
-    geometry_is_context_only: bool = False,
-) -> None:
+def render_page_header_hub(*, geometry_is_context_only: bool = False) -> None:
     """Render a minimal shared header area with current context only."""
     render_current_context_bar(
-        current_page,
         geometry_is_context_only=geometry_is_context_only,
     )
 
 
 def render_auxiliary_page_header(
-    current_page: str,
     *,
     summary_message: str,
     detail_message: str,
@@ -307,14 +299,12 @@ def render_auxiliary_page_header(
     """Render a minimal header for pages kept outside the main research narrative."""
     st.caption(summary_message)
     render_current_context_bar(
-        current_page,
         section_title="科研展示选中 case（仅供导入/对照）",
         intro_text=detail_message,
     )
 
 
 def render_current_context_bar(
-    current_page: str,
     *,
     geometry_is_context_only: bool = False,
     section_title: str = "当前跨页上下文",
@@ -421,7 +411,3 @@ def render_workflow_case_source_panel(
         st.caption(selected_case_caption)
     else:
         st.caption(empty_case_caption or standard_message)
-
-
-    """Hide the long glossary block to keep pages compact."""
-    return None

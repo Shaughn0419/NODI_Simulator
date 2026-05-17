@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 
+from tools.audits import tsuyama_detection_rate_calibration as calib
 from tools.one_shot import tsuyama_phase2_parameter_inverse as inverse
 
 
@@ -66,6 +67,39 @@ def test_family_plan_can_filter_candidate_ids_for_d2p1_smoke():
     }
     assert len(plan) == 12
     assert set(plan["variant_signal_transfer_mode"]) == {"none"}
+
+
+def test_family_plan_exposes_tau_1ms_criterion_b_candidate_family():
+    candidate_ids = [
+        "tau_1ms_control",
+        "tau_1ms_global_refphi_plus_0p2",
+        "tau_1ms_global_refphi_plus_0p4",
+        "tau_1ms_global_refphi_plus_0p6",
+        "tau_1ms_global_refphi_minus_0p4",
+        "tau_1ms_collection_narrow",
+        "tau_1ms_global_refphi_plus_collection_narrow",
+        "tau_1ms_collection_wide",
+        "tau_1ms_bfp_lobe_045",
+    ]
+
+    plan = inverse.build_family_plan(
+        family_ids=["D2_operator_phase_bfp_raw"],
+        candidate_ids=candidate_ids,
+    )
+
+    assert set(plan["base_candidate_id"]) == set(candidate_ids)
+    assert len(plan) == len(candidate_ids) * 2
+    assert set(plan["variant_signal_transfer_mode"]) == {"none"}
+
+    catalog = calib.candidate_by_id()
+    for candidate_id in candidate_ids:
+        cfg = calib.build_candidate_cfg(
+            catalog[candidate_id],
+            n_events=10,
+            random_seed=42,
+            scenario_id="nodi_2022_10sigma_single",
+        )
+        assert cfg.lockin_time_constant_s == 0.001
 
 
 def test_family_plan_exposes_size_only_reproduction_fit_family():

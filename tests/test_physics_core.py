@@ -201,10 +201,6 @@ from nodi_simulator.pulse_analysis import (
     estimate_threshold_stats_robust,
     extract_pulse_features,
 )
-from nodi_simulator.paper_aligned_profiles import (
-    apply_paper_aligned_profile,
-    list_paper_aligned_profiles,
-)
 from nodi_simulator.photothermal_pod import build_photothermal_pod_diagnostics
 from nodi_simulator.population_trace_simulator import (
     POPULATION_TRACE_DIAGNOSTIC_FIELDS,
@@ -255,11 +251,6 @@ from nodi_simulator.structured_particles import (
     list_exosome_model_presets,
     make_biomimetic_exosome_ensemble_particles,
     make_biomimetic_exosome_particle,
-)
-from nodi_simulator.tsuyama_phase_filter import (
-    classify_phase_filter_validity,
-    compute_tsuyama_phase_filter_bfp_field,
-    integrate_bfp_roi,
 )
 from nodi_simulator.unit_conventions import (
     build_mie_validation_diagnostics,
@@ -3099,7 +3090,6 @@ class TestUtils:
                 "EV_to_contaminant_signal_overlap": 0.0,
                 "phase_flip_fraction": 0.05,
             },
-            DEFAULT_SIM_CFG,
         )
 
         assert set(OOD_DIAGNOSTIC_FIELDS).issubset(diagnostics)
@@ -3125,7 +3115,6 @@ class TestUtils:
                 "EV_to_contaminant_signal_overlap": 0.95,
                 "phase_flip_fraction": 0.7,
             },
-            DEFAULT_SIM_CFG,
         )
 
         assert diagnostics["unknown_particle_flag"] is True
@@ -4268,12 +4257,10 @@ class TestUtils:
     def test_collection_operator_uses_calibrated_operator_table(self, tmp_path):
         table_path = tmp_path / "collection_operator.csv"
         table_path.write_text(
-            "\n".join(
-                [
-                    "operator_id,width_nm,depth_nm,wavelength_nm,theta_center_rad,"
-                    "theta_sigma_rad,phi_sigma_rad,slit_phi_limit_rad,throughput_scale",
-                    "opA,800,550,660,0.11,0.04,0.18,0.22,0.37",
-                ]
+            (
+                "operator_id,width_nm,depth_nm,wavelength_nm,theta_center_rad,"
+                "theta_sigma_rad,phi_sigma_rad,slit_phi_limit_rad,throughput_scale\n"
+                "opA,800,550,660,0.11,0.04,0.18,0.22,0.37"
             ),
             encoding="utf-8",
         )
@@ -4315,11 +4302,9 @@ class TestUtils:
     def test_collection_operator_marks_nearest_row_extrapolation(self, tmp_path):
         table_path = tmp_path / "collection_operator.csv"
         table_path.write_text(
-            "\n".join(
-                [
-                    "operator_id,width_nm,depth_nm,wavelength_nm,theta_center_rad",
-                    "opA,400,250,488,0.09",
-                ]
+            (
+                "operator_id,width_nm,depth_nm,wavelength_nm,theta_center_rad\n"
+                "opA,400,250,488,0.09"
             ),
             encoding="utf-8",
         )
@@ -4527,12 +4512,10 @@ class TestUtils:
     ):
         table_path = tmp_path / "standard_particles.csv"
         table_path.write_text(
-            "\n".join(
-                [
-                    "calibration_id,wavelength_nm,operator_id,K_sca,"
-                    "global_phase_offset_rad",
-                    "stdA,660,opA,2.5,0.31",
-                ]
+            (
+                "calibration_id,wavelength_nm,operator_id,K_sca,"
+                "global_phase_offset_rad\n"
+                "stdA,660,opA,2.5,0.31"
             ),
             encoding="utf-8",
         )
@@ -4674,9 +4657,8 @@ class TestReferenceField:
 1200,900,488,1.22,,0.04
 1200,900,660,1.38,,0.08
 """
-        tmp = tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False)
-        tmp.write(rows)
-        tmp.close()
+        with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False) as tmp:
+            tmp.write(rows)
         return tmp.name
 
     def test_constant_mode(self):
@@ -5073,9 +5055,8 @@ class TestReferenceField:
         rows = """width_nm,depth_nm,wavelength_nm,g_ref,A_ref,phi_ref_rad
 800,550,660,1.10,42.0,0.05
 """
-        tmp = tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False)
-        tmp.write(rows)
-        tmp.close()
+        with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False) as tmp:
+            tmp.write(rows)
         try:
             cfg_low = SimulationConfig(
                 0.2,
@@ -5114,9 +5095,8 @@ class TestReferenceField:
         rows = """width_nm,depth_nm,wavelength_nm,g_ref,A_ref,phi_ref_rad
 800,550,660,1.10,,0.05
 """
-        tmp = tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False)
-        tmp.write(rows)
-        tmp.close()
+        with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False) as tmp:
+            tmp.write(rows)
         try:
             cfg_low = SimulationConfig(
                 0.2,
@@ -5649,167 +5629,6 @@ class TestReferenceField:
         assert "E_ref_trace_complex" not in light
         assert "reference_x_norm" not in light
         assert "reference_z_norm" not in light
-
-
-class TestPaperAlignedProfiles:
-    def test_list_paper_aligned_profiles_exposes_expected_profiles(self):
-        profiles = list_paper_aligned_profiles()
-        assert set(profiles) >= {
-            "diffraction_2020",
-            "nodi_2022",
-            "paired_2024",
-            "paired_2024_10sigma",
-            "pod_2019_2020",
-        }
-        assert profiles["pod_2019_2020"]["status"] == "unavailable"
-        assert profiles["diffraction_2020"]["reference_route"] == "paper_aligned_comparison"
-        assert profiles["diffraction_2020"]["reference_solver_route"] == "tsuyama_phase_filter_1d"
-
-    def test_apply_paper_aligned_profile_nodi_2022_sets_expected_fields(self):
-        cfg = apply_paper_aligned_profile(DEFAULT_SIM_CFG, "nodi_2022")
-        assert cfg.reference_model == "paper_aligned_phase_filter"
-        assert cfg.reference_route == "paper_aligned_comparison"
-        assert cfg.illumination_mode == "overfill"
-        assert cfg.readout_preset == "tsuyama_2022_counting_10sigma"
-        assert cfg.readout_observable_mode == "magnitude"
-        assert cfg.pulse_detection_mode == "positive"
-        assert cfg.detection_decision_mode == "single_channel"
-        assert cfg.engineering_decision_basis == "single_channel"
-        assert cfg.nodi_lockin_frequency_Hz == pytest.approx(3000.0)
-        assert cfg.threshold_sigma == pytest.approx(10.0)
-        assert cfg.threshold_tail == "one_sided"
-        assert cfg.min_peak_width_s == pytest.approx(2.5e-3)
-        assert cfg.min_peak_interval_s == pytest.approx(0.1)
-        assert cfg.engineering_max_phase_flip_fraction == pytest.approx(1.0)
-
-    def test_apply_paper_aligned_profile_paired_2024_sets_expected_fields(self):
-        cfg = apply_paper_aligned_profile(DEFAULT_SIM_CFG, "paired_2024")
-        assert cfg.reference_model == "paper_aligned_phase_filter"
-        assert cfg.reference_route == "paper_aligned_comparison"
-        assert cfg.illumination_mode == "overfill"
-        assert cfg.readout_preset == "tsuyama_2024_paired_5sigma"
-        assert cfg.readout_observable_mode == "magnitude"
-        assert cfg.pulse_detection_mode == "positive"
-        assert cfg.detection_decision_mode == "paired_channel"
-        assert cfg.engineering_decision_basis == "paired_channel"
-        assert cfg.pod_lockin_frequency_Hz == pytest.approx(4100.0)
-        assert cfg.nodi_lockin_frequency_Hz == pytest.approx(1200.0)
-        assert cfg.threshold_sigma == pytest.approx(5.0)
-        assert cfg.threshold_tail == "one_sided"
-        assert cfg.pulse_pairing_tolerance_s == pytest.approx(5.0e-2)
-        assert cfg.engineering_max_phase_flip_fraction == pytest.approx(1.0)
-
-    def test_apply_paper_aligned_profile_paired_2024_10sigma_sets_expected_fields(self):
-        cfg = apply_paper_aligned_profile(DEFAULT_SIM_CFG, "paired_2024_10sigma")
-        assert cfg.readout_preset == "tsuyama_2024_paired_10sigma"
-        assert cfg.threshold_sigma == pytest.approx(10.0)
-        assert cfg.threshold_tail == "one_sided"
-        assert cfg.detection_decision_mode == "paired_channel"
-        assert cfg.readout_observable_mode == "magnitude"
-
-    def test_apply_paper_aligned_profile_unavailable_pod_profile_raises(self):
-        with pytest.raises(ValueError, match="not available"):
-            apply_paper_aligned_profile(DEFAULT_SIM_CFG, "pod_2019_2020")
-
-
-class TestTsuyamaPhaseFilter:
-    def test_solver_exports_complex_decomposition_and_numerical_invariants(self):
-        result = compute_tsuyama_phase_filter_bfp_field(
-            channel_width_m=800e-9,
-            channel_depth_m=20e-9,
-            wavelength_m=660e-9,
-            medium_refractive_index=1.33,
-            wall_refractive_index=1.46,
-            gaussian_waist_m=2.0e-6,
-            n_grid=2048,
-        )
-        np.testing.assert_allclose(
-            result["E_diffraction_BFP"],
-            result["E_total_channel_BFP"] - result["E_no_channel_BFP"],
-            rtol=1e-10,
-            atol=1e-12,
-        )
-        factor = result["thin_phase_complex_factor"]
-        np.testing.assert_allclose(
-            result["E_diffraction_BFP"],
-            factor * result["thin_phase_basis_BFP"],
-            rtol=1e-10,
-            atol=1e-12,
-        )
-        invariants = result["tsuyama_phase_filter_numerical_invariants"]
-        assert invariants["W_code_convention"] == "W_code=2*l_paper"
-        assert invariants["H_code_convention"] == "H_code=d_paper"
-        assert invariants["lambda0_definition"] == "vacuum_wavelength_m"
-        assert invariants["fft_sign_convention"] == "forward_exp_minus_i_q_x"
-        assert invariants["power_normalization_check"] == "parseval_pass"
-        assert invariants["parseval_relative_error"] < 1e-10
-
-    def test_small_phase_perturbation_phase_uses_signed_exp_i_theta_minus_one(self):
-        result = compute_tsuyama_phase_filter_bfp_field(
-            channel_width_m=800e-9,
-            channel_depth_m=1e-12,
-            wavelength_m=660e-9,
-            medium_refractive_index=1.33,
-            wall_refractive_index=1.46,
-            gaussian_waist_m=2.0e-6,
-            n_grid=2048,
-        )
-        basis = result["thin_phase_basis_BFP"]
-        idx = int(np.argmax(np.abs(basis)))
-        perturbation_phase = np.angle(result["E_diffraction_BFP"][idx] / basis[idx])
-        expected = -0.5 * np.pi
-        assert result["theta_signed_rad"] < 0.0
-        assert perturbation_phase == pytest.approx(expected, abs=2e-4)
-        assert result["thin_phase_perturbation_phase_rad"] == pytest.approx(
-            expected,
-            abs=2e-4,
-        )
-
-    def test_phase_filter_validity_thresholds_depth_by_lambda0(self):
-        shallow = classify_phase_filter_validity(
-            channel_width_m=800e-9,
-            channel_depth_m=0.7 * 660e-9,
-            wavelength_m=660e-9,
-            medium_refractive_index=1.33,
-            wall_refractive_index=1.46,
-        )
-        mid = classify_phase_filter_validity(
-            channel_width_m=800e-9,
-            channel_depth_m=1.0 * 660e-9,
-            wavelength_m=660e-9,
-            medium_refractive_index=1.33,
-            wall_refractive_index=1.46,
-        )
-        deep = classify_phase_filter_validity(
-            channel_width_m=800e-9,
-            channel_depth_m=1.8 * 660e-9,
-            wavelength_m=660e-9,
-            medium_refractive_index=1.33,
-            wall_refractive_index=1.46,
-        )
-        assert shallow["phase_filter_validity"] == "within_phase_filter_assumption"
-        assert mid["phase_filter_validity"] == "extrapolated_phase_filter"
-        assert deep["phase_filter_validity"] == "requires_blank_or_fullwave"
-        assert deep["requires_calibration_or_fullwave"] is True
-
-    def test_integrate_bfp_roi_reports_complex_amplitude_and_mask_units(self):
-        result = compute_tsuyama_phase_filter_bfp_field(
-            channel_width_m=800e-9,
-            channel_depth_m=20e-9,
-            wavelength_m=660e-9,
-            medium_refractive_index=1.33,
-            wall_refractive_index=1.46,
-            gaussian_waist_m=2.0e-6,
-            n_grid=2048,
-        )
-        roi = integrate_bfp_roi(
-            result["bfp_q_rad_per_m"],
-            result["E_diffraction_BFP"],
-            roi_half_width_rad_per_m=1.0e6,
-        )
-        assert isinstance(roi["roi_complex_amplitude"], complex)
-        assert roi["detector_mask_units"] == "rad_per_m"
-        assert roi["roi_sample_count"] > 0
 
 
 class TestIllumination:
@@ -8112,16 +7931,14 @@ class TestReadoutSurrogate:
     ):
         table_path = tmp_path / "blank_false_positive.csv"
         table_path.write_text(
-            "\n".join(
-                [
-                    "blank_calibration_id,threshold_sigma_nodi,threshold_sigma_pod,"
-                    "blank_trace_autocorrelation_time_s,"
-                    "effective_independent_samples_per_trace,lockin_filter_order,"
-                    "empirical_peak_false_alarm_rate_per_minute,"
-                    "empirical_pair_false_alarm_rate_per_minute,"
-                    "lane_noise_correlation_coefficient",
-                    "blankA,9.5,10.5,0.002,140,2,0.03,0.004,0.42",
-                ]
+            (
+                "blank_calibration_id,threshold_sigma_nodi,threshold_sigma_pod,"
+                "blank_trace_autocorrelation_time_s,"
+                "effective_independent_samples_per_trace,lockin_filter_order,"
+                "empirical_peak_false_alarm_rate_per_minute,"
+                "empirical_pair_false_alarm_rate_per_minute,"
+                "lane_noise_correlation_coefficient\n"
+                "blankA,9.5,10.5,0.002,140,2,0.03,0.004,0.42"
             ),
             encoding="utf-8",
         )
@@ -9141,7 +8958,7 @@ class TestDesignMetricsAndPostprocess:
         )
 
     def test_parameter_sweep_requires_theta_grid_before_cases_run(self, monkeypatch):
-        def _unexpected_case_run(*args, **kwargs):
+        def _unexpected_case_run(*_args, **_kwargs):
             raise AssertionError("case execution should not start without theta_grid_rad")
 
         monkeypatch.setattr(
@@ -9165,7 +8982,7 @@ class TestDesignMetricsAndPostprocess:
             )
 
     def test_parameter_sweep_raises_on_case_failure_by_default(self, monkeypatch):
-        def _failing_case(*args, **kwargs):
+        def _failing_case(*_args, **_kwargs):
             raise RuntimeError("synthetic case failure")
 
         monkeypatch.setattr(parameter_sweep_module, "run_single_case_batch", _failing_case)
@@ -9185,7 +9002,7 @@ class TestDesignMetricsAndPostprocess:
             )
 
     def test_parameter_sweep_allows_partial_only_when_explicit(self, monkeypatch):
-        def _failing_case(*args, **kwargs):
+        def _failing_case(*_args, **_kwargs):
             raise RuntimeError("synthetic partial failure")
 
         monkeypatch.setattr(parameter_sweep_module, "run_single_case_batch", _failing_case)
@@ -9684,7 +9501,7 @@ class TestIntegration:
         )
         positions = [event["initial_position"] for event in batch["events"]]
         x_positions = [position[0] for position in positions]
-        assert len(set(f"{x:.10e}" for x in x_positions)) > 1
+        assert len({f"{x:.10e}" for x in x_positions}) > 1
 
     def test_batch_summary_exports_center_biased_position_diagnostics(self):
         theta_grid = np.linspace(0.01, np.pi - 0.01, 500)
@@ -11253,11 +11070,11 @@ class TestIntegration:
         )
         call_counts = {"intrinsic": 0, "operator": 0}
 
-        def fake_intrinsic(*args, **kwargs):
+        def fake_intrinsic(*_args, **_kwargs):
             call_counts["intrinsic"] += 1
             return {"angular_field": np.array([1.0, 2.0])}
 
-        def fake_operator(*args, **kwargs):
+        def fake_operator(*_args, **_kwargs):
             call_counts["operator"] += 1
             return {"roi_weight": np.array([0.25, 0.75])}
 

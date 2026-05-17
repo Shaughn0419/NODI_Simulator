@@ -354,24 +354,23 @@ def build_route_subset_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, 
     registry = validate_pilot_registry(load_pilot_registry(project_root))
     lane = registry["pilot_design_lanes"][0]
     p2_manifest = _p2_route_universe(project_root)
-    selected_routes = []
-    for row in _select_pilot_routes(p2_manifest["routes"]):
-        selected_routes.append(
-            {
-                **{field: row[field] for field in SELECTED_ROUTE_FIELDS},
-                "selection_source": P2_READINESS_ROUTE_UNIVERSE_MANIFEST.as_posix(),
-                "selection_role": "minimal_future_spot_check_design_only",
-                "calibrated_claim_allowed": False,
-                "p0_release_conclusion_changed": False,
-                "p1_surrogate_risk_role_preserved": True,
-                "p2_readiness_scope_preserved": True,
-                "physical_solver_execution_authorized": False,
-                "measured_data_ingest_authorized": False,
-                "solver_output_generated": False,
-                "raw_magnitude_final_gate_allowed": False,
-                "route_promotion_authorized": False,
-            }
-        )
+    selected_routes = [
+        {
+            **{field: row[field] for field in SELECTED_ROUTE_FIELDS},
+            "selection_source": P2_READINESS_ROUTE_UNIVERSE_MANIFEST.as_posix(),
+            "selection_role": "minimal_future_spot_check_design_only",
+            "calibrated_claim_allowed": False,
+            "p0_release_conclusion_changed": False,
+            "p1_surrogate_risk_role_preserved": True,
+            "p2_readiness_scope_preserved": True,
+            "physical_solver_execution_authorized": False,
+            "measured_data_ingest_authorized": False,
+            "solver_output_generated": False,
+            "raw_magnitude_final_gate_allowed": False,
+            "route_promotion_authorized": False,
+        }
+        for row in _select_pilot_routes(p2_manifest["routes"])
+    ]
     return {
         "schema_version": (
             "ev_nodi_p3_bounded_solver_authorization_pilot_design_route_subset_manifest_v1"
@@ -537,9 +536,7 @@ def build_artifact_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
         "required_false_fields": list(TOP_LEVEL_FALSE_FIELDS),
-        "claim_boundary": {
-            key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS
-        }
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "bounded_solver_authorization_pilot_design_only"},
     }
 

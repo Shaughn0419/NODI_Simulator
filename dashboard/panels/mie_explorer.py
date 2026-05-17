@@ -152,11 +152,11 @@ def _build_overview_trend_note(df, metric: str, summary_theta_deg: float) -> lis
 
     group_increase_flags = []
     for _, sub_df in df.groupby(["material", "wavelength_nm"]):
-        sub_df = sub_df.sort_values("diameter_nm")
-        if len(sub_df) < 2:
+        sorted_sub_df = sub_df.sort_values("diameter_nm")
+        if len(sorted_sub_df) < 2:
             continue
-        start = float(sub_df.iloc[0][metric])
-        end = float(sub_df.iloc[-1][metric])
+        start = float(sorted_sub_df.iloc[0][metric])
+        end = float(sorted_sub_df.iloc[-1][metric])
         if np.isfinite(start) and np.isfinite(end):
             group_increase_flags.append(end > start)
 
@@ -280,7 +280,7 @@ def render_mie_explorer():
 
     st.header("Mie Explorer — 纯 Mie 散射结果")
     st.caption("这一页只解释标准结果库当前 case 的本征散射起点，不把 reference、noise 和 gate 混在一起。")
-    render_page_header_hub("Mie Explorer", geometry_is_context_only=True)
+    render_page_header_hub(geometry_is_context_only=True)
     linked_label = format_particle_label(
         linked_defaults["material"],
         linked_defaults["diameter_nm"],

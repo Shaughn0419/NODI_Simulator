@@ -10,7 +10,7 @@ from nodi_simulator import realism_v2 as rv2
 
 
 def test_run_manifest_provenance_checksum_ignores_created_at(tmp_path):
-    assert rv2.RUN_MANIFEST_VOLATILE_FIELDS == frozenset({"created_at"})
+    assert frozenset({"created_at"}) == rv2.RUN_MANIFEST_VOLATILE_FIELDS
     assert rv2.RUN_MANIFEST_PROVENANCE_CHECKSUM_KIND == "stable_content_v1"
 
     manifest = {
@@ -219,8 +219,6 @@ def test_snr_cannot_be_calibrated_absolute_without_artifacts():
         wavelength_nm=660,
         readout_path="ET2030_50ohm_voltage",
         connection=connection,
-        measured_detector_transfer=True,
-        measured_blank=True,
     )
 
     assert result["SNR_claim_level"] == "absolute_blocked"

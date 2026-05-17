@@ -121,17 +121,11 @@ def _style_candidate_table(df: pd.DataFrame, metric_column_header: str, display_
             "final_engineering_score",
             "engineering_score",
             "robust_score",
-        }:
-            format_map[column] = lambda value, _col=column: _format_metric_value(_col, value)
-        elif column in {
+        } or column in {
             "detection_rate",
             "stable_detection_rate",
             "paired_detection_rate",
-        }:
-            format_map[column] = lambda value, _col=column: _format_metric_value(_col, value)
-        elif column == "mean_peak_height":
-            format_map[column] = lambda value, _col=column: _format_metric_value(_col, value)
-        elif column == "CV":
+        } or column == "mean_peak_height" or column == "CV":
             format_map[column] = lambda value, _col=column: _format_metric_value(_col, value)
     return df.style.format(format_map)
 
@@ -175,7 +169,7 @@ def render_explorer():
     """Render the Design Explorer page."""
     st.header("Design Explorer — 在结果空间里找平台、定代表点")
     st.caption("这页把前面的结论带回全局设计空间：先找稳定平台，再定代表点，再决定是否进入 `Case Inspector` 做最终复核。")
-    render_page_header_hub("Design Explorer")
+    render_page_header_hub()
     render_display_banner(
         eyebrow="Evidence Tool",
         title="先读方向，再筛平台，再定代表点",
@@ -748,24 +742,28 @@ def render_explorer():
     top = sorted_df_f.head(10).copy()
     top["当前指标"] = top[display_metric]
     top_columns = ["width_nm", "depth_nm", "当前指标"]
-    for candidate_col in [
-        "design_recommendation_label",
-        "observation_freeze_status",
-    ]:
-        if candidate_col in top.columns:
-            top_columns.append(candidate_col)
-    for candidate_col in [
-        "score",
-        "final_engineering_score",
-        "engineering_score",
-        "robust_score",
-        "detection_rate",
-        "stable_detection_rate",
-        "mean_peak_height",
-        "CV",
-    ]:
-        if candidate_col in top.columns:
-            top_columns.append(candidate_col)
+    top_columns.extend(
+        candidate_col
+        for candidate_col in [
+            "design_recommendation_label",
+            "observation_freeze_status",
+        ]
+        if candidate_col in top.columns
+    )
+    top_columns.extend(
+        candidate_col
+        for candidate_col in [
+            "score",
+            "final_engineering_score",
+            "engineering_score",
+            "robust_score",
+            "detection_rate",
+            "stable_detection_rate",
+            "mean_peak_height",
+            "CV",
+        ]
+        if candidate_col in top.columns
+    )
     top_display = (
         top[top_columns]
         .rename(columns={"当前指标": metric_column_header})
@@ -848,7 +846,7 @@ def render_explorer():
         )
         fig.add_trace(go.Scatter(
             x=[selected_W], y=[selected_H], mode="markers",
-            marker=dict(size=16, symbol="x", color="red", line=dict(width=2)),
+            marker={"size": 16, "symbol": "x", "color": "red", "line": {"width": 2}},
             showlegend=False,
         ))
         st.plotly_chart(fig, width="stretch")
@@ -877,7 +875,7 @@ def render_explorer():
             fig_w.add_trace(go.Scatter(
                 x=x_wlb, y=y_wlb, mode="lines",
                 name="Wilson LB",
-                line=dict(dash="dot", color="orange"),
+                line={"dash": "dot", "color": "orange"},
             ))
         fig_w.add_vline(x=selected_W, line_dash="dash", line_color="red")
         fig_w.update_layout(
@@ -895,7 +893,7 @@ def render_explorer():
             fig_h.add_trace(go.Scatter(
                 x=x_hlb, y=y_hlb, mode="lines",
                 name="Wilson LB",
-                line=dict(dash="dot", color="orange"),
+                line={"dash": "dot", "color": "orange"},
             ))
         fig_h.add_vline(x=selected_H, line_dash="dash", line_color="red")
         fig_h.update_layout(

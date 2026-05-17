@@ -197,7 +197,7 @@ def _resolve_sampled_dimension_counts(
         return dict(full_counts)
 
     budget_per_particle = max(1, int(sample_case_limit) // max(1, int(particle_count)))
-    selected_counts = {key: 1 for key in GRID_DIMENSION_KEYS}
+    selected_counts = dict.fromkeys(GRID_DIMENSION_KEYS, 1)
     for key in GRID_SAMPLE_PRIORITY:
         while selected_counts[key] < full_counts[key]:
             proposed_counts = dict(selected_counts)
@@ -320,26 +320,29 @@ def _run_variant(
     log_path = output_dir / f"{_artifact_prefix(grid, variant_tag)}.log"
     output_dir.mkdir(parents=True, exist_ok=True)
     start = time.perf_counter()
-    with log_path.open("w", encoding="utf-8") as log_handle:
-        with contextlib.redirect_stdout(log_handle), contextlib.redirect_stderr(log_handle):
-            precompute_sweep(
-                grid_name=grid,
-                config_tag=variant_tag,
-                particle_profile=particle_profile,
-                output_dir=str(output_dir),
-                n_workers=workers,
-                save_freeze_probe_report=False,
-                progress_interval_s=progress_interval_s,
-                resume=False,
-                checkpoint_enabled=True,
-                checkpoint_batch_size=32,
-                checkpoint_flush_interval_s=30.0,
-                artifact_profile="minimal",
-                vectorized_event_engine=variant.vectorized_event_engine,
-                event_block_size=variant.event_block_size,
-                event_block_rng_order=variant.event_block_rng_order,
-                include_diffusion=True,
-            )
+    with (
+        log_path.open("w", encoding="utf-8") as log_handle,
+        contextlib.redirect_stdout(log_handle),
+        contextlib.redirect_stderr(log_handle),
+    ):
+        precompute_sweep(
+            grid_name=grid,
+            config_tag=variant_tag,
+            particle_profile=particle_profile,
+            output_dir=str(output_dir),
+            n_workers=workers,
+            save_freeze_probe_report=False,
+            progress_interval_s=progress_interval_s,
+            resume=False,
+            checkpoint_enabled=True,
+            checkpoint_batch_size=32,
+            checkpoint_flush_interval_s=30.0,
+            artifact_profile="minimal",
+            vectorized_event_engine=variant.vectorized_event_engine,
+            event_block_size=variant.event_block_size,
+            event_block_rng_order=variant.event_block_rng_order,
+            include_diffusion=True,
+        )
     wall_time_s = float(time.perf_counter() - start)
     df, meta = _load_variant_outputs(
         output_dir=output_dir,

@@ -240,9 +240,9 @@ def compute_silver_transfer_gains(feature_table: pd.DataFrame) -> dict[int, floa
             & _bool_mask(feature_table, "usable_for_paper_svm")
         ][column]
         observed = float(ag40.mean()) / max(float(au40.mean()), 1e-12) if len(au40) and len(ag40) else float("nan")
-        target = (
-            lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][wavelength_nm]
-            / lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][wavelength_nm]
+        target = joint_fit.table_s1_signal_ratio_target(
+            wavelength_nm,
+            joint_fit.DEFAULT_SIGNAL_RATIO_TARGET_MODE,
         )
         gains[wavelength_nm] = (
             float(target / observed) if np.isfinite(observed) and observed > 0 else float("nan")

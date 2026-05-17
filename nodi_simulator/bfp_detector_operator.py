@@ -76,9 +76,12 @@ def _prepare_projected_fields(
     sca_field = np.asarray(scattering_field_theta_or_2d, dtype=complex)
     theta_vals = np.asarray(theta_grid_rad, dtype=float)
 
-    if sim_cfg.collection_integration_mode != "pupil_slit_surrogate":
-        if ref_field.ndim == 1 and sca_field.ndim == 1:
-            return ref_field, sca_field, None
+    if (
+        sim_cfg.collection_integration_mode != "pupil_slit_surrogate"
+        and ref_field.ndim == 1
+        and sca_field.ndim == 1
+    ):
+        return ref_field, sca_field, None
 
     phi_vals = (
         np.asarray(phi_grid_rad, dtype=float)

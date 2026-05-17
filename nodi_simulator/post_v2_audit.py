@@ -224,8 +224,8 @@ def load_unique_route_aggregates(project_root: Path = PROJECT_ROOT) -> list[dict
             if row[index["particle_family"]] == "EV_sEV":
                 aggregates[key]["ev_prior_case_rows"] += 1
     rows = []
-    for key, aggregate_row in aggregates.items():
-        aggregate_row = dict(aggregate_row)
+    for key, base_aggregate_row in aggregates.items():
+        aggregate_row = dict(base_aggregate_row)
         aggregate_row["v1_route_score_p10_ev_prior"] = _p10(ev_scores[key])
         aggregate_row["v1_route_score_p10_all_particles_diagnostic"] = _p10(all_scores[key])
         aggregate_row["route_aggregate_claim_level"] = "relative_engineering_prescore_only"
@@ -1234,23 +1234,23 @@ def build_extended_pairwise_stability(project_root: Path = PROJECT_ROOT) -> list
             )
     historical = [row for row in audit_rows if row["route_role_initial"] == "historical_v1_main"]
     main = [row for row in audit_rows if row["route_role_initial"] == "main_locked"]
-    for hrow in historical:
-        for mrow in main:
-            rows.append(
-                {
-                    "extended_pairwise_view": "historical_report_pairwise_drift",
-                    "comparison_stratum": "historical_vs_current_main",
-                    "candidate_id": hrow["candidate_id"],
-                    "relative_order": "diagnostic",
-                    "route_key": hrow["route_key"],
-                    "reference_candidate_id": mrow["candidate_id"],
-                    "bfp_percentile_delta_vs_reference": float(
-                        hrow["bfp_roi_rank_percentile_in_stratum"]
-                    )
-                    - float(mrow["bfp_roi_rank_percentile_in_stratum"]),
-                    "claim_level": "relative_extended_pairwise_diagnostic_only",
-                }
+    rows.extend(
+        {
+            "extended_pairwise_view": "historical_report_pairwise_drift",
+            "comparison_stratum": "historical_vs_current_main",
+            "candidate_id": hrow["candidate_id"],
+            "relative_order": "diagnostic",
+            "route_key": hrow["route_key"],
+            "reference_candidate_id": mrow["candidate_id"],
+            "bfp_percentile_delta_vs_reference": float(
+                hrow["bfp_roi_rank_percentile_in_stratum"]
             )
+            - float(mrow["bfp_roi_rank_percentile_in_stratum"]),
+            "claim_level": "relative_extended_pairwise_diagnostic_only",
+        }
+        for hrow in historical
+        for mrow in main
+    )
     return rows
 
 

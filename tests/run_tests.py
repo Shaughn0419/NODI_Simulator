@@ -24,6 +24,30 @@ MAX_DEFAULT_WORKERS = 8
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PYTEST_VENDOR = REPO_ROOT / ".pytest_vendor"
 PROCESS_SHUTDOWN_TIMEOUT_S = 10.0
+APPLEDOUBLE_SKIP_DIRS = {
+    ".codex_pdf_venv",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    ".venv-tests",
+    "__pycache__",
+    "exports",
+    "review_bundles",
+}
+
+
+def _clean_appledouble_metadata() -> None:
+    """Remove macOS AppleDouble files before pytest sees result directories."""
+    for path in REPO_ROOT.rglob("._*"):
+        try:
+            rel_parts = path.relative_to(REPO_ROOT).parts
+        except ValueError:
+            continue
+        if any(part in APPLEDOUBLE_SKIP_DIRS for part in rel_parts[:-1]):
+            continue
+        if path.is_file():
+            path.unlink()
 
 
 def _build_env(*, require_xdist: bool) -> dict[str, str]:
@@ -107,7 +131,7 @@ def _run_concurrent(lanes: list[tuple[str, list[str]]]) -> int:
         first_failure = 0
         pending = {process for _, process in processes}
         while pending:
-            for label, process in list(processes):
+            for label, process in processes:
                 if process not in pending:
                     continue
                 return_code = process.poll()
@@ -168,6 +192,7 @@ def main() -> int:
         if args.workers is not None
         else _default_workers(skip_app_interactions=args.skip_app_interactions)
     )
+    _clean_appledouble_metadata()
 
     parallel_cmd = [
         sys.executable,

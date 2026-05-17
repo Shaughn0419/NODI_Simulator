@@ -138,7 +138,7 @@ def _require_true(mapping: dict[str, Any], keys: tuple[str, ...], context: str) 
 
 
 def _guard_payload() -> dict[str, bool]:
-    return {key: False for key in FALSE_FIELDS} | {key: True for key in TRUE_FIELDS}
+    return dict.fromkeys(FALSE_FIELDS, False) | dict.fromkeys(TRUE_FIELDS, True)
 
 
 def _validate_guard_fields(mapping: dict[str, Any], context: str) -> None:
@@ -413,7 +413,7 @@ def build_p16_closure_artifact_manifest(project_root: Path = PROJECT_ROOT) -> di
         "manifest_role": "p16_closure_artifact_manifest",
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
-        "claim_boundary": {key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS}
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "p16_review_closure_only"},
         **_guard_payload(),
     }
@@ -452,7 +452,7 @@ def build_p17_design_artifact_manifest(project_root: Path = PROJECT_ROOT) -> dic
         "manifest_role": "p17_next_authorization_design_artifact_manifest",
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
-        "claim_boundary": {key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS}
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "next_authorization_design_only"},
         "rank_instability_governance": _rank_instability_payload(),
         "report_numbering_governance": _report_numbering_payload(),

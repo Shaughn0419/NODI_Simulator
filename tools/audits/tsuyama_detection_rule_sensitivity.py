@@ -190,7 +190,6 @@ def run_candidate_blank_checks(
 def write_rule_report(
     output_dir: Path,
     *,
-    screen_summary: pd.DataFrame,
     verify_summary: pd.DataFrame,
     screen_meta: dict[str, Any],
     verify_meta: dict[str, Any],
@@ -361,7 +360,6 @@ def main(argv: list[str] | None = None) -> None:
     args = build_parser().parse_args(argv)
     output_dir = Path(args.output_dir)
     if args.report_only:
-        screen_summary = pd.read_csv(output_dir / "screen_candidate_summary_v1.csv")
         verify_summary = pd.read_csv(output_dir / "verify_candidate_summary_v1.csv")
         blank_path = output_dir / "verify_blank_synthetic_v1.csv"
         blank_summary = pd.read_csv(blank_path) if blank_path.exists() else None
@@ -371,7 +369,6 @@ def main(argv: list[str] | None = None) -> None:
             verify_meta = json.load(fh)
         report_path = write_rule_report(
             output_dir,
-            screen_summary=screen_summary,
             verify_summary=verify_summary,
             screen_meta=screen_meta,
             verify_meta=verify_meta,
@@ -442,7 +439,6 @@ def main(argv: list[str] | None = None) -> None:
 
     report_path = write_rule_report(
         output_dir,
-        screen_summary=screen_summary,
         verify_summary=verify_summary,
         screen_meta=screen_meta,
         verify_meta=verify_meta,

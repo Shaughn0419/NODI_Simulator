@@ -289,38 +289,36 @@ def validate_execution_registry(registry: dict[str, Any]) -> dict[str, Any]:
 
 
 def _guard_payload() -> dict[str, bool]:
-    return {key: False for key in FALSE_FIELDS} | {key: True for key in TRUE_FIELDS}
+    return dict.fromkeys(FALSE_FIELDS, False) | dict.fromkeys(TRUE_FIELDS, True)
 
 
 def _read_p6_solver_output_csv(path: Path) -> list[dict[str, Any]]:
     with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    parsed = []
-    for row in rows:
-        parsed.append(
-            {
-                **row,
-                "wavelength_nm": int(row["wavelength_nm"]),
-                "width_nm": int(row["width_nm"]),
-                "depth_nm": int(row["depth_nm"]),
-                "dimensionless_width_over_wavelength": float(row["dimensionless_width_over_wavelength"]),
-                "dimensionless_depth_over_wavelength": float(row["dimensionless_depth_over_wavelength"]),
-                "solver_native_real_trace_only": float(row["solver_native_real_trace_only"]),
-                "solver_native_imag_trace_only": float(row["solver_native_imag_trace_only"]),
-                "solver_native_response_trace_only": float(row["solver_native_response_trace_only"]),
-                "solver_response_rank": int(row["solver_response_rank"]),
-                "solver_response_rank_percentile": float(row["solver_response_rank_percentile"]),
-                **{
-                    key: row[key] == "True"
-                    for key in row
-                    if key.endswith("_authorized")
-                    or key.endswith("_allowed")
-                    or key.endswith("_generated")
-                    or key.endswith("_preserved")
-                    or key == "p0_release_conclusion_changed"
-                },
-            }
-        )
+    parsed = [
+        {
+            **row,
+            "wavelength_nm": int(row["wavelength_nm"]),
+            "width_nm": int(row["width_nm"]),
+            "depth_nm": int(row["depth_nm"]),
+            "dimensionless_width_over_wavelength": float(row["dimensionless_width_over_wavelength"]),
+            "dimensionless_depth_over_wavelength": float(row["dimensionless_depth_over_wavelength"]),
+            "solver_native_real_trace_only": float(row["solver_native_real_trace_only"]),
+            "solver_native_imag_trace_only": float(row["solver_native_imag_trace_only"]),
+            "solver_native_response_trace_only": float(row["solver_native_response_trace_only"]),
+            "solver_response_rank": int(row["solver_response_rank"]),
+            "solver_response_rank_percentile": float(row["solver_response_rank_percentile"]),
+            **{
+                key: row[key] == "True"
+                for key in row
+                if key.endswith(
+                    ("_authorized", "_allowed", "_generated", "_preserved")
+                )
+                or key == "p0_release_conclusion_changed"
+            },
+        }
+        for row in rows
+    ]
     return validate_p6_solver_rows(parsed)
 
 
@@ -414,31 +412,29 @@ def write_solver_output_csv(project_root: Path = PROJECT_ROOT) -> Path:
 def _read_solver_output_csv(path: Path) -> list[dict[str, Any]]:
     with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    parsed = []
-    for row in rows:
-        parsed.append(
-            {
-                **row,
-                "wavelength_nm": int(row["wavelength_nm"]),
-                "width_nm": int(row["width_nm"]),
-                "depth_nm": int(row["depth_nm"]),
-                "dimensionless_width_over_wavelength": float(row["dimensionless_width_over_wavelength"]),
-                "dimensionless_depth_over_wavelength": float(row["dimensionless_depth_over_wavelength"]),
-                "p6_solver_response_rank": int(row["p6_solver_response_rank"]),
-                "solver_native_phase_gradient_trace_only": float(row["solver_native_phase_gradient_trace_only"]),
-                "solver_native_aperture_balance_trace_only": float(row["solver_native_aperture_balance_trace_only"]),
-                "solver_native_second_lane_response_trace_only": float(row["solver_native_second_lane_response_trace_only"]),
-                "second_lane_response_rank": int(row["second_lane_response_rank"]),
-                "second_lane_response_rank_percentile": float(row["second_lane_response_rank_percentile"]),
-                "second_lane_vs_p6_rank_delta": int(row["second_lane_vs_p6_rank_delta"]),
-                **{
-                    key: row[key] == "True"
-                    for key in (*FALSE_FIELDS, *TRUE_FIELDS)
-                    if key in row
-                },
-            }
-        )
-    return parsed
+    return [
+        {
+            **row,
+            "wavelength_nm": int(row["wavelength_nm"]),
+            "width_nm": int(row["width_nm"]),
+            "depth_nm": int(row["depth_nm"]),
+            "dimensionless_width_over_wavelength": float(row["dimensionless_width_over_wavelength"]),
+            "dimensionless_depth_over_wavelength": float(row["dimensionless_depth_over_wavelength"]),
+            "p6_solver_response_rank": int(row["p6_solver_response_rank"]),
+            "solver_native_phase_gradient_trace_only": float(row["solver_native_phase_gradient_trace_only"]),
+            "solver_native_aperture_balance_trace_only": float(row["solver_native_aperture_balance_trace_only"]),
+            "solver_native_second_lane_response_trace_only": float(row["solver_native_second_lane_response_trace_only"]),
+            "second_lane_response_rank": int(row["second_lane_response_rank"]),
+            "second_lane_response_rank_percentile": float(row["second_lane_response_rank_percentile"]),
+            "second_lane_vs_p6_rank_delta": int(row["second_lane_vs_p6_rank_delta"]),
+            **{
+                key: row[key] == "True"
+                for key in (*FALSE_FIELDS, *TRUE_FIELDS)
+                if key in row
+            },
+        }
+        for row in rows
+    ]
 
 
 def build_p7_authorization_binding_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
@@ -565,9 +561,7 @@ def build_artifact_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]
         "manifest_role": "second_bounded_solver_lane_execution_artifact_manifest",
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
-        "claim_boundary": {
-            key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS
-        }
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "second_bounded_solver_lane_trace_only"},
         **_guard_payload(),
     }

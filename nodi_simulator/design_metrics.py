@@ -110,9 +110,7 @@ def attach_anchor_equivalent_metrics(
     for anchor in anchor_rows:
         key = design_metric_match_key(anchor)
         current: MutableMapping[str, Any] | None = anchors_by_key.get(key)
-        if current is None:
-            anchors_by_key[key] = anchor
-        elif _peak_height(anchor) > _peak_height(current):
+        if current is None or _peak_height(anchor) > _peak_height(current):
             anchors_by_key[key] = anchor
 
     any_anchor_available = bool(anchor_rows)

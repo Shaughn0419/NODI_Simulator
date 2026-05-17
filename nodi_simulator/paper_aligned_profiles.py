@@ -192,8 +192,7 @@ def apply_paper_aligned_profile(
         cfg.reference_model = "paper_aligned_phase_filter"
         cfg.reference_route = "paper_aligned_comparison"
         cfg.illumination_mode = "overfill"
-        cfg = apply_readout_preset(cfg, "tsuyama_2022_counting_10sigma")
-        return cfg
+        return apply_readout_preset(cfg, "tsuyama_2022_counting_10sigma")
 
     if profile_name in {"paired_2024", "paired_2024_10sigma"}:
         cfg.reference_model = "paper_aligned_phase_filter"
@@ -204,7 +203,6 @@ def apply_paper_aligned_profile(
             if profile_name == "paired_2024_10sigma"
             else "tsuyama_2024_paired_5sigma"
         )
-        cfg = apply_readout_preset(cfg, readout_preset)
-        return cfg
+        return apply_readout_preset(cfg, readout_preset)
 
     raise AssertionError(f"Unhandled available paper-aligned profile: {profile_name}")

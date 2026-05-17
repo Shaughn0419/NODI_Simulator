@@ -40,6 +40,7 @@ def test_target_audit_outputs_expected_table_s1_ratio_records():
     strict_name = "ag40_to_au40_interferometric_column_ratio_660"
     formula_name = "ag40_to_au40_sqrt_scattering_column_ratio_660"
     recomputed_name = "ag40_to_au40_recomputed_mie_sqrt_csca_ratio_660"
+    legacy_name = "ag40_to_au40_legacy_interferometric_column_over_gold_ratio_660"
 
     assert frame.loc[
         strict_name,
@@ -48,19 +49,21 @@ def test_target_audit_outputs_expected_table_s1_ratio_records():
     assert bool(frame.loc[
         strict_name,
         "usable_for_hard_acceptance",
-    ]) is False
+    ]) is True
     assert bool(frame.loc[formula_name, "usable_for_hard_acceptance"]) is True
+    assert bool(frame.loc[legacy_name, "usable_for_hard_acceptance"]) is False
     assert frame.loc[recomputed_name, "confidence"] == "inferred"
     assert frame.loc[
         strict_name,
         "target_integrity_status",
-    ] == "unresolved_table_s1_interferometric_column_inconsistency"
+    ] == "table_s1_interferometric_ratio_semantics_resolved"
     assert (
         frame.loc[strict_name, "recommended_signal_ratio_target_mode"]
-        == "sqrt_scattering_column_ratio"
+        == "interferometric_column_ratio"
     )
-    assert float(frame.loc[strict_name, "value"]) > 2.0
+    assert 0.7 < float(frame.loc[strict_name, "value"]) < 1.0
     assert 0.7 < float(frame.loc[formula_name, "value"]) < 1.0
+    assert float(frame.loc[legacy_name, "value"]) > 2.0
 
 
 def test_target_audit_demotes_au20_lower_bound_to_warning_only():

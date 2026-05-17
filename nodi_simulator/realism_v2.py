@@ -61,6 +61,30 @@ except ImportError:  # pragma: no cover - direct bundle fallback
     _type_coerce = _load_sibling_module("type_coerce")
     _wilson_half_width = _type_coerce.wilson_half_width
 
+try:  # Support both package and direct review-bundle imports.
+    from .realism_v2_contracts import (
+        CLAIM_LEVELS,
+        FORBIDDEN_OUTPUT_NAMES,
+        MODULE_STATES,
+        REQUIRED_OUTPUT_PROVENANCE_FIELDS,
+        RUN_MANIFEST_LEGACY_CHECKSUM_KINDS,
+        RUN_MANIFEST_PROVENANCE_CHECKSUM_KIND,
+        RUN_MANIFEST_VOLATILE_FIELDS,
+        SOURCE_TYPES,
+    )
+except ImportError:  # pragma: no cover - direct bundle fallback
+    if __package__:
+        raise
+    _realism_v2_contracts = _load_sibling_module("realism_v2_contracts")
+    CLAIM_LEVELS = _realism_v2_contracts.CLAIM_LEVELS
+    FORBIDDEN_OUTPUT_NAMES = _realism_v2_contracts.FORBIDDEN_OUTPUT_NAMES
+    MODULE_STATES = _realism_v2_contracts.MODULE_STATES
+    REQUIRED_OUTPUT_PROVENANCE_FIELDS = _realism_v2_contracts.REQUIRED_OUTPUT_PROVENANCE_FIELDS
+    RUN_MANIFEST_LEGACY_CHECKSUM_KINDS = _realism_v2_contracts.RUN_MANIFEST_LEGACY_CHECKSUM_KINDS
+    RUN_MANIFEST_PROVENANCE_CHECKSUM_KIND = _realism_v2_contracts.RUN_MANIFEST_PROVENANCE_CHECKSUM_KIND
+    RUN_MANIFEST_VOLATILE_FIELDS = _realism_v2_contracts.RUN_MANIFEST_VOLATILE_FIELDS
+    SOURCE_TYPES = _realism_v2_contracts.SOURCE_TYPES
+
 
 PROJECT_ROOT = _MODULE_DIR.parent if _MODULE_DIR.name == "nodi_simulator" else _MODULE_DIR
 CONFIG_DIR = PROJECT_ROOT / "configs" / "realism_v2"
@@ -102,11 +126,6 @@ DEFAULT_R7_2_OPERATOR_ARTIFACT_GAP_REGISTER_DIR = (
 )
 DEFAULT_V2_NO_MEASURED_DATA_CLOSURE_DIR = (
     PROJECT_ROOT / "results" / "ev_nodi_realism_v2_no_measured_data_closure"
-)
-RUN_MANIFEST_VOLATILE_FIELDS: frozenset[str] = frozenset({"created_at"})
-RUN_MANIFEST_PROVENANCE_CHECKSUM_KIND = "stable_content_v1"
-RUN_MANIFEST_LEGACY_CHECKSUM_KINDS: frozenset[str | None] = frozenset(
-    {None, "raw_sha256_file", "sha256_file"}
 )
 
 
@@ -164,50 +183,6 @@ def _validate_run_manifest_checksum_kind(
 
 def _is_sha256_hex(value: str) -> bool:
     return len(value) == 64 and all(ch in "0123456789abcdef" for ch in value)
-
-
-MODULE_STATES = (
-    "off",
-    "surrogate",
-    "bounded_prior",
-    "measured_prior",
-    "calibrated",
-    "blocked",
-)
-
-CLAIM_LEVELS = (
-    "relative_proxy",
-    "relative_with_priors",
-    "scenario_count_rate",
-    "safety_sidecar",
-    "diagnostic_only",
-    "absolute_blocked",
-    "calibrated_absolute",
-)
-
-SOURCE_TYPES = (
-    "assumption",
-    "datasheet",
-    "literature",
-    "synthetic",
-    "bounded_prior",
-    "measured",
-    "calibrated",
-)
-
-REQUIRED_OUTPUT_PROVENANCE_FIELDS = (
-    "unit",
-    "source_type",
-    "scenario_id",
-    "claim_level",
-    "calibration_dependency",
-    "module_status",
-    "base_route_key",
-    "scenario_identity",
-    "run_manifest_path",
-)
-
-FORBIDDEN_OUTPUT_NAMES: frozenset[str] = frozenset({"detector_SNR", "calibrated_detector_SNR"})
 
 
 MAX_ANCHOR_SCENARIO_BUNDLES = 8
@@ -2094,8 +2069,6 @@ def scenario_detector_unit_sidecar(
     tau_s: float = 0.002,
     filter_order: int = 2,
     RIN_PSD_1_per_Hz: float = 1.0e-12,
-    measured_detector_transfer: bool = False,
-    measured_blank: bool = False,
     detector_transfer_artifact_id: str | None = None,
     measured_blank_artifact_id: str | None = None,
     registry: dict[str, Any] | None = None,
@@ -6133,7 +6106,7 @@ def anchor_smoke_routes(include_optional: bool = True) -> tuple[tuple[int, int, 
         (488, 600, 1500),
     )
     if include_optional:
-        routes = routes + ((660, 900, 1400), (404, 700, 1400))
+        routes = (*routes, (660, 900, 1400), (404, 700, 1400))
     if len(routes) > MAX_ANCHOR_ROUTES:
         raise ValueError("anchor smoke route panel exceeds max_anchor_routes")
     return routes
@@ -6463,10 +6436,7 @@ def route_role_R3a(wavelength_nm: int, width_nm: int, depth_nm: int) -> str:
 def classify_R3a_scenario_spread_watch(
     *, min_snr: float, max_snr: float, physical_explanation: str = ""
 ) -> dict[str, Any]:
-    if min_snr <= 0:
-        spread = float("inf")
-    else:
-        spread = max_snr / min_snr
+    spread = float("inf") if min_snr <= 0 else max_snr / min_snr
     if spread > 1.0e3 and not physical_explanation:
         status = "stop_requires_physical_explanation"
     elif spread > 1.0e3:
@@ -9495,22 +9465,22 @@ def run_representative_full_wave_R4(
                                 "P_filter_leakage_abs_W": thermal["P_filter_leakage_abs_W"],
                             }
                         )
-                        for metric in (
-                            "full_wave_cross_term_signed_W",
-                            "full_wave_ROI_signal_signed_W",
-                            "surrogate_cross_term_signed_W",
-                            "surrogate_ROI_signal_signed_W",
-                        ):
-                            unit_rows.append(
-                                {
-                                    "stage": "R4_representative_full_wave_validation",
-                                    "case_id": case_id,
-                                    "metric": metric,
-                                    "unit": "W",
-                                    "status": "pass",
-                                    "solver_execution_mode": solver_status["solver_execution_mode"],
-                                }
+                        unit_rows.extend(
+                            {
+                                "stage": "R4_representative_full_wave_validation",
+                                "case_id": case_id,
+                                "metric": metric,
+                                "unit": "W",
+                                "status": "pass",
+                                "solver_execution_mode": solver_status["solver_execution_mode"],
+                            }
+                            for metric in (
+                                "full_wave_cross_term_signed_W",
+                                "full_wave_ROI_signal_signed_W",
+                                "surrogate_cross_term_signed_W",
+                                "surrogate_ROI_signal_signed_W",
                             )
+                        )
                         decision_inputs.append(observable_row)
 
     detector_state_rows = [
@@ -10326,48 +10296,47 @@ def run_revised_R4_rerun(
         },
     ]
 
-    ambiguity_rows = []
-    for row in main_nonblank:
-        ambiguity_rows.append(
-            {
-                "route_id": row["route_id"],
-                "interface_state": row["interface_state"],
-                "mesh_level": row["mesh_level"],
-                "particle_id": row["particle_id"],
-                "polarization_state": row["polarization_state"],
-                "full_wave_cross_term_signed_W": row["full_wave_cross_term_signed_W"],
-                "surrogate_cross_term_signed_W": row["surrogate_cross_term_signed_W"],
-                "canonical_full_wave_cross_term_signed_W": row[
-                    "canonical_full_wave_cross_term_signed_W"
-                ],
-                "abs_full_wave_cross_term_W": row["abs_full_wave_cross_term_W"],
-                "abs_surrogate_cross_term_W": row["abs_surrogate_cross_term_W"],
-                "median_abs_full_wave_cross_term_for_route_particle": row[
-                    "median_abs_full_wave_cross_term_for_route_particle"
-                ],
-                "sign_reliability_threshold_W": row["sign_reliability_threshold_W"],
-                "sign_reliability_threshold_source": row["sign_reliability_threshold_source"],
-                "sign_reliability_band": row["sign_reliability_band"],
-                "sign_preserved_raw": row["sign_preserved_raw"],
-                "sign_preserved_after_global_flip": row["sign_preserved_after_global_flip"],
-                "sign_ambiguous_due_to_near_zero": row["sign_ambiguous_due_to_near_zero"],
-                "mesh_refined_agreement": row["mesh_refined_agreement"],
-                "near_wall_stress_agreement": row["near_wall_stress_agreement"],
-                "main_660_recovery_gate_met": main_recovery_gate_met,
-                "R5_plan_preparation_authorized": False,
-                **_revised_R4_provenance(
-                    route_id=(
-                        f"{row['route_id']}_{row['particle_id']}_"
-                        f"{row['interface_state']}_{row['mesh_level']}"
-                    ),
-                    route_role="main_660_near_wall_coarse_sign_ambiguity",
-                    unit="mixed_units_with_per_field_unit_columns",
-                    claim_level="diagnostic_only",
-                    manifest_path=manifest_path,
-                    case_id=row["case_id"],
+    ambiguity_rows = [
+        {
+            "route_id": row["route_id"],
+            "interface_state": row["interface_state"],
+            "mesh_level": row["mesh_level"],
+            "particle_id": row["particle_id"],
+            "polarization_state": row["polarization_state"],
+            "full_wave_cross_term_signed_W": row["full_wave_cross_term_signed_W"],
+            "surrogate_cross_term_signed_W": row["surrogate_cross_term_signed_W"],
+            "canonical_full_wave_cross_term_signed_W": row[
+                "canonical_full_wave_cross_term_signed_W"
+            ],
+            "abs_full_wave_cross_term_W": row["abs_full_wave_cross_term_W"],
+            "abs_surrogate_cross_term_W": row["abs_surrogate_cross_term_W"],
+            "median_abs_full_wave_cross_term_for_route_particle": row[
+                "median_abs_full_wave_cross_term_for_route_particle"
+            ],
+            "sign_reliability_threshold_W": row["sign_reliability_threshold_W"],
+            "sign_reliability_threshold_source": row["sign_reliability_threshold_source"],
+            "sign_reliability_band": row["sign_reliability_band"],
+            "sign_preserved_raw": row["sign_preserved_raw"],
+            "sign_preserved_after_global_flip": row["sign_preserved_after_global_flip"],
+            "sign_ambiguous_due_to_near_zero": row["sign_ambiguous_due_to_near_zero"],
+            "mesh_refined_agreement": row["mesh_refined_agreement"],
+            "near_wall_stress_agreement": row["near_wall_stress_agreement"],
+            "main_660_recovery_gate_met": main_recovery_gate_met,
+            "R5_plan_preparation_authorized": False,
+            **_revised_R4_provenance(
+                route_id=(
+                    f"{row['route_id']}_{row['particle_id']}_"
+                    f"{row['interface_state']}_{row['mesh_level']}"
                 ),
-            }
-        )
+                route_role="main_660_near_wall_coarse_sign_ambiguity",
+                unit="mixed_units_with_per_field_unit_columns",
+                claim_level="diagnostic_only",
+                manifest_path=manifest_path,
+                case_id=row["case_id"],
+            ),
+        }
+        for row in main_nonblank
+    ]
 
     reliability_summary_rows: list[dict[str, Any]] = []
     for route_id in sorted({row["route_id"] for row in revised_observable_rows}):
@@ -11692,9 +11661,10 @@ def _r5_source_inventory(base_path: Path) -> dict[str, Any]:
 
 
 def _r5_write_scenario_manifest_rows(path: Path, scenarios: list[dict[str, Any]]) -> None:
-    rows = []
-    for scenario in scenarios:
-        rows.append({key: scenario[key] for key in sorted(R5_REQUIRED_SCENARIO_BUNDLE_FIELDS)})
+    rows = [
+        {key: scenario[key] for key in sorted(R5_REQUIRED_SCENARIO_BUNDLE_FIELDS)}
+        for scenario in scenarios
+    ]
     write_csv_rows(path, rows)
 
 
@@ -11828,7 +11798,7 @@ def run_R5_full_grid_v2(
             )
             source_case_id = str(source_row.get("case_id") or f"source_row_{source_row_index}")
             source_case_hash = hashlib.sha256(
-                f"{source_row_index}|{source_case_id}".encode("utf-8")
+                f"{source_row_index}|{source_case_id}".encode()
             ).hexdigest()
             source_score = _r5_source_score(source_row)
             route_key = (wavelength_nm, width_nm, depth_nm)
@@ -12484,26 +12454,25 @@ def run_R5_1_route_role_stability_interpretation(
             }
         )
 
-    main_interpretation_rows = []
-    for row in main_rows:
-        main_interpretation_rows.append(
-            {
-                "route_id": row["route_id"],
-                "wavelength_nm": row["wavelength_nm"],
-                "width_nm": row["width_nm"],
-                "depth_nm": row["depth_nm"],
-                "route_role": row["route_role"],
-                "main_660_route_role_locked": True,
-                "mean_detectability_relative_prior_score": row[
-                    "mean_detectability_relative_prior_score"
-                ],
-                "fine_confirm_main660_fraction": row["fine_confirm_main660_fraction"],
-                "review_refined_main660_fraction": row["review_refined_main660_fraction"],
-                "interpretation": "locked_main_660_robust_relative_prior_evidence_not_final_calibration",
-                "main_660_redefinition_authorized": False,
-                "R6_plan_preparation_authorized": False,
-            }
-        )
+    main_interpretation_rows = [
+        {
+            "route_id": row["route_id"],
+            "wavelength_nm": row["wavelength_nm"],
+            "width_nm": row["width_nm"],
+            "depth_nm": row["depth_nm"],
+            "route_role": row["route_role"],
+            "main_660_route_role_locked": True,
+            "mean_detectability_relative_prior_score": row[
+                "mean_detectability_relative_prior_score"
+            ],
+            "fine_confirm_main660_fraction": row["fine_confirm_main660_fraction"],
+            "review_refined_main660_fraction": row["review_refined_main660_fraction"],
+            "interpretation": "locked_main_660_robust_relative_prior_evidence_not_final_calibration",
+            "main_660_redefinition_authorized": False,
+            "R6_plan_preparation_authorized": False,
+        }
+        for row in main_rows
+    ]
 
     weak_reference_rows = [
         {
@@ -12519,21 +12488,20 @@ def run_R5_1_route_role_stability_interpretation(
         }
     ]
 
-    selected_annulus_rows = []
-    for row in selected_rows:
-        selected_annulus_rows.append(
-            {
-                "route_id": row["route_id"],
-                "route_role": row["route_role"],
-                "selected_annulus_boundary_policy": row["selected_annulus_boundary_policy"],
-                "mean_detectability_relative_prior_score": row[
-                    "mean_detectability_relative_prior_score"
-                ],
-                "selected_annulus_replaces_all_crossing_ranking": False,
-                "selected_annulus_bound_change_authorized": False,
-                "interpretation": "selected_annulus_remains_parallel_lens_only",
-            }
-        )
+    selected_annulus_rows = [
+        {
+            "route_id": row["route_id"],
+            "route_role": row["route_role"],
+            "selected_annulus_boundary_policy": row["selected_annulus_boundary_policy"],
+            "mean_detectability_relative_prior_score": row[
+                "mean_detectability_relative_prior_score"
+            ],
+            "selected_annulus_replaces_all_crossing_ranking": False,
+            "selected_annulus_bound_change_authorized": False,
+            "interpretation": "selected_annulus_remains_parallel_lens_only",
+        }
+        for row in selected_rows
+    ]
 
     detector = _first_row(detector_rows, "R5 detector blank claim guardrails")
     thermal = _first_row(thermal_rows, "R5 thermal 404 sidecar summary")
@@ -12802,11 +12770,12 @@ def run_R5_2_bounded_scenario_prior_audit(
         for rows in plan["audit_route_set"].values()
         for row in rows
     }
-    audit_rows: list[dict[str, str]] = []
     with full_summary_path.open(newline="", encoding="utf-8") as handle:
-        for row in csv.DictReader(handle):
-            if row["route_id"] in R5_2_AUDIT_ROUTE_IDS:
-                audit_rows.append(row)
+        audit_rows: list[dict[str, str]] = [
+            row
+            for row in csv.DictReader(handle)
+            if row["route_id"] in R5_2_AUDIT_ROUTE_IDS
+        ]
 
     if len(audit_rows) != R5_2_EXISTING_R5_AUDIT_ROW_CAP:
         raise ValueError("R5.2 audit source rows exceed or miss reviewed plan cap")
@@ -12945,41 +12914,40 @@ def run_R5_2_bounded_scenario_prior_audit(
             }
         )
 
-    traceability_rows = []
-    for row in audit_rows:
-        traceability_rows.append(
-            {
-                "R5_case_id": row["R5_case_id"],
-                "source_v1_row_index": row["source_v1_row_index"],
-                "source_v1_case_id": row["source_v1_case_id"],
-                "source_v1_case_hash": row["source_v1_case_hash"],
-                "route_id": row["route_id"],
-                "audit_route_group": route_groups[row["route_id"]],
-                "wavelength_nm": row["wavelength_nm"],
-                "width_nm": row["width_nm"],
-                "depth_nm": row["depth_nm"],
-                "route_role": row["route_role"],
-                "particle_name": row["particle_name"],
-                "scenario_bundle": row["scenario_bundle"],
-                "scenario_identity": row["scenario_identity"],
-                "stochastic_seed": row["stochastic_seed"],
-                "detectability_relative_prior_score": row["detectability_relative_prior_score"],
-                "source_v1_relative_score": row["source_v1_relative_score"],
-                "scenario_relative_prior_multiplier": row["scenario_relative_prior_multiplier"],
-                "scenario_detector_SNR": row["scenario_detector_SNR"],
-                "effective_scenario_detector_SNR": row["effective_scenario_detector_SNR"],
-                "primary_metric": row["primary_metric"],
-                "SNR_claim_level": row["SNR_claim_level"],
-                "event_probability_claim_level": row["event_probability_claim_level"],
-                "p_detect_mapping_claim_level": row["p_detect_mapping_claim_level"],
-                "detected_events_source": row["detected_events_source"],
-                "context_route_promotion_authorized": False,
-                "main_660_redefinition_authorized": False,
-                "route_specific_manual_sign_flip_applied": False,
-                "selected_annulus_replaces_all_crossing_ranking": False,
-                "claim_level": row["claim_level"],
-            }
-        )
+    traceability_rows = [
+        {
+            "R5_case_id": row["R5_case_id"],
+            "source_v1_row_index": row["source_v1_row_index"],
+            "source_v1_case_id": row["source_v1_case_id"],
+            "source_v1_case_hash": row["source_v1_case_hash"],
+            "route_id": row["route_id"],
+            "audit_route_group": route_groups[row["route_id"]],
+            "wavelength_nm": row["wavelength_nm"],
+            "width_nm": row["width_nm"],
+            "depth_nm": row["depth_nm"],
+            "route_role": row["route_role"],
+            "particle_name": row["particle_name"],
+            "scenario_bundle": row["scenario_bundle"],
+            "scenario_identity": row["scenario_identity"],
+            "stochastic_seed": row["stochastic_seed"],
+            "detectability_relative_prior_score": row["detectability_relative_prior_score"],
+            "source_v1_relative_score": row["source_v1_relative_score"],
+            "scenario_relative_prior_multiplier": row["scenario_relative_prior_multiplier"],
+            "scenario_detector_SNR": row["scenario_detector_SNR"],
+            "effective_scenario_detector_SNR": row["effective_scenario_detector_SNR"],
+            "primary_metric": row["primary_metric"],
+            "SNR_claim_level": row["SNR_claim_level"],
+            "event_probability_claim_level": row["event_probability_claim_level"],
+            "p_detect_mapping_claim_level": row["p_detect_mapping_claim_level"],
+            "detected_events_source": row["detected_events_source"],
+            "context_route_promotion_authorized": False,
+            "main_660_redefinition_authorized": False,
+            "route_specific_manual_sign_flip_applied": False,
+            "selected_annulus_replaces_all_crossing_ranking": False,
+            "claim_level": row["claim_level"],
+        }
+        for row in audit_rows
+    ]
 
     scenario_rows = []
     for scenario in scenarios:
@@ -13812,16 +13780,15 @@ def run_R5_3_route_prior_model_revision_audit(
         }
     ]
 
-    forbidden_guard_rows = []
-    for forbidden in sorted(R5_3_FORBIDDEN_PRIOR_FAMILIES):
-        forbidden_guard_rows.append(
-            {
-                "forbidden_prior_family": forbidden,
-                "attempted": False,
-                "status": "pass",
-                "route_prior_model_revision_execution_authorized": False,
-            }
-        )
+    forbidden_guard_rows = [
+        {
+            "forbidden_prior_family": forbidden,
+            "attempted": False,
+            "status": "pass",
+            "route_prior_model_revision_execution_authorized": False,
+        }
+        for forbidden in sorted(R5_3_FORBIDDEN_PRIOR_FAMILIES)
+    ]
 
     main_after_rows = []
     for route_id in sorted(
@@ -14666,41 +14633,41 @@ def run_R6_route_prior_sensitivity_audit(
                 }
             )
 
-        for scenario in sorted(R5_REQUIRED_SCENARIO_BUNDLE_IDS):
-            scenario_rows.append(
-                {
-                    "candidate_prior_id": candidate_id,
-                    "scenario_bundle": scenario,
-                    "context_or_weak_routes_above_candidate_adjusted_main_count": (
-                        scenario_residual_counts[(candidate_id, scenario)]
-                    ),
-                    "candidate_adjusted_main660_mean": candidate_main_by_scenario[candidate_id][
-                        scenario
-                    ],
-                    "new_scenario_bundle_authorized": False,
-                    "scenario_weight_change_authorized": False,
-                    "claim_level": "relative_with_priors",
-                }
-            )
+        scenario_rows.extend(
+            {
+                "candidate_prior_id": candidate_id,
+                "scenario_bundle": scenario,
+                "context_or_weak_routes_above_candidate_adjusted_main_count": (
+                    scenario_residual_counts[(candidate_id, scenario)]
+                ),
+                "candidate_adjusted_main660_mean": candidate_main_by_scenario[candidate_id][
+                    scenario
+                ],
+                "new_scenario_bundle_authorized": False,
+                "scenario_weight_change_authorized": False,
+                "claim_level": "relative_with_priors",
+            }
+            for scenario in sorted(R5_REQUIRED_SCENARIO_BUNDLE_IDS)
+        )
 
-        for particle in sorted({row["particle_name"] for row in audit_rows}):
-            particle_rows.append(
-                {
-                    "candidate_prior_id": candidate_id,
-                    "particle_name": particle,
-                    "particle_size_stratum": _particle_size_stratum(
-                        next(row for row in audit_rows if row["particle_name"] == particle)
-                    ),
-                    "context_or_weak_routes_above_candidate_adjusted_main_count": (
-                        particle_residual_counts[(candidate_id, particle)]
-                    ),
-                    "candidate_adjusted_main660_mean": candidate_main_by_particle[candidate_id][
-                        particle
-                    ],
-                    "particle_specific_empirical_fit_authorized": False,
-                    "claim_level": "relative_with_priors",
-                }
-            )
+        particle_rows.extend(
+            {
+                "candidate_prior_id": candidate_id,
+                "particle_name": particle,
+                "particle_size_stratum": _particle_size_stratum(
+                    next(row for row in audit_rows if row["particle_name"] == particle)
+                ),
+                "context_or_weak_routes_above_candidate_adjusted_main_count": (
+                    particle_residual_counts[(candidate_id, particle)]
+                ),
+                "candidate_adjusted_main660_mean": candidate_main_by_particle[candidate_id][
+                    particle
+                ],
+                "particle_specific_empirical_fit_authorized": False,
+                "claim_level": "relative_with_priors",
+            }
+            for particle in sorted({row["particle_name"] for row in audit_rows})
+        )
 
         for route_id in sorted(
             {row["route_id"] for row in audit_rows if row["route_role"] == "main_660"}
@@ -14735,18 +14702,18 @@ def run_R6_route_prior_sensitivity_audit(
             "660_800x600",
             "660_800x700",
         }
-        for route_id in sorted(selected_or_404_ids):
-            selected_and_404_rows.append(
-                {
-                    "candidate_prior_id": candidate_id,
-                    "route_id": route_id,
-                    "selected_annulus_replaces_all_crossing_ranking": False,
-                    "selected_annulus_bound_change_authorized": False,
-                    "thermal_sidecar_used_to_increase_NODI_score": False,
-                    "route_promotion_authorized": False,
-                    "claim_level": "relative_with_priors",
-                }
-            )
+        selected_and_404_rows.extend(
+            {
+                "candidate_prior_id": candidate_id,
+                "route_id": route_id,
+                "selected_annulus_replaces_all_crossing_ranking": False,
+                "selected_annulus_bound_change_authorized": False,
+                "thermal_sidecar_used_to_increase_NODI_score": False,
+                "route_promotion_authorized": False,
+                "claim_level": "relative_with_priors",
+            }
+            for route_id in sorted(selected_or_404_ids)
+        )
 
     selected_candidate = next(
         row for row in candidate_registry_rows if row["candidate_prior_id"] == selected_candidate_id
@@ -15974,41 +15941,39 @@ def _r7_2_artifact_gap_rows(
     artifact: dict[str, Any],
     protocol_rows: list[dict[str, str]],
 ) -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-    for row in protocol_rows:
-        rows.append(
-            {
-                "artifact_id": artifact["artifact_id"],
-                "source_protocol_module_id": artifact["source_protocol_module_id"],
-                "artifact_field": row["artifact_field"],
-                "artifact_field_index": row["artifact_field_index"],
-                "artifact_purpose": artifact["artifact_purpose"],
-                "post_v2_dependency_type": artifact["post_v2_dependency_type"],
-                "requires_bench_measurement": artifact["requires_bench_measurement"],
-                "requires_solver_export": artifact["requires_solver_export"],
-                "requires_manual_review": artifact["requires_manual_review"],
-                "acceptance_criterion": (
-                    "field_defined_with_units_or_categorical_enum_and_provenance"
-                ),
-                "failure_criterion": (
-                    "missing_field_or_score_derived_substitute_or_unreviewed_manual_value"
-                ),
-                "chain_of_custody_required": True,
-                "post_v2_dependency_requires_separate_program_review": True,
-                "gap_status": "registered_no_acquisition",
-                "gap_resolution_authorized": False,
-                "bench_measurement_authorized": False,
-                "experiment_authorized": False,
-                "solver_case_authorized": False,
-                "route_promotion_authorized": False,
-                "main_660_redefinition_authorized": False,
-                "uses_source_v1_relative_score_as_physical_input": False,
-                "allows_route_specific_multiplier": False,
-                "allows_particle_specific_fit": False,
-                "claim_level": artifact["claim_level"],
-            }
-        )
-    return rows
+    return [
+        {
+            "artifact_id": artifact["artifact_id"],
+            "source_protocol_module_id": artifact["source_protocol_module_id"],
+            "artifact_field": row["artifact_field"],
+            "artifact_field_index": row["artifact_field_index"],
+            "artifact_purpose": artifact["artifact_purpose"],
+            "post_v2_dependency_type": artifact["post_v2_dependency_type"],
+            "requires_bench_measurement": artifact["requires_bench_measurement"],
+            "requires_solver_export": artifact["requires_solver_export"],
+            "requires_manual_review": artifact["requires_manual_review"],
+            "acceptance_criterion": (
+                "field_defined_with_units_or_categorical_enum_and_provenance"
+            ),
+            "failure_criterion": (
+                "missing_field_or_score_derived_substitute_or_unreviewed_manual_value"
+            ),
+            "chain_of_custody_required": True,
+            "post_v2_dependency_requires_separate_program_review": True,
+            "gap_status": "registered_no_acquisition",
+            "gap_resolution_authorized": False,
+            "bench_measurement_authorized": False,
+            "experiment_authorized": False,
+            "solver_case_authorized": False,
+            "route_promotion_authorized": False,
+            "main_660_redefinition_authorized": False,
+            "uses_source_v1_relative_score_as_physical_input": False,
+            "allows_route_specific_multiplier": False,
+            "allows_particle_specific_fit": False,
+            "claim_level": artifact["claim_level"],
+        }
+        for row in protocol_rows
+    ]
 
 
 def run_R7_2_operator_artifact_gap_register_generation(
@@ -17008,29 +16973,28 @@ def run_R4_route_model_revision_audit(
                 }
             )
 
-    reference_phase_rows: list[dict[str, Any]] = []
-    for phase_label in ("0", "pi_over_2", "pi"):
-        reference_phase_rows.append(
-            {
-                "phase_label": phase_label,
-                "common_phase_rotation_applied_to": "E_ref_and_E_sca",
-                "cross_term_operator": plan["sign_phase_audit_contract"]["cross_term_operator"],
-                "global_phase_invariance_check": plan["sign_phase_audit_contract"][
-                    "global_phase_invariance_check"
-                ],
-                "cross_term_invariant_under_common_phase": True,
-                "decision_invariant_under_common_phase": True,
-                "reference_phase_anchor_policy": plan["sign_phase_audit_contract"][
-                    "reference_phase_anchor_policy"
-                ],
-                "R5_plan_authorized": False,
-                **_audit_provenance(
-                    route_id=f"common_phase_{phase_label}",
-                    route_role="reference_phase_convention",
-                    manifest_path=manifest_path,
-                ),
-            }
-        )
+    reference_phase_rows: list[dict[str, Any]] = [
+        {
+            "phase_label": phase_label,
+            "common_phase_rotation_applied_to": "E_ref_and_E_sca",
+            "cross_term_operator": plan["sign_phase_audit_contract"]["cross_term_operator"],
+            "global_phase_invariance_check": plan["sign_phase_audit_contract"][
+                "global_phase_invariance_check"
+            ],
+            "cross_term_invariant_under_common_phase": True,
+            "decision_invariant_under_common_phase": True,
+            "reference_phase_anchor_policy": plan["sign_phase_audit_contract"][
+                "reference_phase_anchor_policy"
+            ],
+            "R5_plan_authorized": False,
+            **_audit_provenance(
+                route_id=f"common_phase_{phase_label}",
+                route_role="reference_phase_convention",
+                manifest_path=manifest_path,
+            ),
+        }
+        for phase_label in ("0", "pi_over_2", "pi")
+    ]
 
     for route in route_decision_rows:
         route_id = route["route_id"]

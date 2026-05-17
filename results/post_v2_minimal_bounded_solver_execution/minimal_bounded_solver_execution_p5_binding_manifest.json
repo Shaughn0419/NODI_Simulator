@@ -19,7 +19,7 @@
   "p5_authorization_gate_record_sha256": "0fe53b015c49e562fe99e3b80600edc6479f197b3d6c2961a32429ad9a224da4",
   "p5_authorization_gate_scope_preserved": true,
   "p5_p4_binding_manifest_path": "results/post_v2_bounded_solver_authorization_gate/bounded_solver_authorization_gate_p4_binding_manifest.json",
-  "p5_p4_binding_manifest_sha256": "f8ffcb340253cb43e792927bce92b16f32b3c23033eba7953ec64e9a4e92537f",
+  "p5_p4_binding_manifest_sha256": "b47ba49b5d34a7a8d2fe6264b6d418ed716f371e35901af0bbd7c4b5248f47d2",
   "physical_solver_execution_authorized": true,
   "raw_magnitude_final_gate_allowed": false,
   "required_next_authorization_phrase": "authorize minimal bounded solver execution",

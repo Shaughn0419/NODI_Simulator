@@ -4,8 +4,73 @@ import json
 
 import pandas as pd
 
+from tools import analyze_lens_b_ev_gold_fullgrid as fullgrid
 from tools.audits import ev_size_weighted_route_analysis as route_analysis
 from tools.audits import tsuyama_gold_aligned_detection_lane as lane
+
+
+def test_ev_wavelength_rule_subsets_ignore_non_numeric_rows():
+    routes = pd.DataFrame(
+        [
+            {"wavelength_nm": 404, "width_nm": 600, "depth_nm": 1300},
+            {"wavelength_nm": "660", "width_nm": 700, "depth_nm": 1400},
+            {"wavelength_nm": "not_numeric", "width_nm": 800, "depth_nm": 1500},
+            {"wavelength_nm": None, "width_nm": 850, "depth_nm": 1550},
+            {"wavelength_nm": 532, "width_nm": 900, "depth_nm": 1600},
+        ]
+    )
+
+    recommendation = route_analysis._recommendation_eligible_routes(routes)
+    control = route_analysis._control_only_routes(routes)
+
+    assert set(recommendation["width_nm"]) == {600, 700}
+    assert set(control["width_nm"]) == {900}
+
+
+def test_gold_aligned_wavelength_subset_ignores_non_numeric_rows():
+    routes = pd.DataFrame(
+        [
+            {"wavelength_nm": 404, "width_nm": 600, "depth_nm": 1300},
+            {"wavelength_nm": "660", "width_nm": 700, "depth_nm": 1400},
+            {"wavelength_nm": "not_numeric", "width_nm": 800, "depth_nm": 1500},
+            {"wavelength_nm": None, "width_nm": 850, "depth_nm": 1550},
+            {"wavelength_nm": 532, "width_nm": 900, "depth_nm": 1600},
+        ]
+    )
+
+    recommendation = lane._route_subset_by_wavelength(
+        routes,
+        lane.RECOMMENDATION_ELIGIBLE_WAVELENGTHS_NM,
+    )
+    control = lane._route_subset_by_wavelength(
+        routes,
+        lane.CONTROL_ONLY_WAVELENGTHS_NM,
+    )
+
+    assert set(recommendation["width_nm"]) == {600, 700}
+    assert set(control["width_nm"]) == {900}
+
+
+def test_fullgrid_wavelength_roles_ignore_non_numeric_rows():
+    routes = pd.DataFrame(
+        [
+            {"wavelength_nm": 404},
+            {"wavelength_nm": "660"},
+            {"wavelength_nm": "not_numeric"},
+            {"wavelength_nm": None},
+            {"wavelength_nm": 532},
+        ]
+    )
+
+    out = fullgrid._with_wavelength_role(routes)
+
+    assert out["wavelength_role"].tolist() == [
+        "recommendation_eligible_404_660",
+        "recommendation_eligible_404_660",
+        "unexpected_wavelength",
+        "unexpected_wavelength",
+        "control_only_488_532",
+    ]
 
 
 def test_ev_size_weighted_route_analysis_emits_selected_annulus_lens():
@@ -15,25 +80,25 @@ def test_ev_size_weighted_route_analysis_emits_selected_annulus_lens():
         ((532, 800, 700), 0.40, 0.95),
     ):
         wavelength_nm, width_nm, depth_nm = route
-        for diameter_nm in (60, 80, 100):
-            rows.append(
-                {
-                    "particle_material": "exosome",
-                    "particle_diameter_nm": diameter_nm,
-                    "wavelength_nm": wavelength_nm,
-                    "width_nm": width_nm,
-                    "depth_nm": depth_nm,
-                    "detection_rate": base_rate,
-                    "all_crossing_detection_rate": base_rate,
-                    "selected_detector_mode_annulus_detection_rate": selected_rate,
-                    "selected_detector_mode_annulus_fraction": 0.40,
-                    "stable_detection_rate": base_rate,
-                    "final_engineering_score": base_rate,
-                    "engineering_gate_passed": base_rate > 0.45,
-                    "na_cutoff_active": False,
-                    "rho_physical_envelope_status": "within_envelope",
-                }
-            )
+        rows.extend(
+            {
+                "particle_material": "exosome",
+                "particle_diameter_nm": diameter_nm,
+                "wavelength_nm": wavelength_nm,
+                "width_nm": width_nm,
+                "depth_nm": depth_nm,
+                "detection_rate": base_rate,
+                "all_crossing_detection_rate": base_rate,
+                "selected_detector_mode_annulus_detection_rate": selected_rate,
+                "selected_detector_mode_annulus_fraction": 0.40,
+                "stable_detection_rate": base_rate,
+                "final_engineering_score": base_rate,
+                "engineering_gate_passed": base_rate > 0.45,
+                "na_cutoff_active": False,
+                "rho_physical_envelope_status": "within_envelope",
+            }
+            for diameter_nm in (60, 80, 100)
+        )
 
     df = pd.DataFrame(rows)
     priors = {"uniform": {60: 1.0, 80: 1.0, 100: 1.0}}
@@ -53,6 +118,16 @@ def test_ev_size_weighted_route_analysis_emits_selected_annulus_lens():
     assert selected_top == [
         {"wavelength_nm": 532, "width_nm": 800, "depth_nm": 700}
     ]
+    assert comparison["recommendation_wavelength_rule"].iloc[0] == (
+        "recommendation_conclusion_only_404_660__488_532_control_only"
+    )
+    assert json.loads(
+        comparison["selected_annulus_recommendation_top_routes"].iloc[0]
+    ) == []
+    assert json.loads(comparison["selected_annulus_control_only_top_routes"].iloc[0]) == [
+        {"wavelength_nm": 532, "width_nm": 800, "depth_nm": 700}
+    ]
+    assert comparison["selected_annulus_metric_top1_control_only"].iloc[0]
 
 
 def test_ev_size_weighted_route_analysis_outputs_selected_contribution_and_warnings():
@@ -114,6 +189,42 @@ def test_ev_size_weighted_route_analysis_outputs_selected_contribution_and_warni
     )
 
 
+def test_ev_size_weighted_route_analysis_splits_prior_weight_across_duplicate_presets():
+    rows = []
+    for diameter_nm, rates in ((100, (0.2, 0.6)), (120, (0.8,))):
+        rows.extend(
+            {
+                "particle_material": "exosome",
+                "particle_diameter_nm": diameter_nm,
+                "wavelength_nm": 660,
+                "width_nm": 800,
+                "depth_nm": 1400,
+                "reference_operating_band": "electronics_noise_limited_useful",
+                "detection_rate": rate,
+                "all_crossing_detection_rate": rate,
+                "selected_detector_mode_annulus_detection_rate": rate,
+                "selected_detector_mode_annulus_fraction": 0.40,
+                "stable_detection_rate": rate,
+                "final_engineering_score": rate,
+                "engineering_gate_passed": True,
+                "na_cutoff_active": False,
+                "rho_physical_envelope_status": "within_envelope",
+            }
+            for rate in rates
+        )
+
+    routes = route_analysis.aggregate_routes(
+        pd.DataFrame(rows),
+        {"uniform": {100: 1.0, 120: 1.0}},
+    )
+    row = routes.iloc[0]
+
+    assert abs(row["uniform_weighted_detection"] - 0.6) < 1e-12
+    assert abs(row["uniform_weighted_all_crossing_detection"] - 0.6) < 1e-12
+    assert abs(row["uniform_weighted_selected_annulus_detection"] - 0.6) < 1e-12
+    assert row["uniform_weighted_strict_pass"] == 1.0
+
+
 def test_ev_size_weighted_route_analysis_marks_missing_selected_lens_unavailable():
     rows = []
     for route, base_rate in (
@@ -121,23 +232,23 @@ def test_ev_size_weighted_route_analysis_marks_missing_selected_lens_unavailable
         ((532, 800, 700), 0.40),
     ):
         wavelength_nm, width_nm, depth_nm = route
-        for diameter_nm in (60, 80, 100):
-            rows.append(
-                {
-                    "particle_material": "exosome",
-                    "particle_diameter_nm": diameter_nm,
-                    "wavelength_nm": wavelength_nm,
-                    "width_nm": width_nm,
-                    "depth_nm": depth_nm,
-                    "detection_rate": base_rate,
-                    "all_crossing_detection_rate": base_rate,
-                    "stable_detection_rate": base_rate,
-                    "final_engineering_score": base_rate,
-                    "engineering_gate_passed": base_rate > 0.45,
-                    "na_cutoff_active": False,
-                    "rho_physical_envelope_status": "within_envelope",
-                }
-            )
+        rows.extend(
+            {
+                "particle_material": "exosome",
+                "particle_diameter_nm": diameter_nm,
+                "wavelength_nm": wavelength_nm,
+                "width_nm": width_nm,
+                "depth_nm": depth_nm,
+                "detection_rate": base_rate,
+                "all_crossing_detection_rate": base_rate,
+                "stable_detection_rate": base_rate,
+                "final_engineering_score": base_rate,
+                "engineering_gate_passed": base_rate > 0.45,
+                "na_cutoff_active": False,
+                "rho_physical_envelope_status": "within_envelope",
+            }
+            for diameter_nm in (60, 80, 100)
+        )
 
     df = pd.DataFrame(rows)
     priors = {"uniform": {60: 1.0, 80: 1.0, 100: 1.0}}
@@ -197,6 +308,9 @@ def test_selected_annulus_ranking_defaults_to_reference_useful_routes():
     row = comparison.iloc[0]
     assert row["selected_annulus_rank_scope"] == "reference_useful_only"
     assert json.loads(row["selected_annulus_top_routes"]) == [
+        {"wavelength_nm": 660, "width_nm": 800, "depth_nm": 1400}
+    ]
+    assert json.loads(row["selected_annulus_recommendation_top_routes"]) == [
         {"wavelength_nm": 660, "width_nm": 800, "depth_nm": 1400}
     ]
     assert json.loads(row["selected_annulus_boundary_top_routes"]) == [
@@ -339,30 +453,28 @@ def test_ev_targeted_panel_keeps_primary_rank_and_adds_selected_annulus_rank():
     for route, stable_rate, selected_rate in route_specs:
         wavelength_nm, width_nm, depth_nm = route
         for diameter_nm in lane.EV_DIAMETERS_NM:
-            for member in range(4):
-                rows.append(
-                    {
-                        "scenario_config_id": "ev_nodi_5sigma_single_current_design",
-                        "particle_name": (
-                            f"exosome_biomimetic_{diameter_nm}nm_member{member}"
-                        ),
-                        "particle_diameter_nm": diameter_nm,
-                        "wavelength_nm": wavelength_nm,
-                        "width_nm": width_nm,
-                        "depth_nm": depth_nm,
-                        "detection_rate": stable_rate,
-                        "stable_detection_rate": stable_rate,
-                        "all_crossing_detection_rate": stable_rate,
-                        "selected_detector_mode_candidate_fraction": 0.80,
-                        "selected_detector_mode_candidate_detection_rate": selected_rate,
-                        "selected_detector_mode_annulus_edge_norm_min": 0.50,
-                        "selected_detector_mode_annulus_edge_norm_max": 0.80,
-                        "selected_detector_mode_annulus_fraction": 0.40,
-                        "selected_detector_mode_annulus_detection_rate": selected_rate,
-                        "reference_operating_band": "ok",
-                        "engineering_gate_passed": True,
-                    }
-                )
+            rows.extend(
+                {
+                    "scenario_config_id": "ev_nodi_5sigma_single_current_design",
+                    "particle_name": f"exosome_biomimetic_{diameter_nm}nm_member{member}",
+                    "particle_diameter_nm": diameter_nm,
+                    "wavelength_nm": wavelength_nm,
+                    "width_nm": width_nm,
+                    "depth_nm": depth_nm,
+                    "detection_rate": stable_rate,
+                    "stable_detection_rate": stable_rate,
+                    "all_crossing_detection_rate": stable_rate,
+                    "selected_detector_mode_candidate_fraction": 0.80,
+                    "selected_detector_mode_candidate_detection_rate": selected_rate,
+                    "selected_detector_mode_annulus_edge_norm_min": 0.50,
+                    "selected_detector_mode_annulus_edge_norm_max": 0.80,
+                    "selected_detector_mode_annulus_fraction": 0.40,
+                    "selected_detector_mode_annulus_detection_rate": selected_rate,
+                    "reference_operating_band": "ok",
+                    "engineering_gate_passed": True,
+                }
+                for member in range(4)
+            )
 
     ev = lane._ev_rows_from_raw(pd.DataFrame(rows))
     equal = ev[ev["EV_size_distribution_profile"] == "equal_current"]
@@ -483,6 +595,22 @@ def test_compare_ranking_frames_reports_selected_annulus_cross_check():
     assert row["selected_annulus_top3_changed_vs_all_crossing"]
     assert row["current_532_600x1500_rank"] == 1
     assert row["current_532_600x1500_selected_annulus_rank"] == 3
+    assert row["recommendation_wavelength_rule"] == (
+        "recommendation_conclusion_only_404_660__488_532_control_only"
+    )
+    assert json.loads(row["new_recommendation_top3_routes"]) == [
+        [404, 600, 1300],
+        [660, 900, 1500],
+    ]
+    assert json.loads(row["selected_annulus_recommendation_top3_routes"]) == [
+        [404, 600, 1300],
+        [660, 900, 1500],
+    ]
+    assert json.loads(row["selected_annulus_control_only_top3_routes"]) == [
+        [488, 800, 700],
+        [532, 600, 1500],
+    ]
+    assert row["selected_annulus_top3_contains_control_only"]
 
 
 def test_compare_ranking_frames_marks_missing_selected_annulus_columns_unavailable():

@@ -224,6 +224,7 @@ def _result_dependencies_for_item(item: pytest.Item) -> tuple[Path, ...]:
 
 
 def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
+    _ = config
     for item in items:
         dependencies = _result_dependencies_for_item(item)
         if not dependencies:

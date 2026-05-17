@@ -126,7 +126,7 @@ def spatial_coupling_factor(
         out = np.ones_like(x, dtype=float)
         return float(out) if out.ndim == 0 else out
 
-    elif coupling_model == "gaussian_xy":
+    if coupling_model == "gaussian_xy":
         wcx = channel.width_m / 2
         wcz = channel.depth_m / 2
         out = np.exp(-(x / wcx)**2 - (z / wcz)**2)

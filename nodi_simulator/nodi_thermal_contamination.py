@@ -82,10 +82,7 @@ def build_nodi_thermal_contamination_diagnostics(
     is_metal_standard = material_class == "absorbing_metal_standard"
     is_ev_like = material_class == "EV_like_low_absorption"
 
-    if is_metal_standard:
-        standard_risk = risk
-    else:
-        standard_risk = "not_standard_particle"
+    standard_risk = risk if is_metal_standard else "not_standard_particle"
 
     blockers: list[str] = []
     if sim_cfg.probe_power_W is None:

@@ -215,7 +215,7 @@ def _build_trace_figure(df, *, y_columns: list[tuple[str, str]], title: str, yax
         xaxis_title="时间 (ms)",
         yaxis_title=yaxis_title,
         height=320,
-        margin=dict(l=20, r=20, t=50, b=20),
+        margin={"l": 20, "r": 20, "t": 50, "b": 20},
     )
     return fig
 
@@ -391,7 +391,6 @@ def render_single_case_calculator() -> None:
     st.caption("这是一页独立计算页：输入一个具体 case，直接看从本征散射到 detect/miss 与最终判断的完整现场重算链。")
     _seed_single_case_state()
     render_auxiliary_page_header(
-        "Single-Case Calculator",
         summary_message="它不会改变科研展示主线围绕标准 biomimetic full-range 主结果库的分析叙事。",
         detail_message="如果科研展示或证据页已经选中了一个 case，本页可以把它当作默认值或导入参考，但不会自动回写主线选中 case。",
     )
@@ -547,7 +546,7 @@ def render_single_case_calculator() -> None:
                 text="theta_det",
                 showarrow=False,
                 yshift=-12,
-                font=dict(size=10, color="#2563eb"),
+                font={"size": 10, "color": "#2563eb"},
             )
         if np.isfinite(theta_center_deg) and abs(theta_center_deg - theta_det_deg) > 1e-6:
             fig.add_vline(x=theta_center_deg, line_dash="dot", line_color="#6b7280")
@@ -557,11 +556,11 @@ def render_single_case_calculator() -> None:
                 text="theta_center",
                 showarrow=False,
                 yshift=12,
-                font=dict(size=10, color="#6b7280"),
+                font={"size": 10, "color": "#6b7280"},
             )
         fig.update_layout(
             height=280,
-            margin=dict(l=20, r=20, t=30, b=20),
+            margin={"l": 20, "r": 20, "t": 30, "b": 20},
             xaxis_title="散射角 theta (deg)",
             yaxis_title="dCsca/dΩ (m²/sr)",
         )

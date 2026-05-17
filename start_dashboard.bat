@@ -18,15 +18,16 @@ echo ============================================
 echo.
 
 REM ============================================================
-REM 1. Find a Python interpreter that has streamlit installed
+REM 1. Find a Python interpreter that has dashboard dependencies installed
 REM    (mirrors .command priority order)
 REM ============================================================
 set "PYTHON="
+set "DASHBOARD_IMPORT_CHECK=import streamlit, plotly, numpy, scipy, pandas"
 
 REM Try "python" on PATH
 where python >nul 2>&1
 IF NOT ERRORLEVEL 1 (
-    python -c "import streamlit" >nul 2>&1
+    python -c "%DASHBOARD_IMPORT_CHECK%" >nul 2>&1
     IF NOT ERRORLEVEL 1 set "PYTHON=python"
 )
 
@@ -34,12 +35,12 @@ REM Try "py" launcher (Windows Python Launcher)
 if not defined PYTHON (
     where py >nul 2>&1
     IF NOT ERRORLEVEL 1 (
-        py -3 -c "import streamlit" >nul 2>&1
+        py -3 -c "%DASHBOARD_IMPORT_CHECK%" >nul 2>&1
         IF NOT ERRORLEVEL 1 set "PYTHON=py -3"
     )
 )
 
-REM No Python with streamlit — try to install
+REM No Python with required dashboard packages — try to install
 if not defined PYTHON (
     set "_BASEPY="
 
@@ -60,7 +61,7 @@ if not defined PYTHON (
         exit /b 1
     )
 
-    echo [INFO] streamlit not found. Installing required packages...
+    echo [INFO] Required dashboard packages not found. Installing required packages...
     echo.
     !_BASEPY! -m pip install streamlit plotly numpy scipy pandas
     IF ERRORLEVEL 1 (
@@ -105,8 +106,8 @@ echo.
 REM ============================================================
 REM 4. Check for precomputed result data
 REM ============================================================
-set "CURRENT_STANDARD_DATASET=results\ev_design_full_range_biomimetic_exosome_with_anchors_10000e_summary.csv"
-set "CURRENT_STANDARD_PRECOMPUTE=%PYTHON% -m nodi_simulator.dashboard.precompute --grid ev_design --particle-profile full_range_biomimetic_exosome_with_anchors --tag full_range_biomimetic_exosome_with_anchors_10000e --workers 8 --freeze-probe-report --artifact-profile standard --progress-interval 2 --resume --checkpoint --checkpoint-batch-size 100 --checkpoint-flush-interval 5 --output results/"
+set "CURRENT_STANDARD_DATASET=results\lens_b_fixed660_tau1ms_ev_gold_fullgrid_1000e_seed42_summary.csv"
+set "CURRENT_STANDARD_PRECOMPUTE=%PYTHON% tools\export_lens_b_dashboard_dataset.py"
 
 if exist "%CURRENT_STANDARD_DATASET%" (
     echo [OK] Current standard dataset found: %CURRENT_STANDARD_DATASET%

@@ -238,7 +238,7 @@ def run_ratio_sensitivity(
 def _aggregate_summary(summary: pd.DataFrame) -> pd.DataFrame:
     if summary.empty:
         return pd.DataFrame()
-    grouped = (
+    return (
         summary.groupby(
             [
                 "annulus_window_id",
@@ -260,7 +260,6 @@ def _aggregate_summary(summary: pd.DataFrame) -> pd.DataFrame:
         .reset_index()
         .sort_values(["joint_fit_score_mean", "candidate_id"], ignore_index=True)
     )
-    return grouped
 
 
 def _write_decision(path: Path, *, meta: dict[str, Any], summary: pd.DataFrame) -> None:

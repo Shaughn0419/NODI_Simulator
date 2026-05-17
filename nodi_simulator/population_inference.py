@@ -96,7 +96,7 @@ def _population_bins(diagnostics: Mapping[str, Any]) -> list[str]:
     ):
         value = diagnostics.get(key)
         if isinstance(value, Mapping) and value:
-            return [str(item) for item in value.keys()]
+            return [str(item) for item in value]
         if isinstance(value, Sequence) and not isinstance(value, (str, bytes)) and value:
             return _population_bins_from_sequence(value)
     return []

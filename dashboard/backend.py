@@ -39,14 +39,17 @@ from nodi_simulator.utils import (
 # ============================================================
 
 CURRENT_SCHEMA_VERSION = "1.24"
-CURRENT_STANDARD_DATASET_PREFIX = "ev_design_full_range_biomimetic_exosome_with_anchors_10000e"
+CURRENT_STANDARD_DATASET_PREFIX = "lens_b_fixed660_tau1ms_ev_gold_fullgrid_1000e_seed42"
+LEGACY_STANDARD_DATASET_PREFIX = "ev_design_full_range_biomimetic_exosome_with_anchors_10000e"
 
 _WORKFLOW_DATASET_PRIORITY = (
     CURRENT_STANDARD_DATASET_PREFIX,
+    LEGACY_STANDARD_DATASET_PREFIX,
     "coarse_default",
 )
 _STANDARD_WORKFLOW_PREFIXES = {
     CURRENT_STANDARD_DATASET_PREFIX,
+    LEGACY_STANDARD_DATASET_PREFIX,
 }
 _LEGACY_WORKFLOW_PREFIXES = {
     "coarse_default",
@@ -137,7 +140,7 @@ def _validate_standard_dataset_grid_coverage(
     meta_path: str,
 ) -> None:
     """Reject stale standard result libraries whose grid no longer matches code."""
-    if prefix != CURRENT_STANDARD_DATASET_PREFIX:
+    if prefix != LEGACY_STANDARD_DATASET_PREFIX:
         return
     expected_wavelengths = [
         int(round(float(value) * 1e9))
@@ -442,8 +445,6 @@ def lookup_summary_case_row(
 
 def build_dashboard_data_source(
     session_state: Mapping[str, Any],
-    *,
-    meta: dict | None = None,
 ) -> DashboardDataSource:
     """Build shared live/precomputed source captions for dashboard pages."""
     if session_state.get("using_live_data"):
@@ -507,7 +508,7 @@ def load_metadata(meta_path: str) -> dict:
         raise FileNotFoundError(
             f"{meta_path} not found. Re-run precompute.py."
         )
-    with open(meta_path, "r", encoding="utf-8") as f:
+    with open(meta_path, encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -528,7 +529,7 @@ def load_result_health(
         safe_prefix = _validate_dataset_prefix(prefix)
         health_path = os.path.join(results_dir, f"{safe_prefix}_result_health.json")
         if os.path.exists(health_path):
-            with open(health_path, "r", encoding="utf-8") as f:
+            with open(health_path, encoding="utf-8") as f:
                 report = json.load(f)
             report["_report_source"] = "precomputed_json"
             report["_report_path"] = health_path
@@ -678,11 +679,10 @@ def build_slice_data(
     if fixed_dim == "width":
         sub = sub[sub["width_nm"] == fixed_val].sort_values("depth_nm")
         return sub["depth_nm"].values, sub[value_col].values
-    elif fixed_dim == "depth":
+    if fixed_dim == "depth":
         sub = sub[sub["depth_nm"] == fixed_val].sort_values("width_nm")
         return sub["width_nm"].values, sub[value_col].values
-    else:
-        raise ValueError(f"fixed_dim must be 'width' or 'depth', got {fixed_dim}")
+    raise ValueError(f"fixed_dim must be 'width' or 'depth', got {fixed_dim}")
 
 
 def recompute_scores(

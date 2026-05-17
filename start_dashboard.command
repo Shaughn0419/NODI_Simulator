@@ -15,14 +15,15 @@ echo "  NODI Interferometric Simulator Dashboard"
 echo "============================================"
 echo ""
 
-# --- Find Python with streamlit installed ---
+# --- Find Python with dashboard dependencies installed ---
 # Priority: homebrew python@3.13 > python3 > python
 PYTHON=""
+DASHBOARD_IMPORT_CHECK="import streamlit, plotly, numpy, scipy, pandas"
 
 # Try homebrew python first (most likely to have packages)
 if [ -x "/opt/homebrew/opt/python@3.13/libexec/bin/python" ]; then
     CANDIDATE="/opt/homebrew/opt/python@3.13/libexec/bin/python"
-    if $CANDIDATE -c "import streamlit" 2>/dev/null; then
+    if $CANDIDATE -c "$DASHBOARD_IMPORT_CHECK" 2>/dev/null; then
         PYTHON="$CANDIDATE"
     fi
 fi
@@ -30,7 +31,7 @@ fi
 # Try python3 on PATH
 if [ -z "$PYTHON" ] && command -v python3 &>/dev/null; then
     CANDIDATE="python3"
-    if $CANDIDATE -c "import streamlit" 2>/dev/null; then
+    if $CANDIDATE -c "$DASHBOARD_IMPORT_CHECK" 2>/dev/null; then
         PYTHON="$CANDIDATE"
     fi
 fi
@@ -38,12 +39,12 @@ fi
 # Try python on PATH
 if [ -z "$PYTHON" ] && command -v python &>/dev/null; then
     CANDIDATE="python"
-    if $CANDIDATE -c "import streamlit" 2>/dev/null; then
+    if $CANDIDATE -c "$DASHBOARD_IMPORT_CHECK" 2>/dev/null; then
         PYTHON="$CANDIDATE"
     fi
 fi
 
-# No python with streamlit found — try to install
+# No python with required dashboard packages found — try to install
 if [ -z "$PYTHON" ]; then
     # Pick the best available python
     if [ -x "/opt/homebrew/opt/python@3.13/libexec/bin/python" ]; then
@@ -60,7 +61,7 @@ if [ -z "$PYTHON" ]; then
         exit 1
     fi
 
-    echo "[INFO] Streamlit not found. Installing dependencies..."
+    echo "[INFO] Required dashboard packages not found. Installing dependencies..."
     echo "  Using: $($PYTHON --version 2>&1)"
     echo ""
     $PYTHON -m pip install streamlit plotly numpy scipy pandas
@@ -80,8 +81,8 @@ echo "  Path: $(which $PYTHON 2>/dev/null || echo $PYTHON)"
 export PYTHONPATH="$(pwd):$PYTHONPATH"
 
 # --- Report current dataset status without auto-running legacy precompute ---
-CURRENT_STANDARD_DATASET="results/ev_design_full_range_biomimetic_exosome_with_anchors_10000e_summary.csv"
-CURRENT_STANDARD_PRECOMPUTE_CMD="$PYTHON -m nodi_simulator.dashboard.precompute --grid ev_design --particle-profile full_range_biomimetic_exosome_with_anchors --tag full_range_biomimetic_exosome_with_anchors_10000e --workers 8 --freeze-probe-report --artifact-profile standard --progress-interval 2 --resume --checkpoint --checkpoint-batch-size 100 --checkpoint-flush-interval 5 --output results/"
+CURRENT_STANDARD_DATASET="results/lens_b_fixed660_tau1ms_ev_gold_fullgrid_1000e_seed42_summary.csv"
+CURRENT_STANDARD_PRECOMPUTE_CMD="$PYTHON tools/export_lens_b_dashboard_dataset.py"
 
 echo ""
 if [ -f "$CURRENT_STANDARD_DATASET" ]; then

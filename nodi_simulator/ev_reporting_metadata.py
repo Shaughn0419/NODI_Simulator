@@ -67,7 +67,8 @@ def build_ev_reporting_metadata_diagnostics(
         "final_buffer",
         "orthogonal_size_method",
     )
-    preanalytical_fields = identity_required + (
+    preanalytical_fields = (
+        *identity_required,
         "donor_or_cell_line",
         "storage_temperature_C",
         "freeze_thaw_cycles",
@@ -85,8 +86,8 @@ def build_ev_reporting_metadata_diagnostics(
     misev_completeness = _fraction_present(metadata, preanalytical_fields)
     evtrack_completeness = _fraction_present(
         metadata,
-        preanalytical_fields
-        + (
+        (
+            *preanalytical_fields,
             "culture_medium",
             "serum_depletion_method",
             "collection_time_h",

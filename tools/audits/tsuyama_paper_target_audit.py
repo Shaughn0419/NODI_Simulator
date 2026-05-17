@@ -63,31 +63,43 @@ def _target_record(
     }
 
 
-def _table_s1_material_consistency_residual(material: str, wavelength_nm: int) -> float:
-    interferometric = lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING[material][
-        int(wavelength_nm)
+def _table_s1_gold_column_residual(wavelength_nm: int) -> float:
+    wavelength = int(wavelength_nm)
+    interferometric = lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][
+        wavelength
     ]
-    if material == "gold":
-        sqrt_scattering = float(
-            joint_fit.TABLE_S1_SCATTERING_CROSS_SECTION["gold"][int(wavelength_nm)] ** 0.5
-        )
-    elif material == "silver":
-        sqrt_scattering = float(
-            joint_fit.TABLE_S1_SCATTERING_CROSS_SECTION["silver"][int(wavelength_nm)] ** 0.5
-        )
-    else:
-        raise ValueError(f"Unknown Table S1 material: {material}")
+    sqrt_scattering = float(
+        joint_fit.TABLE_S1_SCATTERING_CROSS_SECTION["gold"][wavelength] ** 0.5
+    )
     return abs(float(interferometric) - sqrt_scattering) / max(sqrt_scattering, 1e-12)
 
 
+def _table_s1_silver_ratio_column_residual(wavelength_nm: int) -> float:
+    wavelength = int(wavelength_nm)
+    silver_interferometric = lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING[
+        "silver"
+    ][wavelength]
+    sqrt_ag_over_au = float(
+        (
+            joint_fit.TABLE_S1_SCATTERING_CROSS_SECTION["silver"][wavelength]
+            / joint_fit.TABLE_S1_SCATTERING_CROSS_SECTION["gold"][wavelength]
+        )
+        ** 0.5
+    )
+    return abs(float(silver_interferometric) - sqrt_ag_over_au) / max(
+        sqrt_ag_over_au,
+        1e-12,
+    )
+
+
 def _table_s1_integrity_status(wavelength_nm: int) -> tuple[str, float]:
-    gold_residual = _table_s1_material_consistency_residual("gold", wavelength_nm)
-    silver_residual = _table_s1_material_consistency_residual("silver", wavelength_nm)
+    gold_residual = _table_s1_gold_column_residual(wavelength_nm)
+    silver_residual = _table_s1_silver_ratio_column_residual(wavelength_nm)
     residual = max(gold_residual, silver_residual)
     status = (
-        "unresolved_table_s1_interferometric_column_inconsistency"
-        if residual > 0.25
-        else "table_s1_interferometric_column_formula_consistent"
+        "table_s1_interferometric_ratio_semantics_needs_review"
+        if residual > 0.08
+        else "table_s1_interferometric_ratio_semantics_resolved"
     )
     return status, residual
 
@@ -99,7 +111,32 @@ def build_target_records() -> list[dict[str, Any]]:
         for target_mode in joint_fit.SIGNAL_RATIO_TARGET_MODES:
             value = joint_fit.table_s1_signal_ratio_target(wavelength_nm, target_mode)
             is_formula_mode = target_mode == "sqrt_scattering_column_ratio"
-            is_strict_mode = target_mode == "interferometric_column_ratio"
+            is_corrected_interferometric_mode = (
+                target_mode == "interferometric_column_ratio"
+            )
+            is_legacy_mode = target_mode == "legacy_interferometric_column_over_gold_ratio"
+            if is_corrected_interferometric_mode:
+                notes = (
+                    "Corrected direct Table S1 Ag40/Au40 target: the silver "
+                    "interferometric column is already ratio-like and must not "
+                    "be divided by the gold interferometric column again."
+                )
+            elif is_formula_mode:
+                notes = (
+                    "Formula-consistent Table S1 Ag40/Au40 target mode; kept as "
+                    "the explicit sqrt(scattering_Ag/scattering_Au) cross-check."
+                )
+            elif is_legacy_mode:
+                notes = (
+                    "Deprecated legacy over-ratio: Ag interferometric column "
+                    "divided by Au interferometric column. Retained only to make "
+                    "earlier double-normalized results auditable."
+                )
+            else:
+                notes = (
+                    "Simulator Mie recomputation using Table S1 fixed n,k; "
+                    "diagnostic cross-check."
+                )
             records.append(
                 _target_record(
                     target_name=f"ag40_to_au40_{target_mode}_{wavelength_nm}",
@@ -112,24 +149,18 @@ def build_target_records() -> list[dict[str, Any]]:
                     value=float(value),
                     band_low=None,
                     band_high=None,
-                    confidence="direct" if not target_mode.startswith("recomputed") else "inferred",
-                    usable_for_hard_acceptance=bool(is_formula_mode),
-                    target_integrity_status=integrity_status,
-                    recommended_signal_ratio_target_mode="sqrt_scattering_column_ratio",
-                    table_s1_interferometric_consistency_residual=consistency_residual,
-                    notes=(
-                        "Formula-consistent Table S1 Ag40/Au40 target mode."
-                        if is_formula_mode
-                        else (
-                            "Strict legacy Table S1 interferometric-column ratio. "
-                            "Retained for audit, but not the sole hard target because "
-                            "the Ag interferometric column is inconsistent with the "
-                            "paper text that interferometric scattering follows the "
-                            "square root of scattering."
-                            if is_strict_mode
-                            else "Simulator Mie recomputation using Table S1 fixed n,k; diagnostic cross-check."
-                        )
+                    confidence=(
+                        "inferred"
+                        if target_mode.startswith("recomputed")
+                        else "direct"
                     ),
+                    usable_for_hard_acceptance=bool(
+                        is_corrected_interferometric_mode or is_formula_mode
+                    ),
+                    target_integrity_status=integrity_status,
+                    recommended_signal_ratio_target_mode="interferometric_column_ratio",
+                    table_s1_interferometric_consistency_residual=consistency_residual,
+                    notes=notes,
                 )
             )
 

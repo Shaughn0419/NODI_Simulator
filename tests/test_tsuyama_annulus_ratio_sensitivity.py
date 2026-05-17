@@ -38,7 +38,7 @@ def test_candidate_with_annulus_window_adds_traceable_cfg_overrides():
 
 
 def test_run_ratio_sensitivity_writes_meta_and_decision(monkeypatch, tmp_path):
-    def fake_sweep(candidate, **kwargs):
+    def fake_sweep(candidate, **_kwargs):
         return pd.DataFrame(
             [
                 {
@@ -54,7 +54,7 @@ def test_run_ratio_sensitivity_writes_meta_and_decision(monkeypatch, tmp_path):
             ]
         )
 
-    def fake_summary(rows, candidate, **kwargs):
+    def fake_summary(_rows, candidate, **_kwargs):
         edge_min = float(candidate.cfg_overrides["selected_annulus_edge_norm_min"])
         return {
             "candidate_id": candidate.candidate_id,

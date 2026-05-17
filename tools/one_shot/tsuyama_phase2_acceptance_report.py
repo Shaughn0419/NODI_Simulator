@@ -119,6 +119,44 @@ def _bounded_log_ratio(value: float, target: float) -> float:
     return float("nan")
 
 
+def _table_s1_target_for_row(
+    row: pd.Series,
+    target_mode: str,
+    wavelength_nm: int,
+) -> float:
+    canonical = joint_fit.table_s1_signal_ratio_target(wavelength_nm, target_mode)
+    target = _safe_float(
+        row.get(f"ag40_to_au40_target_ratio_{target_mode}_{wavelength_nm}")
+    )
+    if not np.isfinite(target) or target <= 0:
+        return canonical
+    if target_mode == "interferometric_column_ratio":
+        legacy = joint_fit.table_s1_signal_ratio_target(
+            wavelength_nm,
+            "legacy_interferometric_column_over_gold_ratio",
+        )
+        if math.isclose(float(target), legacy, rel_tol=1e-9, abs_tol=1e-12):
+            return canonical
+    return float(target)
+
+
+def _default_signal_target_for_row(row: pd.Series, wavelength_nm: int) -> float:
+    canonical = joint_fit.table_s1_signal_ratio_target(
+        wavelength_nm,
+        joint_fit.DEFAULT_SIGNAL_RATIO_TARGET_MODE,
+    )
+    target = _safe_float(row.get(f"ag40_to_au40_target_ratio_{wavelength_nm}"))
+    if not np.isfinite(target) or target <= 0:
+        return canonical
+    legacy = joint_fit.table_s1_signal_ratio_target(
+        wavelength_nm,
+        "legacy_interferometric_column_over_gold_ratio",
+    )
+    if math.isclose(float(target), legacy, rel_tol=1e-9, abs_tol=1e-12):
+        return canonical
+    return float(target)
+
+
 def _numeric_column(frame: pd.DataFrame, column: str, default: float = float("nan")) -> pd.Series:
     if column in frame.columns:
         return pd.to_numeric(frame[column], errors="coerce")
@@ -251,22 +289,16 @@ def _primary_paper_reproduction_fields(
 
 
 def _row_signal_score(row: pd.Series, target_mode: str) -> float:
-    score_column = f"raw_signal_ratio_score_{target_mode}"
-    score = _safe_float(row.get(score_column))
-    if np.isfinite(score):
-        return score
     penalties: list[float] = []
     for wavelength_nm in joint_fit.JOINT_WAVELENGTHS_NM:
         observed = _safe_float(row.get(f"ag40_to_au40_peak_ratio_{wavelength_nm}"))
-        target = _safe_float(
-            row.get(f"ag40_to_au40_target_ratio_{target_mode}_{wavelength_nm}")
-        )
-        if not np.isfinite(target) or target <= 0:
-            target = joint_fit.table_s1_signal_ratio_target(wavelength_nm, target_mode)
+        target = _table_s1_target_for_row(row, target_mode, wavelength_nm)
         residual = _bounded_log_ratio(observed, target)
         if np.isfinite(residual):
             penalties.append(float(residual**2))
-    return float(np.mean(penalties)) if penalties else float("nan")
+    if penalties:
+        return float(np.mean(penalties))
+    return _safe_float(row.get(f"raw_signal_ratio_score_{target_mode}"))
 
 
 def _row_signal_score_with_exponent(
@@ -279,11 +311,7 @@ def _row_signal_score_with_exponent(
     penalties: list[float] = []
     for wavelength_nm in joint_fit.JOINT_WAVELENGTHS_NM:
         observed = _safe_float(row.get(f"ag40_to_au40_peak_ratio_{wavelength_nm}"))
-        target = _safe_float(
-            row.get(f"ag40_to_au40_target_ratio_{target_mode}_{wavelength_nm}")
-        )
-        if not np.isfinite(target) or target <= 0:
-            target = joint_fit.table_s1_signal_ratio_target(wavelength_nm, target_mode)
+        target = _table_s1_target_for_row(row, target_mode, wavelength_nm)
         if np.isfinite(observed) and observed > 0 and np.isfinite(target) and target > 0:
             compressed_observed = float(observed**exponent)
             penalties.append(float(math.log(compressed_observed / target) ** 2))
@@ -572,17 +600,11 @@ def _strict_signal_transfer_upper_metrics(row: pd.Series) -> dict[str, Any]:
     guardrail_penalty = 0.0
     for wavelength_nm in joint_fit.JOINT_WAVELENGTHS_NM:
         observed = _safe_float(row.get(f"ag40_to_au40_peak_ratio_{wavelength_nm}"))
-        target = _safe_float(
-            row.get(
-                "ag40_to_au40_target_ratio_interferometric_column_ratio_"
-                f"{wavelength_nm}"
-            )
+        target = _table_s1_target_for_row(
+            row,
+            "interferometric_column_ratio",
+            wavelength_nm,
         )
-        if not np.isfinite(target) or target <= 0:
-            target = joint_fit.table_s1_signal_ratio_target(
-                wavelength_nm,
-                "interferometric_column_ratio",
-            )
         if not (
             np.isfinite(observed)
             and observed > 0
@@ -1084,10 +1106,10 @@ def _paper_reproduction_metrics_for_row(row: pd.Series) -> dict[str, Any]:
         ),
         "paper_reproduction_status_response_compression": status_response_compression,
         "paper_reproduction_reviewed_score_interpretation": (
-            "descriptive_rescore_only_strict_table_s1_reported_not_scored"
+            "descriptive_rescore_only_corrected_table_s1_reported_not_scored"
         ),
         "paper_reproduction_maximal_upper_score_interpretation": (
-            "strict_table_s1_upper_bound_with_hypothetical_per_wavelength_ag_transfer"
+            "corrected_table_s1_upper_bound_with_hypothetical_per_wavelength_ag_transfer"
         ),
         "paper_reproduction_response_compression_score_interpretation": (
             "single_global_pulse_height_readout_compression_reproduction_only"
@@ -1339,7 +1361,7 @@ def _aggregate_candidate_group(group: pd.DataFrame) -> dict[str, Any]:
                 out[column] = float(numeric.max())
             elif column == "random_seed":
                 out[column] = "seed_median"
-            elif column.endswith("_count") or column.endswith("_rows"):
+            elif column.endswith(("_count", "_rows")):
                 out[column] = int(numeric.max())
             else:
                 out[column] = float(numeric.median())
@@ -1490,16 +1512,17 @@ def raw_family_alignment_status(joint_summary: pd.DataFrame) -> dict[str, Any]:
         penalties: list[float] = []
         for wavelength_nm in joint_fit.JOINT_WAVELENGTHS_NM:
             observed = _safe_float(row.get(f"ag40_to_au40_peak_ratio_{wavelength_nm}"))
-            target = _safe_float(
-                row.get(f"ag40_to_au40_target_ratio_{target_mode}_{wavelength_nm}")
-            )
-            if not np.isfinite(target) or target <= 0:
-                target = joint_fit.table_s1_signal_ratio_target(wavelength_nm, target_mode)
+            target = _table_s1_target_for_row(row, target_mode, wavelength_nm)
             if np.isfinite(observed) and observed > 0 and np.isfinite(target) and target > 0:
                 penalties.append(float(math.log(observed / target) ** 2))
-        return float(np.mean(penalties)) if penalties else float("nan")
+        if penalties:
+            return float(np.mean(penalties))
+        return _safe_float(row.get(f"raw_signal_ratio_score_{target_mode}"))
 
-    strict_signal_score = _numeric_column(raw, "signal_ratio_score")
+    strict_signal_score = raw.apply(
+        lambda row: row_signal_score(row, "interferometric_column_ratio"),
+        axis=1,
+    )
     formula_signal_score = raw.apply(
         lambda row: row_signal_score(row, "sqrt_scattering_column_ratio"),
         axis=1,
@@ -1627,7 +1650,7 @@ def detection_band_status(best: pd.Series) -> dict[str, Any]:
         }
 
     rows: list[dict[str, Any]] = []
-    for diameter_nm, target in joint_fit.DETECTION_RATE_TARGETS.items():
+    for diameter_nm, _target in joint_fit.DETECTION_RATE_TARGETS.items():
         row = diameter_row(diameter_nm)
         median_label = str(row["median_band_label"])
         if diameter_nm == 20:
@@ -1664,8 +1687,7 @@ def detection_band_status(best: pd.Series) -> dict[str, Any]:
         else:
             hard_fail = (
                 row["case_total"] == 0
-                or median_label.startswith("severe")
-                or median_label.startswith("minor")
+                or median_label.startswith(("severe", "minor"))
                 or int(row["severe_miss_count"]) >= 2
             )
             warning = (
@@ -1774,7 +1796,7 @@ def signal_ratio_status(best: pd.Series) -> dict[str, Any]:
     pass_all = True
     for wavelength_nm in joint_fit.JOINT_WAVELENGTHS_NM:
         observed = _safe_float(best.get(f"ag40_to_au40_calibrated_peak_ratio_{wavelength_nm}"))
-        target = _safe_float(best.get(f"ag40_to_au40_target_ratio_{wavelength_nm}"))
+        target = _default_signal_target_for_row(best, wavelength_nm)
         residual = (
             abs(math.log(observed / target))
             if np.isfinite(observed) and observed > 0 and np.isfinite(target) and target > 0
@@ -1795,11 +1817,7 @@ def signal_ratio_status(best: pd.Series) -> dict[str, Any]:
         penalties: list[float] = []
         for wavelength_nm in joint_fit.JOINT_WAVELENGTHS_NM:
             raw_observed = _safe_float(best.get(f"ag40_to_au40_peak_ratio_{wavelength_nm}"))
-            target = _safe_float(
-                best.get(f"ag40_to_au40_target_ratio_{target_mode}_{wavelength_nm}")
-            )
-            if not np.isfinite(target) or target <= 0:
-                target = joint_fit.table_s1_signal_ratio_target(wavelength_nm, target_mode)
+            target = _table_s1_target_for_row(best, target_mode, wavelength_nm)
             if (
                 np.isfinite(raw_observed)
                 and raw_observed > 0
@@ -2070,7 +2088,7 @@ def build_acceptance_report(
             no_go_reasons.append("raw_signal_ratio_alignment_not_met")
         elif raw_signal_status == "pass_formula_consistent_table_s1_target_only":
             diagnostic_warnings.append(
-                "strict_table_s1_signal_unresolved_formula_signal_pass"
+                "interferometric_column_signal_unresolved_formula_signal_pass"
             )
         if raw_size_status != "pass":
             no_go_reasons.append("raw_size_response_alignment_not_met")
@@ -2090,17 +2108,17 @@ def build_acceptance_report(
         _status_row("detection_alignment", detection["detection_alignment_status"], json.dumps(detection["rows"], ensure_ascii=False), "Au20 low misses warn; Au20 over-detection and Au30-60 gate remain blockers"),
         _status_row("au20_detection_status", detection["au20_detection_status"], "", "Au20 lower-bound misses are warning-only; over-detection remains hard"),
         _status_row("au30_60_detection_status", detection["au30_60_detection_status"], "", "Au30/Au40/Au60 practical selected-annulus sanity gate"),
-        _status_row("strict_interferometric_column_signal_ratio_pass", signal["strict_status"], signal["strict_score"], "raw Ag40/Au40 ratio against strict Table S1 interferometric-column target"),
+        _status_row("strict_interferometric_column_signal_ratio_pass", signal["strict_status"], signal["strict_score"], "raw Ag40/Au40 ratio against corrected direct Table S1 silver interferometric-column Ag/Au target"),
         _status_row("formula_consistent_signal_ratio_pass", signal["formula_status"], signal["formula_score"], "raw Ag40/Au40 ratio against sqrt-scattering Table S1 target"),
         _status_row("recomputed_mie_signal_ratio_pass", signal["recomputed_mie_status"], signal["recomputed_mie_score"], "raw Ag40/Au40 ratio against simulator recomputed Mie sqrt-Csca target"),
-        _status_row("calibrated_or_strict_signal_ratio_pass", signal["status"], signal["score"], "legacy calibrated/strict Ag40/Au40 residual"),
+        _status_row("calibrated_or_strict_signal_ratio_pass", signal["status"], signal["score"], "calibrated Ag40/Au40 residual against corrected default Table S1 target"),
         _status_row("size_exponent_pass", size_snr["size_status"], size_snr["calibrated_size_exponent"], "calibrated Au size exponent"),
         _status_row("snr_ratio_pass", size_snr["snr_status"], size_snr["snr_ratio"], "Au30/Au20 SNR ratio"),
         _status_row("classification_diagnostic", classification["status"], classification.get("svm_accuracy_claim_level"), classification["notes"]),
         _status_row("acceptance_aggregation", aggregation_info["acceptance_aggregation_mode"], json.dumps(aggregation_info, ensure_ascii=False), "candidate signing uses seed-median rows when seeds are available"),
         _status_row("inverse_context", inverse_context["status"], json.dumps(inverse_context, ensure_ascii=False), "family-ladder / seed context for final signing"),
         _status_row("raw_family_alignment", raw_alignment["status"], json.dumps(raw_alignment, ensure_ascii=False), "raw/non-transfer family shadow check"),
-        _status_row("raw_signal_ratio_alignment", raw_signal_status, raw_alignment.get("best_raw_strict_signal_ratio_score"), "strict and formula-consistent Table S1 target modes are reported separately"),
+        _status_row("raw_signal_ratio_alignment", raw_signal_status, raw_alignment.get("best_raw_strict_signal_ratio_score"), "corrected interferometric-column and sqrt-scattering Table S1 target modes are reported separately"),
         _status_row("raw_size_response_alignment", raw_size_status, raw_alignment.get("best_raw_size_exponent_score"), "raw Au size-response must align before local fit can be signed"),
         _status_row("local_fit_interpretability", local_fit_status, best_uses_local_fit, "E-family transfer/size correction remains diagnostic unless raw family supports it"),
         _status_row("paper_reproduction_status", best.get("paper_reproduction_status"), best.get("paper_reproduction_score_formula"), "paper reproduction fit only; not physical calibration"),
@@ -2110,8 +2128,8 @@ def build_acceptance_report(
         _status_row("paper_reproduction_snr_scale", "info", best.get("paper_reproduction_fitted_global_snr_scale"), "single global SNR scale to paper Au20/Au30 anchors"),
         _status_row("paper_reproduction_snr_response_status", best.get("paper_reproduction_status_snr_response"), best.get("paper_reproduction_score_formula_snr_response"), "single global SNR response exponent plus scale"),
         _status_row("paper_reproduction_snr_response_exponent", best.get("paper_reproduction_snr_response_status"), best.get("paper_reproduction_snr_response_exponent"), "global readout/SNR exponent used only for reproduction rescore"),
-        _status_row("paper_reproduction_reviewed_status", best.get("paper_reproduction_status_reviewed"), best.get("paper_reproduction_score_reviewed_snr_response"), "descriptive reviewed score; strict Table S1 is report-only and release status is unchanged"),
-        _status_row("paper_reproduction_maximal_upper_status", best.get("paper_reproduction_status_maximal_upper"), best.get("paper_reproduction_score_maximal_upper"), "maximal upper-bound score with hypothetical strict Table S1 Ag transfer; not calibration"),
+        _status_row("paper_reproduction_reviewed_status", best.get("paper_reproduction_status_reviewed"), best.get("paper_reproduction_score_reviewed_snr_response"), "descriptive reviewed score; corrected Table S1 residual is report-only and release status is unchanged"),
+        _status_row("paper_reproduction_maximal_upper_status", best.get("paper_reproduction_status_maximal_upper"), best.get("paper_reproduction_score_maximal_upper"), "maximal upper-bound score with hypothetical corrected Table S1 Ag transfer; not calibration"),
         _status_row("paper_reproduction_response_compression_status", best.get("paper_reproduction_status_response_compression"), best.get("paper_reproduction_score_response_compression"), "single global pulse-height/readout compression; descriptive reproduction-only lens"),
         _status_row("paper_reproduction_response_compression_gamma", best.get("paper_reproduction_response_compression_gamma_status"), best.get("paper_reproduction_applied_response_compression_gamma"), "global gamma shared across wavelength, geometry, and diameter"),
         _status_row(
@@ -2125,7 +2143,7 @@ def build_acceptance_report(
             "status/score for the selected paper reproduction score mode",
         ),
         _status_row("paper_reproduction_strict_upper_ag_transfer_gain_range", best.get("paper_reproduction_strict_upper_ag_transfer_status"), json.dumps({"min": best.get("paper_reproduction_strict_upper_ag_transfer_gain_min"), "max": best.get("paper_reproduction_strict_upper_ag_transfer_gain_max")}), "hypothetical per-wavelength Ag transfer range used only for upper-bound scoring"),
-        _status_row("paper_reproduction_score_strict_upper", "info", best.get("paper_reproduction_score_strict_upper"), "strict Table S1 upper-bound reproduction score"),
+        _status_row("paper_reproduction_score_strict_upper", "info", best.get("paper_reproduction_score_strict_upper"), "corrected Table S1 upper-bound reproduction score"),
         _status_row("diagnostic_warnings", "info", json.dumps(diagnostic_warnings), "diagnostic warnings do not by themselves block release"),
         _status_row("no_go_status", "pass" if not no_go_reasons else "stop", json.dumps(no_go_reasons), "stop means publish diagnostic/negative result only"),
     ]

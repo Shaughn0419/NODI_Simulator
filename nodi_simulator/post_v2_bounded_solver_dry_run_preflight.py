@@ -502,9 +502,7 @@ def build_artifact_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]
         "route_promotion_authorized": False,
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
-        "claim_boundary": {
-            key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS
-        }
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "bounded_solver_dry_run_preflight_only"},
     }
 

@@ -175,7 +175,7 @@ P18_TEXT_PATHS: tuple[str, ...] = (
 
 
 def _guard_payload() -> dict[str, bool]:
-    return {key: False for key in FALSE_FIELDS} | {key: True for key in TRUE_FIELDS}
+    return dict.fromkeys(FALSE_FIELDS, False) | dict.fromkeys(TRUE_FIELDS, True)
 
 
 def _require_false(mapping: dict[str, Any], keys: tuple[str, ...], context: str) -> None:
@@ -344,19 +344,18 @@ def write_rank_summary_csv(project_root: Path = PROJECT_ROOT) -> Path:
 def _read_rank_summary_csv(path: Path) -> list[dict[str, Any]]:
     with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    parsed: list[dict[str, Any]] = []
-    for row in rows:
-        parsed.append(
-            {
-                **row,
-                "rank": int(row["rank"]),
-                "rank_percentile": float(row["rank_percentile"]),
-                "previous_lane_rank_delta": (
-                    "" if row["previous_lane_rank_delta"] == "" else int(row["previous_lane_rank_delta"])
-                ),
-                **{key: row[key] == "True" for key in (*FALSE_FIELDS, *TRUE_FIELDS) if key in row},
-            }
-        )
+    parsed: list[dict[str, Any]] = [
+        {
+            **row,
+            "rank": int(row["rank"]),
+            "rank_percentile": float(row["rank_percentile"]),
+            "previous_lane_rank_delta": (
+                "" if row["previous_lane_rank_delta"] == "" else int(row["previous_lane_rank_delta"])
+            ),
+            **{key: row[key] == "True" for key in (*FALSE_FIELDS, *TRUE_FIELDS) if key in row},
+        }
+        for row in rows
+    ]
     return validate_rank_summary_rows(parsed)
 
 
@@ -396,7 +395,7 @@ def build_synthesis_record(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
         "stop_continue_decision": P18_DECISION,
         "next_required_stage": P18_NEXT_STAGE,
         "blocked_future_authorization_phrase": P18_BLOCKED_FUTURE_PHRASE,
-        "claim_boundary": {key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS}
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "bounded_lane_synthesis_stop_continue_only"},
         **_guard_payload(),
     }
@@ -439,7 +438,7 @@ def build_artifact_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
         "source_bindings": _source_binding_manifest(project_root),
-        "claim_boundary": {key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS}
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "bounded_lane_synthesis_stop_continue_only"},
         "stop_continue_decision": P18_DECISION,
         "next_required_stage": P18_NEXT_STAGE,

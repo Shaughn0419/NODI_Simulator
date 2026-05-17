@@ -93,7 +93,7 @@
       "roughness_leakage_simulation_authorized": false,
       "route_promotion_authorized": false,
       "second_bounded_solver_lane_execution_authorized": true,
-      "sha256": "07574633233dc370d0a95bf385f56c4c15e188e9ad41fc5e17f75a83698e868e",
+      "sha256": "c363ca5ab7df4da89f1be696590b368594b3cb82814fb26a998f20a23fc15586",
       "solver_native_raw_magnitude_final_gate_allowed": false,
       "solver_output_generated": true,
       "status": "generated_manifest",

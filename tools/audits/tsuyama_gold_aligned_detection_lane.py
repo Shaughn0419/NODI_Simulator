@@ -71,6 +71,11 @@ CANDIDATE_CASE_TRIPLES: tuple[tuple[int, int, int], ...] = (
     (660, 900, 1400),
     (660, 900, 1500),
 )
+RECOMMENDATION_ELIGIBLE_WAVELENGTHS_NM = (404, 660)
+CONTROL_ONLY_WAVELENGTHS_NM = (488, 532)
+RECOMMENDATION_WAVELENGTH_RULE = (
+    "recommendation_conclusion_only_404_660__488_532_control_only"
+)
 WEAK_REFERENCE_CONTROL: tuple[int, int, int] = (660, 700, 1500)
 TSUYAMA_2022_NODI_PAPER_GEOMETRY: tuple[tuple[int, int, int], ...] = (
     (488, 800, 550),
@@ -838,12 +843,11 @@ def _final_gold_scenario_ids(output_dir: Path, candidates: list[str]) -> list[st
     blank_pass = set(
         final_blank.loc[final_blank["blank_gate_pass"].astype(bool), "scenario_config_id"].astype(str)
     )
-    selected = [
+    return [
         sid
         for sid in candidates
         if bool(smoke_status.get(sid, {}).get("gold_anchor_pass", False)) and sid in blank_pass
     ]
-    return selected
 
 
 def run_synthetic_blank(
@@ -1169,6 +1173,11 @@ COMPARISON_OUTPUT_COLUMNS = (
     "selected_annulus_lens_available",
     "selected_annulus_lens_status",
     "selected_annulus_top3_routes",
+    "recommendation_wavelength_rule",
+    "new_recommendation_top3_routes",
+    "selected_annulus_recommendation_top3_routes",
+    "selected_annulus_control_only_top3_routes",
+    "selected_annulus_top3_contains_control_only",
     "top3_changed",
     "selected_annulus_top3_changed_vs_all_crossing",
     "current_532_600x1500_rank",
@@ -1466,10 +1475,14 @@ def _rank_ev_routes(
 
 def _is_ev_numeric_diagnostic_column(column: str) -> bool:
     return (
-        column.startswith("selected_detector_mode_")
-        or column.startswith("weighted_selected_detector_mode_")
+        column.startswith(
+            (
+                "selected_detector_mode_",
+                "weighted_selected_detector_mode_",
+                "ranking_within_scenario",
+            )
+        )
         or column == "all_crossing_detection_rate"
-        or column.startswith("ranking_within_scenario")
     )
 
 
@@ -1512,10 +1525,7 @@ def compare_ranking_frames(ev: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
         )
         if column not in ev.columns
     ]
-    ev = _ensure_ev_comparison_lens_columns(
-        ev,
-        selected_annulus_missing_columns=selected_annulus_missing_columns,
-    )
+    ev = _ensure_ev_comparison_lens_columns(ev)
     new_routes = (
         ev.groupby(["scenario_config_id", "EV_size_distribution_profile", *route_cols], dropna=False)
         .agg(
@@ -1549,12 +1559,10 @@ def compare_ranking_frames(ev: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
             new_top3 = _top_route_set(
                 new_sub,
                 ["weighted_stable_detection_rate", "weighted_detection_rate"],
-                route_cols,
             )
             old_top3 = _top_route_set(
                 old_sub,
                 ["weighted_stable_per_10000", "weighted_detected_per_10000"],
-                route_cols,
             )
             selected_annulus_top3 = (
                 _top_route_set(
@@ -1563,7 +1571,41 @@ def compare_ranking_frames(ev: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
                         "weighted_selected_detector_mode_annulus_detection_rate",
                         "weighted_stable_detection_rate",
                     ],
-                    route_cols,
+                )
+                if selected_annulus_available
+                else set()
+            )
+            new_recommendation_top3 = _top_route_set(
+                _route_subset_by_wavelength(
+                    new_sub,
+                    RECOMMENDATION_ELIGIBLE_WAVELENGTHS_NM,
+                ),
+                ["weighted_stable_detection_rate", "weighted_detection_rate"],
+            )
+            selected_annulus_recommendation_top3 = (
+                _top_route_set(
+                    _route_subset_by_wavelength(
+                        selected_annulus_sub,
+                        RECOMMENDATION_ELIGIBLE_WAVELENGTHS_NM,
+                    ),
+                    [
+                        "weighted_selected_detector_mode_annulus_detection_rate",
+                        "weighted_stable_detection_rate",
+                    ],
+                )
+                if selected_annulus_available
+                else set()
+            )
+            selected_annulus_control_only_top3 = (
+                _top_route_set(
+                    _route_subset_by_wavelength(
+                        selected_annulus_sub,
+                        CONTROL_ONLY_WAVELENGTHS_NM,
+                    ),
+                    [
+                        "weighted_selected_detector_mode_annulus_detection_rate",
+                        "weighted_stable_detection_rate",
+                    ],
                 )
                 if selected_annulus_available
                 else set()
@@ -1624,6 +1666,22 @@ def compare_ranking_frames(ev: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
                     "selected_annulus_top3_routes": json.dumps(
                         sorted(selected_annulus_top3)
                     ),
+                    "recommendation_wavelength_rule": RECOMMENDATION_WAVELENGTH_RULE,
+                    "new_recommendation_top3_routes": json.dumps(
+                        sorted(new_recommendation_top3)
+                    ),
+                    "selected_annulus_recommendation_top3_routes": json.dumps(
+                        sorted(selected_annulus_recommendation_top3)
+                    ),
+                    "selected_annulus_control_only_top3_routes": json.dumps(
+                        sorted(selected_annulus_control_only_top3)
+                    ),
+                    "selected_annulus_top3_contains_control_only": bool(
+                        any(
+                            route[0] in CONTROL_ONLY_WAVELENGTHS_NM
+                            for route in selected_annulus_top3
+                        )
+                    ),
                     "top3_changed": old_top3 != new_top3,
                     "selected_annulus_top3_changed_vs_all_crossing": (
                         selected_annulus_available
@@ -1651,8 +1709,6 @@ def compare_ranking_frames(ev: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
 
 def _ensure_ev_comparison_lens_columns(
     ev: pd.DataFrame,
-    *,
-    selected_annulus_missing_columns: list[str],
 ) -> pd.DataFrame:
     out = ev.copy()
     defaults = {
@@ -1718,7 +1774,7 @@ def _max_or_none(values: pd.Series) -> float | None:
     return None
 
 
-def _top_route_set(df: pd.DataFrame, sort_cols: list[str], route_cols: list[str]) -> set[tuple[int, int, int]]:
+def _top_route_set(df: pd.DataFrame, sort_cols: list[str]) -> set[tuple[int, int, int]]:
     if df.empty or any(col not in df for col in sort_cols):
         return set()
     ranked = df.sort_values(sort_cols, ascending=False).head(3)
@@ -1726,6 +1782,16 @@ def _top_route_set(df: pd.DataFrame, sort_cols: list[str], route_cols: list[str]
         (int(row.wavelength_nm), int(row.width_nm), int(row.depth_nm))
         for row in ranked.itertuples(index=False)
     }
+
+
+def _route_subset_by_wavelength(
+    df: pd.DataFrame,
+    wavelengths_nm: tuple[int, ...],
+) -> pd.DataFrame:
+    if df.empty or "wavelength_nm" not in df:
+        return df.iloc[0:0].copy()
+    wavelength = pd.to_numeric(df["wavelength_nm"], errors="coerce")
+    return df[wavelength.isin(wavelengths_nm)].copy()
 
 
 def _route_rank(df: pd.DataFrame, *, route: tuple[int, int, int], sort_cols: list[str]) -> int | None:
@@ -1854,14 +1920,16 @@ def run_write_report(output_dir: Path) -> None:
         "",
     ]
     if feasible_summary:
-        for row in feasible_summary:
-            lines.append(
+        lines.extend(
+            (
                 "- "
                 f"{row.get('scenario_config_id')}: "
                 f"scenario_config_feasible={row.get('scenario_config_feasible')}, "
                 f"feasible_case_count={row.get('feasible_case_count')}, "
                 f"paired_diag_pass={row.get('paired_diag_pass')}"
             )
+            for row in feasible_summary
+        )
     else:
         lines.append("- missing or empty feasible scenario summary")
     lines.extend(

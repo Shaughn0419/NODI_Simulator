@@ -223,7 +223,7 @@ def _require_true(mapping: dict[str, Any], keys: tuple[str, ...], context: str) 
 
 
 def _guard_payload() -> dict[str, bool]:
-    return {key: False for key in FALSE_FIELDS} | {key: True for key in TRUE_FIELDS}
+    return dict.fromkeys(FALSE_FIELDS, False) | dict.fromkeys(TRUE_FIELDS, True)
 
 
 def _validate_guard_fields(mapping: dict[str, Any], context: str) -> None:
@@ -306,40 +306,38 @@ def validate_execution_registry(registry: dict[str, Any]) -> dict[str, Any]:
 def _read_p14_solver_output_csv(path: Path) -> list[dict[str, Any]]:
     with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    parsed = []
-    for row in rows:
-        parsed.append(
-            {
-                **row,
-                "wavelength_nm": int(row["wavelength_nm"]),
-                "width_nm": int(row["width_nm"]),
-                "depth_nm": int(row["depth_nm"]),
-                "dimensionless_width_over_wavelength": float(row["dimensionless_width_over_wavelength"]),
-                "dimensionless_depth_over_wavelength": float(row["dimensionless_depth_over_wavelength"]),
-                "p12_fourth_lane_response_rank": int(row["p12_fourth_lane_response_rank"]),
-                "solver_native_phase_residual_trace_only": float(
-                    row["solver_native_phase_residual_trace_only"]
-                ),
-                "solver_native_curvature_residual_trace_only": float(
-                    row["solver_native_curvature_residual_trace_only"]
-                ),
-                "solver_native_fifth_lane_response_trace_only": float(
-                    row["solver_native_fifth_lane_response_trace_only"]
-                ),
-                "fifth_lane_response_rank": int(row["fifth_lane_response_rank"]),
-                "fifth_lane_response_rank_percentile": float(row["fifth_lane_response_rank_percentile"]),
-                "fifth_lane_vs_p12_rank_delta": int(row["fifth_lane_vs_p12_rank_delta"]),
-                **{
-                    key: row[key] == "True"
-                    for key in row
-                    if key.endswith("_authorized")
-                    or key.endswith("_allowed")
-                    or key.endswith("_generated")
-                    or key.endswith("_preserved")
-                    or key == "p0_release_conclusion_changed"
-                },
-            }
-        )
+    parsed = [
+        {
+            **row,
+            "wavelength_nm": int(row["wavelength_nm"]),
+            "width_nm": int(row["width_nm"]),
+            "depth_nm": int(row["depth_nm"]),
+            "dimensionless_width_over_wavelength": float(row["dimensionless_width_over_wavelength"]),
+            "dimensionless_depth_over_wavelength": float(row["dimensionless_depth_over_wavelength"]),
+            "p12_fourth_lane_response_rank": int(row["p12_fourth_lane_response_rank"]),
+            "solver_native_phase_residual_trace_only": float(
+                row["solver_native_phase_residual_trace_only"]
+            ),
+            "solver_native_curvature_residual_trace_only": float(
+                row["solver_native_curvature_residual_trace_only"]
+            ),
+            "solver_native_fifth_lane_response_trace_only": float(
+                row["solver_native_fifth_lane_response_trace_only"]
+            ),
+            "fifth_lane_response_rank": int(row["fifth_lane_response_rank"]),
+            "fifth_lane_response_rank_percentile": float(row["fifth_lane_response_rank_percentile"]),
+            "fifth_lane_vs_p12_rank_delta": int(row["fifth_lane_vs_p12_rank_delta"]),
+            **{
+                key: row[key] == "True"
+                for key in row
+                if key.endswith(
+                    ("_authorized", "_allowed", "_generated", "_preserved")
+                )
+                or key == "p0_release_conclusion_changed"
+            },
+        }
+        for row in rows
+    ]
     return validate_p14_solver_rows(parsed)
 
 
@@ -443,27 +441,25 @@ def write_solver_output_csv(project_root: Path = PROJECT_ROOT) -> Path:
 def _read_solver_output_csv(path: Path) -> list[dict[str, Any]]:
     with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    parsed = []
-    for row in rows:
-        parsed.append(
-            {
-                **row,
-                "wavelength_nm": int(row["wavelength_nm"]),
-                "width_nm": int(row["width_nm"]),
-                "depth_nm": int(row["depth_nm"]),
-                "dimensionless_width_over_wavelength": float(row["dimensionless_width_over_wavelength"]),
-                "dimensionless_depth_over_wavelength": float(row["dimensionless_depth_over_wavelength"]),
-                "p14_fifth_lane_response_rank": int(row["p14_fifth_lane_response_rank"]),
-                "solver_native_phase_residual_trace_only": float(row["solver_native_phase_residual_trace_only"]),
-                "solver_native_curvature_residual_trace_only": float(row["solver_native_curvature_residual_trace_only"]),
-                "solver_native_sixth_lane_response_trace_only": float(row["solver_native_sixth_lane_response_trace_only"]),
-                "sixth_lane_response_rank": int(row["sixth_lane_response_rank"]),
-                "sixth_lane_response_rank_percentile": float(row["sixth_lane_response_rank_percentile"]),
-                "sixth_lane_vs_p14_rank_delta": int(row["sixth_lane_vs_p14_rank_delta"]),
-                **{key: row[key] == "True" for key in (*FALSE_FIELDS, *TRUE_FIELDS) if key in row},
-            }
-        )
-    return parsed
+    return [
+        {
+            **row,
+            "wavelength_nm": int(row["wavelength_nm"]),
+            "width_nm": int(row["width_nm"]),
+            "depth_nm": int(row["depth_nm"]),
+            "dimensionless_width_over_wavelength": float(row["dimensionless_width_over_wavelength"]),
+            "dimensionless_depth_over_wavelength": float(row["dimensionless_depth_over_wavelength"]),
+            "p14_fifth_lane_response_rank": int(row["p14_fifth_lane_response_rank"]),
+            "solver_native_phase_residual_trace_only": float(row["solver_native_phase_residual_trace_only"]),
+            "solver_native_curvature_residual_trace_only": float(row["solver_native_curvature_residual_trace_only"]),
+            "solver_native_sixth_lane_response_trace_only": float(row["solver_native_sixth_lane_response_trace_only"]),
+            "sixth_lane_response_rank": int(row["sixth_lane_response_rank"]),
+            "sixth_lane_response_rank_percentile": float(row["sixth_lane_response_rank_percentile"]),
+            "sixth_lane_vs_p14_rank_delta": int(row["sixth_lane_vs_p14_rank_delta"]),
+            **{key: row[key] == "True" for key in (*FALSE_FIELDS, *TRUE_FIELDS) if key in row},
+        }
+        for row in rows
+    ]
 
 
 def build_p15_authorization_binding_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
@@ -578,7 +574,7 @@ def build_artifact_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]
         "manifest_role": "sixth_bounded_solver_lane_execution_artifact_manifest",
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
-        "claim_boundary": {key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS}
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "sixth_bounded_solver_lane_trace_only"},
         **_guard_payload(),
     }

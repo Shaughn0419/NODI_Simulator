@@ -10,7 +10,7 @@
   "p2_readiness_scope_preserved": true,
   "p3_artifact_manifest_path": "results/post_v2_bounded_solver_authorization_pilot_design/bounded_solver_authorization_pilot_design_artifact_manifest.json",
   "p3_artifact_manifest_schema_version": "ev_nodi_p3_bounded_solver_authorization_pilot_design_artifact_manifest_v1",
-  "p3_artifact_manifest_sha256": "0bd394759423421d7c0f19efd0ed47af4937d20f3767fcb3b16770521e52d869",
+  "p3_artifact_manifest_sha256": "f59d2d318994d621312b3039912ad6e793ec93b9ba2577d0fab725a4d411a154",
   "p3_pilot_design_scope_preserved": true,
   "p3_route_subset_manifest_path": "results/post_v2_bounded_solver_authorization_pilot_design/bounded_solver_authorization_pilot_design_route_subset_manifest.json",
   "p3_route_subset_manifest_sha256": "e5b9e7e71133ce9cb7fbd572fece4650042b9a8e3800c43faf226d9ee20b4312",

@@ -310,7 +310,7 @@ def render_interference_explorer() -> None:
 
     st.header("Interference Explorer \u2014 \u4ece\u672c\u5f81\u6563\u5c04\u5230 clean signal \u8f93\u51fa")
     st.caption("这一页把标准结果库当前 case 的 Mie 本征散射接到 reference 上，解释 clean interferometric pulse 为什么会变强或变弱。")
-    render_page_header_hub("Interference Explorer")
+    render_page_header_hub()
     linked_label = format_particle_label(defaults["material"], defaults["diameter_nm"])
     render_workflow_case_source_panel(
         anchor_row=anchor_row,
@@ -337,10 +337,12 @@ def render_interference_explorer() -> None:
         st.header("干涉系统参数")
         st.caption(defaults["source_label"])
         st.caption("这里只保留会直接改变 clean signal 判断的核心参数；其余系统细节固定沿用当前口径。")
-        if st.session_state.get("selected_particle") is not None:
-            if st.button("同步当前选点到本页参数", key="intf_sync_from_selected"):
-                _apply_defaults(force=True)
-                st.rerun()
+        if st.session_state.get("selected_particle") is not None and st.button(
+            "同步当前选点到本页参数",
+            key="intf_sync_from_selected",
+        ):
+            _apply_defaults(force=True)
+            st.rerun()
         st.selectbox(
             "材料",
             MATERIAL_OPTIONS,
@@ -539,9 +541,7 @@ def render_interference_explorer() -> None:
     )
     if scan_variable == "rho":
         scan_values = np.linspace(1.0, 30.0, 10)
-    elif scan_variable == "width_nm":
-        scan_values = np.arange(500, 2001, 150, dtype=float)
-    elif scan_variable == "depth_nm":
+    elif scan_variable == "width_nm" or scan_variable == "depth_nm":
         scan_values = np.arange(500, 2001, 150, dtype=float)
     else:
         scan_values = np.array(WAVELENGTH_OPTIONS_NM, dtype=float)

@@ -77,7 +77,7 @@ def test_linked_feature_rows_and_transfer_gain_are_explicit():
     assert set(table["class_label"]) == {"Au40", "Au60", "Ag40", "Ag60"}
 
     gains = classification.compute_silver_transfer_gains(table)
-    assert gains[488] == pytest.approx(4.222222222222222 / 2.0)
+    assert gains[488] == pytest.approx(1.9 / 2.0)
     with_transfer = classification.apply_silver_transfer_columns(table, gains)
     ag40 = with_transfer[with_transfer["class_label"] == "Ag40"].iloc[0]
     assert ag40["paper_transfer_peak_height_488"] == pytest.approx(20.0 * gains[488])

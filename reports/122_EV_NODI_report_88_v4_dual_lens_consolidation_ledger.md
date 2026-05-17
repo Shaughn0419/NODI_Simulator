@@ -1,8 +1,51 @@
 # EV NODI report 88 v4.0 dual-lens consolidation ledger 2026-05-11
 
-This ledger records the 2026-05-11 in-place restructure of `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md` from v3.0 to **v4.0 dual-lens**, plus the governance-doc updates required to keep the all-crossing lens and the selected-annulus paper-audit lens equally weighted as reader entrances.
+This ledger records the 2026-05-11 in-place restructure of `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md` from v3.0 to **v4.0 dual-lens**, plus the follow-on v5.x updates required to keep the all-crossing lens and the selected-annulus Tsuyama-anchored lens equally weighted as reader entrances.
 
-It is a review artifact; the current scientific single source of truth is the updated `reports/88` v4.0. Raw provenance for the selected-annulus lens remains `reports/49` (Phase 2 / 2.5–2.11) and `reports/71` (R5.2 bounded scenario-prior audit + sidecar guardrail).
+It is a review artifact; the current scientific single source of truth is the updated `reports/88` v5.2.6. Raw provenance for the selected-annulus lens remains `reports/49` (B1 Phase 2 / 2.5–2.11), `reports/71` (R5.2 bounded scenario-prior audit + sidecar guardrail), and `results/lens_b_ev_gold_fullgrid_1seed_20260513/` (B2 EV+gold full-grid derived analysis).
+
+## v5.2.6 full-grid addendum (2026-05-14): lens B EV+gold full-grid final
+
+Resolved in report 88 v5.2.6:
+
+- B2 is no longer pending or represented by targeted EV evidence. The completed full-grid directory is `results/lens_b_ev_gold_fullgrid_1seed_20260513/`.
+- Precheck status: `32,032` rows, `seed=42`, `10000` events/case, particle materials `exosome/gold`, and wavelengths `404 / 488 / 532 / 660`.
+- EV recommendation uses EV/exosome rows only. Gold rows are retained only for anchor / Tsuyama consistency diagnostics and must not be mixed into an EV winner.
+- Recommendation-eligible wavelength conclusions are restricted to `404` and `660`. `488/532` remain in raw tables, trend plots, and control-only tables, but cannot become final recommendation wavelengths.
+- The EV-only selected-annulus full-grid is dominated by `660 nm / 800 nm` width; report-level conservative B2 recommendation is written as `660 / 800x1400` and `660 / 800x1500`, with `404` retained as a shortwave eligible sidecar rather than the full-grid winner.
+- The result is a one-seed synthetic relative result, not a 3-seed robust consensus, not a measured blank result, and not calibrated SNR/LOD or biological specificity evidence.
+
+Derived files added for this addendum:
+
+| File | Role |
+|---|---|
+| `lens_b_fullgrid_data_precheck.json` | result integrity and scope precheck |
+| `lens_b_ev_fullgrid_route_ranking.csv` | EV-only full-grid route / geometry / wavelength ranking |
+| `lens_b_ev_recommendation_eligible_404_660.csv` | EV-only recommendation-eligible 404/660 table |
+| `lens_b_ev_control_only_488_532.csv` | EV-only 488/532 control/trend table |
+| `lens_b_gold_anchor_tsuyama_diagnostic_summary.csv` | gold anchor / Tsuyama diagnostic-only summary |
+| `lens_b_a_vs_b_difference_explainer.csv` | lens / parameter / metric / particle-scope difference table |
+| `lens_b_fullgrid_analysis_report.md` | short B full-grid final analysis report |
+
+## v5.2.5 correction addendum (2026-05-13): lens B EV application
+
+User clarification (2026-05-13):
+
+```text
+口径 B 的创建目标，是修改所有估计的参数值，让锚点尺寸的结果与 Tsuyama 论文中的数据一致，
+然后用这些估计的参数值，来计算出哪些尺寸才是最合适的。
+口径 B 也是要用估计值来看 EV biomimetic，不是只看 anchor。
+推荐波长只在 660 / 404 内选，488 / 532 只作趋势/对照；
+这个规则只反映到选型结论，中间对比表格和图不要受影响。
+```
+
+Resolved in report 88 v5.2.5, then superseded for B2 selection by the v5.2.6 full-grid addendum above:
+
+- Lens B is now explicitly split into **B1 anchor target-fitting / residual diagnostic** and **B2 EV biomimetic application**.
+- B1 keeps the frozen estimated parameter set (`D2.1 best`, `gamma = 0.749`, `snr_scale = 0.728`, `snr_response_exp = 0.812`, selected-annulus `0.5-0.8`) and the anchor diagnostic geometry `660 / 800x550` + `660 / 1200x550`.
+- B2 applied those frozen parameters to EV biomimetic targeted evidence as an interim correction. The raw metric top1 `488 / 600x1500` remains in comparison/trend/control output, but no longer appears as a recommendation conclusion.
+- Recommendation conclusions choose only among `660` and `404`. The then-current targeted recommendation-eligible shortlist `404 / 600x1300` plus `660 / 800x1400-1500` has been replaced for current B2 selection by the v5.2.6 EV+gold full-grid result.
+- No simulation, solver case, candidate, lane, seed, measured artifact, frozen B parameter, or raw metric table changed.
 
 ## User-driven scope decision
 
@@ -547,3 +590,140 @@ pytest tests/test_paper_provenance_disjoint_and_supersession.py -q
 ### Open dependency unchanged
 
 P19 evidence-strategy gate must, when designed, declare acceptance criteria for **both lenses**. v5.x §12.3 / §16 / §18.3 / §18.5 全部重申。v5.2 reader comparison pack 不改变这条 dependency；附录 D / E 中大量 `—` cell 直接显示 P19 实测的优先级（§16.2）。
+
+## v5.2.2 external-review entrance layer (2026-05-13): GPT-Pro feedback triage
+
+User instruction (2026-05-13):
+
+```text
+再深入思考之后，先开始完善分析报告。
+对于论文的部分，深入思考之后，列一个详细的提纲，先保留为一个说明文档保存下来。
+```
+
+Resolved:
+
+- report 88 升为 **v5.2.2 external-review entrance layer**；
+- 只在 §0 增加外部初读者入口，不改任何数值、表格数据、release status、forbidden claim 或冻结参数；
+- 论文路线不塞回主报告，单独保存为 `reports/123_EV_NODI_paper_story_outline_for_later_discussion.md`，后续再讨论。
+
+### Files updated for v5.2.2
+
+| File | Change |
+|---|---|
+| [reports/88](88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md) | Header 升为 v5.2.2；新增 §0.3c 外部审稿人入口：四波长角色表、版本 / lens lineage 表、三张优先图表规格、report 123 论文提纲指针；§18.2 增加 v5.2.2 历史行。 |
+| [reports/123](123_EV_NODI_paper_story_outline_for_later_discussion.md) | 新增后续论文路线讨论草案：paper positioning、storyline、methods/results outline、main figure plan、supplement plan、minimum validation package、reviewer-risk checklist。 |
+| [文档导航.md](../文档导航.md) | 当前入口说明更新到 v5.2.2；新增 report 123 入口；报告优先级更新。 |
+| [reports/122](122_EV_NODI_report_88_v4_dual_lens_consolidation_ledger.md) | 本段落。 |
+
+### What did not change
+
+- No new simulation / solver case / candidate / lane / random seed / experiment / measured artifact ingest.
+- Lens A main-660 recommendation unchanged.
+- Lens B frozen diagnostic set unchanged.
+- selected-annulus 0.5–0.8 unchanged.
+- `calibrated_claim_allowed = false` boundary unchanged.
+- P19 evidence-strategy dependency unchanged.
+
+### Verification status
+
+This v5.2.2 pass is markdown-only. Run `git diff --check` and the targeted paper-provenance / claim-language tests before external release packaging.
+
+## v5.2.3 reviewer-figure entrance layer (2026-05-13): remaining-change execution pass
+
+User instruction (2026-05-13):
+
+```text
+接下来还有什么改动，都详细列出来，然后逐步去完成
+```
+
+Resolved remaining change list:
+
+1. **First-time reviewer claim boundary** — add a compact box before §0.1 so external readers know the report is a relative route audit, not a calibrated simulator or experimental paper.
+2. **Whole engineering workflow flowchart** — convert the existing 7-stage text chain into a Mermaid flowchart in §2.1a.
+3. **Core computation unit diagram** — add a second Mermaid diagram in §2.1b showing Mie scattering, detector operator, reference field, interference, readout/noise, and pulse extraction.
+4. **Evidence/gap map** — add §7.0a to show direct evidence vs mean/grouped evidence vs nearest route evidence vs true coverage gaps.
+5. **Route-role decision matrix** — add §10.6a so 660 / 404 / 532 / 488 are read as route roles rather than absolute wavelength winners.
+6. **GPT-Pro prompt** — add a copyable prompt for the next external review pass, including test-status honesty, report 88 logic review, figure/table review, and paper-roadmap review.
+7. **Navigation and index sync** — update report 88 header/history/table index, `文档导航.md`, report 123 dependency line, and this ledger.
+
+### Files updated for v5.2.3
+
+| File | Change |
+|---|---|
+| [reports/88](88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md) | Header 升为 v5.2.3；新增 §0.0、§2.1a、§2.1b、§7.0a、§10.6a；§18.2 和附录 C 同步新增项。 |
+| [reports/123](123_EV_NODI_paper_story_outline_for_later_discussion.md) | 依赖主报告指针更新为 report 88 v5.2.2 / v5.2.3 之后的论文路线草案。 |
+| [reports/124](124_GPT_PRO_REVIEW_PROMPT_FOR_REPORT_88.md) | 新增可复制 GPT-Pro 审查 prompt，覆盖 report 88 逻辑 / 图表 / 四波长角色 / 论文路线，并要求测试状态实话实说。 |
+| [文档导航.md](../文档导航.md) | 当前入口说明和使用优先级更新到 v5.2.3，并列出新增 reviewer 图解入口。 |
+| [reports/122](122_EV_NODI_report_88_v4_dual_lens_consolidation_ledger.md) | 本段落。 |
+
+### What did not change
+
+- No new simulation / solver case / candidate / lane / random seed / experiment / measured artifact ingest.
+- Lens A main-660 recommendation unchanged.
+- Lens B frozen diagnostic set unchanged.
+- selected-annulus 0.5–0.8 unchanged.
+- `calibrated_claim_allowed = false` boundary unchanged.
+- P19 evidence-strategy dependency unchanged.
+
+### Verification evidence (v5.2.3)
+
+```text
+git diff --check
+  -> passed
+python -m pytest tests/test_paper_provenance_disjoint_and_supersession.py tests/test_claim_language_regression.py -q
+  -> 19 passed in 0.05s
+python tests/run_tests.py --workers 7
+  -> AppTest lane: 5 passed, 1347 deselected in 1.72s
+  -> non-AppTest lane: 1347 passed in 73.57s
+```
+
+## v5.2.4 lens-language cleanup layer (2026-05-13): GPT-Pro follow-up triage
+
+User feedback (2026-05-13) reviewed report 88 v5.2.3 and found the first-time reader layer substantially improved, but still flagged three high-priority risks:
+
+1. §7.0a mixed-lens `D` labels could be misread as all-crossing direct evidence.
+2. Internal "校准 / calibration" wording could still imply measured physical calibration.
+3. `selected-annulus` needed an earlier optical-annulus warning.
+
+Resolved v5.2.4 changes:
+
+1. **Header compression** — keep the report entrance light: version, status, unchanged invariants, current route verdict, and §0 reading pointer only.
+2. **selected-annulus optical-annulus warning** — add the first-mention warning in §0.0: selected-annulus is an event-position / analysis-window lens, not a BFP optical annular aperture unless detector-operator code explicitly implements one.
+3. **Number comparability rule** — add a §0.0 micro-rule: direct quantitative comparison requires matching lens, particle panel, source type, and fixed variables.
+4. **§7.0a lens-coded coverage map** — replace ambiguous `D` with `D-A`, `D-N`, `D-P`, and `D-S`; title the EV map as "not a single-lens map"; state that those four direct-evidence classes cannot be merged.
+5. **NODI-lens warnings** — add explicit warnings above §7.1.1 and §7.1.2 so 45.15% / 47.15% NODI-lens values are not read as all-crossing main-route scores.
+6. **Route-role evidence row** — add an "Evidence type" row to §10.6a distinguishing direct main-route evidence, partial strict shortwave cells, and literature/control grouped trend evidence.
+7. **Target-fitting terminology cleanup** — rewrite internal workflow language from "校准 lens / 校准估计参数 / 校准在前" to "reproduction-lens target fitting / frozen reproduction-parameter set / target-fitting first, residual-based selection second" while preserving forbidden calibrated-claim warnings.
+8. **P19 acceptance criteria** — add §16.2a with minimum acceptance criteria for measured blank/BFP/slit/ROI, Au raw traces, soft-particle controls, detector chain, flow/trajectory, full-wave spot checks, and EV/contaminant characterization.
+9. **Navigation and prompt sync** — update `文档导航.md`, report 123 dependency line, report 124 GPT-Pro prompt, §18.2, and appendix C to v5.2.4.
+
+### Files updated for v5.2.4
+
+| File | Change |
+|---|---|
+| [reports/88](88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md) | Header 升为 v5.2.4；新增 §0.0 selected-annulus warning / comparability rule；§7.0a 改 lens-coded evidence map；§7.1.1 / §7.1.2 加 lens warning；§10.6a 加 evidence type 行；§11 术语改为 target-fitting；新增 §16.2a；§18.2 / 附录 C 同步。 |
+| [reports/123](123_EV_NODI_paper_story_outline_for_later_discussion.md) | 依赖主报告指针更新为 report 88 v5.2.2–v5.2.4 之后的论文路线草案。 |
+| [reports/124](124_GPT_PRO_REVIEW_PROMPT_FOR_REPORT_88.md) | GPT-Pro prompt 更新为审查 report 88 v5.2.4，并加入 D-A/D-N/D-P/D-S、target-fitting、selected-annulus warning、P19 criteria 关注点。 |
+| [文档导航.md](../文档导航.md) | 当前入口说明、双口径提示、报告归档与使用优先级更新到 v5.2.4。 |
+| [reports/122](122_EV_NODI_report_88_v4_dual_lens_consolidation_ledger.md) | 本段落。 |
+
+### What did not change
+
+- No new simulation / solver case / candidate / lane / random seed / experiment / measured artifact ingest.
+- Lens A main-660 recommendation unchanged.
+- Lens B frozen diagnostic set unchanged.
+- selected-annulus 0.5–0.8 unchanged.
+- `calibrated_claim_allowed = false` boundary unchanged.
+- P19 remains a future evidence-strategy gate; v5.2.4 only states minimum acceptance criteria.
+
+### Verification evidence (v5.2.4)
+
+```text
+git diff --check
+  -> passed
+python -m pytest tests/test_paper_provenance_disjoint_and_supersession.py tests/test_claim_language_regression.py -q
+  -> 19 passed in 0.05s
+python tests/run_tests.py --workers 7
+  -> AppTest lane: 5 passed, 1347 deselected in 1.78s
+  -> non-AppTest lane: 1347 passed in 79.84s
+```

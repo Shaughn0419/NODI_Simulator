@@ -360,6 +360,9 @@ def test_acceptance_no_go_splits_formula_signal_pass_from_size_failure():
                 row[
                     f"ag40_to_au40_target_ratio_sqrt_scattering_column_ratio_{wavelength_nm}"
                 ] = 2.0
+                row[
+                    f"ag40_to_au40_target_ratio_interferometric_column_ratio_{wavelength_nm}"
+                ] = 20.0
 
     summary, _, _, payload = acceptance.build_acceptance_report(
         joint_summary=pd.DataFrame(rows),
@@ -371,7 +374,7 @@ def test_acceptance_no_go_splits_formula_signal_pass_from_size_failure():
     )
     assert payload["no_go_reasons"] == ["raw_size_response_alignment_not_met"]
     assert payload["diagnostic_warnings"] == [
-        "strict_table_s1_signal_unresolved_formula_signal_pass"
+        "interferometric_column_signal_unresolved_formula_signal_pass"
     ]
     indexed = summary.set_index("metric")
     assert indexed.loc["formula_consistent_signal_ratio_pass", "status"] == "pass"

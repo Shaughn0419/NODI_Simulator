@@ -279,6 +279,93 @@ def candidate_catalog() -> list[CalibrationCandidate]:
             "Phase 2.5 raw-operator candidate using an off-axis Tsuyama BFP lobe centered at 0.65 NA fraction.",
         ),
         _candidate(
+            "tau_1ms_control",
+            {"lockin_time_constant_s": 1.0e-3},
+            "Criterion B current-runtime control: 1 ms lock-in candidate without local transfer/size correction.",
+        ),
+        _candidate(
+            "tau_1ms_global_refphi_plus_0p2",
+            {
+                "lockin_time_constant_s": 1.0e-3,
+                "ref_phi0_rad": 0.2,
+            },
+            "Criterion B 1 ms raw-operator candidate with a smaller shared positive global reference phase offset.",
+        ),
+        _candidate(
+            "tau_1ms_global_refphi_plus_0p4",
+            {
+                "lockin_time_constant_s": 1.0e-3,
+                "ref_phi0_rad": 0.4,
+            },
+            "Criterion B 1 ms raw-operator candidate with the D2.1 positive global reference phase offset.",
+        ),
+        _candidate(
+            "tau_1ms_global_refphi_plus",
+            {
+                "lockin_time_constant_s": 1.0e-3,
+                "ref_phi0_rad": 0.4,
+            },
+            "Alias-style Criterion B 1 ms candidate preserving the historic plus-0.4 naming convention.",
+        ),
+        _candidate(
+            "tau_1ms_global_refphi_plus_0p6",
+            {
+                "lockin_time_constant_s": 1.0e-3,
+                "ref_phi0_rad": 0.6,
+            },
+            "Criterion B 1 ms raw-operator candidate with a larger shared positive global reference phase offset.",
+        ),
+        _candidate(
+            "tau_1ms_global_refphi_minus_0p4",
+            {
+                "lockin_time_constant_s": 1.0e-3,
+                "ref_phi0_rad": -0.4,
+            },
+            "Criterion B 1 ms raw-operator candidate with a shared negative global reference phase offset.",
+        ),
+        _candidate(
+            "tau_1ms_collection_narrow",
+            {
+                "lockin_time_constant_s": 1.0e-3,
+                "collection_sigma_rad": 0.08,
+                "collection_phi_sigma_rad": 0.16,
+                "slit_phi_limit_rad": 0.25,
+            },
+            "Criterion B 1 ms raw-operator candidate with the D2.1 narrower BFP/slit collection surrogate.",
+        ),
+        _candidate(
+            "tau_1ms_global_refphi_plus_collection_narrow",
+            {
+                "lockin_time_constant_s": 1.0e-3,
+                "ref_phi0_rad": 0.4,
+                "collection_sigma_rad": 0.08,
+                "collection_phi_sigma_rad": 0.16,
+                "slit_phi_limit_rad": 0.25,
+            },
+            "Criterion B 1 ms candidate combining the D2.1 positive reference phase with the narrower BFP/slit collection surrogate.",
+        ),
+        _candidate(
+            "tau_1ms_collection_wide",
+            {
+                "lockin_time_constant_s": 1.0e-3,
+                "collection_sigma_rad": 0.22,
+                "collection_phi_sigma_rad": 0.35,
+                "slit_phi_limit_rad": 0.50,
+            },
+            "Criterion B 1 ms diagnostic candidate with a wider BFP/slit collection surrogate.",
+        ),
+        _candidate(
+            "tau_1ms_bfp_lobe_045",
+            {
+                "lockin_time_constant_s": 1.0e-3,
+                "reference_model": "tsuyama_bfp_integrated",
+                "tsuyama_bfp_roi_mode": "slit_off_axis_lobe_surrogate",
+                "tsuyama_bfp_lobe_center_fraction": 0.45,
+                "tsuyama_bfp_lobe_sigma_fraction": 0.18,
+            },
+            "Criterion B 1 ms diagnostic candidate using an off-axis Tsuyama BFP lobe centered at 0.45 NA fraction.",
+        ),
+        _candidate(
             "refspace_0p25",
             {"reference_spatial_amplitude_strength": 0.25},
             "Weaker cross-section reference-field spatial modulation estimate.",
@@ -1493,7 +1580,6 @@ def select_top_candidates(
 def write_report(
     output_dir: Path,
     *,
-    screen_summary: pd.DataFrame,
     verify_summary: pd.DataFrame,
     screen_meta: dict[str, Any],
     verify_meta: dict[str, Any],
@@ -1596,9 +1682,10 @@ def dataframe_to_markdown(df: pd.DataFrame) -> str:
     if df.empty:
         return "_No rows._"
     headers = [str(col) for col in df.columns]
-    body: list[list[str]] = []
-    for row in df.itertuples(index=False, name=None):
-        body.append([_markdown_cell(value) for value in row])
+    body: list[list[str]] = [
+        [_markdown_cell(value) for value in row]
+        for row in df.itertuples(index=False, name=None)
+    ]
     widths = [
         max(len(headers[index]), *(len(row[index]) for row in body))
         for index in range(len(headers))
@@ -1670,7 +1757,6 @@ def main(argv: list[str] | None = None) -> None:
     args = build_parser().parse_args(argv)
     output_dir = Path(args.output_dir)
     if args.report_only:
-        screen_summary = pd.read_csv(output_dir / "screen_candidate_summary_v1.csv")
         verify_summary = pd.read_csv(output_dir / "verify_candidate_summary_v1.csv")
         with (output_dir / "screen_meta_v1.json").open("r", encoding="utf-8") as fh:
             screen_meta = json.load(fh)
@@ -1678,7 +1764,6 @@ def main(argv: list[str] | None = None) -> None:
             verify_meta = json.load(fh)
         report_path = write_report(
             output_dir,
-            screen_summary=screen_summary,
             verify_summary=verify_summary,
             screen_meta=screen_meta,
             verify_meta=verify_meta,
@@ -1726,7 +1811,6 @@ def main(argv: list[str] | None = None) -> None:
     _ = verify_raw
     report_path = write_report(
         output_dir,
-        screen_summary=screen_summary,
         verify_summary=verify_summary,
         screen_meta=screen_meta,
         verify_meta=verify_meta,

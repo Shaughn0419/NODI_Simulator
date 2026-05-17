@@ -1241,7 +1241,7 @@ def _load_checkpoint_results(checkpoint_dir: str) -> tuple[list[dict], dict]:
     manifest_path = os.path.join(checkpoint_dir, "manifest.json")
     manifest = {}
     if os.path.exists(manifest_path):
-        with open(manifest_path, "r", encoding="utf-8") as f:
+        with open(manifest_path, encoding="utf-8") as f:
             manifest = json.load(f)
 
     if not os.path.isdir(chunks_dir):
@@ -3392,17 +3392,16 @@ def results_to_design_postprocess_dataframe(results: list[dict]) -> pd.DataFrame
 
 def results_to_physics_fields_dataframe(results: list[dict]) -> pd.DataFrame:
     """Flatten compact physics fields into one row per case."""
-    rows = []
-    for result in results:
-        rows.append(
-            {
-                **_build_result_coordinate_payload(result),
-                **{
-                    key: _export_cell_value(value)
-                    for key, value in _build_compact_physics_payload(result).items()
-                },
-            }
-        )
+    rows = [
+        {
+            **_build_result_coordinate_payload(result),
+            **{
+                key: _export_cell_value(value)
+                for key, value in _build_compact_physics_payload(result).items()
+            },
+        }
+        for result in results
+    ]
     return pd.DataFrame(rows)
 
 
@@ -4511,8 +4510,6 @@ def _ensure_recommendation_columns(summary_df: pd.DataFrame) -> pd.DataFrame:
 
 def build_engineering_gate_calibration_report(
     summary_df: pd.DataFrame,
-    *,
-    top_k: int = 10,
 ) -> dict:
     """
     Build a structured calibration report for the current engineering gate.
@@ -5155,38 +5152,36 @@ def build_runtime_performance_report(
     slowest_cases = []
     if not df.empty and "case_runtime_seconds" in df.columns:
         slowest_df = df.sort_values("case_runtime_seconds", ascending=False).head(20)
-        for row in slowest_df.to_dict("records"):
-            slowest_cases.append(
-                {
-                    "particle_name": str(row.get("particle_name", "")),
-                    "particle_material": str(row.get("particle_material", "")),
-                    "particle_diameter_nm": row.get("particle_diameter_nm"),
-                    "wavelength_nm": row.get("wavelength_nm"),
-                    "width_nm": row.get("width_nm"),
-                    "depth_nm": row.get("depth_nm"),
-                    "n_events": int(row.get("n_events", 0) or 0),
-                    "case_runtime_seconds": (
-                        float(row["case_runtime_seconds"])
-                        if pd.notna(row.get("case_runtime_seconds"))
-                        else None
-                    ),
-                    "case_events_per_second": (
-                        float(row["case_events_per_second"])
-                        if pd.notna(row.get("case_events_per_second"))
-                        else None
-                    ),
-                    "vectorized_event_engine_used": row.get(
-                        "vectorized_event_engine_used"
-                    ),
-                    "vectorized_event_engine_fallback_reason": row.get(
-                        "vectorized_event_engine_fallback_reason"
-                    ),
-                }
-            )
+        slowest_cases.extend(
+            {
+                "particle_name": str(row.get("particle_name", "")),
+                "particle_material": str(row.get("particle_material", "")),
+                "particle_diameter_nm": row.get("particle_diameter_nm"),
+                "wavelength_nm": row.get("wavelength_nm"),
+                "width_nm": row.get("width_nm"),
+                "depth_nm": row.get("depth_nm"),
+                "n_events": int(row.get("n_events", 0) or 0),
+                "case_runtime_seconds": (
+                    float(row["case_runtime_seconds"])
+                    if pd.notna(row.get("case_runtime_seconds"))
+                    else None
+                ),
+                "case_events_per_second": (
+                    float(row["case_events_per_second"])
+                    if pd.notna(row.get("case_events_per_second"))
+                    else None
+                ),
+                "vectorized_event_engine_used": row.get("vectorized_event_engine_used"),
+                "vectorized_event_engine_fallback_reason": row.get(
+                    "vectorized_event_engine_fallback_reason"
+                ),
+            }
+            for row in slowest_df.to_dict("records")
+        )
 
     fallback_telemetry = summarize_vectorized_fallback_telemetry(results)
     fallback_count = int(fallback_telemetry["vectorized_fallback_case_count"])
-    report = {
+    return {
         "runtime_performance_schema": "precompute_runtime_performance_v1",
         "monitoring_intent": (
             "Use this file after full recompute to decide whether the next "
@@ -5310,7 +5305,6 @@ def build_runtime_performance_report(
             ),
         },
     }
-    return report
 
 
 def build_freeze_probe_report(
@@ -5477,27 +5471,26 @@ def build_freeze_probe_report(
         .mean()
     )
 
-    top_cases = []
     top_df = df.sort_values(
         ["final_engineering_score", "score"],
         ascending=[False, False],
     ).head(max(int(top_k), 1))
-    for row in top_df.to_dict("records"):
-        top_cases.append(
-            {
-                "particle_name": str(row["particle_name"]),
-                "final_engineering_score": float(row["final_engineering_score"]),
-                "path_opd_freeze_status": row["path_opd_freeze_status"],
-                "observation_freeze_status": row["observation_freeze_status"],
-                "count_prediction_status": row["count_prediction_status"],
-                "count_rate_confidence_status": row["count_rate_confidence_status"],
-                "interface_fullwave_required": _is_truthy_status_value(
-                    row["interface_fullwave_required"]
-                ),
-                "thermal_pod_model_status": row["thermal_pod_model_status"],
-                "pod_quantitative_route_status": row["pod_quantitative_route_status"],
-            }
-        )
+    top_cases = [
+        {
+            "particle_name": str(row["particle_name"]),
+            "final_engineering_score": float(row["final_engineering_score"]),
+            "path_opd_freeze_status": row["path_opd_freeze_status"],
+            "observation_freeze_status": row["observation_freeze_status"],
+            "count_prediction_status": row["count_prediction_status"],
+            "count_rate_confidence_status": row["count_rate_confidence_status"],
+            "interface_fullwave_required": _is_truthy_status_value(
+                row["interface_fullwave_required"]
+            ),
+            "thermal_pod_model_status": row["thermal_pod_model_status"],
+            "pod_quantitative_route_status": row["pod_quantitative_route_status"],
+        }
+        for row in top_df.to_dict("records")
+    ]
 
     return FreezeProbeReportPayload(
         n_cases=int(len(df)),

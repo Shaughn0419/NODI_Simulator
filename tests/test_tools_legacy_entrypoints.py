@@ -41,6 +41,7 @@ def test_legacy_one_shot_help_and_bare_call_do_not_execute_underlying_writer(tmp
             str(PROJECT_ROOT / "tools" / "ev_nodi_realism_v2_R6_route_prior_sensitivity_audit.py"),
         ],
         cwd=PROJECT_ROOT,
+        check=False,
         capture_output=True,
         text=True,
     )
@@ -56,6 +57,7 @@ def test_legacy_one_shot_help_and_bare_call_do_not_execute_underlying_writer(tmp
             str(blocked_output_dir),
         ],
         cwd=PROJECT_ROOT,
+        check=False,
         capture_output=True,
         text=True,
     )
@@ -88,6 +90,7 @@ def test_canonical_one_shot_help_and_stray_args_do_not_execute_underlying_writer
     refusal = subprocess.run(
         [sys.executable, str(script)],
         cwd=PROJECT_ROOT,
+        check=False,
         capture_output=True,
         text=True,
     )
@@ -97,6 +100,7 @@ def test_canonical_one_shot_help_and_stray_args_do_not_execute_underlying_writer
     stray_arg = subprocess.run(
         [sys.executable, str(script), "--output-dir", str(blocked_output_dir)],
         cwd=PROJECT_ROOT,
+        check=False,
         capture_output=True,
         text=True,
     )
@@ -182,7 +186,8 @@ def test_retired_root_package_module_fallbacks_are_absent():
         r"^\s*from\s+(realism_v2_io|type_coerce)\s+import\b",
         re.MULTILINE,
     )
-    paths = _python_sources(PROJECT_ROOT / "tools" / "one_shot") + [
+    paths = [
+        *_python_sources(PROJECT_ROOT / "tools" / "one_shot"),
         PROJECT_ROOT / "nodi_simulator" / "realism_v2.py",
     ]
     for path in paths:

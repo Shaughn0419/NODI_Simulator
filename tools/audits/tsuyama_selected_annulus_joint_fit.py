@@ -85,6 +85,7 @@ SIGNAL_RATIO_TARGET_MODES = (
     "interferometric_column_ratio",
     "sqrt_scattering_column_ratio",
     "recomputed_mie_sqrt_csca_ratio",
+    "legacy_interferometric_column_over_gold_ratio",
 )
 DEFAULT_SIGNAL_RATIO_TARGET_MODE = "interferometric_column_ratio"
 DEFAULT_JOINT_CANDIDATES = (
@@ -119,7 +120,6 @@ def table_s1_signal_ratio_target(wavelength_nm: int, target_mode: str) -> float:
     if target_mode == "interferometric_column_ratio":
         return float(
             lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][wavelength]
-            / lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][wavelength]
         )
     if target_mode == "sqrt_scattering_column_ratio":
         return float(
@@ -134,6 +134,11 @@ def table_s1_signal_ratio_target(wavelength_nm: int, target_mode: str) -> float:
                 recomputed_table_s1_csca_m2("silver", wavelength)
                 / recomputed_table_s1_csca_m2("gold", wavelength)
             )
+        )
+    if target_mode == "legacy_interferometric_column_over_gold_ratio":
+        return float(
+            lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][wavelength]
+            / lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][wavelength]
         )
     raise ValueError(f"Unknown Table S1 signal-ratio target mode: {target_mode}")
 
@@ -993,13 +998,9 @@ def run_joint_fit(
                 for wavelength_nm in JOINT_WAVELENGTHS_NM
             },
             "ag_au_peak_ratio_targets": {
-                str(wavelength_nm): (
-                    lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["silver"][
-                        wavelength_nm
-                    ]
-                    / lane.TSUYAMA_2022_TABLE_S1_INTERFEROMETRIC_SCATTERING["gold"][
-                        wavelength_nm
-                    ]
+                str(wavelength_nm): table_s1_signal_ratio_target(
+                    wavelength_nm,
+                    DEFAULT_SIGNAL_RATIO_TARGET_MODE,
                 )
                 for wavelength_nm in JOINT_WAVELENGTHS_NM
             },
@@ -1090,6 +1091,7 @@ def write_report(output_dir: Path, *, summary: pd.DataFrame, meta: dict[str, Any
         "- It does not change global simulator defaults or EV route ranking by itself.",
         "- The score uses 800x550 and 1200x550 selected-annulus detection rates, Ag/Au peak ratios, Au size scaling, and Au30/Au20 SNR ratio.",
         "- Ag/Au transfer-fit variants use one residual transfer gain per wavelength, then score both paper geometries under that same gain.",
+        "- `interferometric_column_ratio` uses the Table S1 Ag row directly as the Ag/Au ratio-like value; the old Ag-column/Au-column over-ratio is exported only as `legacy_interferometric_column_over_gold_ratio`.",
         "- Au size-scaling is still scored on peak height, while alternate observables are exported as diagnostics only.",
         "- Size-response fit variants apply a bounded Au power-law correction inside the paper-fit score only.",
         "- `required_silver_transfer_gain_*` reports the residual wavelength/material gain needed to match Table S1 ratios after the simulated trace output.",

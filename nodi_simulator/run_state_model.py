@@ -41,7 +41,7 @@ def _signal_scale(summary: Mapping[str, Any], sim_cfg: SimulationConfig) -> floa
         abs(float(sim_cfg.post_readout_noise_std))
         * max(float(sim_cfg.threshold_sigma), 1.0),
     )
-    return max(max(candidates), 1.0e-12)
+    return max(*candidates, 1.0e-12)
 
 
 def _fouling_index_per_min(sim_cfg: SimulationConfig) -> float:

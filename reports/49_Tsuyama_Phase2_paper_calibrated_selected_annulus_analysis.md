@@ -2,16 +2,18 @@
 
 > Codex 执行修订：2026-05-06。本文对应 `.omx/plans/roadmap-phase2-tsuyama-paper-calibrated-selected-annulus-2026-05-03.md` 的 G0-G5 推进结果，并合入 Phase 2.5 target-consistency、seed-median acceptance、epsilon/severity detection gate、raw-operator 修正、D2.1 局部 refphase/collection smoke、Phase 2.6 paper-reproduction rescore / size-only 3000-event confirmation、Phase 2.7 single global SNR response rescore、Phase 2.8 reviewed/descriptive score rescore、Phase 2.9 maximal upper-bound score rescore、Phase 2.10 raw Au size-response residual decomposition、Phase 2.11 single global pulse-height/readout compression rescore，以及 stop-decision 后的 ET-2030 / LI5640 instrument-aware feasibility 与 paper-statistics sensitivity boundary。Phase 2 仍是 computational paper-audit proxy lane，不修改 selected-annulus `0.5-0.8`，不回写 EV full-grid，不升级 absolute SNR / LOD / concentration claim。
 
+> 2026-05-14 target 修正：Table S1 Ag/Au `interferometric_column_ratio` 的旧实现把 Ag interferometric 列又除以 Au interferometric 列，形成 double-normalized over-ratio。现已修正为直接使用 Ag 表列本身：488/532/660 nm 为 `1.90 / 0.89 / 0.85`，与 `sqrt(scattering_Ag/scattering_Au)` 基本一致。旧 `4.222 / 1.309 / 2.656` 只保留为 `legacy_interferometric_column_over_gold_ratio` 审计字段。下文历史提到的 strict over-ratio / hypothetical strict Ag transfer 应按 legacy 诊断理解，不再作为推荐 target。
+
 ## 1. 结论
 
-Phase 2 已完成一遍完整的 computational paper-audit 闭环：target audit、read-only baseline acceptance、A-E family-ladder inverse search、8-worker / 3-seed full run、classification diagnostic 和报告同步都已跑通。full inverse 使用 `10000 events/case`、seeds `42 / 43 / 44`、`8 workers`，共评估 `52` 个 candidate、`156` 条 seed summary、`5616` 条 raw joint-case rows，运行时间约 `24968 s`（约 `6.94 h`）。Phase 2.5 之后又完成了一个更小的 D2.1 局部 smoke，只检查 `tau_2ms` 附近的 global reference phase 与窄 collection 组合，不再扩大 annulus 或 E-family correction。Phase 2.6 在现有 acceptance / inverse 工具内新增 `paper_reproduction_formula` 与 `paper_reproduction_strict_upper` rescore mode，并新增 size-only `F_paper_reproduction_fit` family，用来量化“若目标是尽量贴近 Tsuyama 数值，需要声明多大的 reproduction-only 估计项”。Phase 2.7 进一步只允许一个 single global SNR response exponent + scale，对同一批 3000-event size-only summary 做 read-only rescore。Phase 2.8 只调整评分叙事，不新增 simulation：strict Table S1 residual 改为 report-only，detection warning 与 complexity 降权，专门回答“当前低自由度估计项是否已能形成可读的数值复现口径”。Phase 2.9 再做 maximal upper-bound rescore：允许 hypothetical strict Table S1 per-wavelength Ag transfer，只用于估计“如果接受更高自由度，数值上限能到哪里”。Phase 2.10 不再追分数，而是把 raw Au size-response 拆成 wavelength、geometry、observable 和相邻粒径段，定位 raw exponent 偏陡的来源。Phase 2.11 把最后一个仍有物理可读性的低自由度方向落成显式 score：单一全局 pulse-height/readout compression `gamma` 同时作用于 size、SNR ratio 与 Ag/Au ratio。
+Phase 2 已完成一遍完整的 computational paper-audit 闭环：target audit、read-only baseline acceptance、A-E family-ladder inverse search、8-worker / 3-seed full run、classification diagnostic 和报告同步都已跑通。full inverse 使用 `10000 events/case`、seeds `42 / 43 / 44`、`8 workers`，共评估 `52` 个 candidate、`156` 条 seed summary、`5616` 条 raw joint-case rows，运行时间约 `24968 s`（约 `6.94 h`）。Phase 2.5 之后又完成了一个更小的 D2.1 局部 smoke，只检查 `tau_2ms` 附近的 global reference phase 与窄 collection 组合，不再扩大 annulus 或 E-family correction。Phase 2.6 在现有 acceptance / inverse 工具内新增 `paper_reproduction_formula` 与 `paper_reproduction_strict_upper` rescore mode，并新增 size-only `F_paper_reproduction_fit` family，用来量化“若目标是尽量贴近 Tsuyama 数值，需要声明多大的 reproduction-only 估计项”。Phase 2.7 进一步只允许一个 single global SNR response exponent + scale，对同一批 3000-event size-only summary 做 read-only rescore。Phase 2.8 只调整评分叙事，不新增 simulation：legacy over-ratio residual 改为 report-only，detection warning 与 complexity 降权，专门回答“当前低自由度估计项是否已能形成可读的数值复现口径”。Phase 2.9 再做 maximal upper-bound rescore：历史上允许 hypothetical legacy-over-ratio per-wavelength Ag transfer，只用于估计“如果接受更高自由度，数值上限能到哪里”。Phase 2.10 不再追分数，而是把 raw Au size-response 拆成 wavelength、geometry、observable 和相邻粒径段，定位 raw exponent 偏陡的来源。Phase 2.11 把最后一个仍有物理可读性的低自由度方向落成显式 score：单一全局 pulse-height/readout compression `gamma` 同时作用于 size、SNR ratio 与 Ag/Au ratio。
 
 最终签发状态是：**negative_or_diagnostic_result_only；没有 accepted paper-calibrated candidate**。这不是 EV full-grid 的失败，也不是 660/404 实验面板的阻塞项。它只说明：在当前 surrogate 和 selected-annulus `0.5-0.8` 固定口径下，Tsuyama paper-audit lane 仍只能作为 diagnostic / proxy，而不能升级为已签发的 paper-calibrated candidate。
 
 目前最重要的正结果是：
 
 - target audit 已把 `direct / inferred / operational / diagnostic_only` 分开，hard acceptance target 中没有 `diagnostic_only`。
-- Table S1 Ag/Au target 已拆成 `interferometric_column_ratio`、`sqrt_scattering_column_ratio`、`recomputed_mie_sqrt_csca_ratio` 三种模式；当前 strict interferometric-column 口径保留作审计，但 Ag 行与论文“interferometric scattering 为 scattering 开方”的文字关系存在不一致，因此不再作为唯一 direct hard target。
+- Table S1 Ag/Au target 已拆成 corrected `interferometric_column_ratio`、`sqrt_scattering_column_ratio`、`recomputed_mie_sqrt_csca_ratio` 与 legacy over-ratio 四种模式；corrected direct target 与 sqrt-scattering cross-check 已基本一致，旧 strict over-ratio 仅保留作历史审计。
 - acceptance 现在以 candidate 的 seed-median 代表行签发，不再由单个 seed 的最低 score 决定 release status；JSON 同步记录 input path、hash、row count、candidate count、seed count 和 selected-annulus bounds。
 - full inverse 的 best candidate 在 3 个 seeds 中解释方向稳定，且 seed-median 代表行没有触发 transfer gain、size-response、reference、rho 或 NA guardrail。
 - detection alignment 不再作为本轮主 blocker：Au20 偏低降级为 weak-SNR warning，Au20 过高仍是 hard guard；Au30/Au40/Au60 使用 epsilon/severity gate，当前只有边界/轻微 warning，不触发 release blocker。
@@ -21,15 +23,15 @@ Phase 2 已完成一遍完整的 computational paper-audit 闭环：target audit
 
 目前最重要的保守结论是：
 
-- full acceptance 现在只触发一个主 No-Go：`raw_size_response_alignment_not_met`。formula-consistent Table S1 Ag/Au raw signal 已通过；strict Table S1 signal 保留为 `strict_table_s1_signal_unresolved_formula_signal_pass` diagnostic warning。
+- full acceptance 现在只触发一个主 No-Go：`raw_size_response_alignment_not_met`。corrected direct / formula-consistent Table S1 Ag/Au raw signal 已基本通过；旧 `strict_table_s1_signal_unresolved_formula_signal_pass` diagnostic warning 来自 legacy over-ratio 误读，不再作为 Ag/Au 表面建模失败证据。
 - Au20 只有 `3/6` 个 joint cases 落入 operational band，但这些 miss 全部是 lower-bound miss；这与论文中 Au20 weak-SNR / not-all-detected 的描述相容，因此标为 `Au20_low_sensitivity_warning`，不再等同于 release blocker。
-- A-D raw / non-transfer families没有出现 Ag/Au signal 与 Au size-response 同时对齐的候选：strict Table S1 target 下 raw signal 仍未通过；formula-consistent Table S1 target 下 raw signal 已有大量候选通过，但 raw Au size-response 仍未通过。full inverse 的 seed-median acceptance 下，best raw family score 约 `2.64`，best raw strict signal-ratio score 约 `0.895`，best raw formula-consistent signal-ratio score 约 `0.033`，best raw size-exponent score 约 `1.632`。D2.1 局部 smoke 把 raw size-exponent score 进一步压到约 `1.149`，但对应 raw Au exponent 仍约 `3.05`，离 `2.3` 的 paper-audit proxy target 仍明显偏陡。
+- A-D raw / non-transfer families没有出现 Ag/Au signal 与 Au size-response 同时对齐的候选：corrected direct / formula-consistent Table S1 target 下 raw signal 已有大量候选通过，但 raw Au size-response 仍未通过。full inverse 的 seed-median acceptance 下，best raw family score 约 `2.64`，legacy over-ratio score 只作历史诊断；best raw formula-consistent signal-ratio score 约 `0.033`，best raw size-exponent score 约 `1.632`。D2.1 局部 smoke 把 raw size-exponent score 进一步压到约 `1.149`，但对应 raw Au exponent 仍约 `3.05`，离 `2.3` 的 paper-audit proxy target 仍明显偏陡。
 - 因此，E family 的漂亮数值不能被解释成“估计参数自然收敛到论文结果”，而只能解释成 bounded local paper-fit lens 的诊断结果。
 - Phase 2.6 reproduction rescore 给出了更直接的量化：D2.1 最优 reproduction base 是 `tau_2ms_global_refphi_plus`，`paper_reproduction_score_formula = 3.743`，需要全局 Au power-law size-response delta `-0.797` 和 single global SNR scale `0.728`，才能把 corrected Au exponent 映射到 `2.3`；full inverse 最优 reproduction base 是 `refspace_0p25__paper_5sigma_sensitivity`，score `4.681`，需要 delta `-0.958` 和 SNR scale `0.414`。两者都低于 raw-only 解释的残差，但都没有达到 bounded reproduction pass/partial threshold，因此仍是 `reproduction_fit_not_met`，不是 raw calibration。
 - 3000-event size-only confirmation 验证了这条估计项路径的稳定性，但没有改变签发状态：最佳候选为 `tau_2ms_global_refphi_plus_0p6__paper_5sigma_size_response_fit`，`paper_reproduction_score_formula = 3.954`，required/applied global size delta `-0.878`，SNR scale `0.730`，detection alignment 为 pass/warning 级别；仍未达到 bounded reproduction pass/partial threshold，因此不进入 `10000 events/case` confirm。
 - Phase 2.7 single global SNR response rescore 进一步确认：给同一个 best candidate 加入全局 SNR response exponent `0.812` 后，SNR ratio 加权残差从 `1.405` 降到 `0.423`，但 fit complexity 加权项从 `1.340` 升到 `1.931`，综合 score 只从 `3.954` 降到 `3.808`。这说明单一 SNR/readout 估计项有帮助，但在严格 scoring 下仍不足以进入 bounded partial，更不能触发 `10000 events/case` confirm。
-- Phase 2.8 reviewed/descriptive rescore 进一步把“签发 acceptance”和“读者口径解释”分开：strict Table S1 residual 只报告、不计入 primary score；detection warning 与 fit complexity 作为描述性复现项降权。best candidate 仍是 `tau_2ms_global_refphi_plus_0p6__paper_5sigma_size_response_fit`，reviewed score 为 `1.9385`，状态为 `bounded_reproduction_partial_descriptive`。这意味着当前 estimated-parameter lens 已能形成一个可读的 partial paper-reproduction 叙事，但它不改变 No-Go：`raw_size_response_alignment_not_met`，也不签 raw calibration。
-- Phase 2.9 maximal upper-bound rescore 则把“继续复现论文数值”推到当前合理边界：在不新增事件、不移动 annulus 的前提下，加入 hypothetical strict Table S1 Ag transfer。3000-event size-only best 的 maximal score 为 `1.2869`，仍只是 partial；full inverse 和 D2.1 的 best 上限分数分别为 `0.9814` 与 `0.9893`，可以达到 `maximal_paper_fit_upper_bound`。但它需要 per-wavelength Ag transfer gain 约 `1.76-3.12`，加上 global Au size-response / SNR response 估计项，因此只能作为高自由度 reproduction upper bound，不能签 raw calibration。
+- Phase 2.8 reviewed/descriptive rescore 进一步把“签发 acceptance”和“读者口径解释”分开：当时的 strict residual 现在归类为 legacy over-ratio 残差，不能进入 primary score；detection warning 与 fit complexity 作为描述性复现项降权。best candidate 仍是 `tau_2ms_global_refphi_plus_0p6__paper_5sigma_size_response_fit`，reviewed score 为 `1.9385`，状态为 `bounded_reproduction_partial_descriptive`。这意味着当前 estimated-parameter lens 已能形成一个可读的 partial paper-reproduction 叙事，但它不改变 No-Go：`raw_size_response_alignment_not_met`，也不签 raw calibration。
+- Phase 2.9 maximal upper-bound rescore 现在应读作 legacy-over-ratio sensitivity：它证明旧 double-normalized target 可被高自由度 Ag transfer 硬贴，但不再是推荐或物理必要的 target。3000-event size-only best 的 historical maximal score 为 `1.2869`，full inverse 和 D2.1 的 historical 上限分数分别为 `0.9814` 与 `0.9893`；这些数值只保留为历史诊断，不改变当前 corrected target 结论。
 - Phase 2.10 raw Au size-response decomposition 说明 residual 的主要来源不是 Au20/Au30 低检出，而是 40→60 nm 这一段过陡。D2.1 best 的 peak-height median exponent 为 `3.0679`，local-SNR median exponent 为 `3.0882`；`peak_margin_z` 和 `peak_height_times_width` 更陡。所有 peak-height case 的 limiting pair 都是 `40-60`。660 nm 与 `1200x550` 相对最接近 target，532 nm / `800x550` 相对最差。这说明后续若继续复现，只应考虑全局 readout/pulse-height compression 这类单调压缩项；不应回头改 Au20 detection、移动 annulus 或做 per-diameter correction。
 - Phase 2.11 response-compression rescore 验证了这个最后方向：D2.1 best `tau_2ms_global_refphi_plus_collection_narrow` 需要 `gamma=0.749` 才能把 Au exponent 映射到 `2.3`，score 为 `2.033`，已经非常接近但仍高于 bounded partial 阈值 `2.0`。full inverse best `low_noise_stack` score 为 `2.651`，3000-event size-only best score 为 `3.722`。因此 single global compression 只能作为 descriptive reproduction lens，不能升级为 accepted candidate；再往下若继续降分，就会需要 per-diameter、per-geometry、per-case 或 logistic remap 这类过拟合项。
 - stop-decision 后的 instrument-aware feasibility 不是继续 paper-fit 搜索，而是检查实际 ET-2030 + LI5640 读出链的量级边界。`tools/audits/instrument_hardware_feasibility.py` 用 ET-2030 silicon responsivity / NEP / 0.4 mm active area、LI5640 current/voltage sensitivity、time constant 与 filter-order prior 生成 `216` 个 feasibility rows；所有 current-input / low-noise TIA rows 都有 comfortable margin，而 50 Ω voltage path 有 `211/216` rows 低于最小 sensitivity、`5/216` rows 只是 near minimum。结论是硬件估计支持 current input / TIA 作为可行路线，但这只是 instrument feasibility estimate，不解锁 absolute SNR calibration。
@@ -39,7 +41,7 @@ Phase 2 已完成一遍完整的 computational paper-audit 闭环：target audit
 
 | Gate | 产物 | 当前状态 | 复核结论 |
 |---|---|---|---|
-| G0 Target Audit | `results/tsuyama_phase2_paper_target_audit_v1/` | 完成 | `20` 个 target records，`10` 个 hard-acceptance targets；Table S1 Ag/Au ratio 拆成 strict / formula-consistent / recomputed-Mie 三种 target mode，hard target 不含 diagnostic_only |
+| G0 Target Audit | `results/tsuyama_phase2_paper_target_audit_v1/` | 完成 | `23` 个 target records，`13` 个 hard-acceptance targets；Table S1 Ag/Au ratio 拆成 corrected direct / formula-consistent / recomputed-Mie / legacy-over-ratio 四种 target mode，legacy 不作 hard acceptance |
 | G1 Baseline Acceptance | `results/tsuyama_phase2_acceptance_baseline_v1/` | 完成 | best candidate 为 `baseline_current_estimates__paper_5sigma_signal_size_transfer_fit`；detection 为 Au20 low warning，baseline release status 为 `baseline_requires_phase2_inverse_confirmation` |
 | G2 Family-Ladder Inverse | `results/tsuyama_phase2_parameter_inverse_full_v1/` | 完成 | `10000 events/case`、`52` candidates、`3` seeds、`8 workers`；A-E family ladder 全量跑通 |
 | G2.5 Raw-Operator Smoke | `results/tsuyama_phase2p5_operator_phase_bfp_smoke_v1/` | 完成 | `1500 events/case`、`20` candidates、`3` seeds、`8 workers`；没有 candidate 满足 promote rule，不进入 10000-event confirm |
@@ -47,13 +49,13 @@ Phase 2 已完成一遍完整的 computational paper-audit 闭环：target audit
 | G2.7 Paper-Reproduction Rescore | `results/tsuyama_phase2p6_paper_reproduction_fit_d2p1_v1/`、`results/tsuyama_phase2p6_paper_reproduction_fit_full_inverse_v1/` | 完成 | read-only rescore；D2.1 best delta `-0.797`、full inverse best delta `-0.958`；均为 reproduction-only，status `reproduction_fit_not_met` |
 | G2.8 Size-Only Reproduction Confirmation | `results/tsuyama_phase2p6_paper_reproduction_fit_3000e_v1/`、`results/tsuyama_phase2p6_paper_reproduction_fit_3000e_acceptance_v1/` | 完成 | `3000 events/case`、`4` size-only candidates、`3` seeds、`8 workers`；best score `3.954`，delta `-0.878`，仍不满足 bounded reproduction pass/partial |
 | G2.9 SNR Response Rescore | `results/tsuyama_phase2p7_snr_response_rescore_3000e_v1/` | 完成 | read-only rescore；best candidate 不变，SNR response exponent `0.812`，score 降至 `3.808`，仍不满足 bounded reproduction pass/partial |
-| G2.10 Reviewed Score Rescore | `results/tsuyama_phase2p8_reviewed_score_rescore_3000e_v1/` | 完成 | read-only rescore；strict Table S1 report-only、detection/complexity 降权；reviewed score `1.938`，为 descriptive partial，不改变 negative/diagnostic release |
-| G2.11 Maximal Upper-Bound Rescore | `results/tsuyama_phase2p9_maximal_upper_rescore_3000e_v1/`、`results/tsuyama_phase2p9_maximal_upper_rescore_full_inverse_v1/`、`results/tsuyama_phase2p9_maximal_upper_rescore_d2p1_v1/` | 完成 | read-only rescore；允许 hypothetical strict Ag transfer；D2.1/full-inverse 上限约 `0.98-0.99`，但属于 `maximal_paper_fit_upper_bound`，不改变 release |
+| G2.10 Reviewed Score Rescore | `results/tsuyama_phase2p8_reviewed_score_rescore_3000e_v1/` | 完成 | read-only rescore；legacy over-ratio report-only、detection/complexity 降权；reviewed score `1.938`，为 descriptive partial，不改变 negative/diagnostic release |
+| G2.11 Maximal Upper-Bound Rescore | `results/tsuyama_phase2p9_maximal_upper_rescore_3000e_v1/`、`results/tsuyama_phase2p9_maximal_upper_rescore_full_inverse_v1/`、`results/tsuyama_phase2p9_maximal_upper_rescore_d2p1_v1/` | 完成 | read-only historical sensitivity；允许 hypothetical legacy-over-ratio Ag transfer；D2.1/full-inverse 上限约 `0.98-0.99`，只作历史诊断，不改变 release |
 | G2.12 Size-Response Residual Decomposition | `results/tsuyama_phase2p10_size_response_decomposition_3000e_v1/`、`results/tsuyama_phase2p10_size_response_decomposition_full_inverse_v1/`、`results/tsuyama_phase2p10_size_response_decomposition_d2p1_v1/` | 完成 | read-only decomposition；按 wavelength / geometry / observable / adjacent size pair 拆解 raw Au exponent，确认主残差来自 `40-60` pair |
 | G2.13 Response-Compression Rescore | `results/tsuyama_phase2p11_response_compression_rescore_3000e_v1/`、`results/tsuyama_phase2p11_response_compression_rescore_full_inverse_v1/`、`results/tsuyama_phase2p11_response_compression_rescore_d2p1_v1/` | 完成 | single global gamma；D2.1 best score `2.033`，仍未达 bounded partial，release 不变 |
 | G2.14 Instrument-Aware Feasibility | `results/instrument_hardware_feasibility_v1/` | 完成 | ET-2030 / LI5640 estimated hardware layer；current input / low-noise TIA 全部 comfortable，50 Ω voltage 多数低于 sensitivity；只作硬件可行性量级检查，不解锁 detector-unit calibration |
 | G2.15 Paper-Statistics Sensitivity | `results/tsuyama_paper_statistics_sensitivity_v1/` | 完成 | 只读估算有限计数、IQR trimming、粒径分布能贡献的 flattening；`274/288` rows 为 unlikely-alone，最佳 D2.1 local-SNR 仍需约 `30.6%` high-size suppression |
-| G3 Multi-Seed Signing | `results/tsuyama_phase2_acceptance_full_inverse_v1/` | 完成 | acceptance 使用 seed-median 代表行；best candidate 三 seed 稳定；detection 为 Au20 low warning + Au30-60 borderline/minor warning；formula-consistent raw signal 通过但 raw size-response 未通过，最终 release status 为 `negative_or_diagnostic_result_only` |
+| G3 Multi-Seed Signing | `results/tsuyama_phase2_acceptance_full_inverse_v1/` | 完成 | acceptance 使用 seed-median 代表行；best candidate 三 seed 稳定；detection 为 Au20 low warning + Au30-60 borderline/minor warning；corrected/formula raw signal 通过但 raw size-response 未通过，最终 release status 为 `negative_or_diagnostic_result_only` |
 | G4 Classification Diagnostic | `results/tsuyama_2022_classification_lane_phase2_smoke_v1/` | 完成 | `200` feature rows、usable rows `107`、min class count `24`、`no_accuracy_claim` |
 | G5 Report/Docs | 本报告、`reports/48_*`、`24_*`、`guides/operations/14_*` | 完成 | Phase 2 negative / diagnostic 边界已同步：不阻塞 660/404 实验，不改 EV 主库 |
 
@@ -61,9 +63,10 @@ Phase 2 已完成一遍完整的 computational paper-audit 闭环：target audit
 
 G0 输出的 target manifest 把 Tsuyama paper side 的信息拆成四类：
 
-- **Direct / audit**：Table S1 Ag40/Au40 `interferometric_column_ratio`，覆盖 488、532、660 nm；保留 strict 审计，但不再无条件作为唯一 hard target。
-- **Formula-consistent**：Table S1 scattering cross-section column 的 `sqrt_scattering_column_ratio`；这是当前推荐 hard signal-ratio mode，因为它与论文文字说明一致。
+- **Corrected direct**：Table S1 Ag40/Au40 `interferometric_column_ratio`，覆盖 488、532、660 nm；直接使用 Ag interferometric 列本身作为 ratio-like target，可作 hard target。
+- **Formula-consistent**：Table S1 scattering cross-section column 的 `sqrt_scattering_column_ratio`；这是与 corrected direct target 基本一致的交叉检查，也可作 hard signal-ratio mode。
 - **Recomputed-Mie**：用 Table S1 fixed n,k 在本 simulator 内重算 `sqrt(Csca_Ag/Csca_Au)`，作为 inferred / diagnostic cross-check。
+- **Legacy audit**：旧 `legacy_interferometric_column_over_gold_ratio`，即 Ag interferometric 列再除以 Au interferometric 列；只用于追踪历史 double-normalized 结果，不作 hard target。
 - **Inferred**：Au size exponent `2.3`、Au30/Au20 SNR ratio `33/12 = 2.75`。
 - **Operational**：Au30/40/60 selected-annulus detection proxy bands、Au20 upper-detection guard、Au20 low-sensitivity warning，以及 selected-annulus geometry guardrail。
 - **Diagnostic only**：classification accuracy `71.9 +/- 4.0%`、2020 POD Au20 near-100% counting、2024 paired POD+NODI classification。
@@ -165,7 +168,7 @@ python tools/one_shot/tsuyama_phase2_parameter_inverse.py \
   --output-dir results/tsuyama_phase2p5_d2p1_refphi_collection_smoke_v1
 ```
 
-D2.1 的 acceptance 输出位于 `results/tsuyama_phase2p5_d2p1_refphi_collection_acceptance_v1/`。它把 detection alignment 提升到 `pass`，Au20 只是单点 high-outlier warning；但 release status 仍是 `negative_or_diagnostic_result_only`，唯一主 No-Go 仍是 `raw_size_response_alignment_not_met`。strict Table S1 signal 只作为 diagnostic warning 保留，局部候选排序如下：
+D2.1 的 acceptance 输出位于 `results/tsuyama_phase2p5_d2p1_refphi_collection_acceptance_v1/`。它把 detection alignment 提升到 `pass`，Au20 只是单点 high-outlier warning；但 release status 仍是 `negative_or_diagnostic_result_only`，唯一主 No-Go 仍是 `raw_size_response_alignment_not_met`。corrected Table S1 signal 不是主 blocker，旧 strict signal 只作为 legacy over-ratio diagnostic warning 保留，局部候选排序如下：
 
 | candidate | joint score | formula joint score | formula signal score | raw Au exponent | size score | 判断 |
 |---|---:|---:|---:|---:|---:|---|
@@ -224,11 +227,11 @@ python tools/one_shot/tsuyama_phase2_acceptance_report.py \
 | Phase 2.6 size-only | `tau_2ms_global_refphi_plus_0p6__paper_5sigma_size_response_fit` | `3.9541` | none | `1.4053` | `1.0500` | `1.3400` | size-only best，但未过 partial |
 | Phase 2.7 SNR response | `tau_2ms_global_refphi_plus_0p6__paper_5sigma_size_response_fit` | `3.8076` | `0.8120` | `0.4235` | `1.0500` | `1.9308` | SNR ratio 明显改善，但复杂度抵消一部分收益，仍未过 partial |
 
-Phase 2.7 的结论是负面的、但有信息量：一个全局 SNR response exponent 可以解释一部分 Au30/Au20 SNR ratio 偏差，但剩余 detection warning、strict Table S1 diagnostic residual 和 declared fit complexity 仍让 score 停在 `3.8` 左右。若不放宽评分、不加入更多自由度，这一路线不应升到 `10000 events/case`。
+Phase 2.7 的结论是负面的、但有信息量：一个全局 SNR response exponent 可以解释一部分 Au30/Au20 SNR ratio 偏差，但剩余 detection warning、legacy over-ratio diagnostic residual 和 declared fit complexity 仍让 score 停在 `3.8` 左右。若不放宽评分、不加入更多自由度，这一路线不应升到 `10000 events/case`。
 
 Phase 2.8 按用户选择的 B 路线继续：不再运行事件模拟，只复核 reproduction score 的叙事权重是否过硬。新的 `paper_reproduction_reviewed` primary score mode 保持所有物理/fit 项不变，但做三件事：
 
-- strict Table S1 interferometric-column residual 仍完整输出，但不再进入 primary descriptive score，因为 Table S1 Ag 行与“interferometric scattering = scattering 开方”的文字解释存在 target-mode ambiguity。
+- legacy over-ratio residual 仍完整输出，但不再进入 primary descriptive score；corrected Table S1 Ag 行已与 `sqrt(scattering_Ag/scattering_Au)` 解释对齐。
 - detection warning 从 hard-ish reproduction penalty 降权，保留 Au20 over-detection / Au30-60 severe miss guardrail；当前 best 只有 Au20 high-outlier warning 和 Au30 minor warning。
 - fit complexity penalty 降权，用来回答“当前显式估计项是否足以写成读者可理解的 paper reproduction lens”，而不是签发 raw calibration。
 
@@ -247,7 +250,7 @@ python tools/one_shot/tsuyama_phase2_acceptance_report.py \
 
 这个结果的解释要非常严格：Phase 2.8 不是新的 acceptance pass，而是说明在“只求论文数值复现叙事”的 reader-facing score 下，当前低自由度估计项已经达到 partial reproduction；但 `candidate_release_status` 仍为 `negative_or_diagnostic_result_only`，No-Go 仍是 `raw_size_response_alignment_not_met`。换句话说，它适合写进报告作为“estimated-parameter reproduction lens”，不适合用来启动 `10000 events/case` confirm 或回写 EV full-grid。
 
-Phase 2.9 继续沿用户指定的路线 2 推进，但把自由度边界明确标成 **maximal upper-bound**：它不再假装是 raw physical family，也不新增事件模拟；只在现有 acceptance report 中加入 `paper_reproduction_maximal_upper` score mode。这个模式允许一个 hypothetical strict Table S1 per-wavelength Ag transfer，把 strict `interferometric_column_ratio` residual 作为“如果用显式 Ag transfer 硬贴 strict 表列，最多能贴到哪里”的上限项。该 transfer 仍受 `0.25-4.0` bounded gain guardrail 约束，并单独记入 complexity / DOF；它不改 material defaults、不回写 EV full-grid，也不改变 formula-consistent Table S1 仍是更干净 signal proxy 的判断。
+Phase 2.9 继续沿用户指定的路线 2 推进，但把自由度边界明确标成 **maximal upper-bound**：它不再假装是 raw physical family，也不新增事件模拟；只在现有 acceptance report 中加入 `paper_reproduction_maximal_upper` score mode。按 2026-05-14 修正，这个模式实际是在问“如果硬贴 legacy double-normalized over-ratio，最多能贴到哪里”。该 transfer 仍受 `0.25-4.0` bounded gain guardrail 约束，并单独记入 complexity / DOF；它不改 material defaults、不回写 EV full-grid，也不再改变 corrected direct / formula-consistent Table S1 是干净 signal proxy 的判断。
 
 ```bash
 python tools/one_shot/tsuyama_phase2_acceptance_report.py \
@@ -273,13 +276,13 @@ python tools/one_shot/tsuyama_phase2_acceptance_report.py \
   --output-dir results/tsuyama_phase2p9_maximal_upper_rescore_d2p1_v1
 ```
 
-| source | best candidate | maximal score | maximal status | size delta | strict Ag transfer gain range | 解释 |
+| source | best candidate | historical maximal score | maximal status | size delta | legacy Ag transfer gain range | 解释 |
 |---|---|---:|---|---:|---:|---|
-| 3000-event size-only | `tau_2ms_global_refphi_plus_0p6__paper_5sigma_size_response_fit` | `1.2869` | `maximal_paper_fit_partial_upper_bound` | `-0.8782` | `1.810-3.070` | 仍只是 partial；低自由度候选不靠 strict Ag transfer 也已可读 |
-| full inverse | `refspace_0p25__paper_5sigma_sensitivity` | `0.9814` | `maximal_paper_fit_upper_bound` | `-0.9583` | `1.902-3.116` | 上限分数可过 `<=1`，但需要更强 size delta 与 strict Ag transfer |
+| 3000-event size-only | `tau_2ms_global_refphi_plus_0p6__paper_5sigma_size_response_fit` | `1.2869` | `maximal_paper_fit_partial_upper_bound` | `-0.8782` | `1.810-3.070` | historical partial；低自由度候选不靠 legacy Ag transfer 也已可读 |
+| full inverse | `refspace_0p25__paper_5sigma_sensitivity` | `0.9814` | `maximal_paper_fit_upper_bound` | `-0.9583` | `1.902-3.116` | 历史上限分数可过 `<=1`，但需要更强 size delta 与 legacy Ag transfer |
 | D2.1 local smoke | `tau_2ms_global_refphi_plus_collection_narrow` | `0.9893` | `maximal_paper_fit_upper_bound` | `-0.7706` | `1.758-3.085` | 需要的 size delta 最温和，但仍是 high-DOF upper-bound lens |
 
-Phase 2.9 的科学含义是：如果目标仅是“把现有 selected-annulus 输出映射到 Tsuyama paper proxy 数值附近”，那么在引入 global Au size-response correction、single global SNR response，以及 strict Table S1 per-wavelength Ag transfer 后，full inverse 与 D2.1 都能给出接近 score `1` 的上限解。但这个解的自由度已经高于 bounded descriptive reproduction；它证明的是 **可映射性上限**，不是 raw-family 自然复现。因此它正好给出当前计算路线的停点：若继续追更低分，只能引入 per-diameter / per-geometry / per-case correction 或 detection logistic remap，这会越过本项目允许的 estimated-parameter 复现边界。
+Phase 2.9 的科学含义在修正后应收窄为：如果目标是硬贴 legacy over-ratio，那么在引入 global Au size-response correction、single global SNR response，以及 per-wavelength Ag transfer 后，full inverse 与 D2.1 都能给出接近 score `1` 的历史上限解。但这个解的自由度已经高于 bounded descriptive reproduction，且 target 本身是 double-normalized 误读；它证明的是 **legacy target 可映射性上限**，不是 raw-family 自然复现。
 
 Phase 2.10 不继续追更低 score，而是把 raw Au size-response residual 拆开。新增输出 `paper_reproduction_size_response_case_decomposition_v1.csv` 和 `paper_reproduction_size_response_candidate_summary_v1.csv`，对每个 seed-median candidate、每个 observable、每个 wavelength×geometry 都重新拟合 Au20/Au30/Au40/Au60 的 log-log exponent，并额外记录 `20-30`、`30-40`、`40-60` 三个相邻粒径段的局部斜率。
 
@@ -304,7 +307,7 @@ python tools/one_shot/tsuyama_phase2_acceptance_report.py \
 
 D2.1 best 的 peak-height case-level decomposition 显示，最接近的组合是 `660 / 1200x550`（exponent `3.0335`）和 `660 / 800x550`（`3.0456`）；相对最差的是 `532 / 800x550`（`3.1563`）。所有 6 个 peak-height case 的 limiting pair 都是 `40-60`，不是 `20-30`。这点很关键：继续调 Au20 检出率、Au20 lower band 或 Au20 SNR，并不能解决 raw exponent 偏陡；真正需要解释的是大粒径段的 readout / phase / trajectory / collection 是否存在全局压缩或饱和。
 
-Phase 2.10 还做了一个只读估算：如果用单一 global pulse-height response compression `signal' = signal^gamma`，D2.1 best 需要 `gamma ≈ 0.749` 才能把 peak-height exponent 映射到 `2.3`。这个估计项会把 Au30/Au20 SNR ratio 从 `3.28` 压到约 `2.43`，formula-consistent Ag/Au loss 仍约 `0.041`，但 strict Table S1 loss 仍高。这说明 response compression 是比 per-diameter correction 更值得考虑的下一种估计项；不过它仍是 reproduction lens，不是 raw calibration。
+Phase 2.10 还做了一个只读估算：如果用单一 global pulse-height response compression `signal' = signal^gamma`，D2.1 best 需要 `gamma ≈ 0.749` 才能把 peak-height exponent 映射到 `2.3`。这个估计项会把 Au30/Au20 SNR ratio 从 `3.28` 压到约 `2.43`，formula-consistent Ag/Au loss 仍约 `0.041`；旧 strict loss 偏高现在解释为 legacy over-ratio 残差。这说明 response compression 是比 per-diameter correction 更值得考虑的下一种估计项；不过它仍是 reproduction lens，不是 raw calibration。
 
 Phase 2.11 已把这个只读估算落实为正式 `paper_reproduction_response_compression` score mode。它不新增事件模拟，也不改 selected-annulus；同一个全局 `gamma` 同时作用于 Au size-response、Au20/Au30 SNR ratio 与 Ag/Au signal ratio，并且只允许一个 global SNR scale 来对应 paper-normalized Au20/Au30 anchors。它不允许 per-wavelength、per-geometry、per-diameter 或 per-case gamma，也不做 detection logistic remap。
 
@@ -358,7 +361,7 @@ python tools/one_shot/tsuyama_phase2_parameter_inverse.py \
 
 full acceptance report 因此触发当前唯一主 No-Go：
 
-- `raw_size_response_alignment_not_met`：acceptance 先把 `156` 条 seed summary 聚合为 `52` 个 candidate seed-median 代表行；raw/non-transfer family 共 `38` 个可用 candidate，strict Table S1 target 下 `raw_strict_signal_aligned_count = 0`，因此记录 `strict_table_s1_signal_unresolved_formula_signal_pass` diagnostic warning；formula-consistent Table S1 target 下 `raw_formula_signal_aligned_count = 27`，说明 Ag/Au raw signal mismatch 很大一部分来自 target-mode 歧义；但 `raw_size_aligned_count = 0`，`raw_joint_signal_size_aligned_count = 0`，所以仍不能签 accepted candidate。
+- `raw_size_response_alignment_not_met`：acceptance 先把 `156` 条 seed summary 聚合为 `52` 个 candidate seed-median 代表行；raw/non-transfer family 共 `38` 个可用 candidate。2026-05-14 修正后，corrected direct 与 formula-consistent Table S1 target 都说明 Ag/Au raw signal 不是主 blocker；旧 `strict_table_s1_signal_unresolved_formula_signal_pass` warning 归类为 legacy over-ratio 误读。但 `raw_size_aligned_count = 0`，`raw_joint_signal_size_aligned_count = 0`，所以仍不能签 accepted candidate。
 
 detection side 的状态则改为 `partial_pass_with_Au20_low_warning`：Au20 在 `6` 个 joint cases 中只有 `3` 个进入 operational band，但 miss 全部偏低；Au30 为 `5/6` 且属于 minor/borderline warning，Au40/Au60 为 `6/6`。这个结果与论文中 Au20 weak-SNR、not-all-detected 的叙述相容，不再作为与 raw signal/size alignment 同等级的 release blocker。Au20 过高、Au20/Au30 倒挂、Au30-60 severe miss 或 median 明显越界仍会 hard fail。
 
@@ -388,7 +391,7 @@ Phase 2 报告必须继续用双栏 claim，避免把 Tsuyama paper geometry 与
 本轮 full inverse search 已触发严格 No-Go；因此本报告采用 negative result 模板，而不是 accepted candidate 模板。仍需长期保留的 stop rules 是：
 
 - hard acceptance target 中出现 `diagnostic_only`。
-- target audit 显示 Table S1 target mode 尚未 source-audited，却把 strict mode 当唯一 hard target。
+- target audit 显示 Table S1 target mode 尚未 source-audited，或把 legacy over-ratio 当唯一 hard target。
 - candidate 主要依赖 Ag transfer 或 Au size correction 才好看，但 raw signal + raw size-response 没有同时改善。本轮已触发。
 - selected/all uplift 过强且 all-crossing shadow 完全不支持。
 - SNR ratio 和 size exponent 只能二选一改善。
@@ -406,15 +409,15 @@ It only says the current Tsuyama paper-audit selected-annulus proxy lane cannot 
 
 ## 10. Phase 2.11 后的边界复核
 
-计算侧已经完成 D2.1 局部 smoke、Phase 2.6 read-only paper-reproduction rescore、`3000 events/case` size-only confirmation、Phase 2.7 single global SNR response rescore、Phase 2.8 reviewed/descriptive score rescore、Phase 2.9 maximal upper-bound rescore、Phase 2.10 raw Au size-response residual decomposition，以及 Phase 2.11 single global response-compression rescore。当前最可审计的结论是：formula-consistent Table S1 Ag/Au signal 基本可讲通，detection proxy 也不是主阻塞；剩下的核心问题是 raw Au size-response 仍偏陡。如果目标是“raw physical family 自然对齐”，D2.1 已经给出足够证据说明，继续在 global phase / scalar collection surrogate 上细扫，收益会快速递减，并容易滑向隐形 E-family correction。
+计算侧已经完成 D2.1 局部 smoke、Phase 2.6 read-only paper-reproduction rescore、`3000 events/case` size-only confirmation、Phase 2.7 single global SNR response rescore、Phase 2.8 reviewed/descriptive score rescore、Phase 2.9 maximal upper-bound rescore、Phase 2.10 raw Au size-response residual decomposition，以及 Phase 2.11 single global response-compression rescore。当前最可审计的结论是：corrected direct / formula-consistent Table S1 Ag/Au signal 基本可讲通，detection proxy 也不是主阻塞；剩下的核心问题是 raw Au size-response 仍偏陡。如果目标是“raw physical family 自然对齐”，D2.1 已经给出足够证据说明，继续在 global phase / scalar collection surrogate 上细扫，收益会快速递减，并容易滑向隐形 E-family correction。
 
-如果目标是“继续用估计项尽量复现论文数值”，Phase 2.6-2.11 已经给出了分层答案。严格 reproduction score 下，最佳 size-only 候选 `tau_2ms_global_refphi_plus_0p6__paper_5sigma_size_response_fit` 三 seed 稳定、无 guardrail failure，size delta `-0.878` 仍在 bounded 区间内，SNR response exponent `0.812` 也在 bounded 区间内，但 score 只降至 `3.808`，仍高于严格 `<= 2.0` threshold。reviewed/descriptive score 下，同一候选降至 `1.938`，可写成 `bounded_reproduction_partial_descriptive`。maximal upper-bound score 下，full inverse 与 D2.1 可降至约 `0.98-0.99`，但依赖 hypothetical strict Table S1 per-wavelength Ag transfer，fit DOF 增至 `6`，只能写成 `maximal_paper_fit_upper_bound`。Phase 2.11 用单一全局 response-compression 替代 per-size correction 后，D2.1 best 达到 score `2.033`，非常接近但仍未过 `<= 2.0` threshold。因此当前应停止继续加计算自由度：路线 2 已经证明“能部分或上限式贴近论文数值”，但下一步再降分就需要 per-diameter correction、per-geometry correction、per-case SNR scale 或 detection logistic remap，这会把 reproduction lens 推向过拟合。
+如果目标是“继续用估计项尽量复现论文数值”，Phase 2.6-2.11 已经给出了分层答案。严格 reproduction score 下，最佳 size-only 候选 `tau_2ms_global_refphi_plus_0p6__paper_5sigma_size_response_fit` 三 seed 稳定、无 guardrail failure，size delta `-0.878` 仍在 bounded 区间内，SNR response exponent `0.812` 也在 bounded 区间内，但 score 只降至 `3.808`，仍高于严格 `<= 2.0` threshold。reviewed/descriptive score 下，同一候选降至 `1.938`，可写成 `bounded_reproduction_partial_descriptive`。历史 maximal upper-bound score 下，full inverse 与 D2.1 可降至约 `0.98-0.99`，但它依赖 legacy over-ratio per-wavelength Ag transfer，fit DOF 增至 `6`，只保留为 historical sensitivity。Phase 2.11 用单一全局 response-compression 替代 per-size correction 后，D2.1 best 达到 score `2.033`，非常接近但仍未过 `<= 2.0` threshold。因此当前应停止继续加计算自由度：路线 2 已经证明“能部分贴近论文数值”，但下一步再降分就需要 per-diameter correction、per-geometry correction、per-case SNR scale 或 detection logistic remap，这会把 reproduction lens 推向过拟合。
 
 外部 stop-decision 复核同意这一收口判断：现在可以停止 Tsuyama selected-annulus Phase 2 / Phase 2.11 的计算侧 estimated-parameter / reproduction-lens search。Phase 2.11 已经完成此前唯一仍有科学价值的后续计算方向。它说明 global response compression 是比 per-diameter correction 更干净的 reproduction lens，但仍不足以签 accepted candidate。若没有新的实测约束或明确物理新项，不再建议继续 broad raw sweep、继续调 annulus、继续调 Au20 detection，或把 score threshold/权重调到“刚好通过”。
 
 为了避免“是不是停得太早”的误判，stop-decision 后又补了两个只读边界检查。第一个是 ET-2030 + LI5640 的 instrument-aware feasibility：在 estimated silicon responsivity、NEP、LI5640 current sensitivity、time constant / filter-order prior 下，current-input / low-noise TIA 连接具备 comfortable sensitivity margin；同样的弱 photocurrent 若走 50 Ω voltage path，多数配置低于最小 voltage sensitivity。这支持第一轮实验优先核对 current-input / TIA 接法和量程，而不是继续在 optical surrogate 里调相位。第二个是 paper-statistics sensitivity：把 Phase 2.10 的 limiting-pair decomposition 转换成“需要把 high-diameter member 压低多少才能匹配 `2.3` exponent”。结果显示大部分 case 需要 `30%+` 的 high-size signal suppression；这意味着 IQR trimming、500-count finite sampling 或 vendor size dispersion 可能解释一部分 flattening，但没有 event-level pulses / TEM-DLS batch distribution 时，不能单独把 40-60 nm 斜率问题讲通。
 
-长期 stop rule 仍需保留：除非拿到新的实测 blank / BFP / detector / lock-in / Au trace 数据，或者新增的是明确由这些实测数据约束的 operator model，否则不再把 broad raw-parameter sweep 作为主路线。若未来确实重启 raw-family 计算，promote 条件仍保持严格：formula-consistent signal score 通过或 strict signal score 显著下降，同时 raw Au size exponent 至少降到 `2.85` 以下或相对当前 D2.1 best 再改善 `>= 0.25`，且 Au30-60 detection 不能 severe fail，Au20 不能过检，三 seeds 方向一致。
+长期 stop rule 仍需保留：除非拿到新的实测 blank / BFP / detector / lock-in / Au trace 数据，或者新增的是明确由这些实测数据约束的 operator model，否则不再把 broad raw-parameter sweep 作为主路线。若未来确实重启 raw-family 计算，promote 条件仍保持严格：corrected/formula signal score 通过，同时 raw Au size exponent 至少降到 `2.85` 以下或相对当前 D2.1 best 再改善 `>= 0.25`，且 Au30-60 detection 不能 severe fail，Au20 不能过检，三 seeds 方向一致。
 
 如果要把 Phase 2 从 proxy 继续往 absolute calibration 推进，还需要以下最小实测数据：
 

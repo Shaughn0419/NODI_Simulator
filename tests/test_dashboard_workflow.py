@@ -17,6 +17,7 @@ import re
 import subprocess
 import sys
 import importlib
+from contextlib import suppress
 from typing import Any
 from copy import deepcopy
 from pathlib import Path
@@ -27,10 +28,8 @@ import pytest
 import streamlit as st
 
 _StreamlitAppTest: Any = None
-try:
+with suppress(Exception):
     from streamlit.testing.v1 import AppTest as _StreamlitAppTest
-except Exception:  # pragma: no cover - optional test dependency
-    pass
 
 AppTest: Any = _StreamlitAppTest
 
@@ -1583,15 +1582,16 @@ def test_dashboard_prefers_ev_design_anchor_dataset_when_available():
         "fine_fine_full_range_10000e",
         "fine_full_range_biomimetic_exosome_10000e",
         "ev_design_full_range_biomimetic_exosome_with_anchors_10000e",
+        "lens_b_fixed660_tau1ms_ev_gold_fullgrid_1000e_seed42",
     ]
     assert (
         resolve_preferred_dataset_prefix(prefixes)
-        == "ev_design_full_range_biomimetic_exosome_with_anchors_10000e"
+        == "lens_b_fixed660_tau1ms_ev_gold_fullgrid_1000e_seed42"
     )
 
 
 def test_dashboard_launchers_reference_current_standard_dataset_and_not_legacy_defaults():
-    current_prefix = "ev_design_full_range_biomimetic_exosome_with_anchors_10000e"
+    current_prefix = "lens_b_fixed660_tau1ms_ev_gold_fullgrid_1000e_seed42"
     legacy_markers = (
         "coarse_default_summary",
         "coarse_full_range_summary",
@@ -2058,8 +2058,8 @@ class TestDashboardWorkflow:
             assert cfg_mod.DEFAULT_SIM_CFG.reference_route == "calibrated_primary"
             assert "calibrated_lookup" in cfg_mod.REFERENCE_MODEL_OPTIONS
             assert (
-                cfg_mod.DEFAULT_REFERENCE_MODEL_INDEX
-                == cfg_mod.REFERENCE_MODEL_OPTIONS.index("calibrated_lookup")
+                cfg_mod.REFERENCE_MODEL_OPTIONS.index("calibrated_lookup")
+                == cfg_mod.DEFAULT_REFERENCE_MODEL_INDEX
             )
         finally:
             monkeypatch.delenv("NODI_REFERENCE_CALIBRATION_PATH", raising=False)
@@ -2421,20 +2421,21 @@ def test_dashboard_page_registry_matches_workflow():
         "Decision Summary",
         "Engineering Windows",
     ]
-    assert PAGE_OPTIONS == WORKFLOW_PAGE_OPTIONS + [
+    assert [
+        *WORKFLOW_PAGE_OPTIONS,
         "Mie Explorer",
         "Interference Explorer",
         "Noise & Detection Explorer",
         "Design Explorer",
         "Case Inspector",
         "Single-Case Calculator",
-    ]
+    ] == PAGE_OPTIONS
 
 
 def test_page_header_hub_keeps_cross_page_navigation_in_sidebar(monkeypatch):
     captured_buttons: list[str] = []
 
-    def fake_button(label: str, *args: object, **kwargs: object) -> bool:
+    def fake_button(label: str, *_args: object, **_kwargs: object) -> bool:
         captured_buttons.append(label)
         return False
 
@@ -2447,7 +2448,6 @@ def test_page_header_hub_keeps_cross_page_navigation_in_sidebar(monkeypatch):
         st.session_state["selected_H_nm"] = 610
         for page in PAGE_OPTIONS:
             render_page_header_hub(
-                page,
                 geometry_is_context_only=page == "Mie Explorer",
             )
 
@@ -3943,7 +3943,7 @@ def test_build_engineering_gate_calibration_report_prefers_current_default():
             },
         ]
     )
-    report = build_engineering_gate_calibration_report(df, top_k=3)
+    report = build_engineering_gate_calibration_report(df)
     assert report["current_gate"]["passed_cases"] == 1
     assert report["current_gate"]["failed_cases"] == 4
     assert report["recommended_default_variant"] == "current_default"

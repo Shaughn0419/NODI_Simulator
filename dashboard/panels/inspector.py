@@ -48,7 +48,7 @@ def _coerce_float(value: object) -> float | None:
     return None
 
 
-def _build_case_trend_notes(case: dict, score_info: dict, outcome: dict) -> list[str]:
+def _build_case_trend_notes(score_info: dict, outcome: dict) -> list[str]:
     lines: list[str] = []
 
     stable_rate = outcome.get("stable_detection_rate")
@@ -118,7 +118,7 @@ def render_inspector():
     """Render the Case Inspector page."""
     st.header("Case Inspector — 看成因、看波动、看单事件")
     st.caption("这是整个链路的最终复盘页：回答“为什么这个点分高/分低”，以及“它在单事件层面到底是不是好测”。")
-    render_page_header_hub("Case Inspector")
+    render_page_header_hub()
 
     particle = st.session_state.get("selected_particle")
     wavelength = st.session_state.get("selected_wavelength_nm")
@@ -333,7 +333,7 @@ def render_inspector():
         if outcome.get("mean_peak_margin_z") is not None
         else "N/A",
     )
-    for note in _build_case_trend_notes(case, score_info, outcome):
+    for note in _build_case_trend_notes(score_info, outcome):
         st.caption(note)
 
     required_detected = outcome.get("engineering_gate_required_detected_events")
@@ -384,12 +384,12 @@ def render_inspector():
         if heights:
             st.markdown("**峰高分布**")
             fig_h = go.Figure(go.Histogram(x=heights, nbinsx=20, marker_color="steelblue"))
-            fig_h.update_layout(xaxis_title="峰高", yaxis_title="数量", height=250, margin=dict(t=10))
+            fig_h.update_layout(xaxis_title="峰高", yaxis_title="数量", height=250, margin={"t": 10})
             st.plotly_chart(fig_h, width="stretch")
         if widths:
             st.markdown("**峰宽分布**")
             fig_w = go.Figure(go.Histogram(x=[w * 1e3 for w in widths], nbinsx=20, marker_color="coral"))
-            fig_w.update_layout(xaxis_title="峰宽 (ms)", yaxis_title="数量", height=250, margin=dict(t=10))
+            fig_w.update_layout(xaxis_title="峰宽 (ms)", yaxis_title="数量", height=250, margin={"t": 10})
             st.plotly_chart(fig_w, width="stretch")
 
     st.subheader("单事件 Trace")
@@ -416,8 +416,8 @@ def render_inspector():
     evt = events[idx]
     t_ms = evt["trajectory"]["time_s"] * 1e3
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=t_ms, y=evt["signal_trace"], mode="lines", name="干净信号 (clean signal)", line=dict(color="blue")))
-    fig.add_trace(go.Scatter(x=t_ms, y=evt["signal_noisy"], mode="lines", name="加噪读出 (noisy signal)", line=dict(color="gray", width=0.5), opacity=0.6))
+    fig.add_trace(go.Scatter(x=t_ms, y=evt["signal_trace"], mode="lines", name="干净信号 (clean signal)", line={"color": "blue"}))
+    fig.add_trace(go.Scatter(x=t_ms, y=evt["signal_noisy"], mode="lines", name="加噪读出 (noisy signal)", line={"color": "gray", "width": 0.5}, opacity=0.6))
     fig.add_hline(y=evt["threshold"], line_dash="dash", line_color="red", annotation_text=f"检测阈值 (threshold)={evt['threshold']:.4f}")
     fig.update_layout(
         xaxis_title="时间 (ms)",

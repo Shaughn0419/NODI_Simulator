@@ -348,9 +348,7 @@ def build_readiness_artifact_manifest(
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
         "required_false_fields": list(TOP_LEVEL_FALSE_FIELDS),
-        "claim_boundary": {
-            key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS
-        }
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "bounded_solver_readiness_only"},
     }
 

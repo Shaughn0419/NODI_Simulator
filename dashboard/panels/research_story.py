@@ -20,11 +20,13 @@ import streamlit as st
 
 from nodi_simulator.dashboard.backend import (
     check_data_files,
+    CURRENT_STANDARD_DATASET_PREFIX,
     ensure_summary_geometry_columns,
     list_available_datasets,
     load_metadata,
     load_result_health,
     load_sweep_summary,
+    resolve_preferred_dataset_prefix,
 )
 from nodi_simulator.dashboard.panels.common import (
     render_display_banner,
@@ -36,7 +38,7 @@ RESULTS_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
     "results",
 )
-PRIMARY_STORY_PREFIX = "ev_design_full_range_biomimetic_exosome_with_anchors_10000e"
+PRIMARY_STORY_PREFIX = CURRENT_STANDARD_DATASET_PREFIX
 EXOSOME_BAND_SPECS = [
     ("40–80 nm", 40, 80),
     ("90–150 nm", 90, 150),
@@ -107,7 +109,7 @@ def _aggregate_wavelength_table(df: pd.DataFrame) -> pd.DataFrame:
             ]
         )
 
-    table = (
+    return (
         df.groupby("wavelength_nm", dropna=False)
         .agg(
             case_count=("wavelength_nm", "size"),
@@ -129,7 +131,6 @@ def _aggregate_wavelength_table(df: pd.DataFrame) -> pd.DataFrame:
         )
         .reset_index(drop=True)
     )
-    return table
 
 def _format_order(order: list[int]) -> str:
     return " > ".join(f"`{int(wl)}`" for wl in order)
@@ -169,7 +170,7 @@ def _bar_figure(
     fig.update_layout(
         title=title,
         height=340,
-        margin=dict(l=24, r=24, t=64, b=24),
+        margin={"l": 24, "r": 24, "t": 64, "b": 24},
         yaxis_title=y_axis_title,
         xaxis_title="波长",
     )
@@ -184,6 +185,9 @@ def _load_primary_story_inputs() -> tuple[str, pd.DataFrame, dict[str, Any], dic
 
 def _resolve_story_dataset_prefix() -> str:
     available = list_available_datasets(RESULTS_DIR)
+    preferred = resolve_preferred_dataset_prefix(available)
+    if preferred:
+        return preferred
     if PRIMARY_STORY_PREFIX not in available:
         preview = ", ".join(available[:8]) if available else "(none)"
         raise FileNotFoundError(
@@ -196,8 +200,7 @@ def _resolve_story_dataset_prefix() -> str:
 def _filter_default_ready_within_envelope(df: pd.DataFrame) -> pd.DataFrame:
     sub = df.copy()
     sub = sub[sub["observation_freeze_status"] == "default_ready_for_result_freeze"]
-    sub = sub[sub["rho_physical_envelope_status"] == "within_envelope"]
-    return sub
+    return sub[sub["rho_physical_envelope_status"] == "within_envelope"]
 
 def _aggregate_band_wavelength_table(
     df: pd.DataFrame,
@@ -253,14 +256,15 @@ def _band_heatmap_figure(
         table.pivot(index="band_label", columns="wavelength_nm", values=metric_col)
         .reindex(index=band_labels, columns=wavelength_order)
     )
-    text = []
-    for row in pivot.to_numpy(dtype=float):
-        text.append([
+    text = [
+        [
             "N/A"
             if not np.isfinite(value)
             else f"{float(value):.1%}" if percent else f"{float(value):.3f}"
             for value in row
-        ])
+        ]
+        for row in pivot.to_numpy(dtype=float)
+    ]
     fig.add_trace(
         go.Heatmap(
             z=pivot.to_numpy(dtype=float),
@@ -275,7 +279,7 @@ def _band_heatmap_figure(
     fig.update_layout(
         title=title,
         height=380,
-        margin=dict(l=24, r=24, t=64, b=24),
+        margin={"l": 24, "r": 24, "t": 64, "b": 24},
         xaxis_title="波长",
         yaxis_title="粒径分组",
     )
@@ -499,14 +503,14 @@ def _dimension_profile_figure(
                 x=sub[dimension_col].tolist(),
                 y=sub[metric_col].tolist(),
                 mode="lines+markers",
-                line=dict(color=WAVELENGTH_COLORS.get(wavelength_nm, "#6B7280"), width=3),
-                marker=dict(size=7),
+                line={"color": WAVELENGTH_COLORS.get(wavelength_nm, "#6B7280"), "width": 3},
+                marker={"size": 7},
             )
         )
     fig.update_layout(
         title=title,
         height=360,
-        margin=dict(l=24, r=24, t=64, b=24),
+        margin={"l": 24, "r": 24, "t": 64, "b": 24},
         xaxis_title="W (nm)" if dimension_col == "width_nm" else "H (nm)",
         yaxis_title=y_axis_title,
     )
@@ -566,16 +570,15 @@ def _geometry_heatmap_figure(
         table.pivot(index="depth_nm", columns="width_nm", values=metric_col)
         .reindex(index=depth_order, columns=width_order)
     )
-    text = []
-    for row in pivot.to_numpy(dtype=float):
-        text.append(
-            [
-                "N/A"
-                if not np.isfinite(value)
-                else f"{float(value):.1%}" if percent else f"{float(value):.3f}"
-                for value in row
-            ]
-        )
+    text = [
+        [
+            "N/A"
+            if not np.isfinite(value)
+            else f"{float(value):.1%}" if percent else f"{float(value):.3f}"
+            for value in row
+        ]
+        for row in pivot.to_numpy(dtype=float)
+    ]
     fig.add_trace(
         go.Heatmap(
             z=pivot.to_numpy(dtype=float),
@@ -590,7 +593,7 @@ def _geometry_heatmap_figure(
     fig.update_layout(
         title=title,
         height=400,
-        margin=dict(l=24, r=24, t=64, b=24),
+        margin={"l": 24, "r": 24, "t": 64, "b": 24},
         xaxis_title="W (nm)",
         yaxis_title="H (nm)",
     )
@@ -863,7 +866,7 @@ def _decision_one_pager_table(
 def render_research_overview() -> None:
     st.header("Decision Summary — 一页先拿到主结论和读图顺序")
     st.caption("这页只做一件事：把 38 号 biomimetic exosome 报告压成一页读图入口。先知道主路线、第二路线、默认几何和不建议方向，再决定往哪一层细看。")
-    render_page_header_hub("Decision Summary")
+    render_page_header_hub()
     render_display_banner(
         eyebrow="Executive View",
         title="先拿结论，再决定细看哪一层证据",
@@ -1003,7 +1006,7 @@ def render_research_overview() -> None:
 def render_geometry_platform() -> None:
     st.header("Engineering Windows — 把研究上限线和工程保守线分开")
     st.caption("这页专门讲 38 号报告里最容易被误读的部分：最高分尖峰不等于默认工程方案。这里要把 `W=500/600 nm` 的研究上限线和 `W=700–900, H=700–1000 nm` 的工程保守线明确拆开。")
-    render_page_header_hub("Engineering Windows")
+    render_page_header_hub()
     render_display_banner(
         eyebrow="Engineering Window",
         title="几何页不该盯着最高分点，而该先分清哪条是工程保守线",

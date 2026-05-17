@@ -51,12 +51,17 @@ SELECTED_ANNULUS_CONTRIBUTION_COLUMN = "selected_detector_mode_annulus_contribut
 SELECTED_ANNULUS_UPLIFT_COLUMN = "selected_detector_mode_annulus_uplift"
 REFERENCE_USEFUL_BAND = "electronics_noise_limited_useful"
 ROUTE_COLUMNS = ["wavelength_nm", "width_nm", "depth_nm"]
+RECOMMENDATION_ELIGIBLE_WAVELENGTHS_NM = (404, 660)
+CONTROL_ONLY_WAVELENGTHS_NM = (488, 532)
+RECOMMENDATION_WAVELENGTH_RULE = (
+    "recommendation_conclusion_only_404_660__488_532_control_only"
+)
 
 
 def build_priors(diameters: list[int]) -> dict[str, dict[int, float]]:
     priors: dict[str, dict[int, float]] = {}
 
-    priors["uniform"] = {d: 1.0 for d in diameters}
+    priors["uniform"] = dict.fromkeys(diameters, 1.0)
 
     small_ev = {}
     for d in diameters:
@@ -99,6 +104,25 @@ def build_priors(diameters: list[int]) -> dict[str, dict[int, float]]:
 def normalize_prior(prior: dict[int, float]) -> dict[int, float]:
     total = sum(prior.values())
     return {k: v / total for k, v in prior.items()}
+
+
+def _with_route_diameter_balanced_prior_weights(
+    df: pd.DataFrame,
+    wmap: dict[int, float],
+) -> pd.DataFrame:
+    weighted = df.copy()
+    diameter = pd.to_numeric(weighted["particle_diameter_nm"], errors="coerce")
+    duplicate_count = (
+        weighted.assign(_prior_diameter_nm=diameter)
+        .groupby([*ROUTE_COLUMNS, "_prior_diameter_nm"], dropna=False)[
+            "_prior_diameter_nm"
+        ]
+        .transform("size")
+        .astype(float)
+    )
+    base_weight = diameter.map(wmap).fillna(0.0).astype(float)
+    weighted["weight"] = base_weight / duplicate_count.where(duplicate_count > 0, 1.0)
+    return weighted
 
 
 def aggregate_routes(df: pd.DataFrame, priors: dict[str, dict[int, float]]) -> pd.DataFrame:
@@ -150,8 +174,7 @@ def aggregate_routes(df: pd.DataFrame, priors: dict[str, dict[int, float]]) -> p
 
     for prior_name, prior in priors.items():
         wmap = normalize_prior(prior)
-        weighted = df.copy()
-        weighted["weight"] = weighted["particle_diameter_nm"].map(wmap)
+        weighted = _with_route_diameter_balanced_prior_weights(df, wmap)
         agg = (
             weighted.groupby(ROUTE_COLUMNS)
             .apply(
@@ -447,6 +470,26 @@ def build_selected_annulus_ranking_comparison(
             else routes.iloc[0:0]
         )
         boundary_top = _route_records(boundary_ranked.head(top_n))
+        primary_recommendation_ranked = _rank_routes(
+            _recommendation_eligible_routes(routes),
+            primary_sort,
+        )
+        selected_recommendation_ranked = (
+            _rank_routes(
+                _recommendation_eligible_routes(selected_rankable),
+                selected_sort,
+            )
+            if selected_available
+            else routes.iloc[0:0]
+        )
+        selected_control_only_ranked = (
+            _rank_routes(
+                _control_only_routes(selected_rankable),
+                selected_sort,
+            )
+            if selected_available
+            else routes.iloc[0:0]
+        )
         primary_set = {tuple(record.values()) for record in primary_top}
         selected_set = {tuple(record.values()) for record in selected_top}
         primary_top1 = primary_top[0] if primary_top else None
@@ -459,11 +502,28 @@ def build_selected_annulus_ranking_comparison(
                 "selected_annulus_lens": (
                     "selected_annulus_detection_reference_useful_then_stable_then_final"
                 ),
+                "recommendation_wavelength_rule": RECOMMENDATION_WAVELENGTH_RULE,
                 "selected_annulus_rank_scope": selected_rank_scope,
                 "top_n": int(top_n),
                 "primary_top_routes": json.dumps(primary_top),
                 "selected_annulus_top_routes": json.dumps(selected_top),
                 "selected_annulus_boundary_top_routes": json.dumps(boundary_top),
+                "primary_recommendation_top_routes": json.dumps(
+                    _route_records(primary_recommendation_ranked.head(top_n))
+                ),
+                "selected_annulus_recommendation_top_routes": json.dumps(
+                    _route_records(selected_recommendation_ranked.head(top_n))
+                    if selected_available
+                    else []
+                ),
+                "selected_annulus_control_only_top_routes": json.dumps(
+                    _route_records(selected_control_only_ranked.head(top_n))
+                    if selected_available
+                    else []
+                ),
+                "selected_annulus_metric_top1_control_only": (
+                    _route_is_control_only(selected_top1) if selected_available else False
+                ),
                 "selected_annulus_top1_route_changed": (
                     selected_available and primary_top1 != selected_top1
                 ),
@@ -485,17 +545,44 @@ def _rank_routes(routes: pd.DataFrame, sort_cols: list[str]) -> pd.DataFrame:
     return routes.sort_values(available, ascending=[False] * len(available)).copy()
 
 
+def wavelength_isin(routes: pd.DataFrame, wavelengths_nm: tuple[int, ...]) -> pd.Series:
+    wavelength = pd.to_numeric(routes["wavelength_nm"], errors="coerce")
+    return wavelength.isin(wavelengths_nm)
+
+
+def _recommendation_eligible_routes(routes: pd.DataFrame) -> pd.DataFrame:
+    if "wavelength_nm" not in routes:
+        return routes.iloc[0:0].copy()
+    mask = wavelength_isin(routes, RECOMMENDATION_ELIGIBLE_WAVELENGTHS_NM)
+    return routes[mask].copy()
+
+
+def _control_only_routes(routes: pd.DataFrame) -> pd.DataFrame:
+    if "wavelength_nm" not in routes:
+        return routes.iloc[0:0].copy()
+    mask = wavelength_isin(routes, CONTROL_ONLY_WAVELENGTHS_NM)
+    return routes[mask].copy()
+
+
+def _route_is_control_only(route: dict[str, int] | None) -> bool:
+    if not route:
+        return False
+    try:
+        wavelength_nm = int(route["wavelength_nm"])
+    except (KeyError, TypeError, ValueError):
+        return False
+    return wavelength_nm in CONTROL_ONLY_WAVELENGTHS_NM
+
+
 def _route_records(routes: pd.DataFrame) -> list[dict[str, int]]:
-    records: list[dict[str, int]] = []
-    for row in routes.itertuples(index=False):
-        records.append(
-            {
-                "wavelength_nm": int(row.wavelength_nm),
-                "width_nm": int(row.width_nm),
-                "depth_nm": int(row.depth_nm),
-            }
-        )
-    return records
+    return [
+        {
+            "wavelength_nm": int(row.wavelength_nm),
+            "width_nm": int(row.width_nm),
+            "depth_nm": int(row.depth_nm),
+        }
+        for row in routes.itertuples(index=False)
+    ]
 
 
 def print_top_routes(routes: pd.DataFrame, prior_name: str, top_n: int) -> None:
@@ -570,6 +657,20 @@ def print_top_routes(routes: pd.DataFrame, prior_name: str, top_n: int) -> None:
             f"under prior: {prior_name}"
         )
         print(selected_ranked[selected_cols].head(top_n).round(4).to_string(index=False))
+        selected_recommendation_ranked = _recommendation_eligible_routes(
+            selected_ranked
+        )
+        if not selected_recommendation_ranked.empty:
+            print(
+                f"\nTOP {top_n} recommendation-eligible selected-annulus routes "
+                f"(404/660 conclusion only) under prior: {prior_name}"
+            )
+            print(
+                selected_recommendation_ranked[selected_cols]
+                .head(top_n)
+                .round(4)
+                .to_string(index=False)
+            )
         if "reference_operating_band" in routes:
             boundary_ranked = routes[
                 routes["reference_operating_band"].astype(str).ne(REFERENCE_USEFUL_BAND)

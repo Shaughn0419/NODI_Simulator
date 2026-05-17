@@ -102,7 +102,7 @@
       "raw_magnitude_final_gate_allowed": false,
       "roughness_leakage_simulation_authorized": false,
       "route_promotion_authorized": false,
-      "sha256": "f50fbc109ff9da4f28204400326d1d31215c01ee112b4a5e648619ddd3f804cf",
+      "sha256": "3525f2a362cd1c496aa8d940af574547317d3ae6059ffeea18eb70dee6c12c5b",
       "solver_native_raw_magnitude_final_gate_allowed": false,
       "status": "generated_record",
       "transport_residence_time_simulation_authorized": false,

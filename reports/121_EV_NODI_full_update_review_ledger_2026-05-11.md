@@ -1,11 +1,17 @@
 # EV NODI full update review ledger 2026-05-11
 
-This ledger records the 2026-05-11 in-place consolidation of the current full-data reader report, the file-by-file source/config/test review, the documentation review, and the verification evidence. It is a review artifact; the current scientific single source of truth remains `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md` v3.0.
+> 2026-05-14 supersession note: this ledger is historical provenance for the
+> 2026-05-11 v3.0 consolidation. The current scientific single source of truth
+> is `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`
+> v5.2.6, which includes the completed lens-B EV+gold full-grid final. Do not
+> use this file's v3.0 wording as current report status.
+
+This ledger records the 2026-05-11 in-place consolidation of the then-current full-data reader report, the file-by-file source/config/test review, the documentation review, and the verification evidence. It is a historical review artifact; on 2026-05-11 the scientific single source of truth was `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md` v3.0.
 
 ## Report baseline and merge record
 
 - Baseline selected: `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`.
-- Reason: `reports/current/README.md` marks report 47 as historical and identifies report 88 as the current reader-facing v1/v2 interpretation; after this pass, report 88 is v3.0 and includes P0-P18.
+- Reason: `reports/current/README.md` marked report 47 as historical and identified report 88 as the then-current reader-facing v1/v2 interpretation; after this pass, report 88 was v3.0 and included P0-P18.
 - Version/date after update: `v3.0`, `2026-05-11`.
 - Coverage after update: v1 full-grid `32,032` base design combinations at `10,000` synthetic events per case; realism v2 no-measured-data closure; P0 review-ready relative audit (`572` route aggregate rows, `143` per wavelength); P1-P18 physical-ceiling contracts and six bounded trace-only lanes.
 - Current boundary: no measured acquisition data, no calibration-data ingest, no calibrated SNR/event-probability/LOD/concentration/biological-specificity claim, no route promotion, no main-660 redefinition.
@@ -579,7 +585,7 @@ Tracked files reviewed in git order: 519. Each row records the path, category, f
 
 ## Documentation file-by-file ledger
 
-Documentation/explanatory files reviewed in git order plus this ledger: 269. Historical/stage reports are preserved as provenance unless listed as updated; current entry points now route readers to report 88 v3.0 and this ledger.
+Documentation/explanatory files reviewed in git order plus this ledger: 269. Historical/stage reports are preserved as provenance unless listed as updated; at that 2026-05-11 pass, entry points routed readers to report 88 v3.0 and this ledger.
 
 | Path | Role | Update record |
 |---|---|---|
@@ -874,7 +880,7 @@ Documentation/explanatory files reviewed in git order plus this ledger: 269. His
 - `文档导航.md`: added report 121 ledger entry and P0-audit / P6-P16 trace notes; switched v2 anchor guidance to v3.0.
 - `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`: refreshed in place to v3.0 with P0-P18 merged conclusions and trade-off trace evidence.
 - `reports/89_EV_NODI_post_v2_unmodeled_realism_register.md`: refreshed with P0-P18 status + P19 evidence-strategy boundary and completion notes.
-- `reports/current/README.md`: kept as current entrypoint with report 47 demoted to historical and v3.0 report 88 anchor.
+- `reports/current/README.md`: at that pass, kept as entrypoint with report 47 demoted to historical and v3.0 report 88 anchor.
 - `tests/run_tests.md`: added the AppleDouble mounted-storage reproducibility caveat and tool-safe compile path guidance.
 - `reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md`: this artifact now carries scope note, env fingerprint, open items split, and schema-drift intent.
 

@@ -64,10 +64,9 @@ def _select_cases() -> pd.DataFrame:
     selected = selected[
         selected["cohort"] == "exosome_mainline_representative"
     ].copy()
-    selected = selected.sort_values(
+    return selected.sort_values(
         ["wavelength_nm", "particle_name", "width_nm", "depth_nm"]
     ).reset_index(drop=True)
-    return selected
 
 
 def _load_summary_lookup() -> pd.DataFrame:

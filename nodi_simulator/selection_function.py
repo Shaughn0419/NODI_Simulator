@@ -237,9 +237,9 @@ def compute_observed_distribution_correction(
 
     total_true_weight = sum(true_weights.values())
     if total_true_weight <= 0.0:
-        true_distribution = {bin_id: 0.0 for bin_id in bin_ids}
-        observed_distribution = {bin_id: 0.0 for bin_id in bin_ids}
-        bias_factor: dict[str, float | None] = {bin_id: None for bin_id in bin_ids}
+        true_distribution = dict.fromkeys(bin_ids, 0.0)
+        observed_distribution = dict.fromkeys(bin_ids, 0.0)
+        bias_factor: dict[str, float | None] = dict.fromkeys(bin_ids)
         prediction_status = "unavailable_zero_true_population_weight"
         gate_passed = False
     else:
@@ -255,7 +255,7 @@ def compute_observed_distribution_correction(
             prediction_status = "observed_distribution_predicted_by_selection_surrogate"
             gate_passed = True
         else:
-            observed_distribution = {bin_id: 0.0 for bin_id in bin_ids}
+            observed_distribution = dict.fromkeys(bin_ids, 0.0)
             prediction_status = "unavailable_zero_selected_population_weight"
             gate_passed = False
         bias_factor = {

@@ -49,7 +49,8 @@ MINIMUM_OUTPUT_SCHEMA_FIELDS = (
     "primary_blocker_summary",
 )
 
-DESIGN_CLAIM_GOVERNANCE_FIELDS = MINIMUM_OUTPUT_SCHEMA_FIELDS + (
+DESIGN_CLAIM_GOVERNANCE_FIELDS = (
+    *MINIMUM_OUTPUT_SCHEMA_FIELDS,
     "minimum_output_schema_version",
     "minimum_output_schema_status",
     "minimum_output_schema_missing_fields",

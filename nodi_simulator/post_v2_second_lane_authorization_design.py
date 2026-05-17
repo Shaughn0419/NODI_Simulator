@@ -272,9 +272,7 @@ def _load_validated_p6_evidence(project_root: Path) -> dict[str, dict[str, Any]]
 
 
 def _guard_payload() -> dict[str, bool]:
-    return {key: False for key in TOP_LEVEL_FALSE_FIELDS} | {
-        key: True for key in TOP_LEVEL_TRUE_FIELDS
-    }
+    return dict.fromkeys(TOP_LEVEL_FALSE_FIELDS, False) | dict.fromkeys(TOP_LEVEL_TRUE_FIELDS, True)
 
 
 def build_p6_evidence_binding_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
@@ -411,9 +409,7 @@ def build_artifact_manifest(project_root: Path = PROJECT_ROOT) -> dict[str, Any]
         "manifest_role": "second_lane_authorization_design_artifact_manifest",
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
-        "claim_boundary": {
-            key: False for key in CLAIM_BOUNDARY_FALSE_FIELDS
-        }
+        "claim_boundary": dict.fromkeys(CLAIM_BOUNDARY_FALSE_FIELDS, False)
         | {"allowed_claim_level": "second_lane_authorization_design_only"},
         **_guard_payload(),
     }

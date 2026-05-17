@@ -1,0 +1,191 @@
+"""Generated documentation files for the review package."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def write_schema_docs(project_root: Path = PROJECT_ROOT) -> list[Path]:
+    schema_dir = project_root / "docs/schemas"
+    schema_dir.mkdir(parents=True, exist_ok=True)
+    docs = {
+        "post_v2_mandatory_audit_schema.md": (
+            "# Post-v2 Mandatory Audit Schema\n\n"
+            "The core table is `results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv`. "
+            "Rows are unique relative route aggregates with declared particle scope, rank-percentile evidence, "
+            "and explicit claim blockers. Raw arbitrary-unit ratios are diagnostic only.\n"
+            "\nTop-level columns tracked from `top_candidate_mandatory_audit.csv`:\n\n"
+            "- `absolute_lod_claim_allowed`\n"
+            "- `aggregation_particle_family`\n"
+            "- `aggregation_quantile`\n"
+            "- `aggregation_scope`\n"
+            "- `anchor_particles_included`\n"
+            "- `audit_bfp_jacobian_applied`\n"
+            "- `audit_generated_at`\n"
+            "- `bfp_roi_cross_term_proxy`\n"
+            "- `bfp_roi_rank_percentile_in_stratum`\n"
+            "- `bfp_roi_score`\n"
+            "- `bfp_roi_self_term_proxy`\n"
+            "- `biological_specificity_claim_allowed`\n"
+            "- `calibrated_snr_claim_allowed`\n"
+            "- `candidate_source`\n"
+            "- `coincidence_event_overlap_proxy_definition`\n"
+            "- `coincidence_event_overlap_proxy_label`\n"
+            "- `comparison_stratum`\n"
+            "- `contaminant_pass_fraction`\n"
+            "- `contaminant_risk_label`\n"
+            "- `contaminant_utilized_in_risk_policy`\n"
+            "- `contaminants_included_in_route_score`\n"
+            "- `depth_nm`\n"
+            "- `detector_voltage_prediction_claim_allowed`\n"
+            "- `ev_polydispersity_pass_fraction_proxy`\n"
+            "- `ev_sample_profile_min_risk_label`\n"
+            "- `ev_sample_profile_resolved`\n"
+            "- `final_audit_decision`\n"
+            "- `main_660_redefinition_authorized`\n"
+            "- `missing_v1_reason`\n"
+            "- `noise_max_abs_percentile_delta_vs_nominal`\n"
+            "- `noise_pass_fraction`\n"
+            "- `rank_inversion_flag`\n"
+            "- `rank_inversion_reason_codes`\n"
+            "- `rank_inversion_severity`\n"
+            "- `ranking_participation`\n"
+            "- `route_key`\n"
+            "- `route_role_final`\n"
+            "- `route_role_initial`\n"
+            "- `selected_annulus_boundary_policy`\n"
+            "- `selected_annulus_main_control_reversal`\n"
+            "- `selected_annulus_primary_gate_switch_blocked`\n"
+            "- `selected_annulus_replaces_all_crossing_ranking`\n"
+            "- `source_v1_library_sha256`\n"
+            "- `true_ev_concentration_claim_allowed`\n"
+            "- `tsuyama_geometry_relation`\n"
+            "- `tsuyama_signal_rank_percentile_in_stratum`\n"
+            "- `tsuyama_signal_score`\n"
+            "- `v1_bfp_to_angle_jacobian_applied`\n"
+            "- `v1_detector_field_units`\n"
+            "- `v1_field_coordinate_measure`\n"
+            "- `v1_operator_route`\n"
+            "- `v1_output_claim_level`\n"
+            "- `v1_scalar_rank_in_stratum`\n"
+            "- `v1_scalar_rank_percentile_in_stratum`\n"
+            "- `v1_scalar_score`\n"
+            "- `wavelength_nm`\n"
+            "- `width_nm`\n"
+            "\nTop-level manifest fields tracked from "
+            "`top_candidate_mandatory_audit_manifest.json`:\n\n"
+            "- `audit_bfp_jacobian_applied_layer`\n"
+            "- `audit_manifest_schema`\n"
+            "- `calibrated_claim_allowed`\n"
+            "- `milestone`\n"
+            "- `p0b_artifacts_produced_from_evidence_chain`\n"
+            "- `rank_policy`\n"
+            "- `unprefixed_forbidden_audit_columns`\n"
+            "- `v1_bfp_to_angle_jacobian_applied_expected`\n"
+            "- `v1_source_field_mapping`\n"
+        ),
+        "review_package_manifest_schema.md": (
+            "# Review Package Manifest Schema\n\n"
+            "`REVIEW_BUILD_MANIFEST.json` may track build-time generation work. "
+            "`REVIEW_PACKAGE_MANIFEST.json` is the relative-audit release manifest and may not contain "
+            "`must_be_generated`. `REVIEW_PACKAGE_HASHES.sha256` excludes itself and the "
+            "release manifest to avoid hash recursion.\n"
+            "\nTop-level release-manifest fields tracked from "
+            "`REVIEW_PACKAGE_MANIFEST.json`:\n\n"
+            "- `calibrated_claim_allowed`\n"
+            "- `deferred_p0b_roles`\n"
+            "- `generated_at`\n"
+            "- `git_commit`\n"
+            "- `git_dirty`\n"
+            "- `hashes_manifest_sha256`\n"
+            "- `platform`\n"
+            "- `release_readiness`\n"
+            "- `review_package_manifest_schema`\n"
+            "- `v1_summary_mode`\n"
+            "\nTop-level build-manifest fields tracked from "
+            "`REVIEW_BUILD_MANIFEST.json`:\n\n"
+            "- `calibrated_claim_allowed`\n"
+            "- `generated_at`\n"
+            "- `git_commit`\n"
+            "- `git_dirty`\n"
+            "- `hashes_manifest_sha256`\n"
+            "- `review_build_manifest_schema`\n"
+        ),
+        "noise_readout_scenario_bundle_schema.md": (
+            "# Noise/Readout Scenario Bundle Schema\n\n"
+            "The post-v2 noise audit extends `configs/realism_v2/r5_scenario_bundle_manifest.yaml` "
+            "by reference. Pass criteria are relative rank-percentile stability versus nominal; "
+            "SNR, false-positive, and absolute margin floors remain blocked.\n"
+            "\nTracked scenario-bundle manifest keys from "
+            "`configs/realism_v2/noise_readout_scenario_bundle.yaml`:\n\n"
+            "- `extends_scenario_bundle_id`\n"
+            "- `forked_scenario_ids_allowed`\n"
+            "- `pass_criterion_id`\n"
+            "- `required_scenario_ids`\n"
+            "- `scenario_alias_map`\n"
+            "- `source_scenario_manifest_path`\n"
+            "- `source_scenario_manifest_sha256`\n"
+            "\nTop-level columns in `results/post_v2_mandatory_audit/"
+            "noise_readout_scenario_bundle.csv`:\n\n"
+            "- `absolute_snr_gate_used`\n"
+            "- `event_probability_claim_level`\n"
+            "- `fixed_margin_z_floor_used`\n"
+            "- `mean_detectability_relative_prior_score`\n"
+            "- `n_case_rows`\n"
+            "- `noise_pass_criterion_claim_level`\n"
+            "- `p_detect_mapping_claim_level`\n"
+            "- `scenario_bundle_definition_checksum`\n"
+            "- `snr_claim_level`\n"
+            "- `source_summary_path`\n"
+            "- `source_summary_sha256`\n"
+        ),
+        "ev_sample_profiles_schema.md": (
+            "# EV Sample Profiles Schema\n\n"
+            "`configs/realism_v2/ev_sample_profiles.yaml` defines relative uncertainty profiles. "
+            "The `unknown` profile has at least medium risk and no biological-specificity claim.\n"
+        ),
+        "forbidden_claims_lexicon_schema.md": (
+            "# Forbidden Claims Lexicon Schema\n\n"
+            "`configs/realism_v2/forbidden_claims_lexicon.yaml` lists English and Chinese "
+            "calibrated, absolute, biological, concentration, and promotion claim phrases. "
+            "Negated blocker language is permitted within pinned windows.\n"
+            "\nRequired top-level keys:\n\n"
+            "- `allowed_blocker_examples`\n"
+            "- `forbidden_phrase_negators`\n"
+            "- `languages`\n"
+            "- `negator_window_chars_zh`\n"
+            "- `negator_window_tokens_en`\n"
+            "- `objects`\n"
+            "- `verbs`\n"
+            "- `zh_forbidden_objects`\n"
+            "- `zh_forbidden_verbs`\n"
+            "- `zh_negators`\n"
+        ),
+    }
+    outputs = []
+    for filename, text in docs.items():
+        path = schema_dir / filename
+        path.write_text(text, encoding="utf-8")
+        outputs.append(path)
+    return outputs
+
+
+def write_review_package_readme(project_root: Path = PROJECT_ROOT) -> Path:
+    path = project_root / "REVIEW_PACKAGE_README.md"
+    path.write_text(
+        "# EV/NODI Post-v2 Relative Audit Package\n\n"
+        "This P0 release package supports a no-measured-data relative audit. "
+        "It records reproducible paths, hashes, scaffold roles, paper provenance, "
+        "claim-language blockers, and P0b route adjudication artifacts for review.\n\n"
+        "v2 sidecars provide BFP ROI/Jacobian, Tsuyama BFP reference, Mie-to-power "
+        "guardrail, noise/readout scenario, selected-annulus, and EV/sample uncertainty "
+        "no-measured-data audit layers; however, the v1 full-grid main library remains a "
+        "theta/phi surrogate, pupil/slit surrogate, arbitrary-unit relative engineering "
+        "library, so all conclusions are relative candidate-audit conclusions and not "
+        "calibrated physical predictions.\n",
+        encoding="utf-8",
+    )
+    return path
