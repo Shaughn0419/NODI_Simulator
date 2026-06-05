@@ -1,20 +1,19 @@
 from __future__ import annotations
 
 import copy
-import csv
 from pathlib import Path
 
 import pytest
 
 from nodi_simulator import realism_v2 as rv2
+from nodi_simulator.realism_v2_io import read_csv_rows
 
 
 R5_DIR = rv2.DEFAULT_R5_FULL_GRID_V2_DIR
 
 
 def _csv_rows(path: Path) -> list[dict[str, str]]:
-    with path.open(newline="", encoding="utf-8") as handle:
-        return list(csv.DictReader(handle))
+    return read_csv_rows(path)
 
 
 def test_R5_1_plan_is_plan_only_and_selects_interpretation_lane():

@@ -9756,6 +9756,18 @@ class TestIntegration:
             stream_summary_only=True,
         )
         assert stream_batch["summary"] == slim_batch["summary"]
+        for prefix in (
+            "peak_height",
+            "peak_margin_z",
+            "peak_to_threshold_ratio",
+            "peak_width_s",
+            "transit_time_s",
+            "local_snr",
+        ):
+            for suffix in ("p10", "p50", "p90", "p95", "p99"):
+                key = f"{prefix}_{suffix}"
+                assert key in stream_batch["summary"]
+                assert math.isfinite(stream_batch["summary"][key])
         assert stream_batch["events"] == []
 
     def test_vectorized_pure_advection_block_matches_stream_summary_metrics(self):

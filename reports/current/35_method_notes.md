@@ -1,6 +1,6 @@
 # 35 方法学补充摘要
 
-> 当前状态：方法学说明。旧 full-range 数值报告已降级为历史快照；当前 reader-facing 综合报告是 `reports/88_*`。本文只保留重写报告或审查评分口径时仍应使用的方法。
+> 当前状态：方法学说明。旧 full-range 数值报告已降级为历史快照；当前 Lens-B full-grid 解释是 `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`，综合背景是 `reports/88_*`。本文只保留重写报告或审查评分口径时仍应使用的方法。
 
 ## 保留的方法学原则
 

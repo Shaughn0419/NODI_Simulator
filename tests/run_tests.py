@@ -47,7 +47,10 @@ def _clean_appledouble_metadata() -> None:
         if any(part in APPLEDOUBLE_SKIP_DIRS for part in rel_parts[:-1]):
             continue
         if path.is_file():
-            path.unlink()
+            try:
+                path.unlink()
+            except FileNotFoundError:
+                continue
 
 
 def _build_env(*, require_xdist: bool) -> dict[str, str]:

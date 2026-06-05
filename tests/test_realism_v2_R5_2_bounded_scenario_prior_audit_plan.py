@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from nodi_simulator import realism_v2 as rv2
+from nodi_simulator.realism_v2_io import open_text_artifact, read_csv_rows
 
 
 R5_DIR = rv2.DEFAULT_R5_FULL_GRID_V2_DIR
@@ -15,8 +16,7 @@ R5_1_DIR = rv2.DEFAULT_R5_1_INTERPRETATION_DIR
 
 
 def _csv_rows(path: Path) -> list[dict[str, str]]:
-    with path.open(newline="", encoding="utf-8") as handle:
-        return list(csv.DictReader(handle))
+    return read_csv_rows(path)
 
 
 def test_R5_2_plan_is_plan_only_and_consumes_R5_1_gate():
@@ -136,7 +136,7 @@ def test_R5_2_planned_route_rows_match_R5_summary_counts():
         for row in rows
     }
     counts: Counter[str] = Counter()
-    with (R5_DIR / "full_grid_v2_summary.csv").open(newline="", encoding="utf-8") as handle:
+    with open_text_artifact(R5_DIR / "full_grid_v2_summary.csv", newline="") as handle:
         for row in csv.DictReader(handle):
             if row["route_id"] in planned:
                 counts[row["route_id"]] += 1

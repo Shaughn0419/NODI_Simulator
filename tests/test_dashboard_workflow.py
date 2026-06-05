@@ -12,6 +12,7 @@ Parallel policy:
 
 import os
 import json
+import gzip
 import pickle
 import re
 import subprocess
@@ -1810,6 +1811,28 @@ def test_check_data_files_rejects_path_like_prefix(tmp_path):
         check_data_files(str(tmp_path), "../escape")
 
 
+def test_check_data_files_accepts_gzip_archived_summary_and_compact(tmp_path):
+    prefix = "archived_dataset"
+    with gzip.open(
+        tmp_path / f"{prefix}_summary.csv.gz",
+        "wt",
+        encoding="utf-8",
+        newline="",
+    ) as f:
+        pd.DataFrame({"particle_name": ["gold_20nm"]}).to_csv(f, index=False)
+    with gzip.open(tmp_path / f"{prefix}_compact.pkl.gz", "wb") as f:
+        dump_dashboard_pickle(f, [])
+    (tmp_path / f"{prefix}_meta.json").write_text(
+        json.dumps({"dashboard_schema_version": CURRENT_SCHEMA_VERSION}),
+        encoding="utf-8",
+    )
+
+    csv_path, pkl_path, _ = check_data_files(str(tmp_path), prefix)
+
+    assert csv_path.endswith("_summary.csv.gz")
+    assert pkl_path.endswith("_compact.pkl.gz")
+
+
 def test_check_data_files_rejects_stale_standard_wavelength_set(tmp_path):
     prefix = "ev_design_full_range_biomimetic_exosome_with_anchors_10000e"
     pd.DataFrame({"particle_name": ["gold_20nm"]}).to_csv(
@@ -2266,6 +2289,30 @@ def test_load_sweep_compact_backfills_gate_and_recommendation_fields(tmp_path):
     assert case["summary"]["engineering_gate_primary_blocker_label"]
     assert case["design_recommendation_status"] == "recommended_with_caution"
     assert case["physics"]["design_recommendation_label"]
+
+
+def test_load_sweep_compact_reads_gzip_archive_from_logical_path(tmp_path):
+    logical_path = tmp_path / "legacy_compact.pkl"
+    legacy_case = {
+        "particle_name": "gold_80nm",
+        "wavelength_m": 660e-9,
+        "width_m": 800e-9,
+        "depth_m": 550e-9,
+        "summary": {
+            "engineering_gate_passed": True,
+            "engineering_gate_failed_count": 0,
+            "engineering_gate_reason": "PASS",
+            "observation_freeze_status": "caution_probe_before_result_freeze",
+        },
+        "physics": {},
+    }
+    with gzip.open(f"{logical_path}.gz", "wb") as f:
+        dump_dashboard_pickle(f, [legacy_case])
+
+    compact = load_sweep_compact(str(logical_path))
+
+    assert compact[0]["particle_name"] == "gold_80nm"
+    assert compact[0]["design_recommendation_status"] == "recommended_with_caution"
 
 
 def test_load_sweep_compact_backfills_summary_nested_gate_fields(tmp_path):

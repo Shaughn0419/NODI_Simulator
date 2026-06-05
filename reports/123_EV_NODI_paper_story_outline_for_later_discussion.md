@@ -1,9 +1,10 @@
 # EV/NODI paper story outline for later discussion
 
-- 日期：2026-05-14
+- 日期：2026-05-14；2026-05-23 状态覆盖
 - 状态：讨论草案；不作为 report 88 的 claim 升级
-- 作用：把 report 88 v5.2.2–v5.2.6 之后的论文路线、主图结构、验证数据需求和审稿风险先保存下来，后续单独讨论
-- 依赖主报告：`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`
+- 作用：把 report 88 / report 140 之后的论文路线、主图结构、验证数据需求和审稿风险先保存下来，后续单独讨论
+- 最新 full-grid 依赖：`reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`
+- 背景主报告：`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`
 
 ---
 

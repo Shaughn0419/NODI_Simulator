@@ -2,6 +2,14 @@
 
 Purpose: record every Markdown documentation file covered by the documentation cleanup/audit pass, including active docs and archived historical docs, so future readers can see which files are current entry points and which files are preserved provenance snapshots.
 
+2026-05-23 status note: this file is now a historical file-coverage snapshot.
+The current per-file documentation status audit is
+`reports/142_current_documentation_status_audit_20260523.md`, with machine
+inventory in `tmp/current_documentation_status_20260523/`. The latest
+reader-facing Lens-B full-grid interpretation is
+`reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`.
+Use `README.md` and `文档导航.md` for current entry ordering.
+
 2026-05-14 status note: this audit is a historical file-coverage snapshot. The
 current reader-facing single source of truth is now
 `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`

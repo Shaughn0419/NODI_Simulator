@@ -15,8 +15,7 @@ from pathlib import Path
 from statistics import quantiles
 from typing import Any
 
-from .realism_v2_io import sha256_file, write_json_atomic
-from .realism_v2_io import write_csv_rows
+from .realism_v2_io import open_text_artifact, sha256_file, write_csv_rows, write_json_atomic
 from .review_package import PROJECT_ROOT, POST_V2_AUDIT_DIR, V1_SUMMARY_PATH, stable_json_bytes
 
 
@@ -628,7 +627,7 @@ def build_noise_readout_route_sensitivity(project_root: Path = PROJECT_ROOT) -> 
     live_scenario_ids = [row["scenario_id"] for row in scenario_manifest["scenario_bundles"]]
     scores: dict[tuple[str, str], list[float]] = defaultdict(list)
     route_meta: dict[str, dict[str, Any]] = {}
-    with source.open(encoding="utf-8", newline="") as handle:
+    with open_text_artifact(source, newline="") as handle:
         reader = csv.DictReader(handle)
         for row in reader:
             if row["particle_material"] != "exosome":

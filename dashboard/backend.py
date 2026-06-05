@@ -8,6 +8,7 @@ Provides:
     - Parameter tuning support (build configs from UI, live sweep, live tag)
 """
 
+import gzip
 import json
 import os
 import re
@@ -93,6 +94,16 @@ class DashboardLoadedData:
 # Data file management
 # ============================================================
 
+
+def _resolve_optional_gzip(path: str) -> str:
+    """Resolve archived result artifacts stored as a gzip twin."""
+    if os.path.exists(path):
+        return path
+    gzip_path = f"{path}.gz"
+    if os.path.exists(gzip_path):
+        return gzip_path
+    return path
+
 def check_data_files(results_dir: str, prefix: str) -> tuple[str, str, str]:
     """
     Check existence of sweep result files + schema version match.
@@ -109,6 +120,9 @@ def check_data_files(results_dir: str, prefix: str) -> tuple[str, str, str]:
     csv_path = os.path.join(results_dir, f"{safe_prefix}_summary.csv")
     pkl_path = os.path.join(results_dir, f"{safe_prefix}_compact.pkl")
     meta_path = os.path.join(results_dir, f"{safe_prefix}_meta.json")
+
+    csv_path = _resolve_optional_gzip(csv_path)
+    pkl_path = _resolve_optional_gzip(pkl_path)
 
     for path in [csv_path, pkl_path]:
         if not os.path.exists(path):
@@ -489,12 +503,16 @@ def load_sweep_summary(
     """Load sweep summary, preferring the typed parquet artifact when present."""
     if parquet_path is not None and os.path.exists(parquet_path):
         return _enrich_loaded_summary_df(pd.read_parquet(parquet_path))
-    return _enrich_loaded_summary_df(pd.read_csv(csv_path, low_memory=False))
+    return _enrich_loaded_summary_df(
+        pd.read_csv(_resolve_optional_gzip(csv_path), low_memory=False)
+    )
 
 
 def load_sweep_compact(pkl_path: str) -> list[dict]:
     """Load compact sweep results from a restricted dashboard pickle artifact."""
-    with open(pkl_path, "rb") as f:
+    resolved_path = _resolve_optional_gzip(pkl_path)
+    open_fn = gzip.open if resolved_path.endswith(".gz") else open
+    with open_fn(resolved_path, "rb") as f:
         data = load_dashboard_pickle(f)
     return [_enrich_loaded_compact_case(case) for case in data]
 

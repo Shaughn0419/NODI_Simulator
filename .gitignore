@@ -197,6 +197,7 @@ archive/**
 # Reference paper binaries stay local; keep the directory README.
 papers/*.pdf
 papers/*.docx
+papers/analysis_full_v1/
 
 # Binary analysis/report exports
 reports/**/*.csv

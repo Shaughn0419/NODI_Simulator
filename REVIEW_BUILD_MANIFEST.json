@@ -6,8 +6,8 @@
           "path": "README.md",
           "path_status": "exists",
           "role": "repo_readme",
-          "sha256": "26060f0a552badba1afd4027adcbf20ea26dad884d460161dab970cf04350ed0",
-          "size_bytes": 10748,
+          "sha256": "15a958e550cab3f0e5cad2e06179c1aeb971e2252953a2efe23a6bd9af805ddb",
+          "size_bytes": 13505,
           "source_lane": "docs"
         },
         {
@@ -585,16 +585,16 @@
           "path": "REVIEW_PACKAGE_README.md",
           "path_status": "exists",
           "role": "review_package_readme",
-          "sha256": "ded332211e1daea4df353242346e865430ead494beada82478c382fa02182963",
-          "size_bytes": 680,
+          "sha256": "68c9b9cad372e5305592a3e4013e35dcd7a0866d32b87c7ff783043dbe7229e7",
+          "size_bytes": 995,
           "source_lane": "review_package_root"
         },
         {
           "path": "HISTORICAL_REPORT_SUPERSESSION.md",
           "path_status": "exists",
           "role": "historical_report_supersession",
-          "sha256": "6e0b506f0f3021de0b55fd81f188701e41a72e14e0e70b8070fd0f32d8eece34",
-          "size_bytes": 4981,
+          "sha256": "1139ea98877625e3a96f9380435f13a125129dd3cb1900a6a24ec43b92fb4107",
+          "size_bytes": 5743,
           "source_lane": "P1.governance"
         }
       ],
@@ -791,12 +791,12 @@
     }
   ],
   "calibrated_claim_allowed": false,
-  "generated_at": "2026-05-17T10:22:30+00:00",
-  "git_commit": "1bc542923ed7802d2f21c8ed222ea82e35e4ec3f",
-  "git_dirty": false,
+  "generated_at": "2026-06-05T17:29:52+00:00",
+  "git_commit": "56fe5feee321677d1af0b1931cf6eaf6b77b98b3",
+  "git_dirty": true,
   "hashes_manifest_path": "REVIEW_PACKAGE_HASHES.sha256",
-  "hashes_manifest_sha256": "648b78322297657fcac87f16449526d93ea521607b04808662ff8f9b829e1446",
-  "package_id": "ev_nodi_post_v2_review_package_20260517_p0b",
+  "hashes_manifest_sha256": "aa5fb0f305fcfcc4d5c28156574edde70f3c13cd137b70b51fca782518d5ac5d",
+  "package_id": "ev_nodi_post_v2_review_package_20260605_p0b",
   "package_role": "internal_build_tracking",
   "release_manifest_path": "REVIEW_PACKAGE_MANIFEST.json",
   "review_build_manifest_schema": "ev_nodi_review_build_manifest_v1"

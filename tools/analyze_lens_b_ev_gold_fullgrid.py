@@ -17,8 +17,9 @@ from tools._common import dataframe_to_markdown_table, format_record_lines, writ
 from tools.audits import ev_size_weighted_route_analysis as route_analysis
 
 
-EXPECTED_ROWS = 32_032
-EXPECTED_SEED = 42
+EXPECTED_ROWS_PER_SEED = 32_032
+FORMAL_FULL_GRID_SEEDS = (11, 22, 33)
+LEGACY_REFERENCE_SEED = 42
 ACCEPTED_N_EVENTS = (1_000, 10_000)
 FINAL_VALIDATION_N_EVENTS = 10_000
 EXPECTED_MATERIALS = ("exosome", "gold")
@@ -37,12 +38,29 @@ def _load_csv(path: Path) -> pd.DataFrame:
     return pd.read_csv(path, low_memory=False)
 
 
-def validate_input(df: pd.DataFrame) -> dict[str, Any]:
+def validate_input(
+    df: pd.DataFrame,
+    *,
+    expected_rows: int = EXPECTED_ROWS_PER_SEED,
+    expected_seed: int | None = None,
+    expected_n_events: int | None = None,
+    expected_normalization_lane: str | None = None,
+) -> dict[str, Any]:
     wavelength_col = "wavelength_nm"
+    normalization_lane_values = (
+        sorted(df["normalization_lane"].dropna().astype(str).unique().tolist())
+        if "normalization_lane" in df
+        else []
+    )
     checks = {
         "row_count": int(len(df)),
+        "expected_rows": int(expected_rows),
         "random_seed_values": sorted(pd.to_numeric(df["random_seed"]).dropna().astype(int).unique().tolist()),
+        "expected_seed": expected_seed,
         "n_events_values": sorted(pd.to_numeric(df["n_events"]).dropna().astype(int).unique().tolist()),
+        "expected_n_events": expected_n_events,
+        "normalization_lane_values": normalization_lane_values,
+        "expected_normalization_lane": expected_normalization_lane,
         "particle_material_values": sorted(df["particle_material"].dropna().astype(str).unique().tolist()),
         "wavelength_nm_values": sorted(pd.to_numeric(df[wavelength_col]).dropna().astype(int).unique().tolist()),
         "lockin_time_constant_s_values": sorted(
@@ -60,14 +78,40 @@ def validate_input(df: pd.DataFrame) -> dict[str, Any]:
         },
     }
     failures: list[str] = []
-    if checks["row_count"] != EXPECTED_ROWS:
-        failures.append(f"row_count expected {EXPECTED_ROWS}, got {checks['row_count']}")
-    if checks["random_seed_values"] != [EXPECTED_SEED]:
-        failures.append(f"random_seed expected [{EXPECTED_SEED}], got {checks['random_seed_values']}")
-    if len(checks["n_events_values"]) != 1 or checks["n_events_values"][0] not in ACCEPTED_N_EVENTS:
+    if checks["row_count"] != int(expected_rows):
+        failures.append(f"row_count expected {expected_rows}, got {checks['row_count']}")
+    if len(checks["random_seed_values"]) != 1:
+        failures.append(
+            "input must contain exactly one seed for this per-seed analyzer, "
+            f"got {checks['random_seed_values']}"
+        )
+    elif expected_seed is not None and checks["random_seed_values"] != [int(expected_seed)]:
+        failures.append(
+            f"random_seed expected [{expected_seed}], got {checks['random_seed_values']}"
+        )
+    if len(checks["n_events_values"]) != 1:
+        failures.append(f"input must contain exactly one n_events value, got {checks['n_events_values']}")
+    elif expected_n_events is not None and checks["n_events_values"] != [int(expected_n_events)]:
+        failures.append(
+            f"n_events expected [{expected_n_events}], got {checks['n_events_values']}"
+        )
+    elif checks["n_events_values"][0] not in ACCEPTED_N_EVENTS:
         failures.append(
             "n_events expected one of "
             f"{list(ACCEPTED_N_EVENTS)}, got {checks['n_events_values']}"
+        )
+    if len(normalization_lane_values) > 1:
+        failures.append(
+            "this per-seed analyzer accepts one normalization view at a time; "
+            f"got {normalization_lane_values}"
+        )
+    if (
+        expected_normalization_lane is not None
+        and normalization_lane_values != [expected_normalization_lane]
+    ):
+        failures.append(
+            "normalization_lane expected "
+            f"[{expected_normalization_lane}], got {normalization_lane_values}"
         )
     if checks["particle_material_values"] != list(EXPECTED_MATERIALS):
         failures.append(
@@ -432,16 +476,20 @@ def write_markdown_report(path: Path, summary: dict[str, Any], wavelength_summar
             "recommendation evidence. Do not relabel these rows as 1 ms without "
             "rerunning or rebuilding the analysis.\n"
         )
+    source_name = summary["input_precheck"].get("source_csv", "input raw CSV")
+    seed_values = summary["input_precheck"].get("random_seed_values", [])
+    normalization_values = summary["input_precheck"].get("normalization_lane_values", [])
     text = f"""# Lens B EV + Gold Full-Grid Derived Analysis
 
-Source: `seed_42_raw_rows.csv`
+Source: `{source_name}`
 {tau_overlay}
 
 ## Precheck
 
 - Rows: {summary['input_precheck']['row_count']}
-- Seed: {summary['input_precheck']['random_seed_values']}
+- Seed: {seed_values}
 - n_events: {summary['input_precheck']['n_events_values']}
+- normalization_lane: {normalization_values}
 - Materials: {summary['input_precheck']['particle_material_values']}
 - Wavelengths: {summary['input_precheck']['wavelength_nm_values']}
 - lockin_time_constant_s: {summary['input_precheck'].get('lockin_time_constant_s_values')}
@@ -472,24 +520,17 @@ Source: `seed_42_raw_rows.csv`
 
 {_markdown_table(wavelength_summary)}
 
-## Main reading
+## Main reading guard
 
-The full-grid EV application no longer supports the old pre-fullgrid statement that
-`488 nm / 600 x 1500 nm` is the Lens-B EV recommendation. In this completed
-one-seed full grid, the reference-useful selected-annulus tops are dominated by
-660 nm / 800 nm-width routes. At 1000 events/case, the best depth depends on the
-EV size prior: uniform and small-EV priors choose 800 x 1100 nm, the broad prior
-chooses 800 x 1000 nm, and the sharp MSC-sEV prior chooses 800 x 1400 nm. The
-current low-event design read should therefore be written as a 660 nm / 800 nm
-width family with a 1000-1400 nm depth band, centered on 1100 nm for broad use
-and keeping 1400 nm as the small-sEV stress-check. Do not collapse this low-event
-evidence into the older B5 targeted-panel 800 x 1500 nm result, and do not label
-it as the 10000-event final-validation run.
+Use the generated top tables above for this exact seed, event count, and
+normalization view. Do not carry forward old hard-coded route conclusions from
+legacy seed-42 or low-event reports. A final 3-seed statement must be written
+only after the dedicated aggregation step has compared seeds and preserved the
+normalization-view boundary.
 
-404 nm remains recommendation-eligible and should stay in the eligible table, but
-it is not the full-grid Lens-B winner under the selected-annulus EV application.
-488/532 nm remain control-only / trend-only even when their raw metric is high.
-Gold rows should be discussed only as anchor/Tsuyama consistency diagnostics.
+404 and 660 nm are recommendation-eligible. 488/532 nm remain control-only /
+trend-only even when a raw metric is high. Gold rows should be discussed only as
+anchor/Tsuyama consistency diagnostics.
 """
     path.write_text(text, encoding="utf-8")
 
@@ -500,7 +541,14 @@ def run(args: argparse.Namespace) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     df = _load_csv(input_csv)
-    checks = validate_input(df)
+    checks = validate_input(
+        df,
+        expected_rows=int(args.expected_rows),
+        expected_seed=args.expected_seed,
+        expected_n_events=args.expected_n_events,
+        expected_normalization_lane=args.expected_normalization_lane,
+    )
+    checks["source_csv"] = str(input_csv)
     write_json_file(output_dir / "lens_b_fullgrid_data_precheck.json", checks)
     if checks["status"] != "passed":
         raise SystemExit("Input precheck failed; see lens_b_fullgrid_data_precheck.json")
@@ -545,6 +593,14 @@ def main() -> None:
     parser.add_argument(
         "--output-dir",
         default="results/lens_b_ev_gold_fullgrid_1seed_20260513",
+    )
+    parser.add_argument("--expected-rows", type=int, default=EXPECTED_ROWS_PER_SEED)
+    parser.add_argument("--expected-seed", type=int, default=None)
+    parser.add_argument("--expected-n-events", type=int, default=None)
+    parser.add_argument(
+        "--expected-normalization-lane",
+        choices=["fixed_660_gold", "per_wavelength_gold"],
+        default=None,
     )
     parser.add_argument("--check-only", action="store_true")
     run(parser.parse_args())

@@ -1,8 +1,9 @@
 # GPT-Pro Review Bundle
 
-This bundle is intended for external GPT-Pro review of report 88 v5.2.6 and the
-supporting EV/NODI simulator code, tests, reports, configs, papers, and result
-artifacts.
+This bundle was originally intended for external GPT-Pro review of report 88.
+As of 2026-05-23, report 140 is the current Lens-B EV+gold 3seed × 10000e
+full-grid post-run entrypoint; report 88 remains the consolidated background
+report.
 
 Primary copyable prompt:
 
@@ -13,6 +14,7 @@ reports/124_GPT_PRO_REVIEW_PROMPT_FOR_REPORT_88.md
 Primary report:
 
 ```text
+reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md
 reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md
 ```
 
@@ -43,8 +45,9 @@ not be interpreted as calibrated physical prediction evidence, absolute SNR/LOD
 evidence, measured blank safety evidence, true EV concentration evidence, or
 biological specificity evidence.
 
-Lens-B current-state note: report 88 v5.2.6 includes the completed one-seed
-EV+gold full-grid application under
-`results/lens_b_ev_gold_fullgrid_1seed_20260513/`. EV recommendation rows must
-be read from EV/exosome rows only; gold rows are diagnostics only; 488/532 are
-control/trend wavelengths, not final recommendation wavelengths.
+Lens-B current-state note: report 140 supersedes the report 88 / report 100
+single-seed Lens-B overlay for robust route interpretation. `fixed_660_gold`
+and `per_wavelength_gold` are normalization views over shared physical events,
+not independent event campaigns. EV recommendation rows must be read from
+EV/exosome rows only; gold rows are diagnostics only; 488/532 are control/trend
+wavelengths, not final recommendation wavelengths.

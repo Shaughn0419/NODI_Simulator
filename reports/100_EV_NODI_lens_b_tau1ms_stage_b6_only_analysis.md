@@ -7,6 +7,7 @@
 - 当前运行配置：tau=1 ms（`lockin_time_constant_s = 0.001`），随机种子 42，每个工况 1000 个事件。
 - 本报告只讨论口径 B。口径 B 是“以 Tsuyama 为锚点的 EV 应用读法”，不是全局工程主排序。
 - 重要方法更新：Stage B6 使用“每个波长各自用金颗粒基准归一化”的口径，适合 Tsuyama 锚点诊断和同一波长内几何排序；Stage B7 已完成固定 660 金颗粒基准重算，用于分离 EV 短波散射优势与每波长 Au 锚点归一化效应。
+- **2026-05-23 覆盖说明（必须先读）**：本报告是历史单 seed、1000 events/case B6/B7 overlay，不再是 Lens-B 最新 robust conclusion。最新入口是 `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`：EV+gold exhaustive shared-dual 3seed × 10000e audit/analysis 已完成；`fixed_660_gold` selected-annulus recommendation family 转向 404 nm / W500 mid-depth；`per_wavelength_gold` selected-annulus recommendation family 保留 660 nm / W800 D1400-D1500，尤其 sharp MSC/sEV prior。B6/B7 的方法分层仍有解释价值，但 route conclusion 需要按 report 140 的 normalization-view boundary 更新。该更新仍是 no-measured-data Level-1 relative/proxy evidence，不是任何高阶实测性能、EV 生物学性能或 optical-BFP annulus claim。
 
 ---
 

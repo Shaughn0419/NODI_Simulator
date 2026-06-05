@@ -1,8 +1,9 @@
 # GPT-Pro review prompt for report 88
 
-- 日期：2026-05-14
-- 用途：复制给 GPT-Pro，让它审查 report 88 v5.2.6、lens-B EV+gold full-grid final 与后续论文路线
-- 依赖主报告：`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`
+- 日期：2026-05-23 覆盖更新
+- 用途：复制给 GPT-Pro，让它审查 report 140 的 Lens-B 3seed × 10000e post-run 结论、report 88 综合背景与后续论文路线
+- 最新主报告：`reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`
+- 背景主报告：`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`
 - 论文路线草案：`reports/123_EV_NODI_paper_story_outline_for_later_discussion.md`
 
 ---
@@ -24,6 +25,7 @@ First, establish reproducibility status:
 
 Primary files to read:
 
+- reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md
 - reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md
 - reports/122_EV_NODI_report_88_v4_dual_lens_consolidation_ledger.md
 - reports/123_EV_NODI_paper_story_outline_for_later_discussion.md
@@ -49,7 +51,7 @@ Optional supporting files if available:
 
 Review target:
 
-The current main report is report 88 v5.2.6. It is a no-measured-data, relative design-space audit for EV/NODI route selection. It now includes the completed one-seed Lens-B EV+gold full-grid application. It is not a calibrated simulator, not an experimental report, not a biological-specificity report, and not a full-wave electromagnetic solver.
+The current Lens-B full-grid report is report 140. Report 88 remains the consolidated background report. Report 100 is historical B6/B7 single-seed method context. These are no-measured-data, relative design-space audits for EV/NODI route selection. They are not calibrated simulators, not experimental reports, not biological-specificity reports, and not full-wave electromagnetic solvers.
 
 Please review it from two perspectives.
 
@@ -75,7 +77,7 @@ Focus on:
 3. Is the dual-lens logic clear?
    - Lens A: all-crossing engineering route selection.
    - Lens B: selected-annulus Tsuyama-anchored EV application lens: B1 fits/freezes estimated parameters from Au/Ag anchors, then B2 applies those parameters to EV biomimetic candidates.
-   - B2 is now completed as EV+gold full-grid (`32,032` rows, `seed=42`, `10000 events/case`), not pending and not merely targeted EV evidence.
+   - B2 latest robust evidence is report 140: shared-dual 3 seeds × 10000 events/case over 572 route triples and 56 particles.
    - Here selected-annulus should read as an event-position / analysis-window lens, not a BFP optical annular aperture unless code evidence explicitly supports it.
    - Neither lens should replace the other.
    - Anchor diagnostic geometry should not be mistaken for EV recommendation geometry.

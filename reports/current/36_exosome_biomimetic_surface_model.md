@@ -1,5 +1,11 @@
 # Exosome Biomimetic Surface Model
 
+> Current status (2026-05-23): this remains the active EV/sEV optical-model
+> rationale note. Numerical route interpretation should be read through
+> `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`
+> for the latest Lens-B full-grid result and `reports/88_*` for consolidated
+> background.
+
 ## Why this document exists
 
 The simulator originally treated exosomes as a homogeneous dielectric sphere with `n = 1.38`.

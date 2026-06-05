@@ -1,0 +1,9 @@
+stress_particle_proxy,diagnostic_role,formal_particle_panel_action,full_run_scoring_action,level1_boundary
+Au_standard,positive optical anchor / standard particle,already_has_Au20_Au30_Au40_Au60_anchors; no change,excluded_from_new_stress_lens,standard-particle context only; no calibrated detector transfer
+Ag_standard,material-contrast stress if constants are available,not added to PARTICLE_PANEL before formal run,diagnostic_manifest_only,requires material constants/provenance before any even-diagnostic rehearsal
+PS_or_silica_bead,non-EV bead / false-positive comparator,formal panel already has PS100 and silica100 controls; no change,excluded_from_robust_route_promotion,control/comparator only; no biology claim
+hollow_organosilica_reference_bead,EV-like RI/reference bead future comparator,not added to PARTICLE_PANEL before formal run,diagnostic_manifest_only,future reference-particle evidence only
+liposome_or_EV_like_vesicle,low-RI vesicle/co-isolate comparator,formal panel already has liposome_like_100nm; no change,excluded_from_new_stress_lens,optical surrogate only; no EV specificity
+lipoprotein_like_low_RI_particle,low-RI biological co-isolate comparator,formal panel already has lipoprotein_like_40nm; no change,excluded_from_new_stress_lens,optical false-positive context only
+protein_aggregate,aggregate/co-isolate comparator,formal panel already has protein_aggregate_like_70nm; no change,excluded_from_new_stress_lens,diagnostic comparator only
+cell_debris_coisolate_proxy,large/heterogeneous co-isolate stress,not added to PARTICLE_PANEL before formal run,diagnostic_manifest_only,requires separate stress lens before scoring impact

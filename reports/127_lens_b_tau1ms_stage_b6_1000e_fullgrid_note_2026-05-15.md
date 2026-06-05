@@ -5,6 +5,7 @@
 - Status: Stage B6 seed-42 EV+gold full-grid completed at `1000 events/case`
 - Claim boundary: low-event full-grid design evidence, not the planned `10000 events/case` final-validation run
 - Superseding overlay: Stage B7 fixed-660-gold normalization is now documented in `reports/100_EV_NODI_lens_b_tau1ms_stage_b6_only_analysis.md`; B6 remains the per-wavelength gold-normalized Tsuyama-lineage comparison read, not the latest cross-wavelength Criterion-B decision read.
+- 2026-05-23 overlay: this note is historical single-seed 1000e context. The latest robust Lens-B full-grid interpretation is `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`; report 140 supersedes this note and report 100 for route-family interpretation.
 
 ## Source artifacts
 

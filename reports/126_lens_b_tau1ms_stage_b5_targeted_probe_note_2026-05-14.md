@@ -3,6 +3,7 @@
 - Date: 2026-05-14
 - Scope: Criterion B / 口径 B only
 - Status: Stage B5 targeted EV probe completed; Stage B6 low-event full-grid now completed at `1000 events/case`
+- 2026-05-23 overlay: this note is historical targeted-probe context. The latest robust Lens-B full-grid interpretation is `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`; do not use this B5/B6 targeted language as the current route-family conclusion.
 
 ## Source artifacts
 

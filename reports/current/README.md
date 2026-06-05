@@ -2,8 +2,10 @@
 
 This directory stores older notes that remain useful for methods, performance,
 or historical comparison. It is not the current reader-facing entry point. Start
-with `reports/88_*` for the current v5.2.8 full-data consolidated analysis and
-`reports/87_*` for the v2 no-measured-data closure boundary.
+with `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`
+for the current Lens-B full-grid post-run analysis, `reports/88_*` for the
+consolidated v1/v2/post-v2 background, and `reports/87_*` for the v2
+no-measured-data closure boundary.
 
 Current status:
 
@@ -13,25 +15,21 @@ Current status:
 - `47_EV_NODI全量结果分层分析报告.md` — historical 32032-case four-wavelength all-crossing reader-facing analysis from an earlier reader-report lane. It remains useful for comparison, but current v1/v2 interpretation is report 88.
 - `47_ev_design_full_grid_analysis/` — historical derived CSV tables backing report 47, including mechanism-chain, wavelength-ratio, geometry-effect, candidate-detection, 404-vs-660 decomposition, deep-channel usability, gold-gate sensitivity, PEG geometry scenarios, and EV size-weighted ranking tables.
 
-2026-05-15 lens-B tau=1 ms low-event full-grid update: report 88 should now be
-read with the Stage B6/B7 overlay in report 100. Lens B is B1 Tsuyama Au/Ag
-anchor target-fitting plus B2 frozen-B-lens EV+gold full-grid application. The
-B6 run
-`results/stage_b6_tau1ms_ev_gold_fullgrid_1000e_seed42_22worker_restart_20260514/`
-uses per-wavelength gold normalization and remains the Tsuyama-lineage /
-same-wavelength geometry diagnostic read. The B7 run
-`results/stage_b7_fixed660_tau1ms_ev_gold_fullgrid_1000e_seed42_22worker_restart_20260515/`
-uses fixed-660-gold normalization and is the current cross-wavelength
-Criterion-B low-event decision read. Both have `32,032` rows, `seed=42`,
-`1000` events/case, and `lockin_time_constant_s=0.001`. EV recommendation uses
-EV/exosome rows only; gold rows are anchor / Tsuyama diagnostics only. B6 points
-to a `660 nm / 800 nm` width family as the Tsuyama-lineage comparison family;
-B7 shifts the current cross-wavelength candidate to a `404 nm / 500 nm` width
-family centered on `404 / 500x550` and `404 / 500x900`. `488/532` remain
-raw/control/trend results only. The older
-`results/lens_b_ev_gold_fullgrid_1seed_20260513/` run remains real 10000e
-full-grid evidence, but it used tau=2 ms and is legacy sensitivity/reference
-only under the current B=1 ms rule.
+2026-05-23 Lens-B 3seed × 10000e update: report 140 supersedes the 2026-05-15
+B6/B7 single-seed low-event overlay for robust Lens-B interpretation. The
+shared-dual run uses seeds `11/22/33`, 572 route triples, 56 particles, and
+10000 events/case. `fixed_660_gold` and `per_wavelength_gold` are
+normalization views over shared physical events, not independent event
+campaigns. In report 140, fixed view moves the selected-annulus recommendation
+family toward 404 nm / W500 mid-depth routes; per-wavelength view preserves the
+660 nm / W800 D1400-D1500 family, especially under the sharp MSC/sEV prior.
+
+2026-05-15 lens-B tau=1 ms low-event full-grid update: this is now historical
+method context superseded by report 140. B6 remains the per-wavelength
+gold-normalized Tsuyama-lineage diagnostic read; B7 remains the fixed-660-gold
+single-seed low-event overlay. `488/532` remain raw/control/trend results only.
+The older `results/lens_b_ev_gold_fullgrid_1seed_20260513/` run used tau=2 ms
+and remains legacy sensitivity/reference only.
 
 2026-05-13 lens-B EV-application correction: this is now historical context
 superseded by the 2026-05-15 tau=1 ms low-event full-grid update above. It introduced the B1/B2
@@ -65,4 +63,6 @@ Deleted current-result reports:
 
 - `35.4_最新全量数据库全面复核与选型报告.md`
 
-That file was tied to deleted or stale full-library results. New current-result reporting should now continue from report 88 plus the Lens-B B7 overlay in report 100 unless a deliberately historical comparison is needed.
+That file was tied to deleted or stale full-library results. New current-result
+reporting should now continue from report 140 plus report 88 background unless
+a deliberately historical comparison is needed.

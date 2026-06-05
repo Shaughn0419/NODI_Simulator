@@ -27,8 +27,8 @@ import time
 from collections import Counter
 from collections.abc import Callable
 from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
-from copy import copy
-from dataclasses import dataclass, field
+from copy import copy, deepcopy
+from dataclasses import dataclass, field, replace
 from typing import Any, Literal
 
 import numpy as np
@@ -2750,6 +2750,40 @@ def _conditional_rate_fields(
     }
 
 
+def _quantile_summary_fields(
+    prefix: str,
+    values: list[float],
+    *,
+    empty_value: float = 0.0,
+) -> dict[str, float]:
+    """Return compact distribution summaries without retaining event arrays."""
+    if not values:
+        return {
+            f"{prefix}_p10": float(empty_value),
+            f"{prefix}_p50": float(empty_value),
+            f"{prefix}_p90": float(empty_value),
+            f"{prefix}_p95": float(empty_value),
+            f"{prefix}_p99": float(empty_value),
+        }
+    arr = np.asarray(values, dtype=float)
+    arr = arr[np.isfinite(arr)]
+    if arr.size == 0:
+        return {
+            f"{prefix}_p10": float(empty_value),
+            f"{prefix}_p50": float(empty_value),
+            f"{prefix}_p90": float(empty_value),
+            f"{prefix}_p95": float(empty_value),
+            f"{prefix}_p99": float(empty_value),
+        }
+    return {
+        f"{prefix}_p10": float(np.quantile(arr, 0.10, method="linear")),
+        f"{prefix}_p50": float(np.quantile(arr, 0.50, method="linear")),
+        f"{prefix}_p90": float(np.quantile(arr, 0.90, method="linear")),
+        f"{prefix}_p95": float(np.quantile(arr, 0.95, method="linear")),
+        f"{prefix}_p99": float(np.quantile(arr, 0.99, method="linear")),
+    }
+
+
 @dataclass
 class _BatchSummaryAccumulator:
     """Incrementally accumulate batch-summary metrics without storing all events."""
@@ -3618,6 +3652,17 @@ class _BatchSummaryAccumulator:
                 "unknown",
             ),
         }
+        out.update(_quantile_summary_fields("peak_height", heights))
+        out.update(_quantile_summary_fields("peak_margin_z", peak_margin_z))
+        out.update(
+            _quantile_summary_fields(
+                "peak_to_threshold_ratio",
+                peak_to_threshold_ratios,
+            )
+        )
+        out.update(_quantile_summary_fields("peak_width_s", widths))
+        out.update(_quantile_summary_fields("transit_time_s", self.transit_times))
+        out.update(_quantile_summary_fields("local_snr", self.local_snrs))
         out.update(
             self._selected_detector_mode_fields(
                 n_detected=n_detected,
@@ -4328,6 +4373,466 @@ def simulate_one_event(
         "background_max_margin_z": background_max_margin_z,
     }
 
+    if not retain_full_payload:
+        return event_result
+
+    reference_to_scattering_ratio = A_ref_trace / np.clip(A_sca_trace, 1e-15, None)
+    event_result.update({
+        "trajectory": trajectory,
+        "signal_trace": trace["signal_trace"],
+        "interference_cross_term": trace.get("interference_cross_term"),
+        "interference_cross_term_collapsed": trace.get("interference_cross_term_collapsed"),
+        "interference_cross_term_joint": trace.get("interference_cross_term_joint"),
+        "interference_cross_term_mode": trace.get("interference_cross_term_mode"),
+        "interference_overlap_factor_abs": trace.get("interference_overlap_factor_abs"),
+        "interference_overlap_factor_phase_rad": trace.get("interference_overlap_factor_phase_rad"),
+        "interference_overlap_status": trace.get("interference_overlap_status"),
+        "scattering_only_intensity": trace.get("scattering_only_intensity"),
+        "signal_raw_noisy": noisy["signal_noisy"],
+        "pulse_time_s": pulse_time_s,
+        "signal_noisy": pulse_signal,
+        "signal_pre_readout_noisy": noisy["signal_noisy"],
+        "shot_noise": noisy.get("shot_noise"),
+        "I_baseline": trace.get("I_baseline"),
+        "I_baseline_trace": trace.get("I_baseline_trace"),
+        "signal_detect_pre_post": readout["signal_detect"],
+        "signal_nodi": post_readout_nodi["signal_post_readout"],
+        "signal_pod": post_readout_pod["signal_post_readout"],
+        "signal_nodi_pre_post": readout["signal_nodi"],
+        "signal_pod_pre_post": readout["signal_pod"],
+        "signal_nodi_true": readout["signal_nodi_true"],
+        "signal_pod_true": readout["signal_pod_true"],
+        "signal_nodi_leak": readout.get("signal_nodi_leak"),
+        "signal_pod_leak": readout.get("signal_pod_leak"),
+        "nodi_transit_response_model": readout.get("nodi_transit_response_model"),
+        "nodi_transit_bandwidth_Hz": readout.get("nodi_transit_bandwidth_Hz"),
+        "nodi_transit_bandwidth_gain": readout.get("nodi_transit_bandwidth_gain"),
+        "nodi_bandwidth_limited_fraction": readout.get("nodi_bandwidth_limited_fraction"),
+        "nodi_lockin_bandwidth_Hz": readout.get("nodi_lockin_bandwidth_Hz"),
+        "post_readout_noise": post_readout["post_readout_noise"],
+        "A_ref_trace": reference_trace.get("A_ref_trace"),
+        "A_sca_trace": sca_trace.get("A_sca"),
+        "median_reference_to_scattering_amplitude_ratio": float(
+            np.median(reference_to_scattering_ratio)
+        ),
+        "phi_ref_rad": reference_trace.get("phi_ref_trace_rad"),
+        "reference_amplitude_scale": reference_trace.get("reference_amplitude_scale"),
+        "reference_spatial_phase_rad": reference_trace.get("reference_spatial_phase_rad"),
+        "reference_spatial_mode": reference_trace.get("reference_spatial_mode"),
+        "reference_x_norm": reference_trace.get("reference_x_norm"),
+        "reference_z_norm": reference_trace.get("reference_z_norm"),
+        "phi_material_rad": sca_trace.get("phi_material_rad"),
+        "phi_projection_rad": sca_trace.get("phi_projection_rad"),
+        "phi_material_parallel_rad": sca_trace.get("phi_material_parallel_rad"),
+        "phi_material_perpendicular_rad": sca_trace.get("phi_material_perpendicular_rad"),
+        "phi_beam_rad": sca_trace.get("phi_beam_rad"),
+        "phi_beam_gouy_rad": sca_trace.get("phi_beam_gouy_rad"),
+        "phi_beam_curv_rad": sca_trace.get("phi_beam_curv_rad"),
+        "phi_focus_crossing_rad": sca_trace.get("phi_focus_crossing_rad"),
+        "phi_gouy_ref_rad": sca_trace.get("phi_gouy_ref_rad"),
+        "phi_gouy_sca_rad": sca_trace.get("phi_gouy_sca_rad"),
+        "delta_phi_gouy_rad": sca_trace.get("delta_phi_gouy_rad"),
+        "gouy_dedup_active": sca_trace.get("gouy_dedup_active"),
+        "phi_gouy_reference_status": sca_trace.get("phi_gouy_reference_status"),
+        "phi_gouy_scattering_status": sca_trace.get("phi_gouy_scattering_status"),
+        "phi_gouy_semantics_status": sca_trace.get("phi_gouy_semantics_status"),
+        "phi_sca_path_x_rad": sca_trace.get("phi_sca_path_x_rad"),
+        "phi_sca_path_z_rad": sca_trace.get("phi_sca_path_z_rad"),
+        "phi_ref_trace_rad": sca_trace.get("phi_ref_rad"),
+        "phi_sca_path_rad": sca_trace.get("phi_sca_path_rad"),
+        "phi_extra_rad": sca_trace.get("phi_extra_rad"),
+        "scattering_projection_basis": scattering_projection_basis,
+        "illumination_projection_basis": illumination.get("illumination_projection_basis"),
+        "illumination_effective_basis": illumination.get("illumination_effective_basis"),
+        "illumination_projection_basis_match": illumination.get(
+            "illumination_projection_basis_match"
+        ),
+        "illumination_projection_coupling_status": illumination.get(
+            "illumination_projection_coupling_status"
+        ),
+        "reference_projection_basis": reference.get("reference_projection_basis"),
+        "reference_effective_basis": reference.get("reference_effective_basis"),
+        "reference_projection_basis_match": reference.get(
+            "reference_projection_basis_match"
+        ),
+        "reference_projection_coupling_status": reference.get(
+            "reference_projection_coupling_status"
+        ),
+        "interference_projection_basis": reference.get("reference_projection_basis"),
+        "interference_projection_basis_match": reference.get(
+            "reference_projection_basis_match"
+        ),
+        "interference_projection_coupling_status": reference.get(
+            "reference_projection_coupling_status"
+        ),
+        "delta_phi_ref_rad": sca_trace.get("delta_phi_ref_rad"),
+        "readout_model": sim_cfg.readout_model,
+        "features_pod": features_pod,
+        "pulse_pairing_tolerance_s": sim_cfg.pulse_pairing_tolerance_s,
+        "paired_pulse_count": paired_pulse_count,
+        "strict_paired_detected": detected_paired_channel,
+        "initial_position": (x0, z0),
+        "initial_position_center_bias_strength": position_diag.get(
+            "initial_position_center_bias_strength",
+            0.0,
+        ),
+        "initial_position_center_bias_min_confinement_ratio": position_diag.get(
+            "initial_position_center_bias_min_confinement_ratio",
+            0.0,
+        ),
+        "transport_channel_width_m": transport_channel.width_m,
+        "transport_channel_depth_m": transport_channel.depth_m,
+        "threshold_background_median": threshold_stats["median"],
+        "pod_threshold": pod_threshold_stats["threshold"],
+        "pod_threshold_background_median": pod_threshold_stats["median"],
+        "pod_threshold_robust_std": pod_threshold_stats["robust_std"],
+    })
+    return event_result
+
+
+def _simulate_one_event_from_shared_physical_state(
+    *,
+    channel: Channel,
+    optical: OpticalSystem,
+    sim_cfg: SimulationConfig,
+    E_sca_unit_normalized: complex | float,
+    reference: dict,
+    theta_det_rad: float,
+    rng: np.random.Generator,
+    scattering_phase_diagnostics: dict | None,
+    medium_refractive_index: float,
+    transport_channel: Channel,
+    transport_cfg: SimulationConfig,
+    trajectory: dict,
+    illumination: dict,
+    transit_time_s: float,
+    reference_trace: dict,
+    x0: float,
+    z0: float,
+    position_diag: dict,
+    retain_full_payload: bool,
+    readout_context: _ReadoutContext | None,
+    event_case_context: _EventCaseContext,
+    summary_accumulator: _BatchSummaryAccumulator | None,
+) -> dict:
+    """Evaluate one normalization/readout view from a precomputed physical event."""
+    sca_trace = compute_scattering_field_trace(
+        trajectory,
+        E_sca_unit_normalized,
+        optical,
+        illumination,
+        transport_channel,
+        x0,
+        z0,
+        sim_cfg.phase_model,
+        coupling_model=transport_cfg.coupling_model,
+        path_opd_model=sim_cfg.path_opd_model,
+        detection_theta_rad=theta_det_rad,
+        medium_refractive_index=medium_refractive_index,
+        reference_phase_rad=reference_trace["phi_ref_trace_rad"],
+        scattering_phase_diagnostics=scattering_phase_diagnostics,
+        include_phase_diagnostics=retain_full_payload,
+    )
+    trace = generate_interferometric_trace(
+        trajectory,
+        {**reference, **reference_trace},
+        sca_trace,
+        sim_cfg,
+    )
+    noisy = add_detector_noise(
+        trace["signal_trace"],
+        trajectory["time_s"],
+        sim_cfg,
+        rng,
+        detected_intensity=trace.get("I_det"),
+        baseline_intensity=trace.get("I_baseline"),
+    )
+    readout = apply_readout_chain(
+        noisy["signal_noisy"],
+        trajectory["time_s"],
+        sim_cfg,
+        transit_time_s=transit_time_s,
+        readout_context=readout_context,
+        export_full_diagnostics=retain_full_payload,
+    )
+    if (
+        sim_cfg.post_readout_noise_std <= 0
+        and sim_cfg.post_readout_colored_noise_std <= 0
+        and sim_cfg.post_readout_drift_slope == 0
+    ):
+        zero_noise = np.zeros_like(readout["signal_detect"], dtype=float)
+        post_readout = {
+            "signal_post_readout": np.asarray(readout["signal_detect"], dtype=float),
+            "post_readout_noise": zero_noise,
+        }
+        post_readout_nodi = (
+            {
+                "signal_post_readout": np.asarray(readout["signal_nodi"], dtype=float),
+                "post_readout_noise": zero_noise,
+            }
+            if retain_full_payload
+            else None
+        )
+        post_readout_pod = {
+            "signal_post_readout": np.asarray(readout["signal_pod"], dtype=float),
+            "post_readout_noise": zero_noise,
+        }
+    else:
+        post_readout = add_post_readout_noise(
+            readout["signal_detect"],
+            trajectory["time_s"],
+            sim_cfg,
+            rng,
+        )
+        if retain_full_payload:
+            post_readout_nodi = add_post_readout_noise(
+                readout["signal_nodi"],
+                trajectory["time_s"],
+                sim_cfg,
+                rng,
+            )
+        else:
+            _advance_post_readout_noise_rng(
+                np.asarray(readout["signal_nodi"]).shape,
+                sim_cfg,
+                rng,
+                time_s=trajectory["time_s"],
+            )
+            post_readout_nodi = None
+        post_readout_pod = add_post_readout_noise(
+            readout["signal_pod"],
+            trajectory["time_s"],
+            sim_cfg,
+            rng,
+        )
+
+    pulse_time_s, pulse_traces, pulse_sampling_diag = (
+        _resample_traces_for_pulse_extraction(
+            trajectory["time_s"],
+            (
+                np.asarray(post_readout["signal_post_readout"], dtype=float),
+                np.asarray(post_readout_pod["signal_post_readout"], dtype=float),
+            ),
+            sim_cfg,
+        )
+    )
+    pulse_signal = pulse_traces[0]
+    pulse_pod_signal = pulse_traces[1]
+    pulse_context_active = build_pulse_extraction_context(
+        pulse_time_s,
+        sim_cfg.min_peak_width_s,
+        sim_cfg.min_peak_interval_s,
+    )
+    threshold_stats, n_bg, threshold_background_source_runtime = (
+        _estimate_runtime_threshold_stats_1d(pulse_signal, sim_cfg)
+    )
+    threshold = threshold_stats["threshold"]
+    features_nodi = extract_pulse_features(
+        pulse_time_s,
+        pulse_signal,
+        threshold,
+        sim_cfg.min_peak_width_s,
+        sim_cfg.min_peak_interval_s,
+        detection_mode=sim_cfg.pulse_detection_mode,
+        context=pulse_context_active,
+        include_area_prominence=retain_full_payload,
+        width_measure_mode=sim_cfg.pulse_width_measure_mode,
+        duration_estimation_policy=sim_cfg.pulse_duration_estimation_policy,
+    )
+    pod_threshold_stats, pod_n_bg, pod_threshold_background_source_runtime = (
+        _estimate_runtime_threshold_stats_1d(pulse_pod_signal, sim_cfg)
+    )
+    features_pod = extract_pulse_features(
+        pulse_time_s,
+        pulse_pod_signal,
+        pod_threshold_stats["threshold"],
+        sim_cfg.min_peak_width_s,
+        sim_cfg.min_peak_interval_s,
+        detection_mode=sim_cfg.pulse_detection_mode,
+        context=pulse_context_active,
+        include_area_prominence=retain_full_payload,
+        width_measure_mode=sim_cfg.pulse_width_measure_mode,
+        duration_estimation_policy=sim_cfg.pulse_duration_estimation_policy,
+    )
+    paired_pulse_count, paired_primary_indices = _pair_peaks_by_time(
+        features_nodi["peaks"],
+        features_pod["peaks"],
+        sim_cfg.pulse_pairing_tolerance_s,
+    )
+    features_paired = _build_paired_features(features_nodi, paired_primary_indices)
+    features = (
+        features_paired
+        if sim_cfg.detection_decision_mode == "paired_channel"
+        else features_nodi
+    )
+    detected_single_channel = features_nodi["n_peaks"] > 0
+    detected_paired_channel = features_paired["n_peaks"] > 0
+    best_peak_paired = False
+    if features_nodi["n_peaks"] > 0:
+        best_peak_idx = int(
+            np.argmax([peak["peak_height"] for peak in features_nodi["peaks"]])
+        )
+        best_peak_paired = best_peak_idx in paired_primary_indices
+    signal_detect_arr = np.asarray(pulse_signal, dtype=float)
+    local_snr = float(
+        np.max(np.abs(signal_detect_arr)) / max(threshold_stats["robust_std"], 1e-15)
+    )
+    A_ref_trace = np.asarray(
+        reference_trace.get("A_ref_trace", np.zeros_like(trace["signal_trace"])),
+        dtype=float,
+    )
+    A_sca_trace = np.asarray(
+        sca_trace.get("A_sca", np.zeros_like(trace["signal_trace"])),
+        dtype=float,
+    )
+    mean_reference_to_scattering_ratio = float(
+        np.mean(A_ref_trace / np.clip(A_sca_trace, 1e-15, None))
+    )
+    reference_dominated_fraction = (
+        float(np.mean(A_ref_trace >= A_sca_trace))
+        if retain_full_payload or summary_accumulator is None
+        else None
+    )
+    scattering_projection_basis = event_case_context.scattering_projection_basis
+    signal_eval = np.asarray(pulse_signal, dtype=float)
+    if sim_cfg.pulse_detection_mode == "absolute":
+        signal_eval = np.abs(signal_eval)
+    background_eval, _, _ = _threshold_background_segments(signal_eval, sim_cfg)
+    robust_std = max(float(threshold_stats["robust_std"]), 1e-15)
+    if signal_eval.size > 0:
+        event_max_margin_z = float((np.max(signal_eval) - threshold) / robust_std)
+        background_max_margin_z = float(
+            (np.max(background_eval) - threshold) / robust_std
+        )
+    else:
+        event_max_margin_z = float(-threshold / robust_std)
+        background_max_margin_z = event_max_margin_z
+
+    if not retain_full_payload and summary_accumulator is not None:
+        summary_accumulator.update_from_simulation(
+            features=features,
+            features_nodi=features_nodi,
+            features_paired=features_paired,
+            detected_single_channel=detected_single_channel,
+            detected_paired_channel=detected_paired_channel,
+            threshold=threshold,
+            threshold_robust_std=threshold_stats["robust_std"],
+            pod_threshold=pod_threshold_stats["threshold"],
+            pod_threshold_robust_std=pod_threshold_stats["robust_std"],
+            threshold_background_segment_samples=n_bg,
+            trace=trace,
+            noisy=noisy,
+            A_ref_trace=A_ref_trace,
+            A_sca_trace=A_sca_trace,
+            mean_reference_to_scattering_ratio=mean_reference_to_scattering_ratio,
+            transit_time_s=transit_time_s,
+            local_snr=local_snr,
+            position_diag=position_diag,
+            readout=readout,
+            illumination=illumination,
+            reference=reference,
+            paired_pulse_count=paired_pulse_count,
+            best_peak_paired=best_peak_paired,
+            sca_trace=sca_trace,
+            event_max_margin_z=event_max_margin_z,
+            background_max_margin_z=background_max_margin_z,
+            detection_decision_mode=sim_cfg.detection_decision_mode,
+        )
+        return {}
+
+    event_result = {
+        "features": features,
+        "features_nodi": features_nodi,
+        "features_paired": features_paired,
+        "detected_single_channel": detected_single_channel,
+        "detected_paired_channel": detected_paired_channel,
+        "threshold": threshold,
+        "threshold_robust_std": threshold_stats["robust_std"],
+        "pod_threshold": pod_threshold_stats["threshold"],
+        "pod_threshold_robust_std": pod_threshold_stats["robust_std"],
+        "threshold_background_segment_samples": n_bg,
+        "threshold_background_source_runtime": threshold_background_source_runtime,
+        "pod_threshold_background_segment_samples": pod_n_bg,
+        "pod_threshold_background_source_runtime": pod_threshold_background_source_runtime,
+        **pulse_sampling_diag,
+        "pulse_detection_mode": sim_cfg.pulse_detection_mode,
+        "I_baseline": trace.get("I_baseline"),
+        "shot_noise_std_mean": noisy.get("shot_noise_std_mean", 0.0),
+        "shot_noise_reference_dominated_fraction": noisy.get(
+            "shot_noise_reference_dominated_fraction",
+            0.0,
+        ),
+        "mean_shot_noise_intensity_proxy": noisy.get("mean_shot_noise_intensity_proxy", 0.0),
+        "mean_shot_noise_baseline_proxy": noisy.get("mean_shot_noise_baseline_proxy", 0.0),
+        "mean_A_ref_local": float(np.mean(A_ref_trace)),
+        "mean_A_sca_local": float(np.mean(A_sca_trace)),
+        "mean_reference_to_scattering_amplitude_ratio": mean_reference_to_scattering_ratio,
+        "reference_dominated_fraction": (
+            reference_dominated_fraction
+            if reference_dominated_fraction is not None
+            else float(np.mean(A_ref_trace >= A_sca_trace))
+        ),
+        "transit_time_s": transit_time_s,
+        "local_snr": local_snr,
+        "initial_position_distribution_mode": position_diag.get(
+            "initial_position_distribution_mode",
+            "uniform",
+        ),
+        "initial_position_distribution_active": position_diag.get(
+            "initial_position_distribution_active",
+            False,
+        ),
+        "initial_position_x_norm": position_diag.get("initial_position_x_norm", 0.0),
+        "initial_position_z_norm": position_diag.get("initial_position_z_norm", 0.0),
+        "initial_position_confinement_ratio": position_diag.get(
+            "initial_position_confinement_ratio",
+            0.0,
+        ),
+        "initial_position_confinement_activation": position_diag.get(
+            "initial_position_confinement_activation",
+            0.0,
+        ),
+        "initial_position_center_bias_x_exponent": position_diag.get(
+            "initial_position_center_bias_x_exponent",
+            1.0,
+        ),
+        "initial_position_center_bias_z_exponent": position_diag.get(
+            "initial_position_center_bias_z_exponent",
+            1.0,
+        ),
+        "nodi_transit_bandwidth_Hz": readout.get("nodi_transit_bandwidth_Hz"),
+        "nodi_transit_bandwidth_gain": readout.get("nodi_transit_bandwidth_gain"),
+        "nodi_bandwidth_limited_fraction": readout.get("nodi_bandwidth_limited_fraction"),
+        "interference_overlap_factor_abs": trace.get("interference_overlap_factor_abs"),
+        "interference_overlap_factor_phase_rad": trace.get(
+            "interference_overlap_factor_phase_rad"
+        ),
+        "illumination_projection_coupling_status": illumination.get(
+            "illumination_projection_coupling_status"
+        ),
+        "reference_projection_coupling_status": reference.get(
+            "reference_projection_coupling_status"
+        ),
+        "interference_projection_coupling_status": reference.get(
+            "reference_projection_coupling_status"
+        ),
+        "rho_requested": reference.get("rho_requested", float(sim_cfg.rho)),
+        "rho_physical_envelope_nominal": reference.get("rho_physical_envelope_nominal"),
+        "rho_physical_envelope_status": reference.get("rho_physical_envelope_status"),
+        "has_paired_pulse": paired_pulse_count > 0,
+        "best_peak_paired": best_peak_paired,
+        "path_opd_model": sca_trace.get("path_opd_model", sim_cfg.path_opd_model),
+        "path_opd_reference_plane": sca_trace.get("path_opd_reference_plane", "unknown"),
+        "path_opd_z_geometry_factor": sca_trace.get("path_opd_z_geometry_factor", 1.0),
+        "path_opd_z_reference_mode": sca_trace.get("path_opd_z_reference_mode", "unknown"),
+        "path_opd_default_model": sca_trace.get("path_opd_default_model", sim_cfg.path_opd_model),
+        "path_opd_model_role": sca_trace.get("path_opd_model_role", "unknown"),
+        "path_opd_default_frozen": sca_trace.get("path_opd_default_frozen", True),
+        "path_opd_freeze_status": sca_trace.get("path_opd_freeze_status", "unknown"),
+        "detection_decision_mode": sim_cfg.detection_decision_mode,
+        "event_max_margin_z": event_max_margin_z,
+        "background_max_margin_z": background_max_margin_z,
+    }
     if not retain_full_payload:
         return event_result
 
@@ -8506,6 +9011,470 @@ def run_single_case_batch(
             ),
         },
     }
+
+
+def _clone_rng_from_state(state: dict) -> np.random.Generator:
+    rng = np.random.default_rng()
+    rng.bit_generator.state = deepcopy(state)
+    return rng
+
+
+def _rng_states_equal(left: dict, right: dict) -> bool:
+    if left.keys() != right.keys():
+        return False
+    for key, left_value in left.items():
+        right_value = right[key]
+        if isinstance(left_value, dict) and isinstance(right_value, dict):
+            if not _rng_states_equal(left_value, right_value):
+                return False
+        elif isinstance(left_value, np.ndarray) or isinstance(right_value, np.ndarray):
+            if not np.array_equal(np.asarray(left_value), np.asarray(right_value)):
+                return False
+        elif left_value != right_value:
+            return False
+    return True
+
+
+def _shared_event_view_metadata(
+    *,
+    sim_cfg: SimulationConfig,
+    rng_seed: int | None,
+    case_identity: str,
+    actual_events: int,
+) -> dict[str, object]:
+    return {
+        "random_sequence_policy": sim_cfg.random_sequence_policy,
+        "event_sampling_policy": sim_cfg.event_sampling_policy,
+        "event_position_low_variance_sampling": bool(
+            sim_cfg.event_sampling_policy != "random"
+        ),
+        "case_random_seed": int(rng_seed) if rng_seed is not None else None,
+        "case_random_identity": case_identity,
+        "adaptive_event_budget_mode": sim_cfg.adaptive_event_budget_mode,
+        "adaptive_event_budget_requested_events": int(sim_cfg.n_events),
+        "adaptive_event_budget_actual_events": int(actual_events),
+        "adaptive_event_budget_stopped_early": bool(
+            int(actual_events) < int(sim_cfg.n_events)
+        ),
+        "adaptive_event_budget_stop_reason": "fixed_event_budget",
+        "adaptive_min_events": int(sim_cfg.adaptive_min_events),
+        "adaptive_check_interval": int(sim_cfg.adaptive_check_interval),
+        "vectorized_event_engine": sim_cfg.vectorized_event_engine,
+        "event_block_size": int(sim_cfg.event_block_size),
+        "event_block_rng_order": sim_cfg.event_block_rng_order,
+        "vectorized_event_engine_used": "off",
+        "vectorized_event_engine_fallback_reason": "shared_dual_event_loop_path",
+        "vectorized_event_rng_order": "event_loop_order",
+        "shared_event_dual_normalization_used": True,
+        "shared_event_physical_event_count": int(actual_events),
+        "shared_event_dual_normalization_scope": (
+            "same initial positions, Brownian trajectories, illumination envelope, "
+            "and per-event noise RNG start state shared across normalization views"
+        ),
+    }
+
+
+def _refresh_shared_event_batch_result(
+    batch: dict,
+    *,
+    particle: Particle,
+    channel: Channel,
+    optical: OpticalSystem,
+    sim_cfg: SimulationConfig,
+    shared_event_summary: dict[str, object],
+    rng_seed: int | None,
+    case_identity: str,
+) -> dict:
+    """Overlay shared-event summaries onto a static zero-event case skeleton."""
+    out = dict(batch)
+    reference = dict(out.get("reference", {}))
+    summary = dict(out.get("summary", {}))
+    summary.update(shared_event_summary)
+    summary.update(
+        _shared_event_view_metadata(
+            sim_cfg=sim_cfg,
+            rng_seed=rng_seed,
+            case_identity=case_identity,
+            actual_events=int(shared_event_summary.get("n_events", sim_cfg.n_events)),
+        )
+    )
+    recompute_manifest = build_recompute_manifest_diagnostics(
+        particle,
+        channel,
+        optical,
+        sim_cfg,
+    )
+    summary.update(recompute_manifest)
+    reference.update(recompute_manifest)
+
+    detector_noise_summary = build_detector_noise_diagnostics(
+        sim_cfg,
+        collection_operator=None,
+        mean_shot_noise_std=summary.get("mean_shot_noise_std"),
+        reference_enhancement_gain=summary.get(
+            "mean_reference_to_scattering_amplitude_ratio"
+        ),
+    )
+    summary.update(detector_noise_summary)
+    reference.update(detector_noise_summary)
+    run_state = build_run_state_diagnostics(summary, sim_cfg)
+    summary.update(run_state)
+    reference.update(run_state)
+    threshold_false_alarm_summary = build_threshold_false_alarm_diagnostics(
+        sim_cfg,
+        n_background_samples=summary.get("threshold_background_segment_samples"),
+        mean_threshold_robust_std=summary.get("mean_threshold_robust_std"),
+        mean_pod_threshold_robust_std=summary.get("mean_pod_threshold_robust_std"),
+    )
+    summary.update(threshold_false_alarm_summary)
+    reference.update(threshold_false_alarm_summary)
+    event_quality = build_event_quality_control_diagnostics(
+        summary,
+        sim_cfg,
+        reference=reference,
+    )
+    summary.update(event_quality)
+    reference.update(event_quality)
+    engineering_gate = evaluate_engineering_gate(summary, sim_cfg)
+    summary.update(engineering_gate)
+    reference.update(engineering_gate)
+
+    qc_conditioned_detection_rate = summary.get("detected_rate_after_event_qc")
+    conditional_detection_rate_source = "detected_rate_after_event_qc"
+    if qc_conditioned_detection_rate is None:
+        qc_conditioned_detection_rate = summary.get("detection_rate")
+        conditional_detection_rate_source = (
+            "detection_rate_fallback_event_qc_unavailable"
+        )
+    empirical_peak_far_per_min = reference.get(
+        "empirical_peak_false_alarm_rate_per_minute"
+    )
+    blank_false_positive_rate_hz = (
+        max(float(empirical_peak_far_per_min) / 60.0, 0.0)
+        if empirical_peak_far_per_min is not None
+        else None
+    )
+    count_model_summary = build_count_model_diagnostics(
+        particle,
+        channel,
+        sim_cfg,
+        conditional_detection_rate=qc_conditioned_detection_rate,
+        conditional_detection_rate_source=conditional_detection_rate_source,
+        mean_transit_time_s=summary.get("mean_transit_time_s"),
+        blank_false_positive_rate_Hz=blank_false_positive_rate_hz,
+    )
+    summary.update(count_model_summary)
+    reference.update(count_model_summary)
+    count_likelihood = build_count_likelihood_diagnostics(
+        summary,
+        count_model_summary,
+        sim_cfg,
+    )
+    summary.update(count_likelihood)
+    reference.update(count_likelihood)
+    selection_function = build_selection_function_diagnostics(
+        particle,
+        summary,
+        sim_cfg,
+    )
+    summary.update(selection_function)
+    reference.update(selection_function)
+    ev_population_prior = build_ev_population_prior_diagnostics(
+        particle,
+        {**reference, **summary},
+        sim_cfg,
+    )
+    summary.update(ev_population_prior)
+    reference.update(ev_population_prior)
+    population_inference = build_population_inference_scaffold(
+        {**reference, **summary}
+    )
+    summary.update(population_inference)
+    reference.update(population_inference)
+    ood_detection = build_ood_detection_diagnostics(
+        particle,
+        summary,
+    )
+    summary.update(ood_detection)
+    reference.update(ood_detection)
+    claim_governance = build_design_claim_governance_diagnostics(
+        particle,
+        channel,
+        optical,
+        sim_cfg,
+        reference=reference,
+        summary=summary,
+    )
+    summary.update(claim_governance)
+    reference.update(claim_governance)
+    experimental_design_advisor = build_experimental_design_advisor(
+        {**reference, **summary}
+    )
+    summary.update(experimental_design_advisor)
+    reference.update(experimental_design_advisor)
+
+    out["events"] = []
+    out["summary"] = summary
+    out["reference"] = reference
+    intrinsic = dict(out.get("intrinsic", {}))
+    intrinsic.update(recompute_manifest)
+    intrinsic.update(event_quality)
+    intrinsic.update(selection_function)
+    intrinsic.update(run_state)
+    intrinsic.update(count_model_summary)
+    intrinsic.update(count_likelihood)
+    intrinsic.update(ev_population_prior)
+    intrinsic.update(population_inference)
+    intrinsic.update(ood_detection)
+    intrinsic.update(claim_governance)
+    intrinsic.update(experimental_design_advisor)
+    out["intrinsic"] = intrinsic
+    return out
+
+
+def _with_reconstructed_overlap_complex(reference: dict) -> dict:
+    """Restore complex overlap factor needed by trace generation if flattened."""
+    out = dict(reference)
+    if "interference_overlap_factor_complex" not in out:
+        amp = out.get("interference_overlap_factor_abs")
+        phase = out.get("interference_overlap_factor_phase_rad")
+        if amp is not None and phase is not None:
+            out["interference_overlap_factor_complex"] = complex(
+                float(amp) * np.exp(1j * float(phase))
+            )
+    return out
+
+
+def run_single_case_batch_shared_event_normalization_views(
+    particle: Particle,
+    medium: Medium,
+    channel: Channel,
+    optical: OpticalSystem,
+    view_configs: dict[str, SimulationConfig],
+    E_sca_refs: dict[str, float],
+    theta_grid_rad: np.ndarray,
+    *,
+    intrinsic_cache: dict | None = None,
+    reference_cache: dict | None = None,
+    collection_operator_cache: dict | None = None,
+) -> dict[str, dict]:
+    """Run multiple normalization views from one physical event stream.
+
+    This production path is intentionally scoped to the full-grid launch mode:
+    stream-summary output, fixed event budget, and event-loop execution. It
+    shares initial-position sampling, Brownian trajectory generation,
+    illumination, and the per-event noise RNG start state across views while
+    accumulating separate normalization/readout summaries.
+    """
+    if not view_configs:
+        raise ValueError("at least one normalization view is required")
+    if set(view_configs) != set(E_sca_refs):
+        raise ValueError("view_configs and E_sca_refs must have identical keys")
+
+    base_name = next(iter(view_configs))
+    base_cfg = view_configs[base_name]
+    for name, cfg in view_configs.items():
+        if int(cfg.n_events) != int(base_cfg.n_events):
+            raise ValueError(f"view {name} has mismatched n_events")
+        if cfg.random_seed != base_cfg.random_seed:
+            raise ValueError(f"view {name} has mismatched random_seed")
+        if cfg.random_sequence_policy != base_cfg.random_sequence_policy:
+            raise ValueError(f"view {name} has mismatched random_sequence_policy")
+        if cfg.event_sampling_policy != base_cfg.event_sampling_policy:
+            raise ValueError(f"view {name} has mismatched event_sampling_policy")
+        for field_name in (
+            "noise_std",
+            "noise_model",
+            "drift_slope",
+            "shot_noise_scale",
+            "post_readout_noise_std",
+            "post_readout_drift_slope",
+            "detector_noise_model_route",
+        ):
+            if getattr(cfg, field_name) != getattr(base_cfg, field_name):
+                raise ValueError(
+                    f"view {name} has mismatched {field_name}"
+                )
+        if cfg.adaptive_event_budget_mode != "fixed":
+            raise ValueError("shared-event dual normalization requires fixed event budget")
+        if cfg.vectorized_event_engine != "off":
+            raise ValueError("shared-event dual normalization currently requires event-loop mode")
+        if cfg.post_readout_colored_noise_std > 0:
+            raise ValueError("shared-event dual normalization does not yet support colored post-readout noise")
+
+    skeletons: dict[str, dict] = {}
+    for name, cfg in view_configs.items():
+        # SimulationConfig intentionally requires a positive n_events.  Use a
+        # one-event static skeleton, then replace all event-derived summaries
+        # below with the shared physical event stream.  This keeps the rich
+        # reference/governance schema without duplicating the formal 10000e
+        # event campaign for each normalization view.
+        zero_cfg = replace(cfg, n_events=1, adaptive_event_budget_mode="fixed")
+        skeletons[name] = run_single_case_batch(
+            particle,
+            medium,
+            channel,
+            optical,
+            zero_cfg,
+            E_sca_refs[name],
+            theta_grid_rad,
+            retain_event_traces=False,
+            stream_summary_only=True,
+            intrinsic_cache=intrinsic_cache,
+            reference_cache=reference_cache,
+            collection_operator_cache=collection_operator_cache,
+        )
+
+    medium_refractive_index = float(medium.refractive_index_at(optical.wavelength_m))
+    diffusion_coefficient = (
+        _compute_diffusion_coefficient(particle, medium)
+        if base_cfg.include_diffusion
+        else None
+    )
+    event_case_context = _build_event_case_context(
+        channel,
+        base_cfg,
+        particle_radius_m=particle.radius_m,
+    )
+    transport_channel = event_case_context.transport_channel
+    transport_cfg = event_case_context.transport_cfg
+    trajectory_context = event_case_context.trajectory_context
+    readout_contexts = {
+        name: _build_readout_context(trajectory_context.time_s, cfg)
+        for name, cfg in view_configs.items()
+    }
+    case_identity = _build_case_random_identity(
+        particle,
+        medium,
+        channel,
+        optical,
+    )
+    rng_seed = _resolve_case_rng_seed(base_cfg, case_identity)
+    rng = np.random.default_rng(rng_seed)
+    unit_position_samples = _build_event_position_unit_samples(
+        n_events=base_cfg.n_events,
+        policy=base_cfg.event_sampling_policy,
+        seed=rng_seed,
+        case_identity=case_identity,
+    )
+    accumulators = {
+        name: _BatchSummaryAccumulator(
+            stable_detection_margin_z_min=cfg.stable_detection_margin_z_min,
+            fixed_false_alarm_rate=cfg.evaluation_false_alarm_rate,
+            selected_annulus_edge_norm_min=cfg.selected_annulus_edge_norm_min,
+            selected_annulus_edge_norm_max=cfg.selected_annulus_edge_norm_max,
+        )
+        for name, cfg in view_configs.items()
+    }
+
+    for event_idx in range(int(base_cfg.n_events)):
+        unit_position_sample = (
+            tuple(float(x) for x in unit_position_samples[event_idx])
+            if unit_position_samples is not None
+            else None
+        )
+        x0, z0, position_diag = sample_initial_position(
+            transport_channel,
+            rng,
+            particle.radius_m,
+            sim_cfg=transport_cfg,
+            unit_position_sample=unit_position_sample,
+        )
+        trajectory = simulate_particle_trajectory(
+            transport_channel,
+            optical,
+            transport_cfg,
+            x0,
+            z0,
+            particle_radius_m=particle.radius_m,
+            diffusion_coefficient=diffusion_coefficient,
+            rng=rng,
+            trajectory_context=trajectory_context,
+        )
+        illumination = compute_illumination_envelope(
+            trajectory["x_m"],
+            trajectory["y_m"],
+            trajectory["z_m"],
+            optical,
+            medium_refractive_index=medium_refractive_index,
+            sim_cfg=base_cfg,
+        )
+        transit_time_s = _estimate_transit_time_s(
+            trajectory["time_s"],
+            illumination["A_env_scalar"],
+        )
+        shared_rng_state = deepcopy(rng.bit_generator.state)
+        lane_end_state = None
+        for name, cfg in view_configs.items():
+            reference = _with_reconstructed_overlap_complex(skeletons[name]["reference"])
+            intrinsic = skeletons[name]["intrinsic"]
+            reference_trace = compute_reference_field_trace(
+                trajectory,
+                reference,
+                channel,
+                optical,
+                cfg,
+                initial_x_m=x0,
+                initial_z_m=z0,
+            )
+            scattering_phase_summary = {
+                "phi_sca_material_rad": intrinsic.get("phi_sca_material_rad"),
+                "phi_sca_material_parallel_rad": intrinsic.get(
+                    "phi_sca_material_parallel_rad"
+                ),
+                "phi_sca_material_perpendicular_rad": intrinsic.get(
+                    "phi_sca_material_perpendicular_rad"
+                ),
+                "phi_projection_rad": intrinsic.get("phi_projection_rad"),
+            }
+            lane_rng = _clone_rng_from_state(shared_rng_state)
+            _simulate_one_event_from_shared_physical_state(
+                channel=channel,
+                optical=optical,
+                sim_cfg=cfg,
+                E_sca_unit_normalized=intrinsic["E_sca_unit_normalized_complex"],
+                reference=reference,
+                theta_det_rad=float(intrinsic["theta_det_rad"]),
+                rng=lane_rng,
+                scattering_phase_diagnostics=scattering_phase_summary,
+                medium_refractive_index=medium_refractive_index,
+                transport_channel=transport_channel,
+                transport_cfg=transport_cfg,
+                trajectory=trajectory,
+                illumination=illumination,
+                transit_time_s=transit_time_s,
+                reference_trace=reference_trace,
+                x0=x0,
+                z0=z0,
+                position_diag=position_diag,
+                retain_full_payload=False,
+                readout_context=readout_contexts[name],
+                event_case_context=event_case_context,
+                summary_accumulator=accumulators[name],
+            )
+            state = deepcopy(lane_rng.bit_generator.state)
+            if lane_end_state is None:
+                lane_end_state = state
+            elif not _rng_states_equal(lane_end_state, state):
+                raise RuntimeError(
+                    "shared-event normalization views consumed different RNG counts"
+                )
+        if lane_end_state is not None:
+            rng.bit_generator.state = lane_end_state
+
+    outputs: dict[str, dict] = {}
+    for name, cfg in view_configs.items():
+        outputs[name] = _refresh_shared_event_batch_result(
+            skeletons[name],
+            particle=particle,
+            channel=channel,
+            optical=optical,
+            sim_cfg=cfg,
+            shared_event_summary=accumulators[name].finalize(),
+            rng_seed=rng_seed,
+            case_identity=case_identity,
+        )
+    return outputs
 
 
 def _resolve_worker_count(n_workers: int | None) -> int:

@@ -2,7 +2,7 @@
 
 This ledger records the 2026-05-11 in-place restructure of `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md` from v3.0 to **v4.0 dual-lens**, plus the follow-on v5.x updates required to keep the all-crossing lens and the selected-annulus Tsuyama-anchored lens equally weighted as reader entrances.
 
-It is a review artifact; the current scientific single source of truth is the updated `reports/88` v5.2.6. Raw provenance for the selected-annulus lens remains `reports/49` (B1 Phase 2 / 2.5–2.11), `reports/71` (R5.2 bounded scenario-prior audit + sidecar guardrail), and `results/lens_b_ev_gold_fullgrid_1seed_20260513/` (B2 EV+gold full-grid derived analysis).
+It is a review artifact. As of 2026-05-23, the current Lens-B full-grid source of truth is `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`; report 88 remains the consolidated v1/v2/post-v2 background. Raw provenance for the selected-annulus lens remains `reports/49` (B1 Phase 2 / 2.5–2.11), `reports/71` (R5.2 bounded scenario-prior audit + sidecar guardrail), and the report 140 audited shared-dual 3seed × 10000e seed/aggregation directories.
 
 ## v5.2.6 full-grid addendum (2026-05-14): lens B EV+gold full-grid final
 

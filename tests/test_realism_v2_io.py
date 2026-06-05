@@ -1,9 +1,15 @@
 from __future__ import annotations
 
 import csv
+import gzip
+import hashlib
 import json
 
 from nodi_simulator.realism_v2_io import (
+    open_text_artifact,
+    read_csv_headers,
+    read_csv_rows,
+    resolve_artifact_path,
     sha256_file,
     write_csv_rows,
     write_json_atomic,
@@ -65,6 +71,21 @@ def test_sha256_file_hashes_file_contents(tmp_path):
         "ba7816bf8f01cfea414140de5dae2223"
         "b00361a396177a9cb410ff61f20015ad"
     )
+
+
+def test_csv_artifact_helpers_resolve_gzip_fallback(tmp_path):
+    logical_path = tmp_path / "rows.csv"
+    gzip_path = tmp_path / "rows.csv.gz"
+    content = "a,b\n1,2\n"
+    with gzip.open(gzip_path, mode="wt", encoding="utf-8", newline="") as handle:
+        handle.write(content)
+
+    assert resolve_artifact_path(logical_path) == gzip_path
+    with open_text_artifact(logical_path, newline="") as handle:
+        assert handle.read() == content
+    assert read_csv_headers(logical_path) == ["a", "b"]
+    assert read_csv_rows(logical_path) == [{"a": "1", "b": "2"}]
+    assert sha256_file(logical_path) == hashlib.sha256(content.encode("utf-8")).hexdigest()
 
 
 def test_write_run_manifest_writes_root_copy_only_when_requested(tmp_path):

@@ -1,6 +1,6 @@
 # EV/NODI 设计决策平台升级路线图与修改框架
 
-> 当前状态：2026-05-14 复核版。旧版“Tsuyama 对齐主链升级路线图”中的 P0-P6 可落地项已经完成，完成态正文已归档到 [archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md](./archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md)。根目录文件43保留为历史/治理路线图；当前综合结论以 `reports/88_*` v5.2.6 为准，v2 无实测边界以 `reports/87_*` 和 `reports/84_*` 为准，口径 B 的 B2 EV+gold full-grid 当前结果以 `results/lens_b_ev_gold_fullgrid_1seed_20260513/` 为准。
+> 当前状态：2026-05-23 复核版。旧版“Tsuyama 对齐主链升级路线图”中的 P0-P6 可落地项已经完成，完成态正文已归档到 [archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md](./archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md)。根目录文件43保留为历史/治理路线图；当前 Lens-B full-grid 结论以 `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md` 为准，综合背景以 `reports/88_*` 为准，v2 无实测边界以 `reports/87_*` 和 `reports/84_*` 为准。旧 `results/lens_b_ev_gold_fullgrid_1seed_20260513/` 和 B6/B7 1000e 只作 historical / method provenance。
 
 > 2026-05-08 补充：selected detector-mode / selected-annulus 已成为固定交叉验证口径，canonical annulus 保持 `0.5-0.8`；旧临时 plan 和旧 selected-detector-mode 探索结果已被 Phase 2 acceptance、D2/D2.1、Phase 2.6-2.11、v2 closure 和 `reports/88_*` 取代，不再作为当前证据入口。
 

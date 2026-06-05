@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import gzip
 import hashlib
 import io
 import json
@@ -12,12 +13,50 @@ from pathlib import Path
 from typing import Any
 
 
+def resolve_artifact_path(path: str | Path) -> Path:
+    """Resolve a logical artifact path, allowing a gzip-compressed twin."""
+    artifact_path = Path(path)
+    if artifact_path.exists():
+        return artifact_path
+    gzip_path = artifact_path.with_name(f"{artifact_path.name}.gz")
+    if gzip_path.exists():
+        return gzip_path
+    return artifact_path
+
+
+def open_text_artifact(path: str | Path, *, newline: str | None = None):
+    artifact_path = resolve_artifact_path(path)
+    if artifact_path.suffix == ".gz":
+        return gzip.open(artifact_path, mode="rt", newline=newline, encoding="utf-8")
+    return artifact_path.open(newline=newline, encoding="utf-8")
+
+
 def sha256_file(path: str | Path) -> str:
     digest = hashlib.sha256()
-    with Path(path).open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
+    requested_path = Path(path)
+    artifact_path = resolve_artifact_path(requested_path)
+    if artifact_path.suffix == ".gz" and artifact_path != requested_path:
+        with gzip.open(artifact_path, mode="rb") as handle:
+            for block in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(block)
+    else:
+        with artifact_path.open("rb") as handle:
+            for block in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(block)
     return digest.hexdigest()
+
+
+def read_csv_rows(path: str | Path) -> list[dict[str, str]]:
+    with open_text_artifact(path, newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
+def read_csv_headers(path: str | Path) -> list[str]:
+    with open_text_artifact(path, newline="") as handle:
+        try:
+            return list(next(csv.reader(handle)))
+        except StopIteration:
+            raise ValueError(f"CSV file has no header row: {path}") from None
 
 
 def write_csv_rows(path: Path, rows: list[dict[str, Any]]) -> None:

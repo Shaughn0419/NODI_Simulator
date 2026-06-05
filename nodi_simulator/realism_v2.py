@@ -41,6 +41,9 @@ def _load_sibling_module(module_name: str) -> Any:
 
 try:  # Support both package and direct review-bundle imports.
     from .realism_v2_io import (
+        open_text_artifact,
+        read_csv_headers,
+        read_csv_rows,
         sha256_file,
         write_csv_rows,
         write_run_manifest as _write_run_manifest_impl,
@@ -49,6 +52,9 @@ except ImportError:  # pragma: no cover - direct bundle fallback
     if __package__:
         raise
     _realism_v2_io = _load_sibling_module("realism_v2_io")
+    open_text_artifact = _realism_v2_io.open_text_artifact
+    read_csv_headers = _realism_v2_io.read_csv_headers
+    read_csv_rows = _realism_v2_io.read_csv_rows
     sha256_file = _realism_v2_io.sha256_file
     write_csv_rows = _realism_v2_io.write_csv_rows
     _write_run_manifest_impl = _realism_v2_io.write_run_manifest
@@ -9840,8 +9846,7 @@ def run_representative_full_wave_R4(
 
 
 def _read_csv_dicts(path: Path) -> list[dict[str, str]]:
-    with path.open(newline="", encoding="utf-8") as handle:
-        return list(csv.DictReader(handle))
+    return read_csv_rows(path)
 
 
 def _first_row(rows: Sequence[Mapping[str, Any]], label: str) -> Mapping[str, Any]:
@@ -9851,11 +9856,7 @@ def _first_row(rows: Sequence[Mapping[str, Any]], label: str) -> Mapping[str, An
 
 
 def _csv_headers(path: Path) -> list[str]:
-    with path.open(newline="", encoding="utf-8") as handle:
-        try:
-            return list(next(csv.reader(handle)))
-        except StopIteration:
-            raise ValueError(f"CSV file has no header row: {path}") from None
+    return read_csv_headers(path)
 
 
 def _sign(value: float, *, eps: float = 1.0e-300) -> int:
@@ -12770,7 +12771,7 @@ def run_R5_2_bounded_scenario_prior_audit(
         for rows in plan["audit_route_set"].values()
         for row in rows
     }
-    with full_summary_path.open(newline="", encoding="utf-8") as handle:
+    with open_text_artifact(full_summary_path, newline="") as handle:
         audit_rows: list[dict[str, str]] = [
             row
             for row in csv.DictReader(handle)

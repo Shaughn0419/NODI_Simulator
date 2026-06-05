@@ -8,6 +8,11 @@ from pathlib import Path
 import pytest
 
 from nodi_simulator import realism_v2 as rv2
+from nodi_simulator.realism_v2_io import (
+    open_text_artifact,
+    read_csv_headers,
+    read_csv_rows,
+)
 
 
 R5_DIR = rv2.DEFAULT_R5_FULL_GRID_V2_DIR
@@ -21,17 +26,15 @@ R5_EXECUTION_MANIFEST_FROZEN_CHECKSUMS = {
 
 
 def _csv_rows(path: Path) -> list[dict[str, str]]:
-    with path.open(newline="", encoding="utf-8") as handle:
-        return list(csv.DictReader(handle))
+    return read_csv_rows(path)
 
 
 def _csv_headers(path: Path) -> set[str]:
-    with path.open(newline="", encoding="utf-8") as handle:
-        return set(next(csv.reader(handle)))
+    return set(read_csv_headers(path))
 
 
 def _row_count(path: Path) -> int:
-    with path.open(newline="", encoding="utf-8") as handle:
+    with open_text_artifact(path, newline="") as handle:
         return sum(1 for _ in handle) - 1
 
 
@@ -61,7 +64,11 @@ def test_R5_source_schema_helpers_report_missing_or_bad_columns():
 
 def test_R5_outputs_required_files_only_and_respect_cap():
     assert R5_DIR.exists()
-    files = {p.name for p in R5_DIR.iterdir() if p.is_file() and not p.name.startswith("._")}
+    files = {
+        p.name.removesuffix(".gz")
+        for p in R5_DIR.iterdir()
+        if p.is_file() and not p.name.startswith("._")
+    }
 
     assert files == rv2.R5_REQUIRED_OUTPUTS_IF_EXECUTED_AFTER_REVIEW
     assert _row_count(R5_DIR / "full_grid_v2_case_manifest.csv") == 256256
@@ -83,9 +90,7 @@ def test_R5_case_manifest_uses_reviewed_source_rows_scenarios_and_no_seeds():
     route_ids: set[str] = set()
     role_counts: Counter[str] = Counter()
 
-    with (R5_DIR / "full_grid_v2_case_manifest.csv").open(
-        newline="", encoding="utf-8"
-    ) as handle:
+    with open_text_artifact(R5_DIR / "full_grid_v2_case_manifest.csv", newline="") as handle:
         for row in csv.DictReader(handle):
             scenarios.add(row["scenario_bundle"])
             seeds.add(row["stochastic_seed"])
@@ -118,7 +123,7 @@ def test_R5_summary_claim_boundaries_are_blocked_for_all_rows():
         "R5_followup_expansion_authorized": Counter(),
     }
 
-    with (R5_DIR / "full_grid_v2_summary.csv").open(newline="", encoding="utf-8") as handle:
+    with open_text_artifact(R5_DIR / "full_grid_v2_summary.csv", newline="") as handle:
         for row in csv.DictReader(handle):
             for key in counters:
                 counters[key][row[key]] += 1

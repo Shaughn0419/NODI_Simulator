@@ -15,29 +15,39 @@ The current project state is:
   adds the P0 review-ready audit package plus six bounded trace-only lanes; it
   does not promote a route because the two locked main-660 candidates swap
   rank across P6/P8/P10/P12/P14/P16.
-- **Lens B is now a completed low-event Tsuyama-anchored application lane.**
-  B1 uses Tsuyama Au/Ag anchors to freeze an estimated parameter set; B2 has
-  two current `seed=42`, `1,000` events/case EV+gold full-grid reads: B6
-  per-wavelength gold normalization for Tsuyama-lineage geometry diagnostics,
-  and B7 fixed-660-gold normalization for cross-wavelength EV decision support.
+- **Lens B now has a completed 3-seed, 10,000 events/case exhaustive EV+gold
+  full-grid post-run analysis.** The shared-dual run covers seeds `11/22/33`,
+  572 wavelength/width/depth routes, 56 particles, and 960,960,000 physical
+  stochastic event samples. `fixed_660_gold` and `per_wavelength_gold` are two
+  normalization views over the same physical events, not separate event
+  campaigns. The current entry point is report 140.
+- **The older τ=1 ms B6/B7 Lens-B reads remain historical single-seed
+  overlays.** B6 per-wavelength gold normalization is still useful for
+  Tsuyama-lineage geometry diagnostics; B7 fixed-660-gold normalization was the
+  previous low-event cross-wavelength decision overlay. Both are now superseded
+  for robust Lens-B interpretation by the 3-seed 10000e post-run analysis.
   EV recommendations use EV/exosome rows only; gold rows are diagnostic anchors
-  only. The old `10,000` events/case Lens-B full-grid is a 2 ms legacy
-  sensitivity/reference run, not the current 1 ms decision lane.
+  only. The old 2026-05-13 `10,000` events/case Lens-B full-grid remains a
+  2 ms legacy sensitivity/reference run, not the current 1 ms decision lane.
 - **The repository still has no measured acquisition data.** It does not
   authorize calibrated signal-to-noise ratio, calibrated event probability,
   absolute detection limit, true EV concentration, biological specificity,
   measured blank safety, route promotion, or main-660 redefinition.
 
-For readers, start with the consolidated analysis, then read the Lens-B B7
-overlay for the latest Criterion-B cross-wavelength update:
+For readers, start with the latest full-grid post-run analysis, then use the
+older consolidated reports for background and provenance:
 
+- [reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md](./reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md)
 - [reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md](./reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md)
 - [reports/100_EV_NODI_lens_b_tau1ms_stage_b6_only_analysis.md](./reports/100_EV_NODI_lens_b_tau1ms_stage_b6_only_analysis.md)
 
-Report 88 is the consolidated v1/v2/post-v2 reader report with the B6
-low-event Lens-B overlay. Report 100 is the newer Lens-B focused update: B6
-remains the per-wavelength gold-normalized Tsuyama-lineage comparison, while
-B7 is the fixed-660-gold cross-wavelength read.
+Report 140 is the current Lens-B full-grid interpretation and audit ledger. It
+confirms hard output integrity with a raw/diagnostic schema caveat and records
+the new cross-view result: `fixed_660_gold` moves the selected-annulus
+recommendation family toward 404 nm / W500 mid-depth routes, while
+`per_wavelength_gold` preserves the 660 nm / W800 D1400-D1500 family under the
+sharp MSC/sEV prior. Report 88 remains the consolidated v1/v2/post-v2 reader
+report; report 100 is now a historical single-seed B6/B7 overlay.
 
 For the final v2 boundary, read:
 
@@ -55,6 +65,8 @@ Supported:
 - post-v2 relative-audit records and trace-only rank-instability evidence;
 - mesh/sign consistency checks for the locked 660 nm main route;
 - a low-dimensional explanation for why narrow/deep context routes scored high;
+- Level-1 3-seed EV+gold route-family comparison under explicitly named
+  normalization views;
 - a concrete list of missing artifacts needed before physical calibration.
 
 Not supported:
@@ -69,6 +81,8 @@ Not supported:
 - replacing all-crossing ranking with selected-annulus ranking, or the reverse;
 - treating P6-P16 trace ordering as route promotion.
 - treating Lens-B gold anchor geometry as an EV recommendation;
+- double-counting `fixed_660_gold` and `per_wavelength_gold` as independent
+  physical stochastic event campaigns;
 - treating 488/532 raw or control wins as final recommendation wavelengths.
 
 ## Current Scientific Bottom Line
@@ -88,14 +102,15 @@ show that this warning is explainable by low-dimensional width-family and
 mechanistic-prior hypotheses, but those hypotheses are not calibrated physical
 laws.
 
-Lens B does not override that engineering main ranking. Under B6
-per-wavelength gold normalization, its EV-only selected-annulus evidence points
-to a 660 nm / 800 nm-width Tsuyama-lineage comparison family. Under the newer
-B7 fixed-660-gold normalization, the current low-event cross-wavelength
-Criterion-B candidate shifts to the 404 nm / 500 nm-width family, centered on
-404 / 500x550 and 404 / 500x900. This is still one seed and 1,000 events/case,
-not measured calibration or 10,000-event final validation. 488/532 remain
-control/trend only.
+The completed 3-seed 10000e Lens-B full-grid does not produce one universal
+winner. Under `fixed_660_gold`, EV-prior selected-annulus recommendation ranks
+move to the 404 nm / W500 mid-depth family. Under `per_wavelength_gold`, the
+same recommendation lens returns to the 660 nm / W800 family, especially
+`660_W800_D1400` and `660_W800_D1500` for the sharp MSC/sEV prior. The older
+main-660 conclusion therefore stands with a narrower normalization/lens
+boundary, while the 404 branch is now a fixed-view Level-1 candidate family
+rather than only a sidecar/stress branch. 488/532 remain control/reference
+wavelengths.
 
 ## Quick Start
 
@@ -153,6 +168,11 @@ The latest local cleanup/review baseline was:
 - [guides/operations/14_测试说明.md](./guides/operations/14_测试说明.md): test operation notes.
 - [guides/operations/15_无实测数据时如何接入未来校准数据.md](./guides/operations/15_无实测数据时如何接入未来校准数据.md): future calibration-data handoff boundary.
 - [reports/89_EV_NODI_post_v2_unmodeled_realism_register.md](./reports/89_EV_NODI_post_v2_unmodeled_realism_register.md): post-v2 realism gaps acknowledged but not solved inside v2.
+- [reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md](./reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md): current 3-seed 10000e EV+gold exhaustive full-grid audit and interpretation.
+- [reports/141_full_project_code_doc_cleanup_audit_20260523.md](./reports/141_full_project_code_doc_cleanup_audit_20260523.md): 2026-05-23 code/documentation cleanup review ledger.
+- [reports/142_current_documentation_status_audit_20260523.md](./reports/142_current_documentation_status_audit_20260523.md): 2026-05-23 per-Markdown-file currentness audit.
+- [reports/143_project_productization_cleanup_20260523.md](./reports/143_project_productization_cleanup_20260523.md): 2026-05-23 productization cleanup ledger, artifact tiers, and next refactor queue.
+- [reports/144_results_papers_internal_slimming_audit_20260523.md](./reports/144_results_papers_internal_slimming_audit_20260523.md): 2026-05-23 internal `results/` / `papers/` slimming candidates and risk tiers.
 - [reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md](./reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md): 2026-05-11 full report merge, code-review ledger, documentation ledger, and verification record.
 - [type_coerce.md](./type_coerce.md), [realism_v2_io.md](./realism_v2_io.md), and [optional_acceleration.md](./optional_acceleration.md): small shared helper modules introduced during the May 8 hardening pass. These helpers, plus realism-v2, data-object, utility, parameter-sweep, material, Mie, intrinsic-scattering, illumination, reference-field, trajectory, scattering-trace, interferometric-trace, pulse-analysis, population-trace, polarization-Jones, calibration, manifest, run-state, control, count, OOD, Bayesian, population, experimental-design, seed, geometry, fluidic, electrokinetic, optical-exposure, optical-hardware, objective-panel, wavelength-comparability, readout-transfer, BFP-detector, paper-aligned, Tsuyama phase-filter, count-generation, interface-correction, structured-particle, particle-design, design-metric, design-postprocess, design-claim, selection, reference-operating, particle-channel, NODI thermal, photothermal-POD, assay-control, event-QC, EV integrity, EV reporting, unit, detector-unit, and uncertainty helpers, are canonical under `nodi_simulator/`.
 - Public package exports are maintained in `nodi_simulator/_exports.py`; root package-module compatibility wrappers have been retired.
@@ -178,6 +198,12 @@ The post-v2 result lineage is stored under `results/post_v2_*`. These artifacts
 are review/audit/trace records. They are not measured data and must not be used
 as calibrated detector output.
 
+The current exhaustive Lens-B EV+gold 3-seed 10000e lineage is stored under
+`results/exhaustive_ev_gold_fullgrid_shared_dual_10000e_seed*_16worker_20260518`
+and the paired aggregation directories
+`results/exhaustive_ev_gold_fullgrid_shared_dual_3seed_10000e_*_aggregation_20260518`.
+Use report 140 for interpretation rather than reading the raw CSVs directly.
+
 ## Repository Hygiene
 
 Generated caches, local agents, virtual environments, review bundles, and large
@@ -188,6 +214,11 @@ needed for provenance:
 - `.omx/`, `.claude/`
 - `tmp/`, `.pdf_output/`
 - large generated files under `results/`, `exports/`, and `review_bundles/`
+
+The 2026-05-23 productization cleanup pass removed safe local cache/export
+noise and left `results/` / `papers/` intact pending hash-manifest
+externalization. See report 143 before deleting large local runtime or evidence
+directories.
 
 Historical material under `archive/` is kept for provenance. Do not use archive
 documents as current scientific truth unless the current reports explicitly

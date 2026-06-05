@@ -4,6 +4,7 @@
 - Scope: Criterion B / 口径 B only
 - Current rule: Criterion B runtime lock-in time constant is fixed at `τ = 1 ms`
 - Current status: the completed `results/lens_b_ev_gold_fullgrid_1seed_20260513/` run is a real completed full-grid, but it used `lockin_time_constant_s = 0.002`; it is now legacy 2 ms sensitivity/reference evidence. A current `τ=1 ms` Stage B6 EV+gold full-grid has since completed at `1000 events/case` in `results/stage_b6_tau1ms_ev_gold_fullgrid_1000e_seed42_22worker_restart_20260514/`; it is low-event full-grid design evidence, not the planned `10000 events/case` final-validation run.
+- 2026-05-23 overlay: this roadmap is now historical execution context. The latest robust Lens-B full-grid interpretation is `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`, based on shared-dual 3seed × 10000e outputs. Do not use this roadmap's B6/B7 next-action language as the current scientific conclusion.
 
 ## New-thread quick start
 
