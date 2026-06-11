@@ -1,12 +1,12 @@
 # EV/NODI 设计决策平台升级路线图与修改框架
 
-> 当前状态：2026-05-23 复核版。旧版“Tsuyama 对齐主链升级路线图”中的 P0-P6 可落地项已经完成，完成态正文已归档到 [archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md](./archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md)。根目录文件43保留为历史/治理路线图；当前 Lens-B full-grid 结论以 `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md` 为准，综合背景以 `reports/88_*` 为准，v2 无实测边界以 `reports/87_*` 和 `reports/84_*` 为准。旧 `results/lens_b_ev_gold_fullgrid_1seed_20260513/` 和 B6/B7 1000e 只作 historical / method provenance。
+> 当前状态：2026-06-12 no-data closure 版。旧版“Tsuyama 对齐主链升级路线图”中的 P0-P6 可落地项已经完成，完成态正文已归档到 [archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md](./archive/tsuyama/59_Tsuyama对齐主链升级路线图与修改框架_2026-04-24完成态.md)。根目录文件43保留为历史/治理路线图；当前 Lens-B / Stage-1 / no-data closure 以 `reports/140_*`、`reports/147_*`、`reports/148_*` 为准。当前最终写法是 `404/W500` fixed-view candidate 与 `660/W800` per-wavelength-view candidate 并立；R1 与 C/D×V2 是 narrowed no-data gate 外的 deferred cells。旧 `results/lens_b_ev_gold_fullgrid_1seed_20260513/` 和 B6/B7 1000e 只作 historical / method provenance。
 
-> 2026-05-08 补充：selected detector-mode / selected-annulus 已成为固定交叉验证口径，canonical annulus 保持 `0.5-0.8`；旧临时 plan 和旧 selected-detector-mode 探索结果已被 Phase 2 acceptance、D2/D2.1、Phase 2.6-2.11、v2 closure 和 `reports/88_*` 取代，不再作为当前证据入口。
+> 2026-05-08 补充，2026-06-12 重标注：selected detector-mode / selected-annulus 已成为固定交叉验证口径，canonical annulus 保持 `0.5-0.8`；旧临时 plan 和旧 selected-detector-mode 探索结果已被 Phase 2 acceptance、D2/D2.1、Phase 2.6-2.11、v2 closure 和后续 `reports/140_*` / `reports/147_*` / `reports/148_*` no-data closure 取代，不再作为当前证据入口。`reports/88_*` 仅保留历史综合背景角色。
 
 > 2026-04-27 波长与几何网格口径修正：正式 `ev_design + full_range_biomimetic_exosome_with_anchors` 必须覆盖 `404 / 488 / 532 / 660 nm`，并使用 `11` 个宽度节点与 `13` 个深度节点，即 `32032 cases × 10000 events/case`。此前三波长 `7056 cases` 或旧几何 `9408 cases` 结果库只能视为 stale partial coverage，不能作为 current truth。
 
-> 当前重算判断：formal EV full-grid recompute 已完成，只签 relative/proxy/diagnostic EV design decision library。没有实测 blank / standard particle / BFP ROI / lock-in transfer / detector-unit 数据时，P2/P3 继续保持 data-blocked / calibration-ready / future-high-fidelity lane，不得输出 calibrated SNR、absolute LOD、absolute EV concentration、真实跨波长 detector-unit 优劣或 biological EV specificity claim。若目标改为 experimental calibrated platform，必须等 P2/P3 的真实数据或高保真 solver 接入后再升级 claim。
+> 当前重算判断：formal EV full-grid recompute 与 no-data 审计收口均已完成，只签 relative/proxy/diagnostic EV design decision library 与 detector-surrogate candidate families。没有实测 blank / standard particle / BFP ROI / lock-in transfer / detector-unit 数据时，P2/P3 继续保持 data-blocked / calibration-ready / future-high-fidelity lane，不得输出 calibrated SNR、absolute LOD、absolute EV concentration、真实跨波长 detector-unit 优劣或 biological EV specificity claim。若目标改为 experimental calibrated platform，必须等 P2/P3 的真实数据或高保真 solver 接入后再升级 claim。
 
 ## 总判断
 
@@ -196,7 +196,7 @@ P0-hard 内部也分两类：`unit/mie/manifest` 这类失败时阻止 formal fu
 | Particle-induced channel perturbation | `particle_induced_channel_perturbation_model` 已支持 `excluded_volume_phase_surrogate` / `born_phase_object` / `full_phase_mask_recompute`，当前默认仍保持 diagnostic-only。 | 低散射 EV 风险诊断已可输出；没有 double-count guard / fullwave / 实测前不得 active coherent addition。 |
 | Particle-channel double counting | `nodi_simulator/particle_channel_perturbation.py` 已输出 double-counting risk 与 guard 字段。 | 默认不把 perturbation 加回主 score；只有 guard 通过或高保真/实测闭环后才可升级。 |
 | Detector forward model | `detector_forward_model` 已接受 `collapsed_scalar_surrogate`、`joint_overlap_coherent_surrogate`、`roi_intensity_integral`、`roi_complex_mode_overlap_integral`；`nodi_simulator/bfp_detector_operator.py` 已输出 scalar-vs-ROI disagreement。 | ROI lane 是 comparison/diagnostic contract；无 detector-unit chain 时仍不能给 photon/voltage calibrated claim。 |
-| Tsuyama BFP reference | `nodi_simulator/tsuyama_phase_filter.py` 已输出 BFP 复场；`nodi_simulator/reference_field.py` 已提供 `tsuyama_bfp_integrated` detector-resolved comparison lane。 | 可做 BFP-level comparison，不替换 measured blank calibration 或 calibrated truth。 |
+| Tsuyama BFP reference | `nodi_simulator/tsuyama_phase_filter.py` 已输出 BFP 复场；`nodi_simulator/reference_field.py` 已提供 `tsuyama_bfp_integrated` BFP/ROI-resolved comparison lane。 | 可做 BFP-level comparison，不替换 measured blank calibration、calibrated truth 或 detector-resolved winner evidence。 |
 | Reference operating point | `nodi_simulator/reference_operating_point.py` 已输出 reference too weak / saturation / RIN/leakage risk 等工作带诊断。 | 防止“reference 越强越好”的错误推荐；无实测 detector/noise budget 时仍是诊断。 |
 | NA cutoff | `nodi_simulator/reference_field.py` 当前有 engineering hard guardrail/width saturation。 | 增加 soft rolloff policy，保留 hard guardrail 作保守 lane。 |
 | Transport / initial distribution | `uniform_accessible_area` 与 `flux_weighted` 已 runtime-active；`electrostatic_equilibrium` / measured distribution 仍为 schema-reserved。 | EV helper 可用 `flux_weighted`；正式 dashboard precompute 仍按 dashboard 默认配置，除非显式切换 helper。 |
@@ -468,7 +468,7 @@ bfp_roi_mask_status = surrogate_not_calibrated
 detector_forward_claim_level = relative_ranking_only
 ```
 
-注意：这条 lane 是 detector-resolved comparison，不直接解锁 detector voltage 或 photon-unit claim。核心硬要求是：
+注意：这条 lane 是 BFP/ROI-resolved comparison，不直接解锁 detector voltage、photon-unit 或 detector-resolved winner claim。核心硬要求是：
 
 ```text
 S_ROI = integral_ROI(|E_ref + E_sca|^2 - |E_ref|^2) dA

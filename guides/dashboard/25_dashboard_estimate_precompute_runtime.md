@@ -102,4 +102,4 @@ python -m nodi_simulator.dashboard.estimate_precompute_runtime \
 当前这台 10 核机器上，`workers=8` 附近表现最好。这里的“实测”只表示本机运行耗时测量，不表示仪器/样品实测数据：
 
 - `coarse + full_range`: 运行计时 `3277.2 s`，约 `54.6 min`
-- `ev_design + full_range_biomimetic_exosome_with_anchors`: 正式 full-grid 已完成；最新科学解释以 `reports/88_*` 为准，复跑前应改用新的 tag 或先归档旧产物
+- `ev_design + full_range_biomimetic_exosome_with_anchors`: 正式 full-grid 已完成；当前科学解释以 `reports/140_*`、`reports/147_*`、`reports/148_*` 为准，复跑前应改用新的 tag 或先归档旧产物

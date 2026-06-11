@@ -520,7 +520,12 @@ def write_review_manifests(project_root: Path = PROJECT_ROOT) -> tuple[Path, Pat
     return build_path, release_path, project_root / "REVIEW_PACKAGE_HASHES.sha256"
 
 
-def verify_review_package(project_root: Path = PROJECT_ROOT, *, allow_dirty: bool = False) -> list[str]:
+def verify_review_package(
+    project_root: Path = PROJECT_ROOT,
+    *,
+    allow_dirty: bool = False,
+    external_bundle_mode: bool = False,
+) -> list[str]:
     release_path = project_root / "REVIEW_PACKAGE_MANIFEST.json"
     hash_path = project_root / "REVIEW_PACKAGE_HASHES.sha256"
     manifest = _load_json_compatible(release_path)
@@ -531,7 +536,8 @@ def verify_review_package(project_root: Path = PROJECT_ROOT, *, allow_dirty: boo
     recorded_commit = manifest.get("git_commit")
     current_commit = git_commit(project_root)
     if (
-        isinstance(recorded_commit, str)
+        not external_bundle_mode
+        and isinstance(recorded_commit, str)
         and recorded_commit
         and current_commit
         and not git_commit_is_ancestor(recorded_commit, current_commit, project_root)
@@ -569,6 +575,7 @@ def verify_review_package(project_root: Path = PROJECT_ROOT, *, allow_dirty: boo
         "PASS hashes",
         "PASS v1_summary_contract",
         "PASS v2_closure_contract",
+        "PASS external_bundle_mode" if external_bundle_mode else "PASS local_git_context",
         "PASS post_v2_audit_schema"
         if not manifest.get("deferred_p0b_roles")
         else "SKIP post_v2_audit_tables declared_P0b_deferred",

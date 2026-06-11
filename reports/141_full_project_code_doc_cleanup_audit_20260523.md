@@ -88,7 +88,7 @@
   - 当前项目状态改为 report 140 的 3seed × 10000e exhaustive EV+gold full-grid 结论。
   - 明确 `fixed_660_gold` / `per_wavelength_gold` 是 normalization views，不是独立 physical campaigns。
   - 把 report 140 放到 reader entry 第一位，并把 report 88 / 100 降为背景与历史 overlay。
-  - 更新当前科学 bottom line：fixed view 指向 404/W500 mid-depth；per-wavelength view 保留 660/W800 D1400-D1500；488/532 仍 control/reference。
+  - 2026-05-23 当时更新科学 bottom line：fixed view 指向 404/W500 mid-depth；per-wavelength view 保留 660/W800 深通道背景；488/532 仍 control/reference。2026-06-12 后该表述已由 report 140/147/148 收紧为 `404/W500` fixed-view candidate 与 `660/W800` per-wavelength-view candidate 并立，D1400/D1500 不再是 mandatory final design。
 - `文档导航.md`
   - 第一屏加入 report 140 提示、双 normalization-view 边界和最新 route-family 解释。
   - 当前读者入口把 report 140 放在 report 88 / 100 之前。

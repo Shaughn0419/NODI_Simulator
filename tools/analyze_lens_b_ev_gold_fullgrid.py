@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportCallIssue=false, reportGeneralTypeIssues=false
+"""Analyze historical Lens-B EV+gold full-grid CSVs.
+
+This tool is retained for provenance and regression checks. Current no-data
+closure wording lives in reports 140/147/148 and must not be replaced by the
+older seed-42, route-role, or B6/B7 terminology emitted here.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -417,7 +425,7 @@ def build_a_vs_b_difference_table(routes: pd.DataFrame, raw_df: pd.DataFrame) ->
             },
             {
                 "difference_axis": "wavelength_governance",
-                "criterion_a_engineering_lens": "A route-role table keeps 660 main, 404 sidecar, 488/532 controls.",
+                "criterion_a_engineering_lens": "Historical A route-role table kept 660 main, 404 sidecar, 488/532 controls.",
                 "criterion_b_tsuyama_anchored_ev_application": "B raw/control rankings keep 404/488/532/660, but final recommendation conclusions can only use 404/660.",
                 "implemented_field_or_source": "RECOMMENDATION_ELIGIBLE_WAVELENGTHS_NM=(404,660); CONTROL_ONLY_WAVELENGTHS_NM=(488,532)",
                 "observed_effect_in_fullgrid": "The B full-grid control-only table keeps 488/532 raw ranks, but the recommendation-eligible table excludes them before final selection.",
@@ -483,6 +491,11 @@ def write_markdown_report(path: Path, summary: dict[str, Any], wavelength_summar
 
 Source: `{source_name}`
 {tau_overlay}
+
+> 2026-06-12 status: this is a historical/provenance analyzer output. Current
+> no-data closure is `reports/140_*`, `reports/147_*`, and `reports/148_*`:
+> `404/W500` fixed-view candidate plus `660/W800` per-wavelength-view candidate,
+> with no detector-resolved or absolute winner.
 
 ## Precheck
 
@@ -585,7 +598,12 @@ def run(args: argparse.Namespace) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description=(
+            "Analyze historical Lens-B EV+gold full-grid CSVs. Current no-data "
+            "closure wording belongs to reports 140/147/148."
+        )
+    )
     parser.add_argument(
         "--input-csv",
         default="results/lens_b_ev_gold_fullgrid_1seed_20260513/seed_42_raw_rows.csv",

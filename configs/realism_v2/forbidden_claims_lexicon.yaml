@@ -6,7 +6,11 @@
     "relative robustness only",
     "no-measured-data audit-only",
     "absolute claim blocked",
-    "biological specificity blocked"
+    "biological specificity blocked",
+    "no absolute winner",
+    "detector-resolved winner not authorized",
+    "blank-FPR not calibrated",
+    "NODI gain not a claim"
   ],
   "claim_scope": "no_measured_data_relative_audit_only",
   "forbidden_phrase_negators": [
@@ -23,6 +27,7 @@
     "not mean",
     "must not",
     "unauthorized",
+    "not authorized",
     "not calibrated"
   ],
   "languages": [
@@ -46,7 +51,11 @@
     "exosome-specific detection",
     "MSC-EV-specific detection",
     "route promotion",
-    "main-660 redefinition"
+    "main-660 redefinition",
+    "detector-resolved winner",
+    "absolute winner",
+    "blank-FPR",
+    "NODI gain"
   ],
   "schema": "ev_nodi_forbidden_claims_lexicon_v1",
   "verbs": [
@@ -72,7 +81,13 @@
     "外泌体特异性",
     "MSC-EV特异性",
     "路线晋升",
-    "main-660重新定义"
+    "main-660重新定义",
+    "detector-resolved winner",
+    "绝对胜者",
+    "探测器分辨胜者",
+    "blank-FPR",
+    "空白FPR",
+    "外差增强倍数"
   ],
   "zh_forbidden_verbs": [
     "校准",
@@ -100,6 +115,7 @@
     "不可声称",
     "已封禁",
     "已封锁",
-    "被阻断"
+    "被阻断",
+    "不授权"
   ]
 }

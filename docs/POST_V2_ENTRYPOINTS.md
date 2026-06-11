@@ -1,5 +1,9 @@
 # Post-v2 entrypoint lifecycle
 
+2026-06-12 note: this is a source-code lifecycle contract for post-v2 entrypoint
+modules. It does not define the current scientific conclusion. Current no-data
+claim wording lives in report 140 plus the 147/148 closure set.
+
 The package-level `nodi_simulator/post_v2_*.py` files are not disposable scratch
 files. They are active review-package contracts with paired generator and/or
 verifier wrappers under `tools/`, and many are imported directly by tests.

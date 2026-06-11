@@ -3,8 +3,9 @@
 This directory stores older notes that remain useful for methods, performance,
 or historical comparison. It is not the current reader-facing entry point. Start
 with `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`
-for the current Lens-B full-grid post-run analysis, `reports/88_*` for the
-consolidated v1/v2/post-v2 background, and `reports/87_*` for the v2
+for the current final no-data reader-facing analysis, `reports/147_*` and
+`reports/148_*` for the detector-identity / closure ledgers, `reports/88_*`
+for consolidated v1/v2/post-v2 background, and `reports/87_*` for the older v2
 no-measured-data closure boundary.
 
 Current status:
@@ -15,14 +16,14 @@ Current status:
 - `47_EV_NODI全量结果分层分析报告.md` — historical 32032-case four-wavelength all-crossing reader-facing analysis from an earlier reader-report lane. It remains useful for comparison, but current v1/v2 interpretation is report 88.
 - `47_ev_design_full_grid_analysis/` — historical derived CSV tables backing report 47, including mechanism-chain, wavelength-ratio, geometry-effect, candidate-detection, 404-vs-660 decomposition, deep-channel usability, gold-gate sensitivity, PEG geometry scenarios, and EV size-weighted ranking tables.
 
-2026-05-23 Lens-B 3seed × 10000e update: report 140 supersedes the 2026-05-15
-B6/B7 single-seed low-event overlay for robust Lens-B interpretation. The
-shared-dual run uses seeds `11/22/33`, 572 route triples, 56 particles, and
-10000 events/case. `fixed_660_gold` and `per_wavelength_gold` are
-normalization views over shared physical events, not independent event
-campaigns. In report 140, fixed view moves the selected-annulus recommendation
-family toward 404 nm / W500 mid-depth routes; per-wavelength view preserves the
-660 nm / W800 D1400-D1500 family, especially under the sharp MSC/sEV prior.
+2026-06-12 no-data closure update: report 140 now incorporates reports 147/148.
+It should be read as a final no-data relative-audit report, not as a route-winner
+declaration. The shared-dual 3seed × 10000e run remains the full-grid evidence
+layer, but fixed/per-wavelength rankings are now detector-surrogate
+candidate-family evidence: fixed view retains 404/W500, per-wavelength retains
+660/W800, and Stage-1 route audit prevents either from becoming a
+detector-resolved or absolute winner. R1 and C/D×V2 are deferred out of the
+narrowed no-data sealing gate.
 
 2026-05-15 lens-B tau=1 ms low-event full-grid update: this is now historical
 method context superseded by report 140. B6 remains the per-wavelength
@@ -41,7 +42,7 @@ interpretation is `reports/88_*`, which merges v1 full-grid evidence,
 realism v2 closure, P0 review-ready relative audit, and P1-P18 bounded
 physical-ceiling / trace-governance evidence. The post-v2 lanes remain
 no-measured-data relative audit and trace-only artifacts; they do not authorize
-calibrated claims, route promotion, or main-660 redefinition.
+calibrated claims, route promotion, or legacy route-family redefinition.
 
 2026-05-08 status update: report 47 is historical. Current formal v1/v2 reader interpretation has moved to `reports/88_*`; v2 has closed as a no-measured-data realism supplement, not an experimental acquisition lane.
 

@@ -192,7 +192,7 @@ def generate_claim_text(payload: Mapping[str, Any]) -> str:
     if bool(payload.get("EV_design_detector_caution_flag", False)):
         return (
             "EV design is ranked for relative/proxy model use with detector "
-            "operator caution; detector-resolved and absolute/global green "
+            "operator caution; detector-resolved, absolute, and global-green "
             "claims remain blocked pending ROI calibration or measured detector "
             "validation."
         )
@@ -224,7 +224,8 @@ def generate_claim_boundary_text(payload: Mapping[str, Any]) -> dict[str, str]:
     else:
         allowed = "该几何在当前 relative EV design model 下优先级较高，可作为候选复核。"
     forbidden = (
-        "不可说该几何真实 detector voltage、absolute SNR、LOD 或生物特异性最高；"
+        "不可说该几何真实 detector voltage、calibrated/absolute SNR、LOD、"
+        "detector-resolved winner 或生物特异性最高；"
         "这些需要 detector-unit calibration、blank controls 和实验验证。"
     )
     return {

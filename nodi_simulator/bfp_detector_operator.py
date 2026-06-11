@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import numpy as np
+from typing import cast
 
 from .data_objects import SimulationConfig
 from .utils import collapse_angular_field_with_operator
@@ -196,66 +197,24 @@ def compute_detector_integrated_interference(
     scattering_theta_grid_rad: np.ndarray | None = None,
 ) -> dict[str, object]:
     """Compare collapsed scalar and ROI-integrated detector interference."""
-    theta_vals = np.asarray(operator.get("theta_grid_rad", theta_grid_rad), dtype=float)
-    ref_eval = _resample_complex_theta_field(
+    projected = compute_projected_detector_terms(
         theta_grid_rad,
         reference_field_theta_or_2d,
-        theta_vals,
-    )
-    sca_eval = _resample_complex_theta_field(
-        theta_grid_rad if scattering_theta_grid_rad is None else scattering_theta_grid_rad,
         scattering_field_theta_or_2d,
-        theta_vals,
-    )
-
-    ref_collapsed_raw = collapse_angular_field_with_operator(
-        theta_vals,
-        ref_eval,
         operator,
         sim_cfg,
+        reference_target_collapsed=reference_target_collapsed,
+        scattering_target_collapsed=scattering_target_collapsed,
         phi_grid_rad=phi_grid_rad,
+        scattering_theta_grid_rad=scattering_theta_grid_rad,
+        rescale_to_collapsed_target=True,
     )
-    sca_collapsed_raw = collapse_angular_field_with_operator(
-        theta_vals,
-        sca_eval,
-        operator,
-        sim_cfg,
-        phi_grid_rad=phi_grid_rad,
-    )
-    if reference_target_collapsed is not None and abs(ref_collapsed_raw) > 1e-30:
-        ref_eval = ref_eval * (complex(reference_target_collapsed) / ref_collapsed_raw)
-    if scattering_target_collapsed is not None and abs(sca_collapsed_raw) > 1e-30:
-        sca_eval = sca_eval * (complex(scattering_target_collapsed) / sca_collapsed_raw)
-
-    ref_collapsed = collapse_angular_field_with_operator(
-        theta_vals,
-        ref_eval,
-        operator,
-        sim_cfg,
-        phi_grid_rad=phi_grid_rad,
-    )
-    sca_collapsed = collapse_angular_field_with_operator(
-        theta_vals,
-        sca_eval,
-        operator,
-        sim_cfg,
-        phi_grid_rad=phi_grid_rad,
-    )
-    projected_ref, projected_sca, projected_phi = _prepare_projected_fields(
-        theta_vals,
-        ref_eval,
-        sca_eval,
-        operator,
-        sim_cfg,
-        phi_grid_rad=phi_grid_rad,
-    )
-    i_ref, self_sca, cross_term, joint_overlap = _integrate_detector_terms(
-        theta_vals,
-        projected_ref,
-        projected_sca,
-        operator,
-        phi_grid_rad=projected_phi,
-    )
+    ref_collapsed = complex(cast(complex, projected["reference_collapsed"]))
+    sca_collapsed = complex(cast(complex, projected["scattering_collapsed"]))
+    i_ref = float(cast(float, projected["reference_intensity_roi"]))
+    self_sca = float(cast(float, projected["self_scattering_intensity_roi"]))
+    cross_term = float(cast(float, projected["cross_term_detector_integrated"]))
+    joint_overlap = complex(cast(complex, projected["joint_overlap_complex"]))
     signal_integrated = float(self_sca + cross_term)
     scalar_cross_complex = complex(ref_collapsed * np.conj(sca_collapsed))
     scalar_signal = float(abs(sca_collapsed) ** 2 + 2.0 * np.real(scalar_cross_complex))
@@ -288,6 +247,101 @@ def compute_detector_integrated_interference(
         "detector_operator_gate_passed": band in {"small", "moderate"},
         "detector_operator_comparison_lane_status": "roi_complex_mode_overlap_comparison_active",
         "detector_forward_claim_level": "relative_ranking_only",
+    }
+
+
+def compute_projected_detector_terms(
+    theta_grid_rad: np.ndarray,
+    reference_field_theta_or_2d: np.ndarray,
+    scattering_field_theta_or_2d: np.ndarray,
+    operator: dict,
+    sim_cfg: SimulationConfig,
+    *,
+    reference_target_collapsed: complex | None = None,
+    scattering_target_collapsed: complex | None = None,
+    phi_grid_rad: np.ndarray | None = None,
+    scattering_theta_grid_rad: np.ndarray | None = None,
+    rescale_to_collapsed_target: bool,
+) -> dict[str, object]:
+    """Return collapsed and ROI-integrated detector terms with optional rescaling."""
+    theta_vals = np.asarray(operator.get("theta_grid_rad", theta_grid_rad), dtype=float)
+    ref_eval = _resample_complex_theta_field(
+        theta_grid_rad,
+        reference_field_theta_or_2d,
+        theta_vals,
+    )
+    sca_eval = _resample_complex_theta_field(
+        theta_grid_rad if scattering_theta_grid_rad is None else scattering_theta_grid_rad,
+        scattering_field_theta_or_2d,
+        theta_vals,
+    )
+
+    ref_collapsed_raw = collapse_angular_field_with_operator(
+        theta_vals,
+        ref_eval,
+        operator,
+        sim_cfg,
+        phi_grid_rad=phi_grid_rad,
+    )
+    sca_collapsed_raw = collapse_angular_field_with_operator(
+        theta_vals,
+        sca_eval,
+        operator,
+        sim_cfg,
+        phi_grid_rad=phi_grid_rad,
+    )
+    if (
+        rescale_to_collapsed_target
+        and reference_target_collapsed is not None
+        and abs(ref_collapsed_raw) > 1e-30
+    ):
+        ref_eval = ref_eval * (complex(reference_target_collapsed) / ref_collapsed_raw)
+    if (
+        rescale_to_collapsed_target
+        and scattering_target_collapsed is not None
+        and abs(sca_collapsed_raw) > 1e-30
+    ):
+        sca_eval = sca_eval * (complex(scattering_target_collapsed) / sca_collapsed_raw)
+
+    ref_collapsed = collapse_angular_field_with_operator(
+        theta_vals,
+        ref_eval,
+        operator,
+        sim_cfg,
+        phi_grid_rad=phi_grid_rad,
+    )
+    sca_collapsed = collapse_angular_field_with_operator(
+        theta_vals,
+        sca_eval,
+        operator,
+        sim_cfg,
+        phi_grid_rad=phi_grid_rad,
+    )
+    projected_ref, projected_sca, projected_phi = _prepare_projected_fields(
+        theta_vals,
+        ref_eval,
+        sca_eval,
+        operator,
+        sim_cfg,
+        phi_grid_rad=phi_grid_rad,
+    )
+    i_ref, self_sca, cross_term, joint_overlap = _integrate_detector_terms(
+        theta_vals,
+        projected_ref,
+        projected_sca,
+        operator,
+        phi_grid_rad=projected_phi,
+    )
+    return {
+        "reference_collapsed_raw": complex(ref_collapsed_raw),
+        "scattering_collapsed_raw": complex(sca_collapsed_raw),
+        "reference_collapsed": complex(ref_collapsed),
+        "scattering_collapsed": complex(sca_collapsed),
+        "reference_intensity_roi": float(i_ref),
+        "self_scattering_intensity_roi": float(self_sca),
+        "cross_term_detector_integrated": float(cross_term),
+        "joint_overlap_complex": complex(joint_overlap),
+        "rescale_to_collapsed_target": bool(rescale_to_collapsed_target),
     }
 
 

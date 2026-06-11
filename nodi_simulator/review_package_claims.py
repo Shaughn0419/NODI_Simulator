@@ -58,6 +58,10 @@ def build_forbidden_claims_lexicon() -> dict[str, Any]:
             "MSC-EV-specific detection",
             "route promotion",
             "main-660 redefinition",
+            "detector-resolved winner",
+            "absolute winner",
+            "blank-FPR",
+            "NODI gain",
         ],
         "zh_forbidden_verbs": ["校准", "验证", "确认", "绝对", "真实", "实测", "已证明"],
         "zh_forbidden_objects": [
@@ -74,6 +78,12 @@ def build_forbidden_claims_lexicon() -> dict[str, Any]:
             "MSC-EV特异性",
             "路线晋升",
             "main-660重新定义",
+            "detector-resolved winner",
+            "绝对胜者",
+            "探测器分辨胜者",
+            "blank-FPR",
+            "空白FPR",
+            "外差增强倍数",
         ],
         "forbidden_phrase_negators": [
             "blocked",
@@ -89,6 +99,7 @@ def build_forbidden_claims_lexicon() -> dict[str, Any]:
             "not mean",
             "must not",
             "unauthorized",
+            "not authorized",
             "not calibrated",
         ],
         "zh_negators": [
@@ -109,6 +120,7 @@ def build_forbidden_claims_lexicon() -> dict[str, Any]:
             "已封禁",
             "已封锁",
             "被阻断",
+            "不授权",
         ],
         "allowed_blocker_examples": [
             "calibrated SNR blocked",
@@ -118,6 +130,10 @@ def build_forbidden_claims_lexicon() -> dict[str, Any]:
             "no-measured-data audit-only",
             "absolute claim blocked",
             "biological specificity blocked",
+            "no absolute winner",
+            "detector-resolved winner not authorized",
+            "blank-FPR not calibrated",
+            "NODI gain not a claim",
         ],
     }
 

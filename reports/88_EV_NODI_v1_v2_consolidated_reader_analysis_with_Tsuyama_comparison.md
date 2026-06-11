@@ -2,9 +2,10 @@
 
 - 日期 / 版本：2026-05-15；**v5.2.8（lens-B τ=1 ms 1000e low-event full-grid overlay）**
 - 报告性质：读者向综合分析报告；适用口径 = 无实测数据 + 合成相对先验模型 + post-v2 审计 / 有界 trace
-- 当前主结论（本报告 v5.2.8 原始口径）：660 nm = conservative main route；404 nm = shortwave sidecar / probe；532 / 488 nm = Tsuyama-aligned trend controls
-- **2026-05-23 覆盖说明（必须先读）**：本报告不是最新 Lens-B full-grid 结论入口。`reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md` 已完成 EV+gold exhaustive shared-dual 3seed × 10000e post-run audit/analysis。新证据显示：`fixed_660_gold` selected-annulus recommendation family 转向 404 nm / W500 mid-depth；`per_wavelength_gold` selected-annulus recommendation family 保留 660 nm / W800 D1400-D1500，尤其 sharp MSC/sEV prior。旧的 `660_W800_D1400/D1500` 结论因此仍成立，但边界收窄为 per-wavelength selected-annulus / sharp-prior 等明确口径；404 不能再只写成 sidecar/probe，而是 fixed-view Level-1 candidate family。该更新仍是 no-measured-data relative/proxy evidence，不是任何高阶实测性能、EV 生物学性能或 optical-BFP annulus claim。
-- **Lens-B B7 后续覆盖说明**：本报告的 §11 记录 B6 per-wavelength gold-normalized 低事件数 full-grid 读法；更新的 B7 fixed-660-gold normalization 已在 `reports/100_EV_NODI_lens_b_tau1ms_stage_b6_only_analysis.md` 中给出。B7 是当前口径 B 跨波长低事件数决策读法，把 EV recommendation-eligible 顶部从 B6 的 660 / 800 nm family 改为 404 / 500 nm family。它仍是 `seed=42`、`1000 events/case`、无实测校准的 synthetic relative evidence，不覆盖口径 A main-660。
+- **2026-06-12 当前状态（必须先读）**：本报告是历史综合背景报告，不再是最终结论入口。当前最终读者向 no-data 结论见 `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`，封板门与残余假设见 `reports/147_detector_forward_identity_full_chain_adversarial_audit_synthesis_20260610.md` 和 `reports/148_extreme_simulation_roadmap_post_audit_20260610.md`。旧的“660 conservative main route / 404 sidecar”表述已被降级：当前只能写成 `candidate families under detector surrogate`，即 `404/W500` fixed-view candidate 与 `660/W800` per-wavelength-view candidate 并立；不存在 detector-resolved 或绝对跨波长 winner。
+- 原始 v5.2.8 路线叙述（历史口径）：660 nm = conservative main route；404 nm = shortwave sidecar / probe；532 / 488 nm = Tsuyama-aligned trend controls。该叙述只保留为历史 provenance，不得作为当前结论复用。
+- **2026-05-23 覆盖说明（已由 2026-06-12 再次收紧）**：report 140 完成 EV+gold exhaustive shared-dual 3seed × 10000e post-run audit/analysis；2026-06-12 后，当前读法进一步收紧为 `404/W500` fixed-view candidate 与 `660/W800` per-wavelength-view candidate 并立，D1400/D1500 不再写作最终深度 mandate。
+- **Lens-B B7 后续覆盖说明（历史）**：本报告的 §11 和 report 100 记录 B6/B7 单 seed 1000e 方法谱系；它们不再作为 robust Lens-B route conclusion。
 - v5.2.6 历史更新：口径 B 的 **EV + gold full-grid, 1 seed × 10000 events/case** 曾完成（`results/lens_b_ev_gold_fullgrid_1seed_20260513/`，32,032 rows），但后来确认 runtime 是 2 ms；v5.2.7 起只保留为 legacy sensitivity/reference。口径 B 仍拆为 **B1 anchor target-fitting** + **B2 EV biomimetic application**：B1 只冻结 estimated parameter set；B2 才从 EV full-grid 选型。Gold rows 只做 anchor / Tsuyama consistency diagnostics；最终推荐波长只允许 660 / 404，488 / 532 只能作为 trend/control。
 - **v5.2.7 overlay**：口径 B runtime 现在按固定要求锁定为 **τ = 1 ms**。因此 `results/lens_b_ev_gold_fullgrid_1seed_20260513/` 的 raw rows（实际 `lockin_time_constant_s = 0.002 s`）只能作为 **legacy 2 ms sensitivity / impact reference**，不能再写成当前 B=1 ms final full-grid evidence。
 - **v5.2.8 overlay**：Stage B6 `τ=1 ms` EV + gold full-grid 已完成 32,032 rows（`results/stage_b6_tau1ms_ev_gold_fullgrid_1000e_seed42_22worker_restart_20260514/`），但事件数是 `1000 events/case`。它是当前 B=1 ms low-event design evidence，不是 `10000 events/case` final-validation。
@@ -22,7 +23,7 @@
 | 读者问题 | 本报告允许的回答 | 本报告不允许的回答 |
 |---|---|---|
 | 这份报告到底是什么？ | 面向 EV/NODI 路线选择的 no-measured-data relative design audit；它审计 Mie → detector → reference → interference → readout → pulse → route governance 的完整链条 | 不是 calibrated simulator、不是实验报告、不是完整 full-wave 电磁求解、不是 EV 生物学验证 |
-| 当前选型结论是什么？ | 最终推荐波长只在 660 / 404 内产生：660 nm 是当前 conservative main route；404 nm 是 shortwave sidecar / probe；532 / 488 nm 即使 raw metric 排名最高也只能是 Tsuyama-aligned trend controls | 不能写成"660 物理绝对最优"、"404 因短波散射强就替代 660"、"532/488 已成为主路线竞争者" |
+| 当前选型结论是什么？ | 当前最终结论不在本报告正文内封板，而在 report 140/147/148 closure set：`404/W500` 是 fixed-view detector-surrogate candidate family，`660/W800` 是 per-wavelength detector-surrogate candidate family；532 / 488 只能作为 control/trend | 不能写成"660 物理绝对最优"、"404 或 660 已成为 detector-resolved winner"、"532/488 已成为主路线竞争者" |
 | 数字应怎样读？ | 同 lens、同 panel、同 source type 内可读相对趋势；coverage gap 显式标 `—` | 不能把 synthetic detection proxy 当真实事件概率、count rate、concentration、LOD 或 calibrated SNR |
 | 论文还能怎么走？ | 可作为 physics-governed route-selection framework 的底稿；paper story 另见 report 123 | 不能把 Tsuyama alignment、selected-annulus residual 或 route score 写成 validated EV detection performance |
 
@@ -53,7 +54,9 @@
               EV / NODI 工程路线如何排序、主路线选哪一组几何？
         主分母：全 back-focal-plane 全 crossing
         颗粒：EV biomimetic + Au20/Au30 anchors
-        当前推荐：660 nm + 通道宽 800 nm × 通道深 1400 / 1500 nm 的双 main 集合
+        历史正文推荐：660 nm + 通道宽 800 nm × 通道深 1400 / 1500 nm 的双 main 集合
+        当前 closure-set 读法：该历史推荐已降级为背景；最终读法见 report 140，
+        即 404/W500 fixed-view candidate 与 660/W800 per-wavelength candidate 并立。
 
 口径 B — Tsuyama-anchored EV application lens
         问题：先用 Tsuyama Au/Ag anchor 反推低自由度 estimated parameter set，
@@ -76,7 +79,7 @@
 |---|---|---|
 | 问题 A 是什么 | EV / NODI 工程主线推荐 | §1.1 |
 | 问题 B 是什么 | 用 Tsuyama anchor 反推估计参数，再用 frozen B lens 看 EV biomimetic | §1.2 / §11 |
-| 当前推荐是什么 | 口径 A：660 nm + 800 × 1400 / 1500 nm 双 main 集合；口径 B：本报告 §11 的 B6 per-wavelength gold-normalized 读法指向 660 nm / 800 nm width family，更新的 B7 fixed-660-gold overlay（report 100）把当前跨波长低事件数候选改为 404 nm / 500 nm width family；488/532 只作 control/trend | §10 / §11 + report 100 |
+| 当前推荐是什么 | 当前 closure set 不给单一绝对主路线：`404/W500` 是 fixed-view candidate family，`660/W800` 是 per-wavelength-view candidate family；488/532 只作 control/trend；本报告 §10/§11 是历史背景 | report 140/147/148；本报告仅作 provenance |
 | 不能下哪些结论 | 校准 SNR / LOD / 真实浓度 / 生物特异性 / 替代主排序 / 移动 selected-annulus / 把 γ 当物理常数 / route promotion / classification accuracy 已复现 | §15.2 |
 | 下一步要做什么 | P19 evidence-strategy gate 双口径同时声明 acceptance criteria + 优先获取 measured Au raw trace + measured blank / BFP / slit / ROI | §16 |
 
@@ -103,12 +106,12 @@
 
 | 波长 | 本报告中的主角色 | 主要证据位置 | 可以支持的最强表述 | 禁止表述 | 下一步若要升级需要什么 |
 |---:|---|---|---|---|---|
-| **660 nm** | 口径 A conservative main route；B6 per-wavelength Lens-B 中的 long-wave high-score family | §6.4.A / §6.4.B / §6.4.C；§10；§11.4 / §11.5；附录 D/E；B7 见 report 100 | 在当前 no-measured-data relative audit 下，口径 A 保留 660 nm + 800 × 1400 / 1500 nm 工程主集合；B6 选出 660 nm / 800 nm width，B7 fixed-660 后不再把 660 写成口径 B 跨波长首选 | "660 nm 是物理上绝对最佳波长"；"660 已有 calibrated SNR / LOD" | measured blank / BFP / slit / ROI；standard-particle transfer；detector gain / noise；full-wave spot checks；若需 final-validation 再跑 B=1 ms 10000e |
-| **404 nm** | 口径 A shortwave probe / sidecar；B7 fixed-660 Lens-B 当前跨波长候选 | §2.4；§6.4.F；§7.2.5a；§10.6；§11.5；§12.2；附录 D.4；B7 见 report 100 | 404 nm 的 Csca / \|E_sca\| / peak 阶段量更强；B7 fixed-660 低事件数口径把推荐合格集顶部改为 404 / 500 nm width family | "404 因 peak 强就替代口径 A main-660"；"404 热效应给 NODI 加分" | 404 blank/reference；thermal / POD cross-talk；detector throughput；shortwave full-wave / exposure safety；若需 final-validation 再跑 B=1 ms 10000e |
+| **660 nm** | 当前 per-wavelength-view candidate family；历史正文里曾写作 conservative main route | report 140/147/148 为当前入口；本报告 §6/§10/§11 仅作背景 | 可写 `660/W800` 是 per-wavelength detector-surrogate candidate family | "660 nm 是物理上绝对最佳波长"；"660 已有 calibrated SNR / LOD"；"660 是 detector-resolved winner" | measured blank / BFP / slit / ROI；standard-particle transfer；detector gain / noise；full-wave spot checks |
+| **404 nm** | 当前 fixed-view candidate family；历史正文里曾写作 shortwave sidecar/probe | report 140/147/148 为当前入口；本报告 §2/§6/§7 仅作背景 | 可写 `404/W500` 是 fixed-view detector-surrogate candidate family，且短波阶段量更强 | "404 因 peak 强就成为绝对 winner"；"404 热效应给 NODI 加分" | 404 blank/reference；thermal / POD cross-talk；detector throughput；shortwave full-wave / exposure safety |
 | **532 nm** | Tsuyama-aligned mid-wave trend/control anchor；Au / Ag paper-audit 趋势参照 | §6.2.2；§6.4.C；§7.1.5；§14 | 支持"中间波长不是简单夹在 404 与 660 之间"，并为 Tsuyama 488/532 双波长趋势提供 anchor | "532 已证明 EV/NODI 主路线"；"532 是当前主路线竞争者" | 若要进入主候选，需同等 measured operator / blank / standard-particle / EV panel |
 | **488 nm** | Tsuyama-aligned dual-wavelength control；与 532 一起作为 paper-method trend anchor | §6.2.2；§6.4.C；§7.1.5；§14 | 支持 488/532 文献趋势对照与方法学 sanity check；不是当前 EV 工程主路线 | "488 与 660 / 404 同级竞争主路线"；"Tsuyama 488/532 分类等价于本地 classification 已复现" | 同 532；另需 crosstalk / dual-wavelength readout artifact |
 
-**一句话读法**：本报告不是在宣布"哪个波长物理上绝对更好"，而是在当前合成相对先验 + route governance 下给出**路线角色**：660 = main；404 = shortwave sidecar / probe；532 / 488 = Tsuyama trend controls。
+**一句话读法**：本报告现在应作为历史背景读取；当前 closure set 给出的是 `404/W500` 与 `660/W800` 两个 detector-surrogate candidate family，而不是 660 main / 404 sidecar 的单线叙事。
 
 #### 0.3c.2 版本 / lens lineage 表（防止把历史、主线和审计层混成一个结论）
 
@@ -116,10 +119,10 @@
 |---|---|---|---|
 | v1 full-grid library | 32,032 基础设计组合的相对工程库 | 作为 §6 / §7 / §10 的底层 evidence pool | 不能当成 measured event probability / calibrated detector output |
 | realism v2 sidecars | 在 v1 上加入仪器情景、route governance、blank / readout / uncertainty / no-measured-data closure 的审计层 | 观察路线角色是否稳定；暴露 artifact gap | 不能当成实测校准或真实 blank safety |
-| post-v2 P0–P18 | P0 mandatory audit + P6/P8/P10/P12/P14/P16 有界 trace + P18 stop/continue synthesis | 支撑 §10 的 main-660 不是单指标最高，而是治理后稳定主集合 | 不能把任一 bounded trace 排名当 route promotion |
-| 口径 A all-crossing engineering lens | EV / NODI 工程主排序口径 | 回答"工程主路线是什么"；默认看 §10 | 不能替代口径 B 的 Tsuyama paper-audit 结论 |
-| 口径 B selected-annulus Tsuyama-anchored EV application lens | B1 用 Tsuyama targets 做 reproduction-lens target fitting / parameter freeze；B2 用 frozen B lens 计算 EV biomimetic full-grid 选型 | 回答"Tsuyama anchor 怎样约束 estimated parameters，以及这些参数用于 EV biomimetic full-grid 后为何指向 660 / 800 nm width"；默认看 §11 | 不能把 B1 anchor diagnostic geometry 当 B2 EV recommendation；不能把 488/532 control-only top 当推荐结论；不能把 γ / SNR scale 当物理常数 |
-| report 88 v5.2.8 | 当前读者向综合报告 | 作为当前 single reader-facing synthesis | 不能用旧 report 的局部结论覆盖本报告的 forbidden claim |
+| post-v2 P0–P18 | P0 mandatory audit + P6/P8/P10/P12/P14/P16 有界 trace + P18 stop/continue synthesis | 作为历史 route-governance provenance | 不能把任一 bounded trace 排名当 route promotion |
+| 口径 A all-crossing engineering lens | EV / NODI 工程主排序历史口径 | 作为 all-crossing 背景和变量解释 | 不能替代当前 all-crossing / selected-annulus 并立 closure |
+| 口径 B selected-annulus Tsuyama-anchored EV application lens | B1 用 Tsuyama targets 做 reproduction-lens target fitting / parameter freeze；B2 用 frozen B lens 计算 EV biomimetic full-grid 选型 | 作为 selected-annulus 背景和 Tsuyama lineage 解释 | 不能把 B1 anchor diagnostic geometry 当 B2 EV recommendation；不能把 488/532 control-only top 当推荐结论；不能把 γ / SNR scale 当物理常数 |
+| report 88 v5.2.8 | 历史综合背景报告 | 作为 provenance 和术语背景；当前结论读 report 140/147/148 | 不能用本报告旧路线角色覆盖当前 closure set |
 | report 122 ledger | 版本演化与双口径合并记录 | 追踪 report 88 为什么变成当前结构 | 不是新的科学结果源 |
 | report 123 paper outline | 后续论文路线提纲 | 后续讨论论文 story / figure / validation package 的草案 | 不是 report 88 的结论升级，也不解锁任何 claim |
 
@@ -127,7 +130,7 @@
 
 | 优先级 | 建议图 | 放置位置 | 数据来源 | 图要传达的一句话 | 图注必须写清 |
 |:-:|---|---|---|---|---|
-| 1 | **Route-role decision matrix：660 vs 404 + 532/488 controls** | §10.6 后或 §12 开头 | §6.4.A/F、§10.5、§10.6、§12.2 | 660 是 main；404 是 shortwave sidecar；532/488 是 trend controls | 这是 route role 图，不是 calibrated performance 图 |
+| 1 | **Route-role decision matrix：404/W500 vs 660/W800 + 532/488 controls** | 当前应在 report 140/147/148 之后重画 | report 140/147/148；本报告 §6/§10/§11 仅作背景 | 404/W500 与 660/W800 是 detector-surrogate candidate families；532/488 是 trend controls | 这是 route role 图，不是 calibrated performance 图 |
 | 2 | **Whole observation-chain flowchart** | §2.1 后 | §2.1–§2.2、附录 B、核心代码路径 | 读者不能只看 Csca；必须看 detector / reference / interference / readout / pulse / governance 全链 | 箭头表示计算依赖与审计 provenance，不表示实验校准闭环 |
 | 3 | **Wavelength × geometry evidence map / gap map** | §7 数据覆盖矩阵后 | §7 数据覆盖矩阵、附录 D/E/F | 哪些 cell 有 strict 直接行，哪些只是 route-level / nearest-neighbor evidence | "—" 是 coverage gap，不是 0% detection |
 

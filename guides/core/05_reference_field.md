@@ -305,7 +305,7 @@ width_sinc = sinc(W_eff * kx / 2π)
 
 #### 模式 6：tsuyama_bfp_integrated
 
-`reference_model="tsuyama_bfp_integrated"` 是 detector-resolved BFP comparison lane。它通过：
+`reference_model="tsuyama_bfp_integrated"` 是 BFP/ROI-resolved comparison lane。它通过：
 
 ```python
 compute_reference_field_from_tsuyama_bfp(...)

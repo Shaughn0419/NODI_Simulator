@@ -22,7 +22,7 @@
 
 ## 当前 Tsuyama/BFP ROI 口径
 
-- `compute_reference_field_from_tsuyama_bfp(...)` 仍是 detector-resolved comparison lane，不是 calibrated detector-unit model。
+- `compute_reference_field_from_tsuyama_bfp(...)` 仍是 BFP/ROI-resolved comparison lane，不是 calibrated detector-unit model，也不是 detector-resolved winner evidence。
 - 未配置 measured mask 时，默认仍使用 `tsuyama_bfp_roi_mode`：`symmetric_na_aperture` 或 `slit_off_axis_lobe_surrogate`。
 - 配置 `SimulationConfig.bfp_roi_mask_path` 且 `build_bfp_roi_mask_contract(...)` 判定为 measured/calibrated 后，mask rows 会按 `theta_rad / phi_rad / mask_weight / solid_angle_weight` 投影到 Tsuyama 1D BFP q 轴，并用 weighted ROI 积分计算 `E_ref_complex_roi`、`I_ref_intensity_roi`、`E_no_channel_complex_roi` 与 `I_no_channel_intensity_roi`。
 - 该路径会导出 `tsuyama_bfp_roi_mode="calibrated_bfp_roi_mask_projected_1d"`、`bfp_roi_mask_projection_status`、`bfp_roi_mask_projected_row_count`、`bfp_roi_mask_projected_sample_count`，并把 `reference_detector_bridge_status` 标为 `calibrated_roi_mask_projected_1d_no_detector_unit_chain`。

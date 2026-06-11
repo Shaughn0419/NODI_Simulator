@@ -830,7 +830,7 @@ def write_analysis_markdown(path: Path, card: dict[str, Any]) -> None:
 - Use this card as a pointer, not as a standalone claim source.
 - For hard parameter changes, open `text/full_text.txt`, `caption_index.csv`, and any table CSVs in this paper directory.
 - If a figure/table page is rendered, inspect `page_renders/` before citing a visual trend.
-- If this paper is marked `critical` or `high`, compare its constraints against `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md` before changing claim wording.
+- If this paper is marked `critical` or `high`, compare its constraints against the current no-data closure (`reports/140_*`, `reports/147_*`, `reports/148_*`) before changing claim wording; use report 88 only as historical background.
 """
     write_text(path, text)
 

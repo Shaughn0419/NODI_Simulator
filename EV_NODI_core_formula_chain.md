@@ -521,7 +521,7 @@ Expanding gives:
 E_{\mathrm{ref}}(u,v)E_{\mathrm{sca}}^*(u,v,t)J(u,v)\,du\,dv.
 \]
 
-The current project approximates this detector physics using a shared collection-operator scalar mode and a joint-overlap coherent surrogate. This is stronger than a pure single-angle scalar model, but it remains uncalibrated and detector-resolved only in a surrogate sense.
+The current project approximates this detector physics using a shared collection-operator scalar mode and a joint-overlap coherent surrogate. This is stronger than a pure single-angle scalar model, but it remains an uncalibrated detector-surrogate approximation, not detector-resolved truth.
 
 Current interpretation:
 
@@ -754,7 +754,7 @@ F_{\mathrm{overlap}}E_{\mathrm{ref}}E_{\mathrm{sca}}^*(t)
 \right].
 \]
 
-Here \(F_{\mathrm{overlap}}\) is a complex mode-overlap factor. It can include mode-matching efficiency and phase mismatch. In a calibrated detector model, \(F_{\mathrm{overlap}}\) should be obtained from a detector-resolved overlap calculation or experimental calibration.
+Here \(F_{\mathrm{overlap}}\) is a complex mode-overlap factor. It can include mode-matching efficiency and phase mismatch. In a calibrated detector model, \(F_{\mathrm{overlap}}\) should be obtained from an ROI/mode-resolved overlap calculation or experimental calibration.
 
 ---
 

@@ -50,6 +50,10 @@ _NO_VECTORIZED_FALLBACK_REASON = "<none>"
 from .data_objects import (
     Particle, Medium, Channel, OpticalSystem, SimulationConfig,
 )
+from .detector_route_assembly import (
+    assemble_route_trace_payload,
+    compute_r_self,
+)
 from .design_claim_governance import (
     DESIGN_CLAIM_GOVERNANCE_FIELDS,
     build_design_claim_governance_diagnostics,
@@ -4089,14 +4093,20 @@ def simulate_one_event(
     trace = generate_interferometric_trace(
         trajectory, {**reference, **reference_trace}, sca_trace, sim_cfg
     )
+    route_trace = _route_trace_payload(
+        trace,
+        sim_cfg=sim_cfg,
+        E_sca_unit_normalized=E_sca_unit_normalized,
+        reference=reference,
+    )
 
     # 7. Add noise
     noisy = add_detector_noise(
-        trace["signal_trace"],
+        np.asarray(route_trace["route_signal_trace"], dtype=float),
         trajectory["time_s"],
         sim_cfg,
         rng,
-        detected_intensity=trace.get("I_det"),
+        detected_intensity=np.asarray(route_trace["route_detected_intensity"], dtype=float),
         baseline_intensity=trace.get("I_baseline"),
     )
 
@@ -4371,6 +4381,11 @@ def simulate_one_event(
         "detection_decision_mode": sim_cfg.detection_decision_mode,
         "event_max_margin_z": event_max_margin_z,
         "background_max_margin_z": background_max_margin_z,
+        "detector_route_id": str(getattr(sim_cfg, "detector_route_id", "A_hybrid")),
+        "detector_route_status": route_trace.get("detector_route_status"),
+        "self_route_scale_r_self": route_trace.get("r_self"),
+        "self_collapsed_detector": route_trace.get("self_collapsed_detector"),
+        "self_roi_detector": route_trace.get("self_roi_detector"),
     }
 
     if not retain_full_payload:
@@ -4379,7 +4394,8 @@ def simulate_one_event(
     reference_to_scattering_ratio = A_ref_trace / np.clip(A_sca_trace, 1e-15, None)
     event_result.update({
         "trajectory": trajectory,
-        "signal_trace": trace["signal_trace"],
+        "signal_trace": np.asarray(route_trace["route_signal_trace"], dtype=float),
+        "signal_trace_default_production": trace["signal_trace"],
         "interference_cross_term": trace.get("interference_cross_term"),
         "interference_cross_term_collapsed": trace.get("interference_cross_term_collapsed"),
         "interference_cross_term_joint": trace.get("interference_cross_term_joint"),
@@ -4410,6 +4426,11 @@ def simulate_one_event(
         "nodi_bandwidth_limited_fraction": readout.get("nodi_bandwidth_limited_fraction"),
         "nodi_lockin_bandwidth_Hz": readout.get("nodi_lockin_bandwidth_Hz"),
         "post_readout_noise": post_readout["post_readout_noise"],
+        "detector_route_id": str(getattr(sim_cfg, "detector_route_id", "A_hybrid")),
+        "detector_route_status": route_trace.get("detector_route_status"),
+        "self_route_scale_r_self": route_trace.get("r_self"),
+        "self_collapsed_detector": route_trace.get("self_collapsed_detector"),
+        "self_roi_detector": route_trace.get("self_roi_detector"),
         "A_ref_trace": reference_trace.get("A_ref_trace"),
         "A_sca_trace": sca_trace.get("A_sca"),
         "median_reference_to_scattering_amplitude_ratio": float(
@@ -4539,12 +4560,18 @@ def _simulate_one_event_from_shared_physical_state(
         sca_trace,
         sim_cfg,
     )
+    route_trace = _route_trace_payload(
+        trace,
+        sim_cfg=sim_cfg,
+        E_sca_unit_normalized=E_sca_unit_normalized,
+        reference=reference,
+    )
     noisy = add_detector_noise(
-        trace["signal_trace"],
+        np.asarray(route_trace["route_signal_trace"], dtype=float),
         trajectory["time_s"],
         sim_cfg,
         rng,
-        detected_intensity=trace.get("I_det"),
+        detected_intensity=np.asarray(route_trace["route_detected_intensity"], dtype=float),
         baseline_intensity=trace.get("I_baseline"),
     )
     readout = apply_readout_chain(
@@ -4832,6 +4859,11 @@ def _simulate_one_event_from_shared_physical_state(
         "detection_decision_mode": sim_cfg.detection_decision_mode,
         "event_max_margin_z": event_max_margin_z,
         "background_max_margin_z": background_max_margin_z,
+        "detector_route_id": str(getattr(sim_cfg, "detector_route_id", "A_hybrid")),
+        "detector_route_status": route_trace.get("detector_route_status"),
+        "self_route_scale_r_self": route_trace.get("r_self"),
+        "self_collapsed_detector": route_trace.get("self_collapsed_detector"),
+        "self_roi_detector": route_trace.get("self_roi_detector"),
     }
     if not retain_full_payload:
         return event_result
@@ -4839,7 +4871,8 @@ def _simulate_one_event_from_shared_physical_state(
     reference_to_scattering_ratio = A_ref_trace / np.clip(A_sca_trace, 1e-15, None)
     event_result.update({
         "trajectory": trajectory,
-        "signal_trace": trace["signal_trace"],
+        "signal_trace": np.asarray(route_trace["route_signal_trace"], dtype=float),
+        "signal_trace_default_production": trace["signal_trace"],
         "interference_cross_term": trace.get("interference_cross_term"),
         "interference_cross_term_collapsed": trace.get("interference_cross_term_collapsed"),
         "interference_cross_term_joint": trace.get("interference_cross_term_joint"),
@@ -4870,6 +4903,11 @@ def _simulate_one_event_from_shared_physical_state(
         "nodi_bandwidth_limited_fraction": readout.get("nodi_bandwidth_limited_fraction"),
         "nodi_lockin_bandwidth_Hz": readout.get("nodi_lockin_bandwidth_Hz"),
         "post_readout_noise": post_readout["post_readout_noise"],
+        "detector_route_id": str(getattr(sim_cfg, "detector_route_id", "A_hybrid")),
+        "detector_route_status": route_trace.get("detector_route_status"),
+        "self_route_scale_r_self": route_trace.get("r_self"),
+        "self_collapsed_detector": route_trace.get("self_collapsed_detector"),
+        "self_roi_detector": route_trace.get("self_roi_detector"),
         "A_ref_trace": reference_trace.get("A_ref_trace"),
         "A_sca_trace": sca_trace.get("A_sca"),
         "median_reference_to_scattering_amplitude_ratio": float(
@@ -5209,6 +5247,43 @@ def _estimate_runtime_threshold_stats_block(
         n_background,
         source,
     )
+
+
+def _route_trace_payload(
+    trace: dict,
+    *,
+    sim_cfg: SimulationConfig,
+    E_sca_unit_normalized: complex | float,
+    reference: dict,
+) -> dict[str, object]:
+    """Assemble the route-specific signed trace before noise/readout."""
+    route_id = str(getattr(sim_cfg, "detector_route_id", "A_hybrid"))
+    if route_id == "A_hybrid":
+        return {
+            "route_signal_trace": np.asarray(trace["signal_trace"], dtype=float),
+            "route_detected_intensity": np.asarray(trace.get("I_det"), dtype=float),
+            "r_self": compute_r_self(reference, E_sca_unit_normalized),
+            "self_collapsed_detector": float(abs(complex(E_sca_unit_normalized)) ** 2),
+            "self_roi_detector": reference.get("self_sca_detector_integrated"),
+            "detector_route_status": "production_hybrid_default",
+        }
+    r_self = compute_r_self(reference, E_sca_unit_normalized)
+    payload = assemble_route_trace_payload(
+        trace,
+        route=route_id,
+        r_self=r_self,
+        background_subtraction_on=bool(sim_cfg.background_subtraction_on),
+        interference_overlap_mode=str(sim_cfg.interference_overlap_mode),
+    )
+    payload.update(
+        {
+            "r_self": r_self,
+            "self_collapsed_detector": float(abs(complex(E_sca_unit_normalized)) ** 2),
+            "self_roi_detector": reference.get("self_sca_detector_integrated"),
+            "detector_route_status": "route_assembled_from_full_diagnostics",
+        }
+    )
+    return payload
 
 
 def _extract_best_peak_summary_block(
@@ -6605,6 +6680,14 @@ def run_single_case_batch(
     """
     # 1. Validate
     validate_simulation_config(sim_cfg, optical)
+    if (
+        str(getattr(sim_cfg, "detector_route_id", "A_hybrid")) != "A_hybrid"
+        and str(sim_cfg.vectorized_event_engine) != "off"
+    ):
+        raise ValueError(
+            "detector routes beyond A_hybrid currently require "
+            "vectorized_event_engine='off' so full diagnostics are available"
+        )
     medium_refractive_index = float(medium.refractive_index_at(optical.wavelength_m))
     diffusion_coefficient = (
         _compute_diffusion_coefficient(particle, medium)
@@ -9257,6 +9340,7 @@ def run_single_case_batch_shared_event_normalization_views(
     intrinsic_cache: dict | None = None,
     reference_cache: dict | None = None,
     collection_operator_cache: dict | None = None,
+    view_payload_overrides: dict[str, dict[str, dict[str, object]]] | None = None,
 ) -> dict[str, dict]:
     """Run multiple normalization views from one physical event stream.
 
@@ -9324,6 +9408,11 @@ def run_single_case_batch_shared_event_normalization_views(
             reference_cache=reference_cache,
             collection_operator_cache=collection_operator_cache,
         )
+        if view_payload_overrides and name in view_payload_overrides:
+            overrides = view_payload_overrides[name]
+            for payload_name in ("reference", "intrinsic"):
+                if payload_name in overrides:
+                    skeletons[name][payload_name].update(overrides[payload_name])
 
     medium_refractive_index = float(medium.refractive_index_at(optical.wavelength_m))
     diffusion_coefficient = (

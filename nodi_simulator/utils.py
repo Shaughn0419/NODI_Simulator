@@ -1534,6 +1534,9 @@ def build_detector_forward_diagnostics(
     elif str(sim_cfg.detector_forward_model) == "roi_complex_mode_overlap_integral":
         status = "roi_complex_mode_overlap_integral_comparison_lane_active"
         equation = "integral_ROI(|E_sca|^2)dA + 2*Re(integral_ROI(E_ref*conj(E_sca))dA)"
+    elif str(sim_cfg.detector_forward_model) == "cross_only_joint_overlap_diagnostic":
+        status = "cross_only_joint_overlap_diagnostic_lane_active"
+        equation = "2*Re(integral_ROI(E_ref*conj(E_sca))dA)"
     elif joint_used:
         status = "joint_overlap_coherent_surrogate_active"
         equation = "2*Re(integral T(theta,phi)*E_ref(theta,phi)*conj(E_sca(theta,phi)) dtheta dphi)"
@@ -1685,7 +1688,7 @@ def build_mie_incident_field_validity_diagnostics(
         }
 
     size_parameter = float(intrinsic.get("size_parameter", 0.0) or 0.0)
-    k_m = float(intrinsic.get("k_m", intrinsic.get("k_m_inv", 0.0)) or 0.0)
+    k_m = float(intrinsic["k_m"])
     particle_radius_m = size_parameter / k_m if k_m > 0.0 else None
     geometry = optical.resolve_illumination_geometry()
     beam_waist_min_m = min(
@@ -3416,6 +3419,9 @@ def collapse_angular_field_with_operator(
             phi_vals,
             sim_cfg.scattering_projection_mode,
         )
+        # Phenomenological pupil-slit phase shear. This dimensionless factor is
+        # an auditable surrogate assumption, not a first-principles derivation
+        # of BFP propagation phase.
         theta_phase = np.exp(
             1j * (theta_grid_rad[:, None] - theta_center) * np.sin(phi_vals[None, :])
         )
@@ -3545,6 +3551,9 @@ def _collapse_and_joint_overlap_with_operator(
             phi_vals,
             sim_cfg.scattering_projection_mode,
         )
+        # Phenomenological pupil-slit phase shear. This dimensionless factor is
+        # an auditable surrogate assumption, not a first-principles derivation
+        # of BFP propagation phase.
         theta_phase = np.exp(
             1j * (theta_grid_rad[:, None] - theta_center) * np.sin(phi_vals[None, :])
         )
@@ -3675,11 +3684,8 @@ def compute_detected_scattering_field(
             collection_weights: normalized marginal theta kernel
     """
     theta_grid = intrinsic["theta_grid_rad"]
-    medium_refractive_index = (
-        float(intrinsic.get("k_m", intrinsic["k_m_inv"]))
-        * float(optical.wavelength_m)
-        / (2.0 * np.pi)
-    )
+    k_m = float(intrinsic["k_m"])
+    medium_refractive_index = k_m * float(optical.wavelength_m) / (2.0 * np.pi)
     operator = (
         collection_operator
         if collection_operator is not None
@@ -3697,9 +3703,9 @@ def compute_detected_scattering_field(
     if sim_cfg.scattering_projection_mode == "intensity_proxy":
         field_theta = intrinsic["Esca_unit_amp"].astype(complex)
     elif sim_cfg.scattering_projection_mode == "parallel":
-        field_theta = intrinsic["S2_complex"] / intrinsic.get("k_m", intrinsic["k_m_inv"])
+        field_theta = intrinsic["S2_complex"] / k_m
     elif sim_cfg.scattering_projection_mode == "perpendicular":
-        field_theta = intrinsic["S1_complex"] / intrinsic.get("k_m", intrinsic["k_m_inv"])
+        field_theta = intrinsic["S1_complex"] / k_m
     else:
         raise ValueError(
             f"Unsupported scattering_projection_mode: {sim_cfg.scattering_projection_mode}"
@@ -3742,12 +3748,12 @@ def compute_detected_scattering_field(
 
     s1_eff = interpolate_complex_at_theta(
         theta_grid,
-        intrinsic["S1_complex"] / intrinsic.get("k_m", intrinsic["k_m_inv"]),
+        intrinsic["S1_complex"] / k_m,
         theta_effective,
     )
     s2_eff = interpolate_complex_at_theta(
         theta_grid,
-        intrinsic["S2_complex"] / intrinsic.get("k_m", intrinsic["k_m_inv"]),
+        intrinsic["S2_complex"] / k_m,
         theta_effective,
     )
     if sim_cfg.scattering_projection_mode == "parallel":

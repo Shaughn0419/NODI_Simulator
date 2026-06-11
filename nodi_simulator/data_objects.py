@@ -61,6 +61,13 @@ DETECTOR_FORWARD_MODEL_OPTIONS = (
     "collapsed_scalar_surrogate",
     "roi_intensity_integral",
     "roi_complex_mode_overlap_integral",
+    "cross_only_joint_overlap_diagnostic",
+)
+DETECTOR_ROUTE_ID_OPTIONS = (
+    "A_hybrid",
+    "B_roi_intensity",
+    "C_collapsed_coherent",
+    "D_cross_only",
 )
 FIELD_COORDINATE_MEASURE_OPTIONS = (
     "theta_phi_surrogate",
@@ -1024,6 +1031,8 @@ class SimulationConfig:
         detector_forward_model: Higher-level detector forward-equation claim.
             The default names the current joint-overlap coherent surrogate; it
             is not a photon-unit detector or full intensity-integral model.
+        detector_route_id: Event-trace route assembly used before the shared
+            noise/readout pipeline.
         objective_candidate_id: Optical hardware profile identifier used for
             design-claim governance. P0 treats this as schema/claim metadata,
             not an active objective sweep.
@@ -1377,6 +1386,7 @@ class SimulationConfig:
     joint_alpha: float = 0.5  # weight for object A in joint scoring
     reference_route: str = "auto"  # appended for positional compatibility
     detector_forward_model: str = "joint_overlap_coherent_surrogate"
+    detector_route_id: str = "A_hybrid"
     objective_candidate_id: str = "current_control"
     detector_mode_definition: str = "shared_collection_operator_scalar_mode"
     field_coordinate_measure: str = "theta_phi_surrogate"
@@ -1864,6 +1874,11 @@ class SimulationConfig:
             raise ValueError(
                 "detector_forward_model must be one of "
                 f"{DETECTOR_FORWARD_MODEL_OPTIONS}, got {self.detector_forward_model}"
+            )
+        if self.detector_route_id not in DETECTOR_ROUTE_ID_OPTIONS:
+            raise ValueError(
+                "detector_route_id must be one of "
+                f"{DETECTOR_ROUTE_ID_OPTIONS}, got {self.detector_route_id}"
             )
         if not str(self.objective_candidate_id).strip():
             raise ValueError("objective_candidate_id must be non-empty")

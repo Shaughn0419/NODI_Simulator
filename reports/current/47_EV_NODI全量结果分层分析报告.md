@@ -2,9 +2,9 @@
 
 更新日期：2026-04-30（Asia/Tokyo）
 
-> 当前状态：历史读者版分析报告。它保留早期 all-crossing full-grid 解释和实验候选讨论；当前 Lens-B full-grid 解释以 `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md` 为准，综合背景以 `reports/88_*` 为准。不要用本文替代 v2 无实测收口，也不要把本文的实验面板语言解读为 v2 已经做了真实采集。
+> 当前状态：历史读者版分析报告。它保留早期 all-crossing full-grid 解释和实验候选讨论；当前 no-data closure 以 `reports/140_*`、`reports/147_*` 和 `reports/148_*` 为准。不要用本文替代最终 no-data 读者报告，也不要把本文的实验面板语言解读为已经做了真实采集。
 
-> 2026-05-14 更正：本文下面保留的 `488/532 nm` 主验证语言是历史 all-crossing 读法。当前 report 88 v5.2.6 的选型结论规则是：最终推荐波长只在 `660/404` 内产生；`488/532` 即使在 raw metric 或旧表中最高，也只作为 trend/control。口径 B 的 B2 EV+gold full-grid 已完成，EV 推荐只用 EV/exosome rows，gold rows 只作 anchor / Tsuyama diagnostics。本文的中间表格、趋势比较和历史数字仍可作为对照，不应改写成当前推荐结论。
+> 2026-06-12 更正：本文下面保留的 `488/532 nm` 主验证语言和 660/404 单线推荐语言都是历史 all-crossing 读法。当前最终写法是 `404/W500` fixed-view candidate 与 `660/W800` per-wavelength-view candidate 并立；`488/532` 只作为 trend/control。本文的中间表格、趋势比较和历史数字仍可作为对照，不应改写成当前推荐结论。
 
 2026-05-01 口径补充（已被 2026-05-14 当前状态覆盖）：本报告基于当时的 all-crossing 全量 summary 与派生表。代码主线已新增 selected-annulus parallel analysis lens；后续 full-grid 已生成 selected-annulus ranking / comparison，当前应以 report 88 v5.2.6 和 `results/lens_b_ev_gold_fullgrid_1seed_20260513/` 的 B2 derived files 为准。若用本报告对应的旧全量派生表直接跑新 selected-annulus 工具，selected lens 会被标记为 unavailable/null/NaN，不应解读为 selected-annulus 结论。
 

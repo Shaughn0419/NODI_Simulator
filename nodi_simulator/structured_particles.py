@@ -254,10 +254,18 @@ def build_biomimetic_exosome_core_shell(
     if outer_radius_m <= 0:
         raise ValueError(f"radius_m must be positive, got {radius_m}")
 
-    membrane_thickness_m = float(params["membrane_thickness_m"])
-    corona_thickness_m = float(params["corona_thickness_m"])
-    edl_thickness_m = _debye_length_m(float(params["ionic_strength_M"]))
-    surface_total_m = membrane_thickness_m + corona_thickness_m + edl_thickness_m
+    membrane_thickness_nominal_m = float(params["membrane_thickness_m"])
+    corona_thickness_nominal_m = float(params["corona_thickness_m"])
+    edl_thickness_nominal_m = _debye_length_m(float(params["ionic_strength_M"]))
+    membrane_thickness_m = membrane_thickness_nominal_m
+    corona_thickness_m = corona_thickness_nominal_m
+    edl_thickness_m = edl_thickness_nominal_m
+    surface_total_nominal_m = (
+        membrane_thickness_nominal_m
+        + corona_thickness_nominal_m
+        + edl_thickness_nominal_m
+    )
+    surface_total_m = surface_total_nominal_m
 
     max_surface_total_m = outer_radius_m * (
         1.0 - float(params["min_core_radius_fraction"])
@@ -268,6 +276,8 @@ def build_biomimetic_exosome_core_shell(
         corona_thickness_m *= scale
         edl_thickness_m *= scale
         surface_total_m *= scale
+    else:
+        scale = 1.0
 
     r_edl_inner = outer_radius_m - edl_thickness_m
     r_corona_inner = r_edl_inner - corona_thickness_m
@@ -306,10 +316,21 @@ def build_biomimetic_exosome_core_shell(
         "outer_radius_m": outer_radius_m,
         "core_radius_m": core_radius_m,
         "core_radius_ratio": core_radius_ratio,
+        "core_radius_fraction_resolved": core_radius_ratio,
         "shell_thickness_m": surface_total_m,
+        "surface_layer_total_nominal_m": surface_total_nominal_m,
+        "surface_layer_total_resolved_m": surface_total_m,
+        "surface_layer_scale_factor": float(scale),
+        "surface_layer_clipped_flag": bool(scale < 1.0),
+        "membrane_thickness_nominal_m": membrane_thickness_nominal_m,
         "membrane_thickness_m": membrane_thickness_m,
+        "membrane_thickness_resolved_m": membrane_thickness_m,
+        "corona_thickness_nominal_m": corona_thickness_nominal_m,
         "corona_thickness_m": corona_thickness_m,
+        "corona_thickness_resolved_m": corona_thickness_m,
+        "edl_thickness_nominal_m": edl_thickness_nominal_m,
         "edl_thickness_m": edl_thickness_m,
+        "edl_thickness_resolved_m": edl_thickness_m,
         "core_n_complex": np.sqrt(epsilon_core),
         "shell_n_complex": np.sqrt(epsilon_shell),
         "equivalent_uniform_n_complex": np.sqrt(epsilon_equivalent),

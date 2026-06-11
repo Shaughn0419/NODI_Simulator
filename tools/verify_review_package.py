@@ -29,9 +29,21 @@ def main() -> None:
         action="store_true",
         help="Allow a dirty worktree for local P0a development verification.",
     )
+    parser.add_argument(
+        "--external-bundle-mode",
+        action="store_true",
+        help=(
+            "Verify an exported/unzipped bundle without requiring its manifest "
+            "commit to be reachable from the local git checkout."
+        ),
+    )
     args = parser.parse_args()
-    allow_dirty = args.allow_dirty or args.mode == "local-dev"
-    for line in verify_review_package(Path(args.package_root), allow_dirty=allow_dirty):
+    allow_dirty = args.allow_dirty or (args.mode == "local-dev" and not args.external_bundle_mode)
+    for line in verify_review_package(
+        Path(args.package_root),
+        allow_dirty=allow_dirty,
+        external_bundle_mode=bool(args.external_bundle_mode),
+    ):
         print(line)
 
 

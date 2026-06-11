@@ -5,6 +5,9 @@ The simulator often normalizes per wavelength so W/H geometry trends are
 auditable within one lambda lane. That normalization does not by itself support
 claims that one wavelength has higher real detector voltage, calibrated SNR, or
 absolute LOD than another wavelength.
+
+Blocked cross-wavelength statuses are guardrails. Report builders must not
+rewrite them as 404-vs-660 absolute-winner or calibrated ranking claims.
 """
 
 from __future__ import annotations

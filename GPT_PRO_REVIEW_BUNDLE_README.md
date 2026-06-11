@@ -1,9 +1,9 @@
 # GPT-Pro Review Bundle
 
 This bundle was originally intended for external GPT-Pro review of report 88.
-As of 2026-05-23, report 140 is the current Lens-B EV+gold 3seed × 10000e
-full-grid post-run entrypoint; report 88 remains the consolidated background
-report.
+As of 2026-06-12, the current no-data closure set is report 140 + report 147
++ report 148. Report 88 and report 100 remain historical/background reports,
+not current route-conclusion authorities.
 
 Primary copyable prompt:
 
@@ -11,11 +11,19 @@ Primary copyable prompt:
 reports/124_GPT_PRO_REVIEW_PROMPT_FOR_REPORT_88.md
 ```
 
-Primary report:
+Primary reports:
 
 ```text
 reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md
+reports/147_detector_forward_identity_full_chain_adversarial_audit_synthesis_20260610.md
+reports/148_extreme_simulation_roadmap_post_audit_20260610.md
+```
+
+Historical/background reports:
+
+```text
 reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md
+reports/100_EV_NODI_lens_b_tau1ms_stage_b6_only_analysis.md
 ```
 
 Paper-story outline for later discussion:
@@ -42,12 +50,15 @@ as a history-preserving repository clone.
 
 Claim boundary: this is a no-measured-data relative-audit review bundle. It must
 not be interpreted as calibrated physical prediction evidence, absolute SNR/LOD
-evidence, measured blank safety evidence, true EV concentration evidence, or
-biological specificity evidence.
+evidence, measured blank/FPR safety evidence, true EV concentration evidence,
+biological specificity evidence, detector-resolved winner evidence, or NODI
+heterodyne gain evidence.
 
-Lens-B current-state note: report 140 supersedes the report 88 / report 100
-single-seed Lens-B overlay for robust route interpretation. `fixed_660_gold`
-and `per_wavelength_gold` are normalization views over shared physical events,
-not independent event campaigns. EV recommendation rows must be read from
-EV/exosome rows only; gold rows are diagnostics only; 488/532 are control/trend
-wavelengths, not final recommendation wavelengths.
+Current-state note: the final reader-facing conclusion is `candidate families
+under detector surrogate`, not a single absolute route winner. Use `404/W500`
+as the fixed-view candidate family and `660/W800` as the per-wavelength-view
+candidate family. `fixed_660_gold` and `per_wavelength_gold` are normalization
+views over shared physical events, not independent event campaigns. EV rows are
+recommendation rows; gold rows are diagnostics; 488/532 are control/trend
+wavelengths. R1 and C/D×V2 are deferred outside the narrowed no-data sealing
+gate.

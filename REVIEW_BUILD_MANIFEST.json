@@ -6,8 +6,8 @@
           "path": "README.md",
           "path_status": "exists",
           "role": "repo_readme",
-          "sha256": "15a958e550cab3f0e5cad2e06179c1aeb971e2252953a2efe23a6bd9af805ddb",
-          "size_bytes": 13505,
+          "sha256": "4907917dbfc43a8eb630b12981a2ff53c203b6c3c9f86272f4752f92d86e0475",
+          "size_bytes": 13498,
           "source_lane": "docs"
         },
         {
@@ -46,8 +46,8 @@
           "path": "tools/verify_review_package.py",
           "path_status": "exists",
           "role": "review_package_verifier",
-          "sha256": "f3452fb91cc32530c21f5db9e2d2432be93b796e0446d2acaa91c6c1e4f476dc",
-          "size_bytes": 1236,
+          "sha256": "f0fb7e9008b3b8b4bd95a8e0b3c6aa3d2c16a5d6fb6fd4adfe651f7551849711",
+          "size_bytes": 1624,
           "source_lane": "tools"
         },
         {
@@ -107,8 +107,8 @@
           "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
           "path_status": "exists",
           "role": "forbidden_claims_lexicon.yaml",
-          "sha256": "f44aee4806d68f198a46c280d471e8ad3c3f3e5b7d267f4cc016c2ca43aa7edd",
-          "size_bytes": 1951,
+          "sha256": "54bb17ca1008122bd35f9d63f3e8844e00a211b80bca981c966a97d5401f1582",
+          "size_bytes": 2354,
           "source_lane": "configs_realism_v2"
         },
         {
@@ -572,8 +572,8 @@
           "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
           "path_status": "exists",
           "role": "forbidden_claims_lexicon",
-          "sha256": "f44aee4806d68f198a46c280d471e8ad3c3f3e5b7d267f4cc016c2ca43aa7edd",
-          "size_bytes": 1951,
+          "sha256": "54bb17ca1008122bd35f9d63f3e8844e00a211b80bca981c966a97d5401f1582",
+          "size_bytes": 2354,
           "source_lane": "claim_language_lexicon"
         }
       ],
@@ -585,16 +585,16 @@
           "path": "REVIEW_PACKAGE_README.md",
           "path_status": "exists",
           "role": "review_package_readme",
-          "sha256": "68c9b9cad372e5305592a3e4013e35dcd7a0866d32b87c7ff783043dbe7229e7",
-          "size_bytes": 995,
+          "sha256": "e24144ee4ba9b916edb04a3f59e962fbaaf074fa83d08bef731f8cdb6468ca85",
+          "size_bytes": 947,
           "source_lane": "review_package_root"
         },
         {
           "path": "HISTORICAL_REPORT_SUPERSESSION.md",
           "path_status": "exists",
           "role": "historical_report_supersession",
-          "sha256": "1139ea98877625e3a96f9380435f13a125129dd3cb1900a6a24ec43b92fb4107",
-          "size_bytes": 5743,
+          "sha256": "27f7f88992a7d8108040f29c43c43f0958f6878e592122fcf179b3da5fc33358",
+          "size_bytes": 5368,
           "source_lane": "P1.governance"
         }
       ],
@@ -791,12 +791,12 @@
     }
   ],
   "calibrated_claim_allowed": false,
-  "generated_at": "2026-06-05T17:29:52+00:00",
-  "git_commit": "56fe5feee321677d1af0b1931cf6eaf6b77b98b3",
+  "generated_at": "2026-06-11T19:02:06+00:00",
+  "git_commit": "0b3140cff35cd53c697be2d16f76ce30c0e7a8b6",
   "git_dirty": true,
   "hashes_manifest_path": "REVIEW_PACKAGE_HASHES.sha256",
-  "hashes_manifest_sha256": "aa5fb0f305fcfcc4d5c28156574edde70f3c13cd137b70b51fca782518d5ac5d",
-  "package_id": "ev_nodi_post_v2_review_package_20260605_p0b",
+  "hashes_manifest_sha256": "8854234a10819ee71c85d0a34195bc931f3760c1fff07130a220e4d00fb201d0",
+  "package_id": "ev_nodi_post_v2_review_package_20260611_p0b",
   "package_role": "internal_build_tracking",
   "release_manifest_path": "REVIEW_PACKAGE_MANIFEST.json",
   "review_build_manifest_schema": "ev_nodi_review_build_manifest_v1"

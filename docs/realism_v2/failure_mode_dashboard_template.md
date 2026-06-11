@@ -1,6 +1,6 @@
 # EV/NODI Realism v2 Failure Mode Dashboard Template
 
-> Current status: early-stage dashboard template retained for contract history. It is not the current v2 status table; current v2 closure is in `reports/87_*`.
+> Current status: early-stage dashboard template retained for contract history. It is not the current v2 status table or current project conclusion. Current no-data closure is in `reports/140_*`, `reports/147_*`, and `reports/148_*`; `reports/87_*` is historical v2 boundary evidence.
 
 | Gate | Status | Evidence | Required Action |
 |---|---|---|---|

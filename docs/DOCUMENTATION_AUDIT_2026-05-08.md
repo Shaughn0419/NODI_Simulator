@@ -2,13 +2,19 @@
 
 Purpose: record every Markdown documentation file covered by the documentation cleanup/audit pass, including active docs and archived historical docs, so future readers can see which files are current entry points and which files are preserved provenance snapshots.
 
-2026-05-23 status note: this file is now a historical file-coverage snapshot.
-The current per-file documentation status audit is
+2026-06-12 status note: this file is now a historical file-coverage snapshot.
+The current no-data closure and reader-facing conclusion are in
+`reports/140_*`, `reports/147_*`, and `reports/148_*`: `404/W500`
+fixed-view candidate plus `660/W800` per-wavelength-view candidate, with no
+detector-resolved or absolute winner. Use `README.md` and `文档导航.md` for
+current entry ordering.
+
+2026-05-23 status note: this file became a historical file-coverage snapshot.
+The then-current per-file documentation status audit was
 `reports/142_current_documentation_status_audit_20260523.md`, with machine
-inventory in `tmp/current_documentation_status_20260523/`. The latest
-reader-facing Lens-B full-grid interpretation is
+inventory in `tmp/current_documentation_status_20260523/`. The then-latest
+reader-facing Lens-B full-grid interpretation was
 `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`.
-Use `README.md` and `文档导航.md` for current entry ordering.
 
 2026-05-14 status note: this audit is a historical file-coverage snapshot. The
 current reader-facing single source of truth is now
@@ -36,11 +42,11 @@ Scope excludes generated/runtime/vendor/extracted-text areas: `.venv*`, `.venv-t
 Current interpretation anchors:
 
 - `README.md` and `文档导航.md` for navigation.
-- `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md` for reader-facing v1/v2 interpretation.
-- `reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` and `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` for v2 no-measured-data boundary.
-- `reports/89_EV_NODI_post_v2_unmodeled_realism_register.md` for post-v2 realism gaps that are acknowledged but not solved inside v2.
-- `reports/90-120` for post-v2 P0-P18 provenance; at the 2026-05-11 audit point their conclusions were consolidated into report 88 v3.0, and the current entry order is now governed by report 88 v5.2.6 plus `文档导航.md`.
-- `reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md` for this later audit/update pass.
+- `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md` for the current reader-facing no-data full-grid conclusion.
+- `reports/147_*` and `reports/148_*` for the narrowed no-data sealing gate, residual-assumption ledger, and Stage-1/T3/T4 audit closure.
+- `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`, `reports/87_*`, and `reports/84_*` for historical v1/v2 and realism-v2 boundary provenance.
+- `reports/89_EV_NODI_post_v2_unmodeled_realism_register.md` and `reports/90-120` for post-v2 provenance, not current conclusion wording.
+- `reports/121_EV_NODI_full_update_review_ledger_2026-05-11.md` for the 2026-05-11 audit/update pass.
 
 Forbidden-current-claim reminder: v2 and P0-P18 have no measured data and do not authorize calibrated SNR, calibrated event probability, absolute LOD, true EV concentration, biological specificity, measured blank safety, route promotion, main-660 redefinition, selected-annulus replacement of all-crossing ranking, or use of P6-P16 trace ordering as a single main-660 champion.
 
@@ -208,11 +214,11 @@ Archive rule: every `archive/` Markdown file is marked as historical provenance 
 | `reports/79_EV_NODI_realism_v2_R7_1_operator_artifact_validation_protocol_analysis.md` | stage-evidence-report-preserved |
 | `reports/80_EV_NODI_realism_v2_R7_2_operator_artifact_gap_register_plan.md` | stage-evidence-report-preserved |
 | `reports/81_EV_NODI_realism_v2_R7_2_operator_artifact_gap_register_generation_analysis.md` | stage-evidence-report-preserved |
-| `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` | current-v2-reader-boundary-report |
+| `reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md` | historical-v2-reader-boundary-report |
 | `reports/85_EV_NODI_realism_v2_target_alignment_self_review.md` | stage-evidence-report-preserved |
 | `reports/86_EV_NODI_realism_v2_no_measured_data_closure_plan.md` | stage-evidence-report-preserved |
-| `reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` | current-v2-reader-boundary-report |
-| `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md` | current-v2-reader-boundary-report |
+| `reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md` | historical-v2-reader-boundary-report |
+| `reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md` | historical-v1-v2-reader-background |
 | `reports/89_EV_NODI_post_v2_unmodeled_realism_register.md` | post-v2-boundary-register-current |
 | `reports/current/35_method_notes.md` | current-reports-indexed-historical-where-needed |
 | `reports/current/36_exosome_biomimetic_surface_model.md` | current-reports-indexed-historical-where-needed |

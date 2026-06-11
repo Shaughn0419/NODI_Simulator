@@ -226,7 +226,7 @@ def wall_refractive_index_at(self, wavelength_m: float) -> float
 - `"calibrated_lookup"`：从 blank-channel 标定表读取或插值 `A_ref / phi_ref / g_ref`，更适合实验约束后的默认工作流
 - `"channel_angular_surrogate"`（当前基础包默认）：先生成最小通道衍射角谱场，再过与 `E_sca` 相同的探测算子；适合作为“没有标定表时”的默认物理 fallback
 - `"paper_aligned_phase_filter"`：Tsuyama paper-aligned comparison route，用于论文语义对照，不作为实测 calibrated truth
-- `"tsuyama_bfp_integrated"`：detector-resolved Tsuyama BFP comparison lane，用于诊断/对照，不替代 calibrated lookup
+- `"tsuyama_bfp_integrated"`：BFP/ROI-resolved Tsuyama comparison lane，用于诊断/对照，不替代 calibrated lookup，也不授权 detector-resolved winner claim
 
 **reference_spatial_mode 的两个取值**：
 - `"uniform"`：整个事件内沿用同一个 case 级 `E_ref`

@@ -1,5 +1,14 @@
 # Current Evidence State - Pre-3seed Logic Hardening
 
+2026-06-12 supersession note: this file is historical pre-3seed evidence-state
+provenance. It is not the current project conclusion. For the current no-data
+closure, use `reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`,
+`reports/147_detector_forward_identity_full_chain_adversarial_audit_synthesis_20260610.md`,
+and `reports/148_extreme_simulation_roadmap_post_audit_20260610.md`. Current
+language is `candidate families under detector surrogate`: `404/W500`
+fixed-view candidate plus `660/W800` per-wavelength-view candidate, with R1 and
+C/D×V2 deferred outside the narrowed no-data sealing gate.
+
 Generated: 2026-05-17T17:38:31+00:00
 
 Project stance: no-measured-data relative/proxy design selection. The route

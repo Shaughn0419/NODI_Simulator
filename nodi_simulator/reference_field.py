@@ -12,8 +12,8 @@ Models:
       collapsed by the same collection operator used for E_sca
     - "paper_aligned_phase_filter": Tsuyama-leaning comparison mode where
       depth acts through phase delay only, not as an extra kz-aperture term
-    - "tsuyama_bfp_integrated": detector-resolved Tsuyama BFP ROI comparison
-      route, not calibrated blank truth
+    - "tsuyama_bfp_integrated": BFP/ROI-resolved Tsuyama comparison
+      route, not calibrated blank truth or detector-resolved winner evidence
 """
 
 import os

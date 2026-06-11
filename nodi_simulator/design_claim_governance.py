@@ -603,6 +603,9 @@ def build_design_claim_governance_diagnostics(
     within_lambda_design_eligible = bool(
         relative_design_eligible and within_lambda_ranking_allowed
     )
+    # Historical schema name: this only says the detector-operator gate did not
+    # block relative/proxy design ranking. It must not be read as permission to
+    # publish a detector-resolved or absolute wavelength winner.
     detector_resolved_relative_design_eligible = bool(
         relative_design_eligible and detector_gate
     )

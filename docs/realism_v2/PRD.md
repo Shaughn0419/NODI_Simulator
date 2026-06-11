@@ -1,6 +1,6 @@
 # EV/NODI Realism v2 PRD
 
-> Current status: historical R0/P0 contract document. The full v2 no-measured-data lane has since completed through closure; current reader-facing interpretation lives in `reports/88_*`, and the v2 boundary lives in `reports/87_*` plus `reports/84_*`. This file remains because tests assert the original contract docs are present.
+> Current status: historical R0/P0 contract document. The full v2 no-measured-data lane has since completed and the current no-data closure lives in `reports/140_*`, `reports/147_*`, and `reports/148_*`. Report 88 remains background/provenance. This file remains because tests assert the original contract docs are present.
 
 ## Scope
 

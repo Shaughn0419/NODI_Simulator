@@ -29,6 +29,7 @@ from dashboard.config import (  # noqa: E402
     particle_from_name,
 )
 from nodi_simulator._exports import WATER, run_parameter_sweep  # noqa: E402
+from nodi_simulator.config_trace import build_minimal_config_trace  # noqa: E402
 from nodi_simulator.parameter_sweep import (  # noqa: E402
     build_sweep_case_key,
     run_single_case_batch_shared_event_normalization_views,
@@ -313,6 +314,7 @@ def _write_manifest(
     scope: SourceScope,
     cfg: Any,
     run_kind: str,
+    optical_template: Any | None = None,
 ) -> None:
     frozen_metadata = dict(FROZEN_B_METADATA)
     frozen_metadata["n_events"] = int(args.n_events)
@@ -325,6 +327,12 @@ def _write_manifest(
     )
     implementation_status["implemented_in_runtime_config"]["n_events"] = int(args.n_events)
     normalization_metadata = _normalization_metadata(args.normalization_lane, cfg)
+    config_trace = build_minimal_config_trace(
+        cfg=cfg,
+        optical_template=optical_template,
+        normalization_view=args.normalization_lane,
+        config_trace_status="original_runtime_record",
+    )
     manifest = {
         "run_kind": run_kind,
         "workers": int(args.workers),
@@ -388,6 +396,7 @@ def _write_manifest(
             "selected_annulus_edge_norm_max": cfg.selected_annulus_edge_norm_max,
             "random_sequence_policy": cfg.random_sequence_policy,
             "adaptive_event_budget_mode": cfg.adaptive_event_budget_mode,
+            **config_trace.runtime_config_subset,
         },
     }
     write_json_file(output_dir / "run_manifest.json", manifest)
@@ -1430,6 +1439,7 @@ def run_trial(args: argparse.Namespace) -> dict[str, Any]:
         scope=scope,
         cfg=cfg,
         run_kind="lens_b_ev_gold_fullgrid_trial",
+        optical_template=optical_template,
     )
 
     start = time.perf_counter()
@@ -1586,6 +1596,7 @@ def run_full(args: argparse.Namespace) -> dict[str, Any]:
         scope=scope,
         cfg=cfg,
         run_kind="lens_b_ev_gold_fullgrid_full_1seed",
+        optical_template=optical_template,
     )
 
     start = time.perf_counter()

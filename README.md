@@ -13,14 +13,15 @@ The current project state is:
   adjudication, width-risk sensitivity, and artifact-gap registration.
 - **post-v2 P0-P18 is a relative-audit and bounded-trace evidence layer.** It
   adds the P0 review-ready audit package plus six bounded trace-only lanes; it
-  does not promote a route because the two locked main-660 candidates swap
+  does not promote a route because the two legacy 660-family candidates swap
   rank across P6/P8/P10/P12/P14/P16.
-- **Lens B now has a completed 3-seed, 10,000 events/case exhaustive EV+gold
-  full-grid post-run analysis.** The shared-dual run covers seeds `11/22/33`,
-  572 wavelength/width/depth routes, 56 particles, and 960,960,000 physical
-  stochastic event samples. `fixed_660_gold` and `per_wavelength_gold` are two
-  normalization views over the same physical events, not separate event
-  campaigns. The current entry point is report 140.
+- **The current reader-facing analysis is a no-data closure, not a route winner
+  declaration.** Report 140 is now aligned to reports 147/148: the 3-seed,
+  10,000 events/case exhaustive EV+gold full-grid is retained as evidence, but
+  its fixed/per-wavelength rankings are interpreted as detector-surrogate
+  candidate-family evidence. The no-data sealing gate is narrowed to `R2/V1`
+  A/B/C/D all-3-seed primary decision plus A/B V2 gauge-sampling; R1 and
+  C/D×V2 are explicitly deferred out of the no-data gate.
 - **The older τ=1 ms B6/B7 Lens-B reads remain historical single-seed
   overlays.** B6 per-wavelength gold normalization is still useful for
   Tsuyama-lineage geometry diagnostics; B7 fixed-660-gold normalization was the
@@ -32,24 +33,26 @@ The current project state is:
 - **The repository still has no measured acquisition data.** It does not
   authorize calibrated signal-to-noise ratio, calibrated event probability,
   absolute detection limit, true EV concentration, biological specificity,
-  measured blank safety, route promotion, or main-660 redefinition.
+  measured blank safety, route promotion, or legacy route-family redefinition.
 
 For readers, start with the latest full-grid post-run analysis, then use the
 older consolidated reports for background and provenance:
 
 - [reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md](./reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md)
+- [reports/147_detector_forward_identity_full_chain_adversarial_audit_synthesis_20260610.md](./reports/147_detector_forward_identity_full_chain_adversarial_audit_synthesis_20260610.md)
+- [reports/148_extreme_simulation_roadmap_post_audit_20260610.md](./reports/148_extreme_simulation_roadmap_post_audit_20260610.md)
 - [reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md](./reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md)
 - [reports/100_EV_NODI_lens_b_tau1ms_stage_b6_only_analysis.md](./reports/100_EV_NODI_lens_b_tau1ms_stage_b6_only_analysis.md)
 
-Report 140 is the current Lens-B full-grid interpretation and audit ledger. It
-confirms hard output integrity with a raw/diagnostic schema caveat and records
-the new cross-view result: `fixed_660_gold` moves the selected-annulus
-recommendation family toward 404 nm / W500 mid-depth routes, while
-`per_wavelength_gold` preserves the 660 nm / W800 D1400-D1500 family under the
-sharp MSC/sEV prior. Report 88 remains the consolidated v1/v2/post-v2 reader
-report; report 100 is now a historical single-seed B6/B7 overlay.
+Report 140 is the current final reader-facing analysis. It confirms hard output
+integrity with a raw/diagnostic schema caveat, then applies the 147/148
+detector-identity closure: `fixed_660_gold` retains a 404 nm / W500
+candidate family, `per_wavelength_gold` retains a 660 nm / W800 candidate
+family, and Stage-1 prevents either from becoming a detector-resolved or
+absolute winner because A/B/D preserve the view-flip while C gives 660 in both
+views. Report 88 remains consolidated background; report 100 is historical.
 
-For the final v2 boundary, read:
+For historical v2 boundary provenance, read:
 
 - [reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md](./reports/87_EV_NODI_realism_v2_no_measured_data_closure_analysis.md)
 - [reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md](./reports/84_EV_NODI_realism_v2_no_measured_data_consolidated_roadmap.md)
@@ -63,7 +66,7 @@ Supported:
 - scenario-prior sensitivity under named synthetic instrument scenarios;
 - route-role stability inside the bounded v2 prior model;
 - post-v2 relative-audit records and trace-only rank-instability evidence;
-- mesh/sign consistency checks for the locked 660 nm main route;
+- mesh/sign consistency checks for the legacy 660 nm route-family diagnostics;
 - a low-dimensional explanation for why narrow/deep context routes scored high;
 - Level-1 3-seed EV+gold route-family comparison under explicitly named
   normalization views;
@@ -87,30 +90,21 @@ Not supported:
 
 ## Current Scientific Bottom Line
 
-Within the no-measured-data v2 model, the locked 660 nm main route remains:
+Within the no-measured-data closure, the current bottom line is:
 
-- 660 nm wavelength, 800 nm width, 1400 nm depth;
-- 660 nm wavelength, 800 nm width, 1500 nm depth.
+- 404/W500 is a fixed-view detector-surrogate candidate family.
+- 660/W800 is a per-wavelength detector-surrogate candidate family.
+- Stage-1 detector-route audit prevents either family from being promoted to a
+  detector-resolved or absolute 404/660 winner.
+- Depth is a weak, calibration/noise-dependent engineering band; D900-D1200 is
+  the conservative fabrication range, not a D1400/D1500 mandate.
+- 488/532 remain control/reference wavelengths.
 
-The post-v2 P0 audit keeps those two routes as conditional relative-main
-candidates. P6/P8 rank 800x1400 above 800x1500, P10/P12 reverse that order,
-P14 returns to 800x1400, and P16 returns to 800x1500; the current bottom line
-is therefore rank instability, not a single champion. The earlier
-weak-reference and narrow/deep context-route warnings are best read as evidence
-that the original model underweighted narrow-channel engineering risk. R6/R7
-show that this warning is explainable by low-dimensional width-family and
-mechanistic-prior hypotheses, but those hypotheses are not calibrated physical
-laws.
-
-The completed 3-seed 10000e Lens-B full-grid does not produce one universal
-winner. Under `fixed_660_gold`, EV-prior selected-annulus recommendation ranks
-move to the 404 nm / W500 mid-depth family. Under `per_wavelength_gold`, the
-same recommendation lens returns to the 660 nm / W800 family, especially
-`660_W800_D1400` and `660_W800_D1500` for the sharp MSC/sEV prior. The older
-main-660 conclusion therefore stands with a narrower normalization/lens
-boundary, while the 404 branch is now a fixed-view Level-1 candidate family
-rather than only a sidecar/stress branch. 488/532 remain control/reference
-wavelengths.
+This is a no-data relative-audit final, not a physical or biological truth
+closure. The remaining open axes are measurement-facing: detector identity
+(BFP/slit/reference phase), cross-wavelength gauge, blank/noise/FPR, and EV
+composition. R1 and C/D×V2 remain simulation-completable but are not blockers
+for the no-data final.
 
 ## Quick Start
 
@@ -181,8 +175,10 @@ The latest local cleanup/review baseline was:
 
 The `docs/realism_v2/` files are contract/specification documents used by the
 test suite. They are retained for governance and regression checks even when
-the reader-facing storyline is now summarized by reports 84, 87, 88, the
-post-v2 gap register in report 89, and the P0-P18 reports 90-120.
+the reader-facing storyline is now summarized by reports 140, 147, and 148.
+Reports 84, 87, 88, the post-v2 gap register in report 89, and the P0-P18
+reports 90-120 remain useful provenance, but they are no longer the current
+conclusion entry point.
 
 ## Result Libraries
 

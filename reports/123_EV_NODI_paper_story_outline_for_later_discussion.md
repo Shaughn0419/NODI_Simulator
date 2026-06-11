@@ -1,10 +1,12 @@
 # EV/NODI paper story outline for later discussion
 
-- 日期：2026-05-14；2026-05-23 状态覆盖
+- 日期：2026-05-14；2026-06-12 状态覆盖
 - 状态：讨论草案；不作为 report 88 的 claim 升级
-- 作用：把 report 88 / report 140 之后的论文路线、主图结构、验证数据需求和审稿风险先保存下来，后续单独讨论
-- 最新 full-grid 依赖：`reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`
-- 背景主报告：`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`
+- 作用：把论文路线、主图结构、验证数据需求和审稿风险先保存下来，后续单独讨论
+- 当前 no-data 结论入口：`reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md`
+- 当前封板门与残余假设：`reports/147_detector_forward_identity_full_chain_adversarial_audit_synthesis_20260610.md`、`reports/148_extreme_simulation_roadmap_post_audit_20260610.md`
+- 背景历史报告：`reports/88_EV_NODI_v1_v2_consolidated_reader_analysis_with_Tsuyama_comparison.md`
+- **2026-06-12 当前状态（必须先读）**：本文档仍是论文故事草案，不是当前 claim source。旧的“660 main route / 404 sidecar”论文定位必须按当前 closure set 重写为 `candidate families under detector surrogate`：`404/W500` fixed-view candidate 与 `660/W800` per-wavelength-view candidate 并立；不得写 detector-resolved winner、绝对跨波长 winner、calibrated SNR/LOD/FPR、NODI 增强倍数或 biological specificity。
 
 ---
 
@@ -69,11 +71,11 @@ for nanofluidic optical diffraction interferometry (NODI) route selection.
 
 推荐主张：
 
-> We present an auditable surrogate observation-chain framework that ranks NODI route candidates under explicitly no-measured-data assumptions. The framework identifies a 660-nm-centered route as the conservative engineering mainline, preserves 404 nm as a high-value shortwave sidecar, and uses 532/488 nm as Tsuyama-aligned trend controls, while keeping all calibrated performance claims blocked pending measured artifacts.
+> We present an auditable surrogate observation-chain framework that ranks NODI route candidates under explicitly no-measured-data assumptions. The current closure identifies two detector-surrogate candidate families, a 404/W500 fixed-view family and a 660/W800 per-wavelength-view family, while keeping 532/488 as control/trend wavelengths and blocking all calibrated performance claims pending measured artifacts.
 
 中文可写为：
 
-> 本文提出一个可审计的 NODI surrogate observation-chain 设计审计框架。在明确无实测校准的前提下，该框架把 660 nm 路线识别为保守工程主线，把 404 nm 保留为高价值短波 sidecar，并将 532/488 nm 作为 Tsuyama 文献趋势对照；所有校准性能声明仍由 measured artifact 阻断。
+> 本文提出一个可审计的 NODI surrogate observation-chain 设计审计框架。在明确无实测校准的前提下，当前 closure 只识别两个 detector-surrogate candidate family：`404/W500` fixed-view family 与 `660/W800` per-wavelength-view family；532/488 保留为 control/trend 波长；所有校准性能声明仍由 measured artifact 阻断。
 
 ---
 
@@ -106,10 +108,10 @@ it needs a full observation-chain audit.
 - pulse extraction：决定 per-event detectability；
 - governance：把 route role、claim level 和 forbidden claim 写入结果。
 
-**第三幕：路线选择不是"波长第一"，而是"角色第一"。**
+**第三幕：路线选择不是"波长第一"，而是"候选 family + 实测交接第一"。**
 
-- 660 nm：conservative main route；
-- 404 nm：shortwave sidecar / thermal-sensitive probe；
+- 404/W500：fixed-view detector-surrogate candidate family；
+- 660/W800：per-wavelength-view detector-surrogate candidate family；
 - 532/488 nm：Tsuyama-aligned controls；
 - 任何 route promotion 都需要 measured artifact。
 
@@ -150,10 +152,10 @@ transport/readout/noise models, pulse extraction, and claim-governed route
 scoring.
 
 Results:
-Under the current no-measured-data assumptions, the framework identifies
-660-nm routes around 800 x 1400/1500 nm as the conservative engineering
-mainline, preserves 404 nm as a high-value shortwave sidecar/probe, and uses
-532/488 nm as Tsuyama-aligned trend controls.
+Under the current no-measured-data assumptions, the framework identifies two
+detector-surrogate candidate families rather than a single route winner:
+404/W500 in the fixed-view surface and 660/W800 in the per-wavelength-view
+surface. 532/488 nm remain Tsuyama-aligned trend/control wavelengths.
 
 Boundary:
 The results are relative route-prioritization outputs, not calibrated SNR,
@@ -310,7 +312,7 @@ Table:
 
 Message:
 
-> 404 nm can raise intrinsic scattering and peak proxy, but transit, phase, readout, threshold, and governance prevent direct main-route promotion.
+> 404 nm can raise intrinsic scattering and peak proxy, but transit, phase, readout, threshold, and detector-route governance make it a fixed-view candidate family rather than an absolute route winner.
 
 Figures:
 
@@ -341,7 +343,7 @@ Message:
 Figures:
 
 - Wavelength x geometry heatmap.
-- Governance overlay showing promoted / not promoted / sidecar / control.
+- Governance overlay showing fixed-view candidate / per-wavelength candidate / not promoted / control.
 
 ### Result 5: Dual-lens reconciliation
 
@@ -386,24 +388,24 @@ Table:
 
 ## 5.4 Discussion
 
-### 5.4.1 Why 660 is the conservative main route
+### 5.4.1 Why 660/W800 remains a per-wavelength candidate family
 
 Discuss:
 
-- stable route role;
-- governance after width-prior risk;
+- stable per-wavelength-view role;
+- governance after width-prior and detector-route risk;
 - bounded trace behavior;
 - available evidence across lenses;
 - not a calibrated optimum.
 
-### 5.4.2 Why 404 remains valuable
+### 5.4.2 Why 404/W500 remains a fixed-view candidate family
 
 Discuss:
 
 - high shortwave sensitivity;
 - thermal / photothermal / readout stress test;
-- sidecar value;
-- why it cannot replace main route yet.
+- fixed-view candidate value;
+- why it cannot be promoted to an absolute winner.
 
 ### 5.4.3 Why 532/488 belong in the paper
 
@@ -411,7 +413,7 @@ Discuss:
 
 - Tsuyama dual-wavelength anchors;
 - Au / Ag trend comparison;
-- controls rather than main route candidates.
+- controls rather than final recommendation wavelengths.
 
 ### 5.4.4 Why dual-lens parity matters
 
@@ -486,14 +488,14 @@ Panels:
 
 Purpose:
 
-- Explain 404 vs 660 tension.
+- Explain the 404/W500 fixed-view vs 660/W800 per-wavelength tension.
 
 ### Figure 4: Route-role decision matrix
 
 Panels:
 
-- A: 660 main routes.
-- B: 404 sidecar/probe.
+- A: 660/W800 per-wavelength candidate family.
+- B: 404/W500 fixed-view candidate family.
 - C: 532/488 controls.
 - D: forbidden interpretations.
 
@@ -556,7 +558,7 @@ Purpose:
 | BFP/slit/ROI scan | Measured detector operator | Tests shared projection for reference/scattering | Could validate or revise route ranking |
 | Standard-particle transfer | Au / PS / silica panel across wavelengths | Converts relative pulse proxy toward physical transfer | Prerequisite for calibrated SNR discussion |
 | Detector gain/noise chain | Current/TIA/lock-in/logger characterization | Prevents arbitrary unit confusion | Prerequisite for voltage/current/noise claims |
-| Flow / transit validation | Measured velocity / pulse width / residence time | Tests transit-readout coupling | Could alter 404 sidecar interpretation |
+| Flow / transit validation | Measured velocity / pulse width / residence time | Tests transit-readout coupling | Could alter 404/W500 fixed-view interpretation |
 
 ### 8.2 Tier 2: needed for EV-specific paper claims
 
@@ -572,7 +574,7 @@ Purpose:
 | Study | Minimum implementation | Why it matters |
 |---|---|---|
 | Full-wave blank-channel field | 6-12 representative geometries | Tests reference field surrogate |
-| Particle-in-channel Green tensor spot checks | main 660 + 404 sidecar + controls | Tests wall-modified scattering |
+| Particle-in-channel Green tensor spot checks | 660/W800 + 404/W500 + controls | Tests wall-modified scattering |
 | Vector polarization / high-NA transfer | representative objective / polarization states | Tests scalar projection assumptions |
 | Roughness / fabrication background | bounded perturbation sweep | Tests false background and route fragility |
 
