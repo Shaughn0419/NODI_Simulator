@@ -27,6 +27,8 @@ from tools.audits.run_report148_stage1_ab_minimal import (  # noqa: E402
     PRIOR_NAME,
     READOUT_POLICY,
     ROUTE_MODEL_CATALOG,
+    STAGE1_RANK_SCORE_COLUMN,
+    STAGE1_RANK_SCORE_DEFINITION,
     _build_route_cfg,
     _rank_routes_for_group,
     default_route_panel,
@@ -241,7 +243,8 @@ def _run_case_task(task: CaseTask) -> list[dict[str, Any]]:
                     and str(summary.get("rho_physical_envelope_status")) == "within_envelope"
                 ),
                 "all_crossing_detection_rate": float(summary["all_crossing_detection_rate"]),
-                "final_engineering_score": float(summary["mean_peak_margin_z"]),
+                STAGE1_RANK_SCORE_COLUMN: float(summary["mean_peak_margin_z"]),
+                "stage1_rank_score_definition": STAGE1_RANK_SCORE_DEFINITION,
                 "route_screening_claim_level": "candidate_families_under_current_detector_surrogate_A_vs_C_EV_RI_screening",
                 "route_screening_status": "t4_seed_screening",
             }
@@ -288,7 +291,9 @@ def _winner_rows(case_df: pd.DataFrame) -> pd.DataFrame:
                 "selected_annulus_rank": int(top["selected_annulus_rank"]),
                 "weighted_selected_annulus_detection": float(top[f"{PRIOR_NAME}_weighted_selected_annulus_detection"]),
                 "weighted_stable": float(top[f"{PRIOR_NAME}_weighted_stable"]),
-                "weighted_final": float(top[f"{PRIOR_NAME}_weighted_final"]),
+                f"weighted_{STAGE1_RANK_SCORE_COLUMN}": float(
+                    top[f"{PRIOR_NAME}_weighted_{STAGE1_RANK_SCORE_COLUMN}"]
+                ),
             }
         )
     return pd.DataFrame(rows)
@@ -326,9 +331,15 @@ def _view_flip_rows(winner_df: pd.DataFrame) -> pd.DataFrame:
                 "preset_name": preset_name,
                 "core_n_real": float(core_n_real),
                 "corona_label": corona_label,
-                "fixed_660_gold_winner_wavelength": int(fixed_winner["wavelength_nm"]),
+                "fixed_660_gold_point_estimate_winner_wavelength": int(fixed_winner["wavelength_nm"]),
+                "fixed_660_gold_wilson_separation_status": "overlap",
+                "fixed_660_gold_winner_claim_allowed": False,
+                "fixed_660_gold_candidate_family_retained": True,
                 "fixed_660_gold_winner_family_id": fixed_winner["winner_family_id"],
-                "per_wavelength_gold_winner_wavelength": int(per_winner["wavelength_nm"]),
+                "per_wavelength_gold_point_estimate_winner_wavelength": int(per_winner["wavelength_nm"]),
+                "per_wavelength_gold_wilson_separation_status": "overlap",
+                "per_wavelength_gold_winner_claim_allowed": False,
+                "per_wavelength_gold_candidate_family_retained": True,
                 "per_wavelength_gold_winner_family_id": per_winner["winner_family_id"],
                 "view_flip_flag": int(fixed_winner["wavelength_nm"]) != int(per_winner["wavelength_nm"]),
             }
@@ -352,8 +363,10 @@ def _baseline_changed_combos(view_flip_df: pd.DataFrame) -> set[tuple[str, float
         if baseline_row is None:
             continue
         changed = (
-            row["fixed_660_gold_winner_wavelength"] != baseline_row["fixed_660_gold_winner_wavelength"]
-            or row["per_wavelength_gold_winner_wavelength"] != baseline_row["per_wavelength_gold_winner_wavelength"]
+            row["fixed_660_gold_point_estimate_winner_wavelength"]
+            != baseline_row["fixed_660_gold_point_estimate_winner_wavelength"]
+            or row["per_wavelength_gold_point_estimate_winner_wavelength"]
+            != baseline_row["per_wavelength_gold_point_estimate_winner_wavelength"]
             or row["fixed_660_gold_winner_family_id"] != baseline_row["fixed_660_gold_winner_family_id"]
             or row["per_wavelength_gold_winner_family_id"] != baseline_row["per_wavelength_gold_winner_family_id"]
             or bool(row["view_flip_flag"]) != bool(baseline_row["view_flip_flag"])

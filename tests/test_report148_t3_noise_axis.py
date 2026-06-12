@@ -14,12 +14,12 @@ from tools.audits.run_report148_t3_noise_axis import (
 def test_promoted_shots_flags_nonbaseline_winner_or_band_changes() -> None:
     frame = pd.DataFrame(
         [
-            {"shot_noise_scale": 0.001, "seed": 11, "normalization_view": "fixed_660_gold", "winner_wavelength": 404, "winner_family_id": "f404", "band_404": "electronics_noise_limited_useful", "band_660": "electronics_noise_limited_useful"},
-            {"shot_noise_scale": 0.001, "seed": 11, "normalization_view": "per_wavelength_gold", "winner_wavelength": 660, "winner_family_id": "f660", "band_404": "electronics_noise_limited_useful", "band_660": "electronics_noise_limited_useful"},
-            {"shot_noise_scale": 0.05, "seed": 11, "normalization_view": "fixed_660_gold", "winner_wavelength": 404, "winner_family_id": "f404", "band_404": "shot_noise_limited_no_gain", "band_660": "electronics_noise_limited_useful"},
-            {"shot_noise_scale": 0.05, "seed": 11, "normalization_view": "per_wavelength_gold", "winner_wavelength": 660, "winner_family_id": "f660", "band_404": "shot_noise_limited_no_gain", "band_660": "electronics_noise_limited_useful"},
-            {"shot_noise_scale": 0.2, "seed": 11, "normalization_view": "fixed_660_gold", "winner_wavelength": 660, "winner_family_id": "f660", "band_404": "shot_noise_limited_no_gain", "band_660": "shot_noise_limited_no_gain"},
-            {"shot_noise_scale": 0.2, "seed": 11, "normalization_view": "per_wavelength_gold", "winner_wavelength": 660, "winner_family_id": "f660", "band_404": "shot_noise_limited_no_gain", "band_660": "shot_noise_limited_no_gain"},
+            {"shot_noise_scale": 0.001, "seed": 11, "normalization_view": "fixed_660_gold", "point_estimate_winner_wavelength": 404, "winner_family_id": "f404", "band_404": "electronics_noise_limited_useful", "band_660": "electronics_noise_limited_useful"},
+            {"shot_noise_scale": 0.001, "seed": 11, "normalization_view": "per_wavelength_gold", "point_estimate_winner_wavelength": 660, "winner_family_id": "f660", "band_404": "electronics_noise_limited_useful", "band_660": "electronics_noise_limited_useful"},
+            {"shot_noise_scale": 0.05, "seed": 11, "normalization_view": "fixed_660_gold", "point_estimate_winner_wavelength": 404, "winner_family_id": "f404", "band_404": "shot_noise_limited_no_gain", "band_660": "electronics_noise_limited_useful"},
+            {"shot_noise_scale": 0.05, "seed": 11, "normalization_view": "per_wavelength_gold", "point_estimate_winner_wavelength": 660, "winner_family_id": "f660", "band_404": "shot_noise_limited_no_gain", "band_660": "electronics_noise_limited_useful"},
+            {"shot_noise_scale": 0.2, "seed": 11, "normalization_view": "fixed_660_gold", "point_estimate_winner_wavelength": 660, "winner_family_id": "f660", "band_404": "shot_noise_limited_no_gain", "band_660": "shot_noise_limited_no_gain"},
+            {"shot_noise_scale": 0.2, "seed": 11, "normalization_view": "per_wavelength_gold", "point_estimate_winner_wavelength": 660, "winner_family_id": "f660", "band_404": "shot_noise_limited_no_gain", "band_660": "shot_noise_limited_no_gain"},
         ]
     )
 
@@ -43,7 +43,7 @@ def test_depth_span_rows_separates_all_crossing_and_selected_annulus_faces() -> 
     assert span["depth_span_all_crossing"] == pytest.approx(0.6)
 
 
-def test_headline_rows_tracks_view_disagreement_on_winner_wavelength() -> None:
+def test_headline_rows_tracks_view_disagreement_on_point_estimate_winner_wavelength() -> None:
     route_df = pd.DataFrame(
         [
             {"shot_noise_scale": 0.2, "seed": 11, "normalization_view": "fixed_660_gold", "wavelength_nm": 404, "width_nm": 500, "depth_nm": 700, "route_family_id": "lambda404_w500_depth_sweep", "weighted_selected_annulus_detection": 0.4, "mean_peak_margin_z": 5.0, "reference_operating_band": "shot_noise_limited_no_gain"},
@@ -54,8 +54,11 @@ def test_headline_rows_tracks_view_disagreement_on_winner_wavelength() -> None:
     )
 
     headline = _headline_rows(route_df)
-    assert set(headline["winner_wavelength"]) == {404, 660}
-    assert headline["views_disagree_on_winner_wavelength"].unique().tolist() == [True]
+    assert set(headline["point_estimate_winner_wavelength"]) == {404, 660}
+    assert headline["views_disagree_on_point_estimate_winner_wavelength"].unique().tolist() == [True]
+    assert set(headline["wilson_separation_status"]) == {"overlap"}
+    assert headline["winner_claim_allowed"].unique().tolist() == [False]
+    assert headline["candidate_family_retained"].unique().tolist() == [True]
 
 
 def test_depth_rank_seed_stability_counts_seed_stable_faces() -> None:

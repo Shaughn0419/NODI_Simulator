@@ -277,7 +277,10 @@ def _headline_rows(route_df: pd.DataFrame) -> pd.DataFrame:
                 "seed": int(seed),
                 "normalization_view": normalization_view,
                 "wavelength_nm": int(wavelength_nm),
-                "winner_wavelength": int(wavelength_nm),
+                "point_estimate_winner_wavelength": int(wavelength_nm),
+                "wilson_separation_status": "overlap",
+                "winner_claim_allowed": False,
+                "candidate_family_retained": True,
                 "winner_family_id": top["route_family_id"],
                 "winner_route": f"{int(top['wavelength_nm'])}/{int(top['width_nm'])}x{int(top['depth_nm'])}",
                 "winner_selected_metric": float(top["weighted_selected_annulus_detection"]),
@@ -299,7 +302,10 @@ def _headline_rows(route_df: pd.DataFrame) -> pd.DataFrame:
                 "shot_noise_scale": float(shot_noise_scale),
                 "seed": int(seed),
                 "normalization_view": normalization_view,
-                "winner_wavelength": int(overall["wavelength_nm"]),
+                "point_estimate_winner_wavelength": int(overall["wavelength_nm"]),
+                "wilson_separation_status": "overlap",
+                "winner_claim_allowed": False,
+                "candidate_family_retained": True,
                 "winner_family_id": overall["winner_family_id"],
                 "winner_route": overall["winner_route"],
                 "band_404": w404["reference_operating_band"],
@@ -311,14 +317,14 @@ def _headline_rows(route_df: pd.DataFrame) -> pd.DataFrame:
         disagreement_map: dict[tuple[float, int], bool] = {}
         for (shot_noise_scale, seed), group in cross_df.groupby(["shot_noise_scale", "seed"], sort=True):
             winners_by_view = {
-                str(row["normalization_view"]): int(row["winner_wavelength"])
+                str(row["normalization_view"]): int(row["point_estimate_winner_wavelength"])
                 for row in group.to_dict("records")
             }
             if set(winners_by_view) == set(NORMALIZATION_VIEWS):
                 disagreement_map[(float(shot_noise_scale), int(seed))] = (
                     winners_by_view["fixed_660_gold"] != winners_by_view["per_wavelength_gold"]
                 )
-        cross_df["views_disagree_on_winner_wavelength"] = [
+        cross_df["views_disagree_on_point_estimate_winner_wavelength"] = [
             disagreement_map.get((float(row["shot_noise_scale"]), int(row["seed"])))
             for _, row in cross_df.iterrows()
         ]
@@ -411,7 +417,8 @@ def _promoted_shots(headline_df: pd.DataFrame) -> set[float]:
             if b.empty or c.empty:
                 continue
             if (
-                tuple(sorted(c["winner_wavelength"].unique().tolist())) != tuple(sorted(b["winner_wavelength"].unique().tolist()))
+                tuple(sorted(c["point_estimate_winner_wavelength"].unique().tolist()))
+                != tuple(sorted(b["point_estimate_winner_wavelength"].unique().tolist()))
                 or tuple(sorted(c["winner_family_id"].unique().tolist())) != tuple(sorted(b["winner_family_id"].unique().tolist()))
                 or tuple(sorted(c["band_404"].unique().tolist())) != tuple(sorted(b["band_404"].unique().tolist()))
                 or tuple(sorted(c["band_660"].unique().tolist())) != tuple(sorted(b["band_660"].unique().tolist()))
@@ -478,7 +485,7 @@ def main() -> None:
         for view in NORMALIZATION_VIEWS:
             sub = group[group["normalization_view"].eq(view)]
             vote_counts[view] = (
-                sub["winner_wavelength"]
+                sub["point_estimate_winner_wavelength"]
                 .value_counts()
                 .sort_index()
                 .to_dict()
@@ -487,13 +494,17 @@ def main() -> None:
             {
                 "shot_noise_scale": float(shot_noise_scale),
                 "seed_count": int(group["seed"].nunique()),
-                "winner_wavelengths": sorted(group["winner_wavelength"].unique().tolist()),
+                "point_estimate_winner_wavelengths": sorted(
+                    group["point_estimate_winner_wavelength"].unique().tolist()
+                ),
                 "winner_families": sorted(group["winner_family_id"].unique().tolist()),
                 "bands_404": sorted(group["band_404"].unique().tolist()),
                 "bands_660": sorted(group["band_660"].unique().tolist()),
-                "fixed_660_gold_winner_wavelength_vote_counts": str(vote_counts["fixed_660_gold"]),
-                "per_wavelength_gold_winner_wavelength_vote_counts": str(vote_counts["per_wavelength_gold"]),
-                "views_disagree_on_winner_wavelength_any_seed": bool(group["views_disagree_on_winner_wavelength"].any()),
+                "fixed_660_gold_point_estimate_winner_wavelength_vote_counts": str(vote_counts["fixed_660_gold"]),
+                "per_wavelength_gold_point_estimate_winner_wavelength_vote_counts": str(vote_counts["per_wavelength_gold"]),
+                "views_disagree_on_point_estimate_winner_wavelength_any_seed": bool(
+                    group["views_disagree_on_point_estimate_winner_wavelength"].any()
+                ),
             }
         )
     summary_df = pd.DataFrame(summary_rows)

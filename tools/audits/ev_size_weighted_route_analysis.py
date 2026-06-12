@@ -125,8 +125,18 @@ def _with_route_diameter_balanced_prior_weights(
     return weighted
 
 
-def aggregate_routes(df: pd.DataFrame, priors: dict[str, dict[int, float]]) -> pd.DataFrame:
+def aggregate_routes(
+    df: pd.DataFrame,
+    priors: dict[str, dict[int, float]],
+    *,
+    final_score_column: str = "final_engineering_score",
+) -> pd.DataFrame:
     df = _with_parallel_detection_lenses(df)
+    final_score_output_suffix = (
+        "final"
+        if final_score_column == "final_engineering_score"
+        else final_score_column
+    )
     out = (
         df.groupby(ROUTE_COLUMNS)
         .agg(
@@ -166,7 +176,12 @@ def aggregate_routes(df: pd.DataFrame, priors: dict[str, dict[int, float]]) -> p
                 "mean",
             ),
             raw_mean_stable=("stable_detection_rate", "mean"),
-            raw_mean_final=("final_engineering_score", "mean"),
+            **{
+                f"raw_mean_{final_score_output_suffix}": (
+                    final_score_column,
+                    "mean",
+                )
+            },
         )
         .reset_index()
     )
@@ -210,8 +225,8 @@ def aggregate_routes(df: pd.DataFrame, priors: dict[str, dict[int, float]]) -> p
                         f"{prior_name}_weighted_stable": (
                             x["stable_detection_rate"] * x["weight"]
                         ).sum(),
-                        f"{prior_name}_weighted_final": (
-                            x["final_engineering_score"] * x["weight"]
+                        f"{prior_name}_weighted_{final_score_output_suffix}": (
+                            x[final_score_column] * x["weight"]
                         ).sum(),
                         f"{prior_name}_weighted_strict_pass": (
                             x["strict_ok"].astype(float) * x["weight"]

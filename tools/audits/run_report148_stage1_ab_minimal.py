@@ -49,11 +49,14 @@ EV_SUBSET_DIAMETERS_NM = (60, 80, 100, 120, 140, 160)
 GOLD_ANCHOR_DIAMETERS_NM = (20, 40, 60)
 PRIOR_NAME = "sharp_msc_sev_empirical"
 READOUT_POLICY = "R2_absolute"
-GAUGE_MODES = ("V1_gauge_locked", "V2_raw_angular")
+V2_GAUGE_MODE = "V2_raw_angular_explicit_norm_sample"
+GAUGE_MODES = ("V1_gauge_locked", V2_GAUGE_MODE)
 RAW_REFERENCE_NORMALIZATION_MODE = "rho_g_reference_amplitude"
 RAW_SCATTERING_NORMALIZATION_MODE = "per_case_au20_sca_baseline"
 NOISE_POLICY = "common_noise_control"
 CLAIM_LEVEL = "candidate_families_under_detector_surrogates"
+STAGE1_RANK_SCORE_COLUMN = "stage1_tiebreak_margin_z"
+STAGE1_RANK_SCORE_DEFINITION = "selected_detection, stable_rate, mean_peak_margin_z"
 ROUTE_SCOPE_LABELS = {
     "A_hybrid": "A",
     "B_roi_intensity": "B",
@@ -62,7 +65,7 @@ ROUTE_SCOPE_LABELS = {
 }
 GAUGE_SCOPE_LABELS = {
     "V1_gauge_locked": "V1",
-    "V2_raw_angular": "V2",
+    V2_GAUGE_MODE: "V2",
 }
 
 
@@ -352,7 +355,7 @@ def _build_v2_view_payload_overrides(
             "raw_scattering_normalization_mode": RAW_SCATTERING_NORMALIZATION_MODE,
             "n_ref_raw": float(ref_norm),
             "n_sca_raw": float(sca_norm),
-            "gauge_mode_status": "v2_raw_angular_case_override",
+            "gauge_mode_status": "v2_raw_angular_explicit_norm_sample_case_override",
             "v2_cross_raw_detector_integrated": float(cross_norm),
             "v2_self_roi_raw_detector": float(self_roi_raw_norm),
             "v2_reference_collapsed_raw_normalized_abs": float(abs(ref_collapsed_norm)),
@@ -432,7 +435,7 @@ def _run_case_task(task: CaseTask) -> list[dict[str, Any]]:
                 cfg=cfg,
                 optical_template=optical_template_for_lane,
             )
-        if task.gauge_mode == "V2_raw_angular":
+        if task.gauge_mode == V2_GAUGE_MODE:
             view_payload_overrides[normalization_view] = _build_v2_view_payload_overrides(
                 particle=particle,
                 medium=medium,
@@ -457,6 +460,7 @@ def _run_case_task(task: CaseTask) -> list[dict[str, Any]]:
         signed_view_configs = {
             name: replace(
                 cfg,
+                readout_model="raw",
                 readout_observable_mode="in_phase",
                 pulse_detection_mode="positive",
             )
@@ -536,10 +540,20 @@ def _run_case_task(task: CaseTask) -> list[dict[str, Any]]:
                     if task.detector_route_id == "D_cross_only"
                     else float("nan")
                 ),
+                "absolute_cross_route_fixture": (
+                    "lockin_surrogate_absolute_pipeline_consistency_diagnostic"
+                    if task.detector_route_id == "D_cross_only"
+                    else "not_applicable"
+                ),
                 "absolute_cross_route_detection_rate_wilson_lb": (
                     float(summary["detection_rate_wilson_lb"])
                     if task.detector_route_id == "D_cross_only"
                     else float("nan")
+                ),
+                "signed_polarity_fixture": (
+                    "raw_in_phase_positive_truth"
+                    if signed_summary is not None
+                    else "not_applicable"
                 ),
                 "signed_cross_route_detection_rate": (
                     float(signed_summary["detection_rate"])
@@ -569,7 +583,8 @@ def _run_case_task(task: CaseTask) -> list[dict[str, Any]]:
                     and str(summary.get("rho_physical_envelope_status")) == "within_envelope"
                 ),
                 "all_crossing_detection_rate": float(summary["all_crossing_detection_rate"]),
-                "final_engineering_score": float(summary["mean_peak_margin_z"]),
+                STAGE1_RANK_SCORE_COLUMN: float(summary["mean_peak_margin_z"]),
+                "stage1_rank_score_definition": STAGE1_RANK_SCORE_DEFINITION,
                 "reference_model": str(reference.get("reference_model") or cfg.reference_model),
                 "reference_route": str(reference.get("reference_route") or cfg.reference_route),
                 "interference_overlap_mode": str(reference.get("interference_overlap_mode")),
@@ -609,7 +624,11 @@ def _run_case_task(task: CaseTask) -> list[dict[str, Any]]:
 def _rank_routes_for_group(group: pd.DataFrame) -> pd.DataFrame:
     diameters = sorted(pd.to_numeric(group["particle_diameter_nm"], errors="coerce").dropna().astype(int).unique().tolist())
     priors = route_analysis.build_priors(diameters)
-    routes = route_analysis.aggregate_routes(group, {PRIOR_NAME: priors[PRIOR_NAME]})
+    routes = route_analysis.aggregate_routes(
+        group,
+        {PRIOR_NAME: priors[PRIOR_NAME]},
+        final_score_column=STAGE1_RANK_SCORE_COLUMN,
+    )
     family_lookup = (
         group[
             ["wavelength_nm", "width_nm", "depth_nm", "route_family_id", "route_family_note"]
@@ -624,7 +643,7 @@ def _rank_routes_for_group(group: pd.DataFrame) -> pd.DataFrame:
     )
     selected_col = f"{PRIOR_NAME}_weighted_selected_annulus_detection"
     stable_col = f"{PRIOR_NAME}_weighted_stable"
-    final_col = f"{PRIOR_NAME}_weighted_final"
+    final_col = f"{PRIOR_NAME}_weighted_{STAGE1_RANK_SCORE_COLUMN}"
     mask = routes["selected_annulus_lens_available"].astype(bool) & routes["reference_operating_band"].astype(str).eq(
         route_analysis.REFERENCE_USEFUL_BAND
     )
@@ -696,7 +715,7 @@ def _build_flip_summaries(
             "selected_annulus_rank",
             f"{PRIOR_NAME}_weighted_selected_annulus_detection",
             f"{PRIOR_NAME}_weighted_stable",
-            f"{PRIOR_NAME}_weighted_final",
+            f"{PRIOR_NAME}_weighted_{STAGE1_RANK_SCORE_COLUMN}",
         ]
     ].copy()
     case_df = case_df.merge(
@@ -757,14 +776,20 @@ def _build_flip_summaries(
                 "fixed_660_gold_selected_route_404": f"{int(fixed_404['wavelength_nm'])}/{int(fixed_404['width_nm'])}x{int(fixed_404['depth_nm'])}",
                 "fixed_660_gold_selected_family_id_660": fixed_660["route_family_id"],
                 "fixed_660_gold_selected_route_660": f"{int(fixed_660['wavelength_nm'])}/{int(fixed_660['width_nm'])}x{int(fixed_660['depth_nm'])}",
-                "fixed_660_gold_winner_wavelength": int(fixed_winner["wavelength_nm"]),
+                "fixed_660_gold_point_estimate_winner_wavelength": int(fixed_winner["wavelength_nm"]),
+                "fixed_660_gold_wilson_separation_status": "overlap",
+                "fixed_660_gold_winner_claim_allowed": False,
+                "fixed_660_gold_candidate_family_retained": True,
                 "fixed_660_gold_winner_family_id": fixed_winner["route_family_id"],
                 "fixed_660_gold_winner_route": f"{int(fixed_winner['wavelength_nm'])}/{int(fixed_winner['width_nm'])}x{int(fixed_winner['depth_nm'])}",
                 "per_wavelength_gold_selected_family_id_404": per_404["route_family_id"],
                 "per_wavelength_gold_selected_route_404": f"{int(per_404['wavelength_nm'])}/{int(per_404['width_nm'])}x{int(per_404['depth_nm'])}",
                 "per_wavelength_gold_selected_family_id_660": per_660["route_family_id"],
                 "per_wavelength_gold_selected_route_660": f"{int(per_660['wavelength_nm'])}/{int(per_660['width_nm'])}x{int(per_660['depth_nm'])}",
-                "per_wavelength_gold_winner_wavelength": int(per_winner["wavelength_nm"]),
+                "per_wavelength_gold_point_estimate_winner_wavelength": int(per_winner["wavelength_nm"]),
+                "per_wavelength_gold_wilson_separation_status": "overlap",
+                "per_wavelength_gold_winner_claim_allowed": False,
+                "per_wavelength_gold_candidate_family_retained": True,
                 "per_wavelength_gold_winner_family_id": per_winner["route_family_id"],
                 "per_wavelength_gold_winner_route": f"{int(per_winner['wavelength_nm'])}/{int(per_winner['width_nm'])}x{int(per_winner['depth_nm'])}",
                 "detector_route_flip_flag_404_660": _detector_route_flip_flag_404_660(
@@ -823,14 +848,20 @@ def _build_flip_summaries(
                 "A_hybrid_selected_route_404": f"{int(a_404['wavelength_nm'])}/{int(a_404['width_nm'])}x{int(a_404['depth_nm'])}",
                 "A_hybrid_selected_family_id_660": a_660["route_family_id"],
                 "A_hybrid_selected_route_660": f"{int(a_660['wavelength_nm'])}/{int(a_660['width_nm'])}x{int(a_660['depth_nm'])}",
-                "A_hybrid_winner_wavelength": int(a_winner["wavelength_nm"]),
+                "A_hybrid_point_estimate_winner_wavelength": int(a_winner["wavelength_nm"]),
+                "A_hybrid_wilson_separation_status": "overlap",
+                "A_hybrid_winner_claim_allowed": False,
+                "A_hybrid_candidate_family_retained": True,
                 "A_hybrid_winner_family_id": a_winner["route_family_id"],
                 "A_hybrid_winner_route": f"{int(a_winner['wavelength_nm'])}/{int(a_winner['width_nm'])}x{int(a_winner['depth_nm'])}",
                 "B_roi_intensity_selected_family_id_404": b_404["route_family_id"],
                 "B_roi_intensity_selected_route_404": f"{int(b_404['wavelength_nm'])}/{int(b_404['width_nm'])}x{int(b_404['depth_nm'])}",
                 "B_roi_intensity_selected_family_id_660": b_660["route_family_id"],
                 "B_roi_intensity_selected_route_660": f"{int(b_660['wavelength_nm'])}/{int(b_660['width_nm'])}x{int(b_660['depth_nm'])}",
-                "B_roi_intensity_winner_wavelength": int(b_winner["wavelength_nm"]),
+                "B_roi_intensity_point_estimate_winner_wavelength": int(b_winner["wavelength_nm"]),
+                "B_roi_intensity_wilson_separation_status": "overlap",
+                "B_roi_intensity_winner_claim_allowed": False,
+                "B_roi_intensity_candidate_family_retained": True,
                 "B_roi_intensity_winner_family_id": b_winner["route_family_id"],
                 "B_roi_intensity_winner_route": f"{int(b_winner['wavelength_nm'])}/{int(b_winner['width_nm'])}x{int(b_winner['depth_nm'])}",
                 "detector_route_rank_stability_class": (
@@ -853,15 +884,15 @@ def _build_flip_summaries(
         required = {
             ("V1_gauge_locked", 404),
             ("V1_gauge_locked", 660),
-            ("V2_raw_angular", 404),
-            ("V2_raw_angular", 660),
+            (V2_GAUGE_MODE, 404),
+            (V2_GAUGE_MODE, 660),
         }
         if set(winners) != required:
             continue
         v1_404 = winners[("V1_gauge_locked", 404)]
         v1_660 = winners[("V1_gauge_locked", 660)]
-        v2_404 = winners[("V2_raw_angular", 404)]
-        v2_660 = winners[("V2_raw_angular", 660)]
+        v2_404 = winners[(V2_GAUGE_MODE, 404)]
+        v2_660 = winners[(V2_GAUGE_MODE, 660)]
         v1_winner = (
             v1_404
             if v1_404[f"{PRIOR_NAME}_weighted_selected_annulus_detection"]
@@ -889,14 +920,20 @@ def _build_flip_summaries(
                 "V1_selected_route_404": f"{int(v1_404['wavelength_nm'])}/{int(v1_404['width_nm'])}x{int(v1_404['depth_nm'])}",
                 "V1_selected_family_id_660": v1_660["route_family_id"],
                 "V1_selected_route_660": f"{int(v1_660['wavelength_nm'])}/{int(v1_660['width_nm'])}x{int(v1_660['depth_nm'])}",
-                "V1_winner_wavelength": int(v1_winner["wavelength_nm"]),
+                "V1_point_estimate_winner_wavelength": int(v1_winner["wavelength_nm"]),
+                "V1_wilson_separation_status": "overlap",
+                "V1_winner_claim_allowed": False,
+                "V1_candidate_family_retained": True,
                 "V1_winner_family_id": v1_winner["route_family_id"],
                 "V1_winner_route": f"{int(v1_winner['wavelength_nm'])}/{int(v1_winner['width_nm'])}x{int(v1_winner['depth_nm'])}",
                 "V2_selected_family_id_404": v2_404["route_family_id"],
                 "V2_selected_route_404": f"{int(v2_404['wavelength_nm'])}/{int(v2_404['width_nm'])}x{int(v2_404['depth_nm'])}",
                 "V2_selected_family_id_660": v2_660["route_family_id"],
                 "V2_selected_route_660": f"{int(v2_660['wavelength_nm'])}/{int(v2_660['width_nm'])}x{int(v2_660['depth_nm'])}",
-                "V2_winner_wavelength": int(v2_winner["wavelength_nm"]),
+                "V2_point_estimate_winner_wavelength": int(v2_winner["wavelength_nm"]),
+                "V2_wilson_separation_status": "overlap",
+                "V2_winner_claim_allowed": False,
+                "V2_candidate_family_retained": True,
                 "V2_winner_family_id": v2_winner["route_family_id"],
                 "V2_winner_route": f"{int(v2_winner['wavelength_nm'])}/{int(v2_winner['width_nm'])}x{int(v2_winner['depth_nm'])}",
                 "gauge_route_flip_flag_404_660": changed,
@@ -998,8 +1035,10 @@ def _gold_anchor_diagnostic(case_df: pd.DataFrame) -> pd.DataFrame:
         "detection_rate_wilson_lb",
         "stable_detection_rate_wilson_lb",
         "mean_peak_margin_z",
+        "absolute_cross_route_fixture",
         "absolute_cross_route_detection_rate",
         "absolute_cross_route_detection_rate_wilson_lb",
+        "signed_polarity_fixture",
         "signed_cross_route_detection_rate",
         "signed_cross_route_stable_detection_rate",
         "signed_cross_route_detection_rate_wilson_lb",
@@ -1025,7 +1064,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--gauge-modes",
-        default="V1_gauge_locked,V2_raw_angular",
+        default=f"V1_gauge_locked,{V2_GAUGE_MODE}",
         help="Comma-separated gauge modes to run.",
     )
     return parser.parse_args()
@@ -1123,8 +1162,13 @@ def main() -> None:
         "workers": int(args.workers),
         "readout_policies": [READOUT_POLICY],
         "gauge_modes": list(gauge_modes),
+        "raw_reference_normalization_mode": RAW_REFERENCE_NORMALIZATION_MODE,
+        "raw_scattering_normalization_mode": RAW_SCATTERING_NORMALIZATION_MODE,
+        "c_d_v2_coverage": "missing",
+        "gauge_scope": "A/B only; explicit ref/sca normalization present",
         "route_scope": list(detector_route_ids),
         "run_scope_statement": run_scope_statement,
+        "stage1_rank_score_definition": STAGE1_RANK_SCORE_DEFINITION,
         "detector_route_models": [
             {
                 "detector_route_id": route_id,

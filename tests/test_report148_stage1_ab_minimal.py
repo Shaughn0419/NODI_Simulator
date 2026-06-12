@@ -1,17 +1,22 @@
 from __future__ import annotations
 
-import math
 from dataclasses import replace
+import math
+from pathlib import Path
 from typing import cast
 
 from dashboard.config import medium_for_particle, particle_from_name
 from tools.audits.run_report148_stage1_ab_minimal import (
     RAW_REFERENCE_NORMALIZATION_MODE,
     RAW_SCATTERING_NORMALIZATION_MODE,
+    STAGE1_RANK_SCORE_COLUMN,
+    STAGE1_RANK_SCORE_DEFINITION,
+    V2_GAUGE_MODE,
     _build_route_cfg,
     _build_v2_view_payload_overrides,
     _detector_route_flip_flag_404_660,
     _event_accounting,
+    _rank_routes_for_group,
     _run_scope_statement,
     _seed_coverage_rows,
     default_route_panel,
@@ -22,6 +27,7 @@ from tools.lens_b_ev_gold_fullgrid_runner import _fixed_660_e_sca_ref, build_fro
 
 
 def test_v2_view_payload_overrides_expose_raw_norm_provenance_and_finite_scales() -> None:
+    assert V2_GAUGE_MODE == "V2_raw_angular_explicit_norm_sample"
     route = default_route_panel()[0]
     particle = particle_from_name("exosome_biomimetic_corona_nominal_100nm")
     medium = medium_for_particle(particle)
@@ -83,7 +89,7 @@ def test_run_scope_statement_reports_only_requested_cells() -> None:
     assert (
         _run_scope_statement(
             ("A_hybrid", "B_roi_intensity"),
-            ("V1_gauge_locked", "V2_raw_angular"),
+            ("V1_gauge_locked", V2_GAUGE_MODE),
         )
         == "A/B: V1+V2; R2 only"
     )
@@ -133,3 +139,75 @@ def test_seed_coverage_rows_exposes_complete_and_missing_cells() -> None:
     assert coverage.loc["A_hybrid", "seed_coverage_status"] == "complete"
     assert coverage.loc["C_collapsed_coherent", "seed_coverage_status"] == "incomplete"
     assert coverage.loc["C_collapsed_coherent", "missing_seeds"] == "33"
+
+
+def test_stage1_ranking_uses_explicit_tiebreak_margin_not_final_engineering_score() -> None:
+    frame = pd.DataFrame(
+        [
+            {
+                "particle_family": "EV_sEV",
+                "particle_diameter_nm": 80,
+                "wavelength_nm": 404,
+                "width_nm": 500,
+                "depth_nm": 700,
+                "route_family_id": "lambda404_w500_middeep",
+                "route_family_note": "404 family",
+                "detection_rate": 0.4,
+                "all_crossing_detection_rate": 0.4,
+                "stable_detection_rate": 0.4,
+                "selected_detector_mode_annulus_detection_rate": 0.8,
+                "selected_detector_mode_annulus_fraction": 0.5,
+                "selected_detector_mode_annulus_contribution": 0.5,
+                "selected_detector_mode_annulus_uplift": 1.0,
+                "reference_operating_band": "electronics_noise_limited_useful",
+                "strict_ok": True,
+                STAGE1_RANK_SCORE_COLUMN: 2.0,
+            },
+            {
+                "particle_family": "EV_sEV",
+                "particle_diameter_nm": 80,
+                "wavelength_nm": 660,
+                "width_nm": 800,
+                "depth_nm": 900,
+                "route_family_id": "lambda660_w800_middeep",
+                "route_family_note": "660 family",
+                "detection_rate": 0.3,
+                "all_crossing_detection_rate": 0.3,
+                "stable_detection_rate": 0.3,
+                "selected_detector_mode_annulus_detection_rate": 0.7,
+                "selected_detector_mode_annulus_fraction": 0.5,
+                "selected_detector_mode_annulus_contribution": 0.5,
+                "selected_detector_mode_annulus_uplift": 1.0,
+                "reference_operating_band": "electronics_noise_limited_useful",
+                "strict_ok": True,
+                STAGE1_RANK_SCORE_COLUMN: 1.0,
+            },
+        ]
+    )
+
+    ranked = _rank_routes_for_group(frame)
+
+    assert f"sharp_msc_sev_empirical_weighted_{STAGE1_RANK_SCORE_COLUMN}" in ranked.columns
+    assert "sharp_msc_sev_empirical_weighted_final" not in ranked.columns
+    assert ranked.iloc[0]["route_family_id"] == "lambda404_w500_middeep"
+    assert STAGE1_RANK_SCORE_DEFINITION == "selected_detection, stable_rate, mean_peak_margin_z"
+
+
+def test_report148_audit_scripts_do_not_emit_bare_winner_or_final_score_fields() -> None:
+    project_root = Path(__file__).resolve().parents[1]
+    for relpath in (
+        "tools/audits/run_report148_stage1_ab_minimal.py",
+        "tools/audits/run_report148_t3_noise_axis.py",
+        "tools/audits/run_report148_t4_ac_ri.py",
+    ):
+        text = (project_root / relpath).read_text(encoding="utf-8")
+        assert '"winner_wavelength"' not in text
+        assert '"final_engineering_score"' not in text
+        assert '"V2_raw_angular"' not in text
+    stage1_text = (
+        project_root / "tools/audits/run_report148_stage1_ab_minimal.py"
+    ).read_text(encoding="utf-8")
+    assert 'readout_model="raw"' in stage1_text
+    assert '"signed_polarity_fixture"' in stage1_text
+    assert "raw_in_phase_positive_truth" in stage1_text
+    assert "lockin_surrogate_absolute_pipeline_consistency_diagnostic" in stage1_text
