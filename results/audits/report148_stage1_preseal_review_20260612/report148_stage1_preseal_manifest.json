@@ -1,0 +1,123 @@
+{
+  "claim_level": "candidate_families_under_detector_surrogates",
+  "combined_event_accounting": {
+    "case_row_count": 3240,
+    "case_row_events": 6480000,
+    "distinct_physical_events": 3240000
+  },
+  "coverage_gaps": [
+    "C/D x V2 under R2",
+    "all R1 cells"
+  ],
+  "narrowed_no_data_gate_met": true,
+  "full_route_readout_gauge_closure_met": false,
+  "full_route_readout_gauge_closure_status": "not_met_r1_and_c_d_v2_deferred_out_of_no_data_scope",
+  "point_estimate_winner_wavelength_scope": "candidate-family point estimate under detector surrogate; not detector-resolved, not an absolute wavelength winner, and not a calibrated physical/biological claim",
+  "gauge_definitions_changed": false,
+  "generated_at": "2026-06-12",
+  "generation_kind": "analysis_only_from_existing_artifacts_no_simulation",
+  "out_of_scope_cells": [
+    {
+      "deferred_status": "deferred_out_of_no_data_sealing_scope",
+      "detector_route_id": "A_hybrid",
+      "gauge_mode": "V1_gauge_locked",
+      "readout_policy": "R1_signed_positive",
+      "reason": "r1_assumed_invariant_untested"
+    },
+    {
+      "deferred_status": "deferred_out_of_no_data_sealing_scope",
+      "detector_route_id": "A_hybrid",
+      "gauge_mode": "V2_raw_angular_explicit_norm_sample",
+      "readout_policy": "R1_signed_positive",
+      "reason": "r1_assumed_invariant_untested"
+    },
+    {
+      "deferred_status": "deferred_out_of_no_data_sealing_scope",
+      "detector_route_id": "B_roi_intensity",
+      "gauge_mode": "V1_gauge_locked",
+      "readout_policy": "R1_signed_positive",
+      "reason": "r1_assumed_invariant_untested"
+    },
+    {
+      "deferred_status": "deferred_out_of_no_data_sealing_scope",
+      "detector_route_id": "B_roi_intensity",
+      "gauge_mode": "V2_raw_angular_explicit_norm_sample",
+      "readout_policy": "R1_signed_positive",
+      "reason": "r1_assumed_invariant_untested"
+    },
+    {
+      "deferred_status": "deferred_out_of_no_data_sealing_scope",
+      "detector_route_id": "C_collapsed_coherent",
+      "gauge_mode": "V1_gauge_locked",
+      "readout_policy": "R1_signed_positive",
+      "reason": "r1_assumed_invariant_untested"
+    },
+    {
+      "deferred_status": "deferred_out_of_no_data_sealing_scope",
+      "detector_route_id": "C_collapsed_coherent",
+      "gauge_mode": "V2_raw_angular_explicit_norm_sample",
+      "readout_policy": "R1_signed_positive",
+      "reason": "r1_assumed_invariant_untested"
+    },
+    {
+      "deferred_status": "deferred_out_of_no_data_sealing_scope",
+      "detector_route_id": "D_cross_only",
+      "gauge_mode": "V1_gauge_locked",
+      "readout_policy": "R1_signed_positive",
+      "reason": "r1_assumed_invariant_untested"
+    },
+    {
+      "deferred_status": "deferred_out_of_no_data_sealing_scope",
+      "detector_route_id": "D_cross_only",
+      "gauge_mode": "V2_raw_angular_explicit_norm_sample",
+      "readout_policy": "R1_signed_positive",
+      "reason": "r1_assumed_invariant_untested"
+    },
+    {
+      "deferred_status": "deferred_out_of_no_data_sealing_scope",
+      "detector_route_id": "C_collapsed_coherent",
+      "gauge_mode": "V2_raw_angular_explicit_norm_sample",
+      "readout_policy": "R2_absolute",
+      "reason": "cd_v2_represented_by_ab_sample"
+    },
+    {
+      "deferred_status": "deferred_out_of_no_data_sealing_scope",
+      "detector_route_id": "D_cross_only",
+      "gauge_mode": "V2_raw_angular_explicit_norm_sample",
+      "readout_policy": "R2_absolute",
+      "reason": "cd_v2_represented_by_ab_sample"
+    }
+  ],
+  "readout_policy_physics_changed": false,
+  "sealing_gate_scope": "no-data narrowed gate: R2/V1 A/B/C/D all 3-seed primary decision + A/B V2_raw_angular_explicit_norm_sample gauge-sampling check; R1 and C/D x V2 are deferred out of the no-data sealing scope and routed to the simulation-completable / measurement-priority handoff list",
+  "sealing_gate_status": "met_under_narrowed_no_data_scope",
+  "simulation_rerun_performed": false,
+  "source_artifacts": [
+    {
+      "path": "results/audits/report148_stage1_ab_v1v2_20260611/report148_stage1_manifest.json",
+      "sha256": "5c17dd067c65c034e71140699b3db97851dc14f54b92f5a0aae10b171dc6c390"
+    },
+    {
+      "path": "results/audits/report148_stage1_ab_v1v2_20260611/report148_stage1_view_flip_by_seed.csv",
+      "sha256": "208c19fd57780936a7e0fe8037d6603f1c65d3ba1e2bc15f71853f4aeacf7a59"
+    },
+    {
+      "path": "results/audits/report148_stage1_cd_v1_20260611/report148_stage1_manifest.json",
+      "sha256": "8fce40d715662467e3f1943779aa91c5ec46e9e1fda710dff6f4b82712ae9524"
+    },
+    {
+      "path": "results/audits/report148_stage1_cd_v1_20260611/report148_stage1_view_flip_by_seed.csv",
+      "sha256": "1460d80c239cbc70d177d5ca407012ed72456be592e2edd87a62bb3c561ecadc"
+    },
+    {
+      "path": "results/audits/report148_t4_resolution_10000e_20260611/report148_t4_resolution_winner_rows.csv",
+      "sha256": "a53b2daa2c48ddc592680f2db0bb8b77bf6e851e6cfc679721524dd69d53c772"
+    },
+    {
+      "path": "results/audits/report148_t4_resolution_10000e_20260611/report148_t4_resolution_summary.csv",
+      "sha256": "f65359380325faa04354266b38f61ac18e96ca2a19faf378b2ec2c99a61729e7"
+    }
+  ],
+  "source_summary_sha256": "f7455efd4c4a48c817f9078a19f40b24668ac433ba7673a6352f35af55309d2c",
+  "stage1_evidence_scope_statement": "A/B: V1+V2; C/D: V1 only; R2 only"
+}

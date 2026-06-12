@@ -8634,6 +8634,11 @@ class TestBatchSummaryAndEngineeringScore:
         assert gate["engineering_gate_failed_count"] == 5
         assert "n_detected<6" in gate["engineering_gate_reason"]
         assert "detection_rate<0.20" in gate["engineering_gate_reason"]
+        assert gate["engineering_gate_claim_scope"] == "candidate_family_proxy_only"
+        assert gate["candidate_family_claim_allowed"] is True
+        assert gate["detector_resolved_claim_allowed"] is False
+        assert gate["absolute_snr_lod_claim_allowed"] is False
+        assert gate["biological_specificity_claim_allowed"] is False
 
     def test_engineering_gate_uses_hybrid_detected_requirement(self):
         cfg = SimulationConfig(

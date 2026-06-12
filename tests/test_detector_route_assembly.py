@@ -223,6 +223,12 @@ def test_a_hybrid_matches_production_signal_trace_for_both_overlap_modes(
         retain_event_traces=True,
         stream_summary_only=False,
     )
+    summary = result["summary"]
+    assert summary["non_default_detector_routes_require_vectorized_event_engine_off"] is True
+    assert (
+        summary["detector_route_slow_path_guard_status"]
+        == "not_required_for_default_a_hybrid_route"
+    )
     event = result["events"][0]
     joint = np.asarray(event["interference_cross_term_joint"], dtype=float)
     collapsed = np.asarray(event["interference_cross_term_collapsed"], dtype=float)

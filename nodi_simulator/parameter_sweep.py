@@ -6680,10 +6680,10 @@ def run_single_case_batch(
     """
     # 1. Validate
     validate_simulation_config(sim_cfg, optical)
-    if (
+    non_default_detector_route = (
         str(getattr(sim_cfg, "detector_route_id", "A_hybrid")) != "A_hybrid"
-        and str(sim_cfg.vectorized_event_engine) != "off"
-    ):
+    )
+    if non_default_detector_route and str(sim_cfg.vectorized_event_engine) != "off":
         raise ValueError(
             "detector routes beyond A_hybrid currently require "
             "vectorized_event_engine='off' so full diagnostics are available"
@@ -7262,6 +7262,12 @@ def run_single_case_batch(
             "event_block_rng_order": sim_cfg.event_block_rng_order,
             "vectorized_event_engine_used": vectorized_engine_used,
             "vectorized_event_engine_fallback_reason": vectorized_fallback_reason,
+            "non_default_detector_routes_require_vectorized_event_engine_off": True,
+            "detector_route_slow_path_guard_status": (
+                "required_for_non_default_detector_routes"
+                if non_default_detector_route
+                else "not_required_for_default_a_hybrid_route"
+            ),
             "vectorized_event_rng_order": (
                 _vectorized_event_rng_order_label(
                     sim_cfg,
@@ -10259,6 +10265,11 @@ def evaluate_engineering_gate(
         "engineering_gate_basis": basis_metrics["basis"],
         "engineering_gate_failed_count": len(failures),
         "engineering_gate_reason": reason,
+        "engineering_gate_claim_scope": "candidate_family_proxy_only",
+        "candidate_family_claim_allowed": True,
+        "detector_resolved_claim_allowed": False,
+        "absolute_snr_lod_claim_allowed": False,
+        "biological_specificity_claim_allowed": False,
         "engineering_gate_required_detected_events": required_detected,
         "engineering_gate_detected_fraction_lb": detection_rate_lb,
         "engineering_gate_stable_detection_rate_lb": stable_rate,
