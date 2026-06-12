@@ -791,8 +791,8 @@
     }
   ],
   "calibrated_claim_allowed": false,
-  "generated_at": "2026-06-12T05:42:43+00:00",
-  "git_commit": "df3b0e9fce461624bf9aa86ce73e97d856fe1921",
+  "generated_at": "2026-06-12T06:59:18+00:00",
+  "git_commit": "4137ab54e4f2d512e61a6ebc45bb6f985d47b8e5",
   "git_dirty": true,
   "hashes_manifest_path": "REVIEW_PACKAGE_HASHES.sha256",
   "hashes_manifest_sha256": "ee3b51073d7991b26ef81ea6c562df61ed1b6e0526f997cd47b3d0437843b89a",
