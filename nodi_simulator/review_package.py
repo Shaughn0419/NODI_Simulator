@@ -505,8 +505,12 @@ def build_review_manifests(
     return build_manifest, release_manifest
 
 
-def write_review_manifests(project_root: Path = PROJECT_ROOT) -> tuple[Path, Path, Path]:
-    generate_paper_provenance(project_root)
+def write_review_manifests(
+    project_root: Path = PROJECT_ROOT,
+    *,
+    external_bundle_mode: bool = False,
+) -> tuple[Path, Path, Path]:
+    generate_paper_provenance(project_root, external_bundle_mode=external_bundle_mode)
     write_forbidden_claims_lexicon(project_root)
     write_p1_governance_files(project_root)
     write_schema_docs(project_root)
@@ -599,6 +603,7 @@ def export_review_package(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     package_paths = sorted(
         {
+            "REVIEW_BUILD_MANIFEST.json",
             "REVIEW_PACKAGE_MANIFEST.json",
             "REVIEW_PACKAGE_HASHES.sha256",
             *iter_release_artifact_paths(manifest),
@@ -606,7 +611,7 @@ def export_review_package(
     )
     with zipfile.ZipFile(output_path, "w", compression=zipfile.ZIP_STORED) as archive:
         for relpath in package_paths:
-            if relpath.startswith("._") or "/._" in relpath or relpath == "REVIEW_BUILD_MANIFEST.json":
+            if relpath.startswith("._") or "/._" in relpath:
                 continue
             path = project_root / relpath
             if not path.is_file():

@@ -52,7 +52,14 @@ def git_dirty(project_root: Path = PROJECT_ROOT) -> bool:
 
 
 def git_tracked_paths(project_root: Path = PROJECT_ROOT) -> frozenset[str] | None:
-    output = _git_value(["ls-files"], project_root=project_root)
-    if output is None:
+    try:
+        result = subprocess.run(
+            ["git", "ls-files", "-z"],
+            cwd=project_root,
+            check=True,
+            capture_output=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
         return None
-    return frozenset(line for line in output.splitlines() if line)
+    output = result.stdout.decode("utf-8")
+    return frozenset(path for path in output.split("\0") if path)

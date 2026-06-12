@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import csv
 import re
 import unicodedata
 from collections.abc import Mapping
@@ -100,7 +101,23 @@ def validate_paper_overrides(payload: Mapping[str, Any]) -> None:
             )
 
 
-def generate_paper_provenance(project_root: Path = PROJECT_ROOT) -> list[Path]:
+def _validate_existing_paper_manifest(path: Path) -> None:
+    if not path.is_file():
+        raise ValueError(f"paper provenance manifest missing: {path}")
+    with path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        fieldnames = set(reader.fieldnames or [])
+        required = {"paper_id", "local_path", "sha256", "included_in_package"}
+        missing = sorted(required - fieldnames)
+        if missing:
+            raise ValueError(f"paper provenance manifest missing columns: {missing}")
+
+
+def generate_paper_provenance(
+    project_root: Path = PROJECT_ROOT,
+    *,
+    external_bundle_mode: bool = False,
+) -> list[Path]:
     provenance_dir = project_root / PAPER_PROVENANCE_DIR
     provenance_dir.mkdir(parents=True, exist_ok=True)
     overrides_path = ensure_paper_overrides(project_root)
@@ -134,6 +151,22 @@ def generate_paper_provenance(project_root: Path = PROJECT_ROOT) -> list[Path]:
             }
         )
         hash_lines.append(f"{digest}  {relpath}\n")
+
+    existing_manifest = provenance_dir / "paper_manifest.csv"
+    if external_bundle_mode and not rows and existing_manifest.is_file():
+        _validate_existing_paper_manifest(existing_manifest)
+        return [
+            path
+            for path in (
+                provenance_dir / "paper_manifest.csv",
+                provenance_dir / "paper_manifest_overrides.yaml",
+                provenance_dir / "paper_hashes.sha256",
+                provenance_dir / "paper_bibliography.bib",
+                provenance_dir / "paper_provenance_notes.md",
+                provenance_dir / "unavailable_or_not_packaged_papers.csv",
+            )
+            if path.exists()
+        ]
 
     unavailable_rows = list(overrides.get("unavailable_or_not_packaged_papers", []))
     packaged_ids = {row["paper_id"] for row in rows}

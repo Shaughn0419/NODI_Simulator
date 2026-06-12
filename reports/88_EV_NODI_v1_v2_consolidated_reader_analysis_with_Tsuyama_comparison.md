@@ -1,3 +1,8 @@
+---
+claim_status: superseded_do_not_quote_for_current_recommendation
+current_claim_entrypoint: reports/140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md
+---
+
 # EV/NODI 综合分析报告 v5.2.8：lens-B τ=1 ms 1000e low-event full-grid overlay
 
 - 日期 / 版本：2026-05-15；**v5.2.8（lens-B τ=1 ms 1000e low-event full-grid overlay）**

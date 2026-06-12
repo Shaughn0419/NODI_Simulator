@@ -45,3 +45,25 @@ def test_current_paper_provenance_has_expected_files() -> None:
     actual = {path.name for path in (root_path("papers/provenance")).iterdir() if path.is_file()}
 
     assert expected.issubset(actual)
+
+
+def test_external_bundle_mode_preserves_existing_paper_manifest_without_sources(tmp_path: Path) -> None:
+    provenance = tmp_path / "papers/provenance"
+    provenance.mkdir(parents=True)
+    manifest = provenance / "paper_manifest.csv"
+    original = (
+        "paper_id,title,authors,year,doi,local_path,sha256,included_in_package,"
+        "license_or_access_note,used_for_claim_area,metadata_source\n"
+        "paper_a,Example,A. Author,2024,10.000/example,papers/example.pdf,"
+        "abc123,true,local_reference_copy_not_relicensed,,manual_override\n"
+    )
+    manifest.write_text(original, encoding="utf-8")
+    (provenance / "paper_manifest_overrides.yaml").write_text(
+        '{"schema":"ev_nodi_paper_manifest_overrides_v1","papers":{}}\n',
+        encoding="utf-8",
+    )
+
+    paths = generate_paper_provenance(tmp_path, external_bundle_mode=True)
+
+    assert manifest in paths
+    assert manifest.read_text(encoding="utf-8") == original

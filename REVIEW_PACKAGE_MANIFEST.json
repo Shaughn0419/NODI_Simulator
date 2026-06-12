@@ -107,8 +107,8 @@
           "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
           "path_status": "exists",
           "role": "forbidden_claims_lexicon.yaml",
-          "sha256": "54bb17ca1008122bd35f9d63f3e8844e00a211b80bca981c966a97d5401f1582",
-          "size_bytes": 2354,
+          "sha256": "c7470e8492f52ff40395ce922058543ac3cd6191c21071474f3e2c0ea826ca11",
+          "size_bytes": 2483,
           "source_lane": "configs_realism_v2"
         },
         {
@@ -572,8 +572,8 @@
           "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
           "path_status": "exists",
           "role": "forbidden_claims_lexicon",
-          "sha256": "54bb17ca1008122bd35f9d63f3e8844e00a211b80bca981c966a97d5401f1582",
-          "size_bytes": 2354,
+          "sha256": "c7470e8492f52ff40395ce922058543ac3cd6191c21071474f3e2c0ea826ca11",
+          "size_bytes": 2483,
           "source_lane": "claim_language_lexicon"
         }
       ],
@@ -792,15 +792,15 @@
   ],
   "calibrated_claim_allowed": false,
   "deferred_p0b_roles": [],
-  "generated_at": "2026-06-11T19:02:06+00:00",
-  "git_commit": "0b3140cff35cd53c697be2d16f76ce30c0e7a8b6",
+  "generated_at": "2026-06-12T05:42:43+00:00",
+  "git_commit": "df3b0e9fce461624bf9aa86ce73e97d856fe1921",
   "git_dirty": true,
   "hashes_manifest_path": "REVIEW_PACKAGE_HASHES.sha256",
-  "hashes_manifest_sha256": "8854234a10819ee71c85d0a34195bc931f3760c1fff07130a220e4d00fb201d0",
-  "package_id": "ev_nodi_post_v2_review_package_20260611_p0b",
+  "hashes_manifest_sha256": "ee3b51073d7991b26ef81ea6c562df61ed1b6e0526f997cd47b3d0437843b89a",
+  "package_id": "ev_nodi_post_v2_review_package_20260612_p0b",
   "package_role": "external_review_relative_audit",
   "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
-  "python_version": "3.14.5",
+  "python_version": "3.13.13",
   "release_readiness": "p0_p0b_review_ready_relative_audit",
   "review_package_manifest_schema": "ev_nodi_review_package_manifest_v1",
   "v1_summary_mode": "existing_single_summary_csv"

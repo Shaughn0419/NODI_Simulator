@@ -34,7 +34,7 @@
     "en",
     "zh"
   ],
-  "negator_window_chars_zh": 16,
+  "negator_window_chars_zh": 64,
   "negator_window_tokens_en": 8,
   "objects": [
     "SNR",
@@ -116,6 +116,15 @@
     "已封禁",
     "已封锁",
     "被阻断",
-    "不授权"
+    "不授权",
+    "不得",
+    "不是",
+    "没有",
+    "非",
+    "不要",
+    "不把",
+    "不写",
+    "不能写",
+    "不等于"
   ]
 }

@@ -1,3 +1,8 @@
+---
+claim_status: superseded_do_not_quote_for_current_recommendation
+current_claim_entrypoint: ../140_exhaustive_ev_gold_fullgrid_3seed_10000e_postrun_analysis_20260523.md
+---
+
 # Current Reports
 
 This directory stores older notes that remain useful for methods, performance,

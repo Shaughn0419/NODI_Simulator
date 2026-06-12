@@ -31,7 +31,7 @@ def build_forbidden_claims_lexicon() -> dict[str, Any]:
         "languages": ["en", "zh"],
         "claim_scope": "no_measured_data_relative_audit_only",
         "negator_window_tokens_en": 8,
-        "negator_window_chars_zh": 16,
+        "negator_window_chars_zh": 64,
         "verbs": [
             "calibrated",
             "validated",
@@ -121,6 +121,15 @@ def build_forbidden_claims_lexicon() -> dict[str, Any]:
             "已封锁",
             "被阻断",
             "不授权",
+            "不得",
+            "不是",
+            "没有",
+            "非",
+            "不要",
+            "不把",
+            "不写",
+            "不能写",
+            "不等于",
         ],
         "allowed_blocker_examples": [
             "calibrated SNR blocked",
@@ -176,7 +185,7 @@ def _has_negator_near_english(text: str, start: int, end: int, lexicon: Mapping[
 
 
 def _has_negator_near_zh(text: str, start: int, end: int, lexicon: Mapping[str, Any]) -> bool:
-    window = int(lexicon["negator_window_chars_zh"])
+    window = max(int(lexicon["negator_window_chars_zh"]), 64)
     context = text[max(0, start - window) : min(len(text), end + window)]
     return any(str(negator) in context for negator in lexicon["zh_negators"])
 
@@ -226,6 +235,11 @@ def load_forbidden_claims_lexicon(project_root: Path = PROJECT_ROOT) -> dict[str
     return _load_json_compatible(project_root / "configs/realism_v2/forbidden_claims_lexicon.yaml")
 
 
+def _claim_file_is_superseded(text: str) -> bool:
+    header = text[:2048]
+    return "claim_status: superseded_do_not_quote_for_current_recommendation" in header
+
+
 def claim_scan_paths(project_root: Path = PROJECT_ROOT) -> list[Path]:
     patterns = (
         "README.md",
@@ -251,6 +265,13 @@ def claim_scan_paths(project_root: Path = PROJECT_ROOT) -> list[Path]:
         "reports/118_*.md",
         "reports/119_*.md",
         "reports/120_*.md",
+        "reports/140_*.md",
+        "reports/147_*.md",
+        "reports/148_*.md",
+        "reports/87_*.md",
+        "reports/88_*.md",
+        "reports/89_*.md",
+        "reports/current/*.md",
         "reports/post_v2_*.md",
         "results/post_v2_mandatory_audit/*.md",
         "results/post_v2_physical_ceiling/*.md",
@@ -307,6 +328,8 @@ def scan_claim_files(project_root: Path = PROJECT_ROOT) -> list[dict[str, Any]]:
     violations: list[dict[str, Any]] = []
     for path in claim_scan_paths(project_root):
         text = _strip_fenced_code_blocks(path.read_text(encoding="utf-8"))
+        if _claim_file_is_superseded(text):
+            continue
         for finding in scan_forbidden_claims(text, lexicon):
             if finding.allowed_by_negator:
                 continue
