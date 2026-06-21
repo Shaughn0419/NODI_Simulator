@@ -88,6 +88,17 @@ def test_csv_artifact_helpers_resolve_gzip_fallback(tmp_path):
     assert sha256_file(logical_path) == hashlib.sha256(content.encode("utf-8")).hexdigest()
 
 
+def test_read_csv_rows_accepts_large_accumulated_source_fields(tmp_path):
+    path = tmp_path / "large.csv"
+    large_field = ";".join(f"event_{index:06d}" for index in range(20000))
+
+    write_csv_rows(path, [{"source_event_rows": large_field, "count": 20000}])
+
+    assert read_csv_rows(path) == [
+        {"source_event_rows": large_field, "count": "20000"}
+    ]
+
+
 def test_write_run_manifest_writes_root_copy_only_when_requested(tmp_path):
     manifest = {"run_id": "example"}
     stage_manifest = tmp_path / "stage" / "run_manifest.json"

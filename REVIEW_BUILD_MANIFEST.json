@@ -791,12 +791,12 @@
     }
   ],
   "calibrated_claim_allowed": false,
-  "generated_at": "2026-06-12T06:59:18+00:00",
-  "git_commit": "4137ab54e4f2d512e61a6ebc45bb6f985d47b8e5",
+  "generated_at": "2026-06-21T13:39:14+00:00",
+  "git_commit": "62d9a4f4e7b2adaad961c74db41c6615ecb13b57",
   "git_dirty": true,
   "hashes_manifest_path": "REVIEW_PACKAGE_HASHES.sha256",
   "hashes_manifest_sha256": "ee3b51073d7991b26ef81ea6c562df61ed1b6e0526f997cd47b3d0437843b89a",
-  "package_id": "ev_nodi_post_v2_review_package_20260612_p0b",
+  "package_id": "ev_nodi_post_v2_review_package_20260621_p0b",
   "package_role": "internal_build_tracking",
   "release_manifest_path": "REVIEW_PACKAGE_MANIFEST.json",
   "review_build_manifest_schema": "ev_nodi_review_build_manifest_v1"

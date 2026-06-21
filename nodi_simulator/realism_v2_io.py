@@ -13,6 +13,9 @@ from pathlib import Path
 from typing import Any
 
 
+csv.field_size_limit(16 * 1024 * 1024)
+
+
 def resolve_artifact_path(path: str | Path) -> Path:
     """Resolve a logical artifact path, allowing a gzip-compressed twin."""
     artifact_path = Path(path)
