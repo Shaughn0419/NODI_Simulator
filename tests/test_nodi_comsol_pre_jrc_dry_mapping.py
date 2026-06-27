@@ -5,7 +5,13 @@ import sys
 from pathlib import Path
 
 from nodi_simulator.realism_v2_io import write_csv_rows
+from nodi_simulator.nodi_comsol_next_artifacts import (
+    COMSOL_V4_ASSUMPTION_SET_ID,
+    COMSOL_V4_SCOPE_OUT_OF_SCOPE_DRY_OPTICAL_SURROGATE,
+    default_comsol_v4_readonly_context,
+)
 from tools.audits.build_nodi_comsol_pre_jrc_dry_mapping import (
+    FUTURE_BLOCKED_FIELDS,
     PASS_STATUS,
     build_pre_jrc_dry_mapping_payload,
     validate_pre_jrc_dry_mapping_payload,
@@ -70,6 +76,12 @@ def test_pre_jrc_dry_mapping_payload_is_no_output_jrc(tmp_path: Path) -> None:
     assert payload["yield_computed"] is False
     assert payload["winner_selected"] is False
     assert payload["dry_mapping_row_count"] == 1
+    assert payload["comsol_v4_context"]["v4_assumption_set_id"] == COMSOL_V4_ASSUMPTION_SET_ID
+    assert (
+        payload["comsol_v4_context"]["v4_scope"]
+        == COMSOL_V4_SCOPE_OUT_OF_SCOPE_DRY_OPTICAL_SURROGATE
+    )
+    assert payload["comsol_v4_context"]["nodi_production_ingestion_allowed"] is False
     dry_row = payload["dry_mapping_rows"][0]
     assert dry_row["future_joint_route_class_id"] == ""
     assert dry_row["future_joint_route_class_status"] == "BLOCKED_NOT_GENERATED_GATE1"
@@ -109,6 +121,43 @@ def test_pre_jrc_validator_rejects_generated_jrc_or_weighted_values() -> None:
     assert any("JRC id must be blank" in issue for issue in issues)
     assert any("JRC status drifted" in issue for issue in issues)
     assert any("q_ch_weight must remain blank" in issue for issue in issues)
+
+
+def test_pre_jrc_payload_validator_rejects_v4_context_promotion() -> None:
+    v4_context = default_comsol_v4_readonly_context()
+    v4_context["nodi_production_ingestion_allowed"] = True
+    payload = {
+        "schema_version": "nodi_comsol_pre_jrc_dry_mapping_report_v1",
+        "status": PASS_STATUS,
+        "issues": [],
+        "coverage_rows": [{"gate1_mapping_status": "dry_map_keys_available"}],
+        "dry_mapping_rows": [],
+        "missing_register_rows": [
+            {
+                "scope": "future_jrc_field",
+                "blocked_field": field,
+                "status": "BLOCKED_NOT_AUTHORIZED",
+            }
+            for field, _reason in FUTURE_BLOCKED_FIELDS
+        ],
+        "comsol_run_performed": False,
+        "nodi_rerun_performed": False,
+        "joint_route_class_generated": False,
+        "q_ch_weighting_performed": False,
+        "yield_computed": False,
+        "winner_selected": False,
+        "detection_probability_computed": False,
+        "true_W_eff_claimed": False,
+        "measured_geometry_claimed": False,
+        "optical_solver_output_claimed": False,
+        "fabrication_release_claimed": False,
+        "P3_solver_conclusion_claimed": False,
+        "comsol_v4_context": v4_context,
+    }
+
+    issues = validate_pre_jrc_dry_mapping_payload(payload)
+
+    assert any("nodi_production_ingestion_allowed must remain false" in issue for issue in issues)
 
 
 def test_pre_jrc_cli_requires_confirm(tmp_path: Path) -> None:

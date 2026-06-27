@@ -12,6 +12,8 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from nodi_simulator.nodi_comsol_next_artifacts import (
+    default_comsol_v4_readonly_context,
+    validate_comsol_v4_readonly_context,
     validate_effective_aperture_surrogate_csv,
     validate_position_response_surface_csv,
 )
@@ -64,6 +66,18 @@ FUTURE_BLOCKED_FIELDS = (
     ("optical_solver_output", "no optical solver output is present or authorized"),
     ("fabrication_release", "fabrication release is not authorized"),
     ("P3_solver_conclusion", "P3 solver conclusions are not authorized"),
+    (
+        "comsol_v4_wet_surface_context_binding",
+        "requires V4-bound sample/surface/wall/roughness/hydraulic identities",
+    ),
+    (
+        "v4_descriptor_overlay_coverage_audit",
+        "requires explicit V4 descriptor overlay and coverage audit before wet/joint use",
+    ),
+    (
+        "v4_wet_event_or_clogging_claim",
+        "V4 descriptor closures cannot be promoted to event rate or clogging probability",
+    ),
 )
 
 
@@ -276,6 +290,7 @@ def build_pre_jrc_dry_mapping_payload(
         "optical_solver_output_claimed": False,
         "fabrication_release_claimed": False,
         "P3_solver_conclusion_claimed": False,
+        "comsol_v4_context": default_comsol_v4_readonly_context(),
         "claim_boundary": (
             "pre-JRC dry mapping only; key coverage and missing-field register; "
             "no JRC output, no q_ch weighting, no yield, no winner"
@@ -391,6 +406,13 @@ def validate_pre_jrc_dry_mapping_payload(payload: dict[str, Any]) -> list[str]:
     for field in FORBIDDEN_FALSE_FIELDS:
         if payload.get(field) is not False:
             issues.append(f"PRE-JRC: {field} must remain false")
+    v4_context = payload.get("comsol_v4_context")
+    if not isinstance(v4_context, dict):
+        issues.append("PRE-JRC: missing COMSOL V4 read-only context")
+    else:
+        issues.extend(
+            f"PRE-JRC: {issue}" for issue in validate_comsol_v4_readonly_context(v4_context)
+        )
     issues.extend(
         validate_pre_jrc_dry_mapping_rows(
             coverage_rows=list(payload.get("coverage_rows", [])),

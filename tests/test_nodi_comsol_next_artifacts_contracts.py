@@ -14,6 +14,11 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     BOUNDED_SMOKE_EXECUTION_ROW_STATUS,
     BOUNDED_SMOKE_READINESS_PASS_STATUS,
     BOUNDED_SMOKE_AUTHORIZATION_PHRASE,
+    COMSOL_V4_ASSUMPTION_SET_ID,
+    COMSOL_V4_ASSUMPTION_SET_SHA256,
+    COMSOL_V4_SCOPE_OUT_OF_SCOPE_DRY_OPTICAL_SURROGATE,
+    COMSOL_V4_SCOPE_WET_SURFACE_CONTEXT,
+    COMSOL_V4_UNBOUND_REQUIRED,
     EAS_BOUNDED_SMOKE_EXECUTION_MANIFEST_FILENAME,
     EAS_FIRST_PRODUCTION_MODES,
     EAS_PRODUCTION_FILENAME,
@@ -114,6 +119,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     build_effective_aperture_runner_launch_plan,
     build_bounded_smoke_readiness_report,
     build_position_response_runner_launch_plan,
+    default_comsol_v4_readonly_context,
     effective_aperture_smoke_manifest_rows,
     evaluate_next_artifacts_future_authorization_request,
     position_response_smoke_manifest_rows,
@@ -176,6 +182,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     select_position_response_source_accumulation_bounded_shard_jobs,
     validate_bounded_smoke_execution_manifest_rows,
     validate_bounded_smoke_execution_report,
+    validate_comsol_v4_readonly_context,
     validate_position_response_bin_source_event_rows,
     validate_position_response_bin_source_rows,
     validate_position_response_source_accumulation_job_plan_report,
@@ -324,6 +331,40 @@ def _assert_has_issue(issues: list[str], rule_id: str) -> None:
     assert any(rule_id in issue for issue in issues), issues
 
 
+def test_comsol_v4_default_context_is_readonly_and_out_of_scope_for_dry_optical() -> None:
+    context = default_comsol_v4_readonly_context()
+
+    assert context["v4_assumption_set_id"] == COMSOL_V4_ASSUMPTION_SET_ID
+    assert context["v4_assumption_set_sha256"] == COMSOL_V4_ASSUMPTION_SET_SHA256
+    assert context["v4_scope"] == COMSOL_V4_SCOPE_OUT_OF_SCOPE_DRY_OPTICAL_SURROGATE
+    assert context["nodi_production_ingestion_allowed"] is False
+    assert context["nodi_count_prediction_allowed"] is False
+    assert context["nodi_optical_update_allowed"] is False
+    assert context["comsol_launch_authorized_now"] is False
+    assert validate_comsol_v4_readonly_context(context) == []
+
+
+def test_comsol_v4_wet_context_requires_explicit_unbound_or_bound_identities() -> None:
+    context = default_comsol_v4_readonly_context(
+        v4_scope=COMSOL_V4_SCOPE_WET_SURFACE_CONTEXT
+    )
+
+    assert context["scenario_id"] == COMSOL_V4_UNBOUND_REQUIRED
+    assert context["roughness_state_id"] == COMSOL_V4_UNBOUND_REQUIRED
+    assert validate_comsol_v4_readonly_context(context) == []
+
+
+def test_comsol_v4_context_rejects_production_promotion_or_hash_drift() -> None:
+    context = default_comsol_v4_readonly_context()
+    context["v4_assumption_set_sha256"] = "0" * 64
+    context["nodi_production_ingestion_allowed"] = True
+
+    issues = validate_comsol_v4_readonly_context(context)
+
+    assert any("sha256 drifted" in issue for issue in issues)
+    assert any("nodi_production_ingestion_allowed must remain false" in issue for issue in issues)
+
+
 def test_position_response_accepts_neutral_response_surface_row() -> None:
     assert validate_position_response_surface_rows([_valid_prs_row()]) == []
 
@@ -352,6 +393,14 @@ def test_position_response_rejects_comsol_transport_distribution_basis() -> None
 
     _assert_has_issue(issues, "PRS-V32")
     _assert_has_issue(issues, "PRS-V39")
+
+
+def test_position_response_rejects_v4_event_rate_or_pass_probability_columns() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_row(v4_event_rate="1.0", wet_pass_probability="0.2")]
+    )
+
+    _assert_has_issue(issues, "PRS-V41")
 
 
 @pytest.mark.parametrize(
@@ -430,6 +479,14 @@ def test_effective_aperture_rejects_true_weff_or_solver_claim_drift() -> None:
 )
 def test_effective_aperture_rejects_extra_positive_claim_columns(claim_field: str) -> None:
     issues = validate_effective_aperture_surrogate_rows([_valid_eas_row(**{claim_field: "true"})])
+
+    _assert_has_issue(issues, "EAS-V26")
+
+
+def test_effective_aperture_rejects_v4_clogging_or_runtime_promotion_columns() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_row(clogging_probability="0.1", runtime_configuration="v4")]
+    )
 
     _assert_has_issue(issues, "EAS-V26")
 

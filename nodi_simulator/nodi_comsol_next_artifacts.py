@@ -399,6 +399,92 @@ FORBIDDEN_POSITIVE_FIELD_FRAGMENTS = (
     "p3_solver_conclusion",
     "p3_solver_execution",
     "solver_execution",
+    "event_rate",
+    "wet_event_rate",
+    "pass_probability",
+    "wet_pass_probability",
+    "clogging_probability",
+    "clogging_rate",
+    "time_to_clog",
+    "recovery_yield",
+    "production_ingestion_payload",
+    "event_generation_payload",
+    "count_prediction_update",
+    "optical_geometry_update",
+    "runtime_configuration",
+)
+
+COMSOL_V4_CONTEXT_SCHEMA_VERSION = "nodi_comsol_v4_readonly_context_v1"
+COMSOL_V4_ASSUMPTION_SET_ID = "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627"
+COMSOL_V4_ASSUMPTION_SET_VERSION = "4.0.0"
+COMSOL_V4_ASSUMPTION_SET_SHA256 = (
+    "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92"
+)
+COMSOL_V4_CLAIM_BOUNDARY = (
+    "literature_derived_descriptor_closure_scenario_only_not_project_measurement_or_calibration"
+)
+COMSOL_V4_SCOPE_WET_SURFACE_CONTEXT = "wet_surface_context"
+COMSOL_V4_SCOPE_OUT_OF_SCOPE_DRY_OPTICAL_SURROGATE = (
+    "out_of_scope_dry_optical_surrogate"
+)
+COMSOL_V4_REVIEW_LOADER_MODE = "review_only_no_production_ingestion"
+COMSOL_V4_AUTHORIZED_USE = "claim_boundary_and_future_joint_gate_context_only"
+COMSOL_V4_UNBOUND_REQUIRED = "UNBOUND_REQUIRED"
+COMSOL_V4_OUT_OF_SCOPE = "OUT_OF_SCOPE_DRY_OPTICAL_SURROGATE"
+
+COMSOL_V4_REQUIRED_CONTEXT_FIELDS: tuple[str, ...] = (
+    "schema_version",
+    "v4_assumption_set_id",
+    "v4_assumption_set_version",
+    "v4_assumption_set_sha256",
+    "v4_scope",
+    "scenario_id",
+    "sample_input_id",
+    "surface_chemistry_state_id",
+    "surface_state_contract",
+    "wall_state_id",
+    "roughness_state_id",
+    "geometry_root",
+    "hydraulic_anchor",
+    "vesicle_model_level",
+    "review_loader_mode",
+    "authorized_use",
+    "claim_boundary",
+    "nodi_production_ingestion_allowed",
+    "nodi_count_prediction_allowed",
+    "nodi_optical_update_allowed",
+    "nodi_runtime_configuration_allowed",
+    "comsol_launch_authorized_now",
+    "mph_load_authorized_now",
+    "wet_pass_probability_allowed",
+    "wet_event_rate_allowed",
+    "clogging_probability_allowed",
+    "yield_or_winner_allowed",
+)
+
+COMSOL_V4_FORBIDDEN_TRUE_FLAGS: tuple[str, ...] = (
+    "nodi_production_ingestion_allowed",
+    "nodi_count_prediction_allowed",
+    "nodi_optical_update_allowed",
+    "nodi_runtime_configuration_allowed",
+    "comsol_launch_authorized_now",
+    "mph_load_authorized_now",
+    "wet_pass_probability_allowed",
+    "wet_event_rate_allowed",
+    "clogging_probability_allowed",
+    "yield_or_winner_allowed",
+)
+
+COMSOL_V4_WET_IDENTITY_FIELDS: tuple[str, ...] = (
+    "scenario_id",
+    "sample_input_id",
+    "surface_chemistry_state_id",
+    "surface_state_contract",
+    "wall_state_id",
+    "roughness_state_id",
+    "geometry_root",
+    "hydraulic_anchor",
+    "vesicle_model_level",
 )
 
 
@@ -430,6 +516,96 @@ CANONICAL_REPORT156_CONTRACTS: tuple[CanonicalContract, ...] = (
         "026e1f120c29ef817410273c522aa5b63cb7d35013f356db1162b51485a212ad",
     ),
 )
+
+
+def default_comsol_v4_readonly_context(
+    *,
+    v4_scope: str = COMSOL_V4_SCOPE_OUT_OF_SCOPE_DRY_OPTICAL_SURROGATE,
+    source_artifact: str = (
+        "comsol test/comsol_ev_pbs_bonded_cross_junction/roadmap/"
+        "EV_PBS_SAMPLE_SURFACE_CANONICAL_CONTRACT_V4_20260627.json"
+    ),
+) -> dict[str, Any]:
+    """Return a NODI-side read-only V4 context block for future joint gates."""
+    if v4_scope == COMSOL_V4_SCOPE_WET_SURFACE_CONTEXT:
+        identity_placeholder = COMSOL_V4_UNBOUND_REQUIRED
+    else:
+        identity_placeholder = COMSOL_V4_OUT_OF_SCOPE
+    return {
+        "schema_version": COMSOL_V4_CONTEXT_SCHEMA_VERSION,
+        "v4_assumption_set_id": COMSOL_V4_ASSUMPTION_SET_ID,
+        "v4_assumption_set_version": COMSOL_V4_ASSUMPTION_SET_VERSION,
+        "v4_assumption_set_sha256": COMSOL_V4_ASSUMPTION_SET_SHA256,
+        "v4_scope": v4_scope,
+        "scenario_id": identity_placeholder,
+        "sample_input_id": identity_placeholder,
+        "surface_chemistry_state_id": identity_placeholder,
+        "surface_state_contract": identity_placeholder,
+        "wall_state_id": identity_placeholder,
+        "roughness_state_id": identity_placeholder,
+        "geometry_root": identity_placeholder,
+        "hydraulic_anchor": identity_placeholder,
+        "vesicle_model_level": identity_placeholder,
+        "source_artifact": source_artifact,
+        "source_row_key": "",
+        "review_loader_mode": COMSOL_V4_REVIEW_LOADER_MODE,
+        "authorized_use": COMSOL_V4_AUTHORIZED_USE,
+        "claim_boundary": COMSOL_V4_CLAIM_BOUNDARY,
+        "nodi_production_ingestion_allowed": False,
+        "nodi_count_prediction_allowed": False,
+        "nodi_optical_update_allowed": False,
+        "nodi_runtime_configuration_allowed": False,
+        "comsol_launch_authorized_now": False,
+        "mph_load_authorized_now": False,
+        "wet_pass_probability_allowed": False,
+        "wet_event_rate_allowed": False,
+        "clogging_probability_allowed": False,
+        "yield_or_winner_allowed": False,
+    }
+
+
+def validate_comsol_v4_readonly_context(context: Mapping[str, Any]) -> list[str]:
+    """Validate that COMSOL V4 context remains review-only on the NODI side."""
+    issues: list[str] = []
+    for field in COMSOL_V4_REQUIRED_CONTEXT_FIELDS:
+        if field not in context:
+            issues.append(f"COMSOL-V4: missing {field}")
+    if context.get("schema_version") != COMSOL_V4_CONTEXT_SCHEMA_VERSION:
+        issues.append("COMSOL-V4: schema_version drifted")
+    if context.get("v4_assumption_set_id") != COMSOL_V4_ASSUMPTION_SET_ID:
+        issues.append("COMSOL-V4: assumption set id drifted")
+    if context.get("v4_assumption_set_version") != COMSOL_V4_ASSUMPTION_SET_VERSION:
+        issues.append("COMSOL-V4: assumption set version drifted")
+    if str(context.get("v4_assumption_set_sha256", "")).lower() != COMSOL_V4_ASSUMPTION_SET_SHA256:
+        issues.append("COMSOL-V4: assumption set sha256 drifted")
+    if context.get("claim_boundary") != COMSOL_V4_CLAIM_BOUNDARY:
+        issues.append("COMSOL-V4: claim boundary drifted")
+    if context.get("review_loader_mode") != COMSOL_V4_REVIEW_LOADER_MODE:
+        issues.append("COMSOL-V4: review loader mode drifted")
+    if context.get("authorized_use") != COMSOL_V4_AUTHORIZED_USE:
+        issues.append("COMSOL-V4: authorized use drifted")
+
+    scope = context.get("v4_scope")
+    if scope not in {
+        COMSOL_V4_SCOPE_WET_SURFACE_CONTEXT,
+        COMSOL_V4_SCOPE_OUT_OF_SCOPE_DRY_OPTICAL_SURROGATE,
+    }:
+        issues.append("COMSOL-V4: invalid v4_scope")
+    for field in COMSOL_V4_FORBIDDEN_TRUE_FLAGS:
+        if context.get(field) is not False:
+            issues.append(f"COMSOL-V4: {field} must remain false")
+    for field in COMSOL_V4_WET_IDENTITY_FIELDS:
+        value = context.get(field)
+        if not value:
+            issues.append(f"COMSOL-V4: {field} is blank")
+        if scope == COMSOL_V4_SCOPE_WET_SURFACE_CONTEXT and value == COMSOL_V4_OUT_OF_SCOPE:
+            issues.append(f"COMSOL-V4: {field} cannot be out-of-scope for wet context")
+        if (
+            scope == COMSOL_V4_SCOPE_OUT_OF_SCOPE_DRY_OPTICAL_SURROGATE
+            and value != COMSOL_V4_OUT_OF_SCOPE
+        ):
+            issues.append(f"COMSOL-V4: {field} must stay out-of-scope for dry optical surrogate")
+    return issues
 
 PRS_REQUIRED_FIELDS: tuple[str, ...] = (
     "response_surface_artifact_version",
@@ -4713,6 +4889,7 @@ def build_production_generation_report(
         "not_optical_solver_output": True,
         "not_fabrication_release": True,
         "not_P3_solver_conclusion": True,
+        "comsol_v4_context": default_comsol_v4_readonly_context(),
         "claim_boundary": "production_generation_gate_no_fabricated_rows",
         "stop_reason": "production_inputs_ready"
         if status == PRODUCTION_GENERATION_PASS_STATUS
@@ -4748,6 +4925,11 @@ def validate_production_generation_report(report: Mapping[str, Any]) -> list[str
         != "evaluate_production_generation_and_write_blockers_or_artifacts"
     ):
         issues.append("PROD-GATE: allowed_current_action drifted")
+    v4_context = report.get("comsol_v4_context")
+    if not isinstance(v4_context, Mapping):
+        issues.append("PROD-GATE: missing COMSOL V4 read-only context")
+    else:
+        issues.extend(f"PROD-GATE: {issue}" for issue in validate_comsol_v4_readonly_context(v4_context))
     if report.get("required_authorization_phrase") != PRODUCTION_GENERATION_AUTHORIZATION_PHRASE:
         issues.append("PROD-GATE: required authorization phrase drifted")
     if report.get("status") == PRODUCTION_GENERATION_BLOCKED_STATUS:
