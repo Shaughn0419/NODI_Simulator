@@ -1,0 +1,5 @@
+schema_version,reviewer,focus,finding_severity,finding,unresolved_risk,required_action
+nodi_comsol_gate2b_self_review_findings_v1,Reviewer A,provenance_hash_row_count_path_reproducibility,PASS,"Gate2B outputs carry source paths, SHA-256, row counts, source package, and inherited Gate2A/COMSOL Gate2A package lineage.",none,none
+nodi_comsol_gate2b_self_review_findings_v1,Reviewer B,forbidden_claim_leakage,PASS,"All weighting, JRC, chi_selected, winner, yield, detection, wet pass, clogging, runtime, and production flags remain false.",none,none
+nodi_comsol_gate2b_self_review_findings_v1,Reviewer C,grain_semantics,PASS,"30 Gate2A grain rows are inherited; 220 nm, D1200, missing NODI_view, and edge4-to-edge20 issues remain blocked or review-only.",none,none
+nodi_comsol_gate2b_self_review_findings_v1,Reviewer D,gate_logic,PASS,"Only 2 TPD/PRS proxy rows enter formal context-only ledger; 2 ingested rows are not production, and 92 q_ch rows stay provenance-only.",none,none
