@@ -1,0 +1,22 @@
+field,required,description
+register_row_id,true,Gate2 candidate register control field
+schema_version,true,Gate2 candidate register control field
+candidate_type,true,Gate2 candidate register control field
+source_artifact,true,"COMSOL or blocked source artifact path, relative to COMSOL root when present"
+sha256,true,SHA256 of source_artifact or MISSING_UNTIL_FORMAL_GATE2_EXPORT
+row_count,true,Source row count; JSON contracts count as 1; missing blocked rows count as 0
+producer,true,Producer or governance owner
+evidence_class,true,Context evidence class; never production physics promotion
+route_key,true,NODI route key if bound; otherwise explicit no-route/review marker
+diameter_basis,true,Diameter grain or explicit non-diameter/review basis
+bin_basis,true,Bin or context basis; coarse bins must be explicit
+claim_boundary,true,Claim ceiling carried from COMSOL packet or NODI register
+allowed_use,true,Context-only or review-only use allowed before later gates
+blocked_use,true,Forbidden interpretations and outputs
+required_next_gate,true,Gate needed before any stronger use
+v4_context_binding,true,"V4 context binding status, if applicable"
+candidate_status,true,Gate2 candidate register control field
+grain_alignment_status,true,Gate2 candidate register control field
+matched_grain_count,true,Gate2 candidate register control field
+blocked_grain_count,true,Gate2 candidate register control field
+review_note,true,Gate2 candidate register control field
