@@ -1,0 +1,5 @@
+reviewer,focus,finding_severity,finding,unresolved_risk
+Reviewer A,COMSOL evidence path/SHA/row_count/mirror reproducibility,PASS,"All COMSOL Gate2B support files are registered with external path, source SHA, row_count, and mirror SHA.",none
+Reviewer B,2-vs-80 parent-child granularity,PASS,2 NODI parent ledger rows map to 80 COMSOL support rows; child rows remain artifact-level only.,none
+Reviewer C,PRS coverage and edge4-to-edge20 semantics,PASS_BLOCKED_AS_EXPECTED,"W800/D900/300 exact PRS grains are present for both views; 220, D1200/300, and edge4-to-edge20 remain blocked/review-only.",edge4-to-edge20 policy not approved
+Reviewer D,forbidden claim leakage and gate logic,PASS,"No q_ch weighting, chi_selected, JRC, winner, yield, detection, wet pass, clogging, runtime, or production promotion is emitted.",none

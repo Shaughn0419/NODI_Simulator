@@ -1,0 +1,9 @@
+check_id,check_name,status,finding,can_open_weighting,can_open_jrc,required_next_gate
+G2C-ACC-001,Gate2B freeze accepted,PASS,Gate2B partial context-only ledger accepted; not formula/production.,false,false,COMSOL Gate2C export repair package or future explicit authorization
+G2C-ACC-002,COMSOL support evidence registered,PASS,8 support files registered and mirrored.,false,false,COMSOL Gate2C export repair package or future explicit authorization
+G2C-ACC-003,2-vs-80 parent-child map,PASS,80 support rows mapped to 2 parent ledger rows.,false,false,COMSOL Gate2C export repair package or future explicit authorization
+G2C-ACC-004,Allowed support grain authorization false,PASS_BLOCKED_AS_EXPECTED,80 rows remain artifact-level only.,false,false,COMSOL Gate2C export repair package or future explicit authorization
+G2C-ACC-005,PRS coverage verdict complete,PASS_BLOCKED_AS_EXPECTED,16 unique route/view/diameter/type verdicts emitted.,false,false,COMSOL Gate2C export repair package or future explicit authorization
+G2C-ACC-006,edge4 to edge20 policy,REVIEW_ONLY_NOT_APPROVED,8 checklist rows; no direct PRS bin use.,false,false,COMSOL Gate2C export repair package or future explicit authorization
+G2C-ACC-007,q_ch formal sidecar,BLOCKED_AS_EXPECTED,18 requirements reviewed; no formal sidecar exists.,false,false,COMSOL Gate2C export repair package or future explicit authorization
+G2C-ACC-008,weighting/JRC authorization,PASS_BLOCKED,"All weighting, JRC, chi_selected, decision, runtime, production flags false.",false,false,COMSOL Gate2C export repair package or future explicit authorization
