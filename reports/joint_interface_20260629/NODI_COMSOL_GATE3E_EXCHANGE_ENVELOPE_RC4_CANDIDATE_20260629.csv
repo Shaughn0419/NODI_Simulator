@@ -1,0 +1,5 @@
+envelope_field,requirement,authorization_effect
+manifest_sha256,required,none
+package_disposition,review-only until future gate,none
+all_authorization_flags_false,required,guardrail
+gate2d_ledger_reference,exactly four rows only,freeze

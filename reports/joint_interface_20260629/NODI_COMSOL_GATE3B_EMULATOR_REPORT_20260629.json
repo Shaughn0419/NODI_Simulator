@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "Gate3A": "PASS_GATE3A_BILATERAL_DOSSIER_ADJUDICATION_NO_POLICY_CONFLICT",
+    "Gate3B": "PASS_GATE3B_EVIDENCE_INTAKE_EMULATOR_V1_READY_NO_AUTHORIZATION",
+    "Gate3C": "PASS_GATE3C_COMSOL_DOSSIER_DRY_RUN_NO_EVIDENCE_ACCEPTED",
+    "Gate3D": "PASS_GATE3D_PRE_AUTH_BOARD_V2_READY_AUTHORIZATION_CLOSED",
+    "Gate3E": "PASS_GATE3E_BILATERAL_INTERFACE_RC4_CANDIDATE_CONTRACT_ONLY",
+    "Gate3F": "PASS_GATE3F_NO_AUTH_STRESS_MUTATION_V3_ZERO_UNEXPECTED_PASS",
+    "nodi_dossiers": 75,
+    "comsol_dossiers": 180,
+    "comsol_closure_trials": 60,
+    "gate3a_adjudication_rows": 315,
+    "gate3c_dossier_dry_run_rows": 180,
+    "gate3c_closure_trial_rows": 60,
+    "gate3c_negative_fixture_rows": 90,
+    "mutation_v3_total": 680,
+    "mutation_v3_unexpected_pass": 0,
+    "gate2d_accepted_rows": 4,
+    "gate2d_ledger_issues": [],
+    "emulator_dispositions": [
+      "ACCEPT_EXISTING_GATE2D_CONTEXT_ONLY",
+      "RECEIVE_REVIEW_ONLY",
+      "PREAUTH_REQUIRED",
+      "REJECT_BLOCKED",
+      "HARD_FAIL_FORBIDDEN_AUTHORIZATION"
+    ],
+    "edge_policy": "NOT_APPROVED",
+    "qch_formal_sidecar": "ABSENT",
+    "binding_state": "FAIL_CLOSED",
+    "comsol_validation_failures": []
+  }
+}

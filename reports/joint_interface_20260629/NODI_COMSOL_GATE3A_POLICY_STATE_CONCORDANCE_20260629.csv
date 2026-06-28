@@ -1,0 +1,5 @@
+policy_id,policy,nodi_state,comsol_state,concordance
+G3A-POL-001,Gate2D accepted ledger,exactly_4,not expanded,PASS
+G3A-POL-002,EDGE,NOT_APPROVED,NOT_APPROVED,PASS
+G3A-POL-003,QCH,NO_FORMAL_QCH_SIDECAR_PRESENT,ABSENT,PASS
+G3A-POL-004,BINDING,FAIL_CLOSED,FAIL_CLOSED,PASS

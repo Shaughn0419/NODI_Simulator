@@ -1,0 +1,4 @@
+signoff_id,role,required,current_status
+G3D-SIGN-001,NODI receiver owner,true,not_requested
+G3D-SIGN-002,COMSOL evidence producer,true,not_requested
+G3D-SIGN-003,Total-control thread,true,not_requested

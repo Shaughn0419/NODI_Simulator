@@ -1,0 +1,3 @@
+delta_id,delta_type,nodi_value,comsol_value,interpretation,policy_impact
+G3A-DELTA-001,scope_delta,75,180,COMSOL dossier set is more granular; NODI receiver adjudicates all rows without evidence acceptance,none
+G3A-DELTA-002,method_delta,no closure trial rows in NODI Gate2Z,60,"closure trials are dry trial semantics, not policy closure",none

@@ -1,0 +1,6 @@
+api_id,api,capability,authorization_effect
+G3B-API-001,decide_intake,row-level disposition,none
+G3B-API-002,has_forbidden_authorization,hard fail positive authorization,none
+G3B-API-003,is_blocked_or_fixture_mention,avoid false fail on blocked/fixture mentions,none
+G3B-API-004,required_gate_for_workstream,workstream-separated next gate,none
+G3B-API-005,workstream_of,EDGE/QCH/BINDING/local-Q/V4 classification,none

@@ -1,0 +1,15 @@
+reviewer,scope,finding,p0_p1_open
+Reviewer A,cross-side census,PASS: no P0/P1; no authorization opened,false
+Reviewer B,dossier honesty,PASS: no P0/P1; no authorization opened,false
+Reviewer C,closure trial semantics,PASS: no P0/P1; no authorization opened,false
+Reviewer D,emulator API,PASS: no P0/P1; no authorization opened,false
+Reviewer E,disposition rules,PASS: no P0/P1; no authorization opened,false
+Reviewer F,EDGE separation,PASS: no P0/P1; no authorization opened,false
+Reviewer G,QCH separation,PASS: no P0/P1; no authorization opened,false
+Reviewer H,BINDING separation,PASS: no P0/P1; no authorization opened,false
+Reviewer I,RC4 fields,PASS: no P0/P1; no authorization opened,false
+Reviewer J,mutation v3,PASS: no P0/P1; no authorization opened,false
+Reviewer K,false-positive behavior,PASS: no P0/P1; no authorization opened,false
+Reviewer L,false-negative behavior,PASS: no P0/P1; no authorization opened,false
+Reviewer M,Gate2D freeze,PASS: no P0/P1; no authorization opened,false
+Reviewer N,git scope/report consistency,PASS: no P0/P1; no authorization opened,false

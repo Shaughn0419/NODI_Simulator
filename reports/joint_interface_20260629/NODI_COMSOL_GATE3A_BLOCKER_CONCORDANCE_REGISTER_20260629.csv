@@ -1,0 +1,5 @@
+blocker_id,blocker,nodi_state,comsol_state,concordance
+G3A-BLOCK-001,220 nm no auto-map,blocked,fail_closed,PASS
+G3A-BLOCK-002,D1200 no D900 borrowing,blocked,fail_closed,PASS
+G3A-BLOCK-003,edge policy not approved,review_only,not_approved,PASS
+G3A-BLOCK-004,q_ch no formal sidecar,absent,absent,PASS

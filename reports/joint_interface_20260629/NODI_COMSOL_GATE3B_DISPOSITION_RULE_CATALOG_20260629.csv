@@ -1,0 +1,6 @@
+rule_id,disposition,rule,human_review_required
+G3B-RULE-001,ACCEPT_EXISTING_GATE2D_CONTEXT_ONLY,only existing frozen Gate2D context rows may enter this disposition,false
+G3B-RULE-002,RECEIVE_REVIEW_ONLY,template/synthetic/fixture/review rows remain not evidence,false
+G3B-RULE-003,PREAUTH_REQUIRED,dossier/trial rows need future authorization before evidence intake,true
+G3B-RULE-004,REJECT_BLOCKED,known blockers fail closed,true
+G3B-RULE-005,HARD_FAIL_FORBIDDEN_AUTHORIZATION,any positive authorization semantics hard fail,true
