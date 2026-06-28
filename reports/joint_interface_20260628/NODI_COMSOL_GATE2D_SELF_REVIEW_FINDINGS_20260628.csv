@@ -1,0 +1,5 @@
+reviewer,focus,finding_severity,finding,unresolved_risk
+Reviewer A,COMSOL Gate2C count consistency,PASS,"Master packet, candidate CSV, and validation status counts match.",none
+Reviewer B,4-row reduced-scope semantics,PASS_PREFLIGHT,Four candidate rows are W800/D900/300 aggregate proxy rows with velocity/residence-time proxy basis only.,none
+Reviewer C,PRS coverage/hash and blocker carry-forward,PASS_PREFLIGHT,"Report 201 PRS verdict confirms exact context-review grains for D900/300 fixed/per-wavelength views; 220, D1200/300, and edge4 remain blocked/review-only.",none
+Reviewer D,forbidden claim leakage,PASS,"All weighting, q_ch, JRC, chi_selected, winner, yield, detection, runtime, and production authorizations remain false.",none

@@ -1,0 +1,7 @@
+exclusion_id,excluded_scope,source_candidate_status,source_candidate_row_count,disposition,decision_use_allowed,can_enter_weighting,can_enter_jrc,is_chi_selected,is_production_ingestion,is_runtime_configuration,required_next_gate
+EXCL-220,220 nm,BLOCKED_220NM_NO_DIRECT_MATCH,72,blocked; no direct PRS match; no auto-map to 300/40/60,false,false,false,false,false,false,future explicit repair/export/policy gate
+EXCL-D1200,W800/D1200 300 nm,BLOCKED_D1200_EXACT_GRAIN_UNCERTAIN,36,blocked/uncertain; cannot borrow D900 semantics,false,false,false,false,false,false,future explicit repair/export/policy gate
+EXCL-UNBOUND-VIEW,TPD source/alignment,BLOCKED_UNBOUND_NODI_VIEW,16,blocked missing NODI_view / not NODI-bound,false,false,false,false,false,false,future explicit repair/export/policy gate
+EXCL-EDGE4,edge4 bin proxy,REVIEW_ONLY_EDGE_POLICY_REQUIRED,16,review-only; edge4-to-edge20 policy not approved,false,false,false,false,false,false,future explicit repair/export/policy gate
+EXCL-QCH,q_ch provenance,QUARANTINE_QCH_PROVENANCE_ONLY,1,quarantine; not formal q_ch sidecar; no weighting,false,false,false,false,false,false,future explicit repair/export/policy gate
+EXCL-LOCALQ-V4-STRONG,local-Q/V4/strong claims,not_in_reduced_scope,0,review-only or hard blocked carry-forward,false,false,false,false,false,false,future explicit repair/export/policy gate

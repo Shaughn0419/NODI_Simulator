@@ -1,0 +1,5 @@
+preflight_check_id,check_name,status,observed,expected,can_open_gate2d_context_only_ledger
+G2D-PREFLIGHT-001,reduced_scope_candidate_row_count,PASS,4,4,true
+G2D-PREFLIGHT-002,report201_prs_coverage_for_reduced_scope_rows,PASS_PREFLIGHT_COVERAGE_PRESENT,4,4,true
+G2D-PREFLIGHT-003,comsol_gate2c_errata_required_for_automatic_acceptance,PASS_ERRATA_PRESENT,true,true before NODI acceptance ledger can open,true
+G2D-PREFLIGHT-004,no_weighting_no_jrc_no_production,PASS_BLOCKED,all authorization flags false,"false for weighting, JRC, chi_selected, runtime, production",true
