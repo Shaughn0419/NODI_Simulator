@@ -1,0 +1,5 @@
+reviewer,focus,finding_severity,finding,unresolved_risk
+Reviewer A,COMSOL Gate2E evidence registration,PASS,Gate2E plan/index/EDGE/QCH/BINDING/validation/manifest files are registered as external read-only evidence with manifest checks.,none
+Reviewer B,EDGE edge20 semantics,PASS,"NODI edge20 definition is hashed from current PRS, but edge4-to-edge20 remains review-only and not direct PRS bin use.",loss/error semantics still required before any stronger gate
+Reviewer C,QCH receipt schema and no promotion,PASS,"QCH receipt schema verdict is ready, current q_ch provenance stays quarantine and is not a formal sidecar.",formal q_ch / flow-split sidecar not present
+Reviewer D,BINDING fail-closed and no accepted row expansion,PASS,"220 nm, D1200, and unbound-view rows remain blocked; Gate2D accepted scope stays exactly four rows.",none for current no-expansion verdict
