@@ -1,0 +1,10 @@
+negative_fixture_id,fixture_name,fixture_condition,expected_validator_result
+NODI-G2I-EDGE-NEG-001,missing_numeric_error_bound,numeric_aggregation_error_bound empty,NOT_APPROVED
+NODI-G2I-EDGE-NEG-002,non_contiguous_edge20_bins,edge_00|edge_02|edge_03|edge_04|edge_05,BLOCKED
+NODI-G2I-EDGE-NEG-003,edge20_hash_mismatch,hash != expected NODI edge20 hash,BLOCKED
+NODI-G2I-EDGE-NEG-004,formula_flag_true,formula_use_authorized=true,HARD_FAIL
+NODI-G2I-EDGE-NEG-005,direct_prs_bin_flag_true,direct_prs_bin_use_authorized=true,HARD_FAIL
+NODI-G2I-EDGE-NEG-006,qch_weighting_flag_true,qch_weighting_authorized=true,HARD_FAIL
+NODI-G2I-EDGE-NEG-007,accepted_row_expansion_true,accepted_row_expansion_authorized=true,HARD_FAIL
+NODI-G2I-EDGE-NEG-008,d1200_borrows_d900,route_key 660/W800/D1200 uses D900 evidence,HARD_FAIL
+NODI-G2I-EDGE-NEG-009,auto_map_220nm,diameter_nm=220 maps to 300 nm PRS,HARD_FAIL

@@ -1,0 +1,17 @@
+row_verdict_id,structural_coverage_proof_id,source_edge_skeleton_row_id,row_verdict,policy_approved,direct_prs_bin_use_authorized,formula_use_authorized,grain_level_ingestion_authorized,accepted_row_expansion_authorized,required_next_gate
+NODI-G2H-STRUCT-VERDICT-001,G2G-EDGE-COV-001,G2E-EDGE-SKEL-001,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-002,G2G-EDGE-COV-002,G2E-EDGE-SKEL-002,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-003,G2G-EDGE-COV-003,G2E-EDGE-SKEL-003,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-004,G2G-EDGE-COV-004,G2E-EDGE-SKEL-004,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-005,G2G-EDGE-COV-005,G2E-EDGE-SKEL-005,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-006,G2G-EDGE-COV-006,G2E-EDGE-SKEL-006,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-007,G2G-EDGE-COV-007,G2E-EDGE-SKEL-007,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-008,G2G-EDGE-COV-008,G2E-EDGE-SKEL-008,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-009,G2G-EDGE-COV-009,G2E-EDGE-SKEL-009,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-010,G2G-EDGE-COV-010,G2E-EDGE-SKEL-010,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-011,G2G-EDGE-COV-011,G2E-EDGE-SKEL-011,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-012,G2G-EDGE-COV-012,G2E-EDGE-SKEL-012,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-013,G2G-EDGE-COV-013,G2E-EDGE-SKEL-013,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-014,G2G-EDGE-COV-014,G2E-EDGE-SKEL-014,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-015,G2G-EDGE-COV-015,G2E-EDGE-SKEL-015,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence
+NODI-G2H-STRUCT-VERDICT-016,G2G-EDGE-COV-016,G2E-EDGE-SKEL-016,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,false,false,false,false,false,Gate2I contract / future closure evidence

@@ -1,0 +1,3 @@
+dashboard_id,workstream,status,state_changed_in_gate2i,qch_weighting_authorized,formula_use_authorized,jrc_authorized,required_next_gate
+NODI-G2I-NONEDGE-DASH-001,QCH,FORMAL_SIDECAR_ABSENT_SCHEMA_READY_NO_WEIGHTING,false,false,false,false,formal q_ch / flow-split sidecar receipt
+NODI-G2I-NONEDGE-DASH-002,BINDING,220_D1200_UNBOUND_FAIL_CLOSED_NO_AUTO_MAP,false,false,false,false,220/D1200/view-bound repair package

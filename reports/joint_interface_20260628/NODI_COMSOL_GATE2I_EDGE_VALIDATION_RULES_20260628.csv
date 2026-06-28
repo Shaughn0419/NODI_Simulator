@@ -1,0 +1,8 @@
+validation_rule_id,rule,failure_status
+NODI-G2I-VAL-001,exactly_16_structural_rows_or_declared_scope,BLOCKED
+NODI-G2I-VAL-002,edge20_hash_matches_expected,BLOCKED
+NODI-G2I-VAL-003,edge20_bins_count_and_contiguity,BLOCKED
+NODI-G2I-VAL-004,numeric_error_bounds_present,NOT_APPROVED
+NODI-G2I-VAL-005,monotonicity_and_conservativeness_present,NOT_APPROVED
+NODI-G2I-VAL-006,all_authorization_flags_false_by_default,HARD_FAIL
+NODI-G2I-VAL-007,QCH_BINDING_not_used_for_EDGE_approval,HARD_FAIL

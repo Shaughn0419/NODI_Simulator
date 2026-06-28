@@ -1,0 +1,17 @@
+blocker_id,blocker_class,source_status,row_count_or_scope,gate2h_status,formula_use_authorized,accepted_row_expansion_authorized,qch_weighting_authorized,jrc_authorized,required_next_gate
+NODI-G2H-BLOCK-GATE2D,Gate2D accepted ledger,FROZEN_EXACTLY_FOUR_ROWS,4,UNCHANGED_NO_ACCEPTED_ROW_EXPANSION,false,false,false,false,future explicit authorization gate
+NODI-G2H-BLOCK-COMSOL-001,,BLOCKED_NO_DIRECT_MATCH,,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,false,false,false,false,NODI direct 220 nm policy/grain required
+NODI-G2H-BLOCK-COMSOL-002,,BLOCKED_D1200_EXACT_GRAIN_UNCERTAIN,,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,false,false,false,false,NODI D1200 exact grain or reduced-scope decision required
+NODI-G2H-BLOCK-COMSOL-003,,BLOCKED_UNBOUND_NODI_VIEW_NOT_EDGE_CLOSURE,,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,false,false,false,false,NODI_view binding policy required
+NODI-G2H-BLOCK-COMSOL-004,,NO_CHANGE_QCH_TEMPLATE_GAP_ONLY,,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,false,false,false,false,Gate2E/Gate2H QCH receipt preflight remains separate
+NODI-G2H-BLOCK-COMSOL-005,,REVIEW_ONLY_OR_HARD_BLOCKED,,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,false,false,false,false,Separate review gate required
+NODI-G2H-BLOCK-COMSOL-006,,HARD_BLOCKED_NO_AUTHORIZATION,,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,false,false,false,false,Explicit future authorization required
+NODI-G2H-BLOCK-NODI-001,Gate2D accepted ledger freeze,UNCHANGED_NO_ACCEPTED_ROW_EXPANSION,4,UNCHANGED_FROM_GATE2G,false,false,false,false,dedicated future gate before any expansion
+NODI-G2H-BLOCK-NODI-002,NON_W800_D900_300_EDGE_ROWS,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,0_in_current_edge_skeleton,UNCHANGED_FROM_GATE2G,false,false,false,false,NEW_SCOPE_GATE_REQUIRED
+NODI-G2H-BLOCK-NODI-003,220NM,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,blocked_class,UNCHANGED_FROM_GATE2G,false,false,false,false,NODI_DIRECT_220NM_POLICY_REQUIRED
+NODI-G2H-BLOCK-NODI-004,D1200,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,blocked_class,UNCHANGED_FROM_GATE2G,false,false,false,false,NODI_D1200_EXACT_GRAIN_OR_REDUCED_SCOPE_DECISION_REQUIRED
+NODI-G2H-BLOCK-NODI-005,TPD_SOURCE_ALIGNMENT,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,blocked_class,UNCHANGED_FROM_GATE2G,false,false,false,false,NODI_VIEW_BINDING_POLICY_REQUIRED
+NODI-G2H-BLOCK-NODI-006,QCH,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,template_gap_only,UNCHANGED_FROM_GATE2G,false,false,false,false,GATE2E_QCH_RECEIPT_PREFLIGHT_REMAINS_OPEN
+NODI-G2H-BLOCK-NODI-007,LOCAL_Q_V4_STRONG_CLAIMS,CARRY_FORWARD_BLOCKED_OR_REVIEW_ONLY,review_only_or_hard_blocked_class,UNCHANGED_FROM_GATE2G,false,false,false,false,SEPARATE_REVIEW_GATE_REQUIRED
+NODI-G2H-BLOCK-NODI-008,Gate2E-QCH,UNCHANGED_FROM_GATE2F_EDGE,non_edge_workstream,UNCHANGED_FROM_GATE2G,false,false,false,false,formal q_ch / flow-split sidecar receipt package
+NODI-G2H-BLOCK-NODI-009,Gate2E-BINDING,UNCHANGED_FROM_GATE2F_EDGE,non_edge_workstream,UNCHANGED_FROM_GATE2G,false,false,false,false,220/D1200/view-bound repair package

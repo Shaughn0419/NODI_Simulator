@@ -1,0 +1,5 @@
+dashboard_id,topic,status,row_count,policy_approved,formula_use_authorized,accepted_row_expansion_authorized,pass_row_count,blocked_or_missing_count
+NODI-G2H-DASH-001,package receipt,PASS_MANIFEST_REPRODUCED,20,false,false,false,,
+NODI-G2H-DASH-002,structural coverage,STRUCTURAL_COVERAGE_RECEIVED_REVIEW_ONLY_NOT_POLICY_APPROVED,16,false,false,false,16,
+NODI-G2H-DASH-003,loss/error policy decision,EDGE_POLICY_NOT_APPROVED_LOSS_ERROR_GAPS_REMAIN,8,false,false,false,,4
+NODI-G2H-DASH-004,Gate2D freeze,FROZEN_EXACTLY_FOUR_ROWS,4,false,false,false,,

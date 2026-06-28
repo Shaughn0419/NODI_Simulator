@@ -1,0 +1,12 @@
+schema_row_id,field_or_section,required_type,acceptance_requirement,requirement_level,prior_gate2g_schema_rows_reviewed,default_policy_approval_status
+NODI-G2I-EDGE-SCHEMA-001,edge20_resolved_reference_rows,table,one row per referenced edge20 bin with route/view/diameter/bin binding,required,10,NOT_APPROVED
+NODI-G2I-EDGE-SCHEMA-002,edge4_aggregate_rows,table,one row per edge4 aggregate with derivation provenance,required,10,NOT_APPROVED
+NODI-G2I-EDGE-SCHEMA-003,numeric_aggregation_error_bound,number,finite numeric bound with sign/basis/units,required,10,NOT_APPROVED
+NODI-G2I-EDGE-SCHEMA-004,numeric_error_bound_units,string,declared unit or dimensionless basis,required,10,NOT_APPROVED
+NODI-G2I-EDGE-SCHEMA-005,monotonicity_check_input,table/ref,edge20-resolved values and ordering basis,required,10,NOT_APPROVED
+NODI-G2I-EDGE-SCHEMA-006,monotonicity_check_output,enum+evidence,PASS/FAIL/REVIEW_REQUIRED plus details,required,10,NOT_APPROVED
+NODI-G2I-EDGE-SCHEMA-007,conservativeness_check_input,table/ref,upper/lower rule inputs,required,10,NOT_APPROVED
+NODI-G2I-EDGE-SCHEMA-008,conservativeness_check_output,enum+evidence,PASS/FAIL/REVIEW_REQUIRED plus details,required,10,NOT_APPROVED
+NODI-G2I-EDGE-SCHEMA-009,reproducibility_evidence,hash bundle,source artifact SHA/row_count/provenance and validator id,required,10,NOT_APPROVED
+NODI-G2I-EDGE-SCHEMA-010,route_view_diameter_bin_binding,fields,route_key/NODI_view/diameter_nm/edge4_bin/edge20 bins,exact,10,NOT_APPROVED
+NODI-G2I-EDGE-SCHEMA-011,authorization_request_flags,booleans,all default false until explicit future approval,required_false_default,10,NOT_APPROVED

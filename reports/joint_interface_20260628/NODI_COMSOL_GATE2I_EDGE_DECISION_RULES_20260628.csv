@@ -1,0 +1,9 @@
+decision_rule_id,condition,rule_description,decision,policy_approval_status
+NODI-G2I-EDGE-RULE-001,missing_numeric_bound,any missing numeric aggregation error bound,NOT_APPROVED,NOT_APPROVED
+NODI-G2I-EDGE-RULE-002,hash_or_bin_mismatch,any edge20 hash/bin mismatch,BLOCKED,NOT_APPROVED
+NODI-G2I-EDGE-RULE-003,authorization_true,any authorization flag preset true,HARD_FAIL,HARD_FAIL
+NODI-G2I-EDGE-RULE-004,structural_only,structural coverage alone,RECEIPT_ONLY_NOT_APPROVED,NOT_APPROVED
+NODI-G2I-EDGE-RULE-005,qch_binding_inference,QCH/BINDING blockers used to infer EDGE approval,HARD_FAIL,HARD_FAIL
+NODI-G2I-EDGE-RULE-006,non_contiguous_bins,edge20 bins non-contiguous or count not five,BLOCKED,NOT_APPROVED
+NODI-G2I-EDGE-RULE-007,d1200_borrowing,D1200 borrows D900 semantics,HARD_FAIL,HARD_FAIL
+NODI-G2I-EDGE-RULE-008,auto_map_220,220 nm auto-mapped to 300 nm or PRS bins,HARD_FAIL,HARD_FAIL

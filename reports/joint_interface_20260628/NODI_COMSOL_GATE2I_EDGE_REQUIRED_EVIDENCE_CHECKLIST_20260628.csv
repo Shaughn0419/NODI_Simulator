@@ -1,0 +1,11 @@
+checklist_id,required_evidence,required_status_for_review,default_if_missing
+NODI-G2I-EDGE-CHECK-001,edge20-resolved evidence rows present,PRESENT_AND_VALIDATED,NOT_APPROVED
+NODI-G2I-EDGE-CHECK-002,edge4 aggregate derivation provenance present,PRESENT_AND_VALIDATED,NOT_APPROVED
+NODI-G2I-EDGE-CHECK-003,numeric aggregation error bound present with units,PRESENT_AND_VALIDATED,NOT_APPROVED
+NODI-G2I-EDGE-CHECK-004,monotonicity inputs/outputs present,PRESENT_AND_VALIDATED,NOT_APPROVED
+NODI-G2I-EDGE-CHECK-005,conservativeness inputs/outputs present,PRESENT_AND_VALIDATED,NOT_APPROVED
+NODI-G2I-EDGE-CHECK-006,source artifact SHA/row_count/provenance stable,PRESENT_AND_VALIDATED,NOT_APPROVED
+NODI-G2I-EDGE-CHECK-007,route/view/diameter/bin binding exact,PRESENT_AND_VALIDATED,NOT_APPROVED
+NODI-G2I-EDGE-CHECK-008,all authorization request flags default false,PRESENT_AND_VALIDATED,NOT_APPROVED
+NODI-G2I-EDGE-CHECK-009,negative fixtures fail as expected,PRESENT_AND_VALIDATED,NOT_APPROVED
+NODI-G2I-EDGE-CHECK-010,QCH/BINDING carry-forward not used for EDGE approval,PRESENT_AND_VALIDATED,NOT_APPROVED

@@ -1,0 +1,6 @@
+reviewer,focus,finding_severity,finding,unresolved_risk
+Reviewer A,COMSOL Gate2G receipt / SHA / row_count / manifest,PASS,All required COMSOL Gate2G files are audited against manifest and validation.,none
+Reviewer B,structural coverage row semantics and edge20 hash,PASS,"16 structural rows align to NODI Gate2G rows, five contiguous bins, expected hash.",policy still not approved
+Reviewer C,loss/error policy decision correctness,PASS_BLOCKED_AS_EXPECTED,"Structural coverage is received but numeric bounds, monotonicity, and conservativeness remain missing.",Gate2I/Gate2J evidence required
+Reviewer D,Gate2I future contract completeness and negative fixtures,PASS,"Contract covers required schema, decision rules, validation rules, and nine negative fixtures.",none
+Reviewer E,forbidden leakage / no accepted row expansion / QCH-BINDING unchanged,PASS,"All authorization flags remain false; Gate2D, QCH, and BINDING states are unchanged.",none

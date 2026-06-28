@@ -1,0 +1,3 @@
+carry_forward_id,workstream,status,source_rows_reviewed,qch_weighting_authorized,formula_use_authorized,jrc_authorized,required_next_gate
+NODI-G2I-NONEDGE-QCH,QCH,FORMAL_SIDECAR_ABSENT_SCHEMA_READY_NO_WEIGHTING,9,false,false,false,formal q_ch / flow-split sidecar receipt
+NODI-G2I-NONEDGE-BINDING,BINDING,220_D1200_UNBOUND_FAIL_CLOSED_NO_AUTO_MAP,9,false,false,false,220/D1200/view-bound repair package
