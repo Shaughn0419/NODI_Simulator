@@ -1,0 +1,5 @@
+rule_id,source_field,target_field,adapter_scope,policy_change_allowed
+G4B-RULE-001,expected_nodi_disposition,disposition,label normalization only,false
+G4B-RULE-002,forbidden_auth_flag_state,formula_use_authorized,hard-fail trigger,false
+G4B-RULE-003,probe_category,row_kind/disposition routing,schema routing,false
+G4B-RULE-004,not_evidence/template_only,not_evidence/template_only,must remain true,false

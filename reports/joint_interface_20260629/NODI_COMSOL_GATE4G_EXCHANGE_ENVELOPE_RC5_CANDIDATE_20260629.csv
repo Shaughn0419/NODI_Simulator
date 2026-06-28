@@ -1,0 +1,5 @@
+envelope_field,requirement,current_authorization
+producer_manifest,required,false
+probe_expected_disposition_map,required,false
+all_rows_not_evidence,required for producer/probe/template rows,false
+gate2d_ledger_reference,exactly four rows,false

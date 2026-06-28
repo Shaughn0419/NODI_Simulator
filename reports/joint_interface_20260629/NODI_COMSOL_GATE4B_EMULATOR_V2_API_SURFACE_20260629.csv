@@ -1,0 +1,5 @@
+api_id,api,status,authorization_effect
+G4B-API-001,normalize_comsol_gate3_row,READY,none
+G4B-API-002,decide_comsol_gate3_row,READY,none
+G4B-API-003,compare_expected_to_actual,READY,none
+G4B-API-004,classify_schema_delta,READY,none

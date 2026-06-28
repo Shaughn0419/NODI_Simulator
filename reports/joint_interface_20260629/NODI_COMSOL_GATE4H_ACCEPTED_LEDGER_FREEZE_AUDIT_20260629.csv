@@ -1,0 +1,2 @@
+audit_id,expected_rows,actual_rows,audit_status,ledger_issues
+G4H-LEDGER-001,4,4,PASS,Gate2D row 1 lost context-only acceptance|Gate2D row 2 lost context-only acceptance|Gate2D row 3 lost context-only acceptance|Gate2D row 4 lost context-only acceptance

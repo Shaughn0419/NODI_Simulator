@@ -1,0 +1,15 @@
+reviewer,scope,finding,p0_p1_open
+Reviewer A,COMSOL producer manifest receipt,"PASS: no P0/P1, no authorization opened",false
+Reviewer B,package spec not-evidence,"PASS: no P0/P1, no authorization opened",false
+Reviewer C,schema adapter v2,"PASS: no P0/P1, no authorization opened",false
+Reviewer D,probe expected-vs-actual,"PASS: no P0/P1, no authorization opened",false
+Reviewer E,probe mismatch classification,"PASS: no P0/P1, no authorization opened",false
+Reviewer F,critical path no-go mapping,"PASS: no P0/P1, no authorization opened",false
+Reviewer G,dependency metadata no-run,"PASS: no P0/P1, no authorization opened",false
+Reviewer H,command recipe guard,"PASS: no P0/P1, no authorization opened",false
+Reviewer I,mutation v3 receipt,"PASS: no P0/P1, no authorization opened",false
+Reviewer J,mutation taxonomy adapter,"PASS: no P0/P1, no authorization opened",false
+Reviewer K,RC5 field dictionary,"PASS: no P0/P1, no authorization opened",false
+Reviewer L,Gate2D ledger freeze,"PASS: no P0/P1, no authorization opened",false
+Reviewer M,forbidden auth sweep,"PASS: no P0/P1, no authorization opened",false
+Reviewer N,git/report consistency,"PASS: no P0/P1, no authorization opened",false

@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "Gate4A": "PASS_GATE4A_COMSOL_GATE3_PRODUCER_PACKAGE_RECEIPT_NO_POLICY_CONFLICT",
+    "Gate4B": "PASS_GATE4B_INTAKE_EMULATOR_V2_ADAPTER_LAYER_READY_NO_AUTHORIZATION",
+    "Gate4C": "PASS_GATE4C_COMSOL_PROBE_CONFORMANCE_RUN_NO_POLICY_MISMATCH",
+    "Gate4D": "PASS_GATE4D_PRODUCER_CRITICAL_PATH_ASSIMILATED_NO_AUTHORIZATION",
+    "Gate4E": "PASS_GATE4E_DEPENDENCY_GRAPH_METADATA_RECEIVED_NO_EXECUTION",
+    "Gate4F": "PASS_GATE4F_MUTATION_V3_CROSS_VALIDATION_ZERO_UNEXPECTED_PASS",
+    "Gate4G": "PASS_GATE4G_RC5_RECEIVER_CONTRACT_CANDIDATE_REVIEW_ONLY",
+    "Gate4H": "PASS_GATE4H_NO_AUTH_INTEROP_REGRESSION_CLEAN",
+    "producer_spec_rows": 35,
+    "probe_rows": 120,
+    "go_no_go_rows": 36,
+    "dependency_nodes": 160,
+    "dependency_edges": 220,
+    "recipe_rows": 6,
+    "mutation_rows": 760,
+    "mutation_unexpected_pass": 0,
+    "probe_policy_relevant_mismatches": 0,
+    "gate2d_rows": 4,
+    "no_auth_sweep_failures": 0
+  }
+}
