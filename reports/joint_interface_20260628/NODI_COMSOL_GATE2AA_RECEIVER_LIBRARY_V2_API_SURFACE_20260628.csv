@@ -1,0 +1,7 @@
+api_id,function_name,api_status,authorization_effect
+G2AA-API-001,sample_csv_rows,READY_FOR_RECEIVER_VALIDATOR_USE,none
+G2AA-API-002,required_field_status,READY_FOR_RECEIVER_VALIDATOR_USE,none
+G2AA-API-003,row_has_authorization_leak,READY_FOR_RECEIVER_VALIDATOR_USE,none
+G2AA-API-004,classify_forbidden_context_value,READY_FOR_RECEIVER_VALIDATOR_USE,none
+G2AA-API-005,validate_property_case,READY_FOR_RECEIVER_VALIDATOR_USE,none
+G2AA-API-006,validate_rc3_semantic_compatibility,READY_FOR_RECEIVER_VALIDATOR_USE,none

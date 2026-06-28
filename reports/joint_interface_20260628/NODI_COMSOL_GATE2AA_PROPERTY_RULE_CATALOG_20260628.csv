@@ -1,0 +1,9 @@
+rule_id,rule,expected_behavior,authorization_effect
+G2AA-RULE-001,authorization flags true fail,fail_closed_or_allowed_blocked_context,none
+G2AA-RULE-002,missing required binding field fails,fail_closed_or_allowed_blocked_context,none
+G2AA-RULE-003,hash mismatch fails,fail_closed_or_allowed_blocked_context,none
+G2AA-RULE-004,template-only false on synthetic fails,fail_closed_or_allowed_blocked_context,none
+G2AA-RULE-005,not_evidence false on fixture fails,fail_closed_or_allowed_blocked_context,none
+G2AA-RULE-006,blocked forbidden mention is allowed context,fail_closed_or_allowed_blocked_context,none
+G2AA-RULE-007,policy_use_requested without evidence fails,fail_closed_or_allowed_blocked_context,none
+G2AA-RULE-008,formal qch sidecar true without sidecar fails,fail_closed_or_allowed_blocked_context,none

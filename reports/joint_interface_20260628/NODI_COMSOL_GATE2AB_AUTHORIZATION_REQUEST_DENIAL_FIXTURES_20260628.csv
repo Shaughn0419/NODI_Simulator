@@ -1,0 +1,6 @@
+denial_fixture_id,fixture_name,expected_verdict,denial_reason,not_evidence
+G2AB-DENY-001,formula_use_requested_before_edge_error_bounds,DENY_AUTHORIZATION_REQUEST,authorization gate is closed and evidence package is incomplete,true
+G2AB-DENY-002,qch_weighting_requested_without_formal_sidecar,DENY_AUTHORIZATION_REQUEST,authorization gate is closed and evidence package is incomplete,true
+G2AB-DENY-003,binding_acceptance_requested_with_missing_view,DENY_AUTHORIZATION_REQUEST,authorization gate is closed and evidence package is incomplete,true
+G2AB-DENY-004,production_ingestion_requested_from_template,DENY_AUTHORIZATION_REQUEST,authorization gate is closed and evidence package is incomplete,true
+G2AB-DENY-005,jrc_requested_from_proxy_context,DENY_AUTHORIZATION_REQUEST,authorization gate is closed and evidence package is incomplete,true

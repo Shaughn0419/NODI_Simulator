@@ -1,0 +1,5 @@
+delta_id,metric,nodi_gate2s_value,comsol_gate2s_x_value,current_nodi_rescan_value,delta_class,authorization_impact,resolution
+G2Y-METHOD-001,matched_artifacts,6435,7444,6502,scan_scope_and_keyword_method_difference,none,registered; use path/SHA rows for artifact identity reconciliation
+G2Y-METHOD-002,fingerprint_sample_size,43,37,750,sampling_depth_difference,none,current NODI Gate2Y fingerprints at least 750 relevant files when available
+G2Y-METHOD-003,safe_read_skip_count,28,2478,29,safe_read_threshold_and_scope_difference,none,skipped large files remain explicit review-only references
+G2Y-METHOD-004,mutation_battery_size,136,204,>=300,mutation_depth_difference,none,Gate2AA v2 raises NODI property mutation battery to at least 300

@@ -1,0 +1,13 @@
+reviewer,review_scope,finding,p0_p1_open
+A,cross-census method/delta,"PASS: methodology deltas classified, no auth impact",false
+B,artifact identity / SHA / fingerprint,PASS: true mismatches treated as review deltas,false
+C,EDGE dossier evidence honesty,PASS: EDGE remains not approved,false
+D,QCH dossier evidence honesty,PASS: no formal sidecar,false
+E,BINDING dossier evidence honesty,PASS: fail-closed semantics preserved,false
+F,receiver library v2 API,PASS: property and RC3 validators available,false
+G,mutation v2 coverage,PASS: >=300 cases,false
+H,unexpected pass / false controls,PASS: zero unexpected pass,false
+I,pre-authorization board boundaries,PASS: authorization closed,false
+J,RC3 conformance,PASS: contract-only RC3 candidate,false
+K,dossier-aware no-auth regression,PASS: no drift,false
+L,git/report consistency,PASS: scoped outputs only,false

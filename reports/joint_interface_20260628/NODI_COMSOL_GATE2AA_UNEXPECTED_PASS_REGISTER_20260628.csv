@@ -1,0 +1,2 @@
+mutation_id,property_family,mutation_name,expected_result,observed_result,validation_status
+NONE,NONE,NO_UNEXPECTED_PASS,not_applicable,none,PASS_NO_UNEXPECTED_PASS

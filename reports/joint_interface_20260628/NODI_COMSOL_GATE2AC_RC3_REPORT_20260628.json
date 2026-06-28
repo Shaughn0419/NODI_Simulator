@@ -1,0 +1,33 @@
+{
+  "summary": {
+    "Gate2Y": "PASS_GATE2Y_CROSS_CENSUS_RECONCILED_METHOD_DELTAS_REGISTERED_NO_AUTHORIZATION",
+    "Gate2Z": "PASS_GATE2Z_DEEP_EVIDENCE_DOSSIERS_REGISTERED_REVIEW_ONLY_NO_AUTHORIZATION",
+    "Gate2AA": "PASS_GATE2AA_PROPERTY_MUTATION_V2_ZERO_UNEXPECTED_PASS_NO_AUTHORIZATION",
+    "Gate2AB": "PASS_GATE2AB_PRE_AUTH_BOARD_PACKAGE_READY_AUTHORIZATION_CLOSED",
+    "Gate2AC": "PASS_GATE2AC_BILATERAL_CONFORMANCE_RC3_CONTRACT_ONLY_NO_AUTHORIZATION",
+    "Gate2AD": "PASS_GATE2AD_DOSSIER_AWARE_NO_AUTH_REGRESSION_CLEAN",
+    "census_scanned": 8744,
+    "census_matched": 6502,
+    "census_fingerprinted": 750,
+    "census_skipped_large": 29,
+    "dossier_count": 75,
+    "dossier_counts_by_workstream": {
+      "EDGE": 25,
+      "QCH": 23,
+      "BINDING": 15,
+      "V4": 9,
+      "LOCAL_Q": 1,
+      "TPD_PRS_PROXY": 2
+    },
+    "mutation_total": 320,
+    "mutation_unexpected_pass": 0,
+    "false_positive_controls": 12,
+    "false_negative_controls": 15,
+    "gate2d_accepted_rows": 4,
+    "gate2d_ledger_issues": [],
+    "edge_policy": "NOT_APPROVED",
+    "qch_formal_sidecar": "ABSENT",
+    "binding_state": "FAIL_CLOSED",
+    "authorization_opened": false
+  }
+}

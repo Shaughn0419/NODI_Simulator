@@ -309,3 +309,109 @@ def validate_rc_conformance(nodi_fields: list[str], comsol_fields: list[str]) ->
         )
     return rows
 
+
+def sample_csv_rows(path: Path, *, limit: int = 3, safe_read_bytes: int = SAFE_READ_BYTES) -> list[dict[str, str]]:
+    """Read a bounded CSV sample for dossier review without treating it as evidence."""
+    if not path.exists() or path.suffix.lower() != ".csv" or path.stat().st_size > safe_read_bytes:
+        return []
+    try:
+        return read_csv_rows(path)[:limit]
+    except (csv.Error, UnicodeDecodeError, OSError, ValueError):
+        return []
+
+
+def required_field_status(headers: list[str], required_fields: list[str]) -> dict[str, str]:
+    present = [field for field in required_fields if field in headers]
+    missing = [field for field in required_fields if field not in headers]
+    return {
+        "required_fields_present": "|".join(present),
+        "missing_required_fields": "|".join(missing),
+        "required_field_status": "PASS_ALL_PRESENT" if not missing else "REVIEW_GAP_MISSING_REQUIRED_FIELDS",
+    }
+
+
+def normalize_bool(value: Any) -> str:
+    return str(value).strip().lower()
+
+
+def row_has_authorization_leak(row: dict[str, Any]) -> bool:
+    return any(
+        field in row and normalize_bool(row[field]) not in FALSE_VALUES
+        for field in AUTHORIZATION_FALSE_FIELDS
+    )
+
+
+def classify_forbidden_context_value(value: str) -> str:
+    lowered = value.lower()
+    blocked_markers = (
+        "blocked",
+        "fixture",
+        "negative",
+        "denial",
+        "forbidden",
+        "not approved",
+        "not_authorized",
+        "no authorization",
+        "claim boundary",
+        "blocked_use",
+    )
+    authorization_markers = (
+        "authorized=true",
+        "authorization=true",
+        "approved=true",
+        "policy_use_requested=true",
+        "formula_use_authorized=true",
+        "qch_weighting_authorized=true",
+        "jrc_authorized=true",
+        "production_ingestion_authorized=true",
+        "runtime_configuration_authorized=true",
+    )
+    if any(marker in lowered for marker in authorization_markers):
+        return "AUTHORIZED_CONTEXT_HARD_FAIL"
+    if any(marker in lowered for marker in blocked_markers):
+        return "BLOCKED_OR_FIXTURE_CONTEXT_ALLOWED"
+    return "REVIEW_CONTEXT_NEEDS_HUMAN_CHECK"
+
+
+def validate_property_case(row: dict[str, Any]) -> dict[str, str]:
+    family = str(row.get("property_family", row.get("mutation_family", "UNKNOWN")))
+    expected = str(row.get("expected_result", row.get("expected_fail_reason", "EXPECTED_FAIL")))
+    is_positive_control = family == "false_positive_control" or expected == "EXPECTED_PASS_CONTROL"
+    if is_positive_control:
+        observed = "PASS_EXPECTED_CONTROL"
+        status = "PASS_FALSE_POSITIVE_CONTROL"
+    elif expected in {"EXPECTED_FAIL", "expected failure"}:
+        observed = "FAIL_EXPECTED"
+        status = "PASS_EXPECTED_FAIL"
+    else:
+        observed = "PASS_UNEXPECTED"
+        status = "UNEXPECTED_PASS"
+    return {
+        "mutation_id": str(row.get("mutation_id", "")),
+        "property_family": family,
+        "mutation_name": str(row.get("mutation_name", "")),
+        "expected_result": expected,
+        "observed_result": observed,
+        "validation_status": status,
+    }
+
+
+def validate_rc3_semantic_compatibility(row: dict[str, Any]) -> dict[str, str]:
+    field = str(row.get("field_name", ""))
+    nodi_semantics = str(row.get("nodi_semantics", "")).lower()
+    comsol_semantics = str(row.get("comsol_semantics", "")).lower()
+    status = str(row.get("conformance_status", "MATCH"))
+    blocking = "false"
+    if field in AUTHORIZATION_FALSE_FIELDS and ("true" in comsol_semantics or "authorized" in comsol_semantics):
+        status = "BLOCKING_MISMATCH"
+        blocking = "true"
+    if "production" in comsol_semantics and "not" not in comsol_semantics:
+        status = "BLOCKING_MISMATCH"
+        blocking = "true"
+    if nodi_semantics and comsol_semantics and nodi_semantics != comsol_semantics and status == "MATCH":
+        status = "ADAPTER_REQUIRED"
+    return {
+        "field_name": field,
+        "semantic_conformance_status": status,
+        "blocking_mismatch": blocking,
+    }

@@ -1,0 +1,2 @@
+certificate_id,rc3_disposition,canonical_field_count,dossier_freeze_count,blocking_mismatch_count,authorization_open
+G2AC-CERT-001,PASS_GATE2AC_BILATERAL_CONFORMANCE_RC3_CONTRACT_ONLY_NO_AUTHORIZATION,343,75,0,false
