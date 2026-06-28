@@ -1,0 +1,5 @@
+accepted_context_row_id,source_comsol_gate2d_candidate_row_id,route_key,NODI_view,diameter_nm,tpd_proxy_aggregation_basis,accepted_scope,not_grain_ingestion,not_formula,not_weighting,not_jrc,not_production_or_runtime
+NODI-G2D-ACCEPT-001,G2D-RS-CAND-001,660/W800/D900,fixed_660_gold,300,residence_time_weighted,artifact_level_context_only,true,true,true,true,true
+NODI-G2D-ACCEPT-002,G2D-RS-CAND-002,660/W800/D900,fixed_660_gold,300,velocity_weighted,artifact_level_context_only,true,true,true,true,true
+NODI-G2D-ACCEPT-003,G2D-RS-CAND-003,660/W800/D900,per_wavelength_gold,300,residence_time_weighted,artifact_level_context_only,true,true,true,true,true
+NODI-G2D-ACCEPT-004,G2D-RS-CAND-004,660/W800/D900,per_wavelength_gold,300,velocity_weighted,artifact_level_context_only,true,true,true,true,true
