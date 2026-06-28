@@ -1,0 +1,5 @@
+reviewer,focus,finding_severity,finding,unresolved_risk
+Reviewer A,COMSOL evidence path/SHA/row_count/manifest,PASS,"COMSOL Gate2F evidence paths, hashes, row counts, manifest, and validation are reproducible.",none
+Reviewer B,16-row grouping concordance and edge20 hash,PASS,"All 16 COMSOL EDGE evidence rows match NODI Gate2F grouping by scope key, edge20 group, row id, and hash.",policy approval still not granted
+Reviewer C,loss/error policy gap and next evidence schema,PASS_BLOCKED_AS_EXPECTED,"Information-loss placeholders are present, but numeric bounds, monotonicity, conservativeness, and approval evidence remain missing.",Gate2H closure evidence required
+Reviewer D,forbidden leakage / no accepted expansion / QCH-BINDING unchanged,PASS,All authorization fields remain false; Gate2D stays four rows; QCH and BINDING are unchanged.,none

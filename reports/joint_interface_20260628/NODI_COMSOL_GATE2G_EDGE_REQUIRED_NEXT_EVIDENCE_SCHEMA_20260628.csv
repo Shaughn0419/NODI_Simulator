@@ -1,0 +1,11 @@
+schema_row_id,field_name,required_type,acceptance_requirement,status_requirement,required_next_gate
+NODI-G2G-EDGE-NEXT-SCHEMA-001,edge4_bin_label,string,edge_norm_0p00_0p25 style label,exact,Gate2H-EDGE-LOSS-ERROR-CLOSURE
+NODI-G2G-EDGE-NEXT-SCHEMA-002,nodi_edge20_definition_hash,sha256,b8b3358e7218e3ebc704c2c8dcaf2c9a0feb15283fa704610b39f8afc68d5ca3,exact,Gate2H-EDGE-LOSS-ERROR-CLOSURE
+NODI-G2G-EDGE-NEXT-SCHEMA-003,candidate_edge20_bins_covered,pipe-delimited ids,five edge20 bins per quarter,exact,Gate2H-EDGE-LOSS-ERROR-CLOSURE
+NODI-G2G-EDGE-NEXT-SCHEMA-004,information_loss_description,string,bounded loss semantics,required,Gate2H-EDGE-LOSS-ERROR-CLOSURE
+NODI-G2G-EDGE-NEXT-SCHEMA-005,numeric_aggregation_error_bound,number or bounded category,not MISSING,required,Gate2H-EDGE-LOSS-ERROR-CLOSURE
+NODI-G2G-EDGE-NEXT-SCHEMA-006,numeric_error_bound_units,string,units or dimensionless basis,required,Gate2H-EDGE-LOSS-ERROR-CLOSURE
+NODI-G2G-EDGE-NEXT-SCHEMA-007,monotonicity_check_result,enum,PASS/FAIL/REVIEW_REQUIRED with evidence,required,Gate2H-EDGE-LOSS-ERROR-CLOSURE
+NODI-G2G-EDGE-NEXT-SCHEMA-008,conservativeness_check_result,enum,PASS/FAIL/REVIEW_REQUIRED with evidence,required,Gate2H-EDGE-LOSS-ERROR-CLOSURE
+NODI-G2G-EDGE-NEXT-SCHEMA-009,reproducibility_checks,structured refs,source SHA/row_count/validator id,required,Gate2H-EDGE-LOSS-ERROR-CLOSURE
+NODI-G2G-EDGE-NEXT-SCHEMA-010,formula_exclusion_flags,booleans,all formula/direct/grain/JRC/q_ch flags false unless future gate,required,Gate2H-EDGE-LOSS-ERROR-CLOSURE

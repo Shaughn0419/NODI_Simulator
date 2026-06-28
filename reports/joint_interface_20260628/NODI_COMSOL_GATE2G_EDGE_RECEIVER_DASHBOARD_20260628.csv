@@ -1,0 +1,5 @@
+dashboard_id,topic,status,row_count,policy_approved,accepted_row_expansion_authorized,formula_use_authorized,required_next_gate,concordant_row_count,gate2d_accepted_row_count
+NODI-G2G-DASH-001,COMSOL Gate2F evidence receipt,RECEIVED_REVIEW_ONLY_EVIDENCE,8_artifacts,false,false,false,Gate2H-EDGE-LOSS-ERROR-CLOSURE,,
+NODI-G2G-DASH-002,16-row grouping concordance,CONCORDANT_NOT_POLICY_APPROVED,16,false,false,false,Gate2H-EDGE-LOSS-ERROR-CLOSURE,16,
+NODI-G2G-DASH-003,loss/error policy gap,POLICY_GAP_OPEN_NOT_APPROVED,8,false,false,false,Gate2H-EDGE-LOSS-ERROR-CLOSURE,,
+NODI-G2G-DASH-004,Gate2D/QCH/BINDING carry-forward,UNCHANGED_BLOCKED_OR_REVIEW_ONLY,9,false,false,false,separate future gates,,4
