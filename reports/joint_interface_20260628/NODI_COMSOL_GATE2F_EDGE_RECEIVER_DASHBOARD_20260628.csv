@@ -1,0 +1,4 @@
+dashboard_id,workstream,status,row_count,accepted_row_expansion_authorized,formula_use_authorized,can_enter_jrc,required_next_gate,derived_grouping_row_count,blocked_grouping_row_count
+NODI-G2F-DASH-001,Gate2D-FREEZE,FROZEN_ACCEPTED_LEDGER_EXACTLY_FOUR_ROWS,4,false,false,false,none for Gate2F EDGE preflight,,
+NODI-G2F-DASH-002,Gate2F-EDGE,REVIEW_ONLY_GROUPING_PREFLIGHT_DERIVED,16,false,false,false,loss/error semantics review,16,0
+NODI-G2F-DASH-003,Gate2F-NONEDGE,UNCHANGED_SCHEMA_READY_NO_FORMAL_SIDECAR; UNCHANGED_220_D1200_UNBOUND_FAIL_CLOSED,2,false,false,false,QCH/BINDING future packages; no state change in Gate2F EDGE,,

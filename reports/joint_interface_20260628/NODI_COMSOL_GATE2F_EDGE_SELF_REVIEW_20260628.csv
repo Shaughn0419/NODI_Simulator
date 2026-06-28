@@ -1,0 +1,5 @@
+reviewer,focus,finding_severity,finding,unresolved_risk
+Reviewer A,source evidence/SHA/row_count,PASS,"COMSOL EDGE skeleton, packet, dashboard, validation, and manifest are registered as read-only evidence.",none
+Reviewer B,edge20 definition/hash/grouping derivation,PASS,"edge4 quarter-bin candidates are derived from NODI edge20 snapshot boundaries and hash, not from direct PRS bin authorization.",none for preflight; policy approval still pending
+Reviewer C,loss/error semantics and review-only boundary,PASS_BLOCKED_AS_EXPECTED,"Grouping can be reviewed, but loss/error semantics remain pending and policy is not approved.",loss/error bounds and conservativeness evidence required
+Reviewer D,forbidden claim leakage and no accepted row expansion,PASS,"All formula, direct-bin, grain-ingestion, weighting, JRC, runtime, and production flags remain false.",none
