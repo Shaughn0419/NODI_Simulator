@@ -1,0 +1,29 @@
+{
+  "date": "20260629",
+  "disposition": "PASS_GATE5F_MUTATION_CROSS_REPLAY_ZERO_UNEXPECTED_PASS",
+  "summary": {
+    "comsol_manifest_rows": 36,
+    "comsol_validation_rows": 13,
+    "comsol_artifact_receipt_rows": 15,
+    "comsol_rc5_field_map_rows": 351,
+    "comsol_probe_rows": 120,
+    "comsol_rc5_index_rows": 8,
+    "comsol_authorization_dependency_rows": 36,
+    "comsol_command_guard_rows": 6,
+    "comsol_mutation_v4_rows": 960,
+    "nodi_gate4_probe_actual_rows": 120,
+    "gate2d_rows": 4,
+    "gate5_pending_rows": 120,
+    "gate5_pending_closed_rows": 120,
+    "gate5a_receipt_blocking_mismatches": 0,
+    "gate5a_self_hash_drift_rows": 3,
+    "gate5_true_policy_conflicts": 0,
+    "gate5_rc5_semantic_conflicts": 0,
+    "gate5_adapter_proposals": 104,
+    "gate5_adapter_negative_controls": 104,
+    "gate5_mutation_combined_rows": 1792,
+    "gate5_mutation_unexpected_pass": 0,
+    "gate5_no_auth_sweep_failures": 0
+  },
+  "authorization": "no formula, no q_ch weighting, no JRC, no production/runtime"
+}

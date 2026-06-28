@@ -1,0 +1,2 @@
+sweep_id,source_file,row_index,field_name,field_value,positive_authorization_detected,evidence_accepted_detected,sweep_status
+G5H-SWEEP-NONE,Gate2D/Gate3/Gate4/Gate5 CSV outputs,0,none,none,false,false,PASS_NO_AUTH

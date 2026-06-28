@@ -1,0 +1,2 @@
+certificate_id,gate2d_accepted_ledger_rows,edge_policy_state,qch_formal_sidecar_state,binding_state,rc5_lock_candidate,runtime_or_production_authorized,weighting_or_jrc_authorized,certificate_status
+G5G-CERT-001,4,NOT_APPROVED,ABSENT,FAIL_CLOSED,RC5_LOCK_CANDIDATE_REVIEW_ONLY,false,false,PASS_NO_AUTHORIZATION

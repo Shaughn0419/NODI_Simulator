@@ -1,0 +1,7 @@
+reviewer_id,dimension,finding,severity,status
+Reviewer A,provenance/SHA,COMSOL Gate4 manifest rows are reproducible or blocked before PASS,P0/P1 none,PASS
+Reviewer B,row_count drift,Gate2D remains exactly 4 rows; Gate5 thresholds checked,P0/P1 none,PASS
+Reviewer C,RC5 semantics,RC5 lock is review-only and has zero semantic conflicts,P0/P1 none,PASS
+Reviewer D,adapter no-verdict-change,Adapter proposals are normalization-only with negative controls,P0/P1 none,PASS
+Reviewer E,forbidden-claim leakage,No positive authorization or evidence acceptance detected,P0/P1 none,PASS
+Reviewer F,cross-side pending closure,COMSOL pending rows are closed by NODI Gate4C actuals without policy conflict,P0/P1 none,PASS
