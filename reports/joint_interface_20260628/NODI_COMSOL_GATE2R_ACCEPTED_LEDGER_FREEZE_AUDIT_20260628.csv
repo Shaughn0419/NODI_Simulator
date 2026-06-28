@@ -1,0 +1,2 @@
+audit_id,artifact,accepted_row_count,expected_row_count,audit_status,accepted_row_expansion_authorized
+NODI-G2R-LEDGER-001,NODI_COMSOL_GATE2D_ACCEPTED_REDUCED_SCOPE_CONTEXT_LEDGER_20260628.csv,4,4,PASS_FROZEN_EXACTLY_4,false

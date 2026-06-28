@@ -1,0 +1,9 @@
+go_no_go_id,gate_or_action,decision,reason,authorization_opened
+NODI-G2Q-GNG-001,EDGE policy review,NO_GO,missing real evidence bounds and diagnostics,false
+NODI-G2Q-GNG-002,EDGE template round-trip,GO,template-only harness ready,false
+NODI-G2Q-GNG-003,QCH weighting,NO_GO,formal sidecar absent,false
+NODI-G2Q-GNG-004,QCH formal sidecar receipt,GO_WHEN_ARTIFACT_EXISTS,contract ready but no sidecar,false
+NODI-G2Q-GNG-005,BINDING accepted row expansion,NO_GO,220/D1200/UNBOUND fail closed,false
+NODI-G2Q-GNG-006,BINDING repair receipt,GO_WHEN_ARTIFACT_EXISTS,contract ready,false
+NODI-G2Q-GNG-007,production/runtime,NO_GO,not in Gate2 scope,false
+NODI-G2Q-GNG-008,JRC/winner/yield/detection_probability,NO_GO,hard blocked,false

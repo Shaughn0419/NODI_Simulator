@@ -1,0 +1,7 @@
+change_rule_id,change_type,change_class,required_receiver_action,authorization_default
+NODI-G2P-CHANGE-001,schema field removal,breaking,requires RC2 and receiver harness update,false
+NODI-G2P-CHANGE-002,authorization flag default true,hard fail,not allowed in any RC,false
+NODI-G2P-CHANGE-003,template-only changed to evidence,breaking,requires evidence receipt gate,false
+NODI-G2P-CHANGE-004,EDGE policy approval requested,breaking,requires real evidence gate and no-auth review,false
+NODI-G2P-CHANGE-005,QCH formal sidecar submitted,reviewable,requires Gate2Q/QCH formal sidecar receipt,false
+NODI-G2P-CHANGE-006,BINDING repair submitted,reviewable,requires exact no-auto-map validation,false

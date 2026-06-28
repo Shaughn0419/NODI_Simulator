@@ -1,0 +1,3 @@
+delta_id,delta_area,nodi_rows_reviewed,comsol_rows_reviewed,delta_status,blocking_mismatch,adapter_gap_count,authorization_impact
+NODI-G2N-DELTA-001,field_rule_fixture_crosswalk,28,86,MATCH_OR_ADAPTER_REQUIRED,false,6,none; all flags remain false
+NODI-G2N-DELTA-002,template_not_evidence_semantics,1,35,MATCH,false,0,none

@@ -1,0 +1,25 @@
+{
+  "gate": "Gate2R",
+  "date_stamp": "20260628",
+  "gate2n_disposition": "PASS_GATE2N_COMSOL_JKLM_SUBMISSION_RECEIPT_CONCORDANT_NO_AUTHORIZATION",
+  "gate2o_disposition": "PASS_GATE2O_ROUND_TRIP_SYNTHETIC_EXCHANGE_HARNESS_READY_NOT_EVIDENCE_NO_AUTHORIZATION",
+  "gate2p_disposition": "PASS_GATE2P_INTERFACE_FREEZE_CANDIDATE_RC1_CONTRACT_ONLY_NO_AUTHORIZATION",
+  "gate2q_disposition": "PASS_GATE2Q_REAL_EVIDENCE_WORK_ORDER_BACKLOG_READY_NO_AUTHORIZATION",
+  "gate2r_disposition": "PASS_GATE2R_NO_AUTHORIZATION_REGRESSION_SWEEP_CLEAN",
+  "gate2d_accepted_row_count": 4,
+  "row_counts": {
+    "comsol_manifest": 30,
+    "comsol_validation": 16,
+    "edge_template_v2": 20,
+    "negative_concordance": 27
+  },
+  "summary": {
+    "comsol_package_receipt_verdict": "CONCORDANT_NO_AUTHORIZATION",
+    "round_trip_dry_run_verdict": "TEMPLATE_ONLY_NOT_EVIDENCE_EXPECTED_FAILS_CONCORDANT",
+    "interface_freeze_rc1": "CONTRACT_FREEZE_CANDIDATE_ONLY",
+    "edge_policy_status": "NOT_APPROVED",
+    "qch_formal_sidecar_status": "NO_FORMAL_QCH_SIDECAR_PRESENT",
+    "binding_status": "FAIL_CLOSED_NO_AUTO_MAP_NO_D1200_BORROW_UNBOUND_VIEW_BLOCKED",
+    "authorization_opened": false
+  }
+}

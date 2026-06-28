@@ -1,0 +1,8 @@
+backlog_id,workstream,owner_side,required_artifact,acceptance_check,blocked_use_until_pass,expected_receiver_harness,p0_p1_risks,can_proceed_without_COMSOL_run,requires_future_authorization
+NODI-G2Q-QCH-001,QCH,COMSOL,formal sidecar CSV with no weighting flags,formal q_ch / flow-split sidecar,q_ch weighting stays blocked,Gate2L QCH harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-QCH-002,QCH,COMSOL,exact NODI-bound binding columns,route/view/diameter/bin binding,q_ch weighting stays blocked,Gate2L QCH harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-QCH-003,QCH,COMSOL,q_ch and flow_split units,units,q_ch weighting stays blocked,Gate2L QCH harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-QCH-004,QCH,COMSOL,normalization basis and denominator,normalization,q_ch weighting stays blocked,Gate2L QCH harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-QCH-005,QCH,COMSOL,source solve id/hash,source solve,q_ch weighting stays blocked,Gate2L QCH harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-QCH-006,QCH,COMSOL,geometry provenance hash,geometry hash,q_ch weighting stays blocked,Gate2L QCH harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-QCH-007,QCH,COMSOL,surface/volume definition,integration definition,q_ch weighting stays blocked,Gate2L QCH harness,authorization leakage; hash drift; semantic auto-map,true,true

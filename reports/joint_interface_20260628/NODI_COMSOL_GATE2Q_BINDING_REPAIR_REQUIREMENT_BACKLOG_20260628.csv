@@ -1,0 +1,5 @@
+backlog_id,workstream,owner_side,required_artifact,acceptance_check,blocked_use_until_pass,expected_receiver_harness,p0_p1_risks,can_proceed_without_COMSOL_run,requires_future_authorization
+NODI-G2Q-BINDING-001,BINDING,COMSOL,direct NODI grain or explicit policy; no auto-map,220 nm repair,accepted expansion stays blocked,Gate2L BINDING harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-BINDING-002,BINDING,COMSOL,exact D1200/300 grain or explicit reduced-scope decision; no D900 borrowing,D1200 repair,accepted expansion stays blocked,Gate2L BINDING harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-BINDING-003,BINDING,COMSOL,explicit NODI_view binding for source/alignment rows,UNBOUND view repair,accepted expansion stays blocked,Gate2L BINDING harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-BINDING-004,BINDING,COMSOL,route/view/diameter/bin exact binding sidecar,TPD source alignment,accepted expansion stays blocked,Gate2L BINDING harness,authorization leakage; hash drift; semantic auto-map,true,true

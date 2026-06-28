@@ -1,0 +1,9 @@
+reviewer,scope,finding,p0_p1_open
+Reviewer A,cross-repo manifest/SHA/row_count receipt,PASS manifest reproduced,false
+Reviewer B,contract delta and adapter gaps,PASS no blocking mismatch,false
+Reviewer C,round-trip harness / fixture concordance,PASS expected fails concordant,false
+Reviewer D,interface freeze RC1 consistency,PASS contract-only freeze candidate,false
+Reviewer E,real evidence backlog usefulness and separation,PASS EDGE/QCH/BINDING separate,false
+Reviewer F,forbidden leakage / authorization flags / no accepted expansion,PASS no auth opened,false
+Reviewer G,QCH no formal sidecar/no weighting,PASS no promotion,false
+Reviewer H,BINDING fail-closed and no auto-map,PASS fail-closed,false

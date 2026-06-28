@@ -1,0 +1,5 @@
+schema_map_id,workstream,schema_version,description,source_row_count,rc1_status,production_runtime_authorized
+NODI-G2P-SCHEMA-EDGE,EDGE,2.0-template,Gate2K template v2,20,FREEZE_CANDIDATE_CONTRACT_ONLY,false
+NODI-G2P-SCHEMA-QCH,QCH,2.0-template,Gate2L QCH formal sidecar template v2; not formal sidecar,4,FREEZE_CANDIDATE_CONTRACT_ONLY,false
+NODI-G2P-SCHEMA-BINDING,BINDING,2.0-template,Gate2L binding repair template v2,4,FREEZE_CANDIDATE_CONTRACT_ONLY,false
+NODI-G2P-SCHEMA-NO_AUTH_GUARDRAILS,NO_AUTH_GUARDRAILS,RC1,authorization false-by-default,20,FREEZE_CANDIDATE_CONTRACT_ONLY,false

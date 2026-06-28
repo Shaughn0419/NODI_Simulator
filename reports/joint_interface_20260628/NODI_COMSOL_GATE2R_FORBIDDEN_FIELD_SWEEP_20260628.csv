@@ -1,0 +1,495 @@
+sweep_id,source_group,forbidden_term,term_present,presence_interpretation,sweep_status
+NODI-G2R-FORBID-0001,group_1,q_ch weighting,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0002,group_1,q_ch*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0003,group_1,q_ch*chi*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0004,group_1,chi_selected,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0005,group_1,route_score,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0006,group_1,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0007,group_1,yield,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0008,group_1,winner,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0009,group_1,detection_probability,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0010,group_1,wet pass probability,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0011,group_1,clogging rate,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0012,group_1,time-to-clog,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0013,group_1,recovery,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0014,group_1,fabrication release,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0015,group_1,runtime configuration,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0016,group_1,production ingestion,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0017,group_1,formula use,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0018,group_1,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0019,group_1,grain-level ingestion,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0020,group_2,q_ch weighting,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0021,group_2,q_ch*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0022,group_2,q_ch*chi*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0023,group_2,chi_selected,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0024,group_2,route_score,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0025,group_2,JOINT_ROUTE_CLASS/JRC,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0026,group_2,yield,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0027,group_2,winner,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0028,group_2,detection_probability,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0029,group_2,wet pass probability,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0030,group_2,clogging rate,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0031,group_2,time-to-clog,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0032,group_2,recovery,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0033,group_2,fabrication release,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0034,group_2,runtime configuration,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0035,group_2,production ingestion,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0036,group_2,formula use,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0037,group_2,direct PRS edge20 bin use,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0038,group_2,grain-level ingestion,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0039,group_3,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0040,group_3,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0041,group_3,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0042,group_3,chi_selected,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0043,group_3,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0044,group_3,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0045,group_3,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0046,group_3,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0047,group_3,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0048,group_3,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0049,group_3,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0050,group_3,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0051,group_3,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0052,group_3,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0053,group_3,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0054,group_3,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0055,group_3,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0056,group_3,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0057,group_3,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0058,group_4,q_ch weighting,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0059,group_4,q_ch*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0060,group_4,q_ch*chi*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0061,group_4,chi_selected,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0062,group_4,route_score,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0063,group_4,JOINT_ROUTE_CLASS/JRC,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0064,group_4,yield,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0065,group_4,winner,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0066,group_4,detection_probability,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0067,group_4,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0068,group_4,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0069,group_4,time-to-clog,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0070,group_4,recovery,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0071,group_4,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0072,group_4,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0073,group_4,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0074,group_4,formula use,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0075,group_4,direct PRS edge20 bin use,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0076,group_4,grain-level ingestion,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0077,group_5,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0078,group_5,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0079,group_5,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0080,group_5,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0081,group_5,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0082,group_5,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0083,group_5,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0084,group_5,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0085,group_5,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0086,group_5,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0087,group_5,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0088,group_5,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0089,group_5,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0090,group_5,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0091,group_5,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0092,group_5,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0093,group_5,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0094,group_5,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0095,group_5,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0096,group_6,q_ch weighting,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0097,group_6,q_ch*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0098,group_6,q_ch*chi*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0099,group_6,chi_selected,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0100,group_6,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0101,group_6,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0102,group_6,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0103,group_6,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0104,group_6,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0105,group_6,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0106,group_6,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0107,group_6,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0108,group_6,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0109,group_6,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0110,group_6,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0111,group_6,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0112,group_6,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0113,group_6,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0114,group_6,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0115,group_7,q_ch weighting,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0116,group_7,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0117,group_7,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0118,group_7,chi_selected,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0119,group_7,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0120,group_7,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0121,group_7,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0122,group_7,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0123,group_7,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0124,group_7,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0125,group_7,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0126,group_7,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0127,group_7,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0128,group_7,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0129,group_7,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0130,group_7,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0131,group_7,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0132,group_7,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0133,group_7,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0134,group_8,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0135,group_8,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0136,group_8,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0137,group_8,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0138,group_8,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0139,group_8,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0140,group_8,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0141,group_8,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0142,group_8,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0143,group_8,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0144,group_8,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0145,group_8,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0146,group_8,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0147,group_8,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0148,group_8,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0149,group_8,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0150,group_8,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0151,group_8,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0152,group_8,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0153,group_9,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0154,group_9,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0155,group_9,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0156,group_9,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0157,group_9,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0158,group_9,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0159,group_9,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0160,group_9,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0161,group_9,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0162,group_9,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0163,group_9,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0164,group_9,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0165,group_9,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0166,group_9,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0167,group_9,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0168,group_9,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0169,group_9,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0170,group_9,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0171,group_9,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0172,group_10,q_ch weighting,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0173,group_10,q_ch*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0174,group_10,q_ch*chi*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0175,group_10,chi_selected,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0176,group_10,route_score,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0177,group_10,JOINT_ROUTE_CLASS/JRC,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0178,group_10,yield,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0179,group_10,winner,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0180,group_10,detection_probability,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0181,group_10,wet pass probability,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0182,group_10,clogging rate,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0183,group_10,time-to-clog,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0184,group_10,recovery,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0185,group_10,fabrication release,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0186,group_10,runtime configuration,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0187,group_10,production ingestion,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0188,group_10,formula use,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0189,group_10,direct PRS edge20 bin use,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0190,group_10,grain-level ingestion,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0191,group_11,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0192,group_11,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0193,group_11,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0194,group_11,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0195,group_11,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0196,group_11,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0197,group_11,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0198,group_11,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0199,group_11,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0200,group_11,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0201,group_11,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0202,group_11,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0203,group_11,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0204,group_11,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0205,group_11,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0206,group_11,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0207,group_11,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0208,group_11,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0209,group_11,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0210,group_12,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0211,group_12,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0212,group_12,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0213,group_12,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0214,group_12,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0215,group_12,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0216,group_12,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0217,group_12,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0218,group_12,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0219,group_12,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0220,group_12,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0221,group_12,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0222,group_12,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0223,group_12,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0224,group_12,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0225,group_12,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0226,group_12,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0227,group_12,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0228,group_12,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0229,group_13,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0230,group_13,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0231,group_13,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0232,group_13,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0233,group_13,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0234,group_13,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0235,group_13,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0236,group_13,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0237,group_13,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0238,group_13,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0239,group_13,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0240,group_13,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0241,group_13,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0242,group_13,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0243,group_13,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0244,group_13,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0245,group_13,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0246,group_13,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0247,group_13,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0248,group_14,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0249,group_14,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0250,group_14,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0251,group_14,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0252,group_14,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0253,group_14,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0254,group_14,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0255,group_14,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0256,group_14,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0257,group_14,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0258,group_14,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0259,group_14,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0260,group_14,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0261,group_14,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0262,group_14,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0263,group_14,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0264,group_14,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0265,group_14,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0266,group_14,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0267,group_15,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0268,group_15,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0269,group_15,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0270,group_15,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0271,group_15,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0272,group_15,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0273,group_15,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0274,group_15,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0275,group_15,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0276,group_15,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0277,group_15,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0278,group_15,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0279,group_15,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0280,group_15,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0281,group_15,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0282,group_15,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0283,group_15,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0284,group_15,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0285,group_15,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0286,group_16,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0287,group_16,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0288,group_16,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0289,group_16,chi_selected,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0290,group_16,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0291,group_16,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0292,group_16,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0293,group_16,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0294,group_16,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0295,group_16,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0296,group_16,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0297,group_16,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0298,group_16,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0299,group_16,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0300,group_16,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0301,group_16,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0302,group_16,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0303,group_16,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0304,group_16,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0305,group_17,q_ch weighting,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0306,group_17,q_ch*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0307,group_17,q_ch*chi*eta,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0308,group_17,chi_selected,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0309,group_17,route_score,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0310,group_17,JOINT_ROUTE_CLASS/JRC,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0311,group_17,yield,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0312,group_17,winner,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0313,group_17,detection_probability,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0314,group_17,wet pass probability,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0315,group_17,clogging rate,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0316,group_17,time-to-clog,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0317,group_17,recovery,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0318,group_17,fabrication release,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0319,group_17,runtime configuration,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0320,group_17,production ingestion,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0321,group_17,formula use,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0322,group_17,direct PRS edge20 bin use,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0323,group_17,grain-level ingestion,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0324,group_18,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0325,group_18,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0326,group_18,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0327,group_18,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0328,group_18,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0329,group_18,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0330,group_18,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0331,group_18,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0332,group_18,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0333,group_18,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0334,group_18,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0335,group_18,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0336,group_18,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0337,group_18,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0338,group_18,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0339,group_18,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0340,group_18,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0341,group_18,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0342,group_18,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0343,group_19,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0344,group_19,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0345,group_19,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0346,group_19,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0347,group_19,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0348,group_19,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0349,group_19,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0350,group_19,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0351,group_19,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0352,group_19,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0353,group_19,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0354,group_19,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0355,group_19,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0356,group_19,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0357,group_19,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0358,group_19,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0359,group_19,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0360,group_19,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0361,group_19,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0362,group_20,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0363,group_20,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0364,group_20,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0365,group_20,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0366,group_20,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0367,group_20,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0368,group_20,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0369,group_20,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0370,group_20,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0371,group_20,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0372,group_20,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0373,group_20,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0374,group_20,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0375,group_20,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0376,group_20,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0377,group_20,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0378,group_20,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0379,group_20,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0380,group_20,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0381,group_21,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0382,group_21,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0383,group_21,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0384,group_21,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0385,group_21,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0386,group_21,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0387,group_21,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0388,group_21,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0389,group_21,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0390,group_21,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0391,group_21,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0392,group_21,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0393,group_21,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0394,group_21,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0395,group_21,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0396,group_21,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0397,group_21,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0398,group_21,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0399,group_21,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0400,group_22,q_ch weighting,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0401,group_22,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0402,group_22,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0403,group_22,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0404,group_22,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0405,group_22,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0406,group_22,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0407,group_22,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0408,group_22,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0409,group_22,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0410,group_22,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0411,group_22,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0412,group_22,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0413,group_22,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0414,group_22,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0415,group_22,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0416,group_22,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0417,group_22,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0418,group_22,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0419,group_23,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0420,group_23,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0421,group_23,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0422,group_23,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0423,group_23,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0424,group_23,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0425,group_23,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0426,group_23,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0427,group_23,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0428,group_23,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0429,group_23,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0430,group_23,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0431,group_23,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0432,group_23,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0433,group_23,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0434,group_23,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0435,group_23,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0436,group_23,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0437,group_23,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0438,group_24,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0439,group_24,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0440,group_24,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0441,group_24,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0442,group_24,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0443,group_24,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0444,group_24,yield,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0445,group_24,winner,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0446,group_24,detection_probability,true,blocked_use_or_fixture_only,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0447,group_24,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0448,group_24,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0449,group_24,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0450,group_24,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0451,group_24,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0452,group_24,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0453,group_24,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0454,group_24,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0455,group_24,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0456,group_24,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0457,group_25,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0458,group_25,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0459,group_25,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0460,group_25,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0461,group_25,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0462,group_25,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0463,group_25,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0464,group_25,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0465,group_25,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0466,group_25,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0467,group_25,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0468,group_25,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0469,group_25,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0470,group_25,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0471,group_25,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0472,group_25,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0473,group_25,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0474,group_25,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0475,group_25,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0476,group_26,q_ch weighting,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0477,group_26,q_ch*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0478,group_26,q_ch*chi*eta,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0479,group_26,chi_selected,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0480,group_26,route_score,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0481,group_26,JOINT_ROUTE_CLASS/JRC,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0482,group_26,yield,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0483,group_26,winner,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0484,group_26,detection_probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0485,group_26,wet pass probability,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0486,group_26,clogging rate,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0487,group_26,time-to-clog,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0488,group_26,recovery,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0489,group_26,fabrication release,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0490,group_26,runtime configuration,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0491,group_26,production ingestion,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0492,group_26,formula use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0493,group_26,direct PRS edge20 bin use,false,absent,PASS_NO_AUTHORIZATION_USE
+NODI-G2R-FORBID-0494,group_26,grain-level ingestion,false,absent,PASS_NO_AUTHORIZATION_USE

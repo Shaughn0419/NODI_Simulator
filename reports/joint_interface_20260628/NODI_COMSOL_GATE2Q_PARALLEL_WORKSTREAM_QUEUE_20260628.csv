@@ -1,0 +1,6 @@
+queue_id,source_request,workstream,receiver_queue_status,cross_line_promotion_allowed,authorization_opened
+NODI-G2Q-QUEUE-001,"Provide real edge20-resolved values, numeric error bounds, monotonicity/conservativeness metrics, source SHA, units, reproducibility group",EDGE,READY_FOR_FUTURE_ARTIFACT_RECEIPT_NOT_AUTHORIZATION,false,false
+NODI-G2Q-QUEUE-002,"Provide formal sidecar evidence rows with q_ch, flow_split, units, normalization, source solve/provenance and false authorization defaults",QCH,READY_FOR_FUTURE_ARTIFACT_RECEIPT_NOT_AUTHORIZATION,false,false
+NODI-G2Q-QUEUE-003,Provide explicit NODI_view and exact route/diameter/bin policy for 220/D1200/UNBOUND repairs,BINDING,READY_FOR_FUTURE_ARTIFACT_RECEIPT_NOT_AUTHORIZATION,false,false
+NODI-G2Q-QUEUE-004,Confirm continued review-only claim ceiling unless future scope is explicitly opened,local-Q/V4,READY_FOR_FUTURE_ARTIFACT_RECEIPT_NOT_AUTHORIZATION,false,false
+NODI-G2Q-QUEUE-005,Keep no JRC/no weighting/no production/no runtime as hard fail defaults,Guardrails,READY_FOR_FUTURE_ARTIFACT_RECEIPT_NOT_AUTHORIZATION,false,false

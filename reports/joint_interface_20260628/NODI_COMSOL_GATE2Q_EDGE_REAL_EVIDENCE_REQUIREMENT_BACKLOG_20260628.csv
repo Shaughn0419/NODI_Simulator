@@ -1,0 +1,7 @@
+backlog_id,workstream,owner_side,required_artifact,acceptance_check,blocked_use_until_pass,expected_receiver_harness,p0_p1_risks,can_proceed_without_COMSOL_run,requires_future_authorization
+NODI-G2Q-EDGE-001,EDGE,COMSOL,edge20 reference values and edge4 aggregate values,edge20-resolved numeric closure,policy approval stays blocked,Gate2K EDGE harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-EDGE-002,EDGE,COMSOL,finite bound with units and normalization,numeric aggregation error bounds,policy approval stays blocked,Gate2K EDGE harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-EDGE-003,EDGE,COMSOL,input/output table and check result,monotonicity,policy approval stays blocked,Gate2K EDGE harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-EDGE-004,EDGE,COMSOL,upper/lower rule inputs and result,conservativeness,policy approval stays blocked,Gate2K EDGE harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-EDGE-005,EDGE,COMSOL,hash-stable source manifest and rerun-free reproducibility evidence,approval-grade reproducibility,policy approval stays blocked,Gate2K EDGE harness,authorization leakage; hash drift; semantic auto-map,true,true
+NODI-G2Q-EDGE-006,EDGE,COMSOL,"artifact sha256, row_count, provenance, row identity",source manifest,policy approval stays blocked,Gate2K EDGE harness,authorization leakage; hash drift; semantic auto-map,true,true

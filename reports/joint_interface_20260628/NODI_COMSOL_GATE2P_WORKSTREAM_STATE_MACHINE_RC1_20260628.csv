@@ -1,0 +1,8 @@
+state_id,workstream,current_state,next_gate_condition,source_rows_prepared,authorization_flags_default_false,runtime_configuration_authorized,production_ingestion_authorized
+NODI-G2P-STATE-Gate2D_ACCEPTED_LEDGER,Gate2D_ACCEPTED_LEDGER,FROZEN_EXACTLY_4_CONTEXT_ONLY_ROWS,no expansion without explicit future gate,4,true,false,false
+NODI-G2P-STATE-EDGE,EDGE,NOT_APPROVED_TEMPLATE_ROUNDTRIP_READY,needs real numeric closure evidence,20,true,false,false
+NODI-G2P-STATE-QCH,QCH,NO_FORMAL_QCH_SIDECAR_PRESENT,needs formal q_ch / flow-split sidecar,4,true,false,false
+NODI-G2P-STATE-BINDING,BINDING,FAIL_CLOSED_NO_AUTO_MAP_NO_D1200_BORROW_UNBOUND_VIEW_BLOCKED,needs binding repair evidence,4,true,false,false
+NODI-G2P-STATE-LOCAL_Q,LOCAL_Q,REVIEW_ONLY_DIAGNOSTIC,carry-forward,0,true,false,false
+NODI-G2P-STATE-V4,V4,REVIEW_ONLY_CLAIM_CEILING,carry-forward,0,true,false,false
+NODI-G2P-STATE-STRONG_CLAIMS,STRONG_CLAIMS,HARD_BLOCKED,future explicit authorization only,0,true,false,false
