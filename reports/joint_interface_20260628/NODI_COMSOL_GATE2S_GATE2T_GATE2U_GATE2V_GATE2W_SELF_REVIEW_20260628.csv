@@ -1,0 +1,11 @@
+reviewer,review_scope,finding,p0_p1_open
+Reviewer A,COMSOL repo census coverage and safe-read behavior,PASS no P0/P1 open,false
+Reviewer B,evidence class classification honesty,PASS no P0/P1 open,false
+Reviewer C,receiver library/API maintainability,PASS no P0/P1 open,false
+Reviewer D,mutation generator coverage,PASS no P0/P1 open,false
+Reviewer E,mutation validator unexpected-pass handling,PASS no P0/P1 open,false
+Reviewer F,RC2 bilateral conformance,PASS no P0/P1 open,false
+Reviewer G,full-history no-auth drift scan,PASS no P0/P1 open,false
+Reviewer H,QCH no formal sidecar/no weighting,PASS no P0/P1 open,false
+Reviewer I,BINDING fail-closed/no auto-map,PASS no P0/P1 open,false
+Reviewer J,git scope and report/CSV/JSON consistency,PASS no P0/P1 open,false

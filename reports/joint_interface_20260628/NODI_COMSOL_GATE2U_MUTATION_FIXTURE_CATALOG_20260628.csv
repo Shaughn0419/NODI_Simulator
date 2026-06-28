@@ -1,0 +1,137 @@
+mutation_id,mutation_family,mutation_name,target_workstream,mutated_field,mutated_value,expected_fail_reason,template_only,not_evidence,authorization_opened
+NODI-G2U-MUT-0001,authorization_true,formula_use_authorized_variant_1,ALL,formula_use_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0002,authorization_true,formula_use_authorized_variant_2,ALL,formula_use_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0003,authorization_true,formula_use_authorized_variant_3,ALL,formula_use_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0004,authorization_true,formula_use_authorized_variant_4,ALL,formula_use_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0005,authorization_true,direct_prs_bin_use_authorized_variant_1,ALL,direct_prs_bin_use_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0006,authorization_true,direct_prs_bin_use_authorized_variant_2,ALL,direct_prs_bin_use_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0007,authorization_true,direct_prs_bin_use_authorized_variant_3,ALL,direct_prs_bin_use_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0008,authorization_true,direct_prs_bin_use_authorized_variant_4,ALL,direct_prs_bin_use_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0009,authorization_true,grain_level_ingestion_authorized_variant_1,ALL,grain_level_ingestion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0010,authorization_true,grain_level_ingestion_authorized_variant_2,ALL,grain_level_ingestion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0011,authorization_true,grain_level_ingestion_authorized_variant_3,ALL,grain_level_ingestion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0012,authorization_true,grain_level_ingestion_authorized_variant_4,ALL,grain_level_ingestion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0013,authorization_true,accepted_row_expansion_authorized_variant_1,ALL,accepted_row_expansion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0014,authorization_true,accepted_row_expansion_authorized_variant_2,ALL,accepted_row_expansion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0015,authorization_true,accepted_row_expansion_authorized_variant_3,ALL,accepted_row_expansion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0016,authorization_true,accepted_row_expansion_authorized_variant_4,ALL,accepted_row_expansion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0017,authorization_true,qch_weighting_authorized_variant_1,ALL,qch_weighting_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0018,authorization_true,qch_weighting_authorized_variant_2,ALL,qch_weighting_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0019,authorization_true,qch_weighting_authorized_variant_3,ALL,qch_weighting_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0020,authorization_true,qch_weighting_authorized_variant_4,ALL,qch_weighting_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0021,authorization_true,jrc_authorized_variant_1,ALL,jrc_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0022,authorization_true,jrc_authorized_variant_2,ALL,jrc_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0023,authorization_true,jrc_authorized_variant_3,ALL,jrc_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0024,authorization_true,jrc_authorized_variant_4,ALL,jrc_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0025,authorization_true,production_ingestion_authorized_variant_1,ALL,production_ingestion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0026,authorization_true,production_ingestion_authorized_variant_2,ALL,production_ingestion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0027,authorization_true,production_ingestion_authorized_variant_3,ALL,production_ingestion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0028,authorization_true,production_ingestion_authorized_variant_4,ALL,production_ingestion_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0029,authorization_true,runtime_configuration_authorized_variant_1,ALL,runtime_configuration_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0030,authorization_true,runtime_configuration_authorized_variant_2,ALL,runtime_configuration_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0031,authorization_true,runtime_configuration_authorized_variant_3,ALL,runtime_configuration_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0032,authorization_true,runtime_configuration_authorized_variant_4,ALL,runtime_configuration_authorized,true,authorization flag true hard fail,true,true,false
+NODI-G2U-MUT-0033,binding,220_auto_map_variant_1,BINDING,220_auto_map,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0034,binding,220_auto_map_variant_2,BINDING,220_auto_map,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0035,binding,220_auto_map_variant_3,BINDING,220_auto_map,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0036,binding,220_auto_map_variant_4,BINDING,220_auto_map,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0037,binding,D1200_borrow_D900_variant_1,BINDING,D1200_borrow_D900,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0038,binding,D1200_borrow_D900_variant_2,BINDING,D1200_borrow_D900,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0039,binding,D1200_borrow_D900_variant_3,BINDING,D1200_borrow_D900,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0040,binding,D1200_borrow_D900_variant_4,BINDING,D1200_borrow_D900,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0041,binding,missing_NODI_view_variant_1,BINDING,missing_NODI_view,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0042,binding,missing_NODI_view_variant_2,BINDING,missing_NODI_view,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0043,binding,missing_NODI_view_variant_3,BINDING,missing_NODI_view,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0044,binding,missing_NODI_view_variant_4,BINDING,missing_NODI_view,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0045,binding,route_alias_mismatch_variant_1,BINDING,route_alias_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0046,binding,route_alias_mismatch_variant_2,BINDING,route_alias_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0047,binding,route_alias_mismatch_variant_3,BINDING,route_alias_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0048,binding,route_alias_mismatch_variant_4,BINDING,route_alias_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0049,binding,diameter_mismatch_variant_1,BINDING,diameter_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0050,binding,diameter_mismatch_variant_2,BINDING,diameter_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0051,binding,diameter_mismatch_variant_3,BINDING,diameter_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0052,binding,diameter_mismatch_variant_4,BINDING,diameter_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0053,binding,bin_basis_mismatch_variant_1,BINDING,bin_basis_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0054,binding,bin_basis_mismatch_variant_2,BINDING,bin_basis_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0055,binding,bin_basis_mismatch_variant_3,BINDING,bin_basis_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0056,binding,bin_basis_mismatch_variant_4,BINDING,bin_basis_mismatch,MUTATED_BAD_VALUE,binding fail-closed/no auto-map/no borrow,true,true,false
+NODI-G2U-MUT-0057,edge,hash_mismatch_variant_1,EDGE,hash_mismatch,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0058,edge,hash_mismatch_variant_2,EDGE,hash_mismatch,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0059,edge,hash_mismatch_variant_3,EDGE,hash_mismatch,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0060,edge,hash_mismatch_variant_4,EDGE,hash_mismatch,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0061,edge,non_contiguous_bins_variant_1,EDGE,non_contiguous_bins,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0062,edge,non_contiguous_bins_variant_2,EDGE,non_contiguous_bins,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0063,edge,non_contiguous_bins_variant_3,EDGE,non_contiguous_bins,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0064,edge,non_contiguous_bins_variant_4,EDGE,non_contiguous_bins,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0065,edge,missing_numeric_bound_variant_1,EDGE,missing_numeric_bound,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0066,edge,missing_numeric_bound_variant_2,EDGE,missing_numeric_bound,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0067,edge,missing_numeric_bound_variant_3,EDGE,missing_numeric_bound,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0068,edge,missing_numeric_bound_variant_4,EDGE,missing_numeric_bound,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0069,edge,units_missing_variant_1,EDGE,units_missing,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0070,edge,units_missing_variant_2,EDGE,units_missing,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0071,edge,units_missing_variant_3,EDGE,units_missing,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0072,edge,units_missing_variant_4,EDGE,units_missing,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0073,edge,normalization_missing_variant_1,EDGE,normalization_missing,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0074,edge,normalization_missing_variant_2,EDGE,normalization_missing,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0075,edge,normalization_missing_variant_3,EDGE,normalization_missing,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0076,edge,normalization_missing_variant_4,EDGE,normalization_missing,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0077,edge,edge20_id_invalid_variant_1,EDGE,edge20_id_invalid,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0078,edge,edge20_id_invalid_variant_2,EDGE,edge20_id_invalid,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0079,edge,edge20_id_invalid_variant_3,EDGE,edge20_id_invalid,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0080,edge,edge20_id_invalid_variant_4,EDGE,edge20_id_invalid,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0081,edge,edge4_group_inconsistent_variant_1,EDGE,edge4_group_inconsistent,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0082,edge,edge4_group_inconsistent_variant_2,EDGE,edge4_group_inconsistent,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0083,edge,edge4_group_inconsistent_variant_3,EDGE,edge4_group_inconsistent,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0084,edge,edge4_group_inconsistent_variant_4,EDGE,edge4_group_inconsistent,MUTATED_BAD_VALUE,EDGE policy evidence incomplete or inconsistent,true,true,false
+NODI-G2U-MUT-0085,qch,formal_sidecar_falsely_true_variant_1,QCH,formal_sidecar_falsely_true,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0086,qch,formal_sidecar_falsely_true_variant_2,QCH,formal_sidecar_falsely_true,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0087,qch,formal_sidecar_falsely_true_variant_3,QCH,formal_sidecar_falsely_true,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0088,qch,formal_sidecar_falsely_true_variant_4,QCH,formal_sidecar_falsely_true,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0089,qch,missing_flow_split_variant_1,QCH,missing_flow_split,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0090,qch,missing_flow_split_variant_2,QCH,missing_flow_split,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0091,qch,missing_flow_split_variant_3,QCH,missing_flow_split,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0092,qch,missing_flow_split_variant_4,QCH,missing_flow_split,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0093,qch,q_ch_eta_present_variant_1,QCH,q_ch_eta_present,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0094,qch,q_ch_eta_present_variant_2,QCH,q_ch_eta_present,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0095,qch,q_ch_eta_present_variant_3,QCH,q_ch_eta_present,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0096,qch,q_ch_eta_present_variant_4,QCH,q_ch_eta_present,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0097,qch,units_mismatch_variant_1,QCH,units_mismatch,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0098,qch,units_mismatch_variant_2,QCH,units_mismatch,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0099,qch,units_mismatch_variant_3,QCH,units_mismatch,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0100,qch,units_mismatch_variant_4,QCH,units_mismatch,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0101,qch,normalization_mismatch_variant_1,QCH,normalization_mismatch,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0102,qch,normalization_mismatch_variant_2,QCH,normalization_mismatch,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0103,qch,normalization_mismatch_variant_3,QCH,normalization_mismatch,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0104,qch,normalization_mismatch_variant_4,QCH,normalization_mismatch,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0105,qch,source_solve_missing_variant_1,QCH,source_solve_missing,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0106,qch,source_solve_missing_variant_2,QCH,source_solve_missing,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0107,qch,source_solve_missing_variant_3,QCH,source_solve_missing,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0108,qch,source_solve_missing_variant_4,QCH,source_solve_missing,MUTATED_BAD_VALUE,QCH formal sidecar absent or forbidden field,true,true,false
+NODI-G2U-MUT-0109,provenance,missing_source_sha_variant_1,ALL,missing_source_sha,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0110,provenance,missing_source_sha_variant_2,ALL,missing_source_sha,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0111,provenance,missing_source_sha_variant_3,ALL,missing_source_sha,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0112,provenance,missing_source_sha_variant_4,ALL,missing_source_sha,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0113,provenance,row_count_mismatch_variant_1,ALL,row_count_mismatch,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0114,provenance,row_count_mismatch_variant_2,ALL,row_count_mismatch,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0115,provenance,row_count_mismatch_variant_3,ALL,row_count_mismatch,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0116,provenance,row_count_mismatch_variant_4,ALL,row_count_mismatch,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0117,provenance,manifest_mismatch_variant_1,ALL,manifest_mismatch,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0118,provenance,manifest_mismatch_variant_2,ALL,manifest_mismatch,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0119,provenance,manifest_mismatch_variant_3,ALL,manifest_mismatch,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0120,provenance,manifest_mismatch_variant_4,ALL,manifest_mismatch,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0121,provenance,schema_version_unknown_variant_1,ALL,schema_version_unknown,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0122,provenance,schema_version_unknown_variant_2,ALL,schema_version_unknown,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0123,provenance,schema_version_unknown_variant_3,ALL,schema_version_unknown,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0124,provenance,schema_version_unknown_variant_4,ALL,schema_version_unknown,MUTATED_BAD_VALUE,provenance/hash/manifest mismatch,true,true,false
+NODI-G2U-MUT-0125,evidence_semantics,template_only_false_on_synthetic_variant_1,ALL,template_only_false_on_synthetic,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0126,evidence_semantics,template_only_false_on_synthetic_variant_2,ALL,template_only_false_on_synthetic,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0127,evidence_semantics,template_only_false_on_synthetic_variant_3,ALL,template_only_false_on_synthetic,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0128,evidence_semantics,template_only_false_on_synthetic_variant_4,ALL,template_only_false_on_synthetic,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0129,evidence_semantics,not_evidence_false_on_fixture_variant_1,ALL,not_evidence_false_on_fixture,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0130,evidence_semantics,not_evidence_false_on_fixture_variant_2,ALL,not_evidence_false_on_fixture,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0131,evidence_semantics,not_evidence_false_on_fixture_variant_3,ALL,not_evidence_false_on_fixture,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0132,evidence_semantics,not_evidence_false_on_fixture_variant_4,ALL,not_evidence_false_on_fixture,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0133,evidence_semantics,policy_use_requested_true_without_evidence_variant_1,ALL,policy_use_requested_true_without_evidence,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0134,evidence_semantics,policy_use_requested_true_without_evidence_variant_2,ALL,policy_use_requested_true_without_evidence,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0135,evidence_semantics,policy_use_requested_true_without_evidence_variant_3,ALL,policy_use_requested_true_without_evidence,true,template/evidence semantics violation,true,true,false
+NODI-G2U-MUT-0136,evidence_semantics,policy_use_requested_true_without_evidence_variant_4,ALL,policy_use_requested_true_without_evidence,true,template/evidence semantics violation,true,true,false

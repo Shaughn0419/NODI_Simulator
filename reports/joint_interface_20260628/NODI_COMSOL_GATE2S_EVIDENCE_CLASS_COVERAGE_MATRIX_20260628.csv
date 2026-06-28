@@ -1,0 +1,15 @@
+coverage_id,workstream,evidence_class_guess,artifact_count,policy_review_ready_count,coverage_status
+NODI-G2S-COVERAGE-0001,BINDING,data_table_review_only,16,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0002,BINDING,document_or_unknown_review_only,36,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0003,BINDING,template_or_synthetic_not_evidence,2,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0004,EDGE,data_table_review_only,9,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0005,EDGE,document_or_unknown_review_only,9,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0006,EDGE,template_or_synthetic_not_evidence,1,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0007,LOCAL_Q,document_or_unknown_review_only,1,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0008,QCH,data_table_review_only,13,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0009,QCH,document_or_unknown_review_only,91,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0010,QCH,negative_fixture,1,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0011,QCH,template_or_synthetic_not_evidence,8,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0012,QCH,validation,3,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0013,QCH,work_order,1,0,REVIEW_ONLY_OR_BLOCKED
+NODI-G2S-COVERAGE-0014,V4,document_or_unknown_review_only,9,0,REVIEW_ONLY_OR_BLOCKED

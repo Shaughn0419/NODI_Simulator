@@ -1,0 +1,2 @@
+certificate_id,certificate_status,field_rows_checked,blocking_mismatch_count,authorization_opened,claim_boundary
+NODI-G2V-RC2-CERT-001,PASS_RC2_CONFORMANCE_CONTRACT_ONLY,71,0,false,RC2 contract conformance only; not evidence acceptance

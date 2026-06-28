@@ -1,0 +1,8 @@
+state_id,workstream,rc2_state,authorization_opened,runtime_configuration_authorized,production_ingestion_authorized
+NODI-G2V-RC2-STATE-001,BINDING,FAIL_CLOSED_NO_AUTO_MAP,false,false,false
+NODI-G2V-RC2-STATE-002,EDGE,NOT_APPROVED_CONTRACT_READY,false,false,false
+NODI-G2V-RC2-STATE-003,Gate2D_ACCEPTED_LEDGER,NOT_APPROVED_CONTRACT_READY,false,false,false
+NODI-G2V-RC2-STATE-004,LOCAL_Q,REVIEW_ONLY_OR_BLOCKED,false,false,false
+NODI-G2V-RC2-STATE-005,QCH,NO_FORMAL_QCH_SIDECAR_PRESENT,false,false,false
+NODI-G2V-RC2-STATE-006,STRONG_CLAIMS,REVIEW_ONLY_OR_BLOCKED,false,false,false
+NODI-G2V-RC2-STATE-007,V4,REVIEW_ONLY_OR_BLOCKED,false,false,false

@@ -1,0 +1,27 @@
+{
+  "gate": "Gate2S",
+  "date_stamp": "20260628",
+  "dispositions": {
+    "Gate2S": "PASS_GATE2S_COMSOL_REPO_CANDIDATE_EVIDENCE_CENSUS_REVIEW_ONLY_NO_AUTHORIZATION",
+    "Gate2T": "PASS_GATE2T_EXECUTABLE_RECEIVER_LIBRARY_V1_READY",
+    "Gate2U": "PASS_GATE2U_ADVERSARIAL_MUTATION_BATTERY_ALL_EXPECTED_FAIL_NO_AUTHORIZATION",
+    "Gate2V": "PASS_GATE2V_BILATERAL_INTERFACE_CONFORMANCE_RC2_CONTRACT_ONLY_NO_AUTHORIZATION",
+    "Gate2W": "PASS_GATE2W_FULL_HISTORY_NO_AUTH_DRIFT_SCAN_CLEAN"
+  },
+  "counts": {
+    "census_scanned": 8674,
+    "census_matched": 6435,
+    "census_output": 200,
+    "mutation_total": 136,
+    "mutation_unexpected_pass": 0,
+    "rc2_field_count": 71,
+    "history_sources_scanned": 351
+  },
+  "summary": {
+    "edge_policy": "NOT_APPROVED",
+    "qch_formal_sidecar": "ABSENT",
+    "binding": "FAIL_CLOSED",
+    "authorization_opened": false,
+    "comsol_manifest": "PARTIAL"
+  }
+}

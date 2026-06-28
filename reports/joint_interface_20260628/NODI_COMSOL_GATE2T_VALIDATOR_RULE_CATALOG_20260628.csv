@@ -1,0 +1,8 @@
+rule_id,rule_name,rule_description,failure_semantics
+NODI-G2T-RULE-001,ledger_freeze,Gate2D accepted ledger exactly 4,hard_fail_on_drift
+NODI-G2T-RULE-002,manifest_repro,manifest SHA/row_count matches filesystem,blocking_mismatch
+NODI-G2T-RULE-003,template_not_evidence,template_only/not_evidence contract,hard_fail_if_false
+NODI-G2T-RULE-004,auth_false,all authorization flags false,hard_fail_if_true
+NODI-G2T-RULE-005,forbidden_context,forbidden terms only blocked/fixture mentions,hard_fail_if_authorized
+NODI-G2T-RULE-006,mutation_expected_fail,mutation fixtures must fail as expected,unexpected_pass_is_p1
+NODI-G2T-RULE-007,rc_conformance,"RC1 to RC2 adapter gaps allowed, blocking semantics rejected",partial_if_blocking
