@@ -1,0 +1,8 @@
+harness_rule_id,rule_description,negative_fixture_family,failure_status,policy_approval_status,formula_use_authorized,jrc_authorized
+EDGE-HARNESS-001,required source SHA and row_count present,missing_source_sha_or_row_count,BLOCKED,NOT_APPROVED,false,false
+EDGE-HARNESS-002,edge20 hash equals NODI hashed definition,edge20_hash_mismatch,BLOCKED,NOT_APPROVED,false,false
+EDGE-HARNESS-003,edge20 bins covered are contiguous,non_contiguous_edge20_bins,BLOCKED,NOT_APPROVED,false,false
+EDGE-HARNESS-004,numeric error bound and units present,missing_numeric_bound_or_units,NOT_APPROVED,NOT_APPROVED,false,false
+EDGE-HARNESS-005,monotonicity and conservativeness fields present,missing_diagnostic_evidence,NOT_APPROVED,NOT_APPROVED,false,false
+EDGE-HARNESS-006,all authorization flags false,authorization_flag_true,HARD_FAIL,NOT_APPROVED,false,false
+EDGE-HARNESS-007,220 nm and D1200 borrowing fail closed,binding_shortcut,HARD_FAIL,NOT_APPROVED,false,false

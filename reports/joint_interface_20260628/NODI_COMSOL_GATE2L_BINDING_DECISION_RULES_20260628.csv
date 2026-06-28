@@ -1,0 +1,8 @@
+decision_rule_id,condition,decision,accepted_context_authorized,grain_level_ingestion_authorized
+NODI-G2L-BIND-RULE-001,220 nm has no direct NODI PRS grain,BLOCKED_NO_DIRECT_NODI_PRS_GRAIN_NO_AUTO_MAP,false,false
+NODI-G2L-BIND-RULE-002,D1200 attempts to borrow D900,HARD_FAIL_D1200_CANNOT_BORROW_D900,false,false
+NODI-G2L-BIND-RULE-003,missing NODI_view,BLOCKED_UNBOUND_VIEW_FAIL_CLOSED,false,false
+NODI-G2L-BIND-RULE-004,bin basis mismatch,BLOCKED_BIN_BASIS_MISMATCH,false,false
+NODI-G2L-BIND-RULE-005,diameter mismatch,BLOCKED_DIAMETER_MISMATCH,false,false
+NODI-G2L-BIND-RULE-006,route alias mismatch,BLOCKED_ROUTE_ALIAS_MISMATCH,false,false
+NODI-G2L-BIND-RULE-007,accepted_context_authorized true,HARD_FAIL_UNAUTHORIZED_ACCEPTANCE,false,false

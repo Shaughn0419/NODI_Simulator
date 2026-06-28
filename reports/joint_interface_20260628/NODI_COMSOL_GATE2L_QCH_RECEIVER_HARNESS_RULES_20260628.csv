@@ -1,0 +1,7 @@
+harness_rule_id,rule,failure_status,can_enter_weighting
+NODI-G2L-QCH-HARNESS-001,formal sidecar must exist before receipt,BLOCKED,false
+NODI-G2L-QCH-HARNESS-002,route/view/diameter/bin binding exact,BLOCKED,false
+NODI-G2L-QCH-HARNESS-003,q_ch and flow_split units required,BLOCKED,false
+NODI-G2L-QCH-HARNESS-004,provenance hashes required,BLOCKED,false
+NODI-G2L-QCH-HARNESS-005,forbidden q_ch composite fields hard fail,HARD_FAIL,false
+NODI-G2L-QCH-HARNESS-006,authorization flags must be false,HARD_FAIL,false

@@ -1,0 +1,12 @@
+negative_result_id,fixture_name,fixture_source,comsol_fixture_seen,expected_validator_result,actual_validator_result,harness_result,policy_approval_status,formula_use_authorized,direct_prs_bin_use_authorized,grain_level_ingestion_authorized,qch_weighting_authorized,jrc_authorized
+NODI-G2K-EDGE-NEG-RESULT-001,missing_numeric_error_bound,NODI_GATE2I_AND_COMSOL_GATE2I,true,BLOCKED_OR_NOT_APPROVED,BLOCKED_OR_NOT_APPROVED,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false
+NODI-G2K-EDGE-NEG-RESULT-002,non_contiguous_edge20_bins,NODI_GATE2I_AND_COMSOL_GATE2I,false,BLOCKED_OR_NOT_APPROVED,BLOCKED_OR_NOT_APPROVED,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false
+NODI-G2K-EDGE-NEG-RESULT-003,edge20_hash_mismatch,NODI_GATE2I_AND_COMSOL_GATE2I,true,BLOCKED_OR_NOT_APPROVED,BLOCKED_OR_NOT_APPROVED,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false
+NODI-G2K-EDGE-NEG-RESULT-004,formula_flag_true,NODI_GATE2I_AND_COMSOL_GATE2I,true,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false
+NODI-G2K-EDGE-NEG-RESULT-005,direct_prs_bin_flag_true,NODI_GATE2I_AND_COMSOL_GATE2I,true,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false
+NODI-G2K-EDGE-NEG-RESULT-006,qch_weighting_flag_true,NODI_GATE2I_AND_COMSOL_GATE2I,true,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false
+NODI-G2K-EDGE-NEG-RESULT-007,accepted_row_expansion_true,NODI_GATE2I_AND_COMSOL_GATE2I,true,BLOCKED_OR_NOT_APPROVED,BLOCKED_OR_NOT_APPROVED,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false
+NODI-G2K-EDGE-NEG-RESULT-008,d1200_borrows_d900,NODI_GATE2I_AND_COMSOL_GATE2I,true,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false
+NODI-G2K-EDGE-NEG-RESULT-009,auto_map_220nm,NODI_GATE2I_AND_COMSOL_GATE2I,false,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false
+NODI-G2K-EDGE-NEG-RESULT-010,missing_source_sha,NODI_GATE2I_AND_COMSOL_GATE2I,true,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false
+NODI-G2K-EDGE-NEG-RESULT-011,missing_units_normalization,NODI_GATE2I_AND_COMSOL_GATE2I,true,BLOCKED_OR_NOT_APPROVED,BLOCKED_OR_NOT_APPROVED,PASS_EXPECTED_FAIL,NOT_APPROVED,false,false,false,false,false

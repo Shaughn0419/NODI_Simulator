@@ -1,0 +1,8 @@
+decision_rule_id,condition,decision,receiver_verdict,can_enter_weighting,jrc_authorized
+NODI-G2L-QCH-RULE-001,formal sidecar absent,NO_FORMAL_SIDECAR_PRESENT,not accepted,false,false
+NODI-G2L-QCH-RULE-002,missing flow_split_fraction,BLOCKED_MISSING_FLOW_SPLIT,blocked,false,false
+NODI-G2L-QCH-RULE-003,units mismatch or missing,BLOCKED_QCH_UNITS_MISMATCH,blocked,false,false
+NODI-G2L-QCH-RULE-004,route/view/diameter/bin mismatch,BLOCKED_BINDING_MISMATCH,blocked,false,false
+NODI-G2L-QCH-RULE-005,q_ch weighting requested,HARD_FAIL_QCH_WEIGHTING_REQUESTED,hard fail,false,false
+NODI-G2L-QCH-RULE-006,q_ch*eta or q_ch*chi*eta present,HARD_FAIL_FORBIDDEN_COMPOSITE_FIELD,hard fail,false,false
+NODI-G2L-QCH-RULE-007,JRC/chi_selected/production flag true,HARD_FAIL_STRONG_CLAIM,hard fail,false,false

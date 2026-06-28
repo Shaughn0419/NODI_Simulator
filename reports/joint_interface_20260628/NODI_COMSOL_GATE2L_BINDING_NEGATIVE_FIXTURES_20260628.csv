@@ -1,0 +1,8 @@
+negative_fixture_id,fixture_name,expected_validator_result,actual_validator_result,harness_result,accepted_context_authorized,grain_level_ingestion_authorized
+NODI-G2L-BIND-NEG-001,220_auto_map_true,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-BIND-NEG-002,D1200_borrow_D900,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-BIND-NEG-003,missing_NODI_view,BLOCKED,BLOCKED,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-BIND-NEG-004,bin_basis_mismatch,BLOCKED,BLOCKED,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-BIND-NEG-005,diameter_mismatch,BLOCKED,BLOCKED,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-BIND-NEG-006,route_alias_mismatch,BLOCKED,BLOCKED,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-BIND-NEG-007,accepted_context_authorized_true,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,false,false

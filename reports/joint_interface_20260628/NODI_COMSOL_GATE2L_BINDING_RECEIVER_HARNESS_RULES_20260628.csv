@@ -1,0 +1,7 @@
+harness_rule_id,rule,failure_status,accepted_context_authorized
+NODI-G2L-BIND-HARNESS-001,220 nm cannot auto-map to 300 nm,HARD_FAIL,false
+NODI-G2L-BIND-HARNESS-002,D1200 cannot borrow D900,HARD_FAIL,false
+NODI-G2L-BIND-HARNESS-003,NODI_view required,BLOCKED,false
+NODI-G2L-BIND-HARNESS-004,bin basis must match declared policy,BLOCKED,false
+NODI-G2L-BIND-HARNESS-005,route alias mismatch fail closed,BLOCKED,false
+NODI-G2L-BIND-HARNESS-006,authorization flags must be false,HARD_FAIL,false

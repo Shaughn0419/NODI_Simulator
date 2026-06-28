@@ -1,0 +1,8 @@
+workstream,current_gate,receiver_status,executable_harness_exists,negative_fixture_count,accepted_row_expansion_authorized,formula_use_authorized,qch_weighting_authorized,jrc_authorized,production_ingestion_authorized,runtime_configuration_authorized,required_next_gate
+EDGE,Gate2K,EXECUTABLE_HARNESS_READY_POLICY_NOT_APPROVED,true,11,false,false,false,false,false,false,Gate2N-EDGE future evidence package validation
+QCH,Gate2L,FORMAL_SIDECAR_ABSENT_SCHEMA_READY_NO_WEIGHTING,true,9,false,false,false,false,false,false,Gate2N-QCH formal sidecar receipt validation
+BINDING,Gate2L,220_D1200_UNBOUND_FAIL_CLOSED_NO_AUTO_MAP,true,7,false,false,false,false,false,false,Gate2N-BINDING repair package validation
+Gate2D_ACCEPTED_LEDGER,Gate2D,FROZEN_EXACTLY_4_CONTEXT_ONLY_ROWS,false,4,false,false,false,false,false,false,no change unless explicitly authorized
+LOCAL_Q,carry-forward,REVIEW_ONLY_DIAGNOSTIC,false,0,false,false,false,false,false,false,review-only diagnostic carry-forward
+V4,carry-forward,REVIEW_ONLY_CLAIM_CEILING,false,0,false,false,false,false,false,false,review-only claim ceiling carry-forward
+STRONG_CLAIMS,carry-forward,HARD_BLOCKED,false,0,false,false,false,false,false,false,future explicit authorization gate only

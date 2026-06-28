@@ -1,0 +1,10 @@
+negative_fixture_id,fixture_name,expected_validator_result,actual_validator_result,harness_result,can_enter_weighting,jrc_authorized
+NODI-G2L-QCH-NEG-001,missing_flow_split,BLOCKED,BLOCKED,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-QCH-NEG-002,units_mismatch,BLOCKED,BLOCKED,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-QCH-NEG-003,route_view_mismatch,BLOCKED,BLOCKED,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-QCH-NEG-004,q_ch_weighting_flag_true,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-QCH-NEG-005,q_ch_eta_field_present,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-QCH-NEG-006,q_ch_chi_eta_field_present,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-QCH-NEG-007,JRC_field_present,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-QCH-NEG-008,chi_selected_true,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,false,false
+NODI-G2L-QCH-NEG-009,production_flag_true,HARD_FAIL,HARD_FAIL,PASS_EXPECTED_FAIL,false,false

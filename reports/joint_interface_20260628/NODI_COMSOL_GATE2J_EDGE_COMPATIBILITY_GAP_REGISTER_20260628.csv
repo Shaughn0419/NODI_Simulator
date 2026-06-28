@@ -1,0 +1,21 @@
+gap_id,gap_family,source_crosswalk_id,gap_status,blocking_mismatch,adapter_or_next_action,authorization_impact
+NODI-G2J-GAP-001,FIELD,NODI-G2J-FIELD-XWALK-001,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-002,FIELD,NODI-G2J-FIELD-XWALK-002,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-003,FIELD,NODI-G2J-FIELD-XWALK-003,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-004,FIELD,NODI-G2J-FIELD-XWALK-004,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-005,FIELD,NODI-G2J-FIELD-XWALK-005,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-006,FIELD,NODI-G2J-FIELD-XWALK-006,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-007,FIELD,NODI-G2J-FIELD-XWALK-007,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-008,FIELD,NODI-G2J-FIELD-XWALK-008,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-009,FIELD,NODI-G2J-FIELD-XWALK-009,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-010,FIELD,NODI-G2J-FIELD-XWALK-010,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-011,FIELD,NODI-G2J-FIELD-XWALK-011,MISSING_ON_COMSOL_SIDE,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-012,RULE,NODI-G2J-RULE-XWALK-001,NODI_STRICTER,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-013,RULE,NODI-G2J-RULE-XWALK-002,NODI_STRICTER,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-014,RULE,NODI-G2J-RULE-XWALK-004,NODI_STRICTER,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-015,RULE,NODI-G2J-RULE-XWALK-005,NODI_STRICTER,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-016,RULE,NODI-G2J-RULE-XWALK-006,NODI_STRICTER,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-017,RULE,NODI-G2J-RULE-XWALK-007,NODI_STRICTER,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-018,RULE,NODI-G2J-RULE-XWALK-008,NODI_STRICTER,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-019,FIXTURE,NODI-G2J-FIXTURE-XWALK-002,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false
+NODI-G2J-GAP-020,FIXTURE,NODI-G2J-FIXTURE-XWALK-009,COMPATIBILITY_ADAPTER_REQUIRED,false,use Gate2J adapter schema before validation,none; all authorization flags remain false

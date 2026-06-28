@@ -1,0 +1,30 @@
+{
+  "gate": "Gate2J",
+  "date_stamp": "20260628",
+  "gate2j_disposition": "PASS_GATE2J_EDGE_CROSS_CONTRACT_RECONCILED_NO_FORMULA_NO_JRC",
+  "gate2k_disposition": "PASS_GATE2K_EDGE_EXECUTABLE_RECEIVER_HARNESS_NEGATIVE_FIXTURES_FAIL_AS_EXPECTED_NO_FORMULA_NO_JRC",
+  "gate2l_qch_disposition": "PASS_GATE2L_QCH_RECEIVER_CONTRACT_READY_NO_FORMAL_SIDECAR_NO_WEIGHTING",
+  "gate2l_binding_disposition": "PASS_GATE2L_BINDING_RECEIVER_CONTRACT_FAIL_CLOSED_NO_AUTO_MAP",
+  "gate2m_disposition": "PASS_GATE2M_UNIFIED_RECEIVER_READINESS_MAP_NO_AUTHORIZATION_NO_JRC",
+  "gate2d_accepted_row_count": 4,
+  "edge_cross_contract_verdict": "RECONCILED_WITH_ADAPTER_GAPS_NO_BLOCKING_MISMATCH",
+  "edge_executable_harness_verdict": "NEGATIVE_FIXTURES_FAIL_AS_EXPECTED_SYNTHETIC_POSITIVE_IS_NOT_EVIDENCE",
+  "qch_receiver_contract_verdict": "NO_FORMAL_SIDECAR_PRESENT_CONTRACT_READY_NO_WEIGHTING",
+  "binding_receiver_contract_verdict": "FAIL_CLOSED_CONTRACT_READY_NO_AUTO_MAP",
+  "row_counts": {
+    "field_crosswalk": 11,
+    "decision_rule_crosswalk": 8,
+    "fixture_crosswalk": 9,
+    "edge_negative_fixture_results": 11,
+    "qch_negative_fixtures": 9,
+    "binding_negative_fixtures": 7
+  },
+  "authorization_summary": {
+    "edge_policy_approved": false,
+    "accepted_row_expansion_authorized": false,
+    "qch_weighting_authorized": false,
+    "jrc_authorized": false,
+    "production_ingestion_authorized": false,
+    "runtime_configuration_authorized": false
+  }
+}

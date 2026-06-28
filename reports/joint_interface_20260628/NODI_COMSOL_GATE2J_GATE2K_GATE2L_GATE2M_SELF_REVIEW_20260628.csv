@@ -1,0 +1,7 @@
+reviewer,review_scope,finding,p0_p1_open
+Reviewer A,EDGE field/rule/fixture cross-contract reconciliation,PASS no blocking mismatch; adapter gaps recorded,false
+Reviewer B,EDGE executable harness and negative fixture behavior,PASS negative fixtures fail as expected,false
+Reviewer C,QCH contract completeness and no weighting promotion,PASS contract ready; no formal sidecar; no weighting,false
+Reviewer D,BINDING contract completeness and fail-closed semantics,PASS 220/D1200/UNBOUND fail closed,false
+Reviewer E,unified readiness map consistency,PASS Gate2D frozen and workstreams separated,false
+Reviewer F,forbidden leakage / no accepted expansion / git scope,PASS no authorization flags enabled,false
