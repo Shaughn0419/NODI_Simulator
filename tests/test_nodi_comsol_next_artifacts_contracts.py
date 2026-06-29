@@ -315,6 +315,14 @@ def _sidewall_acceptance_guard_fields() -> dict[str, object]:
     }
 
 
+def _sidewall_artifact_metadata_fields(artifact_version: str) -> dict[str, object]:
+    return {
+        "artifact_id": "sidewall-v2-fixture",
+        "artifact_version": artifact_version,
+        "artifact_created_utc": "2026-06-29T00:00:00Z",
+    }
+
+
 def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
     row = _valid_prs_row(
         diameter_nm=220,
@@ -355,6 +363,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         neighbor_fill_used="false",
         source_geometry_descriptor_id="descriptor-404-W500-D900-sidewall-85",
         source_geometry_descriptor_sha=GEOMETRY_DESCRIPTOR_SHA256,
+        **_sidewall_artifact_metadata_fields("NODI_POSITION_RESPONSE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
         **_sidewall_observation_cache_fields(),
         **_sidewall_descriptor_context_fields(),
@@ -424,6 +433,7 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
         geometry_propagation_status="propagated",
         geometry_not_propagated_reasons="",
+        **_sidewall_artifact_metadata_fields("NODI_EFFECTIVE_APERTURE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
         **_sidewall_observation_cache_fields(),
         **_sidewall_descriptor_context_fields(),
@@ -563,6 +573,23 @@ def test_position_response_sidewall_v2_requires_runtime_binding_version() -> Non
     del row["geometry_runtime_binding_version"]
 
     issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_artifact_metadata() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["artifact_id"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_wrong_artifact_version() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(artifact_version="NODI_POSITION_RESPONSE_SURFACE_V1")]
+    )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
@@ -941,6 +968,23 @@ def test_effective_aperture_sidewall_v2_requires_solver_trigger_result_guard() -
     del row["optical_solver_trigger_is_result"]
 
     issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_artifact_metadata() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["artifact_created_utc"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_wrong_artifact_version() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(artifact_version="NODI_EFFECTIVE_APERTURE_SURROGATE_V1")]
+    )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 

@@ -790,6 +790,13 @@ SIDEWALL_V2_ACCEPTANCE_GUARD_REQUIRED_FIELDS: tuple[str, ...] = (
 SIDEWALL_V2_ROADMAP_STATUS_ALLOWED = frozenset(
     {"roadmap_only", "surrogate_sensitivity_only", "descriptor_only", "context-only"}
 )
+PRS_SIDEWALL_V2_ARTIFACT_VERSION = "NODI_POSITION_RESPONSE_SIDEWALL_V2"
+EAS_SIDEWALL_V2_ARTIFACT_VERSION = "NODI_EFFECTIVE_APERTURE_SIDEWALL_V2"
+SIDEWALL_V2_ARTIFACT_METADATA_REQUIRED_FIELDS: tuple[str, ...] = (
+    "artifact_id",
+    "artifact_version",
+    "artifact_created_utc",
+)
 SIDEWALL_V2_CACHE_GEOMETRY_MATCH_STATUS_ALLOWED = frozenset(
     {
         "matched_current_geometry",
@@ -9107,6 +9114,13 @@ def _validate_position_response_sidewall_v2_fields(
         check_prs_bin_fields=True,
     )
     _validate_sidewall_v2_acceptance_guards(row, row_index, "PRS-SIDEWALL-V2", issues)
+    _validate_sidewall_v2_artifact_metadata(
+        row,
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+        expected_artifact_version=PRS_SIDEWALL_V2_ARTIFACT_VERSION,
+    )
     channel_model = _value(row, "channel_cross_section_model")
     if channel_model not in {"ideal_rectangle", "trapezoid_tapered_sidewalls"}:
         _issue(
@@ -9606,6 +9620,35 @@ def _validate_sidewall_v2_acceptance_guards(
         _validate_bool_equals(row, field, True, row_index, rule_id, issues)
 
 
+def _validate_sidewall_v2_artifact_metadata(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    *,
+    expected_artifact_version: str,
+) -> None:
+    _require_fields(
+        row,
+        SIDEWALL_V2_ARTIFACT_METADATA_REQUIRED_FIELDS,
+        rule_id,
+        row_index,
+        issues,
+    )
+    if not _value(row, "artifact_id"):
+        _issue(issues, row_index, rule_id, "artifact_id is blank")
+    _validate_constant(
+        row,
+        "artifact_version",
+        expected_artifact_version,
+        row_index,
+        rule_id,
+        issues,
+    )
+    if not _value(row, "artifact_created_utc"):
+        _issue(issues, row_index, rule_id, "artifact_created_utc is blank")
+
+
 def _validate_sidewall_local_geometry(
     row_index: int,
     values: Mapping[str, float],
@@ -10098,6 +10141,13 @@ def _validate_effective_aperture_sidewall_v2_fields(
         check_prs_bin_fields=False,
     )
     _validate_sidewall_v2_acceptance_guards(row, row_index, "EAS-SIDEWALL-V2", issues)
+    _validate_sidewall_v2_artifact_metadata(
+        row,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+        expected_artifact_version=EAS_SIDEWALL_V2_ARTIFACT_VERSION,
+    )
     _validate_sidewall_v2_observation_cache_context(
         row,
         row_index,
