@@ -44,16 +44,16 @@ The following remain blocked and must not be inferred from current sidewall-awar
 
 ## Verification
 
-Latest clean-tree regression command:
+Latest clean-tree sidewall mainline regression command:
 
 ```text
 python -m pytest tests/test_cross_section_geometry.py tests/test_nodi_comsol_next_artifacts_contracts.py tests/test_nodi_comsol_gate11_sidewall_convergence.py tests/test_nodi_comsol_gate12_sidewall_addendum_release_candidate.py tests/test_nodi_comsol_gate13_sidewall_guard_convergence.py tests/test_physics_core.py::TestIntegration::test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics -q
 ```
 
-Latest result before this audit packet:
+Latest result:
 
 ```text
-411 passed in 79.40s (0:01:19)
+416 passed in 80.78s (0:01:20)
 ```
 
 Additional focused verification after adding runtime top-aperture binding guards:
