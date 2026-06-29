@@ -730,6 +730,21 @@ SIDEWALL_V2_SOURCE_GRAIN_REQUIRED_FIELDS: tuple[str, ...] = (
     "source_route_id_nodi",
     "source_D_nm",
 )
+SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPE_REQUIRED_FIELDS: tuple[str, ...] = (
+    "geometry_propagation_scope",
+)
+SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPES = frozenset(
+    {
+        "particle_center_support_only_not_reference_fluidic_electrokinetic",
+        "aperture_surrogate_only_not_true_runtime",
+        "blocked_non_propagated_audit",
+        "rectangle_native_or_non_sidewall_geometry",
+    }
+)
+PRS_SIDEWALL_V2_PROPAGATED_SCOPE = (
+    "particle_center_support_only_not_reference_fluidic_electrokinetic"
+)
+EAS_SIDEWALL_V2_PROPAGATED_SCOPE = "aperture_surrogate_only_not_true_runtime"
 PRS_SIDEWALL_V2_SOURCE_BIN_REQUIRED_FIELDS: tuple[str, ...] = (
     "source_distribution_type",
     "source_bin_basis",
@@ -804,6 +819,7 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "flow_control_mode",
     "reference_field_model",
     "reference_spatial_mode",
+    *SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPE_REQUIRED_FIELDS,
     *SIDEWALL_V2_SOURCE_GRAIN_REQUIRED_FIELDS,
     *PRS_SIDEWALL_V2_SOURCE_BIN_REQUIRED_FIELDS,
     *PRS_SIDEWALL_V2_TRAJECTORY_GUARD_REQUIRED_FIELDS,
@@ -1012,6 +1028,7 @@ EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "not_optical_solver_output",
     "not_qch_weighted",
     "not_detection_probability",
+    *SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPE_REQUIRED_FIELDS,
     *SIDEWALL_V2_SOURCE_GRAIN_REQUIRED_FIELDS,
     *SIDEWALL_V2_PACKAGE_D_PRECHECK_REQUIRED_FIELDS,
     *SIDEWALL_V2_RUNTIME_PROPAGATION_GUARD_REQUIRED_FIELDS,
@@ -9407,6 +9424,13 @@ def _validate_position_response_sidewall_v2_fields(
         "PRS-SIDEWALL-V2",
         issues,
     )
+    _validate_sidewall_v2_geometry_propagation_scope(
+        row,
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+        expected_propagated_scope=PRS_SIDEWALL_V2_PROPAGATED_SCOPE,
+    )
     _validate_sidewall_v2_trajectory_guards(row, row_index, "PRS-SIDEWALL-V2", issues)
     geometry_status = _value(row, "geometry_propagation_status")
     if geometry_status not in PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED:
@@ -10208,6 +10232,60 @@ def _validate_sidewall_v2_trajectory_guards(
             )
 
 
+def _validate_sidewall_v2_geometry_propagation_scope(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    *,
+    expected_propagated_scope: str,
+) -> None:
+    _require_fields(
+        row,
+        SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPE_REQUIRED_FIELDS,
+        rule_id,
+        row_index,
+        issues,
+    )
+    _validate_enum(
+        row,
+        "geometry_propagation_scope",
+        SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPES,
+        row_index,
+        rule_id,
+        issues,
+    )
+    channel_model = _value(row, "channel_cross_section_model")
+    scope = _value(row, "geometry_propagation_scope")
+    if channel_model != "trapezoid_tapered_sidewalls":
+        if scope != "rectangle_native_or_non_sidewall_geometry":
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "non-trapezoid row has sidewall propagation scope",
+            )
+        return
+
+    geometry_status = _value(row, "geometry_propagation_status")
+    if geometry_status == "propagated":
+        if scope != expected_propagated_scope:
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "propagated trapezoid row has ambiguous geometry_propagation_scope",
+            )
+        return
+    if scope != "blocked_non_propagated_audit":
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            "non-propagated trapezoid row lacks blocked audit propagation scope",
+        )
+
+
 def _validate_sidewall_v2_artifact_metadata(
     row: Mapping[str, Any],
     row_index: int,
@@ -10799,6 +10877,13 @@ def _validate_effective_aperture_sidewall_v2_fields(
         row_index,
         "EAS-SIDEWALL-V2",
         issues,
+    )
+    _validate_sidewall_v2_geometry_propagation_scope(
+        row,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+        expected_propagated_scope=EAS_SIDEWALL_V2_PROPAGATED_SCOPE,
     )
     _validate_sidewall_v2_eas_runtime_geometry_context(row, row_index, issues)
     _validate_sidewall_v2_descriptor_context(row, row_index, "EAS-SIDEWALL-V2", issues)

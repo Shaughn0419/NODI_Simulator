@@ -448,6 +448,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         cross_section_geometry_version="trapezoid_straight_sidewall_v1",
         geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
         geometry_propagation_status="propagated",
+        geometry_propagation_scope="particle_center_support_only_not_reference_fluidic_electrokinetic",
         geometry_not_propagated_reasons="",
         sampler_geometry_model="trapezoid_accessible_area_v1",
         sampler_support_model="wall_normal_half_plane_offset_v1",
@@ -579,6 +580,7 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         cross_section_geometry_version="trapezoid_straight_sidewall_v1",
         geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
         geometry_propagation_status="propagated",
+        geometry_propagation_scope="aperture_surrogate_only_not_true_runtime",
         geometry_not_propagated_reasons="",
         source_route_id_nodi="404/W500/D900",
         source_D_nm=900,
@@ -709,6 +711,7 @@ def test_position_response_sidewall_v2_keeps_ideal_rectangle_context_path() -> N
         _valid_prs_sidewall_v2_row(
             channel_cross_section_model="ideal_rectangle",
             cross_section_geometry_version="ideal_rectangle_v1",
+            geometry_propagation_scope="rectangle_native_or_non_sidewall_geometry",
             sampler_geometry_model="rectangle_accessible_area_v1",
             **_sidewall_observation_cache_fields("ideal_rectangle"),
         )
@@ -828,6 +831,27 @@ def test_position_response_sidewall_v2_requires_runtime_propagation_models() -> 
     del row["reference_spatial_mode"]
 
     issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_geometry_propagation_scope() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["geometry_propagation_scope"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_ambiguous_propagation_scope() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                geometry_propagation_scope="aperture_surrogate_only_not_true_runtime",
+            )
+        ]
+    )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
@@ -1168,6 +1192,7 @@ def test_position_response_sidewall_v2_keeps_non_propagated_audit_row_blocked() 
         [
             _valid_prs_sidewall_v2_row(
                 geometry_propagation_status="not_propagated",
+                geometry_propagation_scope="blocked_non_propagated_audit",
                 geometry_not_propagated_reasons="geometry_not_propagated_to_sampler",
                 bin_accessible="false",
                 bin_accessible_area_fraction=0.0,
@@ -1456,6 +1481,29 @@ def test_effective_aperture_sidewall_v2_requires_runtime_geometry_context() -> N
     del row["geometry_runtime_binding_version"]
 
     issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_geometry_propagation_scope() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["geometry_propagation_scope"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_prs_propagation_scope() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                geometry_propagation_scope=(
+                    "particle_center_support_only_not_reference_fluidic_electrokinetic"
+                )
+            )
+        ]
+    )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 
