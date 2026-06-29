@@ -36,6 +36,7 @@ CHANNEL_GEOMETRY_DIAGNOSTIC_FIELDS = (
     "effective_to_ideal_accessible_area_ratio",
     "effective_to_ideal_phase_mask_area_ratio",
     "trapezoid_top_width_m",
+    "trapezoid_depth_m",
     "trapezoid_bottom_width_m",
     "trapezoid_bottom_width_unclipped_m",
     "trapezoid_bottom_width_runtime_clipped_m",
@@ -130,6 +131,7 @@ def build_channel_geometry_diagnostics(
     effective_accessible_area_m2 = ideal_accessible_area_m2
     effective_phase_mask_area_m2 = ideal_phase_mask_area_m2
     trapezoid_top_width_m: float | None = None
+    trapezoid_depth_m: float | None = None
     trapezoid_bottom_width_m: float | None = None
     trapezoid_bottom_width_unclipped_m: float | None = None
     trapezoid_bottom_width_runtime_clipped_m: float | None = None
@@ -167,6 +169,7 @@ def build_channel_geometry_diagnostics(
             sidewall_taper_angle_deg=sidewall_taper_angle_deg,
         )
         trapezoid_top_width_m = trapezoid_geometry.top_width_m
+        trapezoid_depth_m = trapezoid_geometry.depth_m
         trapezoid_bottom_width_unclipped_m = (
             trapezoid_geometry.bottom_width_unclipped_m
         )
@@ -252,6 +255,7 @@ def build_channel_geometry_diagnostics(
             ideal_phase_mask_area_m2,
         ),
         "trapezoid_top_width_m": trapezoid_top_width_m,
+        "trapezoid_depth_m": trapezoid_depth_m,
         "trapezoid_bottom_width_m": trapezoid_bottom_width_m,
         "trapezoid_bottom_width_unclipped_m": trapezoid_bottom_width_unclipped_m,
         "trapezoid_bottom_width_runtime_clipped_m": (

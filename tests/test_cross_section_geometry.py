@@ -153,6 +153,7 @@ def test_channel_diagnostics_emit_unclipped_and_runtime_clipped_bottom_widths() 
     assert diagnostics["trapezoid_bottom_width_unclipped_m"] < 0.0
     assert diagnostics["trapezoid_bottom_width_runtime_clipped_m"] == 0.0
     assert diagnostics["trapezoid_bottom_width_m"] == 0.0
+    assert diagnostics["trapezoid_depth_m"] == pytest.approx(700.0e-9)
     assert diagnostics["trapezoid_closure_status"] == "geometry_closed"
     assert diagnostics["trapezoid_closure_policy"] == "preserve_unclipped_descriptor"
     assert diagnostics["trapezoid_runtime_guard_status"] == "validation_guard"
@@ -655,6 +656,8 @@ def test_trapezoid_trajectory_diagnostics_mark_blocked_rectangular_leakage() -> 
 
 
 def test_sidewall_observation_signature_records_geometry_propagation_fields() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    particle = Particle("ev_220nm_tail", radius_m=110.0e-9, n_real=1.37)
     cfg_85 = replace(
         DEFAULT_SIM_CFG,
         channel_cross_section_model="trapezoid_tapered_sidewalls",
@@ -667,7 +670,27 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         cfg_85,
         sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(83.0),
     )
+    channel_geometry_85 = build_channel_geometry_diagnostics(
+        particle,
+        channel,
+        BASELINE_OPTICAL,
+        cfg_85,
+    )
+    channel_geometry_83 = build_channel_geometry_diagnostics(
+        particle,
+        channel,
+        BASELINE_OPTICAL,
+        cfg_83,
+    )
+    deeper_channel = Channel(width_m=500.0e-9, depth_m=1200.0e-9)
+    channel_geometry_85_deeper = build_channel_geometry_diagnostics(
+        particle,
+        deeper_channel,
+        BASELINE_OPTICAL,
+        cfg_85,
+    )
     reference_85 = {
+        **channel_geometry_85,
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
         "reference_geometry_model": "rectangular_width_depth_reference_proxy_under_trapezoid",
@@ -680,6 +703,7 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         **build_trajectory_geometry_diagnostics(cfg_85),
     }
     reference_83 = {
+        **channel_geometry_83,
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
         **build_trajectory_geometry_diagnostics(cfg_83),
@@ -693,6 +717,12 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
         **build_trajectory_geometry_diagnostics(cfg_85_diffusive),
+    }
+    reference_85_deeper = {
+        **channel_geometry_85_deeper,
+        "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+        "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
+        **build_trajectory_geometry_diagnostics(cfg_85),
     }
 
     signature_85 = _build_observation_signature(
@@ -719,6 +749,12 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         cfg_85_diffusive,
         particle_radius_m=110.0e-9,
     )
+    signature_85_deeper = _build_observation_signature(
+        "operator=test",
+        reference_85_deeper,
+        cfg_85,
+        particle_radius_m=110.0e-9,
+    )
 
     assert "channel_cross_section_model=trapezoid_tapered_sidewalls" in signature_85
     assert "sidewall_taper_angle_deg=5.000000000e+00" in signature_85
@@ -732,6 +768,12 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     )
     assert "trajectory_boundary_model=not_applicable_pure_advection" in signature_85
     assert "trajectory_boundary_claim_level=no_diffusive_boundary_claim" in signature_85
+    assert "trapezoid_top_width_m=5e-07" in signature_85
+    assert "trapezoid_depth_m=9e-07" in signature_85
+    assert "trapezoid_bottom_width_unclipped_m=" in signature_85
+    assert "trapezoid_bottom_width_runtime_clipped_m=" in signature_85
+    assert "trapezoid_center_accessible_area_m2=" in signature_85
+    assert "trapezoid_center_accessible_area_fraction=" in signature_85
     assert (
         "wall_distance_model=not_applicable_diffusion_hindrance_none"
         in signature_85
@@ -764,6 +806,7 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     assert "optical_solver_trigger_is_result=False" in signature_85
     assert signature_85 != signature_83
     assert signature_85 != signature_85_diffusive
+    assert signature_85 != signature_85_deeper
     assert signature_85 != signature_85_larger_particle
 
 
