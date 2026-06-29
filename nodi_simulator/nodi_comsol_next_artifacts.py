@@ -848,6 +848,8 @@ EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "geometry_runtime_binding_version",
     "geometry_propagation_status",
     "geometry_not_propagated_reasons",
+    "optical_solver_triggered",
+    "optical_solver_trigger_reason",
     "optical_solver_trigger_is_result",
     "not_true_W_eff",
     "not_measured_geometry",
@@ -10086,6 +10088,7 @@ def _validate_effective_aperture_sidewall_v2_fields(
         "EAS-SIDEWALL-V2",
         issues,
     )
+    _validate_sidewall_v2_eas_optical_solver_trigger(row, row_index, issues)
     _validate_bool_equals(
         row,
         "not_qch_weighted",
@@ -10119,6 +10122,42 @@ def _validate_effective_aperture_sidewall_v2_fields(
     for field in EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS:
         if _value(row, field):
             _validate_number_or_blank(row, field, row_index, "EAS-SIDEWALL-V2", issues)
+
+
+def _validate_sidewall_v2_eas_optical_solver_trigger(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> None:
+    triggered = _bool_field(
+        row,
+        "optical_solver_triggered",
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+    )
+    reason = _value(row, "optical_solver_trigger_reason")
+    if reason not in EAS_APPROVED_SOLVER_TRIGGER_REASONS:
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            f"invalid optical_solver_trigger_reason={reason}",
+        )
+    if triggered is False and reason != "none":
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            "optical_solver_trigger_reason present without optical_solver_triggered",
+        )
+    if triggered is True and reason == "none":
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            "optical_solver_triggered lacks optical_solver_trigger_reason",
+        )
 
 
 def _validate_sidewall_v2_eas_runtime_geometry_context(

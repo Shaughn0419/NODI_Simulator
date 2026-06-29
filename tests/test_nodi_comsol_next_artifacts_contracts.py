@@ -402,6 +402,8 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         aperture_surrogate_basis="center_accessible_geometry_proxy",
         aperture_surrogate_claim_level="surrogate_sensitivity_only",
         W_eff_optical_surrogate_nm=480.0,
+        optical_solver_triggered="false",
+        optical_solver_trigger_reason="none",
         optical_solver_trigger_is_result="false",
         rank_under_surrogate="",
         not_qch_weighted="true",
@@ -902,6 +904,29 @@ def test_effective_aperture_sidewall_v2_requires_solver_trigger_result_guard() -
     del row["optical_solver_trigger_is_result"]
 
     issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_solver_trigger_fields() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["optical_solver_triggered"]
+    del row["optical_solver_trigger_reason"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_solver_reason_without_trigger() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                optical_solver_triggered="false",
+                optical_solver_trigger_reason="geometry_complexity",
+            )
+        ]
+    )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 
