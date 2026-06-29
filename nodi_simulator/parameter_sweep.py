@@ -6503,6 +6503,22 @@ def _channel_identity_key(
     )
 
 
+def _simulation_config_identity_key(
+    sim_cfg: SimulationConfig,
+) -> tuple[tuple[str, object], ...]:
+    """Build a stable cache key for runtime/surrogate assumptions.
+
+    The worker-local caches are allowed to reuse immutable payloads only when
+    the full SimulationConfig identity is unchanged. This explicitly separates
+    opt-in trapezoid sidewall analyses from the native ideal-rectangle path and
+    avoids relying on object identity when a config is mutated in-place.
+    """
+    return tuple(
+        (str(key), _freeze_cache_value(value))
+        for key, value in sorted(vars(sim_cfg).items(), key=lambda item: str(item[0]))
+    )
+
+
 def _optical_identity_key(optical: OpticalSystem) -> tuple[object, ...]:
     """Build a stable cache key for optical fields used in case-level solvers."""
     return (
@@ -6622,7 +6638,7 @@ def _get_or_build_collection_operator(
         _theta_grid_identity_key(theta_grid_rad),
         _channel_identity_key(channel, optical.wavelength_m),
         _optical_identity_key(optical),
-        id(sim_cfg),
+        _simulation_config_identity_key(sim_cfg),
         float(medium_refractive_index),
     )
     cached = collection_operator_cache.get(key)
@@ -6656,7 +6672,7 @@ def _get_or_compute_reference_field(
     key = (
         _channel_identity_key(channel, optical.wavelength_m),
         _optical_identity_key(optical),
-        id(sim_cfg),
+        _simulation_config_identity_key(sim_cfg),
         float(medium_refractive_index),
     )
     cached = reference_cache.get(key)

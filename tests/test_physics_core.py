@@ -11050,6 +11050,157 @@ class TestIntegration:
         assert second_batch["summary"] == first_batch["summary"]
         assert call_counts == {"intrinsic": 1, "reference": 1, "operator": 1}
 
+    def test_simulation_config_cache_identity_separates_sidewall_geometry(self):
+        base_cfg = SimulationConfig(
+            total_time_s=0.02,
+            sampling_rate_Hz=2000.0,
+            mean_flow_velocity_m_s=2e-4,
+            n_events=1,
+            random_seed=42,
+            reference_spatial_mode="cross_section_surrogate",
+        )
+        trapezoid_cfg = replace(
+            base_cfg,
+            channel_cross_section_model="trapezoid_tapered_sidewalls",
+            sidewall_taper_angle_deg=5.0,
+        )
+        steeper_trapezoid_cfg = replace(trapezoid_cfg, sidewall_taper_angle_deg=7.0)
+        uniform_reference_cfg = replace(base_cfg, reference_spatial_mode="uniform")
+
+        base_key = parameter_sweep_module._simulation_config_identity_key(base_cfg)
+
+        assert (
+            parameter_sweep_module._simulation_config_identity_key(trapezoid_cfg)
+            != base_key
+        )
+        assert parameter_sweep_module._simulation_config_identity_key(
+            steeper_trapezoid_cfg
+        ) != parameter_sweep_module._simulation_config_identity_key(trapezoid_cfg)
+        assert (
+            parameter_sweep_module._simulation_config_identity_key(
+                uniform_reference_cfg
+            )
+            != base_key
+        )
+
+    def test_reference_cache_miss_when_sidewall_config_mutates(self, monkeypatch):
+        sim_cfg = SimulationConfig(
+            total_time_s=0.02,
+            sampling_rate_Hz=2000.0,
+            mean_flow_velocity_m_s=2e-4,
+            n_events=1,
+            random_seed=42,
+            reference_model="geometry_scaled",
+        )
+        medium_refractive_index = float(
+            WATER.refractive_index_at(BASELINE_OPTICAL.wavelength_m)
+        )
+        reference_cache = {}
+        call_counts = {"reference": 0}
+
+        def fake_reference(*_args, **_kwargs):
+            call_counts["reference"] += 1
+            return {"reference_call_index": float(call_counts["reference"])}
+
+        monkeypatch.setattr(
+            parameter_sweep_module,
+            "compute_reference_field",
+            fake_reference,
+        )
+
+        first_reference = parameter_sweep_module._get_or_compute_reference_field(
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            medium_refractive_index,
+            reference_cache,
+        )
+        second_reference = parameter_sweep_module._get_or_compute_reference_field(
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            medium_refractive_index,
+            reference_cache,
+        )
+        sim_cfg.channel_cross_section_model = "trapezoid_tapered_sidewalls"
+        sim_cfg.sidewall_taper_angle_deg = 5.0
+        trapezoid_reference = parameter_sweep_module._get_or_compute_reference_field(
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            medium_refractive_index,
+            reference_cache,
+        )
+
+        assert call_counts == {"reference": 2}
+        assert first_reference == second_reference
+        assert trapezoid_reference["reference_call_index"] == pytest.approx(2.0)
+
+    def test_collection_operator_cache_miss_when_sidewall_config_mutates(
+        self,
+        monkeypatch,
+    ):
+        theta_grid = np.linspace(0.01, np.pi - 0.01, 16)
+        sim_cfg = SimulationConfig(
+            total_time_s=0.02,
+            sampling_rate_Hz=2000.0,
+            mean_flow_velocity_m_s=2e-4,
+            n_events=1,
+            random_seed=42,
+        )
+        medium_refractive_index = float(
+            WATER.refractive_index_at(BASELINE_OPTICAL.wavelength_m)
+        )
+        collection_operator_cache = {}
+        call_counts = {"operator": 0}
+
+        def fake_operator(*_args, **_kwargs):
+            call_counts["operator"] += 1
+            return {"roi_weight": np.array([float(call_counts["operator"])])}
+
+        monkeypatch.setattr(
+            parameter_sweep_module,
+            "build_collection_operator",
+            fake_operator,
+        )
+
+        first_operator = parameter_sweep_module._get_or_build_collection_operator(
+            theta_grid,
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            medium_refractive_index,
+            collection_operator_cache,
+        )
+        second_operator = parameter_sweep_module._get_or_build_collection_operator(
+            theta_grid,
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            medium_refractive_index,
+            collection_operator_cache,
+        )
+        sim_cfg.channel_cross_section_model = "trapezoid_tapered_sidewalls"
+        sim_cfg.sidewall_taper_angle_deg = 5.0
+        trapezoid_operator = parameter_sweep_module._get_or_build_collection_operator(
+            theta_grid,
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            medium_refractive_index,
+            collection_operator_cache,
+        )
+
+        assert call_counts == {"operator": 2}
+        np.testing.assert_array_equal(
+            first_operator["roi_weight"],
+            second_operator["roi_weight"],
+        )
+        np.testing.assert_array_equal(
+            trapezoid_operator["roi_weight"],
+            np.array([2.0]),
+        )
+
     def test_reference_cache_returns_readonly_shallow_payloads(self):
         sim_cfg = SimulationConfig(
             total_time_s=0.02,
