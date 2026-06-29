@@ -24,6 +24,7 @@ from nodi_simulator.data_objects import (
 from nodi_simulator.electrokinetic_transport import (
     build_electrokinetic_transport_diagnostics,
 )
+from nodi_simulator.fluidic_network_model import build_fluidic_network_diagnostics
 from nodi_simulator.fluidic_resistance import compute_fluidic_practicality_penalty
 from nodi_simulator.parameter_sweep import (
     _build_observation_signature,
@@ -757,6 +758,11 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         channel,
         fluidic_cfg_85,
     )
+    fluidic_network_85 = build_fluidic_network_diagnostics(
+        WATER,
+        channel,
+        fluidic_cfg_85,
+    )
     electrokinetic_cfg_85 = replace(
         cfg_85,
         electrokinetic_model="boltzmann_wall_exclusion",
@@ -771,6 +777,7 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     reference_85 = {
         **channel_geometry_85,
         **fluidic_85,
+        **fluidic_network_85,
         **electrokinetic_85,
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
@@ -944,6 +951,38 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         "fixed_pressure_diagnostic_status="
         "proxy_only_rectangular_resistance_under_trapezoid"
     ) in signature_85
+    assert (
+        "fluidic_network_model_status=partial_network_nanochannel_array_only"
+        in signature_85
+    )
+    assert (
+        "fluidic_network_claim_level="
+        "diagnostic_only_no_measured_pressure_flow_relation"
+    ) in signature_85
+    assert (
+        "fluidic_network_pressure_flow_relation_status="
+        "blocked_until_measured_pressure_flow_trace"
+    ) in signature_85
+    assert (
+        "fluidic_network_geometry_model="
+        "trapezoid_descriptor_with_rectangular_proxy_network"
+    ) in signature_85
+    assert (
+        "fluidic_network_hydraulic_resistance_model="
+        "rectangular_hydraulic_resistance_network_proxy_under_trapezoid"
+    ) in signature_85
+    assert (
+        "fluidic_network_hydraulic_resistance_claim_level="
+        "diagnostic_only_rectangular_proxy_not_trapezoid_poiseuille_not_qch"
+    ) in signature_85
+    assert (
+        "fluidic_network_geometry_propagation_status="
+        "geometry_not_propagated_to_fluidic_network"
+    ) in signature_85
+    assert "geometry_not_propagated_to_fluidic_network=True" in signature_85
+    assert "fluidic_network_not_qch_weighted=True" in signature_85
+    assert "fluidic_network_fixed_pressure_prediction_allowed=False" in signature_85
+    assert "fluidic_network_gate_passed=False" in signature_85
     assert "electrokinetic_model=boltzmann_wall_exclusion" in signature_85
     assert (
         "electrokinetic_transport_geometry_model="
@@ -980,6 +1019,12 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         {
             **reference_85,
             "fluidic_geometry_propagation_status": (
+                "rectangle_native_or_non_sidewall_geometry"
+            ),
+        },
+        {
+            **reference_85,
+            "fluidic_network_geometry_propagation_status": (
                 "rectangle_native_or_non_sidewall_geometry"
             ),
         },
