@@ -96,6 +96,7 @@ Completed NODI-side guardrails:
 - Expanded exact claim-promotion blacklists for sidewall PRS/EAS artifacts to reject `rank`, `route_rank`, `sidewall_rank`, `JOINT_ROUTE_CLASS`, `q_ch_weight`, and `q_ch_weighting` while preserving provenance fields such as `rank_source`.
 - Added EAS sidewall v2 guards requiring generic `W_eff_surrogate_nm` to be an explicit numeric alias of a named sidewall-specific surrogate, while eta/rank-source fields remain blank or claim-labeled as disabled/no-rank legacy provenance.
 - Added propagated trapezoid PRS allowlists so sampler, flow, and trajectory-boundary models cannot be blank or silently upgraded beyond the implemented `trapezoid_accessible_area_v1`, `plug`, and declared pure-advection/projection-boundary states.
+- Added runtime top-aperture binding guards so `mask_width`, `top_cd`, and `post_bias_top_cd` descriptor semantics cannot be used as propagated/runtime aperture inputs unless `runtime_top_aperture_nm`, `top_cd_bias_nm`, and `top_cd_bias_source` are present and numerically consistent; PRS/EAS sidewall v2 descriptor-context rows inherit the same hard fail.
 
 Still blocked in this roadmap:
 

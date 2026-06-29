@@ -1474,6 +1474,14 @@ def test_position_response_sidewall_v2_requires_descriptor_context_fields() -> N
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_mask_top_width_runtime_binding_gap() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(W_top_semantics="mask_width")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_descriptor_angle_mismatch() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(sidewall_taper_angle_deg_nodi=85.0)]
@@ -2552,6 +2560,66 @@ def test_geometry_descriptor_v2_rejects_runtime_top_aperture_mismatch() -> None:
             _valid_descriptor_v2_row(
                 W_top_semantics="runtime_top_aperture",
                 runtime_top_aperture_nm=480.0,
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
+def test_geometry_descriptor_v2_rejects_mask_width_propagated_without_runtime_aperture() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [
+            _valid_descriptor_v2_row(
+                W_top_semantics="mask_width",
+                geometry_propagation_status="propagated",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
+def test_geometry_descriptor_v2_rejects_mask_width_runtime_binding_without_bias_source() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [
+            _valid_descriptor_v2_row(
+                W_top_semantics="mask_width",
+                runtime_top_aperture_nm=500.0,
+                mask_top_width_nm=500.0,
+                top_cd_bias_nm=0.0,
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
+def test_geometry_descriptor_v2_accepts_mask_width_runtime_binding_with_bias_metadata() -> None:
+    assert (
+        validate_geometry_descriptor_rows(
+            [
+                _valid_descriptor_v2_row(
+                    W_top_semantics="mask_width",
+                    runtime_top_aperture_nm=480.0,
+                    mask_top_width_nm=500.0,
+                    top_cd_bias_nm=-20.0,
+                    top_cd_bias_source="process_bias_descriptor_context_only",
+                )
+            ]
+        )
+        == []
+    )
+
+
+def test_geometry_descriptor_v2_rejects_top_cd_runtime_aperture_bias_mismatch() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [
+            _valid_descriptor_v2_row(
+                W_top_semantics="top_cd",
+                runtime_top_aperture_nm=490.0,
+                top_cd_bias_nm=-20.0,
+                top_cd_bias_source="process_bias_descriptor_context_only",
             )
         ]
     )

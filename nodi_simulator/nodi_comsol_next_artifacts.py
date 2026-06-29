@@ -1408,6 +1408,9 @@ DESCRIPTOR_V2_W_TOP_SEMANTICS = frozenset(
         "comsol_descriptor",
     }
 )
+DESCRIPTOR_V2_CONTEXT_TOP_SEMANTICS_REQUIRING_BINDING_EVIDENCE = frozenset(
+    {"mask_width", "top_cd", "post_bias_top_cd"}
+)
 DESCRIPTOR_V2_CLOSURE_STATUS = frozenset({"open", "near_closed", "geometry_closed"})
 DESCRIPTOR_V2_CLOSURE_POLICY = frozenset(
     {
@@ -2108,8 +2111,47 @@ def _validate_descriptor_v2_runtime_top_binding(
     issues: list[str],
     rule_id: str = "DESC-V2",
 ) -> None:
-    if _value(row, "W_top_semantics") != "runtime_top_aperture":
+    w_top_semantics = _value(row, "W_top_semantics")
+    runtime_top_aperture_text = _value(row, "runtime_top_aperture_nm")
+    if w_top_semantics == "runtime_top_aperture":
+        runtime_top_aperture_nm = _float_field(
+            row,
+            "runtime_top_aperture_nm",
+            row_index,
+            rule_id,
+            issues,
+        )
+        if w_top_nm is not None and runtime_top_aperture_nm is not None:
+            _validate_close(
+                runtime_top_aperture_nm,
+                w_top_nm,
+                row_index,
+                rule_id,
+                "runtime_top_aperture_nm",
+                issues,
+            )
         return
+
+    if (
+        w_top_semantics
+        not in DESCRIPTOR_V2_CONTEXT_TOP_SEMANTICS_REQUIRING_BINDING_EVIDENCE
+    ):
+        return
+
+    runtime_binding_requested = bool(runtime_top_aperture_text) or (
+        _value(row, "geometry_propagation_status") == "propagated"
+    )
+    if not runtime_binding_requested:
+        return
+    if not runtime_top_aperture_text:
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"W_top_semantics={w_top_semantics} runtime binding lacks runtime_top_aperture_nm",
+        )
+        return
+
     runtime_top_aperture_nm = _float_field(
         row,
         "runtime_top_aperture_nm",
@@ -2117,15 +2159,64 @@ def _validate_descriptor_v2_runtime_top_binding(
         rule_id,
         issues,
     )
-    if w_top_nm is not None and runtime_top_aperture_nm is not None:
-        _validate_close(
-            runtime_top_aperture_nm,
-            w_top_nm,
+    top_cd_bias_source = _value(row, "top_cd_bias_source")
+    if not top_cd_bias_source:
+        _issue(
+            issues,
             row_index,
             rule_id,
-            "runtime_top_aperture_nm",
+            f"W_top_semantics={w_top_semantics} runtime binding lacks top_cd_bias_source",
+        )
+    top_cd_bias_nm: float | None = None
+    if not _value(row, "top_cd_bias_nm"):
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"W_top_semantics={w_top_semantics} runtime binding lacks top_cd_bias_nm",
+        )
+    else:
+        top_cd_bias_nm = _float_field(
+            row,
+            "top_cd_bias_nm",
+            row_index,
+            rule_id,
             issues,
         )
+
+    if w_top_semantics == "mask_width":
+        mask_top_width_nm = _float_field(
+            row,
+            "mask_top_width_nm",
+            row_index,
+            rule_id,
+            issues,
+        )
+        if w_top_nm is not None and mask_top_width_nm is not None:
+            _validate_close(
+                mask_top_width_nm,
+                w_top_nm,
+                row_index,
+                rule_id,
+                "mask_top_width_nm",
+                issues,
+            )
+
+    if runtime_top_aperture_nm is None or w_top_nm is None or top_cd_bias_nm is None:
+        return
+    expected_runtime_top_aperture_nm = w_top_nm
+    if w_top_semantics in {"mask_width", "top_cd"}:
+        expected_runtime_top_aperture_nm = w_top_nm + top_cd_bias_nm
+    if w_top_semantics == "post_bias_top_cd":
+        expected_runtime_top_aperture_nm = w_top_nm
+    _validate_close(
+        runtime_top_aperture_nm,
+        expected_runtime_top_aperture_nm,
+        row_index,
+        rule_id,
+        "runtime_top_aperture_nm",
+        issues,
+    )
 
 
 def _validate_descriptor_v2_measured_geometry_claim(

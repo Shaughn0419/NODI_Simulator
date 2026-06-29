@@ -20,6 +20,7 @@ The current supported split is:
 | Geometry primitive | `TrapezoidCrossSection` preserves unclipped bottom width, closure status, center support, and wall-normal particle support. | `nodi_simulator/cross_section_geometry.py`, `tests/test_cross_section_geometry.py` |
 | Rectangle preservation | `ideal_rectangle` keeps rectangle-specific sampler/support/wall-gap identity. | `test_channel_diagnostics_keep_ideal_rectangle_wall_distance_identity` |
 | Descriptor wall-distance identity | Channel geometry emits prefixed `channel_geometry_wall_distance_model` and claim level, avoiding collision with trajectory `wall_distance_model`. | commit `1f0c2bf` |
+| Runtime top-aperture binding | `mask_width`, `top_cd`, and `post_bias_top_cd` cannot become propagated/runtime top apertures without `runtime_top_aperture_nm`, `top_cd_bias_nm`, `top_cd_bias_source`, and numeric consistency. | `test_geometry_descriptor_v2_accepts_mask_width_runtime_binding_with_bias_metadata` |
 | Sampler propagation | Trapezoid sampler emits support status, steric block reason, nearest-wall distances, and surface gap diagnostics. | `nodi_simulator/utils.py` |
 | Actual runtime signature | Event-loop and pure-advection block batches bind sampler diagnostics into `observation_signature`. | `test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics` |
 | PRS sidewall v2 signature | PRS rows require exact sampler/support/wall-distance signature fragments and row/signature binding. | `tests/test_nodi_comsol_next_artifacts_contracts.py` |
@@ -55,6 +56,13 @@ Latest result before this audit packet:
 411 passed in 79.40s (0:01:19)
 ```
 
+Additional focused verification after adding runtime top-aperture binding guards:
+
+```text
+python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q
+347 passed in 61.24s (0:01:01)
+```
+
 ## Current Go/No-Go
 
 | Package | Status | Note |
@@ -66,6 +74,6 @@ Latest result before this audit packet:
 
 ## Next Safe Actions
 
-1. Keep strengthening no-compute validators and mutation tests for descriptor/profile/source-hash drift.
+1. Keep strengthening no-compute validators and mutation tests for profile/source-hash drift and geometry-source promotion.
 2. Add explicit measured-profile load/hash/validation guards before any `measured_geometry` claim.
 3. Design, but do not silently enable, a validated trapezoid trajectory/flow model path.

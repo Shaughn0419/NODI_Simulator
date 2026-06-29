@@ -1,6 +1,7 @@
 gate_id,package,status,evidence,blocked_claims
 geometry_primitive,Package B,pass,"TrapezoidCrossSection preserves unclipped bottom width, closure status, center support, and wall-normal support","not a measured geometry claim"
 rectangle_preservation,Package B,pass,"ideal_rectangle keeps rectangular sampler/support/wall-gap identities","not sidewall-aware runtime"
+runtime_top_aperture_binding,Package A/D preflight,pass,"mask_width, top_cd, and post_bias_top_cd runtime binding requires runtime_top_aperture_nm, top_cd_bias_nm, top_cd_bias_source, and numeric consistency","not mask/top-CD promotion to runtime aperture"
 sampler_signature_actual_path,Package B,pass,"event-loop and pure-advection block tests bind initial_position_wall_distance_model=trapezoid_signed_wall_distance_v1","not production recomputation"
 prs_signature_guard,Package D preflight,pass,"PRS sidewall v2 requires sampler/support/wall-distance signature fragments and row binding","not PRS production data"
 package_c_wall_distance_gate,Package C/D preflight,pass,"wall_distance basis/source-basis requires includes_trajectory_near_wall_metrics=true and package_C_validation_status=pass","not validated hindered diffusion"
