@@ -3,7 +3,7 @@
     "disposition": "PASS_GATE11_SIDEWALL_DESCRIPTOR_RECEIPT_AND_RC51_ADDENDUM_LOCK_CANDIDATE_NO_AUTH",
     "date": "20260629",
     "worktree_target_status": "CLEAN_ALREADY_COMMITTED",
-    "hardening_commit_rows": 28,
+    "hardening_commit_rows": 32,
     "comsol_receipt_rows": 11,
     "comsol_descriptor_rows": 11,
     "descriptor_validation_failures": 0,
@@ -36,6 +36,50 @@
   "hardening_intake": [
     {
       "intake_id": "G11A-HARDEN-001",
+      "commit": "c44ff90",
+      "commit_full": "c44ff90e34794274c034c454b50558215173de89",
+      "subject": "Reject propagated closed sidewall artifacts",
+      "changed_file_scope": "nodi_comsol_next_artifacts.py;tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "guard_added": "sidewall interface/runtime guard hardening",
+      "prs_eas_descriptor_runtime_cache_impact": "contract hardening",
+      "implemented_status": "implemented_in_current_HEAD",
+      "remaining_gap": "none_at_contract_layer"
+    },
+    {
+      "intake_id": "G11A-HARDEN-002",
+      "commit": "8e702d4",
+      "commit_full": "8e702d4e4c349bb13f2c702e14973ed404f3bae5",
+      "subject": "Add Gate12 sidewall addendum release candidate",
+      "changed_file_scope": "nodi_comsol_next_artifacts.py;tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "guard_added": "sidewall interface/runtime guard hardening",
+      "prs_eas_descriptor_runtime_cache_impact": "contract hardening",
+      "implemented_status": "implemented_in_current_HEAD",
+      "remaining_gap": "none_at_contract_layer"
+    },
+    {
+      "intake_id": "G11A-HARDEN-003",
+      "commit": "f6df710",
+      "commit_full": "f6df710773ee2a7f6e3a2d37639be6c2bb2fc637",
+      "subject": "Block closed trapezoid runtime paths",
+      "changed_file_scope": "nodi_comsol_next_artifacts.py;tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "guard_added": "sidewall interface/runtime guard hardening",
+      "prs_eas_descriptor_runtime_cache_impact": "contract hardening",
+      "implemented_status": "implemented_in_current_HEAD",
+      "remaining_gap": "none_at_contract_layer"
+    },
+    {
+      "intake_id": "G11A-HARDEN-004",
+      "commit": "e29501c",
+      "commit_full": "e29501c3d26b5ff712870d7bc10a3617bd97ca28",
+      "subject": "Add Gate11 sidewall descriptor convergence",
+      "changed_file_scope": "nodi_comsol_next_artifacts.py;tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "guard_added": "sidewall interface/runtime guard hardening",
+      "prs_eas_descriptor_runtime_cache_impact": "contract hardening",
+      "implemented_status": "implemented_in_current_HEAD",
+      "remaining_gap": "none_at_contract_layer"
+    },
+    {
+      "intake_id": "G11A-HARDEN-005",
       "commit": "3b1ed6b",
       "commit_full": "3b1ed6b096e930d93df14a558a903dde6f4f187b",
       "subject": "Scan sidewall package D precheck columns",
@@ -46,7 +90,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-002",
+      "intake_id": "G11A-HARDEN-006",
       "commit": "d388cad",
       "commit_full": "d388cad9e92e33152fc642b41b29ab00d7643613",
       "subject": "Add sidewall package D precheck validator",
@@ -57,7 +101,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-003",
+      "intake_id": "G11A-HARDEN-007",
       "commit": "f84b1d0",
       "commit_full": "f84b1d089ee1ea88f35f990c0edfb724dff3082e",
       "subject": "Bind sidewall EAS optical trigger claims",
@@ -68,7 +112,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-004",
+      "intake_id": "G11A-HARDEN-008",
       "commit": "a53a477",
       "commit_full": "a53a47731515a149b87a3d99df56d81e16d73301",
       "subject": "Require sidewall EAS reference context",
@@ -79,7 +123,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-005",
+      "intake_id": "G11A-HARDEN-009",
       "commit": "9c26dff",
       "commit_full": "9c26dffe19f9c10fab5ff9a1a033542e1811c090",
       "subject": "Require sidewall PRS runtime propagation fields",
@@ -90,7 +134,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-006",
+      "intake_id": "G11A-HARDEN-010",
       "commit": "9928173",
       "commit_full": "99281732dc587fc9eb45a0b35467c793ef2620f0",
       "subject": "Validate sidewall PRS particle radius",
@@ -101,7 +145,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-007",
+      "intake_id": "G11A-HARDEN-011",
       "commit": "9d628f1",
       "commit_full": "9d628f1913ca8d2c8eba845451105c687fb6a12f",
       "subject": "Require sidewall PRS normalized coordinates",
@@ -112,7 +156,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-008",
+      "intake_id": "G11A-HARDEN-012",
       "commit": "340fcf2",
       "commit_full": "340fcf21aa790b77824827cf9ea478afb97f8962",
       "subject": "Require sidewall artifact metadata",
@@ -123,7 +167,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-009",
+      "intake_id": "G11A-HARDEN-013",
       "commit": "e2df991",
       "commit_full": "e2df9910b65e442f79df1ea794ec68315536233e",
       "subject": "Require sidewall roadmap status guard",
@@ -134,7 +178,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-010",
+      "intake_id": "G11A-HARDEN-014",
       "commit": "30e4431",
       "commit_full": "30e4431765bacee26a46d58a9fe6631312dcf624",
       "subject": "Require sidewall artifact acceptance guards",
@@ -145,7 +189,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-011",
+      "intake_id": "G11A-HARDEN-015",
       "commit": "17aacad",
       "commit_full": "17aacad2d864c058d047a0448dda3d45742fe08e",
       "subject": "Require sidewall EAS optical claim level",
@@ -156,7 +200,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-012",
+      "intake_id": "G11A-HARDEN-016",
       "commit": "24d426e",
       "commit_full": "24d426e3c4291153280d3390b83d21c7c28b5cb1",
       "subject": "Require sidewall EAS optical trigger fields",
@@ -167,7 +211,7 @@
       "remaining_gap": "covered_by_Gate11_addendum_or_future_authorized_solver"
     },
     {
-      "intake_id": "G11A-HARDEN-013",
+      "intake_id": "G11A-HARDEN-017",
       "commit": "c1942a2",
       "commit_full": "c1942a24c8cce524c5eaaa4369ced5c174dbd5f5",
       "subject": "Require sidewall EAS runtime geometry context",
@@ -178,7 +222,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-014",
+      "intake_id": "G11A-HARDEN-018",
       "commit": "59f88d7",
       "commit_full": "59f88d76a815037c49c6e8da2bb65fe6f833b4d4",
       "subject": "Require sidewall artifact cache signatures",
@@ -189,7 +233,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-015",
+      "intake_id": "G11A-HARDEN-019",
       "commit": "e889d38",
       "commit_full": "e889d3851edfb5e4208f7c98aa004329b223b434",
       "subject": "Include sidewall descriptor provenance in signatures",
@@ -200,7 +244,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-016",
+      "intake_id": "G11A-HARDEN-020",
       "commit": "a524ce6",
       "commit_full": "a524ce6f3ea9e334f32d8060b5dd34ef40b786c0",
       "subject": "Reject numeric responses for blocked sidewall bins",
@@ -211,7 +255,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-017",
+      "intake_id": "G11A-HARDEN-021",
       "commit": "5ba2eba",
       "commit_full": "5ba2ebaf0d4b2627d5b74a457fec10bc243eff65",
       "subject": "Reject sidewall source grain borrowing",
@@ -222,7 +266,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-018",
+      "intake_id": "G11A-HARDEN-022",
       "commit": "6da5468",
       "commit_full": "6da546863db542a0e813b70fa4dde21820acaeef",
       "subject": "Cover EAS sidewall claim column blacklist",
@@ -233,7 +277,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-019",
+      "intake_id": "G11A-HARDEN-023",
       "commit": "7e04591",
       "commit_full": "7e0459143675bd6ba6812994452fe4487b623a97",
       "subject": "Require sidewall descriptor context fields",
@@ -244,7 +288,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-020",
+      "intake_id": "G11A-HARDEN-024",
       "commit": "8d0d79a",
       "commit_full": "8d0d79a54ae6e773cc2e1d824fdf10f71db9e0e7",
       "subject": "Require sidewall source descriptor binding",
@@ -255,7 +299,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-021",
+      "intake_id": "G11A-HARDEN-025",
       "commit": "8468967",
       "commit_full": "84689677dffd9d4b45551248797c5c2ca243c0ea",
       "subject": "Gate measured geometry claims",
@@ -266,7 +310,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-022",
+      "intake_id": "G11A-HARDEN-026",
       "commit": "580e096",
       "commit_full": "580e0964f467eb179b4f03cb2de868dcd0fc629b",
       "subject": "Reject min-aperture passability promotion",
@@ -277,7 +321,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-023",
+      "intake_id": "G11A-HARDEN-027",
       "commit": "743198b",
       "commit_full": "743198b1f4ba84ee8bf0a454fdc88ef8a03bec7b",
       "subject": "Track secondary sidewall geometry in signatures",
@@ -288,7 +332,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-024",
+      "intake_id": "G11A-HARDEN-028",
       "commit": "2c783e8",
       "commit_full": "2c783e83d7f1c7b1b068c8634f496302b20e5a74",
       "subject": "Harden sidewall Gate10 and descriptor validators",
@@ -299,7 +343,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-025",
+      "intake_id": "G11A-HARDEN-029",
       "commit": "2c48161",
       "commit_full": "2c48161e5d80323afd072ffd0caedbfee0f19d51",
       "subject": "Require runtime top aperture binding when claimed",
@@ -310,7 +354,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-026",
+      "intake_id": "G11A-HARDEN-030",
       "commit": "53618da",
       "commit_full": "53618da7940a6634c5ea382879b55119df5a34f0",
       "subject": "Guard sidewall EAS v2 claim promotion",
@@ -321,7 +365,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-027",
+      "intake_id": "G11A-HARDEN-031",
       "commit": "866ed47",
       "commit_full": "866ed47e024771e4c5d1b092a4aa55b0536d7e93",
       "subject": "Block non-propagated sidewall PRS decisions",
@@ -332,7 +376,7 @@
       "remaining_gap": "none_at_contract_layer"
     },
     {
-      "intake_id": "G11A-HARDEN-028",
+      "intake_id": "G11A-HARDEN-032",
       "commit": "f01a48b",
       "commit_full": "f01a48b64f2865c9bb9d4cd5d8188c4169a6ece5",
       "subject": "Require sidewall PRS local geometry fields",

@@ -894,7 +894,7 @@
       "artifact_role": "gate11_report_json",
       "artifact_path": "reports\\joint_interface_20260629\\NODI_COMSOL_GATE11_SIDEWALL_REPORT_20260629.json",
       "row_count": "NA",
-      "sha256": "4afc319b17ac745981321873ca479fc20d89f5eb8cc2ef296b5ff5756564b035",
+      "sha256": "2f469c40d1acb3d303f27cc1fd3dbf62747731287c129c5bdb5a335ab5d88698",
       "not_evidence": "true"
     },
     {
@@ -918,7 +918,7 @@
       "artifact_role": "release_candidate_root_hash",
       "artifact_path": "inline:Gate12 release root",
       "row_count": "5",
-      "sha256": "8f9996aca4fe14dc13129a9caeedf3b3f9a74723a919c87c74d832301a845e2e",
+      "sha256": "bed80aaed76f9fb45efc8634b782baa17c6ca4846b9e0c0baf0d65c690d1a37a",
       "not_evidence": "true"
     }
   ],
@@ -938,7 +938,7 @@
     "runtime_schema": false,
     "production_contract": false,
     "evidence_authorization": false,
-    "release_root_hash": "8f9996aca4fe14dc13129a9caeedf3b3f9a74723a919c87c74d832301a845e2e"
+    "release_root_hash": "bed80aaed76f9fb45efc8634b782baa17c6ca4846b9e0c0baf0d65c690d1a37a"
   },
   "release_status": {
     "release_candidate": "RC5.1_SIDEWALL_GEOMETRY_DESCRIPTOR_ADDENDUM_V1_RELEASE_CANDIDATE_REVIEW_ONLY_NO_AUTH",
@@ -17314,7 +17314,7 @@
       "commit": "e29501c3d26b5ff712870d7bc10a3617bd97ca28",
       "artifact_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator（usb）\\reports\\joint_interface_20260629\\NODI_COMSOL_GATE11_SIDEWALL_MANIFEST_20260629.csv",
       "row_count": "35",
-      "sha256": "82e003d9b8ddb36323955dd9a184727e8acb0e3bf56f672a6dbac01b356c2e3b",
+      "sha256": "a2ccbfc124185b4c231426a04b95c9c421e0d96094e28b0e5c9fc902c2e445f7",
       "status": "CURRENT",
       "boundary": "review_only_no_auth"
     },
@@ -17326,7 +17326,7 @@
       "commit": "CURRENT_GATE12_PENDING_COMMIT",
       "artifact_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator（usb）\\reports\\joint_interface_20260629\\NODI_COMSOL_GATE12_SIDEWALL_MANIFEST_20260629.csv",
       "row_count": "35",
-      "sha256": "7f1ce2b65bbf7caf38947ed8bba9d76e174d904677872449968ad9c3a099fcbc",
+      "sha256": "93e9b130dc52b3547c3ca8ed0d28ff367be9bc8a6e1e813b8947e9469fcfa1d6",
       "status": "CURRENT",
       "boundary": "review_only_no_auth"
     },
