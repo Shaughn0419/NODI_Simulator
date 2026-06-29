@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import subprocess
 import sys
 from pathlib import Path
@@ -327,6 +328,40 @@ def _valid_descriptor_row(**overrides: object) -> dict[str, object]:
     return row
 
 
+def _valid_descriptor_v2_row(**overrides: object) -> dict[str, object]:
+    sidewall_deg = float(overrides.pop("sidewall_deg_comsol", 85.0))
+    w_top_nm = float(overrides.pop("W_top_nm", 500.0))
+    depth_nm = float(overrides.pop("D_nm", 900.0))
+    w_bottom_unclipped_nm = w_top_nm - 2.0 * depth_nm / math.tan(
+        math.radians(sidewall_deg)
+    )
+    w_bottom_runtime_clipped_nm = max(w_bottom_unclipped_nm, 0.0)
+    closure_status = "open" if w_bottom_unclipped_nm > 0.0 else "geometry_closed"
+    min_aperture_descriptor_nm = min(w_bottom_unclipped_nm, 300.0)
+    row = _valid_descriptor_row(
+        D_nm=depth_nm,
+        W_top_um=w_top_nm / 1000.0,
+        W_bottom_um=w_bottom_unclipped_nm / 1000.0,
+        bottom_width_nm=w_bottom_unclipped_nm,
+        D_inscribed_nm=300.0,
+        min_aperture_nm=min_aperture_descriptor_nm,
+        sidewall_angle_convention="sidewall_angle_from_substrate_plane_90deg_vertical",
+        sidewall_deg_comsol=sidewall_deg,
+        sidewall_taper_angle_deg_nodi=90.0 - sidewall_deg,
+        angle_conversion_formula_id="sidewall_from_horizontal_to_taper_from_vertical_v1",
+        W_top_nm=w_top_nm,
+        W_top_semantics="comsol_descriptor",
+        W_bottom_unclipped_nm=w_bottom_unclipped_nm,
+        W_bottom_runtime_clipped_nm=w_bottom_runtime_clipped_nm,
+        closure_status=closure_status,
+        closure_policy="preserve_unclipped_descriptor",
+        runtime_guard_status="none",
+        min_aperture_descriptor_nm=min_aperture_descriptor_nm,
+    )
+    row.update(overrides)
+    return row
+
+
 def _assert_has_issue(issues: list[str], rule_id: str) -> None:
     assert any(rule_id in issue for issue in issues), issues
 
@@ -555,6 +590,41 @@ def test_effective_aperture_rejects_nonpositive_min_aperture_proxy_invention() -
 
 def test_geometry_descriptor_accepts_nominal_surrogate_descriptor_rules() -> None:
     assert validate_geometry_descriptor_rows([_valid_descriptor_row()]) == []
+
+
+def test_geometry_descriptor_accepts_sidewall_v2_fields_when_consistent() -> None:
+    assert validate_geometry_descriptor_rows([_valid_descriptor_v2_row()]) == []
+
+
+def test_geometry_descriptor_v2_requires_angle_convention() -> None:
+    row = _valid_descriptor_v2_row()
+    del row["sidewall_angle_convention"]
+
+    issues = validate_geometry_descriptor_rows([row])
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
+def test_geometry_descriptor_v2_rejects_angle_conversion_mismatch() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [_valid_descriptor_v2_row(sidewall_taper_angle_deg_nodi=85.0)]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
+def test_geometry_descriptor_v2_rejects_open_status_for_nonpositive_bottom() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [
+            _valid_descriptor_v2_row(
+                sidewall_deg_comsol=70.0,
+                D_nm=700.0,
+                closure_status="open",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
 
 
 def test_geometry_descriptor_rejects_exact_sidewall_claim_columns() -> None:

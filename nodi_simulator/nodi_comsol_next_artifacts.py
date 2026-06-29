@@ -935,6 +935,62 @@ DESCRIPTOR_REQUIRED_FIELDS: tuple[str, ...] = (
     "rounded_corner_radius_nm",
     "claim_boundary",
 )
+DESCRIPTOR_V2_MARKER_FIELDS = frozenset(
+    {
+        "sidewall_angle_convention",
+        "sidewall_deg_comsol",
+        "sidewall_taper_angle_deg_nodi",
+        "angle_conversion_formula_id",
+        "W_top_nm",
+        "W_top_semantics",
+        "W_bottom_unclipped_nm",
+        "W_bottom_runtime_clipped_nm",
+        "closure_status",
+        "closure_policy",
+        "runtime_guard_status",
+        "min_aperture_descriptor_nm",
+    }
+)
+DESCRIPTOR_V2_REQUIRED_FIELDS: tuple[str, ...] = (
+    "sidewall_angle_convention",
+    "sidewall_deg_comsol",
+    "sidewall_taper_angle_deg_nodi",
+    "angle_conversion_formula_id",
+    "W_top_nm",
+    "W_top_semantics",
+    "W_bottom_unclipped_nm",
+    "W_bottom_runtime_clipped_nm",
+    "closure_status",
+    "closure_policy",
+    "runtime_guard_status",
+    "min_aperture_descriptor_nm",
+)
+DESCRIPTOR_V2_SIDEWALL_ANGLE_CONVENTIONS = frozenset(
+    {
+        "sidewall_angle_from_substrate_plane_90deg_vertical",
+        "comsol_from_horizontal_90deg_vertical",
+    }
+)
+DESCRIPTOR_V2_ANGLE_CONVERSION_FORMULA_ID = (
+    "sidewall_from_horizontal_to_taper_from_vertical_v1"
+)
+DESCRIPTOR_V2_W_TOP_SEMANTICS = frozenset(
+    {
+        "runtime_top_aperture",
+        "mask_width",
+        "top_cd",
+        "post_bias_top_cd",
+        "comsol_descriptor",
+    }
+)
+DESCRIPTOR_V2_CLOSURE_STATUS = frozenset({"open", "near_closed", "geometry_closed"})
+DESCRIPTOR_V2_CLOSURE_POLICY = frozenset(
+    {
+        "preserve_unclipped_descriptor",
+        "closure_clamped_runtime",
+        "blocked_runtime",
+    }
+)
 DESCRIPTOR_UNAVAILABLE_FIELDS = frozenset(
     {
         "bottom_cd_bias_nm",
@@ -1251,6 +1307,7 @@ def validate_geometry_descriptor_rows(rows: Sequence[Mapping[str, Any]]) -> list
             "EAS-V06",
             issues,
         )
+        _validate_geometry_descriptor_v2_sidewall_fields(row, row_index, issues)
         width_group_um = _float_field(row, "width_group_um", row_index, "EAS-V07", issues)
         w_top_um = _float_field(row, "W_top_um", row_index, "EAS-V07", issues)
         if width_group_um is not None and w_top_um is not None:
@@ -1295,6 +1352,128 @@ def validate_geometry_descriptor_rows(rows: Sequence[Mapping[str, Any]]) -> list
         if count > 1:
             issues.append(f"EAS-V06: duplicate descriptor grain {grain}")
     return issues
+
+
+def _validate_geometry_descriptor_v2_sidewall_fields(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> None:
+    if not any(field in row for field in DESCRIPTOR_V2_MARKER_FIELDS):
+        return
+
+    _require_fields(row, DESCRIPTOR_V2_REQUIRED_FIELDS, "DESC-V2", row_index, issues)
+    _validate_enum(
+        row,
+        "sidewall_angle_convention",
+        DESCRIPTOR_V2_SIDEWALL_ANGLE_CONVENTIONS,
+        row_index,
+        "DESC-V2",
+        issues,
+    )
+    _validate_constant(
+        row,
+        "angle_conversion_formula_id",
+        DESCRIPTOR_V2_ANGLE_CONVERSION_FORMULA_ID,
+        row_index,
+        "DESC-V2",
+        issues,
+    )
+    _validate_enum(
+        row,
+        "W_top_semantics",
+        DESCRIPTOR_V2_W_TOP_SEMANTICS,
+        row_index,
+        "DESC-V2",
+        issues,
+    )
+    _validate_enum(
+        row,
+        "closure_status",
+        DESCRIPTOR_V2_CLOSURE_STATUS,
+        row_index,
+        "DESC-V2",
+        issues,
+    )
+    _validate_enum(
+        row,
+        "closure_policy",
+        DESCRIPTOR_V2_CLOSURE_POLICY,
+        row_index,
+        "DESC-V2",
+        issues,
+    )
+
+    sidewall_deg = _float_field(row, "sidewall_deg_comsol", row_index, "DESC-V2", issues)
+    taper_deg = _float_field(
+        row,
+        "sidewall_taper_angle_deg_nodi",
+        row_index,
+        "DESC-V2",
+        issues,
+    )
+    if sidewall_deg is not None and taper_deg is not None:
+        if not math.isclose(sidewall_deg + taper_deg, 90.0, abs_tol=1.0e-6):
+            _issue(
+                issues,
+                row_index,
+                "DESC-V2",
+                "sidewall_deg_comsol and sidewall_taper_angle_deg_nodi are not complementary",
+            )
+
+    w_top_nm = _float_field(row, "W_top_nm", row_index, "DESC-V2", issues)
+    depth_nm = _float_field(row, "D_nm", row_index, "DESC-V2", issues)
+    w_bottom_unclipped_nm = _float_field(
+        row,
+        "W_bottom_unclipped_nm",
+        row_index,
+        "DESC-V2",
+        issues,
+    )
+    w_bottom_runtime_clipped_nm = _float_field(
+        row,
+        "W_bottom_runtime_clipped_nm",
+        row_index,
+        "DESC-V2",
+        issues,
+    )
+    _float_field(row, "min_aperture_descriptor_nm", row_index, "DESC-V2", issues)
+    if (
+        sidewall_deg is not None
+        and w_top_nm is not None
+        and depth_nm is not None
+        and w_bottom_unclipped_nm is not None
+    ):
+        tan_theta = math.tan(math.radians(sidewall_deg))
+        if abs(tan_theta) <= 1.0e-12:
+            _issue(issues, row_index, "DESC-V2", "sidewall_deg_comsol has zero tangent")
+        else:
+            expected_bottom = w_top_nm - 2.0 * depth_nm / tan_theta
+            if not math.isclose(
+                w_bottom_unclipped_nm,
+                expected_bottom,
+                rel_tol=1.0e-9,
+                abs_tol=5.0e-2,
+            ):
+                _issue(
+                    issues,
+                    row_index,
+                    "DESC-V2",
+                    "W_bottom_unclipped_nm does not match sidewall formula",
+                )
+
+    if w_bottom_runtime_clipped_nm is not None and w_bottom_runtime_clipped_nm < 0.0:
+        _issue(issues, row_index, "DESC-V2", "W_bottom_runtime_clipped_nm is negative")
+    if w_bottom_unclipped_nm is not None and w_bottom_unclipped_nm <= 0.0:
+        if _value(row, "closure_status") == "open":
+            _issue(
+                issues,
+                row_index,
+                "DESC-V2",
+                "nonpositive W_bottom_unclipped_nm marked closure_status=open",
+            )
+        if not _value(row, "closure_policy"):
+            _issue(issues, row_index, "DESC-V2", "nonpositive bottom width lacks closure_policy")
 
 
 def position_response_smoke_manifest_rows() -> list[dict[str, str]]:
