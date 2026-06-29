@@ -3980,6 +3980,10 @@ def _sample_trapezoid_initial_position(
         u0,
         particle_radius_m,
     )
+    support_slice = geometry.center_accessible_support_at_depth_m(
+        u0,
+        particle_radius_m,
+    )
     local_center_half_width_m = max(0.5 * (x_right_m - x_left_m), 1e-18)
     z_half_span_m = max(0.5 * channel.depth_m - particle_radius_m, 1e-18)
     if mode == "uniform_accessible_area":
@@ -4014,6 +4018,10 @@ def _sample_trapezoid_initial_position(
         "initial_position_z_norm": float(z0 / z_half_span_m),
         "initial_position_sampler_geometry_model": "trapezoid_tapered_sidewalls",
         "initial_position_sampler_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
+        "initial_position_particle_center_support_status": support_slice[
+            "particle_center_support_status"
+        ],
+        "initial_position_steric_block_reason": support_slice["steric_block_reason"],
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
         "geometry_not_propagated_to_sampler": False,
         "initial_position_coordinate_basis": "z_centered",

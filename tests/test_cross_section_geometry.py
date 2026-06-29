@@ -310,6 +310,8 @@ def test_trapezoid_uniform_sampler_stays_in_particle_center_support() -> None:
         assert diag["initial_position_sampler_support_model"] == (
             CENTER_ACCESSIBLE_SUPPORT_MODEL
         )
+        assert diag["initial_position_particle_center_support_status"] == "open"
+        assert diag["initial_position_steric_block_reason"] == ""
         assert diag["geometry_not_propagated_to_sampler"] is False
         assert diag["cross_section_event_bias_status"] == (
             "uniform_over_trapezoid_center_accessible_area"
