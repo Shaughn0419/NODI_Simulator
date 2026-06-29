@@ -9961,28 +9961,40 @@ def _validate_sidewall_v2_observation_cache_context(
     )
     if not observation_signature:
         return
-    for field in ("channel_cross_section_model", "geometry_propagation_status"):
-        value = _value(row, field)
-        if value and f"{field}={value}" not in observation_signature:
-            _issue(
-                issues,
-                row_index,
-                rule_id,
-                f"observation_signature does not bind {field}={value}",
-            )
-    geometry_propagation_scope = _value(row, "geometry_propagation_scope")
-    if (
-        geometry_propagation_scope
-        and f"geometry_propagation_scope={geometry_propagation_scope}"
-        not in observation_signature
+    for field in (
+        "channel_cross_section_model",
+        "geometry_profile_sha256",
+        "geometry_propagation_status",
+        "geometry_propagation_scope",
     ):
-        _issue(
-            issues,
-            row_index,
-            rule_id,
-            "observation_signature does not bind "
-            f"geometry_propagation_scope={geometry_propagation_scope}",
+        _validate_observation_signature_field_binding(
+            row,
+            observation_signature,
+            field=field,
+            row_index=row_index,
+            rule_id=rule_id,
+            issues=issues,
         )
+    _validate_observation_signature_float_binding(
+        row,
+        observation_signature,
+        field="sidewall_taper_angle_deg_nodi",
+        signature_key="sidewall_taper_angle_deg",
+        row_index=row_index,
+        rule_id=rule_id,
+        issues=issues,
+    )
+    _validate_observation_signature_float_binding(
+        row,
+        observation_signature,
+        field="particle_radius_nm",
+        signature_key="particle_radius_m",
+        multiplier=1.0e-9,
+        abs_tol=1.0e-15,
+        row_index=row_index,
+        rule_id=rule_id,
+        issues=issues,
+    )
     if require_trapezoid_signature:
         if "channel_cross_section_model=ideal_rectangle" in observation_signature:
             _issue(
@@ -10009,6 +10021,83 @@ def _validate_sidewall_v2_observation_cache_context(
                     rule_id,
                     f"trapezoid sidewall row observation_signature lacks {fragment}",
                 )
+
+
+def _observation_signature_value(observation_signature: str, key: str) -> str:
+    prefix = f"{key}="
+    for part in observation_signature.split("|"):
+        if part.startswith(prefix):
+            return part[len(prefix) :]
+    return ""
+
+
+def _validate_observation_signature_field_binding(
+    row: Mapping[str, Any],
+    observation_signature: str,
+    *,
+    field: str,
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    signature_key: str | None = None,
+) -> None:
+    value = _value(row, field)
+    if not value:
+        return
+    key = signature_key or field
+    signature_value = _observation_signature_value(observation_signature, key)
+    if signature_value != value:
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"observation_signature does not bind {key}={value}",
+        )
+
+
+def _validate_observation_signature_float_binding(
+    row: Mapping[str, Any],
+    observation_signature: str,
+    *,
+    field: str,
+    signature_key: str,
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    multiplier: float = 1.0,
+    rel_tol: float = 1.0e-9,
+    abs_tol: float = 1.0e-9,
+) -> None:
+    value = _value(row, field)
+    if not value:
+        return
+    signature_value = _observation_signature_value(observation_signature, signature_key)
+    if not signature_value:
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"observation_signature does not bind {signature_key} from {field}",
+        )
+        return
+    try:
+        expected = float(value) * multiplier
+        actual = float(signature_value)
+    except ValueError:
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"observation_signature has nonnumeric {signature_key}",
+        )
+        return
+    if not math.isclose(actual, expected, rel_tol=rel_tol, abs_tol=abs_tol):
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"observation_signature {signature_key}={actual}, expected {expected}",
+        )
 
 
 def _validate_sidewall_v2_acceptance_guards(

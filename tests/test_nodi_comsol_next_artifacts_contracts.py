@@ -356,6 +356,7 @@ def _sidewall_observation_cache_fields(
             f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
             f"|geometry_propagation_scope={geometry_propagation_scope}"
             f"|geometry_propagation_status={geometry_propagation_status}"
+            "|particle_radius_m=1.1e-07"
         )
     return {
         "observation_signature": signature,
@@ -932,6 +933,30 @@ def test_position_response_sidewall_v2_rejects_signature_scope_mismatch() -> Non
     row["observation_signature"] = str(row["observation_signature"]).replace(
         f"geometry_propagation_scope={prs_scope}",
         f"geometry_propagation_scope={eas_scope}",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_signature_angle_mismatch() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "sidewall_taper_angle_deg=5.000000000e+00",
+        "sidewall_taper_angle_deg=6.0",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_signature_particle_radius_mismatch() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "particle_radius_m=1.1e-07",
+        "particle_radius_m=1.0e-07",
     )
 
     issues = validate_position_response_surface_rows([row])
@@ -1612,6 +1637,18 @@ def test_effective_aperture_sidewall_v2_rejects_signature_status_mismatch() -> N
     row["observation_signature"] = str(row["observation_signature"]).replace(
         "geometry_propagation_status=propagated",
         "geometry_propagation_status=not_propagated",
+    )
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_signature_angle_mismatch() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "sidewall_taper_angle_deg=5.000000000e+00",
+        "sidewall_taper_angle_deg=6.0",
     )
 
     issues = validate_effective_aperture_surrogate_rows([row])
