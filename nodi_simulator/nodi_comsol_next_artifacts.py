@@ -735,6 +735,18 @@ PRS_SIDEWALL_V2_SOURCE_BIN_REQUIRED_FIELDS: tuple[str, ...] = (
     "source_bin_basis",
     "source_bin_id",
 )
+PRS_SIDEWALL_V2_TRAJECTORY_GUARD_REQUIRED_FIELDS: tuple[str, ...] = (
+    "trajectory_boundary_model_version",
+    "trajectory_boundary_claim_level",
+    "wall_distance_model_version",
+    "wall_distance_claim_level",
+    "flow_profile_geometry_model",
+    "flow_profile_geometry_claim_level",
+    "geometry_not_propagated_to_flow_model",
+    "geometry_not_propagated_to_near_wall_metrics",
+    "geometry_not_propagated_to_trajectory_boundary",
+    "sidewall_aware_runtime_status",
+)
 PRS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
     {
         "channel_cross_section_model",
@@ -794,6 +806,7 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "reference_spatial_mode",
     *SIDEWALL_V2_SOURCE_GRAIN_REQUIRED_FIELDS,
     *PRS_SIDEWALL_V2_SOURCE_BIN_REQUIRED_FIELDS,
+    *PRS_SIDEWALL_V2_TRAJECTORY_GUARD_REQUIRED_FIELDS,
     *SIDEWALL_V2_PACKAGE_D_PRECHECK_REQUIRED_FIELDS,
     *SIDEWALL_V2_RUNTIME_PROPAGATION_GUARD_REQUIRED_FIELDS,
 )
@@ -9394,6 +9407,7 @@ def _validate_position_response_sidewall_v2_fields(
         "PRS-SIDEWALL-V2",
         issues,
     )
+    _validate_sidewall_v2_trajectory_guards(row, row_index, "PRS-SIDEWALL-V2", issues)
     geometry_status = _value(row, "geometry_propagation_status")
     if geometry_status not in PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED:
         _issue(
@@ -10107,6 +10121,90 @@ def _validate_sidewall_v2_runtime_propagation_guards(
                 row_index,
                 rule_id,
                 "electrokinetic not-propagated flag lacks blocked/not-propagated claim",
+            )
+
+
+def _validate_sidewall_v2_trajectory_guards(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+) -> None:
+    _require_fields(
+        row,
+        PRS_SIDEWALL_V2_TRAJECTORY_GUARD_REQUIRED_FIELDS,
+        rule_id,
+        row_index,
+        issues,
+    )
+    for field in (
+        "trajectory_boundary_model_version",
+        "trajectory_boundary_claim_level",
+        "wall_distance_model_version",
+        "wall_distance_claim_level",
+        "flow_profile_geometry_model",
+        "flow_profile_geometry_claim_level",
+        "sidewall_aware_runtime_status",
+    ):
+        if not _value(row, field):
+            _issue(issues, row_index, rule_id, f"{field} is blank")
+    for field in (
+        "geometry_not_propagated_to_flow_model",
+        "geometry_not_propagated_to_near_wall_metrics",
+        "geometry_not_propagated_to_trajectory_boundary",
+    ):
+        _validate_bool_field(row, field, row_index, rule_id, issues)
+
+    boundary_model = _value(row, "trajectory_boundary_model")
+    boundary_claim = _value(row, "trajectory_boundary_claim_level").lower()
+    if boundary_model == "trapezoid_center_support_projection_boundary_v1":
+        if "surrogate" not in boundary_claim or "not_specular_reflection" not in boundary_claim:
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "trapezoid projection boundary lacks surrogate/not-specular claim level",
+            )
+    elif "specular_reflection" in boundary_claim and "not_specular_reflection" not in boundary_claim:
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            "sidewall trajectory boundary claims specular reflection",
+        )
+
+    flow_not_propagated = _bool_field(
+        row,
+        "geometry_not_propagated_to_flow_model",
+        row_index,
+        rule_id,
+        issues,
+    )
+    if flow_not_propagated:
+        flow_claim = _value(row, "flow_profile_geometry_claim_level").lower()
+        if "rectangular" not in flow_claim and "not_propagated" not in flow_claim:
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "flow not-propagated flag lacks rectangular/not-propagated claim level",
+            )
+
+    near_wall_not_propagated = _bool_field(
+        row,
+        "geometry_not_propagated_to_near_wall_metrics",
+        row_index,
+        rule_id,
+        issues,
+    )
+    if near_wall_not_propagated:
+        wall_claim = _value(row, "wall_distance_claim_level").lower()
+        if "rectangular" not in wall_claim and "not_propagated" not in wall_claim:
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "near-wall not-propagated flag lacks rectangular/not-propagated claim level",
             )
 
 

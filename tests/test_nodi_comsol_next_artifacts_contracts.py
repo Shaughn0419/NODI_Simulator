@@ -481,9 +481,19 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         sparse_reason="",
         neighbor_fill_used="false",
         trajectory_boundary_model="not_applicable_pure_advection",
+        trajectory_boundary_model_version="not_applicable_pure_advection",
+        trajectory_boundary_claim_level="no_diffusive_boundary_claim",
         wall_distance_model="not_applicable_diffusion_hindrance_none",
+        wall_distance_model_version="not_applicable_diffusion_hindrance_none",
+        wall_distance_claim_level="not_used",
         flow_profile_model="plug",
+        flow_profile_geometry_model="plug_flow_geometry_independent_v1",
+        flow_profile_geometry_claim_level="geometry_independent_uniform_flow_surrogate",
         flow_control_mode="fixed_velocity",
+        geometry_not_propagated_to_flow_model="false",
+        geometry_not_propagated_to_near_wall_metrics="false",
+        geometry_not_propagated_to_trajectory_boundary="false",
+        sidewall_aware_runtime_status="partial_sidewall_runtime_no_diffusion_no_wall_metrics",
         reference_field_model="geometry_scaled",
         reference_spatial_mode="cross_section_surrogate",
         source_geometry_descriptor_id="descriptor-404-W500-D900-sidewall-85",
@@ -818,6 +828,43 @@ def test_position_response_sidewall_v2_requires_runtime_propagation_models() -> 
     del row["reference_spatial_mode"]
 
     issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_trajectory_guard_columns() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["trajectory_boundary_claim_level"]
+    del row["geometry_not_propagated_to_near_wall_metrics"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_projection_boundary_as_specular() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                trajectory_boundary_model="trapezoid_center_support_projection_boundary_v1",
+                trajectory_boundary_model_version="trapezoid_center_support_projection_boundary_v1",
+                trajectory_boundary_claim_level="validated_specular_reflection",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_near_wall_flag_without_claim_level() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                geometry_not_propagated_to_near_wall_metrics="true",
+                wall_distance_claim_level="validated_hindered_diffusion_result",
+            )
+        ]
+    )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
