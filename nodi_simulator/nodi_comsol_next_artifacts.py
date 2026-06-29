@@ -813,6 +813,35 @@ SIDEWALL_V2_CACHE_GEOMETRY_MATCH_STATUS_ALLOWED = frozenset(
         "blocked_old_rectangular_cache",
     }
 )
+SIDEWALL_PACKAGE_D_PRECHECK_VERSION = "sidewall_package_d_precheck_v1"
+SIDEWALL_PACKAGE_D_PRECHECK_REQUIRED_FIELDS: tuple[str, ...] = (
+    "sidewall_package_d_precheck_version",
+    "target_artifact_family",
+    "includes_trajectory_near_wall_metrics",
+    "package_A_validation_status",
+    "package_B_validation_status",
+    "package_C_validation_status",
+    "no_forbidden_claim_columns",
+    "no_rectangular_cache_reuse",
+    "no_comsol_context_grain_promotion",
+    "no_edge4_to_edge20_direct_mapping",
+    "no_D900_to_D1200_borrowing",
+    "no_auto_220_300nm_admission",
+    "package_d_precheck_status",
+)
+SIDEWALL_PACKAGE_D_TARGET_ARTIFACT_FAMILY_ALLOWED = frozenset({"prs", "eas", "prs_eas"})
+SIDEWALL_PACKAGE_D_PACKAGE_C_STATUS_ALLOWED = frozenset(
+    {"pass", "not_applicable_for_this_artifact"}
+)
+SIDEWALL_PACKAGE_D_PRECHECK_STATUS_ALLOWED = frozenset({"pass", "blocked"})
+SIDEWALL_PACKAGE_D_PRECHECK_TRUE_FIELDS: tuple[str, ...] = (
+    "no_forbidden_claim_columns",
+    "no_rectangular_cache_reuse",
+    "no_comsol_context_grain_promotion",
+    "no_edge4_to_edge20_direct_mapping",
+    "no_D900_to_D1200_borrowing",
+    "no_auto_220_300nm_admission",
+)
 
 EAS_REQUIRED_FIELDS: tuple[str, ...] = (
     "aperture_artifact_version",
@@ -1383,6 +1412,108 @@ def assert_valid_effective_aperture_surrogate_csv(csv_path: Path, **kwargs: Any)
     issues = validate_effective_aperture_surrogate_csv(csv_path, **kwargs)
     if issues:
         raise ContractValidationError(APERTURE_SURROGATE_ARTIFACT, issues)
+
+
+def validate_sidewall_package_d_precheck_rows(rows: Sequence[Mapping[str, Any]]) -> list[str]:
+    issues: list[str] = []
+    if not rows:
+        return ["SIDEWALL-D-PRECHECK-V01: no rows supplied"]
+
+    for row_index, row in enumerate(rows, start=1):
+        _require_fields(
+            row,
+            SIDEWALL_PACKAGE_D_PRECHECK_REQUIRED_FIELDS,
+            "SIDEWALL-D-PRECHECK-V01",
+            row_index,
+            issues,
+        )
+        _validate_constant(
+            row,
+            "sidewall_package_d_precheck_version",
+            SIDEWALL_PACKAGE_D_PRECHECK_VERSION,
+            row_index,
+            "SIDEWALL-D-PRECHECK-V01",
+            issues,
+        )
+        _validate_enum(
+            row,
+            "target_artifact_family",
+            SIDEWALL_PACKAGE_D_TARGET_ARTIFACT_FAMILY_ALLOWED,
+            row_index,
+            "SIDEWALL-D-PRECHECK-V01",
+            issues,
+        )
+        includes_near_wall = _bool_field(
+            row,
+            "includes_trajectory_near_wall_metrics",
+            row_index,
+            "SIDEWALL-D-PRECHECK-V01",
+            issues,
+        )
+
+        package_a_ok = _value(row, "package_A_validation_status") == "pass"
+        package_b_ok = _value(row, "package_B_validation_status") == "pass"
+        if not package_a_ok:
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V02",
+                "Package D requires package_A_validation_status=pass",
+            )
+        if not package_b_ok:
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V02",
+                "Package D requires package_B_validation_status=pass",
+            )
+
+        package_c_status = _value(row, "package_C_validation_status")
+        if package_c_status not in SIDEWALL_PACKAGE_D_PACKAGE_C_STATUS_ALLOWED:
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V03",
+                f"invalid package_C_validation_status={package_c_status}",
+            )
+        if includes_near_wall is True and package_c_status != "pass":
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V03",
+                "trajectory/near-wall Package D artifacts require package_C_validation_status=pass",
+            )
+
+        true_fields_ok = True
+        for field in SIDEWALL_PACKAGE_D_PRECHECK_TRUE_FIELDS:
+            _validate_bool_equals(
+                row,
+                field,
+                True,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V04",
+                issues,
+            )
+            true_fields_ok = true_fields_ok and _value(row, field).lower() in {"true", "1", "yes"}
+
+        precheck_status = _value(row, "package_d_precheck_status")
+        if precheck_status not in SIDEWALL_PACKAGE_D_PRECHECK_STATUS_ALLOWED:
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V05",
+                f"invalid package_d_precheck_status={precheck_status}",
+            )
+        package_c_ok = package_c_status == "pass" or includes_near_wall is False
+        if precheck_status == "pass" and not (package_a_ok and package_b_ok and package_c_ok and true_fields_ok):
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V05",
+                "package_d_precheck_status=pass with unmet Package D prerequisite",
+            )
+
+    return issues
 
 
 def validate_effective_aperture_surrogate_rows(

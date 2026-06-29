@@ -133,6 +133,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     validate_bounded_smoke_readiness_report,
     validate_position_response_surface_rows,
     validate_runner_launch_plan,
+    validate_sidewall_package_d_precheck_rows,
     NEXT_ARTIFACTS_BOUNDED_SMOKE_READINESS_REPORT_FILENAME,
     NEXT_ARTIFACTS_BOUNDED_SMOKE_READINESS_ISSUES_FILENAME,
     NEXT_ARTIFACTS_BOUNDED_SMOKE_EXECUTION_REPORT_FILENAME,
@@ -451,6 +452,26 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         **_sidewall_observation_cache_fields(),
         **_sidewall_descriptor_context_fields(),
     )
+    row.update(overrides)
+    return row
+
+
+def _valid_sidewall_package_d_precheck_row(**overrides: object) -> dict[str, object]:
+    row: dict[str, object] = {
+        "sidewall_package_d_precheck_version": "sidewall_package_d_precheck_v1",
+        "target_artifact_family": "eas",
+        "includes_trajectory_near_wall_metrics": "false",
+        "package_A_validation_status": "pass",
+        "package_B_validation_status": "pass",
+        "package_C_validation_status": "not_applicable_for_this_artifact",
+        "no_forbidden_claim_columns": "true",
+        "no_rectangular_cache_reuse": "true",
+        "no_comsol_context_grain_promotion": "true",
+        "no_edge4_to_edge20_direct_mapping": "true",
+        "no_D900_to_D1200_borrowing": "true",
+        "no_auto_220_300nm_admission": "true",
+        "package_d_precheck_status": "pass",
+    }
     row.update(overrides)
     return row
 
@@ -1333,6 +1354,60 @@ def test_effective_aperture_sidewall_v2_rejects_source_route_borrowing() -> None
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_sidewall_package_d_precheck_accepts_eas_without_near_wall_metrics() -> None:
+    assert validate_sidewall_package_d_precheck_rows([_valid_sidewall_package_d_precheck_row()]) == []
+
+
+def test_sidewall_package_d_precheck_requires_package_a_and_b_pass() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                package_A_validation_status="blocked",
+                package_B_validation_status="blocked",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V02")
+
+
+def test_sidewall_package_d_precheck_requires_package_c_for_near_wall_metrics() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="not_applicable_for_this_artifact",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_d_precheck_accepts_near_wall_metrics_after_package_c_pass() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+            )
+        ]
+    )
+
+    assert issues == []
+
+
+def test_sidewall_package_d_precheck_rejects_forbidden_gate_false() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [_valid_sidewall_package_d_precheck_row(no_D900_to_D1200_borrowing="false")]
+    )
+
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V04")
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V05")
 
 
 def test_effective_aperture_rejects_old_w_eff_field_name() -> None:
