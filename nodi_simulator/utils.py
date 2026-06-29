@@ -27,6 +27,11 @@ from .calibration_models import (
     optional_calibration_string,
     resolve_calibration_state_machine,
 )
+from .cross_section_geometry import (
+    CENTER_ACCESSIBLE_SUPPORT_MODEL,
+    TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+    TrapezoidCrossSection,
+)
 from .data_objects import (
     Particle, Medium, Channel, OpticalSystem, SimulationConfig,
     READOUT_PRESET_CONFIG_OVERRIDES,
@@ -3895,6 +3900,135 @@ def validate_simulation_config(
         )
 
 
+def _sample_trapezoid_initial_position(
+    channel: Channel,
+    particle_radius_m: float,
+    sim_cfg: SimulationConfig,
+    mode: str,
+    strength: float,
+    min_conf_ratio: float,
+    flux_mixture_fraction: float,
+    unit_sampler,
+    unit_position_sample_supplied: bool,
+) -> tuple[float, float, dict[str, float | str | bool]]:
+    if mode in {"flux_weighted", "flux_uniform_mixture_surrogate"}:
+        raise ValueError(
+            "flux_weighted initial-position sampling is not sidewall-aware for "
+            "trapezoid_tapered_sidewalls; provide a compatible trapezoid flow "
+            "model before enabling flux-weighted sampling"
+        )
+
+    geometry = TrapezoidCrossSection(
+        top_width_m=float(channel.width_m),
+        depth_m=float(channel.depth_m),
+        sidewall_taper_angle_deg=float(sim_cfg.sidewall_taper_angle_deg),
+    )
+    if geometry.center_accessible_area_m2(particle_radius_m) <= 0.0:
+        raise ValueError(
+            "particle_radius_m leaves no center-accessible support in the "
+            "trapezoid_tapered_sidewalls cross-section"
+        )
+
+    bounds = geometry.center_accessible_u_bounds_m(particle_radius_m)
+    if bounds is None:
+        raise ValueError(
+            "particle_radius_m leaves no center-accessible depth interval in "
+            "the trapezoid_tapered_sidewalls cross-section"
+        )
+    u_low_m, u_high_m = bounds
+    min_half_extent = max(
+        0.5 * geometry.center_accessible_width_at_depth_m(u_low_m, particle_radius_m),
+        1e-18,
+    )
+    confinement_ratio = float(
+        np.clip(particle_radius_m / min_half_extent, 0.0, 1.0)
+    )
+    confinement_activation = float(
+        np.clip(
+            (confinement_ratio - min_conf_ratio)
+            / max(0.25 - min_conf_ratio, 1e-12),
+            0.0,
+            1.0,
+        )
+    )
+
+    center_bias_requested = (
+        mode == "center_biased_surrogate"
+        and strength > 0.0
+        and confinement_activation > 0.0
+    )
+    if center_bias_requested:
+        raise ValueError(
+            "center_biased_surrogate is not sidewall-aware for "
+            "trapezoid_tapered_sidewalls; use uniform_accessible_area until "
+            "a trapezoid-aware center-bias model is implemented"
+        )
+
+    x0, u0 = geometry.sample_particle_center_uniform(
+        unit_sampler(0),
+        unit_sampler(1),
+        particle_radius_m,
+    )
+    z0 = float(u0 - 0.5 * channel.depth_m)
+    x_left_m, x_right_m = geometry.center_accessible_x_bounds_at_depth_m(
+        u0,
+        particle_radius_m,
+    )
+    local_center_half_width_m = max(0.5 * (x_right_m - x_left_m), 1e-18)
+    z_half_span_m = max(0.5 * channel.depth_m - particle_radius_m, 1e-18)
+    if mode == "uniform_accessible_area":
+        cross_section_event_bias_status = (
+            "uniform_over_trapezoid_center_accessible_area"
+        )
+    elif mode == "center_biased_surrogate":
+        cross_section_event_bias_status = (
+            "center_biased_surrogate_blocked_to_trapezoid_uniform_support"
+        )
+    else:
+        cross_section_event_bias_status = (
+            "legacy_uniform_over_trapezoid_center_accessible_area"
+        )
+
+    return float(x0), z0, {
+        "initial_position_distribution_mode": mode,
+        "initial_position_distribution_active": True,
+        "initial_position_unit_sample_supplied": unit_position_sample_supplied,
+        "cross_section_event_bias_status": cross_section_event_bias_status,
+        "flux_weighted_sampling_acceptance_rate": 1.0,
+        "flux_weighted_sampling_attempts": 1,
+        "initial_position_center_bias_strength": strength,
+        "initial_position_center_bias_min_confinement_ratio": min_conf_ratio,
+        "initial_position_flux_weighted_mixture_fraction": flux_mixture_fraction,
+        "initial_position_mixture_component": "not_applicable",
+        "initial_position_confinement_ratio": confinement_ratio,
+        "initial_position_confinement_activation": confinement_activation,
+        "initial_position_center_bias_x_exponent": 1.0,
+        "initial_position_center_bias_z_exponent": 1.0,
+        "initial_position_x_norm": float(x0 / local_center_half_width_m),
+        "initial_position_z_norm": float(z0 / z_half_span_m),
+        "initial_position_sampler_geometry_model": "trapezoid_tapered_sidewalls",
+        "initial_position_sampler_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
+        "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+        "geometry_not_propagated_to_sampler": False,
+        "initial_position_coordinate_basis": "z_centered",
+        "initial_position_coordinate_conversion_formula_id": (
+            "centered_z_to_u_from_top_v1"
+        ),
+        "initial_position_u_from_top_m": float(u0),
+        "initial_position_accessible_u_min_m": float(u_low_m),
+        "initial_position_accessible_u_max_m": float(u_high_m),
+        "initial_position_x_left_m": float(x_left_m),
+        "initial_position_x_right_m": float(x_right_m),
+        "initial_position_x_center_m": 0.0,
+        "initial_position_local_width_m": geometry.width_at_depth_m(
+            u0,
+            clipped=True,
+        ),
+        "initial_position_center_accessible_width_m": float(x_right_m - x_left_m),
+        "initial_position_x_local_norm": float(x0 / local_center_half_width_m),
+    }
+
+
 def sample_initial_position(
     channel: Channel,
     rng: np.random.Generator,
@@ -3921,14 +4055,6 @@ def sample_initial_position(
             return float(rng.uniform(0.0, 1.0))
         return float(np.clip(unit_position_sample[index], 0.0, np.nextafter(1.0, 0.0)))
 
-    half_w = channel.width_m / 2.0 - particle_radius_m
-    half_h = channel.depth_m / 2.0 - particle_radius_m
-    if half_w <= 0 or half_h <= 0:
-        raise ValueError(
-            "particle_radius_m is too large for the channel cross-section: "
-            f"radius={particle_radius_m:.2e}m, width={channel.width_m:.2e}m, "
-            f"depth={channel.depth_m:.2e}m"
-        )
     if sim_cfg is None:
         mode = "uniform"
         strength = 0.0
@@ -3940,6 +4066,31 @@ def sample_initial_position(
         min_conf_ratio = float(sim_cfg.initial_position_center_bias_min_confinement_ratio)
         flux_mixture_fraction = float(
             sim_cfg.initial_position_flux_weighted_mixture_fraction
+        )
+
+    if (
+        sim_cfg is not None
+        and str(sim_cfg.channel_cross_section_model) == "trapezoid_tapered_sidewalls"
+    ):
+        return _sample_trapezoid_initial_position(
+            channel,
+            particle_radius_m,
+            sim_cfg,
+            mode,
+            strength,
+            min_conf_ratio,
+            flux_mixture_fraction,
+            _unit,
+            bool(unit_position_sample is not None),
+        )
+
+    half_w = channel.width_m / 2.0 - particle_radius_m
+    half_h = channel.depth_m / 2.0 - particle_radius_m
+    if half_w <= 0 or half_h <= 0:
+        raise ValueError(
+            "particle_radius_m is too large for the channel cross-section: "
+            f"radius={particle_radius_m:.2e}m, width={channel.width_m:.2e}m, "
+            f"depth={channel.depth_m:.2e}m"
         )
 
     min_half_extent = max(min(half_w, half_h), 1e-18)

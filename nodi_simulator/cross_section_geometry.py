@@ -132,24 +132,52 @@ class TrapezoidCrossSection:
         center_width_m = self.width_at_depth_m(u) - 2.0 * side_exclusion_m
         return max(center_width_m, 0.0)
 
+    def center_accessible_u_bounds_m(
+        self,
+        particle_radius_m: float,
+    ) -> tuple[float, float] | None:
+        radius_m = float(particle_radius_m)
+        if radius_m < 0.0:
+            raise ValueError(f"particle_radius_m must be non-negative, got {radius_m}")
+        u_low_m = radius_m
+        u_high_m = self.depth_m - radius_m
+        if u_high_m <= u_low_m:
+            return None
+
+        side_exclusion_m = radius_m * math.sqrt(1.0 + self.k_taper**2)
+        available_top_m = self.top_width_m - 2.0 * side_exclusion_m
+        if available_top_m <= 0.0:
+            return None
+        if self.k_taper > 0.0:
+            u_high_m = min(u_high_m, available_top_m / (2.0 * self.k_taper))
+        if u_high_m <= u_low_m:
+            return None
+        return u_low_m, u_high_m
+
+    def center_accessible_x_bounds_at_depth_m(
+        self,
+        u_m: float,
+        particle_radius_m: float,
+    ) -> tuple[float, float]:
+        radius_m = float(particle_radius_m)
+        if radius_m < 0.0:
+            raise ValueError(f"particle_radius_m must be non-negative, got {radius_m}")
+        side_exclusion_m = radius_m * math.sqrt(1.0 + self.k_taper**2)
+        right_m = self.half_width_at_depth_m(u_m) - side_exclusion_m
+        right_m = max(right_m, 0.0)
+        return -right_m, right_m
+
     def center_accessible_area_m2(self, particle_radius_m: float) -> float:
         radius_m = float(particle_radius_m)
         if radius_m < 0.0:
             raise ValueError(f"particle_radius_m must be non-negative, got {radius_m}")
-        if self.depth_m <= 2.0 * radius_m:
+        bounds = self.center_accessible_u_bounds_m(radius_m)
+        if bounds is None:
             return 0.0
+        u_low_m, u_high_m = bounds
+
         side_exclusion_m = radius_m * math.sqrt(1.0 + self.k_taper**2)
         available_top_m = self.top_width_m - 2.0 * side_exclusion_m
-        if available_top_m <= 0.0:
-            return 0.0
-
-        u_low_m = radius_m
-        u_high_m = self.depth_m - radius_m
-        if self.k_taper > 0.0:
-            u_width_zero_m = available_top_m / (2.0 * self.k_taper)
-            u_high_m = min(u_high_m, u_width_zero_m)
-        if u_high_m <= u_low_m:
-            return 0.0
 
         if self.k_taper <= 0.0:
             return available_top_m * (u_high_m - u_low_m)
@@ -167,6 +195,52 @@ class TrapezoidCrossSection:
             return 0.0
         area_m2 = self.top_width_m * u_high_m - self.k_taper * u_high_m**2
         return max(area_m2, 0.0)
+
+    def sample_particle_center_uniform(
+        self,
+        unit_x: float,
+        unit_u: float,
+        particle_radius_m: float,
+    ) -> tuple[float, float]:
+        """Sample uniformly over the particle-center accessible trapezoid area."""
+        radius_m = float(particle_radius_m)
+        bounds = self.center_accessible_u_bounds_m(radius_m)
+        if bounds is None:
+            raise ValueError(
+                "particle_radius_m leaves no center-accessible support in "
+                "the trapezoid cross-section"
+            )
+        u_low_m, u_high_m = bounds
+        unit_depth = float(min(max(unit_u, 0.0), math.nextafter(1.0, 0.0)))
+        unit_width = float(min(max(unit_x, 0.0), math.nextafter(1.0, 0.0)))
+
+        side_exclusion_m = radius_m * math.sqrt(1.0 + self.k_taper**2)
+        available_top_m = self.top_width_m - 2.0 * side_exclusion_m
+        if self.k_taper <= 0.0:
+            u_m = u_low_m + unit_depth * (u_high_m - u_low_m)
+        else:
+            total_area_m2 = self.center_accessible_area_m2(radius_m)
+            target_area_m2 = unit_depth * total_area_m2
+            constant = (
+                target_area_m2
+                + available_top_m * u_low_m
+                - self.k_taper * u_low_m**2
+            )
+            discriminant = max(
+                available_top_m**2 - 4.0 * self.k_taper * constant,
+                0.0,
+            )
+            u_m = (available_top_m - math.sqrt(discriminant)) / (
+                2.0 * self.k_taper
+            )
+            u_m = min(max(u_m, u_low_m), u_high_m)
+
+        x_left_m, x_right_m = self.center_accessible_x_bounds_at_depth_m(
+            u_m,
+            radius_m,
+        )
+        x_m = x_left_m + unit_width * (x_right_m - x_left_m)
+        return x_m, u_m
 
     def contains_particle_center(
         self,

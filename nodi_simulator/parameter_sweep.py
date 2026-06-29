@@ -5493,7 +5493,14 @@ def _sample_initial_positions_block(
         if sim_cfg is not None
         else "uniform"
     )
-    if mode in {"flux_weighted", "flux_uniform_mixture_surrogate"}:
+    uses_geometry_or_rejection_sampler = mode in {
+        "flux_weighted",
+        "flux_uniform_mixture_surrogate",
+    } or (
+        sim_cfg is not None
+        and str(sim_cfg.channel_cross_section_model) == "trapezoid_tapered_sidewalls"
+    )
+    if uses_geometry_or_rejection_sampler:
         x_vals = np.empty(block_size, dtype=float)
         z_vals = np.empty(block_size, dtype=float)
         diagnostics: list[dict] = []

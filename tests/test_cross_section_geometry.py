@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import replace
 import math
 
+import numpy as np
 import pytest
 
 from nodi_simulator.channel_geometry_model import build_channel_geometry_diagnostics
@@ -19,6 +20,8 @@ from nodi_simulator.data_objects import (
     Channel,
     Particle,
 )
+from nodi_simulator.parameter_sweep import _sample_initial_positions_block
+from nodi_simulator.utils import sample_initial_position
 
 
 def test_comsol_85_deg_converts_to_nodi_taper_5_deg() -> None:
@@ -111,3 +114,110 @@ def test_channel_diagnostics_emit_unclipped_and_runtime_clipped_bottom_widths() 
         "trapezoid_center_accessible_area_m2"
     ]
     assert diagnostics["effective_accessible_area_m2"] > 0.0
+
+
+def test_trapezoid_uniform_sampler_stays_in_particle_center_support() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    radius_m = 110.0e-9
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        initial_position_distribution_mode="uniform_accessible_area",
+    )
+    geom = TrapezoidCrossSection(
+        top_width_m=channel.width_m,
+        depth_m=channel.depth_m,
+        sidewall_taper_angle_deg=cfg.sidewall_taper_angle_deg,
+    )
+
+    unit_samples = [
+        (0.0, 0.0, 0.2),
+        (0.25, 0.3, 0.4),
+        (0.5, 0.5, 0.6),
+        (0.75, 0.8, 0.8),
+        (0.999, 0.999, 0.1),
+    ]
+    for unit_sample in unit_samples:
+        x0, z0, diag = sample_initial_position(
+            channel,
+            np.random.default_rng(123),
+            radius_m,
+            sim_cfg=cfg,
+            unit_position_sample=unit_sample,
+        )
+        u0 = z0 + 0.5 * channel.depth_m
+        assert geom.contains_particle_center(x0, u0, radius_m, tolerance_m=1.0e-18)
+        assert diag["initial_position_sampler_geometry_model"] == (
+            "trapezoid_tapered_sidewalls"
+        )
+        assert diag["initial_position_sampler_support_model"] == (
+            CENTER_ACCESSIBLE_SUPPORT_MODEL
+        )
+        assert diag["geometry_not_propagated_to_sampler"] is False
+        assert diag["cross_section_event_bias_status"] == (
+            "uniform_over_trapezoid_center_accessible_area"
+        )
+
+
+def test_trapezoid_sampler_rejects_flux_weighted_without_flow_model() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        initial_position_distribution_mode="flux_weighted",
+    )
+
+    with pytest.raises(ValueError, match="flux_weighted initial-position sampling"):
+        sample_initial_position(
+            Channel(width_m=500.0e-9, depth_m=900.0e-9),
+            np.random.default_rng(123),
+            110.0e-9,
+            sim_cfg=cfg,
+        )
+
+
+def test_block_trapezoid_sampler_uses_scalar_oracle_path() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    radius_m = 110.0e-9
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        initial_position_distribution_mode="uniform_accessible_area",
+    )
+    unit_samples = np.array(
+        [
+            [0.1, 0.2, 0.3],
+            [0.3, 0.4, 0.5],
+            [0.5, 0.6, 0.7],
+            [0.7, 0.8, 0.9],
+        ],
+        dtype=float,
+    )
+    geom = TrapezoidCrossSection(
+        top_width_m=channel.width_m,
+        depth_m=channel.depth_m,
+        sidewall_taper_angle_deg=cfg.sidewall_taper_angle_deg,
+    )
+
+    x_vals, z_vals, diagnostics = _sample_initial_positions_block(
+        channel,
+        np.random.default_rng(999),
+        radius_m,
+        cfg,
+        unit_samples,
+        0,
+        len(unit_samples),
+    )
+
+    assert len(diagnostics) == len(unit_samples)
+    for x0, z0, diag in zip(x_vals, z_vals, diagnostics):
+        u0 = float(z0 + 0.5 * channel.depth_m)
+        assert geom.contains_particle_center(float(x0), u0, radius_m)
+        assert diag["initial_position_sampler_geometry_model"] == (
+            "trapezoid_tapered_sidewalls"
+        )
+        assert diag["initial_position_sampler_support_model"] == (
+            CENTER_ACCESSIBLE_SUPPORT_MODEL
+        )
