@@ -28,9 +28,10 @@ DEFAULT_COMSOL_ROOT = PROJECT_ROOT.parent / "comsol test" / "comsol_ev_pbs_bonde
 COMSOL_ROADMAP = "roadmap"
 
 NODI_GATE12_COMMIT = "8e702d4"
-NODI_GATE13_BASE_HEAD = "3485b568f97346d45c3b93f5794a03dfa479565c"
+NODI_GATE13_BASE_HEAD = "3aef25df0034b894f4a147d6ea60afc69781d025"
 COMSOL_GATE11_COMMIT = "b16b16b8c61e9ceb3a38debc1dc7a2bd4e635962"
 COMSOL_GATE12_COMMIT = "8823515d220a2a5b25a43f00b998205344e5960f"
+COMSOL_GATE13_COMMIT = "64dfa64b766750f91813c3cd470d369dec61f384"
 DISPOSITION = "PASS_GATE13_SIDEWALL_GUARD_CONVERGENCE_AND_RC51_ADDENDUM_SIGNOFF_READY_NO_AUTH"
 RELEASE_NAME = "RC5.1_SIDEWALL_GEOMETRY_DESCRIPTOR_ADDENDUM_V1_SIGNOFF_READY_REVIEW_ONLY_NO_AUTH"
 ALLOWED_USE = "review-only descriptor receipt;geometry guard convergence;sidewall addendum signoff readiness"
@@ -58,9 +59,31 @@ COMSOL_GATE12_OPTIONAL_FILES = (
     "COMSOL_GATE12_NODI_DIRTY_DELTA_CLOSURE_20260629.csv",
 )
 
+COMSOL_GATE13_REQUIRED_FILES = (
+    "COMSOL_GATE13_SIDEWALL_GUARD_HANDSHAKE_V2_PACKET_20260629.md",
+    "COMSOL_GATE13_STATUS_20260629.json",
+    "COMSOL_GATE13_NODI_SIDEWALL_HARDENING_INTAKE_20260629.csv",
+    "COMSOL_GATE13_GATE12_SELF_RECEIPT_20260629.csv",
+    "COMSOL_GATE13_SIDEWALL_GUARD_SCHEMA_V2_20260629.csv",
+    "COMSOL_GATE13_CLOSED_SIDEWALL_POLICY_20260629.csv",
+    "COMSOL_GATE13_FLUIDIC_PROXY_FIREWALL_20260629.csv",
+    "COMSOL_GATE13_NODI_DESCRIPTOR_DRYRUN_INPUTS_V2_20260629.csv",
+    "COMSOL_GATE13_BINDING_BLOCKER_ROADMAP_V3_20260629.csv",
+    "COMSOL_GATE13_VALIDATION_20260629.csv",
+    "COMSOL_GATE13_MANIFEST_20260629.csv",
+)
+
+COMSOL_GATE13_OPTIONAL_FILES = (
+    "COMSOL_GATE13_MUTATION_FIXTURE_CATALOG_20260629.csv",
+    "COMSOL_GATE13_MUTATION_RESULTS_20260629.csv",
+    "COMSOL_GATE13_PROVENANCE_LEDGER_20260629.csv",
+    "COMSOL_GATE13_SELF_REVIEW_20260629.csv",
+    "COMSOL_GATE13_FUTURE_HANDOFF_ESCROW_V4_20260629.csv",
+)
+
 REPORTS = {
     "327": "GATE13A_SIDEWALL_WORKTREE_RECONCILIATION",
-    "328": "GATE13B_COMSOL_GATE12_RECEIPT_AND_PROVENANCE_REPAIR",
+    "328": "GATE13B_COMSOL_GATE12_BASELINE_AND_GATE13_RECEIPT_PROVENANCE_REPAIR",
     "329": "GATE13C_SIDEWALL_GEOMETRY_CLOSURE_AUTHORITY_CONTRACT_V2",
     "330": "GATE13D_CLOSED_SIDEWALL_HARD_FAIL_HARNESS",
     "331": "GATE13E_FLUIDIC_NETWORK_PROXY_FIREWALL",
@@ -137,8 +160,8 @@ def normalize_manifest_path(path: str) -> str:
     return path.replace("\\", "/").lstrip("./")
 
 
-def manifest_lookup(root: Path) -> dict[str, dict[str, str]]:
-    manifest = comsol_path(root, "COMSOL_GATE12_SIDEWALL_MANIFEST_20260629.csv")
+def manifest_lookup(root: Path, manifest_name: str) -> dict[str, dict[str, str]]:
+    manifest = comsol_path(root, manifest_name)
     if not manifest.exists():
         return {}
     rows = read_csv_rows(manifest)
@@ -179,7 +202,7 @@ def classify_dirty_path(path: str, status: str) -> tuple[str, str, str, str]:
     if path.startswith("reports/322_") or "GATE12_SIDEWALL" in path:
         return (
             "LEGIT_COMSOL_GATE12_PROVENANCE_SYNC",
-            "Gate12 provenance/hash tree refreshed to include COMSOL Gate12 head and post-Gate12 NODI hardening",
+            "Gate12 provenance/hash tree refreshed to include COMSOL Gate13 head and post-Gate12 NODI hardening",
             "low",
             "include_if_tests_pass",
         )
@@ -218,7 +241,7 @@ def worktree_reconciliation() -> list[dict[str, str]]:
         return rows
     for line in status.splitlines():
         status_code = line[:2].strip()
-        path = line[3:].replace("\\", "/")
+        path = line[2:].strip().replace("\\", "/")
         classification, intent, risk, action = classify_dirty_path(path, status_code)
         rows.append(
             {
@@ -243,6 +266,7 @@ def current_hardening_intake() -> list[dict[str, str]]:
         ("b0f8aae", "Mark sidewall fluidic network proxies", "mark rectangular fluidic network results as proxy not q_ch", "fluidic proxy firewall"),
         ("938062c", "Clarify sidewall diagnostic provenance scopes", "trajectory diagnostics scope and closure authority labels", "trajectory diagnostic guard"),
         ("3485b56", "Refresh sidewall reports after diagnostic guards", "absorbed remaining report/provenance dirty deltas", "Gate11/Gate12 refresh"),
+        ("3aef25d", "Add trajectory caveat to Gate12 handoff", "external-reader trajectory diagnostic caveat", "Gate12 user-facing handoff guard"),
     ]
     rows: list[dict[str, str]] = []
     for short, subject, guard, impact in commits:
@@ -267,10 +291,18 @@ def current_hardening_intake() -> list[dict[str, str]]:
     return rows
 
 
-def comsol_gate12_receipt(root: Path) -> list[dict[str, str]]:
-    lookup = manifest_lookup(root)
+def comsol_receipt(
+    root: Path,
+    *,
+    gate_label: str,
+    manifest_name: str,
+    required_files: tuple[str, ...],
+    optional_files: tuple[str, ...],
+    producer_status: str,
+) -> list[dict[str, str]]:
+    lookup = manifest_lookup(root, manifest_name)
     rows: list[dict[str, str]] = []
-    for idx, name in enumerate((*COMSOL_GATE12_REQUIRED_FILES, *COMSOL_GATE12_OPTIONAL_FILES), start=1):
+    for idx, name in enumerate((*required_files, *optional_files), start=1):
         rel = f"roadmap/{name}"
         path = comsol_path(root, name)
         recorded = lookup.get(rel) or lookup.get(name) or {}
@@ -280,30 +312,31 @@ def comsol_gate12_receipt(root: Path) -> list[dict[str, str]]:
         recorded_sha = recorded.get("sha256", recorded.get("sha", "NOT_IN_MANIFEST"))
         recorded_count = recorded.get("row_count", recorded.get("rows", "NOT_IN_MANIFEST"))
         if not exists:
-            status = "MISSING_REQUIRED_ARTIFACT" if name in COMSOL_GATE12_REQUIRED_FILES else "MISSING_OPTIONAL_ARTIFACT"
+            status = "MISSING_REQUIRED_ARTIFACT" if name in required_files else "MISSING_OPTIONAL_ARTIFACT"
         elif recorded and (recorded_sha not in {"", "NOT_IN_MANIFEST"} and actual_sha != recorded_sha):
             status = "BLOCKING_DATA_DRIFT"
         elif recorded and (recorded_count not in {"", "NA", "NOT_IN_MANIFEST"} and actual_count != recorded_count):
             status = "BLOCKING_DATA_DRIFT"
         elif recorded:
             status = "MATCH"
-        elif name == "COMSOL_GATE12_SIDEWALL_MANIFEST_20260629.csv":
+        elif name == manifest_name:
             status = "SELF_REFERENTIAL_METADATA_DRIFT_NON_POLICY"
         else:
-            status = "READABLE_NOT_IN_MANIFEST_NON_BLOCKING_OPTIONAL" if name in COMSOL_GATE12_OPTIONAL_FILES else "MISSING_MANIFEST_ROW"
+            status = "READABLE_NOT_IN_MANIFEST_NON_BLOCKING_OPTIONAL" if name in optional_files else "MISSING_MANIFEST_ROW"
         rows.append(
             {
-                "receipt_id": f"G13B-COMSOL-G12-RCPT-{idx:03d}",
+                "receipt_id": f"G13B-COMSOL-{gate_label}-RCPT-{idx:03d}",
+                "source_gate": gate_label,
                 "artifact_name": name,
                 "original_absolute_path": str(path),
                 "relative_source_path": rel,
-                "required": bool_text(name in COMSOL_GATE12_REQUIRED_FILES),
+                "required": bool_text(name in required_files),
                 "row_count": actual_count,
                 "recorded_row_count": recorded_count,
                 "sha256": actual_sha,
                 "recorded_sha256": recorded_sha,
                 "receipt_status": status,
-                "producer_status": "COMSOL_GATE12_NODI_SIDEWALL_ADDENDUM_RELEASE_CANDIDATE_HANDSHAKE_NO_AUTH",
+                "producer_status": producer_status,
                 "policy_impact": "none_review_only_descriptor_handshake",
                 "auth_impact": "none_no_authorization",
             }
@@ -311,13 +344,40 @@ def comsol_gate12_receipt(root: Path) -> list[dict[str, str]]:
     return rows
 
 
+def comsol_gate12_receipt(root: Path) -> list[dict[str, str]]:
+    return comsol_receipt(
+        root,
+        gate_label="G12",
+        manifest_name="COMSOL_GATE12_SIDEWALL_MANIFEST_20260629.csv",
+        required_files=COMSOL_GATE12_REQUIRED_FILES,
+        optional_files=COMSOL_GATE12_OPTIONAL_FILES,
+        producer_status="COMSOL_GATE12_NODI_SIDEWALL_ADDENDUM_RELEASE_CANDIDATE_HANDSHAKE_NO_AUTH",
+    )
+
+
+def comsol_gate13_receipt(root: Path) -> list[dict[str, str]]:
+    return comsol_receipt(
+        root,
+        gate_label="G13",
+        manifest_name="COMSOL_GATE13_MANIFEST_20260629.csv",
+        required_files=COMSOL_GATE13_REQUIRED_FILES,
+        optional_files=COMSOL_GATE13_OPTIONAL_FILES,
+        producer_status="COMSOL_GATE13_SIDEWALL_GUARD_HANDSHAKE_V2_REVIEW_ONLY_NO_AUTH",
+    )
+
+
 def comsol_gate12_status(root: Path) -> dict[str, Any]:
     status = read_json(comsol_path(root, "COMSOL_GATE12_SIDEWALL_STATUS_20260629.json"))
     return status if isinstance(status, dict) else {}
 
 
+def comsol_gate13_status(root: Path) -> dict[str, Any]:
+    status = read_json(comsol_path(root, "COMSOL_GATE13_STATUS_20260629.json"))
+    return status if isinstance(status, dict) else {}
+
+
 def comsol_validation_rows(root: Path) -> list[dict[str, str]]:
-    path = comsol_path(root, "COMSOL_GATE12_SIDEWALL_VALIDATION_20260629.csv")
+    path = comsol_path(root, "COMSOL_GATE13_VALIDATION_20260629.csv")
     return read_csv_rows(path) if path.exists() else []
 
 
@@ -338,12 +398,12 @@ def provenance_repair_matrix(root: Path) -> list[dict[str, str]]:
         {
             "repair_id": "G13B-PROV-002",
             "field": "comsol_project_head_actual",
-            "old_or_ambiguous_semantics": "legacy comsol_gate11_commit_actual could be misread as current COMSOL head",
-            "gate13_semantics": "actual read-only COMSOL project head for Gate12 handshake receipt",
-            "expected_value": COMSOL_GATE12_COMMIT,
+            "old_or_ambiguous_semantics": "Gate12 expected head became stale after COMSOL Gate13 handshake package",
+            "gate13_semantics": "actual read-only COMSOL project head for Gate13 guard handshake receipt",
+            "expected_value": COMSOL_GATE13_COMMIT,
             "actual_value": actual_head,
-            "repair_status": "MATCH" if actual_head == COMSOL_GATE12_COMMIT else "HEAD_MISMATCH_FAIL_CLOSED",
-            "semantic_conflict": bool_text(actual_head != COMSOL_GATE12_COMMIT),
+            "repair_status": "MATCH" if actual_head == COMSOL_GATE13_COMMIT else "HEAD_MISMATCH_FAIL_CLOSED",
+            "semantic_conflict": bool_text(actual_head != COMSOL_GATE13_COMMIT),
             "dirty_open": "false",
         },
         {
@@ -352,9 +412,20 @@ def provenance_repair_matrix(root: Path) -> list[dict[str, str]]:
             "old_or_ambiguous_semantics": "not present in early Gate12 lockfiles",
             "gate13_semantics": "expected COMSOL Gate12 sidewall release candidate commit",
             "expected_value": COMSOL_GATE12_COMMIT,
+            "actual_value": COMSOL_GATE12_COMMIT,
+            "repair_status": "UNCHANGED_EXPECTED_GATE12_BASELINE",
+            "semantic_conflict": "false",
+            "dirty_open": "false",
+        },
+        {
+            "repair_id": "G13B-PROV-004",
+            "field": "comsol_gate13_commit_expected",
+            "old_or_ambiguous_semantics": "not present before COMSOL Gate13 producer package",
+            "gate13_semantics": "expected COMSOL Gate13 sidewall guard handshake package commit",
+            "expected_value": COMSOL_GATE13_COMMIT,
             "actual_value": actual_head,
-            "repair_status": "MATCH" if actual_head == COMSOL_GATE12_COMMIT else "HEAD_MISMATCH_FAIL_CLOSED",
-            "semantic_conflict": bool_text(actual_head != COMSOL_GATE12_COMMIT),
+            "repair_status": "MATCH" if actual_head == COMSOL_GATE13_COMMIT else "HEAD_MISMATCH_FAIL_CLOSED",
+            "semantic_conflict": bool_text(actual_head != COMSOL_GATE13_COMMIT),
             "dirty_open": "false",
         },
     ]
@@ -497,16 +568,16 @@ def dryrun_harness_v2(root: Path) -> list[dict[str, str]]:
 
 
 def interface_contract_v2(root: Path) -> list[dict[str, str]]:
-    handshake = read_csv_rows(comsol_path(root, "COMSOL_GATE12_SIDEWALL_HANDSHAKE_MATRIX_20260629.csv"))
+    handshake = read_csv_rows(comsol_path(root, "COMSOL_GATE13_SIDEWALL_GUARD_SCHEMA_V2_20260629.csv"))
     rows = []
     for idx, row in enumerate(handshake, start=1):
         semantic_conflict = row.get("semantic_conflict", "false").lower() == "true"
         rows.append(
             {
                 "contract_row_id": f"G13G-CONTRACT-{idx:03d}",
-                "source_field_or_topic": row.get("field", row.get("topic", f"handshake-{idx}")),
-                "nodi_status": row.get("nodi_status", row.get("nodi_resolution", "REVIEW_ONLY")),
-                "comsol_status": row.get("comsol_status", row.get("producer_status", "REVIEW_ONLY")),
+                "source_field_or_topic": row.get("field_name", row.get("field", row.get("topic", f"schema-{idx}"))),
+                "nodi_status": row.get("nodi_responsibility", row.get("nodi_status", "REVIEW_ONLY")),
+                "comsol_status": row.get("producer_responsibility", row.get("comsol_status", "REVIEW_ONLY")),
                 "compatibility_status": "SEMANTIC_CONFLICT" if semantic_conflict else "NORMALIZED_MATCH_OR_REVIEW_ONLY_DELTA",
                 "semantic_conflict": bool_text(semantic_conflict),
                 "closed_sidewall_propagation": "false",
@@ -519,7 +590,7 @@ def interface_contract_v2(root: Path) -> list[dict[str, str]]:
         rows.append(
             {
                 "contract_row_id": "G13G-CONTRACT-000",
-                "source_field_or_topic": "COMSOL_GATE12_SIDEWALL_HANDSHAKE_MATRIX_20260629.csv",
+                "source_field_or_topic": "COMSOL_GATE13_SIDEWALL_GUARD_SCHEMA_V2_20260629.csv",
                 "nodi_status": "MISSING_INPUT",
                 "comsol_status": "MISSING_INPUT",
                 "compatibility_status": "SEMANTIC_CONFLICT",
@@ -545,7 +616,7 @@ def mutation_rows(total: int = 12000) -> tuple[list[dict[str, str]], list[dict[s
         ("runtime_clipped_mismatch", "clipped/unclipped mismatch cannot become measured geometry"),
         ("micro_nano_spoof", "micro descriptor spoofed as nano binding"),
         ("fluidic_proxy_spoof", "rectangular proxy spoofed as q_ch sidecar"),
-        ("comsol_gate12_head_drift", "COMSOL Gate12 head spoof mismatch"),
+        ("comsol_gate13_head_drift", "COMSOL Gate13 current head spoof mismatch"),
         ("qch_jrc_yield_winner_spoof", "forbidden decision field spoof"),
         ("production_runtime_spoof", "runtime/production flag true spoof"),
         ("missing_descriptor_hash", "sidewall-aware row missing descriptor hash"),
@@ -635,7 +706,8 @@ def provenance_ledger(root: Path) -> list[dict[str, str]]:
         ("NODI", "Gate13 base", safe_git_head(PROJECT_ROOT), DISPOSITION),
         ("COMSOL", "Gate10", "5b9f110", "COMSOL_GATE10_SIDEWALL_DESCRIPTOR_INTERFACE_PACKAGE"),
         ("COMSOL", "Gate11", COMSOL_GATE11_COMMIT, "PASS_GATE11_SIDEWALL_ADDENDUM_CONVERGENCE_REVIEW_ONLY_NO_AUTH"),
-        ("COMSOL", "Gate12", safe_git_head(root), "COMSOL_GATE12_NODI_SIDEWALL_ADDENDUM_RELEASE_CANDIDATE_HANDSHAKE_NO_AUTH"),
+        ("COMSOL", "Gate12", COMSOL_GATE12_COMMIT, "COMSOL_GATE12_NODI_SIDEWALL_ADDENDUM_RELEASE_CANDIDATE_HANDSHAKE_NO_AUTH"),
+        ("COMSOL", "Gate13", safe_git_head(root), "COMSOL_GATE13_SIDEWALL_GUARD_HANDSHAKE_V2_REVIEW_ONLY_NO_AUTH"),
     ]
     rows = []
     for idx, (side, gate, commit, status) in enumerate(entries, start=1):
@@ -758,17 +830,21 @@ def validation_plan() -> list[dict[str, str]]:
 
 
 def build_payload(comsol_root: Path) -> dict[str, Any]:
-    receipt = comsol_gate12_receipt(comsol_root)
+    gate12_receipt = comsol_gate12_receipt(comsol_root)
+    gate13_receipt = comsol_gate13_receipt(comsol_root)
     validation = comsol_validation_rows(comsol_root)
-    status = comsol_gate12_status(comsol_root)
+    gate12_status = comsol_gate12_status(comsol_root)
+    status = comsol_gate13_status(comsol_root)
     provenance_repair = provenance_repair_matrix(comsol_root)
     mutation_catalog, mutation_results = mutation_rows()
     payload: dict[str, Any] = {
         "worktree_reconciliation": worktree_reconciliation(),
         "current_hardening_intake": current_hardening_intake(),
-        "comsol_gate12_receipt": receipt,
-        "comsol_gate12_validation": validation,
-        "comsol_gate12_status": status,
+        "comsol_gate12_receipt": gate12_receipt,
+        "comsol_gate12_status": gate12_status,
+        "comsol_gate13_receipt": gate13_receipt,
+        "comsol_gate13_validation": validation,
+        "comsol_gate13_status": status,
         "provenance_repair": provenance_repair,
         "closure_authority_contract_v2": closure_authority_contract_v2(),
         "closed_sidewall_harness": closed_sidewall_hard_fail_harness(),
@@ -791,12 +867,15 @@ def build_payload(comsol_root: Path) -> dict[str, Any]:
         "nodi_gate12_commit": NODI_GATE12_COMMIT,
         "comsol_gate11_commit_expected": COMSOL_GATE11_COMMIT,
         "comsol_gate12_commit_expected": COMSOL_GATE12_COMMIT,
+        "comsol_gate13_commit_expected": COMSOL_GATE13_COMMIT,
         "comsol_project_head_actual": safe_git_head(comsol_root),
         "worktree_rows": len(payload["worktree_reconciliation"]),
         "unknown_dirty_blockers": sum(row["unknown_blocker"] == "true" for row in payload["worktree_reconciliation"]),
-        "comsol_receipt_rows": len(receipt),
-        "comsol_receipt_blocking_drift": sum(row["receipt_status"] == "BLOCKING_DATA_DRIFT" for row in receipt),
-        "comsol_receipt_missing_required": sum(row["receipt_status"] == "MISSING_REQUIRED_ARTIFACT" for row in receipt),
+        "comsol_gate12_receipt_rows": len(gate12_receipt),
+        "comsol_gate13_receipt_rows": len(gate13_receipt),
+        "comsol_receipt_rows": len(gate13_receipt),
+        "comsol_receipt_blocking_drift": sum(row["receipt_status"] == "BLOCKING_DATA_DRIFT" for row in gate13_receipt),
+        "comsol_receipt_missing_required": sum(row["receipt_status"] == "MISSING_REQUIRED_ARTIFACT" for row in gate13_receipt),
         "comsol_validation_rows": len(validation),
         "comsol_validation_failures": sum(str(row.get("status", "")).upper() == "FAIL" for row in validation),
         "comsol_status_disposition": status_disposition,
@@ -839,7 +918,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "COMSOL receipt blocking drift": summary["comsol_receipt_blocking_drift"] == 0,
         "COMSOL receipt missing required": summary["comsol_receipt_missing_required"] == 0,
         "COMSOL validation failures": summary["comsol_validation_failures"] == 0,
-        "COMSOL Gate12 head": summary["comsol_project_head_actual"] == COMSOL_GATE12_COMMIT,
+        "COMSOL Gate13 head": summary["comsol_project_head_actual"] == COMSOL_GATE13_COMMIT,
         "provenance semantic conflicts": summary["provenance_semantic_conflicts"] == 0,
         "provenance dirty open": summary["provenance_dirty_open"] == 0,
         "closed sidewall unexpected pass": summary["closed_sidewall_unexpected_pass"] == 0,
@@ -889,8 +968,9 @@ def write_outputs(payload: dict[str, Any]) -> None:
     csv_specs = {
         "NODI_COMSOL_GATE13_SIDEWALL_WORKTREE_RECONCILIATION_20260629.csv": payload["worktree_reconciliation"],
         "NODI_COMSOL_GATE13_SIDEWALL_CURRENT_HARDENING_INTAKE_MATRIX_20260629.csv": payload["current_hardening_intake"],
-        "NODI_COMSOL_GATE13_SIDEWALL_COMSOL_GATE12_RECEIPT_REGISTER_20260629.csv": payload["comsol_gate12_receipt"],
-        "NODI_COMSOL_GATE13_SIDEWALL_COMSOL_GATE12_VALIDATION_RECEIPT_20260629.csv": payload["comsol_gate12_validation"]
+        "NODI_COMSOL_GATE13_SIDEWALL_COMSOL_GATE12_BASELINE_RECEIPT_REGISTER_20260629.csv": payload["comsol_gate12_receipt"],
+        "NODI_COMSOL_GATE13_SIDEWALL_COMSOL_GATE13_RECEIPT_REGISTER_20260629.csv": payload["comsol_gate13_receipt"],
+        "NODI_COMSOL_GATE13_SIDEWALL_COMSOL_GATE13_VALIDATION_RECEIPT_20260629.csv": payload["comsol_gate13_validation"]
         or [{"validation_id": "none", "status": "MISSING"}],
         "NODI_COMSOL_GATE13_SIDEWALL_GATE12_PROVENANCE_REPAIR_MATRIX_20260629.csv": payload["provenance_repair"],
         "NODI_COMSOL_GATE13_SIDEWALL_CLOSURE_AUTHORITY_CONTRACT_V2_20260629.csv": payload["closure_authority_contract_v2"],
@@ -934,7 +1014,7 @@ def write_outputs(payload: dict[str, Any]) -> None:
         "NODI COMSOL Gate13 Sidewall Guard Convergence",
         [
             f"- Disposition: `{payload['summary']['disposition']}`",
-            f"- COMSOL Gate12 receipt rows: {payload['summary']['comsol_receipt_rows']}",
+            f"- COMSOL Gate13 receipt rows: {payload['summary']['comsol_receipt_rows']}",
             f"- Dry-run harness v2 rows: {payload['summary']['dryrun_v2_rows']}",
             f"- Mutation rows: {payload['summary']['mutation_rows']} with unexpected pass {payload['summary']['mutation_unexpected_pass']}",
             "- Gate2D remains exactly 4 context-only rows; EDGE NOT_APPROVED_PREAUTH_ONLY; QCH ABSENT; BINDING FAIL_CLOSED.",
@@ -955,7 +1035,7 @@ def write_outputs(payload: dict[str, Any]) -> None:
             [
                 f"- Gate13 disposition: `{payload['summary']['disposition']}`",
                 f"- Release candidate: `{payload['summary']['release_name']}`",
-                f"- Key rows: receipt={payload['summary']['comsol_receipt_rows']}; dryrun={payload['summary']['dryrun_v2_rows']}; mutations={payload['summary']['mutation_rows']}; self_review={len(payload['self_review'])}.",
+                f"- Key rows: COMSOL Gate13 receipt={payload['summary']['comsol_receipt_rows']}; dryrun={payload['summary']['dryrun_v2_rows']}; mutations={payload['summary']['mutation_rows']}; self_review={len(payload['self_review'])}.",
                 f"- Auth state: Gate2D={payload['summary']['gate2d_rows']}; EDGE={payload['summary']['edge_state']}; QCH={payload['summary']['qch_state']}; BINDING={payload['summary']['binding_state']}.",
                 "- Claim boundary: descriptor/review-only/no-auth. No COMSOL run, no NODI PRS/EAS rerun, no runtime/production, no q_ch/JRC/yield/winner/detection probability.",
                 f"- Machine-readable support: `{OUTPUT_DIR.relative_to(PROJECT_ROOT).as_posix()}`.",
