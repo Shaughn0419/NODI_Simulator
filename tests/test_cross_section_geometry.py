@@ -750,8 +750,20 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         BASELINE_OPTICAL,
         cfg_85,
     )
+    electrokinetic_cfg_85 = replace(
+        cfg_85,
+        electrokinetic_model="boltzmann_wall_exclusion",
+        ionic_strength_M=1.0e-4,
+        zeta_potential_particle_mV=-35.0,
+        zeta_potential_wall_mV=-45.0,
+    )
+    electrokinetic_85 = build_electrokinetic_transport_diagnostics(
+        channel,
+        electrokinetic_cfg_85,
+    )
     reference_85 = {
         **channel_geometry_85,
+        **electrokinetic_85,
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
         "initial_position_sampler_geometry_model": "trapezoid_tapered_sidewalls",
@@ -897,6 +909,28 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     assert "geometry_not_propagated_to_reference_field=True" in signature_85
     assert "not_optical_solver_output=True" in signature_85
     assert "optical_solver_trigger_is_result=False" in signature_85
+    assert "electrokinetic_model=boltzmann_wall_exclusion" in signature_85
+    assert (
+        "electrokinetic_transport_geometry_model="
+        "blocked_trapezoid_requires_profile_aware_grid"
+    ) in signature_85
+    assert (
+        "electrokinetic_wall_distance_model=blocked_rectangular_wall_distance_grid"
+        in signature_85
+    )
+    assert (
+        "electrokinetic_geometry_propagation_status="
+        "blocked_geometry_not_propagated"
+    ) in signature_85
+    assert (
+        "geometry_not_propagated_to_electrokinetic_transport=True"
+        in signature_85
+    )
+    assert (
+        "surface_charge_transport_claim_level="
+        "blocked_trapezoid_geometry_not_propagated_to_electrokinetic_transport"
+    ) in signature_85
+    assert "electrokinetic_diagnostic_gate_passed=False" in signature_85
     assert signature_85 != signature_83
     assert signature_85 != signature_85_diffusive
     assert signature_85 != signature_85_deeper
@@ -908,6 +942,12 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         {**reference_85, "source_geometry_descriptor_sha": "c" * 64},
         {**reference_85, "geometry_profile_sha256": "d" * 64},
         {**reference_85, "sampler_geometry_model": "rectangular_half_span_v1"},
+        {
+            **reference_85,
+            "electrokinetic_geometry_propagation_status": (
+                "rectangle_native_or_non_sidewall_geometry"
+            ),
+        },
     ):
         assert (
             _build_observation_signature(
