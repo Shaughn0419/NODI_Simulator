@@ -4,6 +4,12 @@ from __future__ import annotations
 
 import math
 
+from .cross_section_geometry import (
+    CENTER_ACCESSIBLE_SUPPORT_MODEL,
+    DEFAULT_CLOSURE_POLICY,
+    TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+    TrapezoidCrossSection,
+)
 from .data_objects import (
     CHANNEL_CROSS_SECTION_MODEL_OPTIONS,
     Channel,
@@ -31,6 +37,16 @@ CHANNEL_GEOMETRY_DIAGNOSTIC_FIELDS = (
     "effective_to_ideal_phase_mask_area_ratio",
     "trapezoid_top_width_m",
     "trapezoid_bottom_width_m",
+    "trapezoid_bottom_width_unclipped_m",
+    "trapezoid_bottom_width_runtime_clipped_m",
+    "trapezoid_closure_depth_m",
+    "trapezoid_closure_status",
+    "trapezoid_closure_policy",
+    "trapezoid_runtime_guard_status",
+    "trapezoid_center_accessible_area_m2",
+    "trapezoid_center_accessible_area_fraction",
+    "center_accessible_support_model",
+    "cross_section_geometry_version",
     "geometry_surrogate_status",
     "geometry_model_discrepancy_flag",
     "roughness_scattering_background_proxy",
@@ -72,13 +88,12 @@ def _trapezoid_widths_m(
     channel: Channel,
     sidewall_taper_angle_deg: float,
 ) -> tuple[float, float]:
-    top_width_m = float(channel.width_m)
-    taper_rad = math.radians(max(sidewall_taper_angle_deg, 0.0))
-    bottom_width_m = max(
-        top_width_m - 2.0 * float(channel.depth_m) * math.tan(taper_rad),
-        0.0,
+    geometry = TrapezoidCrossSection(
+        top_width_m=float(channel.width_m),
+        depth_m=float(channel.depth_m),
+        sidewall_taper_angle_deg=sidewall_taper_angle_deg,
     )
-    return top_width_m, bottom_width_m
+    return geometry.top_width_m, geometry.bottom_width_runtime_clipped_m
 
 
 def _trapezoid_area_m2(
@@ -116,9 +131,20 @@ def build_channel_geometry_diagnostics(
     effective_phase_mask_area_m2 = ideal_phase_mask_area_m2
     trapezoid_top_width_m: float | None = None
     trapezoid_bottom_width_m: float | None = None
+    trapezoid_bottom_width_unclipped_m: float | None = None
+    trapezoid_bottom_width_runtime_clipped_m: float | None = None
+    trapezoid_closure_depth_m: float | None = None
+    trapezoid_closure_status: str | None = None
+    trapezoid_closure_policy: str | None = None
+    trapezoid_runtime_guard_status: str | None = None
+    trapezoid_center_accessible_area_m2: float | None = None
+    trapezoid_center_accessible_area_fraction: float | None = None
+    center_accessible_support_model = "rectangular_half_span_v1"
+    cross_section_geometry_version = "ideal_rectangle_v1"
     geometry_surrogate_status = "ideal_rectangle_no_active_surrogate"
 
     if model == "rounded_rectangle":
+        cross_section_geometry_version = "rounded_rectangle_area_surrogate_v1"
         corner_radius_m = corner_radius_nm * 1e-9
         effective_phase_mask_area_m2 = _rounded_rectangle_area_m2(
             float(channel.width_m),
@@ -135,26 +161,40 @@ def build_channel_geometry_diagnostics(
         )
         geometry_surrogate_status = "rounded_rectangle_area_surrogate_active"
     elif model == "trapezoid_tapered_sidewalls":
-        trapezoid_top_width_m, trapezoid_bottom_width_m = _trapezoid_widths_m(
-            channel,
-            sidewall_taper_angle_deg,
+        trapezoid_geometry = TrapezoidCrossSection(
+            top_width_m=float(channel.width_m),
+            depth_m=float(channel.depth_m),
+            sidewall_taper_angle_deg=sidewall_taper_angle_deg,
         )
-        effective_phase_mask_area_m2 = _trapezoid_area_m2(
-            trapezoid_top_width_m,
-            trapezoid_bottom_width_m,
-            float(channel.depth_m),
+        trapezoid_top_width_m = trapezoid_geometry.top_width_m
+        trapezoid_bottom_width_unclipped_m = (
+            trapezoid_geometry.bottom_width_unclipped_m
         )
-        accessible_top_width_m = max(trapezoid_top_width_m - 2.0 * radius_m, 0.0)
-        accessible_bottom_width_m = max(
-            trapezoid_bottom_width_m - 2.0 * radius_m,
-            0.0,
+        trapezoid_bottom_width_runtime_clipped_m = (
+            trapezoid_geometry.bottom_width_runtime_clipped_m
         )
-        accessible_depth_m = max(float(channel.depth_m) - 2.0 * radius_m, 0.0)
-        effective_accessible_area_m2 = _trapezoid_area_m2(
-            accessible_top_width_m,
-            accessible_bottom_width_m,
-            accessible_depth_m,
+        # Backwards-compatible alias: legacy consumers expect the clipped value here.
+        trapezoid_bottom_width_m = trapezoid_bottom_width_runtime_clipped_m
+        trapezoid_closure_depth_m = trapezoid_geometry.closure_depth_m
+        trapezoid_closure_status = trapezoid_geometry.closure_status
+        trapezoid_closure_policy = DEFAULT_CLOSURE_POLICY
+        if trapezoid_closure_status == "geometry_closed":
+            trapezoid_runtime_guard_status = "validation_guard"
+        elif trapezoid_closure_status == "near_closed":
+            trapezoid_runtime_guard_status = "solver_guard"
+        else:
+            trapezoid_runtime_guard_status = "none"
+        effective_phase_mask_area_m2 = trapezoid_geometry.phase_mask_area_m2()
+        trapezoid_center_accessible_area_m2 = (
+            trapezoid_geometry.center_accessible_area_m2(radius_m)
         )
+        effective_accessible_area_m2 = trapezoid_center_accessible_area_m2
+        trapezoid_center_accessible_area_fraction = _ratio(
+            trapezoid_center_accessible_area_m2,
+            effective_phase_mask_area_m2,
+        )
+        center_accessible_support_model = CENTER_ACCESSIBLE_SUPPORT_MODEL
+        cross_section_geometry_version = TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION
         geometry_surrogate_status = "trapezoid_sidewall_area_surrogate_active"
 
     if model == "ideal_rectangle":
@@ -213,6 +253,20 @@ def build_channel_geometry_diagnostics(
         ),
         "trapezoid_top_width_m": trapezoid_top_width_m,
         "trapezoid_bottom_width_m": trapezoid_bottom_width_m,
+        "trapezoid_bottom_width_unclipped_m": trapezoid_bottom_width_unclipped_m,
+        "trapezoid_bottom_width_runtime_clipped_m": (
+            trapezoid_bottom_width_runtime_clipped_m
+        ),
+        "trapezoid_closure_depth_m": trapezoid_closure_depth_m,
+        "trapezoid_closure_status": trapezoid_closure_status,
+        "trapezoid_closure_policy": trapezoid_closure_policy,
+        "trapezoid_runtime_guard_status": trapezoid_runtime_guard_status,
+        "trapezoid_center_accessible_area_m2": trapezoid_center_accessible_area_m2,
+        "trapezoid_center_accessible_area_fraction": (
+            trapezoid_center_accessible_area_fraction
+        ),
+        "center_accessible_support_model": center_accessible_support_model,
+        "cross_section_geometry_version": cross_section_geometry_version,
         "geometry_surrogate_status": geometry_surrogate_status,
         "geometry_model_discrepancy_flag": discrepancy,
         "roughness_scattering_background_proxy": roughness_proxy,
