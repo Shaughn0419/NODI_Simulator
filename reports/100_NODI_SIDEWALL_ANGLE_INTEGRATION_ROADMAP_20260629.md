@@ -26,15 +26,16 @@ The main refinement after independent review is therefore not a larger angle sca
 Relevant NODI files and artifacts:
 
 - `nodi_simulator/data_objects.py`: core `Channel(width_m, depth_m)` model; x is width, z is depth, y is flow direction. Existing config fields include `channel_cross_section_model`, `sidewall_taper_angle_deg`, `corner_radius_nm`, `surface_roughness_rms_nm`, `width_along_channel_cv`, `depth_along_channel_cv`, and `measured_profile_path`.
-- `nodi_simulator/channel_geometry_model.py`: existing geometry diagnostics can report `ideal_rectangle`, `rounded_rectangle`, `trapezoid_tapered_sidewalls`, and `measured_profile_lookup`; for trapezoid sidewalls it computes top/bottom width and area-style descriptors.
-- `nodi_simulator/utils.py` and `nodi_simulator/trajectory.py`: sampling, reflection, and near-wall gap logic still use rectangular half-spans in the main path.
-- `nodi_simulator/fluidic_resistance.py` and `nodi_simulator/electrokinetic_transport.py`: transport/residence/risk logic still depends on rectangular or simplified hydraulic assumptions.
-- `nodi_simulator/reference_field.py` and `nodi_simulator/illumination.py`: reference field, width/depth phase terms, NA cutoff, and edge illumination depend on the rectangular width/depth abstraction unless explicitly guarded.
-- `parameter_sweep.md`: observation signatures must be extended; otherwise sidewall-angle variants can reuse incompatible cached/provenance states.
+- `nodi_simulator/cross_section_geometry.py` and `nodi_simulator/channel_geometry_model.py`: trapezoid geometry now has a shared primitive/oracle layer that preserves unclipped bottom width, closure status, center-accessible support, and descriptor/runtime clip separation.
+- `nodi_simulator/utils.py`: trapezoid initial-position sampling is routed through the center-accessible support oracle; flux-weighted trapezoid sampling remains blocked unless a compatible trapezoid flow model exists.
+- `nodi_simulator/trajectory.py`: trapezoid runs are guarded against rectangular reflection, rectangular near-wall diffusion, and rectangular flow-profile leakage. Pure-advection plug-flow audit paths can continue only with explicit geometry propagation diagnostics.
+- `nodi_simulator/fluidic_resistance.py` and `nodi_simulator/electrokinetic_transport.py`: trapezoid hydraulic/electrokinetic paths are now explicitly marked proxy/blocked where geometry has not been propagated; no trapezoid Poiseuille, q_ch, clogging-rate, or wall-distance transport claim is emitted.
+- `nodi_simulator/reference_field.py`: trapezoid reference-field paths are explicitly marked as rectangular width/depth proxies or geometry-independent audit paths, with `not_optical_solver_output=true` and `optical_solver_trigger_is_result=false`.
+- `nodi_simulator/parameter_sweep.py`: observation signatures now include cross-section model, taper angle, particle radius, geometry propagation status, closure policy, sampler/trajectory/flow/reference guard fields, so old rectangular cache/signature states cannot silently satisfy trapezoid requests.
 - `roadmap/COMSOL_GEOMETRY_DESCRIPTOR_V1.csv`: already contains descriptor fields such as `sidewall_deg`, `depth_um`, `W_top_um`, `W_bottom_um`, `bottom_width_nm`, `D_inscribed_nm`, and `min_aperture_nm`, but only as descriptor metadata. It preserves negative bottom-width rows in descriptor space; current NODI runtime must not silently clip those rows into open runtime apertures.
-- Existing EAS/PRS and Gate2 artifacts are bounded as surrogate sensitivity or `context-only`, not formula, not production, not route scoring.
+- `nodi_simulator/nodi_comsol_next_artifacts.py`: existing EAS/PRS and Gate2 artifacts are bounded as surrogate sensitivity or `context-only`, not formula, not production, not route scoring. Sidewall v2 descriptor/PRS/EAS fields now have marker-triggered hard validators while preserving legacy V1 contracts.
 
-NODI therefore has a useful starting point, but only the descriptor layer is sidewall-aware today. The runtime physics is not yet fully sidewall-aware.
+NODI therefore has a useful starting point and several runtime leak guards are now implemented, but the simulator is not yet a fully sidewall-aware transport/optical engine. The remaining work is to replace guarded/proxy areas with validated trapezoid trajectory, flow, near-wall transport, and optical/reference solvers before any result can be promoted beyond audit or surrogate sensitivity.
 
 ### 1.2 COMSOL current state
 
@@ -56,6 +57,25 @@ Three independent read-only reviews converged on the same hazards:
 | NODI-focused review | NODI has sidewall descriptor/EAS fields but main runtime geometry remains rectangular. | Roadmap separates descriptor, runtime geometry, transport, optical, and interface gates. |
 | COMSOL-focused review | COMSOL sidewall/depth evidence can only enter NODI as bounded context unless grain/claim gates are satisfied. | Roadmap keeps Stage119/Gate2C/Gate2D as `context-only` and blocks promotion to scoring. |
 | Cross-project risk review | A scalar sidewall field would create false confidence if sampling, trajectory, near-wall distance, and bins remain rectangular. | Roadmap requires mutation tests proving geometry propagation or explicit `not_propagated` flags. |
+
+### 1.4 Implementation progress as of 2026-06-29
+
+Completed NODI-side guardrails:
+
+- Added `TrapezoidCrossSection` geometry primitive and tests for COMSOL/NODI angle conversion, bottom-width preservation, closure status, center-accessible area, wall-normal particle support, and uniform accessible-area sampling.
+- Routed trapezoid initial-position sampling through the geometry oracle; rectangular sampler fallback is no longer accepted for trapezoid support rows.
+- Added trajectory diagnostics that hard-block rectangular reflection, rectangular near-wall diffusion, and incompatible rectangular flow profiles under active trapezoid geometry.
+- Added explicit electrokinetic, fluidic, and reference-field propagation statuses so non-propagated trapezoid paths remain audit/proxy rows, not sidewall-aware runtime results.
+- Added sidewall geometry fields to observation signatures, including particle radius and reference-field geometry propagation status.
+- Added artifact/schema hard-fails for claim-promotion column names, descriptor v2 sidewall fields, PRS sidewall v2 sampler/support/bin fields, and EAS sidewall v2 no-claim guards.
+
+Still blocked in this roadmap:
+
+- sloped-wall reflection and diffusion under Brownian trajectories;
+- trapezoid-compatible flow field or flux-weighted sampler;
+- trapezoid-aware electrokinetic wall-distance grid;
+- full optical/reference-field solver output;
+- route winners, route_score, JRC, q_ch weighting, yield, detection_probability, wet pass probability, clogging rate, time-to-clog, recovery, fabrication release, or production/runtime ingestion.
 
 ## 2. Core physical principles
 
