@@ -781,6 +781,11 @@ SIDEWALL_V2_OBSERVATION_CACHE_REQUIRED_FIELDS: tuple[str, ...] = (
     "observation_signature_version",
     "cache_geometry_match_status",
 )
+SIDEWALL_V2_ACCEPTANCE_GUARD_REQUIRED_FIELDS: tuple[str, ...] = (
+    "not_accepted_for_formula_use",
+    "not_accepted_for_runtime_config",
+    "not_accepted_for_production",
+)
 SIDEWALL_V2_CACHE_GEOMETRY_MATCH_STATUS_ALLOWED = frozenset(
     {
         "matched_current_geometry",
@@ -9097,6 +9102,7 @@ def _validate_position_response_sidewall_v2_fields(
         issues,
         check_prs_bin_fields=True,
     )
+    _validate_sidewall_v2_acceptance_guards(row, row_index, "PRS-SIDEWALL-V2", issues)
     channel_model = _value(row, "channel_cross_section_model")
     if channel_model not in {"ideal_rectangle", "trapezoid_tapered_sidewalls"}:
         _issue(
@@ -9574,6 +9580,23 @@ def _validate_sidewall_v2_observation_cache_context(
                 rule_id,
                 "trapezoid sidewall row observation_signature lacks trapezoid geometry",
             )
+
+
+def _validate_sidewall_v2_acceptance_guards(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+) -> None:
+    _require_fields(
+        row,
+        SIDEWALL_V2_ACCEPTANCE_GUARD_REQUIRED_FIELDS,
+        rule_id,
+        row_index,
+        issues,
+    )
+    for field in SIDEWALL_V2_ACCEPTANCE_GUARD_REQUIRED_FIELDS:
+        _validate_bool_equals(row, field, True, row_index, rule_id, issues)
 
 
 def _validate_sidewall_local_geometry(
@@ -10067,6 +10090,7 @@ def _validate_effective_aperture_sidewall_v2_fields(
         issues,
         check_prs_bin_fields=False,
     )
+    _validate_sidewall_v2_acceptance_guards(row, row_index, "EAS-SIDEWALL-V2", issues)
     _validate_sidewall_v2_observation_cache_context(
         row,
         row_index,

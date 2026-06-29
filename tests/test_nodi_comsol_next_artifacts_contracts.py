@@ -306,6 +306,14 @@ def _sidewall_observation_cache_fields(
     }
 
 
+def _sidewall_acceptance_guard_fields() -> dict[str, object]:
+    return {
+        "not_accepted_for_formula_use": "true",
+        "not_accepted_for_runtime_config": "true",
+        "not_accepted_for_production": "true",
+    }
+
+
 def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
     row = _valid_prs_row(
         diameter_nm=220,
@@ -346,6 +354,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         neighbor_fill_used="false",
         source_geometry_descriptor_id="descriptor-404-W500-D900-sidewall-85",
         source_geometry_descriptor_sha=GEOMETRY_DESCRIPTOR_SHA256,
+        **_sidewall_acceptance_guard_fields(),
         **_sidewall_observation_cache_fields(),
         **_sidewall_descriptor_context_fields(),
     )
@@ -414,6 +423,7 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
         geometry_propagation_status="propagated",
         geometry_not_propagated_reasons="",
+        **_sidewall_acceptance_guard_fields(),
         **_sidewall_observation_cache_fields(),
         **_sidewall_descriptor_context_fields(),
     )
@@ -552,6 +562,23 @@ def test_position_response_sidewall_v2_requires_runtime_binding_version() -> Non
     del row["geometry_runtime_binding_version"]
 
     issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_acceptance_guards() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["not_accepted_for_runtime_config"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_formula_use_acceptance() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(not_accepted_for_formula_use="false")]
+    )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
@@ -973,6 +1000,23 @@ def test_effective_aperture_sidewall_v2_requires_runtime_geometry_context() -> N
     del row["geometry_runtime_binding_version"]
 
     issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_acceptance_guards() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["not_accepted_for_production"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_runtime_config_acceptance() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(not_accepted_for_runtime_config="false")]
+    )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 
