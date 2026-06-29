@@ -9597,7 +9597,11 @@ class TestIntegration:
         assert intrinsic["initial_position_distribution_mode"] == "center_biased_surrogate"
         assert "initial_position_distribution_mode=center_biased_surrogate" in intrinsic["observation_signature"]
 
-    def test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics(self):
+    @pytest.mark.parametrize("vectorized_event_engine", ["off", "pure_advection_block"])
+    def test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics(
+        self,
+        vectorized_event_engine,
+    ):
         theta_grid = np.linspace(0.01, np.pi - 0.01, 160)
         particle = Particle("ev_220nm_tail", radius_m=110.0e-9, n_real=1.37)
         channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
@@ -9621,7 +9625,8 @@ class TestIntegration:
             include_diffusion=False,
             diffusion_hindrance_model="none",
             flow_profile_model="plug",
-            vectorized_event_engine="off",
+            vectorized_event_engine=vectorized_event_engine,
+            event_block_size=2,
         )
 
         batch = run_single_case_batch(
@@ -9637,6 +9642,7 @@ class TestIntegration:
         summary = batch["summary"]
         intrinsic = batch["intrinsic"]
         signature = intrinsic["observation_signature"]
+        assert summary["vectorized_event_engine"] == vectorized_event_engine
         assert summary["initial_position_sampler_geometry_model"] == (
             "trapezoid_tapered_sidewalls"
         )
