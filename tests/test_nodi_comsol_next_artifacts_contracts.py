@@ -901,6 +901,14 @@ def test_position_response_sidewall_v2_rejects_auto_tail_admission() -> None:
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_particle_radius_diameter_mismatch() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(diameter_nm=220, particle_radius_nm=100.0)]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_rejects_qch_flow_on_production_row() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_row(flow_condition_id=QCH_FLOW_CONDITION_ID)]

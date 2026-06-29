@@ -9172,6 +9172,15 @@ def _validate_position_response_sidewall_v2_fields(
         "PRS-SIDEWALL-V2",
         issues,
     )
+    if diameter_nm is not None and particle_radius_nm is not None:
+        _validate_close(
+            particle_radius_nm,
+            0.5 * diameter_nm,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "particle_radius_nm",
+            issues,
+        )
     _validate_sidewall_tail_particle_support_guard(
         row,
         row_index,
