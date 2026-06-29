@@ -750,6 +750,13 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         BASELINE_OPTICAL,
         cfg_85,
     )
+    fluidic_cfg_85 = replace(cfg_85, flow_control_mode="fixed_pressure")
+    fluidic_85 = compute_fluidic_practicality_penalty(
+        particle,
+        WATER,
+        channel,
+        fluidic_cfg_85,
+    )
     electrokinetic_cfg_85 = replace(
         cfg_85,
         electrokinetic_model="boltzmann_wall_exclusion",
@@ -763,6 +770,7 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     )
     reference_85 = {
         **channel_geometry_85,
+        **fluidic_85,
         **electrokinetic_85,
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
@@ -909,6 +917,33 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     assert "geometry_not_propagated_to_reference_field=True" in signature_85
     assert "not_optical_solver_output=True" in signature_85
     assert "optical_solver_trigger_is_result=False" in signature_85
+    assert (
+        "fluidic_clogging_risk_band_claim_level="
+        "static_throat_clearance_proxy_not_clogging_rate"
+    ) in signature_85
+    assert "not_clogging_rate=True" in signature_85
+    assert "not_time_to_clog=True" in signature_85
+    assert (
+        "fluidic_geometry_model="
+        "trapezoid_descriptor_with_rectangular_proxy_fluidics"
+    ) in signature_85
+    assert (
+        "hydraulic_resistance_model="
+        "rectangular_hydraulic_resistance_proxy_under_trapezoid"
+    ) in signature_85
+    assert (
+        "hydraulic_resistance_claim_level="
+        "proxy_not_trapezoid_poiseuille_not_accepted_for_formula_use"
+    ) in signature_85
+    assert (
+        "fluidic_geometry_propagation_status="
+        "geometry_not_propagated_to_fluidic_resistance"
+    ) in signature_85
+    assert "geometry_not_propagated_to_fluidic_resistance=True" in signature_85
+    assert (
+        "fixed_pressure_diagnostic_status="
+        "proxy_only_rectangular_resistance_under_trapezoid"
+    ) in signature_85
     assert "electrokinetic_model=boltzmann_wall_exclusion" in signature_85
     assert (
         "electrokinetic_transport_geometry_model="
@@ -942,6 +977,12 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         {**reference_85, "source_geometry_descriptor_sha": "c" * 64},
         {**reference_85, "geometry_profile_sha256": "d" * 64},
         {**reference_85, "sampler_geometry_model": "rectangular_half_span_v1"},
+        {
+            **reference_85,
+            "fluidic_geometry_propagation_status": (
+                "rectangle_native_or_non_sidewall_geometry"
+            ),
+        },
         {
             **reference_85,
             "electrokinetic_geometry_propagation_status": (
