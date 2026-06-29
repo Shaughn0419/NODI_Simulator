@@ -810,6 +810,49 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     assert signature_85 != signature_85_larger_particle
 
 
+def test_observation_signature_separates_secondary_geometry_descriptors() -> None:
+    base_cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+    )
+    base_reference = {
+        "reference_geometry_model": "rectangular_width_depth_reference_proxy_under_trapezoid",
+        "reference_geometry_propagation_status": (
+            "blocked_trapezoid_geometry_not_propagated_to_reference_field"
+        ),
+    }
+    base_signature = _build_observation_signature(
+        "operator=test",
+        base_reference,
+        base_cfg,
+        particle_radius_m=110.0e-9,
+    )
+
+    assert "corner_radius_nm=0.000000000e+00" in base_signature
+    assert "surface_roughness_rms_nm=0.000000000e+00" in base_signature
+    assert "width_along_channel_cv=0.000000000e+00" in base_signature
+    assert "depth_along_channel_cv=0.000000000e+00" in base_signature
+    assert "measured_profile_path=none" in base_signature
+
+    for mutated_cfg in (
+        replace(base_cfg, corner_radius_nm=12.0),
+        replace(base_cfg, surface_roughness_rms_nm=3.5),
+        replace(base_cfg, width_along_channel_cv=0.04),
+        replace(base_cfg, depth_along_channel_cv=0.03),
+        replace(base_cfg, measured_profile_path="profiles/fibsem_sidewall.csv"),
+    ):
+        assert (
+            _build_observation_signature(
+                "operator=test",
+                base_reference,
+                mutated_cfg,
+                particle_radius_m=110.0e-9,
+            )
+            != base_signature
+        )
+
+
 def test_trapezoid_boltzmann_electrokinetic_grid_is_blocked_not_rectangular() -> None:
     cfg = replace(
         DEFAULT_SIM_CFG,

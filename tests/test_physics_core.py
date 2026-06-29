@@ -11083,6 +11083,31 @@ class TestIntegration:
             != base_key
         )
 
+    def test_simulation_config_cache_identity_separates_secondary_geometry_descriptors(self):
+        base_cfg = SimulationConfig(
+            total_time_s=0.02,
+            sampling_rate_Hz=2000.0,
+            mean_flow_velocity_m_s=2e-4,
+            n_events=1,
+            random_seed=42,
+            channel_cross_section_model="trapezoid_tapered_sidewalls",
+            sidewall_taper_angle_deg=5.0,
+        )
+        base_key = parameter_sweep_module._simulation_config_identity_key(base_cfg)
+
+        for mutated_cfg in (
+            replace(base_cfg, corner_radius_nm=12.0),
+            replace(base_cfg, surface_roughness_rms_nm=3.5),
+            replace(base_cfg, width_along_channel_cv=0.04),
+            replace(base_cfg, depth_along_channel_cv=0.03),
+            replace(base_cfg, measured_profile_path="profiles/fibsem_sidewall.csv"),
+            replace(base_cfg, reference_spatial_mode="uniform"),
+        ):
+            assert (
+                parameter_sweep_module._simulation_config_identity_key(mutated_cfg)
+                != base_key
+            )
+
     def test_reference_cache_miss_when_sidewall_config_mutates(self, monkeypatch):
         sim_cfg = SimulationConfig(
             total_time_s=0.02,
