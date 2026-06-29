@@ -1265,6 +1265,18 @@ def test_position_response_sidewall_v2_rejects_rectangular_cache_signature() -> 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_blocked_old_cache_as_propagated() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                cache_geometry_match_status="blocked_old_rectangular_cache"
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_requires_signature_guard_fragments() -> None:
     issues = validate_position_response_surface_rows(
         [
@@ -1969,6 +1981,18 @@ def test_effective_aperture_sidewall_v2_rejects_rectangular_cache_signature() ->
         [
             _valid_eas_sidewall_v2_row(
                 **_sidewall_observation_cache_fields("ideal_rectangle"),
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_blocked_old_cache_as_propagated() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                cache_geometry_match_status="blocked_old_rectangular_cache"
             )
         ]
     )

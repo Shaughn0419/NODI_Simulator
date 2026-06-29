@@ -10012,6 +10012,17 @@ def _validate_sidewall_v2_observation_cache_context(
         rule_id,
         issues,
     )
+    if _value(row, "cache_geometry_match_status") == "blocked_old_rectangular_cache":
+        if (
+            _value(row, "geometry_propagation_status") == "propagated"
+            or _value(row, "geometry_propagation_scope") != "blocked_non_propagated_audit"
+        ):
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "blocked_old_rectangular_cache cannot satisfy propagated sidewall row",
+            )
     if not observation_signature:
         return
     for field in (
