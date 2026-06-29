@@ -297,6 +297,8 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         blocked_reason="",
         sparse_reason="",
         neighbor_fill_used="false",
+        source_geometry_descriptor_id="descriptor-404-W500-D900-sidewall-85",
+        source_geometry_descriptor_sha=GEOMETRY_DESCRIPTOR_SHA256,
     )
     row.update(overrides)
     return row
@@ -545,6 +547,22 @@ def test_position_response_sidewall_v2_rejects_surface_gap_mismatch() -> None:
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_requires_source_geometry_descriptor_id() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(source_geometry_descriptor_id="")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_source_geometry_descriptor_sha() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(source_geometry_descriptor_sha="not-a-sha")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_non_propagated_open_decision_row() -> None:
     issues = validate_position_response_surface_rows(
         [
@@ -738,6 +756,22 @@ def test_effective_aperture_sidewall_v2_requires_no_probability_claim_guards() -
                 not_detection_probability="false",
             )
         ]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_source_geometry_descriptor_id() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(source_geometry_descriptor_id="")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_source_geometry_descriptor_sha() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(source_geometry_descriptor_sha="not-a-sha")]
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")

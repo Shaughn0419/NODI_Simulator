@@ -9014,6 +9014,12 @@ def _validate_position_response_sidewall_v2_fields(
         return
 
     _require_fields(row, PRS_SIDEWALL_V2_REQUIRED_FIELDS, "PRS-SIDEWALL-V2", row_index, issues)
+    _validate_sidewall_v2_source_geometry_descriptor_binding(
+        row,
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+    )
     channel_model = _value(row, "channel_cross_section_model")
     if channel_model not in {"ideal_rectangle", "trapezoid_tapered_sidewalls"}:
         _issue(
@@ -9153,6 +9159,24 @@ def _validate_position_response_sidewall_v2_fields(
         support_status=support_status,
         decision_allowed=decision_allowed,
         issues=issues,
+    )
+
+
+def _validate_sidewall_v2_source_geometry_descriptor_binding(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+) -> None:
+    if not _value(row, "source_geometry_descriptor_id"):
+        _issue(issues, row_index, rule_id, "source_geometry_descriptor_id is blank")
+    _validate_source_hash(
+        row,
+        field="source_geometry_descriptor_sha",
+        row_index=row_index,
+        rule_id=rule_id,
+        issues=issues,
+        allow_pending=False,
     )
 
 
@@ -9607,6 +9631,12 @@ def _validate_effective_aperture_sidewall_v2_fields(
         return
 
     _require_fields(row, EAS_SIDEWALL_V2_REQUIRED_FIELDS, "EAS-SIDEWALL-V2", row_index, issues)
+    _validate_sidewall_v2_source_geometry_descriptor_binding(
+        row,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+    )
     _validate_constant(
         row,
         "aperture_surrogate_claim_level",
