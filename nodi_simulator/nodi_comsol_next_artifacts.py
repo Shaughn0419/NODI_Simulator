@@ -1427,6 +1427,13 @@ def validate_sidewall_package_d_precheck_rows(rows: Sequence[Mapping[str, Any]])
             row_index,
             issues,
         )
+        _reject_forbidden_positive_fields(
+            row,
+            allowed_negative_fields=set(SIDEWALL_PACKAGE_D_PRECHECK_TRUE_FIELDS),
+            row_index=row_index,
+            rule_id="SIDEWALL-D-PRECHECK-V06",
+            issues=issues,
+        )
         _validate_constant(
             row,
             "sidewall_package_d_precheck_version",
