@@ -520,6 +520,38 @@ def test_position_response_sidewall_v2_rejects_inconsistent_local_geometry() -> 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_non_propagated_open_decision_row() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                geometry_propagation_status="not_propagated",
+                geometry_not_propagated_reasons="geometry_not_propagated_to_sampler",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_keeps_non_propagated_audit_row_blocked() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                geometry_propagation_status="not_propagated",
+                geometry_not_propagated_reasons="geometry_not_propagated_to_sampler",
+                bin_accessible="false",
+                bin_accessible_area_fraction=0.0,
+                bin_particle_center_support_status="blocked",
+                blocked_reason="geometry_not_propagated_to_sampler",
+                decision_use_allowed="false",
+                steric_support_source="not_available",
+            )
+        ]
+    )
+
+    assert issues == []
+
+
 def test_position_response_sidewall_v2_requires_large_tail_support_guard() -> None:
     row = _valid_prs_sidewall_v2_row()
     del row["tail_particle_auto_admitted"]

@@ -8946,6 +8946,16 @@ def _validate_position_response_sidewall_v2_fields(
             "PRS-SIDEWALL-V2",
             "inaccessible sidewall bin lacks blocked_reason",
         )
+    _validate_sidewall_propagation_status_usage(
+        row,
+        row_index,
+        channel_model=channel_model,
+        geometry_status=geometry_status,
+        bin_accessible=bin_accessible,
+        support_status=support_status,
+        decision_allowed=decision_allowed,
+        issues=issues,
+    )
 
 
 def _validate_sidewall_local_geometry(
@@ -9011,6 +9021,61 @@ def _validate_sidewall_local_geometry(
         distance = values.get(field)
         if distance is not None and distance < 0.0:
             _issue(issues, row_index, "PRS-SIDEWALL-V2", f"{field} is negative")
+
+
+def _validate_sidewall_propagation_status_usage(
+    row: Mapping[str, Any],
+    row_index: int,
+    *,
+    channel_model: str,
+    geometry_status: str,
+    bin_accessible: bool | None,
+    support_status: str,
+    decision_allowed: bool | None,
+    issues: list[str],
+) -> None:
+    if channel_model != "trapezoid_tapered_sidewalls":
+        return
+
+    reasons = _value(row, "geometry_not_propagated_reasons")
+    if geometry_status == "propagated":
+        if reasons:
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "propagated trapezoid row carries geometry_not_propagated_reasons",
+            )
+        return
+
+    if not reasons:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "non-propagated trapezoid row lacks geometry_not_propagated_reasons",
+        )
+    if bin_accessible is not False:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "non-propagated trapezoid row is not blocked at bin_accessible",
+        )
+    if support_status != "blocked":
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "non-propagated trapezoid row is not blocked at particle support",
+        )
+    if decision_allowed is not False:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "non-propagated trapezoid row is decision-use allowed",
+        )
 
 
 def _validate_sidewall_tail_particle_support_guard(
