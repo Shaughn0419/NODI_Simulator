@@ -63,6 +63,7 @@ Three independent read-only reviews converged on the same hazards:
 Completed NODI-side guardrails:
 
 - Added `TrapezoidCrossSection` geometry primitive and tests for COMSOL/NODI angle conversion, bottom-width preservation, closure status, center-accessible area, wall-normal particle support, and uniform accessible-area sampling.
+- Added a trapezoid particle-center support projection primitive for future sloped-wall boundary work; it is not yet enabled as a Brownian reflection runtime.
 - Routed trapezoid initial-position sampling through the geometry oracle; rectangular sampler fallback is no longer accepted for trapezoid support rows.
 - Added trajectory diagnostics that hard-block rectangular reflection, rectangular near-wall diffusion, and incompatible rectangular flow profiles under active trapezoid geometry.
 - Added explicit electrokinetic, fluidic, and reference-field propagation statuses so non-propagated trapezoid paths remain audit/proxy rows, not sidewall-aware runtime results.

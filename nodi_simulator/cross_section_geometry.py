@@ -258,3 +258,26 @@ class TrapezoidCrossSection:
             distance_m >= required_m
             for distance_m in self.wall_distances_m(x_m, u_m).values()
         )
+
+    def project_particle_center_into_support(
+        self,
+        x_m: float,
+        u_m: float,
+        particle_radius_m: float,
+    ) -> tuple[float, float]:
+        """Clamp a particle center into the wall-normal accessible support."""
+        radius_m = float(particle_radius_m)
+        bounds = self.center_accessible_u_bounds_m(radius_m)
+        if bounds is None:
+            raise ValueError(
+                "particle_radius_m leaves no center-accessible support in "
+                "the trapezoid cross-section"
+            )
+        u_low_m, u_high_m = bounds
+        u_projected_m = min(max(float(u_m), u_low_m), u_high_m)
+        x_left_m, x_right_m = self.center_accessible_x_bounds_at_depth_m(
+            u_projected_m,
+            radius_m,
+        )
+        x_projected_m = min(max(float(x_m), x_left_m), x_right_m)
+        return x_projected_m, u_projected_m

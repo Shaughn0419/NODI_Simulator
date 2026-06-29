@@ -102,6 +102,40 @@ def test_center_accessible_width_blocks_too_deep_tail_particle_slice() -> None:
     assert geom.center_accessible_width_at_depth_m(600.0e-9, 110.0e-9) == 0.0
 
 
+def test_project_particle_center_into_trapezoid_support() -> None:
+    geom = TrapezoidCrossSection(
+        top_width_m=500.0e-9,
+        depth_m=900.0e-9,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+    )
+    radius_m = 110.0e-9
+
+    x_m, u_m = geom.project_particle_center_into_support(
+        x_m=400.0e-9,
+        u_m=950.0e-9,
+        particle_radius_m=radius_m,
+    )
+
+    assert geom.contains_particle_center(x_m, u_m, radius_m)
+    u_bounds = geom.center_accessible_u_bounds_m(radius_m)
+    assert u_bounds is not None
+    assert u_m == pytest.approx(u_bounds[1])
+    x_left_m, x_right_m = geom.center_accessible_x_bounds_at_depth_m(u_m, radius_m)
+    assert x_m == pytest.approx(x_right_m)
+    assert x_left_m <= x_m <= x_right_m
+
+
+def test_project_particle_center_raises_when_no_support_exists() -> None:
+    geom = TrapezoidCrossSection(
+        top_width_m=120.0e-9,
+        depth_m=400.0e-9,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+    )
+
+    with pytest.raises(ValueError, match="no center-accessible support"):
+        geom.project_particle_center_into_support(0.0, 200.0e-9, 110.0e-9)
+
+
 def test_channel_diagnostics_emit_unclipped_and_runtime_clipped_bottom_widths() -> None:
     cfg = replace(
         DEFAULT_SIM_CFG,
