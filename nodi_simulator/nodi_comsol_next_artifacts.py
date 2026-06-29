@@ -720,6 +720,13 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "sparse_reason",
     "neighbor_fill_used",
 )
+PRS_SIDEWALL_V2_BLOCKED_RESPONSE_VALUE_FIELDS: tuple[str, ...] = (
+    "response_value",
+    "response_proxy_value",
+    "detector_response_proxy",
+    "signal_response_proxy",
+    "response_rate_bin",
+)
 PRS_SIDEWALL_V2_PARTICLE_SUPPORT_STATUS = frozenset({"open", "narrow", "blocked"})
 PRS_SIDEWALL_V2_STERIC_SUPPORT_SOURCE = frozenset(
     {"exact_geometry_primitive", "not_available"}
@@ -9195,6 +9202,13 @@ def _validate_position_response_sidewall_v2_fields(
             "PRS-SIDEWALL-V2",
             "inaccessible sidewall bin lacks blocked_reason",
         )
+    _validate_sidewall_blocked_bin_response_values(
+        row,
+        row_index,
+        bin_accessible=bin_accessible,
+        support_status=support_status,
+        issues=issues,
+    )
     _validate_sidewall_propagation_status_usage(
         row,
         row_index,
@@ -9705,6 +9719,33 @@ def _validate_sidewall_tail_particle_support_guard(
             "PRS-SIDEWALL-V2",
             "large-tail open/narrow support lacks exact geometry primitive source",
         )
+
+
+def _validate_sidewall_blocked_bin_response_values(
+    row: Mapping[str, Any],
+    row_index: int,
+    *,
+    bin_accessible: bool | None,
+    support_status: str,
+    issues: list[str],
+) -> None:
+    if bin_accessible is not False and support_status != "blocked":
+        return
+    for field in PRS_SIDEWALL_V2_BLOCKED_RESPONSE_VALUE_FIELDS:
+        value = _value(row, field)
+        if not value or value.lower() in {"blocked", "none", "null", "na", "n/a"}:
+            continue
+        try:
+            numeric_value = float(value)
+        except ValueError:
+            continue
+        if math.isfinite(numeric_value):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                f"blocked sidewall bin has numeric {field}",
+            )
 
 
 def _validate_sample_status(

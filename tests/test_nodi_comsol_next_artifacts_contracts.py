@@ -545,6 +545,42 @@ def test_position_response_sidewall_v2_rejects_blocked_bin_neighbor_fill() -> No
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_blocked_bin_numeric_response() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                bin_accessible="false",
+                bin_accessible_area_fraction=0.0,
+                bin_particle_center_support_status="blocked",
+                blocked_reason="steric_blocked",
+                decision_use_allowed="false",
+                steric_support_source="not_available",
+                response_value=0.42,
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_allows_blocked_bin_response_token() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                bin_accessible="false",
+                bin_accessible_area_fraction=0.0,
+                bin_particle_center_support_status="blocked",
+                blocked_reason="steric_blocked",
+                decision_use_allowed="false",
+                steric_support_source="not_available",
+                response_value="blocked",
+            )
+        ]
+    )
+
+    assert issues == []
+
+
 def test_position_response_sidewall_v2_rejects_incomplete_local_geometry() -> None:
     row = _valid_prs_sidewall_v2_row()
     del row["x_left_nm"]
