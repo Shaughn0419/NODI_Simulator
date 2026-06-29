@@ -9724,6 +9724,31 @@ def _validate_sidewall_v2_descriptor_context(
                 rule_id,
                 "nonpositive W_bottom_unclipped_nm marked closure_status=open",
             )
+    expected_runtime_guard_by_closure = {
+        "open": "none",
+        "near_closed": "solver_guard",
+        "geometry_closed": "validation_guard",
+    }
+    closure_status = _value(row, "closure_status")
+    runtime_guard_status = _value(row, "runtime_guard_status")
+    expected_runtime_guard = expected_runtime_guard_by_closure.get(closure_status)
+    if expected_runtime_guard is not None and runtime_guard_status != expected_runtime_guard:
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"runtime_guard_status={runtime_guard_status} inconsistent with closure_status={closure_status}",
+        )
+    if (
+        closure_status == "geometry_closed"
+        and _value(row, "geometry_propagation_status") == "propagated"
+    ):
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            "geometry_closed sidewall row cannot be marked geometry_propagation_status=propagated",
+        )
 
 
 def _validate_sidewall_v2_observation_cache_context(

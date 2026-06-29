@@ -261,12 +261,25 @@ def _valid_prs_row(**overrides: object) -> dict[str, object]:
     return row
 
 
-def _sidewall_descriptor_context_fields(depth_nm: float = 900.0) -> dict[str, object]:
-    sidewall_deg = 85.0
+def _sidewall_descriptor_context_fields(
+    depth_nm: float = 900.0,
+    sidewall_deg: float = 85.0,
+) -> dict[str, object]:
     w_top_nm = 500.0
     w_bottom_unclipped_nm = w_top_nm - 2.0 * depth_nm / math.tan(
         math.radians(sidewall_deg)
     )
+    if w_bottom_unclipped_nm <= 0.0:
+        closure_status = "geometry_closed"
+    elif w_bottom_unclipped_nm <= 80.0:
+        closure_status = "near_closed"
+    else:
+        closure_status = "open"
+    runtime_guard_status = {
+        "open": "none",
+        "near_closed": "solver_guard",
+        "geometry_closed": "validation_guard",
+    }[closure_status]
     return {
         "geometry_profile_source": "comsol_descriptor",
         "geometry_profile_sha256": GEOMETRY_DESCRIPTOR_SHA256,
@@ -280,9 +293,9 @@ def _sidewall_descriptor_context_fields(depth_nm: float = 900.0) -> dict[str, ob
         "W_top_semantics": "comsol_descriptor",
         "W_bottom_unclipped_nm": w_bottom_unclipped_nm,
         "W_bottom_runtime_clipped_nm": max(w_bottom_unclipped_nm, 0.0),
-        "closure_status": "open" if w_bottom_unclipped_nm > 0.0 else "geometry_closed",
+        "closure_status": closure_status,
         "closure_policy": "preserve_unclipped_descriptor",
-        "runtime_guard_status": "none",
+        "runtime_guard_status": runtime_guard_status,
     }
 
 
@@ -936,6 +949,31 @@ def test_position_response_sidewall_v2_keeps_non_propagated_audit_row_blocked() 
     assert issues == []
 
 
+def test_position_response_sidewall_v2_rejects_closed_geometry_as_propagated() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                **_sidewall_descriptor_context_fields(depth_nm=900.0, sidewall_deg=70.0)
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_closure_guard_mismatch() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                closure_status="near_closed",
+                runtime_guard_status="none",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_requires_large_tail_support_guard() -> None:
     row = _valid_prs_sidewall_v2_row()
     del row["tail_particle_auto_admitted"]
@@ -1308,6 +1346,18 @@ def test_effective_aperture_sidewall_v2_requires_descriptor_context_fields() -> 
 def test_effective_aperture_sidewall_v2_rejects_descriptor_angle_mismatch() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(sidewall_taper_angle_deg_nodi=85.0)]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_closed_geometry_as_propagated() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                **_sidewall_descriptor_context_fields(depth_nm=900.0, sidewall_deg=70.0)
+            )
+        ]
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
