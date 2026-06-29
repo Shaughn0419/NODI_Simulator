@@ -27,6 +27,12 @@ FLUIDIC_NETWORK_DIAGNOSTIC_FIELDS = (
     "fluidic_network_nanochannel_resistance_fraction",
     "fluidic_network_external_geometry_status",
     "fluidic_network_pressure_flow_relation_status",
+    "fluidic_network_geometry_model",
+    "fluidic_network_hydraulic_resistance_model",
+    "fluidic_network_hydraulic_resistance_claim_level",
+    "fluidic_network_geometry_propagation_status",
+    "geometry_not_propagated_to_fluidic_network",
+    "fluidic_network_not_qch_weighted",
     "fluidic_network_measured_flow_available",
     "fluidic_network_fixed_pressure_prediction_allowed",
     "fluidic_network_gate_passed",
@@ -95,6 +101,10 @@ def build_fluidic_network_diagnostics(
     sim_cfg: SimulationConfig,
 ) -> dict[str, object]:
     """Build P1 fluidic-network metadata without claiming measured flow physics."""
+    sidewall_active = (
+        str(getattr(sim_cfg, "channel_cross_section_model", "ideal_rectangle"))
+        == "trapezoid_tapered_sidewalls"
+    )
     viscosity = float(medium.viscosity_Pa_s or 1.0e-3)
     channel_area = float(channel.width_m * channel.depth_m)
     parallel_count = _positive_int(
@@ -255,6 +265,22 @@ def build_fluidic_network_diagnostics(
         if external_known
         else "partial_network_nanochannel_array_only"
     )
+    if sidewall_active:
+        network_geometry_model = "trapezoid_descriptor_with_rectangular_proxy_network"
+        network_resistance_model = (
+            "rectangular_hydraulic_resistance_network_proxy_under_trapezoid"
+        )
+        network_resistance_claim_level = (
+            "diagnostic_only_rectangular_proxy_not_trapezoid_poiseuille_not_qch"
+        )
+        network_geometry_status = "geometry_not_propagated_to_fluidic_network"
+    else:
+        network_geometry_model = "rectangular_network_resistance_proxy"
+        network_resistance_model = "rectangular_hydraulic_resistance_network_proxy"
+        network_resistance_claim_level = (
+            "diagnostic_only_no_measured_pressure_flow_relation_not_qch_weighted"
+        )
+        network_geometry_status = "rectangle_native_or_non_sidewall_geometry"
 
     return {
         "fluidic_network_schema": "fluidic_network_diagnostic_v1",
@@ -283,6 +309,14 @@ def build_fluidic_network_diagnostics(
         "fluidic_network_pressure_flow_relation_status": (
             "blocked_until_measured_pressure_flow_trace"
         ),
+        "fluidic_network_geometry_model": network_geometry_model,
+        "fluidic_network_hydraulic_resistance_model": network_resistance_model,
+        "fluidic_network_hydraulic_resistance_claim_level": (
+            network_resistance_claim_level
+        ),
+        "fluidic_network_geometry_propagation_status": network_geometry_status,
+        "geometry_not_propagated_to_fluidic_network": sidewall_active,
+        "fluidic_network_not_qch_weighted": True,
         "fluidic_network_measured_flow_available": False,
         "fluidic_network_fixed_pressure_prediction_allowed": False,
         "fluidic_network_gate_passed": False,

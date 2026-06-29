@@ -1856,11 +1856,51 @@ class TestDataObjects:
         assert diagnostics["fluidic_network_pressure_flow_relation_status"] == (
             "blocked_until_measured_pressure_flow_trace"
         )
+        assert diagnostics["fluidic_network_geometry_model"] == (
+            "rectangular_network_resistance_proxy"
+        )
+        assert diagnostics["fluidic_network_hydraulic_resistance_claim_level"] == (
+            "diagnostic_only_no_measured_pressure_flow_relation_not_qch_weighted"
+        )
+        assert diagnostics["fluidic_network_geometry_propagation_status"] == (
+            "rectangle_native_or_non_sidewall_geometry"
+        )
+        assert diagnostics["geometry_not_propagated_to_fluidic_network"] is False
+        assert diagnostics["fluidic_network_not_qch_weighted"] is True
         assert diagnostics["fluidic_network_fixed_pressure_prediction_allowed"] is False
         assert diagnostics["fluidic_network_gate_passed"] is False
         assert "measured_pressure_flow_trace" in diagnostics[
             "fluidic_network_missing_component_inputs"
         ]
+
+    def test_fluidic_network_marks_trapezoid_as_rectangular_proxy_not_qch(self):
+        cfg = replace(
+            DEFAULT_SIM_CFG,
+            channel_cross_section_model="trapezoid_tapered_sidewalls",
+            sidewall_taper_angle_deg=5.0,
+        )
+        diagnostics = build_fluidic_network_diagnostics(
+            WATER,
+            BASELINE_CHANNEL,
+            cfg,
+        )
+
+        assert diagnostics["fluidic_network_geometry_model"] == (
+            "trapezoid_descriptor_with_rectangular_proxy_network"
+        )
+        assert diagnostics["fluidic_network_hydraulic_resistance_model"] == (
+            "rectangular_hydraulic_resistance_network_proxy_under_trapezoid"
+        )
+        assert diagnostics["fluidic_network_hydraulic_resistance_claim_level"] == (
+            "diagnostic_only_rectangular_proxy_not_trapezoid_poiseuille_not_qch"
+        )
+        assert diagnostics["fluidic_network_geometry_propagation_status"] == (
+            "geometry_not_propagated_to_fluidic_network"
+        )
+        assert diagnostics["geometry_not_propagated_to_fluidic_network"] is True
+        assert diagnostics["fluidic_network_not_qch_weighted"] is True
+        assert diagnostics["fluidic_network_fixed_pressure_prediction_allowed"] is False
+        assert diagnostics["fluidic_network_gate_passed"] is False
 
     def test_fluidic_network_diagnostic_uses_parallel_and_configured_geometry(self):
         cfg = replace(DEFAULT_SIM_CFG)
