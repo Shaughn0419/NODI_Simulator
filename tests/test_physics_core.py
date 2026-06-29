@@ -9597,6 +9597,69 @@ class TestIntegration:
         assert intrinsic["initial_position_distribution_mode"] == "center_biased_surrogate"
         assert "initial_position_distribution_mode=center_biased_surrogate" in intrinsic["observation_signature"]
 
+    def test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics(self):
+        theta_grid = np.linspace(0.01, np.pi - 0.01, 160)
+        particle = Particle("ev_220nm_tail", radius_m=110.0e-9, n_real=1.37)
+        channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+        baseline = compute_baseline_normalization(
+            BASELINE_PARTICLE,
+            WATER,
+            BASELINE_OPTICAL,
+            theta_grid,
+        )
+        sim_cfg = SimulationConfig(
+            total_time_s=0.08,
+            sampling_rate_Hz=20000.0,
+            mean_flow_velocity_m_s=2e-4,
+            noise_std=0.0,
+            n_events=2,
+            random_seed=42,
+            rho=10.0,
+            channel_cross_section_model="trapezoid_tapered_sidewalls",
+            sidewall_taper_angle_deg=5.0,
+            initial_position_distribution_mode="uniform_accessible_area",
+            include_diffusion=False,
+            diffusion_hindrance_model="none",
+            flow_profile_model="plug",
+            vectorized_event_engine="off",
+        )
+
+        batch = run_single_case_batch(
+            particle,
+            WATER,
+            channel,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            baseline["E_sca_ref"],
+            theta_grid,
+        )
+
+        summary = batch["summary"]
+        intrinsic = batch["intrinsic"]
+        signature = intrinsic["observation_signature"]
+        assert summary["initial_position_sampler_geometry_model"] == (
+            "trapezoid_tapered_sidewalls"
+        )
+        assert intrinsic["initial_position_sampler_support_model"] == (
+            "wall_normal_half_plane_offset_v1"
+        )
+        assert intrinsic["initial_position_wall_distance_model"] == (
+            "trapezoid_signed_wall_distance_v1"
+        )
+        assert intrinsic["initial_position_wall_distance_claim_level"] == (
+            "geometry_distance_primitive_not_hindered_diffusion"
+        )
+        assert (
+            "initial_position_wall_distance_model=trapezoid_signed_wall_distance_v1"
+            in signature
+        )
+        assert (
+            "initial_position_wall_distance_claim_level="
+            "geometry_distance_primitive_not_hindered_diffusion"
+        ) in signature
+        assert "initial_position_wall_distance_model=unknown" not in signature
+        assert "missing_sampler_diagnostic" not in signature
+
     def test_batch_supports_sobol_sampling_and_adaptive_event_budget(self):
         theta_grid = np.linspace(0.01, np.pi - 0.01, 160)
         baseline = compute_baseline_normalization(

@@ -47,6 +47,15 @@ _LOGGER = logging.getLogger(__name__)
 
 _NO_VECTORIZED_FALLBACK_REASON = "<none>"
 
+_INITIAL_POSITION_SIGNATURE_CONTEXT_FIELDS = (
+    "initial_position_sampler_geometry_model",
+    "initial_position_sampler_support_model",
+    "initial_position_wall_distance_model",
+    "initial_position_wall_distance_claim_level",
+    "initial_position_particle_center_support_status",
+    "initial_position_steric_block_reason",
+)
+
 from .data_objects import (
     Particle, Medium, Channel, OpticalSystem, SimulationConfig,
 )
@@ -951,6 +960,56 @@ def _resolve_case_rng_seed(
         sim_cfg.random_seed if sim_cfg.random_seed is not None else "unseeded",
         case_identity,
     )
+
+
+def _initial_position_signature_context(
+    position_diag: dict | None,
+    sim_cfg: SimulationConfig | None = None,
+) -> dict[str, object]:
+    """Return sampler diagnostics that must be bound into observation signatures."""
+    diag = position_diag or {}
+    sampler_geometry = str(diag.get("initial_position_sampler_geometry_model", ""))
+    cross_section_version = str(diag.get("cross_section_geometry_version", ""))
+    configured_trapezoid = (
+        sim_cfg is not None
+        and str(sim_cfg.channel_cross_section_model) == "trapezoid_tapered_sidewalls"
+    )
+    is_trapezoid = (
+        configured_trapezoid
+        or sampler_geometry == "trapezoid_tapered_sidewalls"
+        or cross_section_version.startswith("trapezoid")
+    )
+    if is_trapezoid:
+        defaults: dict[str, object] = {
+            "initial_position_sampler_geometry_model": "missing_sampler_diagnostic",
+            "initial_position_sampler_support_model": "missing_sampler_diagnostic",
+            "initial_position_wall_distance_model": "missing_sampler_diagnostic",
+            "initial_position_wall_distance_claim_level": (
+                "missing_sampler_diagnostic"
+            ),
+            "initial_position_particle_center_support_status": (
+                "missing_sampler_diagnostic"
+            ),
+            "initial_position_steric_block_reason": "missing_sampler_diagnostic",
+        }
+    else:
+        defaults = {
+            "initial_position_sampler_geometry_model": "ideal_rectangle",
+            "initial_position_sampler_support_model": "rectangular_half_span_v1",
+            "initial_position_wall_distance_model": "rectangular_half_span_gap_v1",
+            "initial_position_wall_distance_claim_level": (
+                "geometry_distance_primitive_not_hindered_diffusion"
+            ),
+            "initial_position_particle_center_support_status": "open",
+            "initial_position_steric_block_reason": "",
+        }
+    context: dict[str, object] = {}
+    for field_name in _INITIAL_POSITION_SIGNATURE_CONTEXT_FIELDS:
+        value = diag.get(field_name, defaults[field_name])
+        if value is None:
+            value = defaults[field_name]
+        context[field_name] = value
+    return context
 
 
 def _build_event_position_unit_samples(
@@ -3089,6 +3148,7 @@ class _BatchSummaryAccumulator:
                     "initial_position_distribution_mode",
                     "uniform",
                 ),
+                **_initial_position_signature_context(position_diag),
                 "detection_decision_mode": detection_decision_mode,
                 "rho_requested": reference.get("rho_requested"),
                 "rho_physical_envelope_status": reference.get(
@@ -3261,6 +3321,7 @@ class _BatchSummaryAccumulator:
                     "initial_position_distribution_mode",
                     "uniform",
                 ),
+                **_initial_position_signature_context(first_position_diag),
                 "detection_decision_mode": detection_decision_mode,
                 "rho_requested": reference.get("rho_requested"),
                 "rho_physical_envelope_status": reference.get(
@@ -3603,6 +3664,10 @@ class _BatchSummaryAccumulator:
             "initial_position_distribution_mode": (
                 first_event_defaults.get("initial_position_distribution_mode", "uniform")
             ),
+            **{
+                field: first_event_defaults.get(field, "unknown")
+                for field in _INITIAL_POSITION_SIGNATURE_CONTEXT_FIELDS
+            },
             "initial_position_distribution_active_fraction": (
                 float(np.mean(self.initial_distribution_actives))
                 if self.initial_distribution_actives else 0.0
@@ -4407,6 +4472,7 @@ def simulate_one_event(
             "initial_position_distribution_mode",
             "uniform",
         ),
+        **_initial_position_signature_context(position_diag, sim_cfg),
         "initial_position_distribution_active": position_diag.get(
             "initial_position_distribution_active",
             False,
@@ -4885,6 +4951,7 @@ def _simulate_one_event_from_shared_physical_state(
             "initial_position_distribution_mode",
             "uniform",
         ),
+        **_initial_position_signature_context(position_diag, sim_cfg),
         "initial_position_distribution_active": position_diag.get(
             "initial_position_distribution_active",
             False,
@@ -7539,6 +7606,11 @@ def run_single_case_batch(
     )
     summary.update(experimental_design_advisor)
     reference.update(experimental_design_advisor)
+    initial_position_signature_context = {
+        field: summary.get(field, "unknown")
+        for field in _INITIAL_POSITION_SIGNATURE_CONTEXT_FIELDS
+    }
+    reference.update(initial_position_signature_context)
     observation_signature = _build_observation_signature(
         collection.get("operator_signature"),
         reference,
@@ -7585,6 +7657,7 @@ def run_single_case_batch(
             **selection_function,
             **run_state,
             **claim_governance,
+            **initial_position_signature_context,
             "E_sca_at_det": float(E_sca_at_det),
             "E_sca_at_det_complex": complex(E_sca_at_det_complex),
             "E_sca_ref": float(E_sca_ref),
