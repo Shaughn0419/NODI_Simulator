@@ -1044,6 +1044,19 @@ def test_position_response_sidewall_v2_requires_signature_wall_distance_model() 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_signature_wall_distance_claim_promotion() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "initial_position_wall_distance_claim_level="
+        "geometry_distance_primitive_not_hindered_diffusion",
+        "initial_position_wall_distance_claim_level=validated_hindered_diffusion_result",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_signature_particle_radius_mismatch() -> None:
     row = _valid_prs_sidewall_v2_row()
     row["observation_signature"] = str(row["observation_signature"]).replace(
