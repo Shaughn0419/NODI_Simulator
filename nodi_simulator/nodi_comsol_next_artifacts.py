@@ -722,6 +722,12 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "blocked_reason",
     "sparse_reason",
     "neighbor_fill_used",
+    "trajectory_boundary_model",
+    "wall_distance_model",
+    "flow_profile_model",
+    "flow_control_mode",
+    "reference_field_model",
+    "reference_spatial_mode",
 )
 PRS_SIDEWALL_V2_BLOCKED_RESPONSE_VALUE_FIELDS: tuple[str, ...] = (
     "response_value",
@@ -9163,6 +9169,23 @@ def _validate_position_response_sidewall_v2_fields(
                 "PRS-SIDEWALL-V2",
                 "trapezoid row uses rectangular sampler geometry",
             )
+        flow_profile_model = _value(row, "flow_profile_model")
+        if flow_profile_model in {"rect_series", "parabolic_rect"}:
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                f"trapezoid row uses rectangular flow_profile_model={flow_profile_model}",
+            )
+        for field in ("trajectory_boundary_model", "wall_distance_model"):
+            value = _value(row, field).lower()
+            if "rect" in value and "trapezoid" not in value:
+                _issue(
+                    issues,
+                    row_index,
+                    "PRS-SIDEWALL-V2",
+                    f"trapezoid row uses rectangular {field}",
+                )
 
     diameter_nm = _float_field(row, "diameter_nm", row_index, "PRS-SIDEWALL-V2", issues)
     particle_radius_nm = _float_field(

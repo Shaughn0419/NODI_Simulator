@@ -363,6 +363,12 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         blocked_reason="",
         sparse_reason="",
         neighbor_fill_used="false",
+        trajectory_boundary_model="not_applicable_pure_advection",
+        wall_distance_model="not_applicable_diffusion_hindrance_none",
+        flow_profile_model="plug",
+        flow_control_mode="fixed_velocity",
+        reference_field_model="geometry_scaled",
+        reference_spatial_mode="cross_section_surrogate",
         source_geometry_descriptor_id="descriptor-404-W500-D900-sidewall-85",
         source_geometry_descriptor_sha=GEOMETRY_DESCRIPTOR_SHA256,
         **_sidewall_artifact_metadata_fields("NODI_POSITION_RESPONSE_SIDEWALL_V2"),
@@ -624,6 +630,32 @@ def test_position_response_sidewall_v2_rejects_promoted_roadmap_status() -> None
 def test_position_response_sidewall_v2_rejects_rectangular_sampler_under_trapezoid() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(sampler_geometry_model="rectangular_half_span_v1")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_runtime_propagation_models() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["wall_distance_model"]
+    del row["reference_spatial_mode"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_rectangular_flow_profile() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(flow_profile_model="rect_series")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_rectangular_wall_distance_model() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(wall_distance_model="rectangular_half_span_gap_v1")]
     )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
