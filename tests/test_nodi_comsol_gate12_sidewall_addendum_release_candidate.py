@@ -17,7 +17,9 @@ def test_gate12_payload_passes_release_candidate_thresholds() -> None:
     assert gate12.validate_payload(payload) == []
     assert payload["summary"]["disposition"] == gate12.DISPOSITION
     assert payload["summary"]["nodi_gate11_commit"] == gate12.NODI_GATE11_COMMIT
-    assert payload["summary"]["comsol_gate11_commit_actual"] == gate12.COMSOL_GATE11_COMMIT
+    assert payload["summary"]["comsol_gate11_commit_expected"] == gate12.COMSOL_GATE11_COMMIT
+    assert payload["summary"]["comsol_gate12_commit_expected"] == gate12.COMSOL_GATE12_COMMIT
+    assert payload["summary"]["comsol_project_head_actual"] == gate12.COMSOL_GATE12_COMMIT
     assert payload["summary"]["comsol_receipt_rows"] == 11
     assert payload["summary"]["comsol_receipt_blocking_drift"] == 0
     assert payload["summary"]["comsol_receipt_missing_required"] == 0
@@ -61,6 +63,7 @@ def test_release_lockfile_is_review_only_no_auth_and_hash_bound() -> None:
     assert lockfile["release_candidate"] == gate12.RELEASE_NAME
     assert lockfile["nodi_gate11_commit"] == gate12.NODI_GATE11_COMMIT
     assert lockfile["comsol_gate11_commit"] == gate12.COMSOL_GATE11_COMMIT
+    assert lockfile["comsol_gate12_commit"] == gate12.COMSOL_GATE12_COMMIT
     assert lockfile["comsol_descriptor_rows"] == 11
     assert lockfile["gate11_mutation_unexpected_pass"] == 0
     assert lockfile["gate2d_rows"] == 4

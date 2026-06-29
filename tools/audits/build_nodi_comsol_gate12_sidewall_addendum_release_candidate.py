@@ -35,6 +35,7 @@ DEFAULT_COMSOL_ROOT = PROJECT_ROOT.parent / "comsol test" / "comsol_ev_pbs_bonde
 COMSOL_ROADMAP = "roadmap"
 NODI_GATE11_COMMIT = "e29501c3d26b5ff712870d7bc10a3617bd97ca28"
 COMSOL_GATE11_COMMIT = "b16b16b8c61e9ceb3a38debc1dc7a2bd4e635962"
+COMSOL_GATE12_COMMIT = "8823515d220a2a5b25a43f00b998205344e5960f"
 DISPOSITION = (
     "PASS_GATE12_RC51_SIDEWALL_ADDENDUM_RELEASE_CANDIDATE_AND_DESCRIPTOR_"
     "RECEIPT_DRYRUN_HARNESS_NO_AUTH"
@@ -292,6 +293,7 @@ def release_hash_tree(root: Path, fields: list[dict[str, str]]) -> list[dict[str
                 "release": RELEASE_NAME,
                 "nodi_gate11_commit": NODI_GATE11_COMMIT,
                 "comsol_gate11_commit": COMSOL_GATE11_COMMIT,
+                "comsol_gate12_commit": COMSOL_GATE12_COMMIT,
                 "components": rows,
             },
             sort_keys=True,
@@ -317,6 +319,7 @@ def release_lockfile(hash_tree: list[dict[str, str]]) -> dict[str, Any]:
         "date": DATE_STAMP,
         "nodi_gate11_commit": NODI_GATE11_COMMIT,
         "comsol_gate11_commit": COMSOL_GATE11_COMMIT,
+        "comsol_gate12_commit": COMSOL_GATE12_COMMIT,
         "comsol_descriptor_rows": 11,
         "gate11_mutation_unexpected_pass": 0,
         "gate2d_rows": EXPECTED_GATE2D_ACCEPTED_ROWS,
@@ -722,6 +725,7 @@ def provenance_ledger(root: Path) -> list[dict[str, str]]:
         ("NODI", "Gate12", "release candidate", "CURRENT_GATE12_PENDING_COMMIT", OUTPUT_DIR / f"NODI_COMSOL_GATE12_SIDEWALL_MANIFEST_{DATE_STAMP}.csv"),
         ("COMSOL", "Gate10", "descriptor export", "5b9f110", root / "roadmap/COMSOL_GATE10_SIDEWALL_MANIFEST_20260629.csv"),
         ("COMSOL", "Gate11", "addendum convergence", COMSOL_GATE11_COMMIT, root / "roadmap/COMSOL_GATE11_SIDEWALL_MANIFEST_20260629.csv"),
+        ("COMSOL", "Gate12", "release candidate", COMSOL_GATE12_COMMIT, root / "roadmap/COMSOL_GATE12_SIDEWALL_MANIFEST_20260629.csv"),
     ]
     rows: list[dict[str, str]] = []
     for idx, (side, gate, role, commit, path) in enumerate(entries, start=1):
@@ -785,6 +789,7 @@ def self_review() -> list[dict[str, str]]:
         "mutation and forbidden promotion",
         "no-auth anti-confusion",
         "provenance ledger",
+        "COMSOL Gate12 project-head provenance",
         "git/staging hygiene",
     ]
     return [
@@ -835,7 +840,8 @@ def build_payload(comsol_root: Path = DEFAULT_COMSOL_ROOT) -> dict[str, Any]:
         "date": DATE_STAMP,
         "nodi_gate11_commit": NODI_GATE11_COMMIT,
         "comsol_gate11_commit_expected": COMSOL_GATE11_COMMIT,
-        "comsol_gate11_commit_actual": safe_git_head(comsol_root),
+        "comsol_gate12_commit_expected": COMSOL_GATE12_COMMIT,
+        "comsol_project_head_actual": safe_git_head(comsol_root),
         "comsol_receipt_rows": len(receipt),
         "comsol_receipt_blocking_drift": sum(row["receipt_status"] == "BLOCKING_DATA_DRIFT" for row in receipt),
         "comsol_receipt_missing_required": sum(row["receipt_status"] == "MISSING_REQUIRED_ARTIFACT" for row in receipt),

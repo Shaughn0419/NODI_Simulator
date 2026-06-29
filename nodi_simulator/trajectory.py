@@ -233,6 +233,12 @@ def build_trajectory_geometry_diagnostics(sim_cfg: SimulationConfig) -> dict[str
         sidewall_status = "not_sidewall_geometry"
 
     return {
+        "trajectory_geometry_diagnostics_scope": (
+            "config_only_not_closure_or_passability_verdict"
+        ),
+        "trajectory_closure_authority": (
+            "channel_geometry_runtime_guards_and_prs_eas_validators"
+        ),
         "trajectory_boundary_model": boundary_model,
         "trajectory_boundary_model_version": boundary_model,
         "trajectory_boundary_claim_level": boundary_claim_level,

@@ -327,6 +327,14 @@ def hardening_intake_matrix() -> list[dict[str, str]]:
             "closed geometry propagation rejection",
             "closure/runtime guard consistency",
         ),
+        "Mark sidewall fluidic network proxies": (
+            "fluidic network rectangular proxy guard",
+            "fluidic network geometry propagation/no-q_ch guard",
+        ),
+        "Mark trajectory diagnostic scope": (
+            "trajectory diagnostic closure/passability scope guard",
+            "trajectory diagnostic no-closure-authority guard",
+        ),
     }
     rows: list[dict[str, str]] = []
     for idx, line in enumerate([line for line in output.splitlines() if line], start=1):
@@ -736,7 +744,7 @@ def mutation_results(catalog: list[dict[str, str]]) -> tuple[list[dict[str, str]
 def roadmap_status_matrix() -> list[dict[str, str]]:
     specs = [
         ("Package A", "Review-safe schema and descriptor work", "completed_contract_layer", "Gate10/Gate11 descriptor schema, addendum candidate, COMSOL receipt", "no_run_complete", "future formal descriptor addendum signoff"),
-        ("Package B", "Runtime geometry primitives", "partially_completed", "trapezoid oracle, sampler support, cache signatures, runtime guards", "no_run_contract_complete", "full sidewall-aware flow/sampler remains future"),
+        ("Package B", "Runtime geometry primitives", "partially_completed", "trapezoid oracle, sampler support, cache signatures, runtime guards, fluidic network proxy guard", "no_run_contract_complete", "full sidewall-aware flow/sampler remains future"),
         ("Package C", "Trajectory and near-wall propagation", "blocked_for_solver_claims", "rectangular leakage guards and projection boundary audit exist", "future_authorization_required", "validated trapezoid trajectory/near-wall solver"),
         ("Package D", "PRS/EAS sidewall sensitivity pilot", "contract_guards_completed_no_numeric_output", "PRS/EAS sidewall v2 validators and fixtures hardened through current HEAD", "future_authorization_required", "real sidewall PRS/EAS preflight after descriptor addendum"),
     ]

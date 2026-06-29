@@ -639,6 +639,12 @@ def test_trapezoid_trajectory_diagnostics_mark_pure_advection_boundary() -> None
 
     diagnostics = build_trajectory_geometry_diagnostics(cfg)
 
+    assert diagnostics["trajectory_geometry_diagnostics_scope"] == (
+        "config_only_not_closure_or_passability_verdict"
+    )
+    assert diagnostics["trajectory_closure_authority"] == (
+        "channel_geometry_runtime_guards_and_prs_eas_validators"
+    )
     assert diagnostics["trajectory_boundary_model"] == "not_applicable_pure_advection"
     assert diagnostics["wall_distance_model"] == (
         "not_applicable_diffusion_hindrance_none"
