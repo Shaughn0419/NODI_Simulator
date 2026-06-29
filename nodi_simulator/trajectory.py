@@ -88,6 +88,21 @@ def _trapezoid_geometry(channel: Channel, sim_cfg: SimulationConfig) -> Trapezoi
     )
 
 
+def _require_trapezoid_runtime_open_channel(
+    channel: Channel,
+    sim_cfg: SimulationConfig,
+) -> None:
+    if not _is_trapezoid_active(sim_cfg):
+        return
+    geometry = _trapezoid_geometry(channel, sim_cfg)
+    if geometry.closure_status == "geometry_closed":
+        raise ValueError(
+            "geometry_closed trapezoid_tapered_sidewalls cannot enter runtime "
+            "transport; keep the row descriptor_only/blocked until an explicit "
+            "closure runtime policy is authorized"
+        )
+
+
 def _require_trapezoid_flow_compatibility(sim_cfg: SimulationConfig) -> None:
     if not _is_trapezoid_active(sim_cfg):
         return
@@ -141,6 +156,7 @@ def _validate_trapezoid_initial_support(
     if not _is_trapezoid_active(sim_cfg):
         return
     geometry = _trapezoid_geometry(channel, sim_cfg)
+    _require_trapezoid_runtime_open_channel(channel, sim_cfg)
     u_m = float(initial_z_m) + 0.5 * float(channel.depth_m)
     if not geometry.contains_particle_center(
         float(initial_x_m),
@@ -357,6 +373,7 @@ def build_trajectory_context(
 ) -> TrajectoryContext:
     """Precompute trajectory constants shared by all events in one case."""
     _require_trapezoid_trajectory_compatibility(sim_cfg)
+    _require_trapezoid_runtime_open_channel(channel, sim_cfg)
     half_w, half_h = _accessible_half_spans(channel, particle_radius_m)
     rect_series_mean_raw = None
     rect_series_lam_arr = None
@@ -541,6 +558,7 @@ def _axial_velocity_scalar(
 ) -> float:
     """Scalar specialization of the axial flow surrogate."""
     _require_trapezoid_flow_compatibility(sim_cfg)
+    _require_trapezoid_runtime_open_channel(channel, sim_cfg)
     if sim_cfg.flow_profile_model == "plug":
         return float(sim_cfg.mean_flow_velocity_m_s)
 
@@ -590,13 +608,14 @@ def axial_velocity_m_s(
 
     rect_series:
         fully developed rectangular-duct odd-series solution, numerically
-        normalized so the accessible cross-section mean equals mean_flow_velocity.
+    normalized so the accessible cross-section mean equals mean_flow_velocity.
 
     This is intentionally a compact surrogate rather than an exact rectangular
     Poiseuille solution. The goal is to introduce slower near-wall streamlines
     and faster centerline trajectories without making the simulator intractable.
     """
     _require_trapezoid_flow_compatibility(sim_cfg)
+    _require_trapezoid_runtime_open_channel(channel, sim_cfg)
     if np.isscalar(x_m) and np.isscalar(z_m):
         x_scalar = _as_scalar_float(x_m)
         z_scalar = _as_scalar_float(z_m)
@@ -647,6 +666,7 @@ def _hindered_diffusion_factors_scalar(
 ) -> tuple[float, float]:
     """Scalar specialization of the hindered-diffusion surrogate."""
     _require_trapezoid_wall_distance_compatibility(sim_cfg)
+    _require_trapezoid_runtime_open_channel(channel, sim_cfg)
     if sim_cfg.diffusion_hindrance_model == "none" or particle_radius_m <= 0:
         return 1.0, 1.0
 
@@ -690,6 +710,7 @@ def hindered_diffusion_factors(
     ad-hoc exponent.
     """
     _require_trapezoid_wall_distance_compatibility(sim_cfg)
+    _require_trapezoid_runtime_open_channel(channel, sim_cfg)
     if np.isscalar(x_m) and np.isscalar(z_m):
         x_scalar = _as_scalar_float(x_m)
         z_scalar = _as_scalar_float(z_m)
@@ -753,6 +774,7 @@ def _axial_transport_velocity_scalar(
     """Scalar specialization of axial transport including near-wall drag."""
     _require_trapezoid_flow_compatibility(sim_cfg)
     _require_trapezoid_wall_distance_compatibility(sim_cfg)
+    _require_trapezoid_runtime_open_channel(channel, sim_cfg)
     base = _axial_velocity_scalar(
         x_m,
         z_m,
@@ -798,6 +820,7 @@ def axial_transport_velocity_m_s(
     """
     _require_trapezoid_flow_compatibility(sim_cfg)
     _require_trapezoid_wall_distance_compatibility(sim_cfg)
+    _require_trapezoid_runtime_open_channel(channel, sim_cfg)
     if np.isscalar(x_m) and np.isscalar(z_m):
         x_scalar = _as_scalar_float(x_m)
         z_scalar = _as_scalar_float(z_m)

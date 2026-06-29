@@ -168,6 +168,61 @@ def test_channel_diagnostics_emit_unclipped_and_runtime_clipped_bottom_widths() 
     assert diagnostics["effective_accessible_area_m2"] > 0.0
 
 
+def test_geometry_closed_trapezoid_cannot_enter_runtime_sampler() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(70.0),
+        initial_position_distribution_mode="uniform_accessible_area",
+    )
+
+    with pytest.raises(ValueError, match="geometry_closed"):
+        sample_initial_position(
+            Channel(width_m=500.0e-9, depth_m=700.0e-9),
+            np.random.default_rng(123),
+            110.0e-9,
+            sim_cfg=cfg,
+        )
+
+
+def test_geometry_closed_trapezoid_cannot_enter_trajectory_context() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(70.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=False,
+    )
+
+    with pytest.raises(ValueError, match="geometry_closed"):
+        build_trajectory_context(
+            Channel(width_m=500.0e-9, depth_m=700.0e-9),
+            cfg,
+            particle_radius_m=110.0e-9,
+        )
+
+
+def test_geometry_closed_trapezoid_cannot_enter_direct_axial_transport() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(70.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=False,
+    )
+
+    with pytest.raises(ValueError, match="geometry_closed"):
+        axial_transport_velocity_m_s(
+            0.0,
+            0.0,
+            Channel(width_m=500.0e-9, depth_m=700.0e-9),
+            cfg,
+            particle_radius_m=110.0e-9,
+        )
+
+
 def test_trapezoid_uniform_sampler_stays_in_particle_center_support() -> None:
     channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
     radius_m = 110.0e-9

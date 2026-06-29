@@ -3923,6 +3923,12 @@ def _sample_trapezoid_initial_position(
         depth_m=float(channel.depth_m),
         sidewall_taper_angle_deg=float(sim_cfg.sidewall_taper_angle_deg),
     )
+    if geometry.closure_status == "geometry_closed":
+        raise ValueError(
+            "geometry_closed trapezoid_tapered_sidewalls cannot enter runtime "
+            "sampling; keep the row descriptor_only/blocked until an explicit "
+            "closure runtime policy is authorized"
+        )
     if geometry.center_accessible_area_m2(particle_radius_m) <= 0.0:
         raise ValueError(
             "particle_radius_m leaves no center-accessible support in the "
