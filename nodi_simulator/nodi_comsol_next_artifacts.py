@@ -873,6 +873,9 @@ PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_SAMPLER_MODELS = frozenset(
     {"trapezoid_accessible_area_v1"}
 )
 PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_FLOW_PROFILE_MODELS = frozenset({"plug"})
+PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_FLOW_CONTROL_MODES = frozenset(
+    {"fixed_velocity"}
+)
 PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_BOUNDARY_MODELS = frozenset(
     {
         "not_applicable_pure_advection",
@@ -9735,6 +9738,17 @@ def _validate_position_response_sidewall_v2_fields(
                     row_index,
                     "PRS-SIDEWALL-V2",
                     f"propagated trapezoid row uses unsupported flow_profile_model={flow_profile_model}",
+                )
+            flow_control_mode = _value(row, "flow_control_mode")
+            if (
+                flow_control_mode
+                not in PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_FLOW_CONTROL_MODES
+            ):
+                _issue(
+                    issues,
+                    row_index,
+                    "PRS-SIDEWALL-V2",
+                    f"propagated trapezoid row uses unsupported flow_control_mode={flow_control_mode}",
                 )
             boundary_model = _value(row, "trajectory_boundary_model")
             if (

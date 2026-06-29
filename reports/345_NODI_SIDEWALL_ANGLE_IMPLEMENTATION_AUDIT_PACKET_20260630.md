@@ -27,7 +27,7 @@ The current supported split is:
 | Actual runtime signature | Event-loop and pure-advection block batches bind sampler diagnostics into `observation_signature`. | `test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics` |
 | PRS sidewall v2 signature | PRS rows require exact sampler/support/wall-distance signature fragments and row/signature binding. | `tests/test_nodi_comsol_next_artifacts_contracts.py` |
 | Package C gate | Any PRS basis/source-basis field carrying `wall_distance` requires `includes_trajectory_near_wall_metrics=true` and `package_C_validation_status=pass`. | commit `dc12148` |
-| PRS propagated allowlist | Propagated trapezoid PRS rows allow only implemented sampler, flow, and boundary states. | commit `c0ae571` |
+| PRS propagated allowlist | Propagated trapezoid PRS rows allow only implemented sampler, flow, flow-control, and boundary states. | `test_position_response_sidewall_v2_rejects_unsupported_propagated_flow_control` |
 | EAS generic surrogate guard | Generic `W_eff_surrogate_nm` must be an explicit numeric alias of a named sidewall surrogate; eta/rank fields stay disabled/no-rank. | commit `c9ea9b7` |
 | Claim blacklist | Sidewall PRS/EAS artifacts reject exact claim-promotion aliases including `rank`, `route_rank`, `sidewall_rank`, `JOINT_ROUTE_CLASS`, `q_ch_weight`, and `q_ch_weighting`. | commit `fb17362` |
 
@@ -62,7 +62,7 @@ Additional focused verification after adding runtime top-aperture binding guards
 
 ```text
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q
-351 passed in 59.62s
+352 passed in 63.46s (0:01:03)
 python -m pytest tests/test_cross_section_geometry.py -q
 38 passed in 0.17s
 python -m pytest tests/test_physics_core.py -k channel_geometry -q

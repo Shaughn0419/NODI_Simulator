@@ -1285,6 +1285,14 @@ def test_position_response_sidewall_v2_rejects_unsupported_propagated_flow_model
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_unsupported_propagated_flow_control() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(flow_control_mode="fixed_pressure")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_unsupported_propagated_boundary_model() -> None:
     issues = validate_position_response_surface_rows(
         [
