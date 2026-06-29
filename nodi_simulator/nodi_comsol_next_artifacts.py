@@ -706,6 +706,8 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "x_center_nm",
     "local_width_nm",
     "local_half_width_nm",
+    "x_local_norm",
+    "u_norm",
     "d_top_nm",
     "d_bottom_nm",
     "d_side_left_nm",
@@ -9187,6 +9189,8 @@ def _validate_position_response_sidewall_v2_fields(
         "x_center_nm",
         "local_width_nm",
         "local_half_width_nm",
+        "x_local_norm",
+        "u_norm",
         "d_top_nm",
         "d_bottom_nm",
         "d_side_left_nm",
@@ -9198,6 +9202,9 @@ def _validate_position_response_sidewall_v2_fields(
         value = _float_field(row, field, row_index, "PRS-SIDEWALL-V2", issues)
         if value is not None:
             local_geometry[field] = value
+    depth_nm = _float_field(row, "D_nm", row_index, "PRS-SIDEWALL-V2", issues)
+    if depth_nm is not None:
+        local_geometry["D_nm"] = depth_nm
     _validate_enum(
         row,
         "nearest_wall_id",
@@ -9662,6 +9669,11 @@ def _validate_sidewall_local_geometry(
     x_center = values.get("x_center_nm")
     local_width = values.get("local_width_nm")
     local_half_width = values.get("local_half_width_nm")
+    x = values.get("x_nm")
+    u = values.get("u_nm")
+    depth = values.get("D_nm")
+    x_local_norm = values.get("x_local_norm")
+    u_norm = values.get("u_norm")
 
     if x_left is not None and x_right is not None:
         if x_left >= x_right:
@@ -9697,6 +9709,45 @@ def _validate_sidewall_local_geometry(
             "PRS-SIDEWALL-V2",
             "local_half_width_nm",
             issues,
+        )
+    if (
+        x_local_norm is not None
+        and x is not None
+        and x_center is not None
+        and local_half_width is not None
+        and local_half_width > 0.0
+    ):
+        expected_x_local_norm = (x - x_center) / local_half_width
+        _validate_close(
+            x_local_norm,
+            expected_x_local_norm,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "x_local_norm",
+            issues,
+        )
+    if x_local_norm is not None and not (-1.0 <= x_local_norm <= 1.0):
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "x_local_norm outside [-1, 1]",
+        )
+    if u_norm is not None and u is not None and depth is not None and depth > 0.0:
+        _validate_close(
+            u_norm,
+            u / depth,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "u_norm",
+            issues,
+        )
+    if u_norm is not None and not (0.0 <= u_norm <= 1.0):
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "u_norm outside [0, 1]",
         )
     if local_width is not None and local_width < 0.0:
         _issue(

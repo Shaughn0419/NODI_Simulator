@@ -347,6 +347,8 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         x_center_nm=0.0,
         local_width_nm=421.0,
         local_half_width_nm=210.5,
+        x_local_norm=0.0,
+        u_norm=0.5,
         d_top_nm=450.0,
         d_bottom_nm=450.0,
         d_side_left_nm=171.0,
@@ -690,6 +692,16 @@ def test_position_response_sidewall_v2_rejects_incomplete_local_geometry() -> No
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_requires_local_normalized_coordinates() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["x_local_norm"]
+    del row["u_norm"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_inconsistent_local_geometry() -> None:
     issues = validate_position_response_surface_rows(
         [
@@ -698,6 +710,24 @@ def test_position_response_sidewall_v2_rejects_inconsistent_local_geometry() -> 
                 x_right_nm=200.0,
                 local_width_nm=421.0,
                 nearest_wall_id="diagonal",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_inconsistent_normalized_coordinates() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                x_nm=100.0,
+                x_center_nm=0.0,
+                local_half_width_nm=200.0,
+                x_local_norm=0.0,
+                u_nm=600.0,
+                D_nm=900.0,
+                u_norm=0.5,
             )
         ]
     )
