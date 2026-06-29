@@ -439,12 +439,26 @@ def test_block_trapezoid_sampler_uses_scalar_oracle_path() -> None:
     assert len(diagnostics) == len(unit_samples)
     for x0, z0, diag in zip(x_vals, z_vals, diagnostics):
         u0 = float(z0 + 0.5 * channel.depth_m)
+        expected_wall_gap = geom.particle_wall_gap_diagnostics_m(
+            float(x0),
+            u0,
+            radius_m,
+        )
         assert geom.contains_particle_center(float(x0), u0, radius_m)
         assert diag["initial_position_sampler_geometry_model"] == (
             "trapezoid_tapered_sidewalls"
         )
         assert diag["initial_position_sampler_support_model"] == (
             CENTER_ACCESSIBLE_SUPPORT_MODEL
+        )
+        assert diag["initial_position_wall_distance_model"] == (
+            TRAPEZOID_WALL_DISTANCE_MODEL
+        )
+        assert diag["initial_position_d_nearest_wall_m"] == pytest.approx(
+            expected_wall_gap["d_nearest_wall_m"]
+        )
+        assert diag["initial_position_surface_gap_for_particle_m"] == pytest.approx(
+            expected_wall_gap["surface_gap_for_particle_m"]
         )
 
 
