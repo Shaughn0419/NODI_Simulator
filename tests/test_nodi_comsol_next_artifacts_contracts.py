@@ -334,6 +334,18 @@ def _valid_eas_row(**overrides: object) -> dict[str, object]:
     return row
 
 
+def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
+    row = _valid_eas_row(
+        eas_mode="sidewall_aperture_surrogate_v2",
+        aperture_surrogate_basis="center_accessible_geometry_proxy",
+        aperture_surrogate_claim_level="surrogate_sensitivity_only",
+        W_eff_optical_surrogate_nm=480.0,
+        optical_solver_trigger_is_result="false",
+    )
+    row.update(overrides)
+    return row
+
+
 def _valid_descriptor_row(**overrides: object) -> dict[str, object]:
     row: dict[str, object] = {
         "route_geometry_id_comsol": "geom-a",
@@ -558,6 +570,40 @@ def test_position_response_smoke_manifest_is_design_only_not_production() -> Non
 
 def test_effective_aperture_accepts_surrogate_row() -> None:
     assert validate_effective_aperture_surrogate_rows([_valid_eas_row()]) == []
+
+
+def test_effective_aperture_accepts_sidewall_v2_fields_when_consistent() -> None:
+    assert validate_effective_aperture_surrogate_rows([_valid_eas_sidewall_v2_row()]) == []
+
+
+def test_effective_aperture_sidewall_v2_requires_solver_trigger_result_guard() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["optical_solver_trigger_is_result"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_solver_trigger_as_result() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                aperture_surrogate_claim_level="optical_solver_output",
+                optical_solver_trigger_is_result="true",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_specific_surrogate_width() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(W_eff_optical_surrogate_nm="")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 
 
 def test_effective_aperture_rejects_old_w_eff_field_name() -> None:

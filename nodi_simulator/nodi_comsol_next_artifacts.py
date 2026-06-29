@@ -758,6 +758,35 @@ EAS_REQUIRED_FIELDS: tuple[str, ...] = (
     "source_artifact",
     "source_sha256",
 )
+EAS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
+    {
+        "eas_mode",
+        "aperture_surrogate_basis",
+        "aperture_surrogate_claim_level",
+        "W_eff_optical_surrogate_nm",
+        "W_eff_transport_surrogate_nm",
+        "W_eff_accessible_surrogate_nm",
+        "optical_solver_trigger_is_result",
+    }
+)
+EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
+    "eas_mode",
+    "aperture_surrogate_basis",
+    "aperture_surrogate_claim_level",
+    "optical_solver_trigger_is_result",
+    "not_true_W_eff",
+    "not_measured_geometry",
+    "not_optical_solver_output",
+)
+EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS: tuple[str, ...] = (
+    "W_eff_optical_surrogate_nm",
+    "W_eff_transport_surrogate_nm",
+    "W_eff_accessible_surrogate_nm",
+    "W_bottom_conservative_nm",
+    "top_bottom_average_heuristic_nm",
+    "center_accessible_aperture_surrogate_nm",
+    "min_aperture_conservative_nm",
+)
 
 PRS_APPROVED_ROUTE_MATRIX = frozenset(
     {
@@ -1297,6 +1326,7 @@ def validate_effective_aperture_surrogate_rows(
         )
         _validate_effective_aperture_numeric_fields(row, row_index, issues)
         _validate_aperture_flags_and_boundary(row, row_index, issues)
+        _validate_effective_aperture_sidewall_v2_fields(row, row_index, issues)
         _validate_enum(
             row,
             "W_eff_mode_sensitivity_class",
@@ -9087,6 +9117,43 @@ def _validate_aperture_flags_and_boundary(
     _validate_bool_field(row, "rank_flip_flag", row_index, "EAS-V03", issues)
     _validate_bool_field(row, "candidate_family_flip_flag", row_index, "EAS-V03", issues)
     _validate_bool_field(row, "guardrail_status_change_flag", row_index, "EAS-V16", issues)
+
+
+def _validate_effective_aperture_sidewall_v2_fields(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> None:
+    if not any(field in row for field in EAS_SIDEWALL_V2_MARKER_FIELDS):
+        return
+
+    _require_fields(row, EAS_SIDEWALL_V2_REQUIRED_FIELDS, "EAS-SIDEWALL-V2", row_index, issues)
+    _validate_constant(
+        row,
+        "aperture_surrogate_claim_level",
+        "surrogate_sensitivity_only",
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+    )
+    _validate_bool_equals(
+        row,
+        "optical_solver_trigger_is_result",
+        False,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+    )
+    if not any(_value(row, field) for field in EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS):
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            "sidewall EAS v2 row lacks a specific surrogate width field",
+        )
+    for field in EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS:
+        if _value(row, field):
+            _validate_number_or_blank(row, field, row_index, "EAS-SIDEWALL-V2", issues)
 
 
 def _validate_solver_trigger_contract(
