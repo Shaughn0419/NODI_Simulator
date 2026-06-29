@@ -278,8 +278,17 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         x_nm=0.0,
         u_nm=450.0,
         z_nm=0.0,
+        x_left_nm=-210.5,
+        x_right_nm=210.5,
+        x_center_nm=0.0,
         local_width_nm=421.0,
+        local_half_width_nm=210.5,
+        d_top_nm=450.0,
+        d_bottom_nm=450.0,
+        d_side_left_nm=171.0,
+        d_side_right_nm=171.0,
         d_nearest_wall_nm=171.0,
+        nearest_wall_id="left_side",
         surface_gap_for_particle_nm=61.0,
         bin_basis="edge_norm_1d_trapezoid_wall_distance_v1",
         bin_accessible="true",
@@ -479,6 +488,31 @@ def test_position_response_sidewall_v2_rejects_blocked_bin_neighbor_fill() -> No
                 blocked_reason="",
                 decision_use_allowed="true",
                 neighbor_fill_used="true",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_incomplete_local_geometry() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["x_left_nm"]
+    del row["nearest_wall_id"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_inconsistent_local_geometry() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                x_left_nm=-200.0,
+                x_right_nm=200.0,
+                local_width_nm=421.0,
+                nearest_wall_id="diagonal",
             )
         ]
     )

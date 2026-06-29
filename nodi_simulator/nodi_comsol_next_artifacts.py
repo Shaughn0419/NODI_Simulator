@@ -700,8 +700,17 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "x_nm",
     "u_nm",
     "z_nm",
+    "x_left_nm",
+    "x_right_nm",
+    "x_center_nm",
     "local_width_nm",
+    "local_half_width_nm",
+    "d_top_nm",
+    "d_bottom_nm",
+    "d_side_left_nm",
+    "d_side_right_nm",
     "d_nearest_wall_nm",
+    "nearest_wall_id",
     "surface_gap_for_particle_nm",
     "bin_basis",
     "bin_accessible",
@@ -714,6 +723,9 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
 PRS_SIDEWALL_V2_PARTICLE_SUPPORT_STATUS = frozenset({"open", "narrow", "blocked"})
 PRS_SIDEWALL_V2_STERIC_SUPPORT_SOURCE = frozenset(
     {"exact_geometry_primitive", "not_available"}
+)
+PRS_SIDEWALL_V2_NEAREST_WALL_IDS = frozenset(
+    {"top", "bottom", "left_side", "right_side"}
 )
 PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED = frozenset(
     {
@@ -8859,16 +8871,36 @@ def _validate_position_response_sidewall_v2_fields(
             )
 
     _validate_sidewall_tail_particle_support_guard(row, row_index, issues)
+    local_geometry: dict[str, float] = {}
     for field in (
         "x_nm",
         "u_nm",
         "z_nm",
+        "x_left_nm",
+        "x_right_nm",
+        "x_center_nm",
         "local_width_nm",
+        "local_half_width_nm",
+        "d_top_nm",
+        "d_bottom_nm",
+        "d_side_left_nm",
+        "d_side_right_nm",
         "d_nearest_wall_nm",
         "surface_gap_for_particle_nm",
         "bin_accessible_area_fraction",
     ):
-        _float_field(row, field, row_index, "PRS-SIDEWALL-V2", issues)
+        value = _float_field(row, field, row_index, "PRS-SIDEWALL-V2", issues)
+        if value is not None:
+            local_geometry[field] = value
+    _validate_enum(
+        row,
+        "nearest_wall_id",
+        PRS_SIDEWALL_V2_NEAREST_WALL_IDS,
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+    )
+    _validate_sidewall_local_geometry(row_index, local_geometry, issues)
 
     bin_accessible = _bool_field(row, "bin_accessible", row_index, "PRS-SIDEWALL-V2", issues)
     neighbor_fill_used = _bool_field(
@@ -8914,6 +8946,71 @@ def _validate_position_response_sidewall_v2_fields(
             "PRS-SIDEWALL-V2",
             "inaccessible sidewall bin lacks blocked_reason",
         )
+
+
+def _validate_sidewall_local_geometry(
+    row_index: int,
+    values: Mapping[str, float],
+    issues: list[str],
+) -> None:
+    x_left = values.get("x_left_nm")
+    x_right = values.get("x_right_nm")
+    x_center = values.get("x_center_nm")
+    local_width = values.get("local_width_nm")
+    local_half_width = values.get("local_half_width_nm")
+
+    if x_left is not None and x_right is not None:
+        if x_left >= x_right:
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "x_left_nm must be less than x_right_nm",
+            )
+        if local_width is not None:
+            _validate_close(
+                local_width,
+                x_right - x_left,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "local_width_nm",
+                issues,
+            )
+        if x_center is not None:
+            _validate_close(
+                x_center,
+                0.5 * (x_left + x_right),
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "x_center_nm",
+                issues,
+            )
+    if local_width is not None and local_half_width is not None:
+        _validate_close(
+            local_half_width,
+            0.5 * local_width,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "local_half_width_nm",
+            issues,
+        )
+    if local_width is not None and local_width < 0.0:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "local_width_nm is negative",
+        )
+    for field in (
+        "d_top_nm",
+        "d_bottom_nm",
+        "d_side_left_nm",
+        "d_side_right_nm",
+        "d_nearest_wall_nm",
+    ):
+        distance = values.get(field)
+        if distance is not None and distance < 0.0:
+            _issue(issues, row_index, "PRS-SIDEWALL-V2", f"{field} is negative")
 
 
 def _validate_sidewall_tail_particle_support_guard(
