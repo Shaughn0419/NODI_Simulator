@@ -488,6 +488,11 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         reference_spatial_mode="cross_section_surrogate",
         source_geometry_descriptor_id="descriptor-404-W500-D900-sidewall-85",
         source_geometry_descriptor_sha=GEOMETRY_DESCRIPTOR_SHA256,
+        source_route_id_nodi="404/W500/D900",
+        source_D_nm=900,
+        source_distribution_type="edge_norm_1d",
+        source_bin_basis="edge_norm_1d_trapezoid_wall_distance_v1",
+        source_bin_id="edge_00",
         **_sidewall_artifact_metadata_fields("NODI_POSITION_RESPONSE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
         **_sidewall_package_d_precheck_fields("prs"),
@@ -565,6 +570,8 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
         geometry_propagation_status="propagated",
         geometry_not_propagated_reasons="",
+        source_route_id_nodi="404/W500/D900",
+        source_D_nm=900,
         **_sidewall_artifact_metadata_fields("NODI_EFFECTIVE_APERTURE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
         **_sidewall_package_d_precheck_fields("eas"),
@@ -975,6 +982,16 @@ def test_position_response_sidewall_v2_requires_source_geometry_descriptor_sha()
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_requires_source_grain_binding_fields() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["source_route_id_nodi"]
+    del row["source_bin_id"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_requires_descriptor_context_fields() -> None:
     row = _valid_prs_sidewall_v2_row()
     del row["sidewall_angle_convention"]
@@ -1266,6 +1283,14 @@ def test_effective_aperture_accepts_sidewall_v2_fields_when_consistent() -> None
     assert validate_effective_aperture_surrogate_rows([_valid_eas_sidewall_v2_row()]) == []
 
 
+def test_effective_aperture_rejects_trapezoid_geometry_without_sidewall_v2_schema() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_row(channel_cross_section_model="trapezoid_tapered_sidewalls")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
 def test_effective_aperture_sidewall_v2_requires_solver_trigger_result_guard() -> None:
     row = _valid_eas_sidewall_v2_row()
     del row["optical_solver_trigger_is_result"]
@@ -1536,6 +1561,15 @@ def test_effective_aperture_sidewall_v2_requires_source_geometry_descriptor_sha(
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 
 
+def test_effective_aperture_sidewall_v2_requires_source_grain_binding_fields() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["source_D_nm"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
 def test_effective_aperture_sidewall_v2_requires_descriptor_context_fields() -> None:
     row = _valid_eas_sidewall_v2_row()
     del row["sidewall_angle_convention"]
@@ -1706,6 +1740,14 @@ def test_sidewall_package_d_precheck_scans_forbidden_columns_even_when_flag_pass
     )
 
     _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V06")
+
+
+def test_sidewall_package_d_precheck_rejects_blocked_status_when_all_gates_pass() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [_valid_sidewall_package_d_precheck_row(package_d_precheck_status="blocked")]
+    )
+
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V05")
 
 
 def test_effective_aperture_rejects_old_w_eff_field_name() -> None:

@@ -726,6 +726,15 @@ SIDEWALL_V2_PACKAGE_D_PRECHECK_REQUIRED_FIELDS: tuple[str, ...] = (
     "no_auto_220_300nm_admission",
     "package_d_precheck_status",
 )
+SIDEWALL_V2_SOURCE_GRAIN_REQUIRED_FIELDS: tuple[str, ...] = (
+    "source_route_id_nodi",
+    "source_D_nm",
+)
+PRS_SIDEWALL_V2_SOURCE_BIN_REQUIRED_FIELDS: tuple[str, ...] = (
+    "source_distribution_type",
+    "source_bin_basis",
+    "source_bin_id",
+)
 PRS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
     {
         "channel_cross_section_model",
@@ -783,6 +792,8 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "flow_control_mode",
     "reference_field_model",
     "reference_spatial_mode",
+    *SIDEWALL_V2_SOURCE_GRAIN_REQUIRED_FIELDS,
+    *PRS_SIDEWALL_V2_SOURCE_BIN_REQUIRED_FIELDS,
     *SIDEWALL_V2_PACKAGE_D_PRECHECK_REQUIRED_FIELDS,
     *SIDEWALL_V2_RUNTIME_PROPAGATION_GUARD_REQUIRED_FIELDS,
 )
@@ -952,6 +963,10 @@ EAS_REQUIRED_FIELDS: tuple[str, ...] = (
 )
 EAS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
     {
+        "channel_cross_section_model",
+        "cross_section_geometry_version",
+        "geometry_runtime_binding_version",
+        "geometry_propagation_status",
         "eas_mode",
         "aperture_surrogate_basis",
         "aperture_surrogate_claim_level",
@@ -984,6 +999,7 @@ EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "not_optical_solver_output",
     "not_qch_weighted",
     "not_detection_probability",
+    *SIDEWALL_V2_SOURCE_GRAIN_REQUIRED_FIELDS,
     *SIDEWALL_V2_PACKAGE_D_PRECHECK_REQUIRED_FIELDS,
     *SIDEWALL_V2_RUNTIME_PROPAGATION_GUARD_REQUIRED_FIELDS,
 )
@@ -1589,6 +1605,13 @@ def validate_sidewall_package_d_precheck_rows(rows: Sequence[Mapping[str, Any]])
                 row_index,
                 "SIDEWALL-D-PRECHECK-V05",
                 "package_d_precheck_status=pass with unmet Package D prerequisite",
+            )
+        if precheck_status == "blocked" and package_a_ok and package_b_ok and package_c_ok and true_fields_ok:
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V05",
+                "package_d_precheck_status=blocked despite all Package D prerequisites passing",
             )
 
     return issues
@@ -9570,6 +9593,27 @@ def _validate_sidewall_v2_source_grain_binding(
     *,
     check_prs_bin_fields: bool,
 ) -> None:
+    _require_fields(
+        row,
+        SIDEWALL_V2_SOURCE_GRAIN_REQUIRED_FIELDS,
+        rule_id,
+        row_index,
+        issues,
+    )
+    for field in SIDEWALL_V2_SOURCE_GRAIN_REQUIRED_FIELDS:
+        if not _value(row, field):
+            _issue(issues, row_index, rule_id, f"{field} is blank")
+    if check_prs_bin_fields:
+        _require_fields(
+            row,
+            PRS_SIDEWALL_V2_SOURCE_BIN_REQUIRED_FIELDS,
+            rule_id,
+            row_index,
+            issues,
+        )
+        for field in PRS_SIDEWALL_V2_SOURCE_BIN_REQUIRED_FIELDS:
+            if not _value(row, field):
+                _issue(issues, row_index, rule_id, f"{field} is blank")
     _validate_optional_exact_source_field(
         row,
         row_index,
