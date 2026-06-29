@@ -21,6 +21,12 @@ from nodi_simulator.data_objects import (
     Particle,
 )
 from nodi_simulator.parameter_sweep import _sample_initial_positions_block
+from nodi_simulator.trajectory import (
+    axial_transport_velocity_m_s,
+    build_trajectory_context,
+    hindered_diffusion_factors,
+    simulate_particle_trajectory,
+)
 from nodi_simulator.utils import sample_initial_position
 
 
@@ -220,4 +226,136 @@ def test_block_trapezoid_sampler_uses_scalar_oracle_path() -> None:
         )
         assert diag["initial_position_sampler_support_model"] == (
             CENTER_ACCESSIBLE_SUPPORT_MODEL
+        )
+
+
+def test_trapezoid_pure_advection_accepts_oracle_sampled_initial_position() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    radius_m = 110.0e-9
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=False,
+        initial_position_distribution_mode="uniform_accessible_area",
+    )
+    x0, z0, _ = sample_initial_position(
+        channel,
+        np.random.default_rng(123),
+        radius_m,
+        sim_cfg=cfg,
+        unit_position_sample=(0.75, 0.5, 0.25),
+    )
+
+    trajectory = simulate_particle_trajectory(
+        channel,
+        BASELINE_OPTICAL,
+        cfg,
+        x0,
+        z0,
+        particle_radius_m=radius_m,
+    )
+
+    np.testing.assert_allclose(trajectory["x_m"], x0)
+    np.testing.assert_allclose(trajectory["z_m"], z0)
+    assert np.all(trajectory["v_y_m_s"] == pytest.approx(cfg.mean_flow_velocity_m_s))
+
+
+def test_trapezoid_trajectory_rejects_rectangular_flow_profiles() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="rect_series",
+        diffusion_hindrance_model="none",
+        include_diffusion=False,
+    )
+
+    with pytest.raises(ValueError, match="rectangular and not sidewall-aware"):
+        build_trajectory_context(
+            Channel(width_m=500.0e-9, depth_m=900.0e-9),
+            cfg,
+            particle_radius_m=110.0e-9,
+        )
+
+
+def test_trapezoid_hindered_diffusion_rejects_rectangular_wall_distance() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="near_wall_surrogate",
+        include_diffusion=False,
+    )
+
+    with pytest.raises(ValueError, match="rectangular wall-distance"):
+        hindered_diffusion_factors(
+            0.0,
+            0.0,
+            Channel(width_m=500.0e-9, depth_m=900.0e-9),
+            110.0e-9,
+            cfg,
+        )
+
+
+def test_trapezoid_trajectory_rejects_diffusive_rectangular_reflection() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=True,
+    )
+
+    with pytest.raises(ValueError, match="sloped-wall reflection"):
+        build_trajectory_context(
+            Channel(width_m=500.0e-9, depth_m=900.0e-9),
+            cfg,
+            particle_radius_m=110.0e-9,
+        )
+
+
+def test_trapezoid_trajectory_rejects_initial_point_outside_oracle_support() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=False,
+    )
+
+    with pytest.raises(ValueError, match="trapezoid particle-center support"):
+        simulate_particle_trajectory(
+            channel,
+            BASELINE_OPTICAL,
+            cfg,
+            initial_x_m=120.0e-9,
+            initial_z_m=310.0e-9,
+            particle_radius_m=110.0e-9,
+        )
+
+
+def test_trapezoid_axial_transport_rejects_rectangular_flow_direct_call() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="parabolic_rect",
+        diffusion_hindrance_model="none",
+        include_diffusion=False,
+    )
+
+    with pytest.raises(ValueError, match="rectangular and not sidewall-aware"):
+        axial_transport_velocity_m_s(
+            0.0,
+            0.0,
+            Channel(width_m=500.0e-9, depth_m=900.0e-9),
+            cfg,
+            particle_radius_m=110.0e-9,
         )

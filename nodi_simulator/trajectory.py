@@ -18,6 +18,7 @@ from functools import lru_cache
 import math
 import numpy as np
 
+from .cross_section_geometry import TrapezoidCrossSection
 from .data_objects import Channel, OpticalSystem, SimulationConfig
 from .optional_acceleration import warn_numba_unavailable
 
@@ -53,6 +54,78 @@ def _as_scalar_float(value: object) -> float:
     if isinstance(value, (int, float, np.integer, np.floating, np.number, np.generic)):
         return float(value)
     raise TypeError("expected numeric scalar")
+
+
+def _is_trapezoid_active(sim_cfg: SimulationConfig) -> bool:
+    return (
+        str(getattr(sim_cfg, "channel_cross_section_model", "ideal_rectangle"))
+        == "trapezoid_tapered_sidewalls"
+    )
+
+
+def _trapezoid_geometry(channel: Channel, sim_cfg: SimulationConfig) -> TrapezoidCrossSection:
+    return TrapezoidCrossSection(
+        top_width_m=float(channel.width_m),
+        depth_m=float(channel.depth_m),
+        sidewall_taper_angle_deg=float(sim_cfg.sidewall_taper_angle_deg),
+    )
+
+
+def _require_trapezoid_flow_compatibility(sim_cfg: SimulationConfig) -> None:
+    if not _is_trapezoid_active(sim_cfg):
+        return
+    if str(sim_cfg.flow_profile_model) in {"parabolic_rect", "rect_series"}:
+        raise ValueError(
+            "flow_profile_model="
+            f"{sim_cfg.flow_profile_model!r} is rectangular and not sidewall-aware "
+            "under trapezoid_tapered_sidewalls"
+        )
+
+
+def _require_trapezoid_wall_distance_compatibility(sim_cfg: SimulationConfig) -> None:
+    if not _is_trapezoid_active(sim_cfg):
+        return
+    if str(sim_cfg.diffusion_hindrance_model) != "none":
+        raise ValueError(
+            "diffusion_hindrance_model="
+            f"{sim_cfg.diffusion_hindrance_model!r} uses rectangular wall-distance "
+            "gaps and is not sidewall-aware under trapezoid_tapered_sidewalls"
+        )
+
+
+def _require_trapezoid_trajectory_compatibility(sim_cfg: SimulationConfig) -> None:
+    if not _is_trapezoid_active(sim_cfg):
+        return
+    _require_trapezoid_flow_compatibility(sim_cfg)
+    _require_trapezoid_wall_distance_compatibility(sim_cfg)
+    if bool(sim_cfg.include_diffusion):
+        raise ValueError(
+            "diffusive trajectory under trapezoid_tapered_sidewalls requires "
+            "a sloped-wall reflection/boundary model; the current trajectory "
+            "boundary is rectangular_half_span"
+        )
+
+
+def _validate_trapezoid_initial_support(
+    channel: Channel,
+    sim_cfg: SimulationConfig,
+    initial_x_m: float,
+    initial_z_m: float,
+    particle_radius_m: float,
+) -> None:
+    if not _is_trapezoid_active(sim_cfg):
+        return
+    geometry = _trapezoid_geometry(channel, sim_cfg)
+    u_m = float(initial_z_m) + 0.5 * float(channel.depth_m)
+    if not geometry.contains_particle_center(
+        float(initial_x_m),
+        u_m,
+        particle_radius_m,
+        tolerance_m=1.0e-18,
+    ):
+        raise ValueError(
+            "initial position is outside the trapezoid particle-center support"
+        )
 
 
 @dataclass(frozen=True)
@@ -171,6 +244,7 @@ def build_trajectory_context(
     particle_radius_m: float = 0.0,
 ) -> TrajectoryContext:
     """Precompute trajectory constants shared by all events in one case."""
+    _require_trapezoid_trajectory_compatibility(sim_cfg)
     half_w, half_h = _accessible_half_spans(channel, particle_radius_m)
     rect_series_mean_raw = None
     rect_series_lam_arr = None
@@ -332,6 +406,7 @@ def _soft_two_wall_faxen_blend(
 
 def estimate_max_axial_velocity(sim_cfg: SimulationConfig) -> float:
     """Upper-bound axial velocity used for conservative timing validation."""
+    _require_trapezoid_flow_compatibility(sim_cfg)
     return float(
         sim_cfg.mean_flow_velocity_m_s
         * _flow_profile_peak_factor(sim_cfg.flow_profile_model)
@@ -353,6 +428,7 @@ def _axial_velocity_scalar(
     rect_series_inv_n3_arr: np.ndarray | None = None,
 ) -> float:
     """Scalar specialization of the axial flow surrogate."""
+    _require_trapezoid_flow_compatibility(sim_cfg)
     if sim_cfg.flow_profile_model == "plug":
         return float(sim_cfg.mean_flow_velocity_m_s)
 
@@ -408,6 +484,7 @@ def axial_velocity_m_s(
     Poiseuille solution. The goal is to introduce slower near-wall streamlines
     and faster centerline trajectories without making the simulator intractable.
     """
+    _require_trapezoid_flow_compatibility(sim_cfg)
     if np.isscalar(x_m) and np.isscalar(z_m):
         x_scalar = _as_scalar_float(x_m)
         z_scalar = _as_scalar_float(z_m)
@@ -457,6 +534,7 @@ def _hindered_diffusion_factors_scalar(
     half_h: float | None = None,
 ) -> tuple[float, float]:
     """Scalar specialization of the hindered-diffusion surrogate."""
+    _require_trapezoid_wall_distance_compatibility(sim_cfg)
     if sim_cfg.diffusion_hindrance_model == "none" or particle_radius_m <= 0:
         return 1.0, 1.0
 
@@ -499,6 +577,7 @@ def hindered_diffusion_factors(
     single-wall mobility surrogates, so x and z no longer differ by a purely
     ad-hoc exponent.
     """
+    _require_trapezoid_wall_distance_compatibility(sim_cfg)
     if np.isscalar(x_m) and np.isscalar(z_m):
         x_scalar = _as_scalar_float(x_m)
         z_scalar = _as_scalar_float(z_m)
@@ -560,6 +639,8 @@ def _axial_transport_velocity_scalar(
     rect_series_inv_n3_arr: np.ndarray | None = None,
 ) -> float:
     """Scalar specialization of axial transport including near-wall drag."""
+    _require_trapezoid_flow_compatibility(sim_cfg)
+    _require_trapezoid_wall_distance_compatibility(sim_cfg)
     base = _axial_velocity_scalar(
         x_m,
         z_m,
@@ -603,6 +684,8 @@ def axial_transport_velocity_m_s(
     mobility reduction along the axial direction to avoid overly optimistic
     near-wall transit speeds.
     """
+    _require_trapezoid_flow_compatibility(sim_cfg)
+    _require_trapezoid_wall_distance_compatibility(sim_cfg)
     if np.isscalar(x_m) and np.isscalar(z_m):
         x_scalar = _as_scalar_float(x_m)
         z_scalar = _as_scalar_float(z_m)
@@ -866,6 +949,14 @@ def simulate_particle_trajectory(
             is requested without diffusion_coefficient.
     """
     # Validate initial position
+    _require_trapezoid_trajectory_compatibility(sim_cfg)
+    _validate_trapezoid_initial_support(
+        channel,
+        sim_cfg,
+        initial_x_m,
+        initial_z_m,
+        particle_radius_m,
+    )
     if trajectory_context is None:
         trajectory_context = build_trajectory_context(
             channel,
@@ -1226,6 +1317,7 @@ def simulate_particle_trajectory_block(
     diffusion draws, matching repeated scalar event calls at the trajectory
     layer while letting the caller batch downstream optical/readout work.
     """
+    _require_trapezoid_trajectory_compatibility(sim_cfg)
     if trajectory_context is None:
         trajectory_context = build_trajectory_context(
             channel,
@@ -1244,6 +1336,19 @@ def simulate_particle_trajectory_block(
         raise ValueError("initial_x_m contains positions outside the channel width")
     if np.any(np.abs(z0) > half_h):
         raise ValueError("initial_z_m contains positions outside the channel depth")
+    if _is_trapezoid_active(sim_cfg):
+        geometry = _trapezoid_geometry(channel, sim_cfg)
+        for x_val, z_val in zip(x0, z0):
+            if not geometry.contains_particle_center(
+                float(x_val),
+                float(z_val) + 0.5 * float(channel.depth_m),
+                particle_radius_m,
+                tolerance_m=1.0e-18,
+            ):
+                raise ValueError(
+                    "initial_x_m/initial_z_m contain positions outside the "
+                    "trapezoid particle-center support"
+                )
 
     n_samples = trajectory_context.n_samples
     time_s = trajectory_context.time_s
