@@ -671,6 +671,54 @@ PRS_REQUIRED_FIELDS: tuple[str, ...] = (
     "source_artifact",
     "source_sha256",
 )
+PRS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
+    {
+        "channel_cross_section_model",
+        "cross_section_geometry_version",
+        "geometry_propagation_status",
+        "sampler_geometry_model",
+        "sampler_support_model",
+        "particle_radius_nm",
+        "coordinate_basis",
+        "bin_accessible",
+        "bin_particle_center_support_status",
+        "neighbor_fill_used",
+    }
+)
+PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
+    "channel_cross_section_model",
+    "cross_section_geometry_version",
+    "geometry_propagation_status",
+    "geometry_not_propagated_reasons",
+    "sampler_geometry_model",
+    "sampler_support_model",
+    "particle_radius_nm",
+    "coordinate_basis",
+    "coordinate_conversion_formula_id",
+    "x_nm",
+    "u_nm",
+    "z_nm",
+    "local_width_nm",
+    "d_nearest_wall_nm",
+    "surface_gap_for_particle_nm",
+    "bin_basis",
+    "bin_accessible",
+    "bin_accessible_area_fraction",
+    "bin_particle_center_support_status",
+    "blocked_reason",
+    "sparse_reason",
+    "neighbor_fill_used",
+)
+PRS_SIDEWALL_V2_PARTICLE_SUPPORT_STATUS = frozenset({"open", "narrow", "blocked"})
+PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED = frozenset(
+    {
+        "propagated",
+        "blocked",
+        "not_propagated",
+        "blocked_trapezoid_geometry_not_propagated",
+        "blocked_rectangular_geometry_leakage",
+    }
+)
 
 EAS_REQUIRED_FIELDS: tuple[str, ...] = (
     "aperture_artifact_version",
@@ -1108,6 +1156,7 @@ def validate_position_response_surface_rows(
         _validate_enum(row, "distribution_type", PRS_APPROVED_DISTRIBUTIONS, row_index, "PRS-V08", issues)
         _validate_optional_enum(row, "row_kind", PRS_APPROVED_ROW_KINDS, row_index, "PRS-V08", issues)
         _validate_position_bin(row, row_index, issues)
+        _validate_position_response_sidewall_v2_fields(row, row_index, issues)
 
         _validate_int_equals(row, "n_seeds", 3, row_index, "PRS-V14", issues)
         _validate_nonnegative_int(row, "n_events_total", row_index, "PRS-V15", issues)
@@ -8730,6 +8779,106 @@ def _validate_position_bin(
             if low is not None and high is not None:
                 if not (-1.0 <= low < high <= 1.0):
                     _issue(issues, row_index, "PRS-V09", f"{low_field}/{high_field} outside [-1,1]")
+
+
+def _validate_position_response_sidewall_v2_fields(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> None:
+    if not any(field in row for field in PRS_SIDEWALL_V2_MARKER_FIELDS):
+        return
+
+    _require_fields(row, PRS_SIDEWALL_V2_REQUIRED_FIELDS, "PRS-SIDEWALL-V2", row_index, issues)
+    channel_model = _value(row, "channel_cross_section_model")
+    if channel_model not in {"ideal_rectangle", "trapezoid_tapered_sidewalls"}:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            f"invalid channel_cross_section_model={channel_model}",
+        )
+    geometry_status = _value(row, "geometry_propagation_status")
+    if geometry_status not in PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            f"invalid geometry_propagation_status={geometry_status}",
+        )
+    if channel_model == "trapezoid_tapered_sidewalls":
+        if not _value(row, "cross_section_geometry_version"):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "trapezoid row missing cross_section_geometry_version",
+            )
+        sampler_model = _value(row, "sampler_geometry_model").lower()
+        if "rect" in sampler_model and "trapezoid" not in sampler_model:
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "trapezoid row uses rectangular sampler geometry",
+            )
+
+    _float_field(row, "particle_radius_nm", row_index, "PRS-SIDEWALL-V2", issues)
+    for field in (
+        "x_nm",
+        "u_nm",
+        "z_nm",
+        "local_width_nm",
+        "d_nearest_wall_nm",
+        "surface_gap_for_particle_nm",
+        "bin_accessible_area_fraction",
+    ):
+        _float_field(row, field, row_index, "PRS-SIDEWALL-V2", issues)
+
+    bin_accessible = _bool_field(row, "bin_accessible", row_index, "PRS-SIDEWALL-V2", issues)
+    neighbor_fill_used = _bool_field(
+        row,
+        "neighbor_fill_used",
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+    )
+    if neighbor_fill_used:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "sidewall PRS row uses neighbor fill",
+        )
+    support_status = _value(row, "bin_particle_center_support_status")
+    if support_status not in PRS_SIDEWALL_V2_PARTICLE_SUPPORT_STATUS:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            f"invalid bin_particle_center_support_status={support_status}",
+        )
+    decision_allowed = _bool_field(
+        row,
+        "decision_use_allowed",
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+    )
+    if (bin_accessible is False or support_status == "blocked") and decision_allowed:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "blocked sidewall bin is decision-use allowed",
+        )
+    if bin_accessible is False and not _value(row, "blocked_reason"):
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "inaccessible sidewall bin lacks blocked_reason",
+        )
 
 
 def _validate_sample_status(

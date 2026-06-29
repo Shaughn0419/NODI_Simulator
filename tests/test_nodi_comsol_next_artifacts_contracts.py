@@ -260,6 +260,37 @@ def _valid_prs_row(**overrides: object) -> dict[str, object]:
     return row
 
 
+def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
+    row = _valid_prs_row(
+        diameter_nm=220,
+        particle_kind="exosome_synthetic_large_tail",
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        cross_section_geometry_version="trapezoid_straight_sidewall_v1",
+        geometry_propagation_status="propagated",
+        geometry_not_propagated_reasons="",
+        sampler_geometry_model="trapezoid_accessible_area_v1",
+        sampler_support_model="wall_normal_half_plane_offset_v1",
+        particle_radius_nm=110.0,
+        coordinate_basis="u_from_top",
+        coordinate_conversion_formula_id="centered_z_to_u_from_top_v1",
+        x_nm=0.0,
+        u_nm=450.0,
+        z_nm=0.0,
+        local_width_nm=421.0,
+        d_nearest_wall_nm=171.0,
+        surface_gap_for_particle_nm=61.0,
+        bin_basis="edge_norm_1d_trapezoid_wall_distance_v1",
+        bin_accessible="true",
+        bin_accessible_area_fraction=1.0,
+        bin_particle_center_support_status="open",
+        blocked_reason="",
+        sparse_reason="",
+        neighbor_fill_used="false",
+    )
+    row.update(overrides)
+    return row
+
+
 def _valid_eas_row(**overrides: object) -> dict[str, object]:
     row: dict[str, object] = {
         "aperture_artifact_version": "NODI_EFFECTIVE_APERTURE_SURROGATE_V1",
@@ -402,6 +433,43 @@ def test_comsol_v4_context_rejects_production_promotion_or_hash_drift() -> None:
 
 def test_position_response_accepts_neutral_response_surface_row() -> None:
     assert validate_position_response_surface_rows([_valid_prs_row()]) == []
+
+
+def test_position_response_accepts_sidewall_v2_geometry_fields_when_consistent() -> None:
+    assert validate_position_response_surface_rows([_valid_prs_sidewall_v2_row()]) == []
+
+
+def test_position_response_sidewall_v2_requires_complete_geometry_fields() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_row(channel_cross_section_model="trapezoid_tapered_sidewalls")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_rectangular_sampler_under_trapezoid() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(sampler_geometry_model="rectangular_half_span_v1")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_blocked_bin_neighbor_fill() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                bin_accessible="false",
+                bin_accessible_area_fraction=0.0,
+                bin_particle_center_support_status="blocked",
+                blocked_reason="",
+                decision_use_allowed="true",
+                neighbor_fill_used="true",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
 def test_position_response_rejects_qch_flow_on_production_row() -> None:
