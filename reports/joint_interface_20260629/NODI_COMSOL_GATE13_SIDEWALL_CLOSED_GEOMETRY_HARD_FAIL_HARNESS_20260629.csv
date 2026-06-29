@@ -1,0 +1,9 @@
+case_id,case_family,trigger,expected_verdict,runtime_propagation_allowed,production_ingestion_allowed,prs_eas_evidence_allowed,comsol_context_accepted,hard_fail_or_quarantine,observed_result,unexpected_pass
+G13D-CLOSED-GUARD-001,closed_trapezoid,W_bottom_unclipped_nm<=0,HARD_FAIL_RUNTIME_PROPAGATION,false,false,false,false,true,MATCH_EXPECTED,false
+G13D-CLOSED-GUARD-002,near_closed_tiny_aperture,0<W_bottom_unclipped_nm<min_aperture_descriptor_nm,QUARANTINE_NEAR_CLOSED_REVIEW_ONLY,false,false,false,false,true,MATCH_EXPECTED,false
+G13D-CLOSED-GUARD-003,clipped_to_zero,W_bottom_runtime_clipped_nm==0,HARD_FAIL_RUNTIME_PROPAGATION,false,false,false,false,true,MATCH_EXPECTED,false
+G13D-CLOSED-GUARD-004,negative_bottom_width,W_bottom_unclipped_nm<0,HARD_FAIL_DESCRIPTOR_FORMULA,false,false,false,false,true,MATCH_EXPECTED,false
+G13D-CLOSED-GUARD-005,bad_angle_convention,sidewall_angle_convention not in allowed enum,HARD_FAIL_DESCRIPTOR_FORMULA,false,false,false,false,true,MATCH_EXPECTED,false
+G13D-CLOSED-GUARD-006,missing_depth,D_nm missing,HARD_FAIL_DESCRIPTOR_FORMULA,false,false,false,false,true,MATCH_EXPECTED,false
+G13D-CLOSED-GUARD-007,micro_as_nano_spoof,micro descriptor promoted to nano binding,HARD_FAIL_BINDING_PROMOTION,false,false,false,false,true,MATCH_EXPECTED,false
+G13D-CLOSED-GUARD-008,sidewall_aware_prs_without_descriptor,PRS row lacks descriptor id/hash,HARD_FAIL_MISSING_DESCRIPTOR_BINDING,false,false,false,false,true,MATCH_EXPECTED,false

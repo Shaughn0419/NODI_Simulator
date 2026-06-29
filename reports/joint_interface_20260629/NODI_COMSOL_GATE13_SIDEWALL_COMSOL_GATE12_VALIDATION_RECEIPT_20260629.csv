@@ -1,0 +1,15 @@
+check_id,status,details,rows_checked
+G12-I-001,PASS,all Gate12 primary artifacts exist,13
+G12-I-002,PASS,NODI Gate11 release receipt complete,33
+G12-I-003,PASS,NODI_DIRTY_NOT_RELEASED closed by NODI Gate11 e29501c,1
+G12-I-004,PASS,"handshake has zero semantic conflicts, zero required missing, zero dirty open",30
+G12-I-005,PASS,descriptor receipt dry-run input package preserves 11 descriptors and is not evidence/no-run,25
+G12-I-006,PASS_BLOCKED_AS_EXPECTED,binding roadmap preserves 10 nano review-only candidates and 1 micro unbound row,11
+G12-I-007,PASS,mutation suite has at least 120 rows and zero unexpected pass/auth promotion,132
+G12-I-008,PASS,future handoff escrow is text-only/no-run/future-auth-required,8
+G12-I-009,PASS,three decision options remain awaiting user decision,3
+G12-I-010,PASS,Gate2D=4; EDGE NOT_APPROVED; QCH ABSENT; BINDING FAIL_CLOSED; no auth promotion,1
+G12-I-011,PASS,no positive authorization flags in Gate12 CSV outputs,6
+G12-I-012,PASS,ten independent self-review dimensions present,10
+G12-I-013,PASS_BLOCKED_AS_EXPECTED,"no COMSOL launch, no .mph load, no NODI write; package is release-candidate handshake only",no-run
+G12-I-014,PASS,overall Gate12 sidewall addendum release candidate validation,14

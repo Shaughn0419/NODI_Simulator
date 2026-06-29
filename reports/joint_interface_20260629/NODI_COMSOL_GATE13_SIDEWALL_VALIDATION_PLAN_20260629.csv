@@ -1,0 +1,8 @@
+validation_id,validation_name,command,required_for_pass,recorded_result
+G13I-VALIDATION-001,builder_cli,python tools/audits/build_nodi_comsol_gate13_sidewall_guard_convergence.py --confirm-gate13-sidewall-guard-convergence,true,PENDING_RUNTIME_VALIDATION
+G13I-VALIDATION-002,py_compile,python -m py_compile tools/audits/build_nodi_comsol_gate13_sidewall_guard_convergence.py,true,PENDING_RUNTIME_VALIDATION
+G13I-VALIDATION-003,ruff,ruff check tools/audits/build_nodi_comsol_gate13_sidewall_guard_convergence.py tests/test_nodi_comsol_gate13_sidewall_guard_convergence.py,true,PENDING_RUNTIME_VALIDATION
+G13I-VALIDATION-004,gate13_pytest,pytest -q tests/test_nodi_comsol_gate13_sidewall_guard_convergence.py,true,PENDING_RUNTIME_VALIDATION
+G13I-VALIDATION-005,geometry_pytest,pytest -q tests/test_cross_section_geometry.py,true,PENDING_RUNTIME_VALIDATION
+G13I-VALIDATION-006,next_artifacts_pytest,pytest -q tests/test_nodi_comsol_next_artifacts_contracts.py,true,PENDING_RUNTIME_VALIDATION
+G13I-VALIDATION-007,physics_core_pytest,pytest -q tests/test_physics_core.py,true,PENDING_RUNTIME_VALIDATION

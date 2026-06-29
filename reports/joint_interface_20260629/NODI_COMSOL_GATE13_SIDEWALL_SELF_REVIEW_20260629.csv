@@ -1,0 +1,13 @@
+reviewer_id,focus,finding,evidence,required_fix_before_pass
+G13L-REVIEWER-01,worktree/git hygiene,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-02,COMSOL Gate12 receipt,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-03,provenance repair,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-04,closure authority,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-05,trajectory diagnostics scope,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-06,closed geometry propagation,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-07,fluidic proxy firewall,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-08,fixture strength,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-09,no-auth leakage,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-10,backward compatibility,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-11,decision wording,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
+G13L-REVIEWER-12,test sufficiency,PASS_NO_P0_P1,Gate13 generated sidecars plus focused pytest expectations,none
