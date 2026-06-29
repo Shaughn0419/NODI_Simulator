@@ -1,0 +1,6 @@
+brief_id,question,answer,supporting_artifact
+G9I-BRIEF-001,Where is the interface now?,RC5.1 freeze release v1 candidate is ready as review-only/no-auth.,NODI_COMSOL_GATE9B_RELEASE_LOCKFILE_20260629.json
+G9I-BRIEF-002,What can freeze?,"Interface vocabulary, hash tree, receiver harness expectations, and no-auth decision surfaces.",NODI_COMSOL_GATE9B_RELEASE_FIELD_DICTIONARY_20260629.csv
+G9I-BRIEF-003,What cannot be authorized?,q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;formula;accepted row expansion;direct PRS bin;grain-level ingestion,NODI_COMSOL_GATE9H_ANTI_CONFUSION_V2_20260629.csv
+G9I-BRIEF-004,Why EDGE first?,EDGE has the cleanest single-workstream preauth rehearsal and isolation proof; QCH sidecar is absent and BINDING remains fail-closed.,NODI_COMSOL_GATE9D_EDGE_PREAUTH_ESCROW_PACKAGE_20260629.csv
+G9I-BRIEF-005,What should user decide?,"Choose freeze-only, EDGE-only preauth next gate, or defer all.",NODI_COMSOL_GATE9C_USER_DECISION_DOSSIER_20260629.csv

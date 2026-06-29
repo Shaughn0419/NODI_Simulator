@@ -1,0 +1,3 @@
+workstream,required_before_reopen,hard_fail_if_missing
+QCH,formal sidecar with route/view/diameter/bin/units/normalization/source SHA,true
+BINDING,direct 220/D1200/UNBOUND repair evidence and NODI policy,true

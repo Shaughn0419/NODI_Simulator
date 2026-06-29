@@ -1,0 +1,6 @@
+sample_id,sample_name,intended_disposition,not_evidence,approved,expected_result
+G9K-SAMPLE-001,freeze_only_sample,FREEZE_INTERFACE_ONLY_NO_EVIDENCE_AUTH,true,false,RECEIVE_REVIEW_ONLY
+G9K-SAMPLE-002,edge_preauth_request_sample,AUTHORIZE_EDGE_ONLY_PREAUTH_NEXT_GATE,true,false,PREAUTH_REQUIRED
+G9K-SAMPLE-003,qch_rejected_sample,QCH_DEFERRED_FORMAL_SIDECAR_ABSENT,true,false,REJECT_BLOCKED
+G9K-SAMPLE-004,binding_rejected_sample,BINDING_DEFERRED_FAIL_CLOSED,true,false,REJECT_BLOCKED
+G9K-SAMPLE-005,multi_workstream_hard_fail_sample,HARD_FAIL_FORBIDDEN_AUTHORIZATION,true,false,HARD_FAIL_FORBIDDEN_AUTHORIZATION

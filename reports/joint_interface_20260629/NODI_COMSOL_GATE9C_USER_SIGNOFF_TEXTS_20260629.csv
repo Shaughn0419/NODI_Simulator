@@ -1,0 +1,4 @@
+signoff_id,choice_id,signoff_text,mutually_exclusive,default_approved
+G9C-SIGNOFF-001,FREEZE_INTERFACE_ONLY_NO_EVIDENCE_AUTH,"I approve RC5.1 interface freeze only. I do not authorize evidence, COMSOL run, weighting, JRC, runtime, or production.",true,false
+G9C-SIGNOFF-002,AUTHORIZE_EDGE_ONLY_PREAUTH_NEXT_GATE,"I authorize only EDGE preauth next-gate preparation. I do not authorize QCH, BINDING, JRC, weighting, runtime, or production.",true,false
+G9C-SIGNOFF-003,DEFER_ALL_EVIDENCE_AUTHORIZATION,I defer all evidence authorization. Keep RC5.1 review-only/no-auth state locked.,true,false

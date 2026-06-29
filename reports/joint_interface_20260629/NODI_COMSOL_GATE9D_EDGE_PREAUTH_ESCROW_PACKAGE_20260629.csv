@@ -1,0 +1,6 @@
+escrow_id,component,requirement,authorization_token_present,execution_allowed,evidence_acceptance_allowed
+G9D-ESCROW-001,required_comsol_package,edge_pilot_manifest.csv;edge_pilot_validation.csv;edge_pilot_receipt.json,false,false,false
+G9D-ESCROW-002,required_nodi_harness,Gate9 release decision harness;Gate8 joint freeze checks;Gate2D freeze check,false,false,false
+G9D-ESCROW-003,one_workstream_isolation,EDGE only; QCH/BINDING/JRC/runtime/production cannot be opened by this token,false,false,false
+G9D-ESCROW-004,abort_conditions,COMSOL launch without auth;.mph load without auth;QCH/BINDING/JRC/runtime/production leakage;missing source SHA;Gate2D row drift,false,false,false
+G9D-ESCROW-005,output_quarantine,all future outputs enter quarantine/review-only registers first,false,false,false

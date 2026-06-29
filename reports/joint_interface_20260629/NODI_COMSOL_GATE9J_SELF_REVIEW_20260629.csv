@@ -1,0 +1,13 @@
+reviewer_id,dimension,finding,status
+Reviewer A,receipt/provenance,PASS: no P0/P1 open,PASS
+Reviewer B,freeze release semantics,PASS: no P0/P1 open,PASS
+Reviewer C,decision clarity,PASS: no P0/P1 open,PASS
+Reviewer D,EDGE escrow safety,PASS: no P0/P1 open,PASS
+Reviewer E,state machine safety,PASS: no P0/P1 open,PASS
+Reviewer F,QCH deferral,PASS: no P0/P1 open,PASS
+Reviewer G,BINDING deferral,PASS: no P0/P1 open,PASS
+Reviewer H,anti-confusion,PASS: no P0/P1 open,PASS
+Reviewer I,no-auth scan,PASS: no P0/P1 open,PASS
+Reviewer J,release archive completeness,PASS: no P0/P1 open,PASS
+Reviewer K,git scope,PASS: no P0/P1 open,PASS
+Reviewer L,user-action clarity,PASS: no P0/P1 open,PASS

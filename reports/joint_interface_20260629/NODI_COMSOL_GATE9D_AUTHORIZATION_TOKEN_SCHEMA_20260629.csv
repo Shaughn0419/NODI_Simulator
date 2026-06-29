@@ -1,0 +1,5 @@
+field,required,current_value,must_match,opens_workstream,opens_qch_binding_jrc_runtime_production
+authorization_token_id,true,ABSENT,EDGE_ONLY_PREAUTH_[date]_[approver],EDGE_ONLY,false
+authorized_scope,true,ABSENT,EDGE_PREAUTH_PACKAGE_PREPARATION_ONLY,EDGE_ONLY,false
+expires_at,true,ABSENT,explicit timestamp,EDGE_ONLY,false
+human_signoff_text,true,ABSENT,exact Gate9C EDGE-only wording,EDGE_ONLY,false

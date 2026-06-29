@@ -1,0 +1,13 @@
+check_id,status,detail
+gate9a_comsol_gate8_receipt,PASS,manifest=35 blocking_drift=0
+gate9b_release_lockfile,PASS,fields=365
+gate9c_decision_choices,PASS,3 mutually exclusive choices
+gate9d_edge_escrow,PASS,"non-executable, token absent"
+gate9e_state_machine,PASS,"quarantine-first, no production"
+gate9f_qch_binding_seals,PASS,QCH/BINDING sealed
+gate9g_provenance_ledger,PASS,NODI+COMSOL Gate5-Gate8 represented
+gate9h_no_auth_sweep,PASS,no positive authorization
+gate9i_executive_packet,PASS,machine-readable support generated
+gate9k_safe_fixtures,PASS,not_evidence fixtures only
+gate2d_freeze,PASS,exactly 4
+workstream_states,PASS,"EDGE not approved, QCH absent, BINDING fail-closed"

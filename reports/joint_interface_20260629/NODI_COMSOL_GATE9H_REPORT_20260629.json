@@ -1,0 +1,28 @@
+{
+  "date": "20260629",
+  "gate": "Gate9H",
+  "summary": {
+    "comsol_manifest_rows": 35,
+    "comsol_validation_rows": 14,
+    "comsol_receipt_rows": 45,
+    "comsol_hash_recon_rows": 21,
+    "comsol_bundle_rows": 24,
+    "comsol_edge_dossier_rows": 1,
+    "comsol_qch_deferral_rows": 1,
+    "comsol_binding_deferral_rows": 1,
+    "comsol_isolation_rows": 1800,
+    "comsol_validation_failures": 0,
+    "gate9a_blocking_drift": 0,
+    "gate9a_missing_required": 0,
+    "gate9b_field_rows": 365,
+    "gate9c_choice_rows": 3,
+    "gate9d_token_present": false,
+    "gate9d_execution_allowed": false,
+    "gate9e_state_rows": 5,
+    "gate9f_seal_rows": 2,
+    "gate9g_ledger_rows": 8,
+    "gate9k_samples": 5,
+    "gate2d_rows": 4
+  },
+  "scope": "freeze-release-candidate/decision-dossier/no-auth"
+}

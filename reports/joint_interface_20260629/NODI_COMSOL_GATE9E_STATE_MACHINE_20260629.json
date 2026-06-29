@@ -1,0 +1,6 @@
+{
+  "initial_state": "RECEIPT",
+  "terminal_state": "STOP_AWAIT_USER",
+  "production_ingestion": false,
+  "runtime_configuration": false
+}

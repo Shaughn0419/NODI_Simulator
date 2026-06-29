@@ -1,0 +1,23 @@
+{
+  "lock_name": "JOINT_RC5_1_FREEZE_RELEASE_V1_CANDIDATE_REVIEW_ONLY",
+  "version": "RC5.1-freeze-v1-candidate-20260629",
+  "date": "20260629",
+  "field_count": 365,
+  "nodi_gate8_lockfile_sha": "9aaf6ab2e55c493a78603471e2b50b0e71d78035d68519f9d6bd9887f40ea4ef",
+  "field_dictionary_sha": "1c1f48139a66e3d02b23aeb8bf273f2eba2a31f4b53444c117ab74cf5ae71fe1",
+  "gate2d_accepted_ledger_rows": 4,
+  "edge_state": "NOT_APPROVED_PREAUTH_DECISION_READY_NOT_AUTHORIZED",
+  "qch_state": "ABSENT",
+  "binding_state": "FAIL_CLOSED",
+  "review_only": true,
+  "evidence_acceptance": false,
+  "runtime_schema": false,
+  "production_contract": false,
+  "authorization": "closed",
+  "breaking_change_triggers": [
+    "canonical field semantic change",
+    "Gate2D row_count drift",
+    "EDGE/QCH/BINDING state promotion",
+    "authorization true"
+  ]
+}

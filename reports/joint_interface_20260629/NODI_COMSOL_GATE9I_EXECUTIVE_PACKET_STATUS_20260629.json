@@ -1,0 +1,5 @@
+{
+  "executive_packet": "ready",
+  "default_user_decision": "AWAITING_USER_DECISION",
+  "no_auth": true
+}

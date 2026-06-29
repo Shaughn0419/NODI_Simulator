@@ -1,0 +1,8 @@
+{
+  "date": "20260629",
+  "disposition": "PASS_GATE9B_JOINT_RC51_FREEZE_RELEASE_V1_CANDIDATE_REVIEW_ONLY",
+  "version": "RC5.1-freeze-v1-candidate-20260629",
+  "field_count": 365,
+  "requires_regate_on_breaking_change": true,
+  "no_auth": true
+}

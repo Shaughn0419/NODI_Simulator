@@ -1,0 +1,6 @@
+{
+  "default_state": "AWAITING_USER_DECISION",
+  "choice_count": 3,
+  "mutually_exclusive": true,
+  "approved_choice": null
+}

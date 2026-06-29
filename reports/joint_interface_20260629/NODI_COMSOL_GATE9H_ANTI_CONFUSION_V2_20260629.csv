@@ -1,0 +1,9 @@
+term_id,term,allowed_interpretation,forbidden_interpretation,positive_flag_handling
+G9H-ANTI-001,freeze,interface baseline only,does not authorize evidence,HARD_FAIL_UNLESS_EXPLICIT_FUTURE_USER_AUTH
+G9H-ANTI-002,signoff,candidate signoff of interface package,does not authorize COMSOL run,HARD_FAIL_UNLESS_EXPLICIT_FUTURE_USER_AUTH
+G9H-ANTI-003,ready,ready for decision/review,does not mean approved,HARD_FAIL_UNLESS_EXPLICIT_FUTURE_USER_AUTH
+G9H-ANTI-004,pilot,future single-line trial concept,not currently executable,HARD_FAIL_UNLESS_EXPLICIT_FUTURE_USER_AUTH
+G9H-ANTI-005,preauth,decision gate before authorization,not authorization,HARD_FAIL_UNLESS_EXPLICIT_FUTURE_USER_AUTH
+G9H-ANTI-006,escrow,non-executable placeholder contract,not a token,HARD_FAIL_UNLESS_EXPLICIT_FUTURE_USER_AUTH
+G9H-ANTI-007,token,future explicit human authorization object,absent now,HARD_FAIL_UNLESS_EXPLICIT_FUTURE_USER_AUTH
+G9H-ANTI-008,runbook,non-executable instructions,not permission to run,HARD_FAIL_UNLESS_EXPLICIT_FUTURE_USER_AUTH

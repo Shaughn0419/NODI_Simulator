@@ -1,0 +1,3 @@
+seal_id,workstream,current_state,source_deferral_id,deferral_seal_hash,reopen_prerequisites,user_authorization_required,edge_pilot_can_reopen,authorization_status
+G9F-QCH-SEAL-001,QCH,ABSENT,G8E-QCH-001,f4541f8f1dc7c498e88035ac823bd27a0bcd568345ad84ad8f5ecdfd84a0b5cd,formal sidecar source evidence;units;normalization;integration definition;receiver preflight,true,false,SEALED_DEFERRED_AUTHORIZATION_CLOSED
+G9F-BINDING-SEAL-001,BINDING,FAIL_CLOSED,G8E-BINDING-001,9bec65a071de42382bce53fd6867a0412ac1b3e63ace0e8b64bbcd9c63bff363,NODI direct policy/evidence for 220/D1200 and explicit view binding repair,true,false,SEALED_DEFERRED_AUTHORIZATION_CLOSED

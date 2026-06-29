@@ -1,0 +1,4 @@
+delta_id,delta,classification,authorization_impact
+G9G-DELTA-001,nodi_view_binding_status optional guard,non_policy_delta,none
+G9G-DELTA-002,self-referential metadata drift,metadata_non_policy,none
+G9G-DELTA-003,receipt/scope granularity deltas,directional_scope_delta,none
