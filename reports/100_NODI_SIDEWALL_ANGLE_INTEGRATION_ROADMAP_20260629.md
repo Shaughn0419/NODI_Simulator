@@ -63,16 +63,19 @@ Three independent read-only reviews converged on the same hazards:
 Completed NODI-side guardrails:
 
 - Added `TrapezoidCrossSection` geometry primitive and tests for COMSOL/NODI angle conversion, bottom-width preservation, closure status, center-accessible area, wall-normal particle support, and uniform accessible-area sampling.
-- Added a trapezoid particle-center support projection primitive for future sloped-wall boundary work; it is not yet enabled as a Brownian reflection runtime.
+- Added a trapezoid particle-center support projection primitive and guarded trajectory path; this is a projection-boundary surrogate, not validated specular sloped-wall reflection or near-wall diffusion.
 - Routed trapezoid initial-position sampling through the geometry oracle; rectangular sampler fallback is no longer accepted for trapezoid support rows.
 - Added trajectory diagnostics that hard-block rectangular reflection, rectangular near-wall diffusion, and incompatible rectangular flow profiles under active trapezoid geometry.
 - Added explicit electrokinetic, fluidic, and reference-field propagation statuses so non-propagated trapezoid paths remain audit/proxy rows, not sidewall-aware runtime results.
 - Added sidewall geometry fields to observation signatures, including particle radius and reference-field geometry propagation status.
 - Added artifact/schema hard-fails for claim-promotion column names, descriptor v2 sidewall fields, PRS sidewall v2 sampler/support/bin fields, and EAS sidewall v2 no-claim guards.
+- Added PRS/EAS sidewall v2 row-level hard-fails for runtime propagation guard fields, Package D precheck binding, source route/depth/bin grain binding, and explicit `geometry_propagation_scope`.
+- Added EAS geometry-marker triggering so `channel_cross_section_model=trapezoid_tapered_sidewalls` cannot bypass sidewall v2 validation.
+- Added PRS trajectory guard columns for boundary model version, claim level, wall-distance claim level, flow-geometry claim level, not-propagated trajectory flags, and `sidewall_aware_runtime_status`.
 
 Still blocked in this roadmap:
 
-- sloped-wall reflection and diffusion under Brownian trajectories;
+- validated sloped-wall specular reflection and near-wall diffusion under Brownian trajectories;
 - trapezoid-compatible flow field or flux-weighted sampler;
 - trapezoid-aware electrokinetic wall-distance grid;
 - full optical/reference-field solver output;
