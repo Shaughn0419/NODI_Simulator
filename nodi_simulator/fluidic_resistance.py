@@ -16,10 +16,18 @@ FLUIDIC_RESISTANCE_DIAGNOSTIC_FIELDS = (
     "residence_time_s",
     "fluidic_practicality_penalty",
     "fluidic_clogging_risk_band",
+    "fluidic_clogging_risk_band_claim_level",
+    "not_clogging_rate",
+    "not_time_to_clog",
     "wall_interaction_risk_band",
     "accessible_cross_section_fraction",
     "nearest_wall_gap_D50_nm",
     "nearest_wall_gap_D90_nm",
+    "fluidic_geometry_model",
+    "hydraulic_resistance_model",
+    "hydraulic_resistance_claim_level",
+    "fluidic_geometry_propagation_status",
+    "geometry_not_propagated_to_fluidic_resistance",
     "fluidic_practicality_status",
     "fixed_pressure_diagnostic_status",
 )
@@ -64,6 +72,10 @@ def compute_fluidic_practicality_penalty(
     sim_cfg: SimulationConfig,
 ) -> dict[str, object]:
     """Compute static P0 fluidic practicality diagnostics."""
+    sidewall_active = (
+        str(getattr(sim_cfg, "channel_cross_section_model", "ideal_rectangle"))
+        == "trapezoid_tapered_sidewalls"
+    )
     viscosity = float(medium.viscosity_Pa_s or 1.0e-3)
     area = float(channel.width_m * channel.depth_m)
     resistance = compute_rectangular_channel_hydraulic_resistance(
@@ -125,6 +137,26 @@ def compute_fluidic_practicality_penalty(
         if str(sim_cfg.flow_control_mode) == "fixed_pressure"
         else "diagnostic_only_trajectory_uses_fixed_velocity"
     )
+    if sidewall_active:
+        fluidic_geometry_model = "trapezoid_descriptor_with_rectangular_proxy_fluidics"
+        hydraulic_resistance_model = (
+            "rectangular_hydraulic_resistance_proxy_under_trapezoid"
+        )
+        hydraulic_resistance_claim_level = (
+            "proxy_not_trapezoid_poiseuille_not_accepted_for_formula_use"
+        )
+        fluidic_geometry_status = "geometry_not_propagated_to_fluidic_resistance"
+        fixed_pressure_status = (
+            "proxy_only_rectangular_resistance_under_trapezoid"
+            if str(sim_cfg.flow_control_mode) == "fixed_pressure"
+            else fixed_pressure_status
+        )
+    else:
+        fluidic_geometry_model = "rectangular_static_hydraulic_proxy"
+        hydraulic_resistance_model = "rectangular_hydraulic_resistance_proxy"
+        hydraulic_resistance_claim_level = "rectangular_static_proxy_not_calibrated"
+        fluidic_geometry_status = "rectangle_native_or_non_sidewall_geometry"
+
     return {
         "flow_control_mode": str(sim_cfg.flow_control_mode),
         "hydraulic_resistance_Pa_s_m3": resistance,
@@ -134,10 +166,20 @@ def compute_fluidic_practicality_penalty(
         "residence_time_s": residence_time,
         "fluidic_practicality_penalty": penalty,
         "fluidic_clogging_risk_band": clogging_band,
+        "fluidic_clogging_risk_band_claim_level": (
+            "static_throat_clearance_proxy_not_clogging_rate"
+        ),
+        "not_clogging_rate": True,
+        "not_time_to_clog": True,
         "wall_interaction_risk_band": wall_band,
         "accessible_cross_section_fraction": accessible_fraction,
         "nearest_wall_gap_D50_nm": nearest_gap_d50_nm,
         "nearest_wall_gap_D90_nm": nearest_gap_d90_nm,
+        "fluidic_geometry_model": fluidic_geometry_model,
+        "hydraulic_resistance_model": hydraulic_resistance_model,
+        "hydraulic_resistance_claim_level": hydraulic_resistance_claim_level,
+        "fluidic_geometry_propagation_status": fluidic_geometry_status,
+        "geometry_not_propagated_to_fluidic_resistance": sidewall_active,
         "fluidic_practicality_status": "static_hydraulic_proxy_active",
         "fixed_pressure_diagnostic_status": fixed_pressure_status,
     }

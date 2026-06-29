@@ -17,12 +17,14 @@ from nodi_simulator.cross_section_geometry import (
 from nodi_simulator.data_objects import (
     BASELINE_OPTICAL,
     DEFAULT_SIM_CFG,
+    WATER,
     Channel,
     Particle,
 )
 from nodi_simulator.electrokinetic_transport import (
     build_electrokinetic_transport_diagnostics,
 )
+from nodi_simulator.fluidic_resistance import compute_fluidic_practicality_penalty
 from nodi_simulator.parameter_sweep import (
     _build_observation_signature,
     _sample_initial_positions_block,
@@ -513,4 +515,36 @@ def test_trapezoid_boltzmann_electrokinetic_grid_is_blocked_not_rectangular() ->
     assert diagnostics["boltzmann_weighted_mean_wall_distance_nm"] is None
     assert diagnostics["surface_charge_transport_claim_level"] == (
         "blocked_trapezoid_geometry_not_propagated_to_electrokinetic_transport"
+    )
+
+
+def test_trapezoid_fluidic_resistance_is_marked_rectangular_proxy() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_control_mode="fixed_pressure",
+    )
+
+    diagnostics = compute_fluidic_practicality_penalty(
+        Particle("ev_220nm_tail", radius_m=110.0e-9, n_real=1.37),
+        WATER,
+        Channel(width_m=500.0e-9, depth_m=900.0e-9),
+        cfg,
+    )
+
+    assert diagnostics["geometry_not_propagated_to_fluidic_resistance"] is True
+    assert diagnostics["hydraulic_resistance_model"] == (
+        "rectangular_hydraulic_resistance_proxy_under_trapezoid"
+    )
+    assert diagnostics["hydraulic_resistance_claim_level"] == (
+        "proxy_not_trapezoid_poiseuille_not_accepted_for_formula_use"
+    )
+    assert diagnostics["fluidic_clogging_risk_band_claim_level"] == (
+        "static_throat_clearance_proxy_not_clogging_rate"
+    )
+    assert diagnostics["not_clogging_rate"] is True
+    assert diagnostics["not_time_to_clog"] is True
+    assert diagnostics["fixed_pressure_diagnostic_status"] == (
+        "proxy_only_rectangular_resistance_under_trapezoid"
     )
