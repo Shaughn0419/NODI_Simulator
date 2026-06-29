@@ -10,4 +10,5 @@ G12-REVIEW-08,decision dossier no default approval,PASS_NO_P0_P1,future real des
 G12-REVIEW-09,mutation and forbidden promotion,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
 G12-REVIEW-10,no-auth anti-confusion,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
 G12-REVIEW-11,provenance ledger,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
-G12-REVIEW-12,git/staging hygiene,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-12,COMSOL Gate12 project-head provenance,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-13,git/staging hygiene,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate

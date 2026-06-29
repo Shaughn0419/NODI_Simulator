@@ -4,7 +4,8 @@
     "date": "20260629",
     "nodi_gate11_commit": "e29501c3d26b5ff712870d7bc10a3617bd97ca28",
     "comsol_gate11_commit_expected": "b16b16b8c61e9ceb3a38debc1dc7a2bd4e635962",
-    "comsol_gate11_commit_actual": "b16b16b8c61e9ceb3a38debc1dc7a2bd4e635962",
+    "comsol_gate12_commit_expected": "8823515d220a2a5b25a43f00b998205344e5960f",
+    "comsol_project_head_actual": "8823515d220a2a5b25a43f00b998205344e5960f",
     "comsol_receipt_rows": 11,
     "comsol_receipt_blocking_drift": 0,
     "comsol_receipt_missing_required": 0,
@@ -30,7 +31,7 @@
     "mutation_result_rows": 720,
     "unexpected_pass_count": 0,
     "forbidden_promotion_count": 0,
-    "provenance_rows": 5,
+    "provenance_rows": 6,
     "no_auth_sweep_failures": 0,
     "gate2d_rows": 4,
     "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
@@ -894,7 +895,7 @@
       "artifact_role": "gate11_report_json",
       "artifact_path": "reports\\joint_interface_20260629\\NODI_COMSOL_GATE11_SIDEWALL_REPORT_20260629.json",
       "row_count": "NA",
-      "sha256": "a3e15b5e8e54a2a219fe7f87b1881f386cd6835e3dae9deb183166b52e81da58",
+      "sha256": "8945e7eb5f7ba7548b4599e72ddc1a339769b24820d41b500a5542d78c93e9b4",
       "not_evidence": "true"
     },
     {
@@ -918,7 +919,7 @@
       "artifact_role": "release_candidate_root_hash",
       "artifact_path": "inline:Gate12 release root",
       "row_count": "5",
-      "sha256": "9e5aef9407ee2926192d0a6431e93d2f599992652ed2ef2568cc54f4d761a2c2",
+      "sha256": "35473619906922094175b5aaec2220e0acac2147e74f3455a8e1a35d4f8bfdc6",
       "not_evidence": "true"
     }
   ],
@@ -927,6 +928,7 @@
     "date": "20260629",
     "nodi_gate11_commit": "e29501c3d26b5ff712870d7bc10a3617bd97ca28",
     "comsol_gate11_commit": "b16b16b8c61e9ceb3a38debc1dc7a2bd4e635962",
+    "comsol_gate12_commit": "8823515d220a2a5b25a43f00b998205344e5960f",
     "comsol_descriptor_rows": 11,
     "gate11_mutation_unexpected_pass": 0,
     "gate2d_rows": 4,
@@ -938,7 +940,7 @@
     "runtime_schema": false,
     "production_contract": false,
     "evidence_authorization": false,
-    "release_root_hash": "9e5aef9407ee2926192d0a6431e93d2f599992652ed2ef2568cc54f4d761a2c2"
+    "release_root_hash": "35473619906922094175b5aaec2220e0acac2147e74f3455a8e1a35d4f8bfdc6"
   },
   "release_status": {
     "release_candidate": "RC5.1_SIDEWALL_GEOMETRY_DESCRIPTOR_ADDENDUM_V1_RELEASE_CANDIDATE_REVIEW_ONLY_NO_AUTH",
@@ -17324,7 +17326,7 @@
       "commit": "e29501c3d26b5ff712870d7bc10a3617bd97ca28",
       "artifact_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator（usb）\\reports\\joint_interface_20260629\\NODI_COMSOL_GATE11_SIDEWALL_MANIFEST_20260629.csv",
       "row_count": "35",
-      "sha256": "fc31387e5194770c59c2b4f0625bd1b4ea455dfc022094a71b0c40ed41f662fe",
+      "sha256": "9b28861801fa4889782e0fd90d7f12c5fce1fa0a7a0ca6a05f2d64411e347f23",
       "status": "CURRENT",
       "boundary": "review_only_no_auth"
     },
@@ -17336,7 +17338,7 @@
       "commit": "CURRENT_GATE12_PENDING_COMMIT",
       "artifact_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator（usb）\\reports\\joint_interface_20260629\\NODI_COMSOL_GATE12_SIDEWALL_MANIFEST_20260629.csv",
       "row_count": "35",
-      "sha256": "130979fc90786d51a9b5ec109ae2b308f959d4abddbe44c759aec9314903bd0e",
+      "sha256": "9461101c7046cb8a2c1e5f155f687487d09ceabad9014f96b945db25a93a2eda",
       "status": "CURRENT",
       "boundary": "review_only_no_auth"
     },
@@ -17361,6 +17363,18 @@
       "artifact_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE11_SIDEWALL_MANIFEST_20260629.csv",
       "row_count": "12",
       "sha256": "4b5fbe2e81a941197ba744f3625a2f103cc360ed53dd065259b5e1d96ed23f8b",
+      "status": "CURRENT",
+      "boundary": "review_only_no_auth"
+    },
+    {
+      "provenance_id": "G12J-PROV-006",
+      "side": "COMSOL",
+      "gate": "Gate12",
+      "role": "release candidate",
+      "commit": "8823515d220a2a5b25a43f00b998205344e5960f",
+      "artifact_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE12_SIDEWALL_MANIFEST_20260629.csv",
+      "row_count": "14",
+      "sha256": "6432d05087275975fcab7ff5a6e1d6261bb9af5f15fc939857458adf23e6111c",
       "status": "CURRENT",
       "boundary": "review_only_no_auth"
     }
@@ -17471,6 +17485,13 @@
     },
     {
       "reviewer_id": "G12-REVIEW-12",
+      "dimension": "COMSOL Gate12 project-head provenance",
+      "finding": "PASS_NO_P0_P1",
+      "residual_risk": "future real descriptor binding still needs explicit user authorization",
+      "action": "none_current_gate"
+    },
+    {
+      "reviewer_id": "G12-REVIEW-13",
       "dimension": "git/staging hygiene",
       "finding": "PASS_NO_P0_P1",
       "residual_risk": "future real descriptor binding still needs explicit user authorization",

@@ -335,10 +335,17 @@ def hardening_intake_matrix() -> list[dict[str, str]]:
             "trajectory diagnostic closure/passability scope guard",
             "trajectory diagnostic no-closure-authority guard",
         ),
+        "Clarify sidewall diagnostic provenance scopes": (
+            "trajectory diagnostic closure/passability scope and COMSOL Gate12 provenance guard",
+            "trajectory diagnostic no-closure-authority/project-head provenance guard",
+        ),
     }
     rows: list[dict[str, str]] = []
     for idx, line in enumerate([line for line in output.splitlines() if line], start=1):
         full, short, subject = line.split("\t", 2)
+        changed_file_scope = ";".join(
+            run_git(["diff-tree", "--no-commit-id", "--name-only", "-r", full]).splitlines()
+        )
         guard, impact = guard_keywords.get(
             subject,
             ("sidewall interface/runtime guard hardening", "contract hardening"),
@@ -349,7 +356,7 @@ def hardening_intake_matrix() -> list[dict[str, str]]:
                 "commit": short,
                 "commit_full": full,
                 "subject": subject,
-                "changed_file_scope": "nodi_comsol_next_artifacts.py;tests/test_nodi_comsol_next_artifacts_contracts.py",
+                "changed_file_scope": changed_file_scope,
                 "guard_added": guard,
                 "prs_eas_descriptor_runtime_cache_impact": impact,
                 "implemented_status": "implemented_in_current_HEAD",

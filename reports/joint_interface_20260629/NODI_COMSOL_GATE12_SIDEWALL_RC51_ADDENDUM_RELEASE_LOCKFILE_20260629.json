@@ -3,6 +3,7 @@
   "date": "20260629",
   "nodi_gate11_commit": "e29501c3d26b5ff712870d7bc10a3617bd97ca28",
   "comsol_gate11_commit": "b16b16b8c61e9ceb3a38debc1dc7a2bd4e635962",
+  "comsol_gate12_commit": "8823515d220a2a5b25a43f00b998205344e5960f",
   "comsol_descriptor_rows": 11,
   "gate11_mutation_unexpected_pass": 0,
   "gate2d_rows": 4,
@@ -14,5 +15,5 @@
   "runtime_schema": false,
   "production_contract": false,
   "evidence_authorization": false,
-  "release_root_hash": "9e5aef9407ee2926192d0a6431e93d2f599992652ed2ef2568cc54f4d761a2c2"
+  "release_root_hash": "35473619906922094175b5aaec2220e0acac2147e74f3455a8e1a35d4f8bfdc6"
 }
