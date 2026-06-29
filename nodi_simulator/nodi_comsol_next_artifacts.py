@@ -690,6 +690,7 @@ PRS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
 PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "channel_cross_section_model",
     "cross_section_geometry_version",
+    "geometry_runtime_binding_version",
     "geometry_propagation_status",
     "geometry_not_propagated_reasons",
     "sampler_geometry_model",
@@ -842,6 +843,11 @@ EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "eas_mode",
     "aperture_surrogate_basis",
     "aperture_surrogate_claim_level",
+    "channel_cross_section_model",
+    "cross_section_geometry_version",
+    "geometry_runtime_binding_version",
+    "geometry_propagation_status",
+    "geometry_not_propagated_reasons",
     "optical_solver_trigger_is_result",
     "not_true_W_eff",
     "not_measured_geometry",
@@ -10062,6 +10068,7 @@ def _validate_effective_aperture_sidewall_v2_fields(
         issues,
         require_trapezoid_signature=True,
     )
+    _validate_sidewall_v2_eas_runtime_geometry_context(row, row_index, issues)
     _validate_sidewall_v2_descriptor_context(row, row_index, "EAS-SIDEWALL-V2", issues)
     _validate_constant(
         row,
@@ -10112,6 +10119,50 @@ def _validate_effective_aperture_sidewall_v2_fields(
     for field in EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS:
         if _value(row, field):
             _validate_number_or_blank(row, field, row_index, "EAS-SIDEWALL-V2", issues)
+
+
+def _validate_sidewall_v2_eas_runtime_geometry_context(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> None:
+    channel_model = _value(row, "channel_cross_section_model")
+    if channel_model != "trapezoid_tapered_sidewalls":
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            f"sidewall EAS v2 requires trapezoid_tapered_sidewalls, got {channel_model}",
+        )
+    if not _value(row, "cross_section_geometry_version"):
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            "sidewall EAS v2 row missing cross_section_geometry_version",
+        )
+    if not _value(row, "geometry_runtime_binding_version"):
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            "sidewall EAS v2 row missing geometry_runtime_binding_version",
+        )
+    geometry_status = _value(row, "geometry_propagation_status")
+    if geometry_status not in PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED:
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            f"invalid geometry_propagation_status={geometry_status}",
+        )
+    if geometry_status != "propagated" and not _value(row, "geometry_not_propagated_reasons"):
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            "non-propagated sidewall EAS row lacks geometry_not_propagated_reasons",
+        )
 
 
 def _validate_solver_trigger_contract(

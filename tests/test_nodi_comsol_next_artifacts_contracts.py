@@ -312,6 +312,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         particle_kind="exosome_synthetic_large_tail",
         channel_cross_section_model="trapezoid_tapered_sidewalls",
         cross_section_geometry_version="trapezoid_straight_sidewall_v1",
+        geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
         geometry_propagation_status="propagated",
         geometry_not_propagated_reasons="",
         sampler_geometry_model="trapezoid_accessible_area_v1",
@@ -405,6 +406,11 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         rank_under_surrogate="",
         not_qch_weighted="true",
         not_detection_probability="true",
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        cross_section_geometry_version="trapezoid_straight_sidewall_v1",
+        geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
+        geometry_propagation_status="propagated",
+        geometry_not_propagated_reasons="",
         **_sidewall_observation_cache_fields(),
         **_sidewall_descriptor_context_fields(),
     )
@@ -534,6 +540,15 @@ def test_position_response_sidewall_v2_requires_complete_geometry_fields() -> No
     issues = validate_position_response_surface_rows(
         [_valid_prs_row(channel_cross_section_model="trapezoid_tapered_sidewalls")]
     )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_runtime_binding_version() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["geometry_runtime_binding_version"]
+
+    issues = validate_position_response_surface_rows([row])
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
@@ -885,6 +900,16 @@ def test_effective_aperture_accepts_sidewall_v2_fields_when_consistent() -> None
 def test_effective_aperture_sidewall_v2_requires_solver_trigger_result_guard() -> None:
     row = _valid_eas_sidewall_v2_row()
     del row["optical_solver_trigger_is_result"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_runtime_geometry_context() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["channel_cross_section_model"]
+    del row["geometry_runtime_binding_version"]
 
     issues = validate_effective_aperture_surrogate_rows([row])
 
