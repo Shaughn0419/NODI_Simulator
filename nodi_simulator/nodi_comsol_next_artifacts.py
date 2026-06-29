@@ -794,6 +794,8 @@ EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "not_true_W_eff",
     "not_measured_geometry",
     "not_optical_solver_output",
+    "not_qch_weighted",
+    "not_detection_probability",
 )
 EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS: tuple[str, ...] = (
     "W_eff_optical_surrogate_nm",
@@ -9384,6 +9386,29 @@ def _validate_effective_aperture_sidewall_v2_fields(
         "EAS-SIDEWALL-V2",
         issues,
     )
+    _validate_bool_equals(
+        row,
+        "not_qch_weighted",
+        True,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+    )
+    _validate_bool_equals(
+        row,
+        "not_detection_probability",
+        True,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+    )
+    if _value(row, "rank_under_surrogate"):
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            "sidewall EAS v2 row must not use rank_under_surrogate",
+        )
     if not any(_value(row, field) for field in EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS):
         _issue(
             issues,

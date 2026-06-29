@@ -352,6 +352,9 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         aperture_surrogate_claim_level="surrogate_sensitivity_only",
         W_eff_optical_surrogate_nm=480.0,
         optical_solver_trigger_is_result="false",
+        rank_under_surrogate="",
+        not_qch_weighted="true",
+        not_detection_probability="true",
     )
     row.update(overrides)
     return row
@@ -692,6 +695,27 @@ def test_effective_aperture_sidewall_v2_rejects_solver_trigger_as_result() -> No
 def test_effective_aperture_sidewall_v2_requires_specific_surrogate_width() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(W_eff_optical_surrogate_nm="")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_rank_promotion() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(rank_under_surrogate=1)]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_no_probability_claim_guards() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                not_qch_weighted="false",
+                not_detection_probability="false",
+            )
+        ]
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
