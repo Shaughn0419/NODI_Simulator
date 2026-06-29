@@ -954,6 +954,49 @@ def test_geometry_descriptor_v2_rejects_min_aperture_passability_evidence() -> N
     _assert_has_issue(issues, "DESC-V2")
 
 
+def test_geometry_descriptor_v2_rejects_unbacked_measured_geometry_claim() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [_valid_descriptor_v2_row(geometry_claim_level="measured_geometry")]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
+def test_geometry_descriptor_v2_accepts_validated_measured_geometry_metadata() -> None:
+    assert (
+        validate_geometry_descriptor_rows(
+            [
+                _valid_descriptor_v2_row(
+                    geometry_claim_level="measured_geometry",
+                    metrology_status="validated",
+                    not_measured_geometry="false",
+                    geometry_profile_source="fibsem",
+                    geometry_profile_sha256="a" * 64,
+                    measured_profile_path="profiles/fibsem_sidewall.csv",
+                )
+            ]
+        )
+        == []
+    )
+
+
+def test_geometry_descriptor_v2_rejects_comsol_descriptor_as_measured_profile() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [
+            _valid_descriptor_v2_row(
+                geometry_claim_level="measured_geometry",
+                metrology_status="validated",
+                not_measured_geometry="false",
+                geometry_profile_source="comsol_descriptor",
+                geometry_profile_sha256="a" * 64,
+                measured_profile_path="profiles/fibsem_sidewall.csv",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
 def test_geometry_descriptor_rejects_exact_sidewall_claim_columns() -> None:
     issues = validate_geometry_descriptor_rows(
         [_valid_descriptor_row(W_eff=500.0, route_score=0.7)]

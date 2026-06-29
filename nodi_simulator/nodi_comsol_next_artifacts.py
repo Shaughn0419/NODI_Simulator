@@ -1096,6 +1096,15 @@ DESCRIPTOR_V2_PASSABILITY_EVIDENCE_FIELDS = frozenset(
         "particle_admission_status",
     }
 )
+DESCRIPTOR_V2_NON_MEASURED_PROFILE_SOURCES = frozenset(
+    {
+        "parameterized",
+        "comsol_descriptor",
+        "descriptor_only",
+        "nominal",
+        "design",
+    }
+)
 DESCRIPTOR_UNAVAILABLE_FIELDS = frozenset(
     {
         "bottom_cd_bias_nm",
@@ -1639,6 +1648,7 @@ def _validate_geometry_descriptor_v2_sidewall_fields(
                 "DESC-V2",
                 f"{field} cannot be used with descriptor min aperture",
             )
+    _validate_descriptor_v2_measured_geometry_claim(row, row_index, issues)
 
 
 def _validate_descriptor_v2_runtime_top_binding(
@@ -1665,6 +1675,78 @@ def _validate_descriptor_v2_runtime_top_binding(
             "runtime_top_aperture_nm",
             issues,
         )
+
+
+def _validate_descriptor_v2_measured_geometry_claim(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> None:
+    geometry_claim_level = _value(row, "geometry_claim_level").lower()
+    metrology_status = _value(row, "metrology_status").lower()
+    not_measured_geometry: bool | None = None
+    if "not_measured_geometry" in row:
+        not_measured_geometry = _bool_field(
+            row,
+            "not_measured_geometry",
+            row_index,
+            "DESC-V2",
+            issues,
+        )
+
+    measured_claim_requested = (
+        geometry_claim_level == "measured_geometry"
+        or metrology_status == "validated"
+        or not_measured_geometry is False
+    )
+    if not measured_claim_requested:
+        return
+
+    if geometry_claim_level != "measured_geometry":
+        _issue(
+            issues,
+            row_index,
+            "DESC-V2",
+            "validated/measured profile metadata lacks geometry_claim_level=measured_geometry",
+        )
+    if metrology_status != "validated":
+        _issue(
+            issues,
+            row_index,
+            "DESC-V2",
+            "measured geometry claim lacks metrology_status=validated",
+        )
+    if not_measured_geometry is True:
+        _issue(
+            issues,
+            row_index,
+            "DESC-V2",
+            "measured geometry claim carries not_measured_geometry=true",
+        )
+
+    geometry_profile_source = _value(row, "geometry_profile_source")
+    geometry_profile_sha256 = _value(row, "geometry_profile_sha256")
+    measured_profile_path = _value(row, "measured_profile_path")
+    if not geometry_profile_source:
+        _issue(issues, row_index, "DESC-V2", "measured geometry lacks geometry_profile_source")
+    elif geometry_profile_source.lower() in DESCRIPTOR_V2_NON_MEASURED_PROFILE_SOURCES:
+        _issue(
+            issues,
+            row_index,
+            "DESC-V2",
+            "measured geometry uses non-measured geometry_profile_source",
+        )
+    if not geometry_profile_sha256:
+        _issue(issues, row_index, "DESC-V2", "measured geometry lacks geometry_profile_sha256")
+    elif not SHA256_RE.fullmatch(geometry_profile_sha256):
+        _issue(
+            issues,
+            row_index,
+            "DESC-V2",
+            "measured geometry_profile_sha256 is not a sha256",
+        )
+    if not measured_profile_path:
+        _issue(issues, row_index, "DESC-V2", "measured geometry lacks measured_profile_path")
 
 
 def position_response_smoke_manifest_rows() -> list[dict[str, str]]:
