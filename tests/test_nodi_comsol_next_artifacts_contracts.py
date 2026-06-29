@@ -324,7 +324,20 @@ def _sidewall_observation_cache_fields(
             geometry_propagation_scope = "rectangle_native_or_non_sidewall_geometry"
     trapezoid_guard_fragments = (
         "|cross_section_geometry_version=trapezoid_straight_sidewall_v1"
+        "|sidewall_angle_convention=sidewall_angle_from_substrate_plane_90deg_vertical"
+        "|sidewall_deg_comsol=85.0"
+        "|W_top_semantics=comsol_descriptor"
+        "|runtime_top_aperture_nm=unknown"
+        f"|source_geometry_descriptor_sha={GEOMETRY_DESCRIPTOR_SHA256}"
         f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
+        "|geometry_runtime_binding_version=geometry_runtime_binding_manifest_v1"
+        "|trapezoid_top_width_m=5e-07"
+        "|trapezoid_depth_m=9e-07"
+        "|trapezoid_bottom_width_unclipped_m=3.425204056533369e-07"
+        "|trapezoid_bottom_width_runtime_clipped_m=3.425204056533369e-07"
+        "|trapezoid_closure_status=open"
+        "|trapezoid_closure_policy=preserve_unclipped_descriptor"
+        "|trapezoid_runtime_guard_status=none"
         f"|geometry_propagation_scope={geometry_propagation_scope}"
         "|particle_radius_m=1.1e-07"
         "|center_accessible_support_model=wall_normal_half_plane_offset_v1"
@@ -1538,6 +1551,42 @@ def test_position_response_sidewall_v2_requires_signature_guard_fragments() -> N
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_signature_top_semantics_mismatch() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "W_top_semantics=comsol_descriptor",
+        "W_top_semantics=mask_width",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_signature_bottom_width_mismatch() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "trapezoid_bottom_width_unclipped_m=3.425204056533369e-07",
+        "trapezoid_bottom_width_unclipped_m=3e-07",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_signature_closure_policy_mismatch() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "trapezoid_closure_policy=preserve_unclipped_descriptor",
+        "trapezoid_closure_policy=blocked_runtime",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_requires_runtime_guard_columns() -> None:
     row = _valid_prs_sidewall_v2_row()
     del row["fluidic_network_not_qch_weighted"]
@@ -1960,6 +2009,18 @@ def test_effective_aperture_sidewall_v2_rejects_signature_angle_mismatch() -> No
     row["observation_signature"] = str(row["observation_signature"]).replace(
         "sidewall_taper_angle_deg=5.000000000e+00",
         "sidewall_taper_angle_deg=6.0",
+    )
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_signature_bottom_width_mismatch() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "trapezoid_bottom_width_unclipped_m=3.425204056533369e-07",
+        "trapezoid_bottom_width_unclipped_m=3e-07",
     )
 
     issues = validate_effective_aperture_surrogate_rows([row])

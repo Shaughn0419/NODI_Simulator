@@ -97,6 +97,7 @@ Completed NODI-side guardrails:
 - Added EAS sidewall v2 guards requiring generic `W_eff_surrogate_nm` to be an explicit numeric alias of a named sidewall-specific surrogate, while eta/rank-source fields remain blank or claim-labeled as disabled/no-rank legacy provenance.
 - Added propagated trapezoid PRS allowlists so sampler, flow, and trajectory-boundary models cannot be blank or silently upgraded beyond the implemented `trapezoid_accessible_area_v1`, `plug`, and declared pure-advection/projection-boundary states.
 - Added runtime top-aperture binding guards so `mask_width`, `top_cd`, and `post_bias_top_cd` descriptor semantics cannot be used as propagated/runtime aperture inputs unless `runtime_top_aperture_nm`, `top_cd_bias_nm`, and `top_cd_bias_source` are present and numerically consistent; PRS/EAS sidewall v2 descriptor-context rows inherit the same hard fail.
+- Added PRS/EAS sidewall v2 observation-signature binding for descriptor identity fields including angle convention, COMSOL angle, `W_top_semantics`, source descriptor hash, geometry runtime binding version, top/depth/bottom dimensions, closure status, closure policy, and runtime guard status.
 
 Still blocked in this roadmap:
 
