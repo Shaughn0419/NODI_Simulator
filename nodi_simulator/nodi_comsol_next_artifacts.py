@@ -851,6 +851,7 @@ EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "optical_solver_triggered",
     "optical_solver_trigger_reason",
     "optical_solver_trigger_is_result",
+    "optical_geometry_claim_level",
     "not_true_W_eff",
     "not_measured_geometry",
     "not_optical_solver_output",
@@ -865,6 +866,9 @@ EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS: tuple[str, ...] = (
     "top_bottom_average_heuristic_nm",
     "center_accessible_aperture_surrogate_nm",
     "min_aperture_conservative_nm",
+)
+EAS_SIDEWALL_V2_OPTICAL_GEOMETRY_CLAIM_LEVEL_ALLOWED = frozenset(
+    {"surrogate", "solver_required"}
 )
 
 PRS_APPROVED_ROUTE_MATRIX = frozenset(
@@ -10089,6 +10093,14 @@ def _validate_effective_aperture_sidewall_v2_fields(
         issues,
     )
     _validate_sidewall_v2_eas_optical_solver_trigger(row, row_index, issues)
+    _validate_enum(
+        row,
+        "optical_geometry_claim_level",
+        EAS_SIDEWALL_V2_OPTICAL_GEOMETRY_CLAIM_LEVEL_ALLOWED,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+    )
     _validate_bool_equals(
         row,
         "not_qch_weighted",
