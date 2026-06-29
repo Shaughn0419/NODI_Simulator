@@ -98,6 +98,7 @@ Completed NODI-side guardrails:
 - Added propagated trapezoid PRS allowlists so sampler, flow, and trajectory-boundary models cannot be blank or silently upgraded beyond the implemented `trapezoid_accessible_area_v1`, `plug`, and declared pure-advection/projection-boundary states.
 - Added runtime top-aperture binding guards so `mask_width`, `top_cd`, and `post_bias_top_cd` descriptor semantics cannot be used as propagated/runtime aperture inputs unless `runtime_top_aperture_nm`, `top_cd_bias_nm`, and `top_cd_bias_source` are present and numerically consistent; PRS/EAS sidewall v2 descriptor-context rows inherit the same hard fail.
 - Added PRS/EAS sidewall v2 observation-signature binding for descriptor identity fields including angle convention, COMSOL angle, `W_top_semantics`, source descriptor hash, geometry runtime binding version, top/depth/bottom dimensions, closure status, closure policy, and runtime guard status.
+- Hardened runtime channel-geometry diagnostics so `measured_profile_lookup` remains blocked metadata-only until an actual profile loader/hash/validator exists; `measured_profile_loaded`, `measured_profile_validated`, `measured_profile_sha256`, and runtime status are now emitted and included in observation signatures.
 
 Still blocked in this roadmap:
 

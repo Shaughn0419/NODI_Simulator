@@ -282,6 +282,57 @@ def test_channel_diagnostics_keep_ideal_rectangle_wall_distance_identity() -> No
     assert diagnostics["cross_section_geometry_version"] == "ideal_rectangle_v1"
 
 
+def test_measured_profile_lookup_without_path_is_blocked() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="measured_profile_lookup",
+        measured_profile_path=None,
+    )
+    diagnostics = build_channel_geometry_diagnostics(
+        Particle("ev_220nm_tail", radius_m=110.0e-9, n_real=1.37),
+        Channel(width_m=500.0e-9, depth_m=700.0e-9),
+        BASELINE_OPTICAL,
+        cfg,
+    )
+
+    assert diagnostics["measured_profile_configured"] is False
+    assert diagnostics["measured_profile_loaded"] is False
+    assert diagnostics["measured_profile_validated"] is False
+    assert diagnostics["measured_profile_sha256"] == ""
+    assert diagnostics["measured_profile_runtime_status"] == "blocked_missing_profile_path"
+    assert diagnostics["geometry_claim_level"] == "blocked_missing_measured_profile"
+    assert diagnostics["channel_geometry_diagnostic_gate_passed"] is False
+
+
+def test_measured_profile_lookup_with_path_stays_blocked_until_loaded_and_validated() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="measured_profile_lookup",
+        measured_profile_path="profiles/fibsem_sidewall.csv",
+    )
+    diagnostics = build_channel_geometry_diagnostics(
+        Particle("ev_220nm_tail", radius_m=110.0e-9, n_real=1.37),
+        Channel(width_m=500.0e-9, depth_m=700.0e-9),
+        BASELINE_OPTICAL,
+        cfg,
+    )
+
+    assert diagnostics["measured_profile_configured"] is True
+    assert diagnostics["measured_profile_loaded"] is False
+    assert diagnostics["measured_profile_validated"] is False
+    assert diagnostics["measured_profile_sha256"] == ""
+    assert diagnostics["measured_profile_runtime_status"] == (
+        "blocked_profile_not_loaded_or_validated"
+    )
+    assert diagnostics["geometry_model_discrepancy_flag"] == (
+        "measured_profile_lookup_configured_not_loaded_or_validated"
+    )
+    assert diagnostics["geometry_claim_level"] == (
+        "blocked_measured_profile_not_loaded_or_validated"
+    )
+    assert diagnostics["channel_geometry_diagnostic_gate_passed"] is False
+
+
 def test_geometry_closed_trapezoid_cannot_enter_runtime_sampler() -> None:
     cfg = replace(
         DEFAULT_SIM_CFG,
@@ -1268,6 +1319,10 @@ def test_observation_signature_separates_secondary_geometry_descriptors() -> Non
     assert "width_along_channel_cv=0.000000000e+00" in base_signature
     assert "depth_along_channel_cv=0.000000000e+00" in base_signature
     assert "measured_profile_path=none" in base_signature
+    assert "measured_profile_loaded=False" in base_signature
+    assert "measured_profile_validated=False" in base_signature
+    assert "measured_profile_sha256=" in base_signature
+    assert "measured_profile_runtime_status=not_requested" in base_signature
 
     for mutated_cfg in (
         replace(base_cfg, corner_radius_nm=12.0),
@@ -1281,6 +1336,25 @@ def test_observation_signature_separates_secondary_geometry_descriptors() -> Non
                 "operator=test",
                 base_reference,
                 mutated_cfg,
+                particle_radius_m=110.0e-9,
+            )
+            != base_signature
+        )
+
+    for mutated_reference in (
+        {**base_reference, "measured_profile_loaded": True},
+        {**base_reference, "measured_profile_validated": True},
+        {**base_reference, "measured_profile_sha256": "c" * 64},
+        {
+            **base_reference,
+            "measured_profile_runtime_status": "blocked_profile_not_loaded_or_validated",
+        },
+    ):
+        assert (
+            _build_observation_signature(
+                "operator=test",
+                mutated_reference,
+                base_cfg,
                 particle_radius_m=110.0e-9,
             )
             != base_signature

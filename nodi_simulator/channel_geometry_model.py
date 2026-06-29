@@ -30,6 +30,10 @@ CHANNEL_GEOMETRY_DIAGNOSTIC_FIELDS = (
     "depth_along_channel_cv",
     "measured_profile_path",
     "measured_profile_configured",
+    "measured_profile_loaded",
+    "measured_profile_validated",
+    "measured_profile_sha256",
+    "measured_profile_runtime_status",
     "ideal_accessible_area_m2",
     "ideal_phase_mask_area_m2",
     "effective_accessible_area_m2",
@@ -127,6 +131,10 @@ def build_channel_geometry_diagnostics(
     depth_cv = _getattr_float(sim_cfg, "depth_along_channel_cv", 0.0)
     measured_profile_path = getattr(sim_cfg, "measured_profile_path", None)
     measured_profile_configured = bool(measured_profile_path)
+    measured_profile_loaded = False
+    measured_profile_validated = False
+    measured_profile_sha256 = ""
+    measured_profile_runtime_status = "not_requested"
 
     radius_m = float(particle.radius_m)
     ideal_phase_mask_area_m2 = float(channel.width_m) * float(channel.depth_m)
@@ -215,16 +223,24 @@ def build_channel_geometry_diagnostics(
         discrepancy = "blocked_measured_profile_path_missing"
         claim_level = "blocked_missing_measured_profile"
         geometry_surrogate_status = "measured_profile_lookup_blocked_missing_path"
+        measured_profile_runtime_status = "blocked_missing_profile_path"
     elif model == "rounded_rectangle":
         discrepancy = "active_rounded_rectangle_surrogate_deviates_from_ideal_rectangle"
         claim_level = "active_parameterized_geometry_surrogate_not_measured"
     elif model == "trapezoid_tapered_sidewalls":
         discrepancy = "active_trapezoid_sidewall_surrogate_deviates_from_ideal_rectangle"
         claim_level = "active_parameterized_geometry_surrogate_not_measured"
+    elif model == "measured_profile_lookup":
+        discrepancy = "measured_profile_lookup_configured_not_loaded_or_validated"
+        claim_level = "blocked_measured_profile_not_loaded_or_validated"
+        geometry_surrogate_status = (
+            "measured_profile_lookup_metadata_only_not_loaded_or_validated"
+        )
+        measured_profile_runtime_status = "blocked_profile_not_loaded_or_validated"
     elif model in CHANNEL_CROSS_SECTION_MODEL_OPTIONS:
-        discrepancy = "measured_profile_lookup_configured_not_loaded_in_p1_surrogate"
+        discrepancy = "configured_geometry_model_not_loaded_in_p1_surrogate"
         claim_level = "parameterized_geometry_surrogate_not_measured"
-        geometry_surrogate_status = "measured_profile_lookup_metadata_only"
+        geometry_surrogate_status = "parameterized_geometry_metadata_only"
     else:
         discrepancy = "blocked_unknown_channel_cross_section_model"
         claim_level = "blocked_unknown_geometry_model"
@@ -238,7 +254,7 @@ def build_channel_geometry_diagnostics(
     )
     gate_passed = bool(
         model in CHANNEL_CROSS_SECTION_MODEL_OPTIONS
-        and (model != "measured_profile_lookup" or measured_profile_configured)
+        and model != "measured_profile_lookup"
     )
 
     return {
@@ -250,6 +266,10 @@ def build_channel_geometry_diagnostics(
         "depth_along_channel_cv": depth_cv,
         "measured_profile_path": measured_profile_path,
         "measured_profile_configured": measured_profile_configured,
+        "measured_profile_loaded": measured_profile_loaded,
+        "measured_profile_validated": measured_profile_validated,
+        "measured_profile_sha256": measured_profile_sha256,
+        "measured_profile_runtime_status": measured_profile_runtime_status,
         "ideal_accessible_area_m2": ideal_accessible_area_m2,
         "ideal_phase_mask_area_m2": ideal_phase_mask_area_m2,
         "effective_accessible_area_m2": effective_accessible_area_m2,
