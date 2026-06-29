@@ -9457,6 +9457,11 @@ def _validate_position_response_sidewall_v2_fields(
         issues,
         expected_family="prs",
     )
+    _validate_prs_sidewall_v2_package_c_wall_distance_binding(
+        row,
+        row_index,
+        issues,
+    )
     _validate_sidewall_v2_artifact_metadata(
         row,
         row_index,
@@ -10334,6 +10339,42 @@ def _validate_sidewall_v2_package_d_precheck_binding(
             row_index,
             rule_id,
             f"Package D precheck binding failed: {precheck_issue}",
+        )
+
+
+def _validate_prs_sidewall_v2_package_c_wall_distance_binding(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> None:
+    if _value(row, "channel_cross_section_model") != "trapezoid_tapered_sidewalls":
+        return
+    wall_distance_basis_active = any(
+        "wall_distance" in _value(row, field).lower()
+        for field in ("bin_basis", "source_bin_basis")
+    )
+    if not wall_distance_basis_active:
+        return
+    includes_near_wall = _bool_field(
+        row,
+        "includes_trajectory_near_wall_metrics",
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+    )
+    if includes_near_wall is not True:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "wall-distance PRS bin requires includes_trajectory_near_wall_metrics=true",
+        )
+    if _value(row, "package_C_validation_status") != "pass":
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "wall-distance PRS bin requires package_C_validation_status=pass",
         )
 
 

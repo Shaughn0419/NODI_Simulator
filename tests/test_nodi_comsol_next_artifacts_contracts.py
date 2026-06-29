@@ -545,7 +545,11 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         source_bin_id="edge_00",
         **_sidewall_artifact_metadata_fields("NODI_POSITION_RESPONSE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
-        **_sidewall_package_d_precheck_fields("prs"),
+        **_sidewall_package_d_precheck_fields(
+            "prs",
+            includes_trajectory_near_wall_metrics="true",
+            package_C_validation_status="pass",
+        ),
         **_sidewall_observation_cache_fields(
             geometry_propagation_scope=(
                 "particle_center_support_only_not_reference_fluidic_electrokinetic"
@@ -926,6 +930,19 @@ def test_position_response_sidewall_v2_rejects_blocked_precheck_status_alone() -
 def test_position_response_sidewall_v2_rejects_eas_package_d_target_family() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(target_artifact_family="eas")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_package_c_for_wall_distance_bins() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                includes_trajectory_near_wall_metrics="false",
+                package_C_validation_status="not_applicable_for_this_artifact",
+            )
+        ]
     )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
