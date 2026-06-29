@@ -8,6 +8,7 @@ import math
 
 TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION = "trapezoid_straight_sidewall_v1"
 CENTER_ACCESSIBLE_SUPPORT_MODEL = "wall_normal_half_plane_offset_v1"
+TRAPEZOID_WALL_DISTANCE_MODEL = "trapezoid_signed_wall_distance_v1"
 DEFAULT_CLOSURE_POLICY = "preserve_unclipped_descriptor"
 DEFAULT_NEAR_CLOSED_THRESHOLD_M = 80.0e-9
 
@@ -116,6 +117,34 @@ class TrapezoidCrossSection:
 
     def nearest_wall_distance_m(self, x_m: float, u_m: float) -> float:
         return min(self.wall_distances_m(x_m, u_m).values())
+
+    def particle_wall_gap_diagnostics_m(
+        self,
+        x_m: float,
+        u_m: float,
+        particle_radius_m: float,
+    ) -> dict[str, float | str]:
+        """Return geometry-only wall distance and particle surface-gap diagnostics."""
+        radius_m = float(particle_radius_m)
+        if radius_m < 0.0:
+            raise ValueError(f"particle_radius_m must be non-negative, got {radius_m}")
+
+        distances_m = self.wall_distances_m(x_m, u_m)
+        nearest_wall_id = min(distances_m, key=distances_m.__getitem__)
+        d_nearest_wall_m = distances_m[nearest_wall_id]
+        return {
+            "wall_distance_model": TRAPEZOID_WALL_DISTANCE_MODEL,
+            "wall_distance_claim_level": (
+                "geometry_distance_primitive_not_hindered_diffusion"
+            ),
+            "d_top_m": distances_m["top"],
+            "d_bottom_m": distances_m["bottom"],
+            "d_side_left_m": distances_m["left_side"],
+            "d_side_right_m": distances_m["right_side"],
+            "d_nearest_wall_m": d_nearest_wall_m,
+            "nearest_wall_id": nearest_wall_id,
+            "surface_gap_for_particle_m": d_nearest_wall_m - radius_m,
+        }
 
     def center_accessible_width_at_depth_m(
         self,

@@ -10,6 +10,7 @@ from nodi_simulator.channel_geometry_model import build_channel_geometry_diagnos
 from nodi_simulator.cross_section_geometry import (
     CENTER_ACCESSIBLE_SUPPORT_MODEL,
     TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+    TRAPEZOID_WALL_DISTANCE_MODEL,
     TrapezoidCrossSection,
     comsol_sidewall_deg_to_nodi_taper_deg,
     nodi_taper_deg_to_comsol_sidewall_deg,
@@ -92,6 +93,43 @@ def test_particle_center_support_uses_wall_normal_sidewall_offset() -> None:
 
     assert geom.contains_particle_center(x_limit_m - 1.0e-12, u_m, radius_m)
     assert not geom.contains_particle_center(x_limit_m + 1.0e-10, u_m, radius_m)
+
+
+def test_particle_wall_gap_diagnostics_use_trapezoid_wall_normals() -> None:
+    geom = TrapezoidCrossSection(
+        top_width_m=500.0e-9,
+        depth_m=900.0e-9,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+    )
+    radius_m = 110.0e-9
+    u_m = 450.0e-9
+    side_norm = math.sqrt(1.0 + geom.k_taper**2)
+    expected_side_distance_m = geom.half_width_at_depth_m(u_m) / side_norm
+
+    diagnostics = geom.particle_wall_gap_diagnostics_m(0.0, u_m, radius_m)
+
+    assert diagnostics["wall_distance_model"] == TRAPEZOID_WALL_DISTANCE_MODEL
+    assert diagnostics["wall_distance_claim_level"] == (
+        "geometry_distance_primitive_not_hindered_diffusion"
+    )
+    assert diagnostics["d_top_m"] == pytest.approx(450.0e-9)
+    assert diagnostics["d_bottom_m"] == pytest.approx(450.0e-9)
+    assert diagnostics["d_side_left_m"] == pytest.approx(expected_side_distance_m)
+    assert diagnostics["d_side_right_m"] == pytest.approx(expected_side_distance_m)
+    assert diagnostics["d_nearest_wall_m"] == pytest.approx(expected_side_distance_m)
+    assert diagnostics["nearest_wall_id"] == "left_side"
+    assert diagnostics["surface_gap_for_particle_m"] == pytest.approx(
+        expected_side_distance_m - radius_m
+    )
+
+    x_limit_m = geom.half_width_at_depth_m(u_m) - radius_m * side_norm
+    outside = geom.particle_wall_gap_diagnostics_m(
+        x_limit_m + 1.0e-9,
+        u_m,
+        radius_m,
+    )
+    assert outside["surface_gap_for_particle_m"] < 0.0
+    assert not geom.contains_particle_center(x_limit_m + 1.0e-9, u_m, radius_m)
 
 
 def test_center_accessible_width_blocks_too_deep_tail_particle_slice() -> None:

@@ -82,6 +82,7 @@ Completed NODI-side guardrails:
 - Added Package B particle-center support slice oracle for `open` / `narrow` / `blocked` status and steric block reasons, then routed trapezoid sampler diagnostics through that oracle.
 - Added initial-position sampler support model, particle-center support status, and steric block reason to observation signatures so sampler-support diagnostics cannot reuse stale cache identities.
 - Added PRS sidewall v2 validator checks requiring initial-position sampler-support signature fragments and binding `sampler_support_model` to `initial_position_sampler_support_model`; EAS sidewall v2 remains aperture-surrogate scoped and is not forced to carry PRS bin semantics.
+- Added a trapezoid wall-distance / particle surface-gap primitive that emits nearest-wall geometry diagnostics only; it is not a hindered-diffusion, adhesion, wet-pass, clogging, recovery, or passability model.
 
 Still blocked in this roadmap:
 
