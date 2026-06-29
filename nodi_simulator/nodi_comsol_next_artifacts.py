@@ -1087,6 +1087,15 @@ DESCRIPTOR_V2_CLOSURE_POLICY = frozenset(
         "blocked_runtime",
     }
 )
+DESCRIPTOR_V2_PASSABILITY_EVIDENCE_FIELDS = frozenset(
+    {
+        "min_aperture_passability_evidence",
+        "min_aperture_descriptor_passability_evidence",
+        "ev_passability_evidence",
+        "particle_passability_evidence",
+        "particle_admission_status",
+    }
+)
 DESCRIPTOR_UNAVAILABLE_FIELDS = frozenset(
     {
         "bottom_cd_bias_nm",
@@ -1536,7 +1545,14 @@ def _validate_geometry_descriptor_v2_sidewall_fields(
         "DESC-V2",
         issues,
     )
-    _float_field(row, "min_aperture_descriptor_nm", row_index, "DESC-V2", issues)
+    min_aperture_descriptor_nm = _float_field(
+        row,
+        "min_aperture_descriptor_nm",
+        row_index,
+        "DESC-V2",
+        issues,
+    )
+    d_inscribed_nm = _float_field(row, "D_inscribed_nm", row_index, "DESC-V2", issues)
     if (
         sidewall_deg is not None
         and w_top_nm is not None
@@ -1590,6 +1606,39 @@ def _validate_geometry_descriptor_v2_sidewall_fields(
             )
         if not _value(row, "closure_policy"):
             _issue(issues, row_index, "DESC-V2", "nonpositive bottom width lacks closure_policy")
+    if (
+        w_bottom_unclipped_nm is not None
+        and d_inscribed_nm is not None
+        and min_aperture_descriptor_nm is not None
+    ):
+        expected_min_aperture = min(w_bottom_unclipped_nm, d_inscribed_nm)
+        if not math.isclose(
+            min_aperture_descriptor_nm,
+            expected_min_aperture,
+            rel_tol=1.0e-9,
+            abs_tol=5.0e-2,
+        ):
+            _issue(
+                issues,
+                row_index,
+                "DESC-V2",
+                "min_aperture_descriptor_nm does not match unclipped descriptor aperture",
+            )
+        if expected_min_aperture < 0.0 and min_aperture_descriptor_nm >= 0.0:
+            _issue(
+                issues,
+                row_index,
+                "DESC-V2",
+                "negative min_aperture_descriptor_nm was clipped",
+            )
+    for field in DESCRIPTOR_V2_PASSABILITY_EVIDENCE_FIELDS:
+        if field in row and _value(row, field):
+            _issue(
+                issues,
+                row_index,
+                "DESC-V2",
+                f"{field} cannot be used with descriptor min aperture",
+            )
 
 
 def _validate_descriptor_v2_runtime_top_binding(

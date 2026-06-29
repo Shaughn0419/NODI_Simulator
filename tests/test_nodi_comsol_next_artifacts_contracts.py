@@ -927,6 +927,33 @@ def test_geometry_descriptor_v2_rejects_runtime_clipped_bottom_mismatch() -> Non
     _assert_has_issue(issues, "DESC-V2")
 
 
+def test_geometry_descriptor_v2_rejects_clipped_negative_min_aperture_descriptor() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [
+            _valid_descriptor_v2_row(
+                sidewall_deg_comsol=70.0,
+                D_nm=700.0,
+                min_aperture_nm=0.0,
+                min_aperture_descriptor_nm=0.0,
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
+def test_geometry_descriptor_v2_rejects_min_aperture_passability_evidence() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [
+            _valid_descriptor_v2_row(
+                min_aperture_descriptor_passability_evidence="particle_admitted"
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
 def test_geometry_descriptor_rejects_exact_sidewall_claim_columns() -> None:
     issues = validate_geometry_descriptor_rows(
         [_valid_descriptor_row(W_eff=500.0, route_score=0.7)]
