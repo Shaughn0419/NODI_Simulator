@@ -245,6 +245,10 @@ def test_channel_diagnostics_emit_unclipped_and_runtime_clipped_bottom_widths() 
     assert diagnostics["trapezoid_closure_policy"] == "preserve_unclipped_descriptor"
     assert diagnostics["trapezoid_runtime_guard_status"] == "validation_guard"
     assert diagnostics["center_accessible_support_model"] == CENTER_ACCESSIBLE_SUPPORT_MODEL
+    assert diagnostics["wall_distance_model"] == TRAPEZOID_WALL_DISTANCE_MODEL
+    assert diagnostics["wall_distance_claim_level"] == (
+        "geometry_distance_primitive_not_hindered_diffusion"
+    )
     assert (
         diagnostics["cross_section_geometry_version"]
         == TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION
@@ -253,6 +257,23 @@ def test_channel_diagnostics_emit_unclipped_and_runtime_clipped_bottom_widths() 
         "trapezoid_center_accessible_area_m2"
     ]
     assert diagnostics["effective_accessible_area_m2"] > 0.0
+
+
+def test_channel_diagnostics_keep_ideal_rectangle_wall_distance_identity() -> None:
+    diagnostics = build_channel_geometry_diagnostics(
+        Particle("ev_220nm_tail", radius_m=110.0e-9, n_real=1.37),
+        Channel(width_m=500.0e-9, depth_m=700.0e-9),
+        BASELINE_OPTICAL,
+        DEFAULT_SIM_CFG,
+    )
+
+    assert diagnostics["channel_cross_section_model"] == "ideal_rectangle"
+    assert diagnostics["center_accessible_support_model"] == "rectangular_half_span_v1"
+    assert diagnostics["wall_distance_model"] == "rectangular_half_span_gap_v1"
+    assert diagnostics["wall_distance_claim_level"] == (
+        "geometry_distance_primitive_not_hindered_diffusion"
+    )
+    assert diagnostics["cross_section_geometry_version"] == "ideal_rectangle_v1"
 
 
 def test_geometry_closed_trapezoid_cannot_enter_runtime_sampler() -> None:
