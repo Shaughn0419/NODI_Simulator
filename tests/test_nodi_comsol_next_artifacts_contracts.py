@@ -314,7 +314,7 @@ def _sidewall_observation_cache_fields(
     if geometry_propagation_scope is None:
         if channel_model == "trapezoid_tapered_sidewalls":
             geometry_propagation_scope = (
-                "particle_center_support_only_not_reference_fluidic_electrokinetic"
+                "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
             )
         else:
             geometry_propagation_scope = "rectangle_native_or_non_sidewall_geometry"
@@ -487,7 +487,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         cross_section_geometry_version="trapezoid_straight_sidewall_v1",
         geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
         geometry_propagation_status="propagated",
-        geometry_propagation_scope="particle_center_support_only_not_reference_fluidic_electrokinetic",
+        geometry_propagation_scope="particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic",
         geometry_not_propagated_reasons="",
         sampler_geometry_model="trapezoid_accessible_area_v1",
         sampler_support_model="wall_normal_half_plane_offset_v1",
@@ -552,7 +552,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         ),
         **_sidewall_observation_cache_fields(
             geometry_propagation_scope=(
-                "particle_center_support_only_not_reference_fluidic_electrokinetic"
+                "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
             )
         ),
         **_sidewall_runtime_propagation_guard_fields(),
@@ -976,7 +976,7 @@ def test_position_response_sidewall_v2_requires_geometry_propagation_scope() -> 
 
 
 def test_position_response_sidewall_v2_rejects_signature_scope_mismatch() -> None:
-    prs_scope = "particle_center_support_only_not_reference_fluidic_electrokinetic"
+    prs_scope = "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
     eas_scope = "aperture_surrogate_only_not_true_runtime"
     row = _valid_prs_sidewall_v2_row()
     row["observation_signature"] = str(row["observation_signature"]).replace(
@@ -1091,6 +1091,22 @@ def test_position_response_sidewall_v2_rejects_ambiguous_propagation_scope() -> 
         [
             _valid_prs_sidewall_v2_row(
                 geometry_propagation_scope="aperture_surrogate_only_not_true_runtime",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_legacy_particle_only_scope() -> None:
+    legacy_scope = "particle_center_support_only_not_reference_fluidic_electrokinetic"
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                geometry_propagation_scope=legacy_scope,
+                **_sidewall_observation_cache_fields(
+                    geometry_propagation_scope=legacy_scope
+                ),
             )
         ]
     )
@@ -1779,7 +1795,7 @@ def test_effective_aperture_sidewall_v2_requires_geometry_propagation_scope() ->
 
 def test_effective_aperture_sidewall_v2_rejects_signature_scope_mismatch() -> None:
     eas_scope = "aperture_surrogate_only_not_true_runtime"
-    prs_scope = "particle_center_support_only_not_reference_fluidic_electrokinetic"
+    prs_scope = "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
     row = _valid_eas_sidewall_v2_row()
     row["observation_signature"] = str(row["observation_signature"]).replace(
         f"geometry_propagation_scope={eas_scope}",
@@ -1844,7 +1860,7 @@ def test_effective_aperture_sidewall_v2_rejects_prs_propagation_scope() -> None:
         [
             _valid_eas_sidewall_v2_row(
                 geometry_propagation_scope=(
-                    "particle_center_support_only_not_reference_fluidic_electrokinetic"
+                    "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
                 )
             )
         ]

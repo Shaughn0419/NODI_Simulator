@@ -735,14 +735,14 @@ SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPE_REQUIRED_FIELDS: tuple[str, ...] = (
 )
 SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPES = frozenset(
     {
-        "particle_center_support_only_not_reference_fluidic_electrokinetic",
+        "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic",
         "aperture_surrogate_only_not_true_runtime",
         "blocked_non_propagated_audit",
         "rectangle_native_or_non_sidewall_geometry",
     }
 )
 PRS_SIDEWALL_V2_PROPAGATED_SCOPE = (
-    "particle_center_support_only_not_reference_fluidic_electrokinetic"
+    "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
 )
 EAS_SIDEWALL_V2_PROPAGATED_SCOPE = "aperture_surrogate_only_not_true_runtime"
 PRS_SIDEWALL_V2_SOURCE_BIN_REQUIRED_FIELDS: tuple[str, ...] = (

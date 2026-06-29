@@ -87,6 +87,7 @@ Completed NODI-side guardrails:
 - Added trapezoid initial-position wall-distance diagnostics and signature fragments for the geometry-only wall-distance model/claim level; PRS sidewall v2 now rejects signatures missing those sampler wall-distance identifiers.
 - Tightened PRS sidewall v2 sampler wall-distance signature checks to require the exact `geometry_distance_primitive_not_hindered_diffusion` no-claim level, preventing hidden promotion to validated hindered-diffusion results.
 - Bound PRS sidewall v2 wall-distance bins to Package C precheck status: any `wall_distance` bin basis must declare `includes_trajectory_near_wall_metrics=true` and `package_C_validation_status=pass`.
+- Updated the PRS sidewall v2 propagated scope to `particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic`; legacy particle-center-only scope no longer satisfies wall-distance-bin PRS rows.
 
 Still blocked in this roadmap:
 
