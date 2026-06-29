@@ -10348,6 +10348,16 @@ def _validate_sidewall_v2_eas_optical_solver_trigger(
             "EAS-SIDEWALL-V2",
             "optical_solver_triggered lacks optical_solver_trigger_reason",
         )
+    claim_level = _value(row, "optical_geometry_claim_level")
+    if claim_level in EAS_SIDEWALL_V2_OPTICAL_GEOMETRY_CLAIM_LEVEL_ALLOWED:
+        expected_claim_level = "solver_required" if triggered is True else "surrogate"
+        if claim_level != expected_claim_level:
+            _issue(
+                issues,
+                row_index,
+                "EAS-SIDEWALL-V2",
+                "optical_solver_triggered is inconsistent with optical_geometry_claim_level",
+            )
 
 
 def _validate_sidewall_v2_eas_runtime_geometry_context(

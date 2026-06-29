@@ -1122,6 +1122,34 @@ def test_effective_aperture_sidewall_v2_accepts_solver_required_trigger() -> Non
     assert issues == []
 
 
+def test_effective_aperture_sidewall_v2_requires_solver_required_when_triggered() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                optical_solver_triggered="true",
+                optical_solver_trigger_reason="geometry_complexity",
+                optical_geometry_claim_level="surrogate",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_surrogate_when_not_triggered() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                optical_solver_triggered="false",
+                optical_solver_trigger_reason="none",
+                optical_geometry_claim_level="solver_required",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
 def test_effective_aperture_sidewall_v2_requires_runtime_geometry_context() -> None:
     row = _valid_eas_sidewall_v2_row()
     del row["channel_cross_section_model"]
