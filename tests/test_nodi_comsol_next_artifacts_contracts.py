@@ -1256,6 +1256,37 @@ def test_position_response_sidewall_v2_rejects_rectangular_flow_profile() -> Non
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_blank_sampler_model() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(sampler_geometry_model="")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_unsupported_propagated_flow_model() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(flow_profile_model="trapezoid_poiseuille_v1")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_unsupported_propagated_boundary_model() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                trajectory_boundary_model="sloped_wall_specular_reflection_v1",
+                trajectory_boundary_model_version=(
+                    "sloped_wall_specular_reflection_v1"
+                ),
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_rectangular_wall_distance_model() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(wall_distance_model="rectangular_half_span_gap_v1")]

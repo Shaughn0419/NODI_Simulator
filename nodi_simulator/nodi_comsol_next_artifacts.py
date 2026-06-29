@@ -869,6 +869,16 @@ PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED = frozenset(
         "blocked_rectangular_geometry_leakage",
     }
 )
+PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_SAMPLER_MODELS = frozenset(
+    {"trapezoid_accessible_area_v1"}
+)
+PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_FLOW_PROFILE_MODELS = frozenset({"plug"})
+PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_BOUNDARY_MODELS = frozenset(
+    {
+        "not_applicable_pure_advection",
+        "trapezoid_center_support_projection_boundary_v1",
+    }
+)
 SIDEWALL_V2_DESCRIPTOR_CONTEXT_REQUIRED_FIELDS: tuple[str, ...] = (
     "geometry_profile_source",
     "geometry_profile_sha256",
@@ -9563,7 +9573,20 @@ def _validate_position_response_sidewall_v2_fields(
                 "PRS-SIDEWALL-V2",
                 "trapezoid row missing cross_section_geometry_version",
             )
-        sampler_model = _value(row, "sampler_geometry_model").lower()
+        for field in (
+            "sampler_geometry_model",
+            "trajectory_boundary_model",
+            "flow_profile_model",
+        ):
+            if not _value(row, field):
+                _issue(
+                    issues,
+                    row_index,
+                    "PRS-SIDEWALL-V2",
+                    f"trapezoid row missing {field}",
+                )
+        sampler_model_raw = _value(row, "sampler_geometry_model")
+        sampler_model = sampler_model_raw.lower()
         if "rect" in sampler_model and "trapezoid" not in sampler_model:
             _issue(
                 issues,
@@ -9587,6 +9610,38 @@ def _validate_position_response_sidewall_v2_fields(
                     row_index,
                     "PRS-SIDEWALL-V2",
                     f"trapezoid row uses rectangular {field}",
+                )
+        if geometry_status == "propagated":
+            if (
+                sampler_model_raw
+                not in PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_SAMPLER_MODELS
+            ):
+                _issue(
+                    issues,
+                    row_index,
+                    "PRS-SIDEWALL-V2",
+                    f"propagated trapezoid row uses unsupported sampler_geometry_model={sampler_model_raw}",
+                )
+            if (
+                flow_profile_model
+                not in PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_FLOW_PROFILE_MODELS
+            ):
+                _issue(
+                    issues,
+                    row_index,
+                    "PRS-SIDEWALL-V2",
+                    f"propagated trapezoid row uses unsupported flow_profile_model={flow_profile_model}",
+                )
+            boundary_model = _value(row, "trajectory_boundary_model")
+            if (
+                boundary_model
+                not in PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_BOUNDARY_MODELS
+            ):
+                _issue(
+                    issues,
+                    row_index,
+                    "PRS-SIDEWALL-V2",
+                    f"propagated trapezoid row uses unsupported trajectory_boundary_model={boundary_model}",
                 )
 
     diameter_nm = _float_field(row, "diameter_nm", row_index, "PRS-SIDEWALL-V2", issues)
