@@ -876,6 +876,11 @@ EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "optical_solver_trigger_reason",
     "optical_solver_trigger_is_result",
     "optical_geometry_claim_level",
+    "reference_field_model",
+    "reference_spatial_mode",
+    "reference_route",
+    "illumination_mode",
+    "detector_operator_id",
     "not_true_W_eff",
     "not_measured_geometry",
     "not_optical_solver_output",
@@ -10265,6 +10270,15 @@ def _validate_effective_aperture_sidewall_v2_fields(
         "EAS-SIDEWALL-V2",
         issues,
     )
+    for field in (
+        "reference_field_model",
+        "reference_spatial_mode",
+        "reference_route",
+        "illumination_mode",
+        "detector_operator_id",
+    ):
+        if not _value(row, field):
+            _issue(issues, row_index, "EAS-SIDEWALL-V2", f"{field} is blank")
     _validate_bool_equals(
         row,
         "not_qch_weighted",

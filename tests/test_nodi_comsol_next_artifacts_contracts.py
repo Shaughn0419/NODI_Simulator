@@ -433,6 +433,11 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         optical_solver_trigger_reason="none",
         optical_solver_trigger_is_result="false",
         optical_geometry_claim_level="surrogate",
+        reference_field_model="geometry_scaled",
+        reference_spatial_mode="cross_section_surrogate",
+        reference_route="rectangular_width_depth_reference_proxy_under_trapezoid",
+        illumination_mode="edge_illumination_surrogate",
+        detector_operator_id="fixed_660_gold_detector_operator_v1",
         rank_under_surrogate="",
         not_qch_weighted="true",
         not_detection_probability="true",
@@ -1123,6 +1128,24 @@ def test_effective_aperture_sidewall_v2_requires_runtime_geometry_context() -> N
     del row["geometry_runtime_binding_version"]
 
     issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_reference_context() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["reference_field_model"]
+    del row["detector_operator_id"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_blank_reference_context() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(reference_spatial_mode="")]
+    )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 
