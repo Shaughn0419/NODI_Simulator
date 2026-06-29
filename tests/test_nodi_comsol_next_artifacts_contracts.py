@@ -260,10 +260,9 @@ def _valid_prs_row(**overrides: object) -> dict[str, object]:
     return row
 
 
-def _sidewall_descriptor_context_fields() -> dict[str, object]:
+def _sidewall_descriptor_context_fields(depth_nm: float = 900.0) -> dict[str, object]:
     sidewall_deg = 85.0
     w_top_nm = 500.0
-    depth_nm = 900.0
     w_bottom_unclipped_nm = w_top_nm - 2.0 * depth_nm / math.tan(
         math.radians(sidewall_deg)
     )
@@ -634,6 +633,34 @@ def test_position_response_sidewall_v2_requires_geometry_profile_sha() -> None:
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_D900_to_D1200_source_borrowing() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                route_id_nodi="404/W500/D1200",
+                D_nm=1200,
+                source_D_nm=900,
+                **_sidewall_descriptor_context_fields(depth_nm=1200.0),
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_edge4_to_edge20_direct_mapping() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                source_bin_basis="edge_norm_1d_edge4",
+                bin_basis="edge_norm_1d_edge20",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_non_propagated_open_decision_row() -> None:
     issues = validate_position_response_surface_rows(
         [
@@ -882,6 +909,21 @@ def test_effective_aperture_sidewall_v2_rejects_descriptor_angle_mismatch() -> N
 def test_effective_aperture_sidewall_v2_requires_geometry_profile_sha() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(geometry_profile_sha256="not-a-sha")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_source_route_borrowing() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                route_id_nodi="404/W500/D1200",
+                D_nm=1200,
+                source_route_id_nodi="404/W500/D900",
+                **_sidewall_descriptor_context_fields(depth_nm=1200.0),
+            )
+        ]
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")

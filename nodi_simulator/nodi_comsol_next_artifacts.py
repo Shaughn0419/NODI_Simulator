@@ -9057,6 +9057,13 @@ def _validate_position_response_sidewall_v2_fields(
         "PRS-SIDEWALL-V2",
         issues,
     )
+    _validate_sidewall_v2_source_grain_binding(
+        row,
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+        check_prs_bin_fields=True,
+    )
     channel_model = _value(row, "channel_cross_section_model")
     if channel_model not in {"ideal_rectangle", "trapezoid_tapered_sidewalls"}:
         _issue(
@@ -9216,6 +9223,103 @@ def _validate_sidewall_v2_source_geometry_descriptor_binding(
         issues=issues,
         allow_pending=False,
     )
+
+
+def _validate_sidewall_v2_source_grain_binding(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    *,
+    check_prs_bin_fields: bool,
+) -> None:
+    _validate_optional_exact_source_field(
+        row,
+        row_index,
+        rule_id,
+        issues,
+        source_field="source_route_id_nodi",
+        target_field="route_id_nodi",
+    )
+    for source_field in ("source_D_nm", "source_depth_nm"):
+        _validate_optional_numeric_source_field(
+            row,
+            row_index,
+            rule_id,
+            issues,
+            source_field=source_field,
+            target_field="D_nm",
+        )
+    if not check_prs_bin_fields:
+        return
+    for source_field, target_field in (
+        ("source_distribution_type", "distribution_type"),
+        ("source_bin_basis", "bin_basis"),
+        ("source_bin_id", "bin_id"),
+    ):
+        _validate_optional_exact_source_field(
+            row,
+            row_index,
+            rule_id,
+            issues,
+            source_field=source_field,
+            target_field=target_field,
+        )
+
+
+def _validate_optional_exact_source_field(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    *,
+    source_field: str,
+    target_field: str,
+) -> None:
+    source_value = _value(row, source_field)
+    if not source_value:
+        return
+    target_value = _value(row, target_field)
+    if source_value != target_value:
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"{source_field}={source_value} does not match {target_field}={target_value}",
+        )
+
+
+def _validate_optional_numeric_source_field(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    *,
+    source_field: str,
+    target_field: str,
+) -> None:
+    source_value = _value(row, source_field)
+    if not source_value:
+        return
+    target_value = _value(row, target_field)
+    try:
+        source_float = float(source_value)
+        target_float = float(target_value)
+    except ValueError:
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"{source_field} or {target_field} is not numeric for source grain binding",
+        )
+        return
+    if not math.isclose(source_float, target_float, rel_tol=1.0e-9, abs_tol=1.0e-6):
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"{source_field}={source_value} does not match {target_field}={target_value}",
+        )
 
 
 def _validate_sidewall_v2_descriptor_context(
@@ -9825,6 +9929,13 @@ def _validate_effective_aperture_sidewall_v2_fields(
         row_index,
         "EAS-SIDEWALL-V2",
         issues,
+    )
+    _validate_sidewall_v2_source_grain_binding(
+        row,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+        check_prs_bin_fields=False,
     )
     _validate_sidewall_v2_descriptor_context(row, row_index, "EAS-SIDEWALL-V2", issues)
     _validate_constant(
