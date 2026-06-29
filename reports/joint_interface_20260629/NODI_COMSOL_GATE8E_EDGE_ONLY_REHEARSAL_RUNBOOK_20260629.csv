@@ -1,0 +1,4 @@
+runbook_step_id,workstream,step,required_detail,authorization_status,abort_condition
+G8E-EDGE-RUNBOOK-001,EDGE,collect_required_input_package,source manifest;source SHA;units;normalization;row identity;NODI receiver schema;validation report,NOT_AUTHORIZED_REHEARSAL_ONLY,missing source SHA or any forbidden positive output
+G8E-EDGE-RUNBOOK-002,EDGE,run_nodi_harness_no_run_preflight,python tools/audits/build_nodi_comsol_gate8a_to_gate8k_joint_freeze_rehearsal.py --confirm-gate8a-to-gate8k,NOT_AUTHORIZED_REHEARSAL_ONLY,unexpected pass;authorization promotion;Gate2D drift
+G8E-EDGE-RUNBOOK-003,EDGE,post_run_no_auth_checks,verify EDGE remains PREAUTH_REQUIRED until explicit user signoff; QCH/BINDING remain closed,NOT_AUTHORIZED_REHEARSAL_ONLY,EDGE policy approved flag or any runtime/production flag

@@ -1,0 +1,30 @@
+{
+  "date": "20260629",
+  "gate": "Gate8C",
+  "summary": {
+    "comsol_manifest_rows": 42,
+    "comsol_validation_rows": 16,
+    "comsol_nodi_receipt_rows": 29,
+    "comsol_dictionary_rows": 366,
+    "comsol_edge_spec_rows": 12,
+    "comsol_qch_spec_rows": 12,
+    "comsol_binding_spec_rows": 12,
+    "comsol_review_spec_rows": 3,
+    "comsol_dependency_nodes": 320,
+    "comsol_dependency_edges": 420,
+    "comsol_fixture_rows": 5200,
+    "gate8a_blocking_drift": 0,
+    "gate8a_missing_required": 0,
+    "gate8b_joint_fields": 365,
+    "gate8b_semantic_conflicts": 0,
+    "gate8c_fixture_rows": 5200,
+    "gate8c_policy_mismatches": 0,
+    "gate8c_unexpected_pass": 0,
+    "gate8d_spec_rows": 39,
+    "gate8d_approved": 0,
+    "gate8f_isolation_rows": 1000,
+    "gate8f_unexpected_accept": 0,
+    "gate2d_rows": 4
+  },
+  "scope": "review-only/no-auth/joint-freeze-signoff-rehearsal"
+}

@@ -1,0 +1,13 @@
+{
+  "lock_name": "JOINT_RC5_1_FREEZE_CANDIDATE_REVIEW_ONLY_NO_AUTH",
+  "date": "20260629",
+  "nodi_canonical_field_count": 365,
+  "comsol_canonical_field_count": 366,
+  "joint_field_count": 365,
+  "optional_guard_delta": "nodi_view_binding_status",
+  "review_only": true,
+  "evidence_acceptance": false,
+  "runtime_schema": false,
+  "production_contract": false,
+  "authorization": "closed"
+}

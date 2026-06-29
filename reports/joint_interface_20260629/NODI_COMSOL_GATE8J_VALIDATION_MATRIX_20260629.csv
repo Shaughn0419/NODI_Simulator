@@ -1,0 +1,13 @@
+check_id,status,detail
+gate8a_comsol_gate7_receipt,PASS,manifest_rows=42 blocking_drift=0
+gate8b_joint_freeze_reconciliation,PASS,joint_fields=365
+gate8c_fixture_replay,PASS,fixture_rows=5200 unexpected_pass=0
+gate8d_spec_intake,PASS,producer specs rehearsed without approval
+gate8e_edge_only_runbook,PASS,EDGE preferred but not authorized
+gate8f_isolation,PASS,isolation_rows=1000
+gate8g_signoff_board,PASS,interface signoff candidate only
+gate8h_anti_confusion,PASS,promotion terms hard-fail
+gate8i_archive,PASS,Gate5-Gate8 handoff indexed
+gate2d_freeze,PASS,exactly 4
+workstream_state_locks,PASS,"EDGE NOT_APPROVED, QCH ABSENT, BINDING FAIL_CLOSED"
+no_auth_sweep,PASS,no positive authorization

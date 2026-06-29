@@ -1,0 +1,2 @@
+sweep_id,source_file,row_index,field_name,field_value,sweep_status
+G8J-SWEEP-NONE,Gate8 payload,0,none,none,PASS_NO_AUTH

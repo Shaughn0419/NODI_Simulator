@@ -1,0 +1,4 @@
+workstream,priority,authorization_status,reason
+EDGE,P1_PREFERRED_FIRST_PILOT,NOT_AUTHORIZED_REHEARSAL_ONLY,best scoped single-workstream no-run pilot candidate
+QCH,P2_DEFER,NOT_AUTHORIZED_REHEARSAL_ONLY,formal sidecar absent
+BINDING,P3_DEFER_HIGHEST_RISK,NOT_AUTHORIZED_REHEARSAL_ONLY,binding repair remains fail-closed

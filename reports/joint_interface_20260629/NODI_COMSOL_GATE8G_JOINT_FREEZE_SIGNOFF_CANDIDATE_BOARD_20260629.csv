@@ -1,0 +1,6 @@
+signoff_id,conclusion,verdict,meaning
+G8G-SIGNOFF-001,CAN_SIGNOFF_INTERFACE_FREEZE_CANDIDATE,true,freeze interface vocabulary and harness baseline only
+G8G-SIGNOFF-002,CANNOT_AUTHORIZE_EVIDENCE,true,"no physical evidence, formula, production, or runtime acceptance"
+G8G-SIGNOFF-003,EDGE_PILOT_PREAUTH_READY_FOR_USER_DECISION,true,"ready for a future user decision, not opened now"
+G8G-SIGNOFF-004,QCH_DEFERRED_FORMAL_SIDECAR_ABSENT,true,QCH remains absent and not weighted
+G8G-SIGNOFF-005,BINDING_DEFERRED_FAIL_CLOSED,true,220/D1200/UNBOUND blockers stay closed

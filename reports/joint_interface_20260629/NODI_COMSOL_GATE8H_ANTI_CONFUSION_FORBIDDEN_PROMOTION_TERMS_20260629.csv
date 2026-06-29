@@ -1,0 +1,17 @@
+term_id,term,allowed_interpretation,forbidden_promotion,positive_flag_handling
+G8H-TERM-001,freeze,interface vocabulary locked for review,does not mean evidence accepted,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-002,ready,ready for no-run review or preauth decision,does not mean authorized,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-003,candidate,candidate package for signoff,does not mean approved,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-004,preauth,pre-authorization decision preparation,does not authorize execution,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-005,rehearsal,dry-run/no-run exercise,does not permit COMSOL run,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-006,approved,forbidden as positive flag,hard fail unless negative fixture expected-fail,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-007,accepted,only allowed for existing Gate2D context ledger,hard fail for evidence/runtime/production,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-008,production,forbidden positive state,hard fail,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-009,runtime,forbidden positive state,hard fail,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-010,JRC,forbidden positive state,hard fail,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-011,weighting,forbidden positive state,hard fail,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-012,q_ch*eta,forbidden positive formula,hard fail,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-013,chi_selected,forbidden positive selection,hard fail,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-014,yield,forbidden positive claim,hard fail,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-015,winner,forbidden positive claim,hard fail,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT
+G8H-TERM-016,detection_probability,forbidden positive claim,hard fail,HARD_FAIL_UNLESS_NEGATIVE_FIXTURE_CONTEXT

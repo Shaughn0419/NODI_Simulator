@@ -1,0 +1,2 @@
+summary_id,fixture_rows_replayed,sample_hardfail_rows,unexpected_pass,unexpected_accept,authorization_promotion,policy_relevant_mismatch
+G8C-SUMMARY-001,5200,8,0,0,0,0

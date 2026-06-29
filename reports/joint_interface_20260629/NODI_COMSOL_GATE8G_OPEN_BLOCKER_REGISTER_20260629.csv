@@ -1,0 +1,4 @@
+blocker_id,workstream,blocker,status
+G8G-BLOCKER-EDGE-001,EDGE,policy approval still closed pending future user preauth,OPEN_PREAUTH_REQUIRED
+G8G-BLOCKER-QCH-001,QCH,formal sidecar absent,OPEN_BLOCKED
+G8G-BLOCKER-BINDING-001,BINDING,binding repair absent/fail-closed,OPEN_BLOCKED

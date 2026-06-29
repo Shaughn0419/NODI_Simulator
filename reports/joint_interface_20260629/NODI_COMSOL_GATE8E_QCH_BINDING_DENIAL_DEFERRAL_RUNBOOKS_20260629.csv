@@ -1,0 +1,3 @@
+deferral_id,workstream,deferral_status,reason,authorization_status
+G8E-QCH-DEFERRAL-001,QCH,DEFERRED_FORMAL_SIDECAR_ABSENT,formal q_ch/flow-split sidecar is absent; provenance/template cannot become weighting,NOT_AUTHORIZED_REHEARSAL_ONLY
+G8E-BINDING-DEFERRAL-001,BINDING,DEFERRED_FAIL_CLOSED,"220 nm no auto-map, D1200 no borrow, UNBOUND view fail-closed",NOT_AUTHORIZED_REHEARSAL_ONLY

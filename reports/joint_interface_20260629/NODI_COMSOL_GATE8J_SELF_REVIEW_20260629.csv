@@ -1,0 +1,13 @@
+reviewer_id,dimension,finding,status
+Reviewer A,provenance/SHA,PASS: no P0/P1 open,PASS
+Reviewer B,freeze semantics,PASS: no P0/P1 open,PASS
+Reviewer C,fixture replay,PASS: no P0/P1 open,PASS
+Reviewer D,package spec intake,PASS: no P0/P1 open,PASS
+Reviewer E,single-workstream isolation,PASS: no P0/P1 open,PASS
+Reviewer F,EDGE runbook safety,PASS: no P0/P1 open,PASS
+Reviewer G,QCH/BINDING deferral,PASS: no P0/P1 open,PASS
+Reviewer H,anti-confusion language,PASS: no P0/P1 open,PASS
+Reviewer I,release archive,PASS: no P0/P1 open,PASS
+Reviewer J,no-auth leakage,PASS: no P0/P1 open,PASS
+Reviewer K,git scope,PASS: no P0/P1 open,PASS
+Reviewer L,user-decision clarity,PASS: no P0/P1 open,PASS
