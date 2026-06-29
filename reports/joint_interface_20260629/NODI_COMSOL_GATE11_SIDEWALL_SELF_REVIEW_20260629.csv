@@ -1,0 +1,13 @@
+review_id,dimension,status,p0_p1_issue,finding
+G11K-REVIEW-001,worktree reconciliation,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-002,COMSOL descriptor receipt provenance,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-003,angle convention and formula,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-004,descriptor hash identity,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-005,RC5.1 addendum semantics,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-006,PRS/EAS guard coverage,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-007,quarantine state machine,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-008,mutation unexpected pass,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-009,roadmap delta honesty,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-010,no-auth leakage,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-011,cross-project convergence,PASS,false,no blocker; review-only/no-auth boundary preserved
+G11K-REVIEW-012,git scope,PASS,false,no blocker; review-only/no-auth boundary preserved

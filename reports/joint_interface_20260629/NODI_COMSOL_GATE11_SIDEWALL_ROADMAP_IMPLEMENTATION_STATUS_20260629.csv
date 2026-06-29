@@ -1,0 +1,5 @@
+roadmap_id,package,scope,implementation_status,current_evidence,can_complete_without_run,remaining_gap,authorization_status
+G11G-001,Package A,Review-safe schema and descriptor work,completed_contract_layer,"Gate10/Gate11 descriptor schema, addendum candidate, COMSOL receipt",no_run_complete,future formal descriptor addendum signoff,closed
+G11G-002,Package B,Runtime geometry primitives,partially_completed,"trapezoid oracle, sampler support, cache signatures, runtime guards",no_run_contract_complete,full sidewall-aware flow/sampler remains future,closed
+G11G-003,Package C,Trajectory and near-wall propagation,blocked_for_solver_claims,rectangular leakage guards and projection boundary audit exist,future_authorization_required,validated trapezoid trajectory/near-wall solver,closed
+G11G-004,Package D,PRS/EAS sidewall sensitivity pilot,contract_guards_completed_no_numeric_output,PRS/EAS sidewall v2 validators and fixtures hardened through current HEAD,future_authorization_required,real sidewall PRS/EAS preflight after descriptor addendum,closed

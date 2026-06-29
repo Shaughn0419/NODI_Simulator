@@ -1,0 +1,64 @@
+{
+  "state_machine": [
+    {
+      "transition_id": "G11E-STATE-001",
+      "from_state": "RECEIPT",
+      "to_state": "HASH_FORMULA_VALIDATION",
+      "allowed_transition_condition": "COMSOL artifact path/sha/row_count readable",
+      "forbidden_transition": "direct_to_PRS_EAS_ACCEPTED;EDGE;QCH;JRC;runtime;production",
+      "hard_fail_triggers": "authorization_true;missing_descriptor_hash;formula_mismatch;UNBOUND_promoted",
+      "current_execution_allowed": "false",
+      "future_authorization_required": "true"
+    },
+    {
+      "transition_id": "G11E-STATE-002",
+      "from_state": "HASH_FORMULA_VALIDATION",
+      "to_state": "QUARANTINE",
+      "allowed_transition_condition": "descriptor hash, angle, formula, authorization flags pass",
+      "forbidden_transition": "direct_to_PRS_EAS_ACCEPTED;EDGE;QCH;JRC;runtime;production",
+      "hard_fail_triggers": "authorization_true;missing_descriptor_hash;formula_mismatch;UNBOUND_promoted",
+      "current_execution_allowed": "false",
+      "future_authorization_required": "true"
+    },
+    {
+      "transition_id": "G11E-STATE-003",
+      "from_state": "QUARANTINE",
+      "to_state": "DESCRIPTOR_REVIEW_ONLY_LEDGER",
+      "allowed_transition_condition": "UNBOUND route/view/diameter/bin remains quarantined",
+      "forbidden_transition": "direct_to_PRS_EAS_ACCEPTED;EDGE;QCH;JRC;runtime;production",
+      "hard_fail_triggers": "authorization_true;missing_descriptor_hash;formula_mismatch;UNBOUND_promoted",
+      "current_execution_allowed": "false",
+      "future_authorization_required": "true"
+    },
+    {
+      "transition_id": "G11E-STATE-004",
+      "from_state": "DESCRIPTOR_REVIEW_ONLY_LEDGER",
+      "to_state": "OPTIONAL_SIDEWALL_PRS_EAS_PREFLIGHT",
+      "allowed_transition_condition": "future user authorization required",
+      "forbidden_transition": "direct_to_PRS_EAS_ACCEPTED;EDGE;QCH;JRC;runtime;production",
+      "hard_fail_triggers": "authorization_true;missing_descriptor_hash;formula_mismatch;UNBOUND_promoted",
+      "current_execution_allowed": "false",
+      "future_authorization_required": "true"
+    },
+    {
+      "transition_id": "G11E-STATE-005",
+      "from_state": "OPTIONAL_SIDEWALL_PRS_EAS_PREFLIGHT",
+      "to_state": "FUTURE_AUTHORIZATION_GATE",
+      "allowed_transition_condition": "preflight outputs are fixtures/quarantine only",
+      "forbidden_transition": "direct_to_PRS_EAS_ACCEPTED;EDGE;QCH;JRC;runtime;production",
+      "hard_fail_triggers": "authorization_true;missing_descriptor_hash;formula_mismatch;UNBOUND_promoted",
+      "current_execution_allowed": "false",
+      "future_authorization_required": "true"
+    },
+    {
+      "transition_id": "G11E-STATE-999",
+      "from_state": "DESCRIPTOR_REVIEW_ONLY_LEDGER",
+      "to_state": "PRS_EAS_ACCEPTED_OR_RUNTIME",
+      "allowed_transition_condition": "never_in_Gate11",
+      "forbidden_transition": "true",
+      "hard_fail_triggers": "any direct accepted/runtime/production promotion",
+      "current_execution_allowed": "false",
+      "future_authorization_required": "true"
+    }
+  ]
+}

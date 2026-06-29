@@ -1,0 +1,2 @@
+status_id,path,git_status,disposition,gate11_action
+G11A-WORKTREE-001,nodi_simulator/nodi_comsol_next_artifacts.py;tests/test_nodi_comsol_next_artifacts_contracts.py,clean,CLEAN_ALREADY_COMMITTED,ingest current HEAD guards

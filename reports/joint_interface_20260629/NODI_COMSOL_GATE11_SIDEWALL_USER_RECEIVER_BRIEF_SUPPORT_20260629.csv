@@ -1,0 +1,5 @@
+brief_id,topic,verdict,support
+G11J-BRIEF-001,where_sidewall_interface_stands,descriptor receipt and RC5.1 addendum candidate ready,COMSOL 11 descriptor rows validate and remain quarantine/review-only
+G11J-BRIEF-002,why_addendum_needed,RC5.1 lacks explicit sidewall descriptor binding fields,sidewall-aware rows fail closed without descriptor id/hash
+G11J-BRIEF-003,prs_eas_guard_coverage,contract validators hardened through current HEAD,"artifact metadata, provenance, grain borrowing, normalized geometry, EAS optical trigger consistency covered"
+G11J-BRIEF-004,remaining_gap,not a sidewall-aware transport or optical solver,future authorization required for numeric sidewall PRS/EAS rerun or solver claims

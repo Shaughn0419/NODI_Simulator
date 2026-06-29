@@ -1,0 +1,15 @@
+{
+  "lock_name": "RC5.1_SIDEWALL_GEOMETRY_DESCRIPTOR_ADDENDUM_V1_CANDIDATE_REVIEW_ONLY",
+  "date": "20260629",
+  "field_count": 29,
+  "review_only": true,
+  "historical_rc51_rewrite": false,
+  "runtime_contract": false,
+  "production_contract": false,
+  "authorization": "closed",
+  "gate2d_rows": 4,
+  "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+  "qch_state": "ABSENT",
+  "binding_state": "FAIL_CLOSED",
+  "hash_tree_sha256": "16116ceb604312456b3088ea3060f3e81600d6867e340b34abefff09b33b8a83"
+}
