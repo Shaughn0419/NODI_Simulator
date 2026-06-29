@@ -774,6 +774,20 @@ SIDEWALL_V2_METROLOGY_STATUS_ALLOWED = frozenset(
 SIDEWALL_V2_RUNTIME_GUARD_STATUS_ALLOWED = frozenset(
     {"none", "solver_guard", "validation_guard", "resource_guard"}
 )
+SIDEWALL_V2_OBSERVATION_SIGNATURE_VERSION = "sidewall_observation_signature_v1"
+SIDEWALL_V2_OBSERVATION_CACHE_REQUIRED_FIELDS: tuple[str, ...] = (
+    "observation_signature",
+    "observation_signature_version",
+    "cache_geometry_match_status",
+)
+SIDEWALL_V2_CACHE_GEOMETRY_MATCH_STATUS_ALLOWED = frozenset(
+    {
+        "matched_current_geometry",
+        "no_cache_lookup_performed",
+        "not_cacheable_audit",
+        "blocked_old_rectangular_cache",
+    }
+)
 
 EAS_REQUIRED_FIELDS: tuple[str, ...] = (
     "aperture_artifact_version",
@@ -9079,6 +9093,13 @@ def _validate_position_response_sidewall_v2_fields(
             "PRS-SIDEWALL-V2",
             f"invalid channel_cross_section_model={channel_model}",
         )
+    _validate_sidewall_v2_observation_cache_context(
+        row,
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+        require_trapezoid_signature=channel_model == "trapezoid_tapered_sidewalls",
+    )
     geometry_status = _value(row, "geometry_propagation_status")
     if geometry_status not in PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED:
         _issue(
@@ -9484,6 +9505,62 @@ def _validate_sidewall_v2_descriptor_context(
                 row_index,
                 rule_id,
                 "nonpositive W_bottom_unclipped_nm marked closure_status=open",
+            )
+
+
+def _validate_sidewall_v2_observation_cache_context(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    *,
+    require_trapezoid_signature: bool,
+) -> None:
+    _require_fields(
+        row,
+        SIDEWALL_V2_OBSERVATION_CACHE_REQUIRED_FIELDS,
+        rule_id,
+        row_index,
+        issues,
+    )
+    observation_signature = _value(row, "observation_signature")
+    if not observation_signature:
+        _issue(issues, row_index, rule_id, "observation_signature is blank")
+    _validate_constant(
+        row,
+        "observation_signature_version",
+        SIDEWALL_V2_OBSERVATION_SIGNATURE_VERSION,
+        row_index,
+        rule_id,
+        issues,
+    )
+    _validate_enum(
+        row,
+        "cache_geometry_match_status",
+        SIDEWALL_V2_CACHE_GEOMETRY_MATCH_STATUS_ALLOWED,
+        row_index,
+        rule_id,
+        issues,
+    )
+    if not observation_signature:
+        return
+    if require_trapezoid_signature:
+        if "channel_cross_section_model=ideal_rectangle" in observation_signature:
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "trapezoid sidewall row uses old rectangular observation signature",
+            )
+        if (
+            "channel_cross_section_model=trapezoid_tapered_sidewalls"
+            not in observation_signature
+        ):
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "trapezoid sidewall row observation_signature lacks trapezoid geometry",
             )
 
 
@@ -9977,6 +10054,13 @@ def _validate_effective_aperture_sidewall_v2_fields(
         "EAS-SIDEWALL-V2",
         issues,
         check_prs_bin_fields=False,
+    )
+    _validate_sidewall_v2_observation_cache_context(
+        row,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+        require_trapezoid_signature=True,
     )
     _validate_sidewall_v2_descriptor_context(row, row_index, "EAS-SIDEWALL-V2", issues)
     _validate_constant(

@@ -291,6 +291,21 @@ def _without_sidewall_descriptor_context(row: dict[str, object]) -> dict[str, ob
     return row
 
 
+def _sidewall_observation_cache_fields(
+    channel_model: str = "trapezoid_tapered_sidewalls",
+) -> dict[str, object]:
+    return {
+        "observation_signature": (
+            f"channel_cross_section_model={channel_model}"
+            "|sidewall_taper_angle_deg=5.000000000e+00"
+            "|geometry_profile_sha256="
+            f"{GEOMETRY_DESCRIPTOR_SHA256}"
+        ),
+        "observation_signature_version": "sidewall_observation_signature_v1",
+        "cache_geometry_match_status": "matched_current_geometry",
+    }
+
+
 def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
     row = _valid_prs_row(
         diameter_nm=220,
@@ -330,6 +345,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         neighbor_fill_used="false",
         source_geometry_descriptor_id="descriptor-404-W500-D900-sidewall-85",
         source_geometry_descriptor_sha=GEOMETRY_DESCRIPTOR_SHA256,
+        **_sidewall_observation_cache_fields(),
         **_sidewall_descriptor_context_fields(),
     )
     row.update(overrides)
@@ -389,6 +405,7 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         rank_under_surrogate="",
         not_qch_weighted="true",
         not_detection_probability="true",
+        **_sidewall_observation_cache_fields(),
         **_sidewall_descriptor_context_fields(),
     )
     row.update(overrides)
@@ -506,6 +523,7 @@ def test_position_response_sidewall_v2_keeps_ideal_rectangle_context_path() -> N
             channel_cross_section_model="ideal_rectangle",
             cross_section_geometry_version="ideal_rectangle_v1",
             sampler_geometry_model="rectangle_accessible_area_v1",
+            **_sidewall_observation_cache_fields("ideal_rectangle"),
         )
     )
 
@@ -656,6 +674,26 @@ def test_position_response_sidewall_v2_requires_descriptor_context_fields() -> N
 def test_position_response_sidewall_v2_rejects_descriptor_angle_mismatch() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(sidewall_taper_angle_deg_nodi=85.0)]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_observation_signature() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(observation_signature="")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_rectangular_cache_signature() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                **_sidewall_observation_cache_fields("ideal_rectangle"),
+            )
+        ]
     )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
@@ -945,6 +983,26 @@ def test_effective_aperture_sidewall_v2_rejects_descriptor_angle_mismatch() -> N
 def test_effective_aperture_sidewall_v2_requires_geometry_profile_sha() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(geometry_profile_sha256="not-a-sha")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_observation_signature() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(observation_signature="")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_rectangular_cache_signature() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                **_sidewall_observation_cache_fields("ideal_rectangle"),
+            )
+        ]
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
