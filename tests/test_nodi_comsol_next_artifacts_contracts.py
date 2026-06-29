@@ -819,6 +819,20 @@ def test_effective_aperture_sidewall_v2_rejects_rank_promotion() -> None:
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 
 
+def test_effective_aperture_sidewall_v2_rejects_exact_claim_columns() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                W_eff=500.0,
+                route_score=0.7,
+                winner="true",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "EAS-V26")
+
+
 def test_effective_aperture_sidewall_v2_requires_no_probability_claim_guards() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [
