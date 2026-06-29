@@ -75,6 +75,8 @@ Completed NODI-side guardrails:
 - Added PRS/EAS sidewall v2 observation-signature hard-fails that bind `geometry_propagation_scope`, `channel_cross_section_model`, and `geometry_propagation_status`, so ideal-rectangle and trapezoid cache/signature states cannot satisfy each other.
 - Expanded PRS/EAS sidewall v2 forbidden exact-column tests for `W_eff`, `score`, `route_score`, `sidewall_score`, `winner`, `chi_selected`, `JRC`, `q_ch`, `q_ch_eta`, `q_ch_chi_eta`, `yield`, `detection_probability`, `wet_pass_probability`, `clogging_rate`, `time_to_clog`, and `recovery`.
 - Added PRS sidewall v2 rank-promotion hard-fail for nonblank `rank_under_surrogate`; legacy EAS rank columns remain blank-only in sidewall v2 rows.
+- Refined sidewall v2 activation so ordinary PRS/EAS rows may explicitly carry `channel_cross_section_model=ideal_rectangle` without being forced into sidewall v2 schema; `trapezoid_tapered_sidewalls` and dedicated sidewall v2 fields still trigger hard validation.
+- Expanded observation-signature binding to compare row values for geometry version, sampler/support, trajectory boundary, wall-distance, flow, reference, fluidic, electrokinetic, angle, and particle-radius guard fields rather than accepting stale key-name fragments.
 
 Still blocked in this roadmap:
 
