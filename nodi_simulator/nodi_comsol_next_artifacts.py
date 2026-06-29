@@ -778,6 +778,20 @@ PRS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
         "neighbor_fill_used",
     }
 )
+PRS_SIDEWALL_V2_EXPLICIT_MARKER_FIELDS = frozenset(
+    {
+        "artifact_version",
+        "geometry_runtime_binding_version",
+        "geometry_propagation_scope",
+        "tail_particle_auto_admitted",
+        "steric_support_source",
+        "coordinate_basis",
+        "bin_particle_center_support_status",
+        "trajectory_boundary_model_version",
+        "wall_distance_model_version",
+        "sidewall_aware_runtime_status",
+    }
+)
 PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "channel_cross_section_model",
     "cross_section_geometry_version",
@@ -997,6 +1011,20 @@ EAS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
         "cross_section_geometry_version",
         "geometry_runtime_binding_version",
         "geometry_propagation_status",
+        "eas_mode",
+        "aperture_surrogate_basis",
+        "aperture_surrogate_claim_level",
+        "W_eff_optical_surrogate_nm",
+        "W_eff_transport_surrogate_nm",
+        "W_eff_accessible_surrogate_nm",
+        "optical_solver_trigger_is_result",
+    }
+)
+EAS_SIDEWALL_V2_EXPLICIT_MARKER_FIELDS = frozenset(
+    {
+        "artifact_version",
+        "geometry_runtime_binding_version",
+        "geometry_propagation_scope",
         "eas_mode",
         "aperture_surrogate_basis",
         "aperture_surrogate_claim_level",
@@ -9367,12 +9395,29 @@ def _validate_position_bin(
                     _issue(issues, row_index, "PRS-V09", f"{low_field}/{high_field} outside [-1,1]")
 
 
+def _sidewall_v2_marker_active(
+    row: Mapping[str, Any],
+    *,
+    explicit_marker_fields: frozenset[str],
+    expected_artifact_version: str,
+) -> bool:
+    if _value(row, "channel_cross_section_model") == "trapezoid_tapered_sidewalls":
+        return True
+    if _value(row, "artifact_version") == expected_artifact_version:
+        return True
+    return any(field in row for field in explicit_marker_fields if field != "artifact_version")
+
+
 def _validate_position_response_sidewall_v2_fields(
     row: Mapping[str, Any],
     row_index: int,
     issues: list[str],
 ) -> None:
-    if not any(field in row for field in PRS_SIDEWALL_V2_MARKER_FIELDS):
+    if not _sidewall_v2_marker_active(
+        row,
+        explicit_marker_fields=PRS_SIDEWALL_V2_EXPLICIT_MARKER_FIELDS,
+        expected_artifact_version=PRS_SIDEWALL_V2_ARTIFACT_VERSION,
+    ):
         return
 
     _require_fields(row, PRS_SIDEWALL_V2_REQUIRED_FIELDS, "PRS-SIDEWALL-V2", row_index, issues)
@@ -9963,11 +10008,50 @@ def _validate_sidewall_v2_observation_cache_context(
         return
     for field in (
         "channel_cross_section_model",
+        "cross_section_geometry_version",
         "geometry_profile_sha256",
         "geometry_propagation_status",
         "geometry_propagation_scope",
+        "sampler_geometry_model",
+        "trajectory_boundary_model",
+        "wall_distance_model",
+        "flow_profile_geometry_model",
+        "reference_geometry_propagation_status",
+        "fluidic_clogging_risk_band_claim_level",
+        "fluidic_geometry_propagation_status",
+        "fluidic_network_geometry_propagation_status",
+        "electrokinetic_geometry_propagation_status",
+        "surface_charge_transport_claim_level",
     ):
         _validate_observation_signature_field_binding(
+            row,
+            observation_signature,
+            field=field,
+            row_index=row_index,
+            rule_id=rule_id,
+            issues=issues,
+        )
+    _validate_observation_signature_field_binding(
+        row,
+        observation_signature,
+        field="sampler_support_model",
+        signature_key="center_accessible_support_model",
+        row_index=row_index,
+        rule_id=rule_id,
+        issues=issues,
+    )
+    for field in (
+        "geometry_not_propagated_to_reference_field",
+        "not_optical_solver_output",
+        "not_clogging_rate",
+        "not_time_to_clog",
+        "geometry_not_propagated_to_fluidic_resistance",
+        "geometry_not_propagated_to_fluidic_network",
+        "fluidic_network_not_qch_weighted",
+        "geometry_not_propagated_to_electrokinetic_transport",
+        "electrokinetic_diagnostic_gate_passed",
+    ):
+        _validate_observation_signature_bool_binding(
             row,
             observation_signature,
             field=field,
@@ -10097,6 +10181,30 @@ def _validate_observation_signature_float_binding(
             row_index,
             rule_id,
             f"observation_signature {signature_key}={actual}, expected {expected}",
+        )
+
+
+def _validate_observation_signature_bool_binding(
+    row: Mapping[str, Any],
+    observation_signature: str,
+    *,
+    field: str,
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    signature_key: str | None = None,
+) -> None:
+    value = _value(row, field)
+    if not value:
+        return
+    key = signature_key or field
+    signature_value = _observation_signature_value(observation_signature, key)
+    if signature_value.lower() != value.lower():
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"observation_signature does not bind {key}={value}",
         )
 
 
@@ -10952,7 +11060,11 @@ def _validate_effective_aperture_sidewall_v2_fields(
     row_index: int,
     issues: list[str],
 ) -> None:
-    if not any(field in row for field in EAS_SIDEWALL_V2_MARKER_FIELDS):
+    if not _sidewall_v2_marker_active(
+        row,
+        explicit_marker_fields=EAS_SIDEWALL_V2_EXPLICIT_MARKER_FIELDS,
+        expected_artifact_version=EAS_SIDEWALL_V2_ARTIFACT_VERSION,
+    ):
         return
 
     _require_fields(row, EAS_SIDEWALL_V2_REQUIRED_FIELDS, "EAS-SIDEWALL-V2", row_index, issues)

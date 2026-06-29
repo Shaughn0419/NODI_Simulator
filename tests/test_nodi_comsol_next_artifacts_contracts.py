@@ -345,6 +345,15 @@ def _sidewall_observation_cache_fields(
         "|surface_charge_transport_claim_level=blocked_trapezoid_geometry_not_propagated_to_electrokinetic_transport"
         "|electrokinetic_diagnostic_gate_passed=False"
     )
+    rectangle_guard_fragments = (
+        trapezoid_guard_fragments.replace(
+            "cross_section_geometry_version=trapezoid_straight_sidewall_v1",
+            "cross_section_geometry_version=ideal_rectangle_v1",
+        ).replace(
+            "sampler_geometry_model=trapezoid_accessible_area_v1",
+            "sampler_geometry_model=rectangle_accessible_area_v1",
+        )
+    )
     signature = (
         f"channel_cross_section_model={channel_model}"
         "|sidewall_taper_angle_deg=5.000000000e+00"
@@ -352,12 +361,7 @@ def _sidewall_observation_cache_fields(
     if channel_model == "trapezoid_tapered_sidewalls":
         signature += trapezoid_guard_fragments
     else:
-        signature += (
-            f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
-            f"|geometry_propagation_scope={geometry_propagation_scope}"
-            f"|geometry_propagation_status={geometry_propagation_status}"
-            "|particle_radius_m=1.1e-07"
-        )
+        signature += rectangle_guard_fragments
     return {
         "observation_signature": signature,
         "observation_signature_version": "sidewall_observation_signature_v1",
@@ -744,6 +748,15 @@ def test_position_response_accepts_neutral_response_surface_row() -> None:
     assert validate_position_response_surface_rows([_valid_prs_row()]) == []
 
 
+def test_position_response_accepts_base_ideal_rectangle_geometry_metadata() -> None:
+    assert (
+        validate_position_response_surface_rows(
+            [_valid_prs_row(channel_cross_section_model="ideal_rectangle")]
+        )
+        == []
+    )
+
+
 def test_position_response_accepts_sidewall_v2_geometry_fields_when_consistent() -> None:
     assert validate_position_response_surface_rows([_valid_prs_sidewall_v2_row()]) == []
 
@@ -945,6 +958,30 @@ def test_position_response_sidewall_v2_rejects_signature_angle_mismatch() -> Non
     row["observation_signature"] = str(row["observation_signature"]).replace(
         "sidewall_taper_angle_deg=5.000000000e+00",
         "sidewall_taper_angle_deg=6.0",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_signature_geometry_version_mismatch() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "cross_section_geometry_version=trapezoid_straight_sidewall_v1",
+        "cross_section_geometry_version=trapezoid_stale_v0",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_signature_sampler_mismatch() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "sampler_geometry_model=trapezoid_accessible_area_v1",
+        "sampler_geometry_model=rectangular_half_span_v1",
     )
 
     issues = validate_position_response_surface_rows([row])
@@ -1475,6 +1512,15 @@ def test_effective_aperture_accepts_surrogate_row() -> None:
     assert validate_effective_aperture_surrogate_rows([_valid_eas_row()]) == []
 
 
+def test_effective_aperture_accepts_base_ideal_rectangle_geometry_metadata() -> None:
+    assert (
+        validate_effective_aperture_surrogate_rows(
+            [_valid_eas_row(channel_cross_section_model="ideal_rectangle")]
+        )
+        == []
+    )
+
+
 def test_effective_aperture_accepts_sidewall_v2_fields_when_consistent() -> None:
     assert validate_effective_aperture_surrogate_rows([_valid_eas_sidewall_v2_row()]) == []
 
@@ -1649,6 +1695,18 @@ def test_effective_aperture_sidewall_v2_rejects_signature_angle_mismatch() -> No
     row["observation_signature"] = str(row["observation_signature"]).replace(
         "sidewall_taper_angle_deg=5.000000000e+00",
         "sidewall_taper_angle_deg=6.0",
+    )
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_signature_runtime_guard_mismatch() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "geometry_not_propagated_to_reference_field=True",
+        "geometry_not_propagated_to_reference_field=False",
     )
 
     issues = validate_effective_aperture_surrogate_rows([row])
