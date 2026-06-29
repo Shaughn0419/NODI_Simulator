@@ -29,6 +29,10 @@ ELECTROKINETIC_DIAGNOSTIC_FIELDS = (
     "unweighted_mean_wall_distance_nm",
     "boltzmann_weighted_mean_wall_distance_nm",
     "electrokinetic_transport_sensitivity_lane_active",
+    "electrokinetic_transport_geometry_model",
+    "electrokinetic_wall_distance_model",
+    "electrokinetic_geometry_propagation_status",
+    "geometry_not_propagated_to_electrokinetic_transport",
     "surface_charge_transport_claim_level",
     "electrokinetic_diagnostic_gate_passed",
 )
@@ -158,6 +162,10 @@ def build_electrokinetic_transport_diagnostics(
 ) -> dict[str, object]:
     """Export Debye-layer and zeta-potential metadata diagnostics."""
     model = str(getattr(sim_cfg, "electrokinetic_model", "not_applied"))
+    cross_section_model = str(
+        getattr(sim_cfg, "channel_cross_section_model", "ideal_rectangle")
+    )
+    sidewall_active = cross_section_model == "trapezoid_tapered_sidewalls"
     ionic_strength_M = sim_cfg.ionic_strength_M
     debye_nm = _debye_length_nm(ionic_strength_M)
     depth_nm = float(channel.depth_m) * 1e9
@@ -185,7 +193,14 @@ def build_electrokinetic_transport_diagnostics(
     if eof_fraction is not None:
         eof_fraction = max(0.0, min(1.0, float(eof_fraction)))
 
-    if model == "boltzmann_wall_exclusion":
+    boltzmann_blocked_by_geometry = bool(
+        sidewall_active and model == "boltzmann_wall_exclusion"
+    )
+    if boltzmann_blocked_by_geometry:
+        boltzmann = _inactive_boltzmann_payload(
+            "blocked_trapezoid_geometry_not_propagated"
+        )
+    elif model == "boltzmann_wall_exclusion":
         boltzmann = _boltzmann_wall_exclusion_surrogate(
             channel,
             debye_nm=debye_nm,
@@ -195,7 +210,11 @@ def build_electrokinetic_transport_diagnostics(
     else:
         boltzmann = _inactive_boltzmann_payload("not_applied_model_not_selected")
 
-    if debye_nm is None:
+    if boltzmann_blocked_by_geometry:
+        claim_level = (
+            "blocked_trapezoid_geometry_not_propagated_to_electrokinetic_transport"
+        )
+    elif debye_nm is None:
         claim_level = "metadata_missing_no_electrokinetic_claim"
     elif model == "not_applied":
         claim_level = "debye_length_diagnostic_only_transport_not_modified"
@@ -215,6 +234,26 @@ def build_electrokinetic_transport_diagnostics(
         gate_passed = bool(
             boltzmann["electrokinetic_transport_sensitivity_lane_active"]
         )
+    if boltzmann_blocked_by_geometry:
+        gate_passed = False
+
+    if model == "boltzmann_wall_exclusion":
+        if boltzmann_blocked_by_geometry:
+            transport_geometry_model = "blocked_trapezoid_requires_profile_aware_grid"
+            wall_distance_model = "blocked_rectangular_wall_distance_grid"
+            propagation_status = "blocked_geometry_not_propagated"
+        else:
+            transport_geometry_model = "rectangular_grid_surrogate_v1"
+            wall_distance_model = "rectangular_nearest_wall_distance_grid_v1"
+            propagation_status = "rectangle_native_or_non_sidewall_geometry"
+    else:
+        transport_geometry_model = "not_applicable_no_boltzmann_grid"
+        wall_distance_model = "not_applicable_no_wall_distance_grid"
+        propagation_status = (
+            "sidewall_no_electrokinetic_grid_requested"
+            if sidewall_active
+            else "rectangle_native_or_non_sidewall_geometry"
+        )
 
     return {
         "electrokinetic_model": model,
@@ -227,6 +266,12 @@ def build_electrokinetic_transport_diagnostics(
         "electroosmotic_flow_fraction": eof_fraction,
         "electrostatic_confinement_flag": confinement_flag,
         **boltzmann,
+        "electrokinetic_transport_geometry_model": transport_geometry_model,
+        "electrokinetic_wall_distance_model": wall_distance_model,
+        "electrokinetic_geometry_propagation_status": propagation_status,
+        "geometry_not_propagated_to_electrokinetic_transport": (
+            boltzmann_blocked_by_geometry
+        ),
         "surface_charge_transport_claim_level": claim_level,
         "electrokinetic_diagnostic_gate_passed": gate_passed,
     }

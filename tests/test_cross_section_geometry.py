@@ -20,6 +20,9 @@ from nodi_simulator.data_objects import (
     Channel,
     Particle,
 )
+from nodi_simulator.electrokinetic_transport import (
+    build_electrokinetic_transport_diagnostics,
+)
 from nodi_simulator.parameter_sweep import (
     _build_observation_signature,
     _sample_initial_positions_block,
@@ -482,3 +485,32 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     ) in signature_85
     assert signature_85 != signature_83
     assert signature_85 != signature_85_larger_particle
+
+
+def test_trapezoid_boltzmann_electrokinetic_grid_is_blocked_not_rectangular() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        electrokinetic_model="boltzmann_wall_exclusion",
+        ionic_strength_M=1.0e-4,
+        zeta_potential_particle_mV=-35.0,
+        zeta_potential_wall_mV=-45.0,
+    )
+
+    diagnostics = build_electrokinetic_transport_diagnostics(
+        Channel(width_m=500.0e-9, depth_m=900.0e-9),
+        cfg,
+    )
+
+    assert diagnostics["boltzmann_wall_exclusion_status"] == (
+        "blocked_trapezoid_geometry_not_propagated"
+    )
+    assert diagnostics["geometry_not_propagated_to_electrokinetic_transport"] is True
+    assert diagnostics["electrokinetic_transport_sensitivity_lane_active"] is False
+    assert diagnostics["electrokinetic_diagnostic_gate_passed"] is False
+    assert diagnostics["unweighted_mean_wall_distance_nm"] is None
+    assert diagnostics["boltzmann_weighted_mean_wall_distance_nm"] is None
+    assert diagnostics["surface_charge_transport_claim_level"] == (
+        "blocked_trapezoid_geometry_not_propagated_to_electrokinetic_transport"
+    )
