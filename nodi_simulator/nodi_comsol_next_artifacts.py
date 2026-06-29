@@ -1063,6 +1063,9 @@ EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "eas_mode",
     "aperture_surrogate_basis",
     "aperture_surrogate_claim_level",
+    "W_eff_surrogate_nm_role",
+    "eta_proxy_claim_level",
+    "rank_source_claim_level",
     "channel_cross_section_model",
     "cross_section_geometry_version",
     "geometry_runtime_binding_version",
@@ -1095,6 +1098,29 @@ EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS: tuple[str, ...] = (
     "top_bottom_average_heuristic_nm",
     "center_accessible_aperture_surrogate_nm",
     "min_aperture_conservative_nm",
+)
+EAS_SIDEWALL_V2_GENERIC_W_EFF_ROLE_TO_FIELD = {
+    "legacy_generic_alias_of_W_eff_optical_surrogate_nm": (
+        "W_eff_optical_surrogate_nm"
+    ),
+    "legacy_generic_alias_of_W_eff_transport_surrogate_nm": (
+        "W_eff_transport_surrogate_nm"
+    ),
+    "legacy_generic_alias_of_W_eff_accessible_surrogate_nm": (
+        "W_eff_accessible_surrogate_nm"
+    ),
+}
+EAS_SIDEWALL_V2_ETA_PROXY_CLAIM_LEVEL = (
+    "sidewall_v2_eta_proxy_disabled_not_qch_not_route_weight"
+)
+EAS_SIDEWALL_V2_RANK_SOURCE_CLAIM_LEVEL = (
+    "legacy_rank_source_provenance_only_not_sidewall_ranking"
+)
+EAS_SIDEWALL_V2_GENERIC_ETA_FIELDS: tuple[str, ...] = (
+    "eta_selected_proxy_under_surrogate",
+    "eta_all_proxy_under_surrogate",
+    "eta_selected_relative_change",
+    "eta_all_relative_change",
 )
 EAS_SIDEWALL_V2_OPTICAL_GEOMETRY_CLAIM_LEVEL_ALLOWED = frozenset(
     {"surrogate", "solver_required"}
@@ -11434,6 +11460,71 @@ def _validate_effective_aperture_sidewall_v2_fields(
     for field in EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS:
         if _value(row, field):
             _validate_number_or_blank(row, field, row_index, "EAS-SIDEWALL-V2", issues)
+    _validate_sidewall_v2_eas_generic_surrogate_guards(row, row_index, issues)
+
+
+def _validate_sidewall_v2_eas_generic_surrogate_guards(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> None:
+    role = _value(row, "W_eff_surrogate_nm_role")
+    specific_field = EAS_SIDEWALL_V2_GENERIC_W_EFF_ROLE_TO_FIELD.get(role)
+    if specific_field is None:
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            f"W_eff_surrogate_nm_role={role} outside allowed sidewall aliases",
+        )
+    else:
+        generic_w_eff = _float_field(
+            row,
+            "W_eff_surrogate_nm",
+            row_index,
+            "EAS-SIDEWALL-V2",
+            issues,
+        )
+        specific_w_eff = _float_field(
+            row,
+            specific_field,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            issues,
+        )
+        if generic_w_eff is not None and specific_w_eff is not None:
+            _validate_close(
+                generic_w_eff,
+                specific_w_eff,
+                row_index,
+                "EAS-SIDEWALL-V2",
+                "W_eff_surrogate_nm",
+                issues,
+            )
+    _validate_constant(
+        row,
+        "eta_proxy_claim_level",
+        EAS_SIDEWALL_V2_ETA_PROXY_CLAIM_LEVEL,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+    )
+    _validate_constant(
+        row,
+        "rank_source_claim_level",
+        EAS_SIDEWALL_V2_RANK_SOURCE_CLAIM_LEVEL,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+    )
+    for field in EAS_SIDEWALL_V2_GENERIC_ETA_FIELDS:
+        if _value(row, field):
+            _issue(
+                issues,
+                row_index,
+                "EAS-SIDEWALL-V2",
+                f"sidewall EAS v2 row must leave {field} blank",
+            )
 
 
 def _validate_sidewall_v2_eas_optical_solver_trigger(

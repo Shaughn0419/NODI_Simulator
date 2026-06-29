@@ -619,7 +619,20 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         eas_mode="sidewall_aperture_surrogate_v2",
         aperture_surrogate_basis="center_accessible_geometry_proxy",
         aperture_surrogate_claim_level="surrogate_sensitivity_only",
+        W_eff_surrogate_nm=480.0,
+        delta_W_eff_surrogate_nm=-20.0,
+        W_eff_surrogate_nm_role="legacy_generic_alias_of_W_eff_optical_surrogate_nm",
         W_eff_optical_surrogate_nm=480.0,
+        eta_selected_proxy_under_surrogate="",
+        eta_all_proxy_under_surrogate="",
+        eta_selected_relative_change="",
+        eta_all_relative_change="",
+        eta_proxy_claim_level=(
+            "sidewall_v2_eta_proxy_disabled_not_qch_not_route_weight"
+        ),
+        rank_source_claim_level=(
+            "legacy_rank_source_provenance_only_not_sidewall_ranking"
+        ),
         optical_solver_triggered="false",
         optical_solver_trigger_reason="none",
         optical_solver_trigger_is_result="false",
@@ -2045,6 +2058,35 @@ def test_effective_aperture_sidewall_v2_rejects_solver_trigger_as_result() -> No
 def test_effective_aperture_sidewall_v2_requires_specific_surrogate_width() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(W_eff_optical_surrogate_nm="")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_generic_w_eff_alias_role_match() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(W_eff_surrogate_nm=500.0)]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_nonblank_eta_proxy_fields() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(eta_selected_proxy_under_surrogate=0.2)]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_eta_and_rank_claim_levels() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                eta_proxy_claim_level="legacy_eta_rank_context",
+                rank_source_claim_level="legacy_rank_context",
+            )
+        ]
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
