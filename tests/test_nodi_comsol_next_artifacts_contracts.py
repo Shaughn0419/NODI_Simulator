@@ -494,20 +494,20 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         x_nm=0.0,
         u_nm=450.0,
         z_nm=0.0,
-        x_left_nm=-210.5,
-        x_right_nm=210.5,
+        x_left_nm=-210.630101413,
+        x_right_nm=210.630101413,
         x_center_nm=0.0,
-        local_width_nm=421.0,
-        local_half_width_nm=210.5,
+        local_width_nm=421.260202827,
+        local_half_width_nm=210.630101413,
         x_local_norm=0.0,
         u_norm=0.5,
         d_top_nm=450.0,
         d_bottom_nm=450.0,
-        d_side_left_nm=171.0,
-        d_side_right_nm=171.0,
-        d_nearest_wall_nm=171.0,
+        d_side_left_nm=209.828590286,
+        d_side_right_nm=209.828590286,
+        d_nearest_wall_nm=209.828590286,
         nearest_wall_id="left_side",
-        surface_gap_for_particle_nm=61.0,
+        surface_gap_for_particle_nm=99.828590286,
         bin_basis="edge_norm_1d_trapezoid_wall_distance_v1",
         bin_accessible="true",
         bin_accessible_area_fraction=1.0,
@@ -1215,10 +1215,26 @@ def test_position_response_sidewall_v2_rejects_wrong_nearest_wall_distance() -> 
         [
             _valid_prs_sidewall_v2_row(
                 d_top_nm=10.0,
-                d_nearest_wall_nm=171.0,
+                d_nearest_wall_nm=209.828590286,
                 nearest_wall_id="left_side",
             )
         ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_sidewall_distance_formula_mismatch() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(d_side_left_nm=171.0)]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_local_width_formula_mismatch() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(local_width_nm=400.0)]
     )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")

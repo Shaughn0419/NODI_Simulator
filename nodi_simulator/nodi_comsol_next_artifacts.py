@@ -9596,6 +9596,11 @@ def _validate_position_response_sidewall_v2_fields(
     depth_nm = _float_field(row, "D_nm", row_index, "PRS-SIDEWALL-V2", issues)
     if depth_nm is not None:
         local_geometry["D_nm"] = depth_nm
+    for field in ("W_top_nm", "sidewall_deg_comsol"):
+        if _value(row, field):
+            value = _float_field(row, field, row_index, "PRS-SIDEWALL-V2", issues)
+            if value is not None:
+                local_geometry[field] = value
     _validate_enum(
         row,
         "nearest_wall_id",
@@ -10616,6 +10621,8 @@ def _validate_sidewall_local_geometry(
     particle_radius_nm: float | None,
     issues: list[str],
 ) -> None:
+    w_top = values.get("W_top_nm")
+    sidewall_deg = values.get("sidewall_deg_comsol")
     x_left = values.get("x_left_nm")
     x_right = values.get("x_right_nm")
     x_center = values.get("x_center_nm")
@@ -10701,6 +10708,85 @@ def _validate_sidewall_local_geometry(
             "PRS-SIDEWALL-V2",
             "u_norm outside [0, 1]",
         )
+    if u is not None:
+        d_top = values.get("d_top_nm")
+        if d_top is not None and not math.isclose(
+            d_top,
+            u,
+            rel_tol=1.0e-9,
+            abs_tol=5.0e-2,
+        ):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "d_top_nm does not match u_nm",
+            )
+        d_bottom = values.get("d_bottom_nm")
+        if d_bottom is not None and depth is not None and not math.isclose(
+            d_bottom,
+            depth - u,
+            rel_tol=1.0e-9,
+            abs_tol=5.0e-2,
+        ):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "d_bottom_nm does not match D_nm - u_nm",
+            )
+    if (
+        w_top is not None
+        and sidewall_deg is not None
+        and u is not None
+        and local_width is not None
+    ):
+        tan_theta = math.tan(math.radians(sidewall_deg))
+        if abs(tan_theta) <= 1.0e-12:
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "sidewall_deg_comsol has zero tangent",
+            )
+        else:
+            expected_local_width = w_top - 2.0 * u / tan_theta
+            if not math.isclose(
+                local_width,
+                expected_local_width,
+                rel_tol=1.0e-9,
+                abs_tol=5.0e-2,
+            ):
+                _issue(
+                    issues,
+                    row_index,
+                    "PRS-SIDEWALL-V2",
+                    "local_width_nm does not match trapezoid width formula",
+                )
+            if x_left is not None and not math.isclose(
+                x_left,
+                -0.5 * expected_local_width,
+                rel_tol=1.0e-9,
+                abs_tol=5.0e-2,
+            ):
+                _issue(
+                    issues,
+                    row_index,
+                    "PRS-SIDEWALL-V2",
+                    "x_left_nm does not match trapezoid width formula",
+                )
+            if x_right is not None and not math.isclose(
+                x_right,
+                0.5 * expected_local_width,
+                rel_tol=1.0e-9,
+                abs_tol=5.0e-2,
+            ):
+                _issue(
+                    issues,
+                    row_index,
+                    "PRS-SIDEWALL-V2",
+                    "x_right_nm does not match trapezoid width formula",
+                )
     if local_width is not None and local_width < 0.0:
         _issue(
             issues,
@@ -10746,6 +10832,42 @@ def _validate_sidewall_local_geometry(
                 row_index,
                 "PRS-SIDEWALL-V2",
                 "nearest_wall_id does not identify a nearest wall",
+            )
+    if (
+        sidewall_deg is not None
+        and x is not None
+        and x_left is not None
+        and x_right is not None
+    ):
+        taper = math.tan(math.radians(90.0 - sidewall_deg))
+        side_norm = math.sqrt(1.0 + taper**2)
+        expected_left = (x - x_left) / side_norm
+        expected_right = (x_right - x) / side_norm
+        d_left = values.get("d_side_left_nm")
+        d_right = values.get("d_side_right_nm")
+        if d_left is not None and not math.isclose(
+            d_left,
+            expected_left,
+            rel_tol=1.0e-9,
+            abs_tol=5.0e-2,
+        ):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "d_side_left_nm does not match trapezoid wall-normal distance",
+            )
+        if d_right is not None and not math.isclose(
+            d_right,
+            expected_right,
+            rel_tol=1.0e-9,
+            abs_tol=5.0e-2,
+        ):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "d_side_right_nm does not match trapezoid wall-normal distance",
             )
     surface_gap = values.get("surface_gap_for_particle_nm")
     if (
