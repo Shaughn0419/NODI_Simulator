@@ -307,10 +307,20 @@ def _without_sidewall_descriptor_context(row: dict[str, object]) -> dict[str, ob
 
 def _sidewall_observation_cache_fields(
     channel_model: str = "trapezoid_tapered_sidewalls",
+    *,
+    geometry_propagation_scope: str | None = None,
 ) -> dict[str, object]:
+    if geometry_propagation_scope is None:
+        if channel_model == "trapezoid_tapered_sidewalls":
+            geometry_propagation_scope = (
+                "particle_center_support_only_not_reference_fluidic_electrokinetic"
+            )
+        else:
+            geometry_propagation_scope = "rectangle_native_or_non_sidewall_geometry"
     trapezoid_guard_fragments = (
         "|cross_section_geometry_version=trapezoid_straight_sidewall_v1"
         f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
+        f"|geometry_propagation_scope={geometry_propagation_scope}"
         "|particle_radius_m=1.1e-07"
         "|center_accessible_support_model=wall_normal_half_plane_offset_v1"
         "|sampler_geometry_model=trapezoid_accessible_area_v1"
@@ -341,7 +351,10 @@ def _sidewall_observation_cache_fields(
     if channel_model == "trapezoid_tapered_sidewalls":
         signature += trapezoid_guard_fragments
     else:
-        signature += f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
+        signature += (
+            f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
+            f"|geometry_propagation_scope={geometry_propagation_scope}"
+        )
     return {
         "observation_signature": signature,
         "observation_signature_version": "sidewall_observation_signature_v1",
@@ -507,7 +520,11 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         **_sidewall_artifact_metadata_fields("NODI_POSITION_RESPONSE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
         **_sidewall_package_d_precheck_fields("prs"),
-        **_sidewall_observation_cache_fields(),
+        **_sidewall_observation_cache_fields(
+            geometry_propagation_scope=(
+                "particle_center_support_only_not_reference_fluidic_electrokinetic"
+            )
+        ),
         **_sidewall_runtime_propagation_guard_fields(),
         **_sidewall_descriptor_context_fields(),
     )
@@ -587,7 +604,9 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         **_sidewall_artifact_metadata_fields("NODI_EFFECTIVE_APERTURE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
         **_sidewall_package_d_precheck_fields("eas"),
-        **_sidewall_observation_cache_fields(),
+        **_sidewall_observation_cache_fields(
+            geometry_propagation_scope="aperture_surrogate_only_not_true_runtime"
+        ),
         **_sidewall_runtime_propagation_guard_fields(),
         **_sidewall_descriptor_context_fields(),
     )
@@ -838,6 +857,20 @@ def test_position_response_sidewall_v2_requires_runtime_propagation_models() -> 
 def test_position_response_sidewall_v2_requires_geometry_propagation_scope() -> None:
     row = _valid_prs_sidewall_v2_row()
     del row["geometry_propagation_scope"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_signature_scope_mismatch() -> None:
+    prs_scope = "particle_center_support_only_not_reference_fluidic_electrokinetic"
+    eas_scope = "aperture_surrogate_only_not_true_runtime"
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        f"geometry_propagation_scope={prs_scope}",
+        f"geometry_propagation_scope={eas_scope}",
+    )
 
     issues = validate_position_response_surface_rows([row])
 
@@ -1200,6 +1233,9 @@ def test_position_response_sidewall_v2_keeps_non_propagated_audit_row_blocked() 
                 blocked_reason="geometry_not_propagated_to_sampler",
                 decision_use_allowed="false",
                 steric_support_source="not_available",
+                **_sidewall_observation_cache_fields(
+                    geometry_propagation_scope="blocked_non_propagated_audit"
+                ),
             )
         ]
     )
@@ -1488,6 +1524,20 @@ def test_effective_aperture_sidewall_v2_requires_runtime_geometry_context() -> N
 def test_effective_aperture_sidewall_v2_requires_geometry_propagation_scope() -> None:
     row = _valid_eas_sidewall_v2_row()
     del row["geometry_propagation_scope"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_signature_scope_mismatch() -> None:
+    eas_scope = "aperture_surrogate_only_not_true_runtime"
+    prs_scope = "particle_center_support_only_not_reference_fluidic_electrokinetic"
+    row = _valid_eas_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        f"geometry_propagation_scope={eas_scope}",
+        f"geometry_propagation_scope={prs_scope}",
+    )
 
     issues = validate_effective_aperture_surrogate_rows([row])
 

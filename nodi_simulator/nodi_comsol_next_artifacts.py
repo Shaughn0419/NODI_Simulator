@@ -889,6 +889,7 @@ SIDEWALL_V2_OBSERVATION_CACHE_REQUIRED_FIELDS: tuple[str, ...] = (
 SIDEWALL_V2_TRAPEZOID_SIGNATURE_REQUIRED_FRAGMENTS: tuple[str, ...] = (
     "cross_section_geometry_version=",
     "geometry_profile_sha256=",
+    "geometry_propagation_scope=",
     "particle_radius_m=",
     "center_accessible_support_model=",
     "sampler_geometry_model=",
@@ -9953,6 +9954,19 @@ def _validate_sidewall_v2_observation_cache_context(
     )
     if not observation_signature:
         return
+    geometry_propagation_scope = _value(row, "geometry_propagation_scope")
+    if (
+        geometry_propagation_scope
+        and f"geometry_propagation_scope={geometry_propagation_scope}"
+        not in observation_signature
+    ):
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            "observation_signature does not bind "
+            f"geometry_propagation_scope={geometry_propagation_scope}",
+        )
     if require_trapezoid_signature:
         if "channel_cross_section_model=ideal_rectangle" in observation_signature:
             _issue(
