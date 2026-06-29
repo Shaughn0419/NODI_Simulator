@@ -9412,6 +9412,13 @@ def _validate_position_response_sidewall_v2_fields(
             "PRS-SIDEWALL-V2",
             f"invalid channel_cross_section_model={channel_model}",
         )
+    if _value(row, "rank_under_surrogate"):
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "sidewall PRS v2 row must not use rank_under_surrogate",
+        )
     _validate_sidewall_v2_observation_cache_context(
         row,
         row_index,

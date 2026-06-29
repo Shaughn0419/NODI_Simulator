@@ -683,6 +683,26 @@ def _assert_has_issue(issues: list[str], rule_id: str) -> None:
     assert any(rule_id in issue for issue in issues), issues
 
 
+SIDEWALL_FORBIDDEN_EXACT_COLUMNS_FOR_TEST = (
+    "W_eff",
+    "score",
+    "route_score",
+    "sidewall_score",
+    "winner",
+    "chi_selected",
+    "JRC",
+    "q_ch",
+    "q_ch_eta",
+    "q_ch_chi_eta",
+    "yield",
+    "detection_probability",
+    "wet_pass_probability",
+    "clogging_rate",
+    "time_to_clog",
+    "recovery",
+)
+
+
 def test_comsol_v4_default_context_is_readonly_and_out_of_scope_for_dry_optical() -> None:
     context = default_comsol_v4_readonly_context()
 
@@ -723,6 +743,28 @@ def test_position_response_accepts_neutral_response_surface_row() -> None:
 
 def test_position_response_accepts_sidewall_v2_geometry_fields_when_consistent() -> None:
     assert validate_position_response_surface_rows([_valid_prs_sidewall_v2_row()]) == []
+
+
+@pytest.mark.parametrize(
+    "forbidden_column",
+    SIDEWALL_FORBIDDEN_EXACT_COLUMNS_FOR_TEST,
+)
+def test_position_response_sidewall_v2_rejects_forbidden_exact_claim_columns(
+    forbidden_column: str,
+) -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(**{forbidden_column: "claim"})]
+    )
+
+    _assert_has_issue(issues, "PRS-V41")
+
+
+def test_position_response_sidewall_v2_rejects_rank_promotion() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(rank_under_surrogate=1)]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
 def test_position_response_sidewall_v2_keeps_ideal_rectangle_context_path() -> None:
@@ -1661,6 +1703,20 @@ def test_effective_aperture_sidewall_v2_rejects_rank_promotion() -> None:
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+@pytest.mark.parametrize(
+    "forbidden_column",
+    SIDEWALL_FORBIDDEN_EXACT_COLUMNS_FOR_TEST,
+)
+def test_effective_aperture_sidewall_v2_rejects_forbidden_exact_claim_columns(
+    forbidden_column: str,
+) -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(**{forbidden_column: "claim"})]
+    )
+
+    _assert_has_issue(issues, "EAS-V26")
 
 
 def test_effective_aperture_sidewall_v2_rejects_exact_claim_columns() -> None:
