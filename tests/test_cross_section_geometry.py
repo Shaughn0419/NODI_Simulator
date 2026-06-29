@@ -832,6 +832,9 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
         "initial_position_sampler_geometry_model": "trapezoid_tapered_sidewalls",
+        "initial_position_sampler_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
+        "initial_position_particle_center_support_status": "open",
+        "initial_position_steric_block_reason": "",
         "sampler_geometry_model": "trapezoid_accessible_area_v1",
         "sidewall_angle_convention": "sidewall_angle_from_substrate_plane_90deg_vertical",
         "sidewall_deg_comsol": 85.0,
@@ -931,6 +934,12 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         "initial_position_sampler_geometry_model=trapezoid_tapered_sidewalls"
         in signature_85
     )
+    assert (
+        f"initial_position_sampler_support_model={CENTER_ACCESSIBLE_SUPPORT_MODEL}"
+        in signature_85
+    )
+    assert "initial_position_particle_center_support_status=open" in signature_85
+    assert "|initial_position_steric_block_reason=" in signature_85
     assert "sampler_geometry_model=trapezoid_accessible_area_v1" in signature_85
     assert (
         f"cross_section_geometry_version={TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION}"
@@ -1066,6 +1075,13 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         {**reference_85, "source_geometry_descriptor_sha": "c" * 64},
         {**reference_85, "geometry_profile_sha256": "d" * 64},
         {**reference_85, "sampler_geometry_model": "rectangular_half_span_v1"},
+        {
+            **reference_85,
+            "initial_position_particle_center_support_status": "blocked",
+            "initial_position_steric_block_reason": (
+                "sidewall_clearance_below_particle_radius"
+            ),
+        },
         {
             **reference_85,
             "fluidic_geometry_propagation_status": (

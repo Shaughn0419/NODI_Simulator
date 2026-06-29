@@ -80,6 +80,7 @@ Completed NODI-side guardrails:
 - Added fluidic, fluidic-network, and electrokinetic model/claim guard fields to required observation signatures so proxy/blocked transport state changes cannot reuse stale sidewall cache identities.
 - Added cache-status hard-fail so `blocked_old_rectangular_cache` cannot satisfy propagated sidewall PRS/EAS rows and is limited to blocked/non-propagated audit semantics.
 - Added Package B particle-center support slice oracle for `open` / `narrow` / `blocked` status and steric block reasons, then routed trapezoid sampler diagnostics through that oracle.
+- Added initial-position sampler support model, particle-center support status, and steric block reason to observation signatures so sampler-support diagnostics cannot reuse stale cache identities.
 
 Still blocked in this roadmap:
 
