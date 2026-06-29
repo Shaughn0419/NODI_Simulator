@@ -811,6 +811,12 @@ def self_review() -> list[dict[str, str]]:
 
 
 def build_payload(comsol_root: Path = DEFAULT_COMSOL_ROOT) -> dict[str, Any]:
+    comsol_head_actual = safe_git_head(comsol_root)
+    comsol_head_relation = (
+        "MATCH_GATE12_BASELINE"
+        if comsol_head_actual == COMSOL_GATE12_COMMIT
+        else "CURRENT_HEAD_AFTER_GATE12_BASELINE_REVIEW_ONLY"
+    )
     receipt = receipt_register(comsol_root)
     dirty = dirty_delta_closure(comsol_root)
     fields = release_field_dictionary()
@@ -847,7 +853,9 @@ def build_payload(comsol_root: Path = DEFAULT_COMSOL_ROOT) -> dict[str, Any]:
         "nodi_gate11_commit": NODI_GATE11_COMMIT,
         "comsol_gate11_commit_expected": COMSOL_GATE11_COMMIT,
         "comsol_gate12_commit_expected": COMSOL_GATE12_COMMIT,
-        "comsol_project_head_actual": safe_git_head(comsol_root),
+        "comsol_project_head_actual": comsol_head_actual,
+        "comsol_project_head_relation_to_gate12": comsol_head_relation,
+        "comsol_current_head_used_for_gate12_release_claim": "false",
         "comsol_receipt_rows": len(receipt),
         "comsol_receipt_blocking_drift": sum(row["receipt_status"] == "BLOCKING_DATA_DRIFT" for row in receipt),
         "comsol_receipt_missing_required": sum(row["receipt_status"] == "MISSING_REQUIRED_ARTIFACT" for row in receipt),
@@ -918,6 +926,10 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         issues.append("COMSOL Gate11 required artifact missing")
     if summary["comsol_validation_failures"] != 0:
         issues.append("COMSOL Gate11 validation failure")
+    if summary["comsol_project_head_actual"] == "UNKNOWN_COMMIT_READONLY_REFERENCE":
+        issues.append("COMSOL project head unavailable")
+    if summary["comsol_current_head_used_for_gate12_release_claim"] != "false":
+        issues.append("COMSOL current head promoted into Gate12 release claim")
     if summary["dirty_delta_open_count"] != 0:
         issues.append("NODI_DIRTY_NOT_RELEASED still open")
     if summary["descriptor_dryrun_rows"] != 11 or summary["descriptor_dryrun_failures"] != 0:
@@ -1017,6 +1029,7 @@ def write_reports(payload: dict[str, Any], reports: dict[str, Path]) -> None:
     ])
     write_md(reports["322"], "322 - Gate12J Cross-Thread Provenance Ledger", [
         f"Provenance rows: {summary['provenance_rows']}.",
+        f"COMSOL current head relation to Gate12 baseline: `{summary['comsol_project_head_relation_to_gate12']}`; current head is not used for Gate12 release claim.",
         "Ledger ties NODI Gate10/Gate11/Gate12 and COMSOL Gate10/Gate11 to sidewall addendum boundaries.",
     ])
     write_md(reports["323"], "323 - Gate12K User-Facing Executive Brief", [

@@ -19,7 +19,13 @@ def test_gate12_payload_passes_release_candidate_thresholds() -> None:
     assert payload["summary"]["nodi_gate11_commit"] == gate12.NODI_GATE11_COMMIT
     assert payload["summary"]["comsol_gate11_commit_expected"] == gate12.COMSOL_GATE11_COMMIT
     assert payload["summary"]["comsol_gate12_commit_expected"] == gate12.COMSOL_GATE12_COMMIT
-    assert payload["summary"]["comsol_project_head_actual"] == gate12.COMSOL_GATE12_COMMIT
+    actual_comsol_head = gate12.safe_git_head(gate12.DEFAULT_COMSOL_ROOT)
+    assert payload["summary"]["comsol_project_head_actual"] == actual_comsol_head
+    assert payload["summary"]["comsol_project_head_relation_to_gate12"] in {
+        "MATCH_GATE12_BASELINE",
+        "CURRENT_HEAD_AFTER_GATE12_BASELINE_REVIEW_ONLY",
+    }
+    assert payload["summary"]["comsol_current_head_used_for_gate12_release_claim"] == "false"
     assert payload["summary"]["comsol_receipt_rows"] == 11
     assert payload["summary"]["comsol_receipt_blocking_drift"] == 0
     assert payload["summary"]["comsol_receipt_missing_required"] == 0
