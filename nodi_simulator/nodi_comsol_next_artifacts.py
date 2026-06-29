@@ -679,6 +679,8 @@ PRS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
         "sampler_geometry_model",
         "sampler_support_model",
         "particle_radius_nm",
+        "tail_particle_auto_admitted",
+        "steric_support_source",
         "coordinate_basis",
         "bin_accessible",
         "bin_particle_center_support_status",
@@ -710,6 +712,9 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "neighbor_fill_used",
 )
 PRS_SIDEWALL_V2_PARTICLE_SUPPORT_STATUS = frozenset({"open", "narrow", "blocked"})
+PRS_SIDEWALL_V2_STERIC_SUPPORT_SOURCE = frozenset(
+    {"exact_geometry_primitive", "not_available"}
+)
 PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED = frozenset(
     {
         "propagated",
@@ -8853,7 +8858,7 @@ def _validate_position_response_sidewall_v2_fields(
                 "trapezoid row uses rectangular sampler geometry",
             )
 
-    _float_field(row, "particle_radius_nm", row_index, "PRS-SIDEWALL-V2", issues)
+    _validate_sidewall_tail_particle_support_guard(row, row_index, issues)
     for field in (
         "x_nm",
         "u_nm",
@@ -8908,6 +8913,79 @@ def _validate_position_response_sidewall_v2_fields(
             row_index,
             "PRS-SIDEWALL-V2",
             "inaccessible sidewall bin lacks blocked_reason",
+        )
+
+
+def _validate_sidewall_tail_particle_support_guard(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> None:
+    diameter_nm = _float_field(row, "diameter_nm", row_index, "PRS-SIDEWALL-V2", issues)
+    particle_radius_nm = _float_field(
+        row,
+        "particle_radius_nm",
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+    )
+    large_tail = bool(
+        (diameter_nm is not None and diameter_nm >= 220.0)
+        or (particle_radius_nm is not None and particle_radius_nm >= 110.0)
+    )
+    if not large_tail:
+        return
+
+    if "tail_particle_auto_admitted" not in row:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "large-tail sidewall row lacks tail_particle_auto_admitted",
+        )
+    else:
+        tail_auto_admitted = _bool_field(
+            row,
+            "tail_particle_auto_admitted",
+            row_index,
+            "PRS-SIDEWALL-V2",
+            issues,
+        )
+        if tail_auto_admitted is not False:
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "large-tail sidewall row auto-admits particle support",
+            )
+
+    steric_support_source = _value(row, "steric_support_source")
+    if not steric_support_source:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "large-tail sidewall row lacks steric_support_source",
+        )
+        return
+    if steric_support_source not in PRS_SIDEWALL_V2_STERIC_SUPPORT_SOURCE:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            f"invalid steric_support_source={steric_support_source}",
+        )
+
+    support_status = _value(row, "bin_particle_center_support_status")
+    if (
+        support_status in {"open", "narrow"}
+        and steric_support_source != "exact_geometry_primitive"
+    ):
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "large-tail open/narrow support lacks exact geometry primitive source",
         )
 
 

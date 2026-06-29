@@ -271,6 +271,8 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         sampler_geometry_model="trapezoid_accessible_area_v1",
         sampler_support_model="wall_normal_half_plane_offset_v1",
         particle_radius_nm=110.0,
+        tail_particle_auto_admitted="false",
+        steric_support_source="exact_geometry_primitive",
         coordinate_basis="u_from_top",
         coordinate_conversion_formula_id="centered_z_to_u_from_top_v1",
         x_nm=0.0,
@@ -477,6 +479,29 @@ def test_position_response_sidewall_v2_rejects_blocked_bin_neighbor_fill() -> No
                 blocked_reason="",
                 decision_use_allowed="true",
                 neighbor_fill_used="true",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_large_tail_support_guard() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["tail_particle_auto_admitted"]
+    del row["steric_support_source"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_auto_tail_admission() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                tail_particle_auto_admitted="true",
+                steric_support_source="not_available",
             )
         ]
     )
