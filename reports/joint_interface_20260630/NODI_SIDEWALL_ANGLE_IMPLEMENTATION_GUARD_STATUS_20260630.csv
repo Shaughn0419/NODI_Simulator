@@ -1,0 +1,11 @@
+gate_id,package,status,evidence,blocked_claims
+geometry_primitive,Package B,pass,"TrapezoidCrossSection preserves unclipped bottom width, closure status, center support, and wall-normal support","not a measured geometry claim"
+rectangle_preservation,Package B,pass,"ideal_rectangle keeps rectangular sampler/support/wall-gap identities","not sidewall-aware runtime"
+sampler_signature_actual_path,Package B,pass,"event-loop and pure-advection block tests bind initial_position_wall_distance_model=trapezoid_signed_wall_distance_v1","not production recomputation"
+prs_signature_guard,Package D preflight,pass,"PRS sidewall v2 requires sampler/support/wall-distance signature fragments and row binding","not PRS production data"
+package_c_wall_distance_gate,Package C/D preflight,pass,"wall_distance basis/source-basis requires includes_trajectory_near_wall_metrics=true and package_C_validation_status=pass","not validated hindered diffusion"
+prs_runtime_allowlist,Package D preflight,pass,"propagated trapezoid PRS allows only trapezoid_accessible_area_v1, plug flow, and declared boundary states","not trapezoid Poiseuille or specular reflection"
+eas_generic_surrogate_guard,Package D preflight,pass,"generic W_eff_surrogate_nm must alias a named sidewall surrogate and eta/rank proxies are disabled/no-rank","not true W_eff, route rank, or q_ch"
+claim_blacklist,All packages,pass,"forbidden exact columns include rank, route_rank, sidewall_rank, JOINT_ROUTE_CLASS, q_ch_weight, q_ch_weighting, W_eff, score, route_score, winner, yield, detection_probability","no route winner or fabrication release"
+optical_reference_solver,Package C/D,blocked,"reference field remains proxy/blocked under trapezoid unless solver artifact exists","not optical solver output"
+wet_transport_claims,Package C/D,blocked,"wall distance is geometry primitive only","no wet pass probability, adhesion, clogging, recovery, yield, detection probability"
