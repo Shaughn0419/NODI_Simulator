@@ -957,6 +957,22 @@ def test_position_response_sidewall_v2_requires_package_c_for_wall_distance_bins
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_requires_package_c_for_wall_distance_position_basis() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                bin_basis="xz_norm_2d_trapezoid_local_width_v1",
+                source_bin_basis="xz_norm_2d_trapezoid_local_width_v1",
+                position_distribution_basis="wall_distance_1d_v1",
+                includes_trajectory_near_wall_metrics="false",
+                package_C_validation_status="not_applicable_for_this_artifact",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_rectangular_sampler_under_trapezoid() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(sampler_geometry_model="rectangular_half_span_v1")]

@@ -10357,7 +10357,13 @@ def _validate_prs_sidewall_v2_package_c_wall_distance_binding(
         return
     wall_distance_basis_active = any(
         "wall_distance" in _value(row, field).lower()
-        for field in ("bin_basis", "source_bin_basis")
+        for field in (
+            "bin_basis",
+            "source_bin_basis",
+            "position_distribution_basis",
+            "source_distribution_type",
+            "distribution_type",
+        )
     )
     if not wall_distance_basis_active:
         return

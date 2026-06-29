@@ -91,6 +91,7 @@ Completed NODI-side guardrails:
 - Renamed sidewall trajectory runtime statuses from `no_wall_metrics` to `no_hindered_wall_metrics`, preserving the geometry-only wall-distance primitive while still blocking hindered-diffusion / wet-wall interpretations.
 - Added prefixed channel-geometry descriptor wall-distance identity fields (`channel_geometry_wall_distance_model`, `channel_geometry_wall_distance_claim_level`) so ideal rectangles remain `rectangular_half_span_gap_v1` while trapezoid rows emit `trapezoid_signed_wall_distance_v1` with `geometry_distance_primitive_not_hindered_diffusion`, without colliding with trajectory `wall_distance_model`.
 - Hardened PRS/EAS sidewall v2 validators so those prefixed channel-geometry wall-distance fields are required, signature-bound, and cannot be promoted to validated hindered-diffusion claims.
+- Expanded Package C precheck enforcement so any PRS basis/source-basis field carrying `wall_distance` semantics requires `includes_trajectory_near_wall_metrics=true` and `package_C_validation_status=pass`, not only `bin_basis`.
 
 Still blocked in this roadmap:
 
