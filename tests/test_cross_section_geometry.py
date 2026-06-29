@@ -693,6 +693,16 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         **channel_geometry_85,
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
+        "initial_position_sampler_geometry_model": "trapezoid_tapered_sidewalls",
+        "sampler_geometry_model": "trapezoid_accessible_area_v1",
+        "sidewall_angle_convention": "sidewall_angle_from_substrate_plane_90deg_vertical",
+        "sidewall_deg_comsol": 85.0,
+        "W_top_semantics": "comsol_descriptor",
+        "runtime_top_aperture_nm": 500.0,
+        "source_geometry_descriptor_sha": "a" * 64,
+        "geometry_profile_sha256": "b" * 64,
+        "geometry_profile_descriptor_version": "geometry_profile_descriptor_v2",
+        "geometry_runtime_binding_version": "geometry_runtime_binding_manifest_v1",
         "reference_geometry_model": "rectangular_width_depth_reference_proxy_under_trapezoid",
         "reference_geometry_propagation_status": (
             "blocked_trapezoid_geometry_not_propagated_to_reference_field"
@@ -758,10 +768,32 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
 
     assert "channel_cross_section_model=trapezoid_tapered_sidewalls" in signature_85
     assert "sidewall_taper_angle_deg=5.000000000e+00" in signature_85
+    assert (
+        "sidewall_angle_convention="
+        "sidewall_angle_from_substrate_plane_90deg_vertical"
+    ) in signature_85
+    assert "sidewall_deg_comsol=85.0" in signature_85
+    assert "W_top_semantics=comsol_descriptor" in signature_85
+    assert "runtime_top_aperture_nm=500.0" in signature_85
+    assert f"source_geometry_descriptor_sha={'a' * 64}" in signature_85
+    assert f"geometry_profile_sha256={'b' * 64}" in signature_85
+    assert (
+        "geometry_profile_descriptor_version=geometry_profile_descriptor_v2"
+        in signature_85
+    )
+    assert (
+        "geometry_runtime_binding_version=geometry_runtime_binding_manifest_v1"
+        in signature_85
+    )
     assert "particle_radius_m=1.1e-07" in signature_85
     assert f"center_accessible_support_model={CENTER_ACCESSIBLE_SUPPORT_MODEL}" in (
         signature_85
     )
+    assert (
+        "initial_position_sampler_geometry_model=trapezoid_tapered_sidewalls"
+        in signature_85
+    )
+    assert "sampler_geometry_model=trapezoid_accessible_area_v1" in signature_85
     assert (
         f"cross_section_geometry_version={TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION}"
         in signature_85
@@ -808,6 +840,23 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     assert signature_85 != signature_85_diffusive
     assert signature_85 != signature_85_deeper
     assert signature_85 != signature_85_larger_particle
+
+    for mutated_reference in (
+        {**reference_85, "W_top_semantics": "runtime_top_aperture"},
+        {**reference_85, "runtime_top_aperture_nm": 480.0},
+        {**reference_85, "source_geometry_descriptor_sha": "c" * 64},
+        {**reference_85, "geometry_profile_sha256": "d" * 64},
+        {**reference_85, "sampler_geometry_model": "rectangular_half_span_v1"},
+    ):
+        assert (
+            _build_observation_signature(
+                "operator=test",
+                mutated_reference,
+                cfg_85,
+                particle_radius_m=110.0e-9,
+            )
+            != signature_85
+        )
 
 
 def test_observation_signature_separates_secondary_geometry_descriptors() -> None:
