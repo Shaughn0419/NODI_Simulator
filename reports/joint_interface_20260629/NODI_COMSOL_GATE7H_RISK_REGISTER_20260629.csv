@@ -1,0 +1,4 @@
+risk_id,risk,severity,mitigation
+G7H-RISK-001,metadata self-reference drift,low,record errata and use data-artifact hashes for blocking
+G7H-RISK-002,adapter overreach,medium,negative controls and no verdict change policy
+G7H-RISK-003,future evidence mistaken for accepted,high,preauth board and no-auth harness hard fail

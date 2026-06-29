@@ -1,0 +1,2 @@
+alignment_id,canonical_field,difference_class,semantic_conflict,nodi_interpretation,alignment_status
+G7A-RC51-ALIGN-001,nodi_view_binding_status,producer-retained receiver-previous optional guard,false,non-policy optional receiver guard; field identity remains compatible,PASS_NON_POLICY_OPTIONAL_GUARD

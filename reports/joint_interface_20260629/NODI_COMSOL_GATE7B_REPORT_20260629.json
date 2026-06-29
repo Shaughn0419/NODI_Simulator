@@ -1,0 +1,24 @@
+{
+  "date": "20260629",
+  "gate": "Gate7B",
+  "summary": {
+    "comsol_gate6_manifest_rows": 30,
+    "comsol_gate6_receipt_rows": 35,
+    "comsol_gate6_discrepancy_rows": 6,
+    "comsol_gate6_rc51_rows": 366,
+    "comsol_gate6_field_diff_rows": 1,
+    "comsol_gate6_adapter_rows": 86,
+    "comsol_gate6_errata_rows": 3,
+    "comsol_gate6_validation_rows": 14,
+    "gate7a_blocking_data_drift": 0,
+    "gate7a_alignment_failures": 0,
+    "gate7b_canonical_fields": 365,
+    "gate7d_rows": 1460,
+    "gate7e_authorization_closed": 3,
+    "gate7f_corpus_rows": 5100,
+    "gate7f_unexpected_pass": 0,
+    "gate7i_no_auth_failures": 0,
+    "gate2d_rows": 4
+  },
+  "scope": "review-only/no-auth/interface-freeze-candidate"
+}

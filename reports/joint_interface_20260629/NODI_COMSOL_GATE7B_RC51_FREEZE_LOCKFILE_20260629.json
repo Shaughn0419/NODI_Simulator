@@ -1,0 +1,28 @@
+{
+  "lock_name": "NODI_RECEIVER_RC5_1_FREEZE_CANDIDATE",
+  "date": "20260629",
+  "scope": "review-only/no-auth/interface-freeze-candidate",
+  "compatibility_version": "RC5.1",
+  "canonical_field_count": 365,
+  "canonical_field_hash": "1c1f48139a66e3d02b23aeb8bf273f2eba2a31f4b53444c117ab74cf5ae71fe1",
+  "hash_tree_root": "ff336d2a0b201a9875e0bdb686e8518a00d5b026e4cc5bdb28406bd3057c48c7",
+  "gate2d_accepted_ledger_rows": 4,
+  "edge_policy_state": "NOT_APPROVED",
+  "qch_formal_sidecar_state": "ABSENT",
+  "binding_state": "FAIL_CLOSED",
+  "allowed_drift_class": [
+    "SELF_REFERENTIAL_METADATA_DRIFT_NON_POLICY",
+    "PATH_ONLY_DELTA"
+  ],
+  "blocked_drift_class": [
+    "BLOCKING_DATA_DRIFT",
+    "CANONICAL_FIELD_SEMANTIC_CHANGE",
+    "GATE2D_ROW_COUNT_DRIFT",
+    "EDGE_QCH_BINDING_STATE_PROMOTION",
+    "AUTHORIZATION_TRUE"
+  ],
+  "runtime_schema": false,
+  "production_contract": false,
+  "evidence_acceptance": false,
+  "authorization": "closed"
+}

@@ -1,0 +1,11 @@
+reviewer_id,dimension,finding,status
+Reviewer A,provenance/SHA,PASS: no P0/P1 open,PASS
+Reviewer B,freeze semantics,PASS: no P0/P1 open,PASS
+Reviewer C,harness completeness,PASS: no P0/P1 open,PASS
+Reviewer D,RC version compatibility,PASS: no P0/P1 open,PASS
+Reviewer E,preauth wording,PASS: no P0/P1 open,PASS
+Reviewer F,replay corpus strength,PASS: no P0/P1 open,PASS
+Reviewer G,rollback governance,PASS: no P0/P1 open,PASS
+Reviewer H,no-auth leakage,PASS: no P0/P1 open,PASS
+Reviewer I,git scope,PASS: no P0/P1 open,PASS
+Reviewer J,user-action clarity,PASS: no P0/P1 open,PASS

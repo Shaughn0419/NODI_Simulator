@@ -1,0 +1,9 @@
+rollback_id,trigger,rollback_target,adapter_only_allowed,freeze_candidate_invalidated,must_return_gate
+G7G-ROLLBACK-001,canonical field addition with no semantic change,Gate6_RC5_1_LOCKSTEP_CANDIDATE,true,false,Gate7_lockfile_refresh
+G7G-ROLLBACK-002,canonical field rename with alias,Gate6_RC5_1_LOCKSTEP_CANDIDATE,true,false,Gate7_lockfile_refresh
+G7G-ROLLBACK-003,manifest SHA drift for self-referential metadata,Gate6_RC5_1_LOCKSTEP_CANDIDATE,true,false,Gate7_lockfile_refresh
+G7G-ROLLBACK-004,artifact row_count drift,Gate2D_FROZEN_LEDGER_AND_GATE6_LAST_PASS,false,true,Gate6
+G7G-ROLLBACK-005,Gate2D row_count not 4,Gate2D_FROZEN_LEDGER_AND_GATE6_LAST_PASS,false,true,Gate6
+G7G-ROLLBACK-006,EDGE/QCH/BINDING state promotion,Gate2D_FROZEN_LEDGER_AND_GATE6_LAST_PASS,false,true,Gate6
+G7G-ROLLBACK-007,authorization flag true,Gate2D_FROZEN_LEDGER_AND_GATE6_LAST_PASS,false,true,Gate6
+G7G-ROLLBACK-008,new evidence-bearing artifact,Gate6_RC5_1_LOCKSTEP_CANDIDATE,false,false,Gate7_lockfile_refresh

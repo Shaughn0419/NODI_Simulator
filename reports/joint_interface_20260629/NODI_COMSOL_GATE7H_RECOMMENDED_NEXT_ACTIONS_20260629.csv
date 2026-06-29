@@ -1,0 +1,3 @@
+action_id,recommended_next_safe_action,requires_authorization
+G7H-ACTION-001,COMSOL consumes NODI Gate7 lockfile and runs no-auth compatibility dry-run,false
+G7H-ACTION-002,"total control selects one future preauth line if desired, likely EDGE first",true

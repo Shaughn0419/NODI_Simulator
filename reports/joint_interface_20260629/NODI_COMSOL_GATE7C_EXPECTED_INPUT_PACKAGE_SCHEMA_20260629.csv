@@ -1,0 +1,11 @@
+schema_field_id,field_name,required_for_future_package,authorization_default,missing_field_disposition
+G7C-SCHEMA-001,manifest_path,true,false,REJECT_BLOCKED
+G7C-SCHEMA-002,artifact_path,true,false,REJECT_BLOCKED
+G7C-SCHEMA-003,recorded_sha,true,false,PREAUTH_REQUIRED
+G7C-SCHEMA-004,actual_sha,true,false,REJECT_BLOCKED
+G7C-SCHEMA-005,row_count,true,false,PREAUTH_REQUIRED
+G7C-SCHEMA-006,canonical_field,true,false,PREAUTH_REQUIRED
+G7C-SCHEMA-007,workstream,true,false,PREAUTH_REQUIRED
+G7C-SCHEMA-008,not_evidence,true,false,PREAUTH_REQUIRED
+G7C-SCHEMA-009,no_auth,true,false,PREAUTH_REQUIRED
+G7C-SCHEMA-010,authorization_flags_false,true,false,PREAUTH_REQUIRED

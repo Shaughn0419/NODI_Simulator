@@ -1,0 +1,4 @@
+blocker_id,workstream,state,blocker
+G7H-BLOCKER-EDGE,EDGE,NOT_APPROVED,numeric loss/error closure absent
+G7H-BLOCKER-QCH,QCH,ABSENT,formal q_ch sidecar absent
+G7H-BLOCKER-BINDING,BINDING,FAIL_CLOSED,220/D1200/UNBOUND exact repair absent

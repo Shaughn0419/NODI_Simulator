@@ -1,0 +1,5 @@
+board_id,conclusion_class,verdict,meaning
+G7H-BOARD-001,CAN_FREEZE_INTERFACE_CANDIDATE,true,freeze interface wording/hash contract only
+G7H-BOARD-002,CANNOT_AUTHORIZE_EVIDENCE,true,no evidence acceptance or formula use
+G7H-BOARD-003,REQUIRES_USER_PREAUTH_FOR_NEXT_GATE,true,future EDGE/QCH/BINDING real package needs explicit user/total-control preauth
+G7H-BOARD-004,HARD_BLOCKED_WORKSTREAMS,EDGE formula;QCH weighting;BINDING auto-map;runtime/production,blocked until future authorized gate

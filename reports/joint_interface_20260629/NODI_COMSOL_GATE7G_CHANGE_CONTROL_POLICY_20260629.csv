@@ -1,0 +1,9 @@
+change_rule_id,change_condition,change_class,nodi_action,requires_user_reauthorization,lockfile_refresh_allowed
+G7G-CHANGE-001,canonical field addition with no semantic change,minor,adapter-only,no,true
+G7G-CHANGE-002,canonical field rename with alias,minor,adapter-only,no,true
+G7G-CHANGE-003,manifest SHA drift for self-referential metadata,minor,record errata,no,true
+G7G-CHANGE-004,artifact row_count drift,breaking,freeze candidate invalid; return Gate6,yes,false
+G7G-CHANGE-005,Gate2D row_count not 4,breaking,hard fail and rollback,yes,false
+G7G-CHANGE-006,EDGE/QCH/BINDING state promotion,breaking,hard fail and require user preauth,yes,false
+G7G-CHANGE-007,authorization flag true,breaking,hard fail,yes,false
+G7G-CHANGE-008,new evidence-bearing artifact,major,preauth board required,yes,false

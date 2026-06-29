@@ -1,0 +1,9 @@
+api_id,api_name,purpose,default_disposition,evidence_acceptance_allowed,authorization_effect
+G7C-API-001,manifest_receipt,package manifest path/SHA/row_count receipt,RECEIVE_REVIEW_ONLY,false,none
+G7C-API-002,rc51_field_conformance,canonical field and semantic guard conformance,RECEIVE_REVIEW_ONLY,false,none
+G7C-API-003,artifact_hash_rowcount_check,artifact reproducibility check,REJECT_BLOCKED on drift,false,none
+G7C-API-004,adapter_normalization_check,label/field alias normalization only,RECEIVE_REVIEW_ONLY,false,none
+G7C-API-005,forbidden_authorization_check,hard fail positive authorization flags,HARD_FAIL_FORBIDDEN_AUTHORIZATION,false,none
+G7C-API-006,gate2d_freeze_check,Gate2D exactly four context-only rows,REJECT_BLOCKED on drift,false,none
+G7C-API-007,workstream_state_lock_check,EDGE/QCH/BINDING state lock,PREAUTH_REQUIRED or REJECT_BLOCKED,false,none
+G7C-API-008,mutation_probe_replay_receipt,mutation/probe expected-fail replay,RECEIVE_REVIEW_ONLY,false,none

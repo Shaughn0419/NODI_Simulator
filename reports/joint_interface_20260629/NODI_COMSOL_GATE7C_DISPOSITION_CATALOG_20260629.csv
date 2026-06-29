@@ -1,0 +1,6 @@
+disposition_id,disposition,meaning,evidence_accepted,authorization_opened
+G7C-DISP-001,ACCEPT_EXISTING_GATE2D_CONTEXT_ONLY,only existing frozen Gate2D context rows,existing_gate2d_context_only_reference,false
+G7C-DISP-002,RECEIVE_REVIEW_ONLY,template/context/review package rows,false,false
+G7C-DISP-003,PREAUTH_REQUIRED,future real evidence package requires user/total-control preauth,false,false
+G7C-DISP-004,REJECT_BLOCKED,binding/schema/state/hash drift or blocked workstream,false,false
+G7C-DISP-005,HARD_FAIL_FORBIDDEN_AUTHORIZATION,"positive authorization, formula, weighting, JRC, production/runtime",false,false

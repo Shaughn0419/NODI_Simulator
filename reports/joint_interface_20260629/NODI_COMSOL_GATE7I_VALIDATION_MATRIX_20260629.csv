@@ -1,0 +1,11 @@
+check_id,status,detail
+gate7a_comsol_gate6_receipt,PASS,blocking drift zero
+gate7b_lockfile_hash_tree,PASS,hash tree generated
+gate7c_harness_dispositions,PASS,five dispositions covered
+gate7d_cross_version_matrix,PASS,RC3-RC5.1 covered
+gate7e_preauth_closed,PASS,EDGE/QCH/BINDING authorization closed
+gate7f_replay_corpus,PASS,unexpected pass zero
+gate7g_rollback_governance,PASS,breaking drift classified
+gate7h_release_board,PASS,freeze interface only
+gate2d_freeze,PASS,exactly 4 rows
+no_auth_sweep,PASS,no positive authorization

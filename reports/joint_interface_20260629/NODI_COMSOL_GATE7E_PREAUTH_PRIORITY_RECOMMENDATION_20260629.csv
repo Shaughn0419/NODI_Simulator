@@ -1,0 +1,4 @@
+priority_id,recommended_first_trial,reason,highest_risk,qch_status
+G7E-PRIORITY-001,EDGE,best scoped to numeric loss/error closure without touching q_ch weighting or binding repair,,
+G7E-PRIORITY-002,,binding repair can accidentally auto-map 220 nm or D1200 if not fail-closed,BINDING,
+G7E-PRIORITY-003,,q_ch provenance/template cannot become formal sidecar or weighting input,,WAIT_FOR_FORMAL_SIDECAR

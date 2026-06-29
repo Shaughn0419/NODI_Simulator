@@ -1,0 +1,2 @@
+cli_contract_id,command,mode,accepts_evidence,opens_authorization
+G7C-CLI-001,python tools/audits/build_nodi_comsol_gate7a_to_gate7j_freeze_readiness.py --confirm-gate7a-to-gate7j,dry-run/generate review-only artifacts,false,false
