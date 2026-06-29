@@ -1,0 +1,19 @@
+board_id,required_guard,gate11_coverage_status,gate12_release_category,covered_by_fixture,numeric_output_generated,requires_future_runtime_solver,authorization_opened
+G12E-BOARD-001,sidewall artifact metadata,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-002,descriptor provenance and source binding,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-003,source grain borrowing rejection,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-004,normalized coordinates,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-005,particle radius / steric support,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-006,runtime geometry propagation fields,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-007,PRS blocked-bin numeric response rejection,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-008,EAS runtime geometry context,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-009,EAS reference context,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-010,EAS optical trigger fields,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-011,EAS optical claim-level consistency,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-012,forbidden claim columns,PASS,implemented_contract_guard,true,false,false,false
+G12E-BOARD-013,artifact cache signatures,PASS,covered_by_fixture,true,false,false,false
+G12E-BOARD-014,acceptance guards,PASS,blocked_by_no_auth,true,false,false,false
+G12E-PACKAGE-A,Package A descriptor/addendum,PASS,implemented_contract_guard,true,false,false,false
+G12E-PACKAGE-B,Package B geometry/runtime primitives,PARTIAL_CONTRACT_GUARDED,requires_future_runtime_solver,true,false,true,false
+G12E-PACKAGE-C,Package C solver/trajectory/optical claims,BLOCKED,blocked_by_no_auth,false,false,true,false
+G12E-PACKAGE-D,Package D PRS/EAS receiver contract,CONTRACT_GUARDS_COMPLETE_NO_NUMERIC_OUTPUT,implemented_contract_guard,true,false,false,false

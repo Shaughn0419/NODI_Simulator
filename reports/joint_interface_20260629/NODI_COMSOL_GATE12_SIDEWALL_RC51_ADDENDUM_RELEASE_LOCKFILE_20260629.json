@@ -1,0 +1,18 @@
+{
+  "release_candidate": "RC5.1_SIDEWALL_GEOMETRY_DESCRIPTOR_ADDENDUM_V1_RELEASE_CANDIDATE_REVIEW_ONLY_NO_AUTH",
+  "date": "20260629",
+  "nodi_gate11_commit": "e29501c3d26b5ff712870d7bc10a3617bd97ca28",
+  "comsol_gate11_commit": "b16b16b8c61e9ceb3a38debc1dc7a2bd4e635962",
+  "comsol_descriptor_rows": 11,
+  "gate11_mutation_unexpected_pass": 0,
+  "gate2d_rows": 4,
+  "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+  "qch_state": "ABSENT",
+  "binding_state": "FAIL_CLOSED",
+  "review_only": true,
+  "historical_freeze_rewrite": false,
+  "runtime_schema": false,
+  "production_contract": false,
+  "evidence_authorization": false,
+  "release_root_hash": "8f9996aca4fe14dc13129a9caeedf3b3f9a74723a919c87c74d832301a845e2e"
+}

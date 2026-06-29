@@ -1,0 +1,721 @@
+fixture_id,fixture_family,source,expected_result,expected_fail_reason,not_evidence,authorization_expected,workstream
+G12I-MUT-0001,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0002,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0003,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0004,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0005,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0006,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0007,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0008,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0009,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0010,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0011,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0012,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0013,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0014,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0015,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0016,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0017,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0018,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0019,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0020,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0021,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0022,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0023,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0024,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0025,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0026,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0027,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0028,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0029,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0030,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0031,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0032,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0033,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0034,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0035,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0036,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0037,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0038,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0039,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0040,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0041,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0042,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0043,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0044,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0045,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0046,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0047,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0048,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0049,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0050,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0051,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0052,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0053,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0054,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0055,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0056,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0057,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0058,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0059,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0060,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0061,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0062,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0063,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0064,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0065,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0066,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0067,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0068,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0069,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0070,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0071,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0072,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0073,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0074,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0075,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0076,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0077,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0078,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0079,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0080,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0081,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0082,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0083,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0084,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0085,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0086,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0087,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0088,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0089,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0090,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0091,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0092,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0093,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0094,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0095,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0096,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0097,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0098,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0099,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0100,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0101,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0102,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0103,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0104,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0105,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0106,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0107,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0108,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0109,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0110,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0111,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0112,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0113,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0114,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0115,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0116,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0117,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0118,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0119,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0120,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0121,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0122,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0123,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0124,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0125,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0126,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0127,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0128,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0129,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0130,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0131,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0132,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0133,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0134,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0135,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0136,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0137,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0138,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0139,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0140,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0141,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0142,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0143,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0144,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0145,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0146,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0147,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0148,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0149,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0150,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0151,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0152,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0153,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0154,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0155,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0156,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0157,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0158,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0159,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0160,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0161,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0162,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0163,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0164,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0165,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0166,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0167,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0168,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0169,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0170,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0171,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0172,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0173,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0174,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0175,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0176,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0177,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0178,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0179,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0180,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0181,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0182,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0183,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0184,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0185,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0186,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0187,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0188,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0189,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0190,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0191,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0192,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0193,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0194,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0195,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0196,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0197,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0198,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0199,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0200,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0201,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0202,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0203,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0204,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0205,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0206,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0207,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0208,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0209,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0210,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0211,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0212,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0213,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0214,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0215,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0216,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0217,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0218,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0219,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0220,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0221,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0222,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0223,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0224,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0225,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0226,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0227,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0228,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0229,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0230,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0231,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0232,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0233,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0234,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0235,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0236,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0237,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0238,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0239,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0240,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0241,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0242,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0243,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0244,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0245,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0246,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0247,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0248,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0249,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0250,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0251,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0252,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0253,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0254,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0255,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0256,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0257,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0258,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0259,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0260,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0261,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0262,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0263,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0264,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0265,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0266,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0267,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0268,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0269,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0270,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0271,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0272,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0273,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0274,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0275,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0276,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0277,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0278,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0279,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0280,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0281,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0282,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0283,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0284,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0285,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0286,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0287,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0288,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0289,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0290,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0291,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0292,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0293,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0294,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0295,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0296,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0297,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0298,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0299,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0300,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0301,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0302,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0303,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0304,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0305,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0306,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0307,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0308,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0309,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0310,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0311,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0312,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0313,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0314,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0315,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0316,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0317,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0318,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0319,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0320,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0321,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0322,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0323,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0324,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0325,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0326,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0327,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0328,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0329,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0330,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0331,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0332,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0333,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0334,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0335,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0336,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0337,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0338,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0339,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0340,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0341,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0342,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0343,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0344,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0345,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0346,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0347,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0348,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0349,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0350,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0351,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0352,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0353,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0354,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0355,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0356,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0357,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0358,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0359,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0360,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0361,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0362,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0363,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0364,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0365,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0366,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0367,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0368,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0369,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0370,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0371,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0372,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0373,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0374,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0375,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0376,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0377,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0378,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0379,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0380,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0381,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0382,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0383,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0384,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0385,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0386,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0387,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0388,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0389,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0390,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0391,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0392,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0393,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0394,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0395,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0396,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0397,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0398,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0399,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0400,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0401,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0402,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0403,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0404,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0405,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0406,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0407,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0408,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0409,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0410,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0411,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0412,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0413,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0414,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0415,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0416,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0417,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0418,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0419,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0420,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0421,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0422,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0423,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0424,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0425,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0426,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0427,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0428,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0429,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0430,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0431,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0432,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0433,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0434,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0435,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0436,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0437,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0438,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0439,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0440,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0441,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0442,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0443,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0444,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0445,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0446,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0447,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0448,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0449,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0450,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0451,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0452,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0453,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0454,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0455,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0456,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0457,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0458,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0459,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0460,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0461,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0462,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0463,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0464,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0465,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0466,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0467,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0468,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0469,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0470,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0471,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0472,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0473,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0474,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0475,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0476,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0477,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0478,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0479,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0480,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0481,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0482,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0483,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0484,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0485,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0486,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0487,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0488,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0489,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0490,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0491,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0492,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0493,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0494,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0495,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0496,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0497,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0498,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0499,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0500,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0501,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0502,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0503,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0504,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0505,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0506,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0507,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0508,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0509,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0510,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0511,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0512,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0513,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0514,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0515,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0516,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0517,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0518,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0519,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0520,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0521,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0522,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0523,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0524,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0525,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0526,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0527,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0528,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0529,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0530,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0531,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0532,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0533,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0534,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0535,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0536,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0537,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0538,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0539,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0540,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0541,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0542,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0543,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0544,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0545,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0546,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0547,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0548,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0549,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0550,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0551,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0552,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0553,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0554,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0555,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0556,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0557,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0558,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0559,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0560,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0561,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0562,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0563,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0564,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0565,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0566,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0567,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0568,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0569,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0570,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0571,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0572,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0573,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0574,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0575,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0576,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0577,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0578,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0579,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0580,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0581,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0582,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0583,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0584,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0585,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0586,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0587,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0588,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0589,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0590,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0591,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0592,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0593,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0594,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0595,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0596,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0597,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0598,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0599,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0600,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0601,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0602,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0603,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0604,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0605,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0606,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0607,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0608,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0609,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0610,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0611,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0612,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0613,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0614,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0615,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0616,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0617,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0618,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0619,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0620,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0621,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0622,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0623,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0624,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0625,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0626,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0627,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0628,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0629,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0630,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0631,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0632,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0633,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0634,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0635,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0636,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0637,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0638,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0639,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0640,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0641,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0642,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0643,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0644,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0645,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0646,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0647,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0648,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0649,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0650,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0651,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0652,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0653,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0654,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0655,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0656,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0657,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0658,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0659,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0660,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0661,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0662,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0663,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0664,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0665,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0666,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0667,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0668,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0669,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0670,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0671,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0672,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0673,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0674,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0675,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0676,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0677,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0678,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0679,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0680,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0681,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0682,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0683,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0684,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0685,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0686,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0687,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0688,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0689,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0690,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0691,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0692,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0693,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0694,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0695,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0696,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine
+G12I-MUT-0697,positive_valid_descriptor_receipt,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,valid descriptor receipt remains review-only,true,false,descriptor
+G12I-MUT-0698,positive_valid_addendum_release,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,release candidate remains no-auth,true,false,addendum
+G12I-MUT-0699,bad_hash,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,descriptor hash mismatch,true,false,PRS_EAS
+G12I-MUT-0700,bad_angle_convention,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,angle convention mismatch,true,false,state_machine
+G12I-MUT-0701,bad_bottom_width,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,bottom width formula mismatch,true,false,descriptor
+G12I-MUT-0702,micro_as_nano_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,micro descriptor cannot bind nano route,true,false,addendum
+G12I-MUT-0703,unbound_promotion,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,UNBOUND route/view/bin promoted,true,false,PRS_EAS
+G12I-MUT-0704,eas_solver_claim_mismatch,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,EAS solver/claim mismatch,true,false,state_machine
+G12I-MUT-0705,prs_blocked_bin_numeric_response,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,blocked PRS bin numeric response,true,false,descriptor
+G12I-MUT-0706,route_score_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,route_score positive spoof,true,false,addendum
+G12I-MUT-0707,jrc_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,JRC positive spoof,true,false,PRS_EAS
+G12I-MUT-0708,qch_weighting_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,q_ch weighting spoof,true,false,state_machine
+G12I-MUT-0709,yield_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,yield positive spoof,true,false,descriptor
+G12I-MUT-0710,winner_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,winner positive spoof,true,false,addendum
+G12I-MUT-0711,detection_probability_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,detection probability spoof,true,false,PRS_EAS
+G12I-MUT-0712,runtime_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,runtime flag true,true,false,state_machine
+G12I-MUT-0713,production_flag_spoof,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,production flag true,true,false,descriptor
+G12I-MUT-0714,fixture_template_not_evidence_false,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,fixture not_evidence false,true,false,addendum
+G12I-MUT-0715,comsol_template_field_alias,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,COMSOL fixture template alias normalized,true,false,PRS_EAS
+G12I-MUT-0716,binding_blocker_retained,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,PASS_REVIEW_ONLY,binding blocker stays blocked,true,false,state_machine
+G12I-MUT-0717,descriptor_without_sha,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor sha,true,false,descriptor
+G12I-MUT-0718,descriptor_without_id,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,missing descriptor id,true,false,addendum
+G12I-MUT-0719,wrong_depth_unit,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,depth unit mismatch,true,false,PRS_EAS
+G12I-MUT-0720,measured_geometry_claim,Gate12 descriptor/addendum/PRS_EAS/state_machine/COMSOL_fixture_template,FAIL_AS_EXPECTED,measured geometry claim,true,false,state_machine

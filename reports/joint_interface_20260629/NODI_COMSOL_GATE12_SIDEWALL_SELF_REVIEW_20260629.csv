@@ -1,0 +1,13 @@
+reviewer_id,dimension,finding,residual_risk,action
+G12-REVIEW-01,COMSOL Gate11 receipt/SHA/row_count,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-02,NODI dirty-delta closure,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-03,RC5.1 sidewall release semantics,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-04,descriptor formula/hash dry-run harness,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-05,review-only ledger and micro/nano blocker split,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-06,PRS/EAS contract release board,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-07,cross-project handshake semantic conflict,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-08,decision dossier no default approval,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-09,mutation and forbidden promotion,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-10,no-auth anti-confusion,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-11,provenance ledger,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
+G12-REVIEW-12,git/staging hygiene,PASS_NO_P0_P1,future real descriptor binding still needs explicit user authorization,none_current_gate
