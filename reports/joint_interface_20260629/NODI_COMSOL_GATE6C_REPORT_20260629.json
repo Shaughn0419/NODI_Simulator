@@ -1,0 +1,31 @@
+{
+  "date": "20260629",
+  "gate": "Gate6C",
+  "summary": {
+    "comsol_gate5_manifest_rows": 31,
+    "comsol_gate5_receipt_rows": 40,
+    "comsol_gate5_probe_rows": 120,
+    "comsol_gate5_adapter_rows": 48,
+    "comsol_gate5_rc5_rows": 366,
+    "comsol_gate5_owner_rows": 36,
+    "comsol_gate5_command_rows": 6,
+    "comsol_gate5_mutation_rows": 1800,
+    "comsol_gate5_exchange_index_rows": 6,
+    "comsol_gate5_validation_rows": 18,
+    "gate6a_blocking_data_drift": 0,
+    "gate6a_self_metadata_drift": 3,
+    "gate6b_semantic_conflicts": 0,
+    "gate6b_policy_conflicts": 0,
+    "gate6c_rows": 365,
+    "gate6c_duplicate_rows": 2,
+    "gate6d_rows": 108,
+    "gate6d_verdict_changes": 0,
+    "gate6e_union_rows": 3592,
+    "gate6e_unexpected_pass": 0,
+    "gate6e_authorization_promotion": 0,
+    "gate2d_rows": 4,
+    "gate6h_no_auth_failures": 0
+  },
+  "scope": "review-only/no-auth/interface-freeze-candidate",
+  "authorization": "no formula, no q_ch weighting, no JRC, no production/runtime"
+}

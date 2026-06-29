@@ -1,0 +1,9 @@
+reviewer_id,dimension,finding,severity,status
+Reviewer A,provenance/SHA,COMSOL Gate5 receipt separates blocking data drift from self-referential metadata drift.,P0/P1 none,PASS
+Reviewer B,cross-side count semantics,"36/40, 365/366, 104/48, and 1792/1800 are explained as scope/granularity deltas.",P0/P1 none,PASS
+Reviewer C,RC5.1 semantic consistency,365 unique canonical fields are lockstep; duplicate producer row is non-semantic.,P0/P1 none,PASS
+Reviewer D,adapter negative controls,Harmonized adapters cannot change verdict or authorization state.,P0/P1 none,PASS
+Reviewer E,mutation/probe coverage,3592 row-equivalent union has zero unexpected pass and zero authorization promotion.,P0/P1 none,PASS
+Reviewer F,metadata drift handling,Gate4/Gate5 self-referential drifts are non-policy and non-evidence.,P0/P1 none,PASS
+Reviewer G,no-auth leakage,"No formula, weighting, JRC, production, runtime, or evidence acceptance opened.",P0/P1 none,PASS
+Reviewer H,git scope,"Gate6 output package is isolated to reports, sidecars, builder, and focused tests.",P0/P1 none,PASS

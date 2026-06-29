@@ -1,0 +1,9 @@
+discrepancy_id,topic,nodi_value,comsol_value,difference_class,explanation,semantic_conflict,policy_conflict,auth_impact
+G6B-DISC-001,receipt row count,36,40,directional_scope_delta,NODI Gate5 received COMSOL Gate4 manifest rows; COMSOL Gate5 received NODI Gate4 report/sidecar rows.,false,false,none
+G6B-DISC-002,RC5 row count,365,366,producer_only_field,COMSOL has 366 RC5 rows but 365 unique canonical fields; duplicate canonical field nodi_view_binding_status is packaging granularity only.,false,false,none
+G6B-DISC-003,adapter rule count,104,48,adapter_rule_granularity_delta,NODI kept 80 carried COMSOL Gate4B rules plus 24 NODI gaps; COMSOL collapsed to 48 producer-side v3 rules.,false,false,none
+G6B-DISC-004,mutation row count,1792,1800,stress_suite_family_delta,NODI combined 760+960+72 rows; COMSOL generated mutation v5 1800 rows with producer-side families.,false,false,none
+G6B-DISC-005,validation/no-auth sweep shape,1,18,directional_scope_delta,NODI no-auth sweep is compact pass row; COMSOL Gate5H validation has 18 named checks.,false,false,none
+G6B-DISC-006,COMSOL Gate4 self-referential metadata SHA drift,3,superseded by Gate5 package,self_referential_metadata_delta,NODI Gate5 recorded validation/manifest/master packet SHA churn as non-policy metadata drift.,false,false,none
+G6B-DISC-007,COMSOL Gate5 self-referential metadata SHA drift,3,current Gate5 package metadata drift,self_referential_metadata_delta,COMSOL Gate5 validation/manifest/master packet are self-referential metadata rows; no data artifact drift.,false,false,none
+G6B-DISC-008,probe reconciliation,120,120,directional_scope_delta,Both sides carry 120 probe rows with identical closure class counts and policy conflict zero.,false,false,none

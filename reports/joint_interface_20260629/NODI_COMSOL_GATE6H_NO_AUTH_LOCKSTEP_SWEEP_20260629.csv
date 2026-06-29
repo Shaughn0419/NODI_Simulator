@@ -1,0 +1,2 @@
+sweep_id,source_file,row_index,field_name,field_value,sweep_status
+G6H-SWEEP-NONE,Gate5/Gate6 outputs,0,none,none,PASS_NO_AUTH
