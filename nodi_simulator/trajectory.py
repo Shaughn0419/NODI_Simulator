@@ -49,6 +49,23 @@ _HINDRANCE_TENSOR = 2
 
 _EMPTY_FLOAT_ARRAY = np.empty(0, dtype=float)
 
+TRAJECTORY_GEOMETRY_DIAGNOSTIC_FIELDS = (
+    "trajectory_boundary_model",
+    "trajectory_boundary_model_version",
+    "trajectory_boundary_claim_level",
+    "wall_distance_model",
+    "wall_distance_model_version",
+    "wall_distance_claim_level",
+    "flow_profile_geometry_model",
+    "flow_profile_geometry_claim_level",
+    "geometry_propagation_status",
+    "geometry_not_propagated_reasons",
+    "geometry_not_propagated_to_flow_model",
+    "geometry_not_propagated_to_near_wall_metrics",
+    "geometry_not_propagated_to_trajectory_boundary",
+    "sidewall_aware_runtime_status",
+)
+
 
 def _as_scalar_float(value: object) -> float:
     if isinstance(value, (int, float, np.integer, np.floating, np.number, np.generic)):
@@ -126,6 +143,83 @@ def _validate_trapezoid_initial_support(
         raise ValueError(
             "initial position is outside the trapezoid particle-center support"
         )
+
+
+def build_trajectory_geometry_diagnostics(sim_cfg: SimulationConfig) -> dict[str, object]:
+    """Return machine-readable geometry propagation status for trajectory paths."""
+    flow_model = str(sim_cfg.flow_profile_model)
+    hindrance_model = str(sim_cfg.diffusion_hindrance_model)
+    is_trapezoid = _is_trapezoid_active(sim_cfg)
+
+    if flow_model == "plug":
+        flow_geometry_model = "plug_flow_geometry_independent_v1"
+        flow_claim_level = "geometry_independent_uniform_flow_surrogate"
+    elif flow_model == "parabolic_rect":
+        flow_geometry_model = "rectangular_parabolic_profile_v1"
+        flow_claim_level = "rectangular_flow_surrogate"
+    else:
+        flow_geometry_model = "rectangular_duct_series_v1"
+        flow_claim_level = "rectangular_flow_surrogate"
+
+    if bool(sim_cfg.include_diffusion):
+        if bool(sim_cfg.reflecting_boundary):
+            boundary_model = "rectangular_half_span_reflection_v1"
+            boundary_claim_level = "rectangular_boundary_surrogate"
+        else:
+            boundary_model = "unbounded_diffusion_no_reflection_v1"
+            boundary_claim_level = "no_reflection_boundary"
+    else:
+        boundary_model = "not_applicable_pure_advection"
+        boundary_claim_level = "no_diffusive_boundary_claim"
+
+    if hindrance_model == "none":
+        wall_distance_model = "not_applicable_diffusion_hindrance_none"
+        wall_distance_claim_level = "not_used"
+    else:
+        wall_distance_model = "rectangular_half_span_gap_v1"
+        wall_distance_claim_level = "rectangular_near_wall_surrogate"
+
+    reasons: list[str] = []
+    if is_trapezoid and flow_model in {"parabolic_rect", "rect_series"}:
+        reasons.append("geometry_not_propagated_to_flow_model")
+    if is_trapezoid and hindrance_model != "none":
+        reasons.append("geometry_not_propagated_to_near_wall_metrics")
+    if is_trapezoid and bool(sim_cfg.include_diffusion):
+        reasons.append("geometry_not_propagated_to_trajectory_boundary")
+
+    if is_trapezoid:
+        if reasons:
+            propagation_status = "blocked_rectangular_geometry_leakage"
+            sidewall_status = "blocked_not_sidewall_aware_runtime"
+        else:
+            propagation_status = "sidewall_sampler_and_pure_advection_propagated"
+            sidewall_status = "partial_sidewall_runtime_no_diffusion_no_wall_metrics"
+    else:
+        propagation_status = "rectangle_native_or_non_sidewall_geometry"
+        sidewall_status = "not_sidewall_geometry"
+
+    return {
+        "trajectory_boundary_model": boundary_model,
+        "trajectory_boundary_model_version": boundary_model,
+        "trajectory_boundary_claim_level": boundary_claim_level,
+        "wall_distance_model": wall_distance_model,
+        "wall_distance_model_version": wall_distance_model,
+        "wall_distance_claim_level": wall_distance_claim_level,
+        "flow_profile_geometry_model": flow_geometry_model,
+        "flow_profile_geometry_claim_level": flow_claim_level,
+        "geometry_propagation_status": propagation_status,
+        "geometry_not_propagated_reasons": tuple(reasons),
+        "geometry_not_propagated_to_flow_model": (
+            "geometry_not_propagated_to_flow_model" in reasons
+        ),
+        "geometry_not_propagated_to_near_wall_metrics": (
+            "geometry_not_propagated_to_near_wall_metrics" in reasons
+        ),
+        "geometry_not_propagated_to_trajectory_boundary": (
+            "geometry_not_propagated_to_trajectory_boundary" in reasons
+        ),
+        "sidewall_aware_runtime_status": sidewall_status,
+    }
 
 
 @dataclass(frozen=True)

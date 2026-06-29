@@ -227,7 +227,11 @@ from .calibration_plan_advisor import (
     CALIBRATION_PLAN_ADVISOR_FIELDS,
     build_calibration_plan_advisor,
 )
-from .trajectory import simulate_particle_trajectory
+from .trajectory import (
+    TRAJECTORY_GEOMETRY_DIAGNOSTIC_FIELDS,
+    build_trajectory_geometry_diagnostics,
+    simulate_particle_trajectory,
+)
 from .scattering_trace import compute_scattering_field_trace, spatial_coupling_factor
 from .interferometric_trace import generate_interferometric_trace
 from .pulse_analysis import estimate_threshold_robust, extract_pulse_features

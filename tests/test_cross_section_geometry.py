@@ -20,10 +20,14 @@ from nodi_simulator.data_objects import (
     Channel,
     Particle,
 )
-from nodi_simulator.parameter_sweep import _sample_initial_positions_block
+from nodi_simulator.parameter_sweep import (
+    _build_observation_signature,
+    _sample_initial_positions_block,
+)
 from nodi_simulator.trajectory import (
     axial_transport_velocity_m_s,
     build_trajectory_context,
+    build_trajectory_geometry_diagnostics,
     hindered_diffusion_factors,
     simulate_particle_trajectory,
 )
@@ -359,3 +363,99 @@ def test_trapezoid_axial_transport_rejects_rectangular_flow_direct_call() -> Non
             cfg,
             particle_radius_m=110.0e-9,
         )
+
+
+def test_trapezoid_trajectory_diagnostics_mark_pure_advection_boundary() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=False,
+    )
+
+    diagnostics = build_trajectory_geometry_diagnostics(cfg)
+
+    assert diagnostics["trajectory_boundary_model"] == "not_applicable_pure_advection"
+    assert diagnostics["wall_distance_model"] == (
+        "not_applicable_diffusion_hindrance_none"
+    )
+    assert diagnostics["flow_profile_geometry_model"] == (
+        "plug_flow_geometry_independent_v1"
+    )
+    assert diagnostics["geometry_propagation_status"] == (
+        "sidewall_sampler_and_pure_advection_propagated"
+    )
+    assert diagnostics["geometry_not_propagated_reasons"] == ()
+    assert diagnostics["sidewall_aware_runtime_status"] == (
+        "partial_sidewall_runtime_no_diffusion_no_wall_metrics"
+    )
+
+
+def test_trapezoid_trajectory_diagnostics_mark_blocked_rectangular_leakage() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="rect_series",
+        diffusion_hindrance_model="near_wall_surrogate",
+        include_diffusion=True,
+    )
+
+    diagnostics = build_trajectory_geometry_diagnostics(cfg)
+
+    assert diagnostics["geometry_propagation_status"] == (
+        "blocked_rectangular_geometry_leakage"
+    )
+    assert diagnostics["geometry_not_propagated_to_flow_model"] is True
+    assert diagnostics["geometry_not_propagated_to_near_wall_metrics"] is True
+    assert diagnostics["geometry_not_propagated_to_trajectory_boundary"] is True
+    assert set(diagnostics["geometry_not_propagated_reasons"]) == {
+        "geometry_not_propagated_to_flow_model",
+        "geometry_not_propagated_to_near_wall_metrics",
+        "geometry_not_propagated_to_trajectory_boundary",
+    }
+
+
+def test_sidewall_observation_signature_records_geometry_propagation_fields() -> None:
+    cfg_85 = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=False,
+    )
+    cfg_83 = replace(
+        cfg_85,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(83.0),
+    )
+    reference_85 = {
+        "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+        **build_trajectory_geometry_diagnostics(cfg_85),
+    }
+    reference_83 = {
+        "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+        **build_trajectory_geometry_diagnostics(cfg_83),
+    }
+
+    signature_85 = _build_observation_signature("operator=test", reference_85, cfg_85)
+    signature_83 = _build_observation_signature("operator=test", reference_83, cfg_83)
+
+    assert "channel_cross_section_model=trapezoid_tapered_sidewalls" in signature_85
+    assert "sidewall_taper_angle_deg=5.000000000e+00" in signature_85
+    assert (
+        f"cross_section_geometry_version={TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION}"
+        in signature_85
+    )
+    assert "trajectory_boundary_model=not_applicable_pure_advection" in signature_85
+    assert (
+        "wall_distance_model=not_applicable_diffusion_hindrance_none"
+        in signature_85
+    )
+    assert (
+        "geometry_propagation_status="
+        "sidewall_sampler_and_pure_advection_propagated"
+    ) in signature_85
+    assert signature_85 != signature_83

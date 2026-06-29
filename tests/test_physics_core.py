@@ -261,6 +261,7 @@ from nodi_simulator.wavelength_comparability import (
     build_wavelength_comparability_diagnostics,
 )
 from nodi_simulator.trajectory import (
+    TRAJECTORY_GEOMETRY_DIAGNOSTIC_FIELDS,
     axial_transport_velocity_m_s,
     axial_velocity_m_s,
     build_trajectory_context,
@@ -9338,6 +9339,10 @@ class TestIntegration:
                 assert field in summary
                 assert field in intrinsic
                 assert field in reference
+            for field in TRAJECTORY_GEOMETRY_DIAGNOSTIC_FIELDS:
+                assert field in summary
+                assert field in intrinsic
+                assert field in reference
             for field in ELECTROKINETIC_DIAGNOSTIC_FIELDS:
                 assert field in summary
                 assert field in intrinsic
@@ -9412,6 +9417,15 @@ class TestIntegration:
             assert summary["channel_cross_section_model"] == "ideal_rectangle"
             assert summary["geometry_claim_level"] == (
                 "nominal_ideal_rectangle_geometry_only"
+            )
+            assert summary["trajectory_boundary_model"] == (
+                "not_applicable_pure_advection"
+            )
+            assert summary["wall_distance_model"] == (
+                "not_applicable_diffusion_hindrance_none"
+            )
+            assert summary["geometry_propagation_status"] == (
+                "rectangle_native_or_non_sidewall_geometry"
             )
             assert summary["electrostatic_confinement_flag"] == (
                 "unavailable_missing_ionic_strength"
@@ -11377,6 +11391,18 @@ class TestIntegration:
         assert "fluidic_practicality_penalty=" in signature
         assert "fluidic_clogging_risk_band=" in signature
         assert "wall_interaction_model=none" in signature
+        assert "channel_cross_section_model=ideal_rectangle" in signature
+        assert "sidewall_taper_angle_deg=0.000000000e+00" in signature
+        assert "cross_section_geometry_version=ideal_rectangle_v1" in signature
+        assert "trajectory_boundary_model=not_applicable_pure_advection" in signature
+        assert (
+            "wall_distance_model=not_applicable_diffusion_hindrance_none"
+            in signature
+        )
+        assert (
+            "geometry_propagation_status=rectangle_native_or_non_sidewall_geometry"
+            in signature
+        )
         assert "interface_correction_mode=off" in signature
         assert (
             "interface_correction_status="

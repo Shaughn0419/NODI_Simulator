@@ -164,8 +164,10 @@ from .reference_operating_point import (
 )
 from .illumination import compute_illumination_envelope
 from .trajectory import (
+    TRAJECTORY_GEOMETRY_DIAGNOSTIC_FIELDS,
     TrajectoryContext,
     build_trajectory_context,
+    build_trajectory_geometry_diagnostics,
     simulate_particle_trajectory,
     simulate_particle_trajectory_block,
 )
@@ -2523,6 +2525,17 @@ def _build_observation_signature(
         f"|evaluation_false_alarm_rate={float(sim_cfg.evaluation_false_alarm_rate):.9e}"
         f"|pulse_pairing_tolerance_s={float(sim_cfg.pulse_pairing_tolerance_s):.9e}"
         f"|calibration_extrapolated={bool(reference.get('calibration_extrapolated', False))}"
+        f"|channel_cross_section_model={sim_cfg.channel_cross_section_model}"
+        f"|sidewall_taper_angle_deg={float(sim_cfg.sidewall_taper_angle_deg):.9e}"
+        f"|cross_section_geometry_version={reference.get('cross_section_geometry_version', 'unknown')}"
+        f"|trapezoid_closure_status={reference.get('trapezoid_closure_status', 'unknown')}"
+        f"|trapezoid_closure_policy={reference.get('trapezoid_closure_policy', 'unknown')}"
+        f"|trapezoid_runtime_guard_status={reference.get('trapezoid_runtime_guard_status', 'unknown')}"
+        f"|trajectory_boundary_model={reference.get('trajectory_boundary_model', 'unknown')}"
+        f"|wall_distance_model={reference.get('wall_distance_model', 'unknown')}"
+        f"|flow_profile_geometry_model={reference.get('flow_profile_geometry_model', 'unknown')}"
+        f"|geometry_propagation_status={reference.get('geometry_propagation_status', 'unknown')}"
+        f"|geometry_not_propagated_reasons={reference.get('geometry_not_propagated_reasons', ())}"
     )
 
 @dataclass
@@ -6757,6 +6770,7 @@ def run_single_case_batch(
         optical,
         sim_cfg,
     )
+    trajectory_geometry = build_trajectory_geometry_diagnostics(sim_cfg)
     electrokinetic_transport = build_electrokinetic_transport_diagnostics(
         channel,
         sim_cfg,
@@ -6840,6 +6854,7 @@ def run_single_case_batch(
     reference.update(objective_panel)
     reference.update(nodi_thermal_contamination)
     reference.update(channel_geometry)
+    reference.update(trajectory_geometry)
     reference.update(electrokinetic_transport)
     reference.update(ev_integrity)
     reference.update(ev_reporting)
@@ -7302,6 +7317,7 @@ def run_single_case_batch(
     summary.update(objective_panel)
     summary.update(nodi_thermal_contamination)
     summary.update(channel_geometry)
+    summary.update(trajectory_geometry)
     summary.update(electrokinetic_transport)
     summary.update(ev_integrity)
     summary.update(ev_reporting)
@@ -7460,6 +7476,7 @@ def run_single_case_batch(
             **experimental_design_advisor,
             **population_inference,
             **channel_geometry,
+            **trajectory_geometry,
             **electrokinetic_transport,
             **ev_integrity,
             **ev_reporting,
@@ -8182,6 +8199,10 @@ def run_single_case_batch(
             **{
                 field: reference.get(field)
                 for field in CHANNEL_GEOMETRY_DIAGNOSTIC_FIELDS
+            },
+            **{
+                field: reference.get(field)
+                for field in TRAJECTORY_GEOMETRY_DIAGNOSTIC_FIELDS
             },
             **{
                 field: reference.get(field)
