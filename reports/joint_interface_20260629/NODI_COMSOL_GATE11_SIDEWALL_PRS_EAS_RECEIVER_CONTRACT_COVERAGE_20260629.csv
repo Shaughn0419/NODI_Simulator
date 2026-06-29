@@ -13,3 +13,4 @@ G11D-COVER-011,EAS optical claim-level consistency,optical_solver_triggered is i
 G11D-COVER-012,forbidden claim columns,SIDEWALL_ROADMAP_FORBIDDEN,PASS,rejects_exact_sidewall_claim_columns,PASS,none_contract_layer,true
 G11D-COVER-013,artifact cache signatures,_validate_sidewall_v2_observation_cache_context,PASS,requires_observation_signature,PASS,none_contract_layer,true
 G11D-COVER-014,acceptance guards,_validate_sidewall_v2_acceptance_guards,PASS,requires_acceptance_guards,PASS,none_contract_layer,true
+G11D-COVER-015,closed geometry propagation rejection,geometry_closed sidewall row cannot be marked geometry_propagation_status=propagated,PASS,rejects_closed_geometry_as_propagated,PASS,none_contract_layer,true

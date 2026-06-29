@@ -94,7 +94,7 @@ def test_descriptor_dryrun_harness_accepts_only_review_quarantine() -> None:
 def test_prs_eas_contract_release_board_has_package_statuses_without_numeric_output() -> None:
     board = gate12.contract_release_board()
 
-    assert len(board) == 18
+    assert len(board) == 19
     assert all(row["numeric_output_generated"] == "false" for row in board)
     assert all(row["authorization_opened"] == "false" for row in board)
     by_id = {row["board_id"]: row for row in board}
@@ -102,6 +102,9 @@ def test_prs_eas_contract_release_board_has_package_statuses_without_numeric_out
     assert by_id["G12E-PACKAGE-B"]["gate12_release_category"] == "requires_future_runtime_solver"
     assert by_id["G12E-PACKAGE-C"]["gate12_release_category"] == "blocked_by_no_auth"
     assert by_id["G12E-PACKAGE-D"]["gate11_coverage_status"] == "CONTRACT_GUARDS_COMPLETE_NO_NUMERIC_OUTPUT"
+    assert any(
+        row["required_guard"] == "closed geometry propagation rejection" for row in board
+    )
 
 
 def test_cross_project_handshake_closes_dirty_delta_with_no_semantic_conflict() -> None:

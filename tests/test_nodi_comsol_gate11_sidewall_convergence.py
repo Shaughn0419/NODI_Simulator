@@ -88,7 +88,7 @@ def test_rc51_sidewall_addendum_is_review_only_and_contains_binding_fields() -> 
 def test_prs_eas_sidewall_contract_coverage_is_closed() -> None:
     coverage = gate11.coverage_matrix()
 
-    assert len(coverage) == 14
+    assert len(coverage) == 15
     assert all(row["implemented_status"] == "PASS" for row in coverage)
     assert all(row["test_status"] == "PASS" for row in coverage)
     assert {row["required_guard"] for row in coverage} >= {
@@ -104,6 +104,7 @@ def test_prs_eas_sidewall_contract_coverage_is_closed() -> None:
         "EAS optical trigger fields",
         "EAS optical claim-level consistency",
         "forbidden claim columns",
+        "closed geometry propagation rejection",
     }
 
 

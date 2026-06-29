@@ -20,7 +20,7 @@
     "nano_review_only_rows": 10,
     "micro_review_only_rows": 1,
     "blocker_rows": 11,
-    "contract_board_rows": 18,
+    "contract_board_rows": 19,
     "handshake_rows": 31,
     "handshake_semantic_conflicts": 0,
     "handshake_dirty_open": 0,
@@ -894,7 +894,7 @@
       "artifact_role": "gate11_report_json",
       "artifact_path": "reports\\joint_interface_20260629\\NODI_COMSOL_GATE11_SIDEWALL_REPORT_20260629.json",
       "row_count": "NA",
-      "sha256": "2f469c40d1acb3d303f27cc1fd3dbf62747731287c129c5bdb5a335ab5d88698",
+      "sha256": "a3e15b5e8e54a2a219fe7f87b1881f386cd6835e3dae9deb183166b52e81da58",
       "not_evidence": "true"
     },
     {
@@ -918,7 +918,7 @@
       "artifact_role": "release_candidate_root_hash",
       "artifact_path": "inline:Gate12 release root",
       "row_count": "5",
-      "sha256": "bed80aaed76f9fb45efc8634b782baa17c6ca4846b9e0c0baf0d65c690d1a37a",
+      "sha256": "9e5aef9407ee2926192d0a6431e93d2f599992652ed2ef2568cc54f4d761a2c2",
       "not_evidence": "true"
     }
   ],
@@ -938,7 +938,7 @@
     "runtime_schema": false,
     "production_contract": false,
     "evidence_authorization": false,
-    "release_root_hash": "bed80aaed76f9fb45efc8634b782baa17c6ca4846b9e0c0baf0d65c690d1a37a"
+    "release_root_hash": "9e5aef9407ee2926192d0a6431e93d2f599992652ed2ef2568cc54f4d761a2c2"
   },
   "release_status": {
     "release_candidate": "RC5.1_SIDEWALL_GEOMETRY_DESCRIPTOR_ADDENDUM_V1_RELEASE_CANDIDATE_REVIEW_ONLY_NO_AUTH",
@@ -1611,6 +1611,16 @@
       "authorization_opened": "false"
     },
     {
+      "board_id": "G12E-BOARD-015",
+      "required_guard": "closed geometry propagation rejection",
+      "gate11_coverage_status": "PASS",
+      "gate12_release_category": "implemented_contract_guard",
+      "covered_by_fixture": "true",
+      "numeric_output_generated": "false",
+      "requires_future_runtime_solver": "false",
+      "authorization_opened": "false"
+    },
+    {
       "board_id": "G12E-PACKAGE-A",
       "required_guard": "Package A descriptor/addendum",
       "gate11_coverage_status": "PASS",
@@ -2119,7 +2129,7 @@
     {
       "sweep_id": "G12H-SWEEP-006",
       "section": "board",
-      "rows_checked": "18",
+      "rows_checked": "19",
       "positive_authorization_flags": "0",
       "gate2d_rows": "4",
       "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
@@ -17314,7 +17324,7 @@
       "commit": "e29501c3d26b5ff712870d7bc10a3617bd97ca28",
       "artifact_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator（usb）\\reports\\joint_interface_20260629\\NODI_COMSOL_GATE11_SIDEWALL_MANIFEST_20260629.csv",
       "row_count": "35",
-      "sha256": "a2ccbfc124185b4c231426a04b95c9c421e0d96094e28b0e5c9fc902c2e445f7",
+      "sha256": "fc31387e5194770c59c2b4f0625bd1b4ea455dfc022094a71b0c40ed41f662fe",
       "status": "CURRENT",
       "boundary": "review_only_no_auth"
     },
@@ -17326,7 +17336,7 @@
       "commit": "CURRENT_GATE12_PENDING_COMMIT",
       "artifact_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator（usb）\\reports\\joint_interface_20260629\\NODI_COMSOL_GATE12_SIDEWALL_MANIFEST_20260629.csv",
       "row_count": "35",
-      "sha256": "93e9b130dc52b3547c3ca8ed0d28ff367be9bc8a6e1e813b8947e9469fcfa1d6",
+      "sha256": "130979fc90786d51a9b5ec109ae2b308f959d4abddbe44c759aec9314903bd0e",
       "status": "CURRENT",
       "boundary": "review_only_no_auth"
     },

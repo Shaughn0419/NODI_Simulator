@@ -323,6 +323,10 @@ def hardening_intake_matrix() -> list[dict[str, str]]:
             "source descriptor id/hash binding",
             "descriptor provenance",
         ),
+        "Reject propagated closed sidewall artifacts": (
+            "closed geometry propagation rejection",
+            "closure/runtime guard consistency",
+        ),
     }
     rows: list[dict[str, str]] = []
     for idx, line in enumerate([line for line in output.splitlines() if line], start=1):
@@ -592,6 +596,11 @@ def coverage_matrix() -> list[dict[str, str]]:
         ("forbidden claim columns", "SIDEWALL_ROADMAP_FORBIDDEN", "rejects_exact_sidewall_claim_columns"),
         ("artifact cache signatures", "_validate_sidewall_v2_observation_cache_context", "requires_observation_signature"),
         ("acceptance guards", "_validate_sidewall_v2_acceptance_guards", "requires_acceptance_guards"),
+        (
+            "closed geometry propagation rejection",
+            "geometry_closed sidewall row cannot be marked geometry_propagation_status=propagated",
+            "rejects_closed_geometry_as_propagated",
+        ),
     ]
     rows = []
     for idx, (guard, code_token, test_token) in enumerate(guards, start=1):
