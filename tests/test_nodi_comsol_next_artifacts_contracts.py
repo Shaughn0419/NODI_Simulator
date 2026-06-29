@@ -1595,6 +1595,18 @@ def test_position_response_sidewall_v2_rejects_signature_closure_policy_mismatch
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_signature_runtime_aperture_without_row_value() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "runtime_top_aperture_nm=unknown",
+        "runtime_top_aperture_nm=123.0",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_requires_runtime_guard_columns() -> None:
     row = _valid_prs_sidewall_v2_row()
     del row["fluidic_network_not_qch_weighted"]
@@ -1786,6 +1798,20 @@ def test_position_response_rejects_exact_sidewall_claim_columns() -> None:
     )
 
     _assert_has_issue(issues, "PRS-V41")
+
+
+def test_position_response_rejects_positive_sidewall_aware_shortcut() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_row(sidewall_aware="true")]
+    )
+
+    _assert_has_issue(issues, "PRS-V41")
+
+
+def test_position_response_allows_negative_sidewall_aware_boundary_flag() -> None:
+    assert validate_position_response_surface_rows(
+        [_valid_prs_row(sidewall_aware="false")]
+    ) == []
 
 
 @pytest.mark.parametrize(
@@ -2029,6 +2055,18 @@ def test_effective_aperture_sidewall_v2_rejects_signature_bottom_width_mismatch(
     row["observation_signature"] = str(row["observation_signature"]).replace(
         "trapezoid_bottom_width_unclipped_m=3.425204056533369e-07",
         "trapezoid_bottom_width_unclipped_m=3e-07",
+    )
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_signature_runtime_aperture_without_row_value() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "runtime_top_aperture_nm=unknown",
+        "runtime_top_aperture_nm=123.0",
     )
 
     issues = validate_effective_aperture_surrogate_rows([row])

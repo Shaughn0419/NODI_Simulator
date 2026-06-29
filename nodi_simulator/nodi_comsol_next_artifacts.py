@@ -442,6 +442,7 @@ SIDEWALL_ROADMAP_FORBIDDEN_EXACT_COLUMNS = frozenset(
         "recovery",
     }
 )
+SIDEWALL_ROADMAP_FORBIDDEN_POSITIVE_COLUMNS = frozenset({"sidewall_aware"})
 
 COMSOL_V4_CONTEXT_SCHEMA_VERSION = "nodi_comsol_v4_readonly_context_v1"
 COMSOL_V4_ASSUMPTION_SET_ID = "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627"
@@ -10412,7 +10413,7 @@ def _validate_sidewall_v2_observation_cache_context(
         rule_id=rule_id,
         issues=issues,
     )
-    _validate_observation_signature_float_binding(
+    _validate_observation_signature_optional_float_or_unknown_binding(
         row,
         observation_signature,
         field="runtime_top_aperture_nm",
@@ -10564,6 +10565,44 @@ def _validate_observation_signature_float_binding(
             rule_id,
             f"observation_signature {signature_key}={actual}, expected {expected}",
         )
+
+
+def _validate_observation_signature_optional_float_or_unknown_binding(
+    row: Mapping[str, Any],
+    observation_signature: str,
+    *,
+    field: str,
+    signature_key: str,
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    multiplier: float = 1.0,
+    rel_tol: float = 1.0e-9,
+    abs_tol: float = 1.0e-9,
+) -> None:
+    value = _value(row, field)
+    signature_value = _observation_signature_value(observation_signature, signature_key)
+    if not value:
+        if signature_value and signature_value != "unknown":
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                f"observation_signature binds {signature_key}={signature_value} without {field}",
+            )
+        return
+    _validate_observation_signature_float_binding(
+        row,
+        observation_signature,
+        field=field,
+        signature_key=signature_key,
+        row_index=row_index,
+        rule_id=rule_id,
+        issues=issues,
+        multiplier=multiplier,
+        rel_tol=rel_tol,
+        abs_tol=abs_tol,
+    )
 
 
 def _validate_observation_signature_bool_binding(
@@ -11968,6 +12007,16 @@ def _reject_forbidden_positive_fields(
     for field in row:
         normalized = field.lower()
         if field in allowed_negative_fields or normalized in NEGATIVE_BOUNDARY_FIELD_NAMES:
+            continue
+        if normalized in SIDEWALL_ROADMAP_FORBIDDEN_POSITIVE_COLUMNS:
+            value = _value(row, field).lower()
+            if value not in {"", "false", "0", "no"}:
+                _issue(
+                    issues,
+                    row_index,
+                    rule_id,
+                    f"forbidden positive sidewall roadmap claim field {field}",
+                )
             continue
         if normalized in SIDEWALL_ROADMAP_FORBIDDEN_EXACT_COLUMNS:
             _issue(issues, row_index, rule_id, f"forbidden sidewall roadmap claim column {field}")

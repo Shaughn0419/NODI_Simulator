@@ -100,6 +100,8 @@ Completed NODI-side guardrails:
 - Added PRS/EAS sidewall v2 observation-signature binding for descriptor identity fields including angle convention, COMSOL angle, `W_top_semantics`, source descriptor hash, geometry runtime binding version, top/depth/bottom dimensions, closure status, closure policy, and runtime guard status.
 - Hardened runtime channel-geometry diagnostics so `measured_profile_lookup` remains blocked metadata-only until an actual profile loader/hash/validator exists; `measured_profile_loaded`, `measured_profile_validated`, `measured_profile_sha256`, and runtime status are now emitted and included in observation signatures.
 - Added propagated trapezoid PRS `flow_control_mode` allowlist so sidewall-aware PRS rows cannot silently mix fixed-pressure semantics into the current fixed-velocity-only plug-flow surrogate.
+- Closed the optional `runtime_top_aperture_nm` signature drift hole found by independent review: when the row has no runtime top-aperture value, PRS/EAS sidewall v2 signatures may only carry `runtime_top_aperture_nm=unknown`, not a numeric value.
+- Added a positive `sidewall_aware=true` shortcut guard so artifacts must use explicit sidewall v2 schema/status fields rather than a broad boolean promotion flag; negative boundary flags such as `sidewall_aware=false` remain allowed.
 
 Still blocked in this roadmap:
 
