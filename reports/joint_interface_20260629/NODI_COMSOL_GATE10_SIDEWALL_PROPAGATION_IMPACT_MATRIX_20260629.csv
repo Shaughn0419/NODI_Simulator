@@ -1,0 +1,13 @@
+impact_id,module_or_workstream,sidewall_impact_path,current_gate_status,future_rerun_required_if_authorized,current_execution_allowed,formula_use_authorized,production_ingestion_authorized,notes
+G10D-IMPACT-001,PRS,position response surface geometry binding,FUTURE_RERUN_REQUIRED_IF_AUTHORIZED,true,false,false,false,must reference descriptor id/hash before sidewall-aware rows
+G10D-IMPACT-002,EAS,effective aperture surrogate sensitivity,FUTURE_RERUN_REQUIRED_IF_AUTHORIZED,true,false,false,false,descriptor must bind optical/reference surrogate claim boundary
+G10D-IMPACT-003,sampler,initial position support,REVIEW_ONLY_DESCRIPTOR_BINDING,false,false,false,false,uniform accessible area oracle exists; flux-weighted remains blocked
+G10D-IMPACT-004,trajectory,boundary and near-wall transport,FUTURE_RERUN_REQUIRED_IF_AUTHORIZED,true,false,false,false,diffusive trapezoid reflection and wall-distance need future solver gate
+G10D-IMPACT-005,fluidic resistance,hydraulic proxy,NO_RUN_AUDIT_ONLY,false,false,false,false,rectangular proxy only; not q_ch or clogging rate
+G10D-IMPACT-006,electrokinetic transport,local wall-distance/electrokinetic grid,BLOCKED_BY_EXISTING_GATE,false,false,false,false,trapezoid geometry not propagated to formal transport
+G10D-IMPACT-007,reference field,optical/reference surrogate,REVIEW_ONLY_DESCRIPTOR_BINDING,false,false,false,false,rectangular proxy or geometry-independent audit only
+G10D-IMPACT-008,local-Q/hydraulic,hydraulic anchor diagnostics,NO_RUN_AUDIT_ONLY,false,false,false,false,review-only; not formal q_ch weighting
+G10D-IMPACT-009,EDGE,edge4/edge20 policy line,BLOCKED_BY_EXISTING_GATE,false,false,false,false,EDGE remains NOT_APPROVED/preauth-only
+G10D-IMPACT-010,QCH,formal q_ch sidecar,BLOCKED_BY_EXISTING_GATE,false,false,false,false,formal q_ch sidecar absent; no weighting
+G10D-IMPACT-011,BINDING,route/view/diameter/bin repairs,BLOCKED_BY_EXISTING_GATE,false,false,false,false,220/D1200/UNBOUND remain fail-closed
+G10D-IMPACT-012,V4 context,surface/context claim ceiling,NO_RUN_AUDIT_ONLY,false,false,false,false,review-only claim ceiling; not runtime

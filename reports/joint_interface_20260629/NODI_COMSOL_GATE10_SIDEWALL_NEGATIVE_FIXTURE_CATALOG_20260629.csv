@@ -1,0 +1,15 @@
+fixture_id,fixture_family,mutation,expected_result,observed_result,validator_status,expected_fail_reason,forbidden_promotion_detected,unexpected_pass
+G10E-NEG-001,negative_sidewall_descriptor,angle convention mismatch,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,invalid sidewall_angle_convention|descriptor hash mismatch,false,false
+G10E-NEG-002,negative_sidewall_descriptor,angle sum not 90,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,angle conversion sum is not 90 deg,false,false
+G10E-NEG-003,negative_sidewall_descriptor,wrong bottom width,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,bottom width formula mismatch|runtime clipped bottom width mismatch,false,false
+G10E-NEG-004,negative_sidewall_descriptor,missing descriptor hash,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,descriptor hash mismatch,false,false
+G10E-NEG-005,negative_sidewall_descriptor,sidewall-aware PRS row without descriptor binding,FAIL,FAIL_AS_EXPECTED,QUARANTINE_MISSING_SIDEWALL_DESCRIPTOR_BINDING,geometry_descriptor_id|geometry_descriptor_sha256,false,false
+G10E-NEG-006,negative_sidewall_descriptor,closure status inconsistent,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,closure_status inconsistent with bottom width,false,false
+G10E-NEG-007,negative_sidewall_descriptor,measured claim without evidence,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,measured geometry claim without evidence,false,false
+G10E-NEG-008,negative_sidewall_descriptor,production flag true,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,forbidden authorization flag production_ingestion_authorized=true,true,false
+G10E-NEG-009,negative_sidewall_descriptor,runtime flag true,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,forbidden authorization flag runtime_configuration_authorized=true,false,false
+G10E-NEG-010,negative_sidewall_descriptor,JRC authorization spoofing,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,forbidden authorization flag jrc_authorized=true,false,false
+G10E-NEG-011,negative_sidewall_descriptor,QCH authorization spoofing,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,forbidden authorization flag qch_weighting_authorized=true,false,false
+G10E-NEG-012,negative_sidewall_descriptor,EDGE formula authorization spoofing,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,forbidden authorization flag formula_use_authorized=true,false,false
+G10E-NEG-013,negative_sidewall_descriptor,runtime clipped bottom width negative,FAIL,FAIL_AS_EXPECTED,FAIL_AS_EXPECTED,runtime clipped bottom width mismatch,false,false
+G10E-NEG-014,negative_sidewall_descriptor,sidewall-aware EAS row without descriptor binding,FAIL,FAIL_AS_EXPECTED,QUARANTINE_MISSING_SIDEWALL_DESCRIPTOR_BINDING,geometry_descriptor_id|geometry_descriptor_sha256,false,false

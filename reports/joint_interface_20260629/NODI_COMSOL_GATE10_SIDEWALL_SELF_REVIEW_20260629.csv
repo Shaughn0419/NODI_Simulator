@@ -1,0 +1,9 @@
+review_id,review_dimension,status,finding,p0_p1_issue
+G10G-REVIEW-001,angle convention,PASS,COMSOL horizontal and NODI taper are complementary,false
+G10G-REVIEW-002,formula and units,PASS,bottom width formula is nm-based and tested,false
+G10G-REVIEW-003,descriptor hash identity,PASS,hash covers core descriptor fields,false
+G10G-REVIEW-004,freeze impact semantics,PASS,RC5.1 left intact; addendum required for sidewall-aware rows,false
+G10G-REVIEW-005,module propagation,PASS,runtime modules remain guarded/proxy unless future authorized,false
+G10G-REVIEW-006,no-auth leakage,PASS,all authorization flags false; negative controls fail,false
+G10G-REVIEW-007,negative controls,PASS,unexpected pass zero,false
+G10G-REVIEW-008,git staging hygiene,PASS,Gate10 outputs only; no production rerun,false

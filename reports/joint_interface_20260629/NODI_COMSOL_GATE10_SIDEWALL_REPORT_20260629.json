@@ -1,0 +1,1443 @@
+{
+  "summary": {
+    "disposition": "PASS_GATE10_SIDEWALL_GEOMETRY_DESCRIPTOR_ADDENDUM_REVIEW_ONLY_NO_AUTH",
+    "date": "20260629",
+    "gate2d_accepted_ledger_rows": 4,
+    "gate2d_expected_rows": 4,
+    "gate9_rc51_field_count": 365,
+    "gate9_manifest_rows": 38,
+    "inventory_rows": 13,
+    "freeze_impact_rows": 18,
+    "sidewall_required_fields_missing": 15,
+    "descriptor_schema_rows": 23,
+    "positive_fixture_rows": 4,
+    "negative_fixture_rows": 14,
+    "mutation_result_rows": 18,
+    "unexpected_pass_count": 0,
+    "forbidden_promotion_count": 0,
+    "rc51_addendum_status": "RC5.1_GEOMETRY_DESCRIPTOR_ADDENDUM_REVIEW_ONLY",
+    "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+    "qch_state": "ABSENT",
+    "binding_state": "FAIL_CLOSED",
+    "production_ingestion_authorized": false,
+    "runtime_configuration_authorized": false
+  },
+  "inventory": [
+    {
+      "inventory_id": "G10A-INV-001",
+      "file": "nodi_simulator/cross_section_geometry.py",
+      "field_or_function": "comsol_sidewall_deg_to_nodi_taper_deg",
+      "unit": "deg",
+      "angle_convention": "COMSOL horizontal 90 vertical to NODI vertical taper",
+      "formula_or_default": "nodi_taper=90-sidewall_deg_comsol",
+      "validation_or_guard": "ValueError outside (0,90]",
+      "impact_module": "descriptor vocabulary and code conversion",
+      "current_interface_freeze_status": "local implementation; not RC5.1 field"
+    },
+    {
+      "inventory_id": "G10A-INV-002",
+      "file": "nodi_simulator/cross_section_geometry.py",
+      "field_or_function": "TrapezoidCrossSection.bottom_width_unclipped_m",
+      "unit": "m",
+      "angle_convention": "NODI taper-from-vertical",
+      "formula_or_default": "W_top-2*D*tan(taper)",
+      "validation_or_guard": "preserves negative descriptor width",
+      "impact_module": "geometry identity and closure",
+      "current_interface_freeze_status": "local diagnostic; not freeze-bound"
+    },
+    {
+      "inventory_id": "G10A-INV-003",
+      "file": "nodi_simulator/cross_section_geometry.py",
+      "field_or_function": "bottom_width_runtime_clipped_m",
+      "unit": "m",
+      "angle_convention": "runtime guard alias",
+      "formula_or_default": "max(unclipped,0)",
+      "validation_or_guard": "must not be measured geometry",
+      "impact_module": "runtime safety only",
+      "current_interface_freeze_status": "not interface identity"
+    },
+    {
+      "inventory_id": "G10A-INV-004",
+      "file": "nodi_simulator/cross_section_geometry.py",
+      "field_or_function": "closure_status",
+      "unit": "enum",
+      "angle_convention": "unclipped descriptor",
+      "formula_or_default": "geometry_closed/near_closed/open",
+      "validation_or_guard": "near threshold 80 nm",
+      "impact_module": "descriptor closure and guards",
+      "current_interface_freeze_status": "not RC5.1 field"
+    },
+    {
+      "inventory_id": "G10A-INV-005",
+      "file": "nodi_simulator/channel_geometry_model.py",
+      "field_or_function": "trapezoid_runtime_guard_status",
+      "unit": "enum",
+      "angle_convention": "derived from closure_status",
+      "formula_or_default": "validation_guard/solver_guard/none",
+      "validation_or_guard": "computed diagnostics",
+      "impact_module": "diagnostic gate",
+      "current_interface_freeze_status": "not freeze-bound"
+    },
+    {
+      "inventory_id": "G10A-INV-006",
+      "file": "nodi_simulator/channel_geometry_model.py",
+      "field_or_function": "geometry_claim_level",
+      "unit": "enum",
+      "angle_convention": "surrogate/not measured",
+      "formula_or_default": "active_parameterized_geometry_surrogate_not_measured",
+      "validation_or_guard": "measured_profile path gate",
+      "impact_module": "claim boundary",
+      "current_interface_freeze_status": "present as generic RC5.1 field but not sidewall-bound"
+    },
+    {
+      "inventory_id": "G10A-INV-007",
+      "file": "nodi_simulator/parameter_sweep.py",
+      "field_or_function": "_build_observation_signature",
+      "unit": "signature text",
+      "angle_convention": "NODI runtime config",
+      "formula_or_default": "includes sidewall and propagation guards",
+      "validation_or_guard": "cache/signature separation",
+      "impact_module": "stale rectangular cache prevention",
+      "current_interface_freeze_status": "local runtime cache guard"
+    },
+    {
+      "inventory_id": "G10A-INV-008",
+      "file": "nodi_simulator/parameter_sweep.py",
+      "field_or_function": "initial_position_distribution_mode",
+      "unit": "enum",
+      "angle_convention": "sampler support",
+      "formula_or_default": "flux_weighted blocked for trapezoid without flow model",
+      "validation_or_guard": "ValueError on invalid trapezoid flux path",
+      "impact_module": "sampler support",
+      "current_interface_freeze_status": "runtime guard only"
+    },
+    {
+      "inventory_id": "G10A-INV-009",
+      "file": "nodi_simulator/trajectory.py",
+      "field_or_function": "build_trajectory_context",
+      "unit": "diagnostic",
+      "angle_convention": "active trapezoid model",
+      "formula_or_default": "blocks rectangular flow and wall-distance leakage",
+      "validation_or_guard": "ValueError guard",
+      "impact_module": "trajectory/transport",
+      "current_interface_freeze_status": "not formula authorization"
+    },
+    {
+      "inventory_id": "G10A-INV-010",
+      "file": "nodi_simulator/fluidic_resistance.py",
+      "field_or_function": "fluidic_trapezoid_propagation_status",
+      "unit": "enum",
+      "angle_convention": "proxy status",
+      "formula_or_default": "rectangular hydraulic proxy under trapezoid",
+      "validation_or_guard": "not q_ch/not clogging-rate",
+      "impact_module": "local-Q/hydraulic review",
+      "current_interface_freeze_status": "review-only proxy"
+    },
+    {
+      "inventory_id": "G10A-INV-011",
+      "file": "nodi_simulator/electrokinetic_transport.py",
+      "field_or_function": "electrokinetic_geometry_propagation_status",
+      "unit": "enum",
+      "angle_convention": "transport diagnostics",
+      "formula_or_default": "blocked_trapezoid_geometry_not_propagated",
+      "validation_or_guard": "not local-Q/not q_ch",
+      "impact_module": "electrokinetic transport",
+      "current_interface_freeze_status": "blocked/review-only"
+    },
+    {
+      "inventory_id": "G10A-INV-012",
+      "file": "nodi_simulator/reference_field.py",
+      "field_or_function": "reference_geometry_propagation_status",
+      "unit": "enum",
+      "angle_convention": "reference-field surrogate",
+      "formula_or_default": "rectangular proxy or geometry-independent under trapezoid",
+      "validation_or_guard": "not optical solver output",
+      "impact_module": "EAS/PRS optical binding",
+      "current_interface_freeze_status": "review-only proxy"
+    },
+    {
+      "inventory_id": "G10A-INV-013",
+      "file": "nodi_simulator/nodi_comsol_next_artifacts.py",
+      "field_or_function": "GEOMETRY_DESCRIPTOR_SHA256",
+      "unit": "sha256",
+      "angle_convention": "legacy route geometry descriptor",
+      "formula_or_default": "static descriptor contract hash",
+      "validation_or_guard": "not sidewall descriptor v2",
+      "impact_module": "COMSOL/NODI handoff provenance",
+      "current_interface_freeze_status": "needs addendum for sidewall-aware rows"
+    }
+  ],
+  "freeze_impact": [
+    {
+      "impact_id": "G10B-FREEZE-001",
+      "field_name": "geometry_descriptor_id",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-002",
+      "field_name": "geometry_descriptor_sha256",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-003",
+      "field_name": "sidewall_angle_convention",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-004",
+      "field_name": "sidewall_deg_comsol",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-005",
+      "field_name": "sidewall_taper_angle_deg_nodi",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-006",
+      "field_name": "angle_conversion_formula_id",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-007",
+      "field_name": "W_top_nm",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-008",
+      "field_name": "D_nm",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_review_optional_or_future_gate",
+      "requiredness_for_sidewall_descriptor": "recommended",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "false",
+      "recommendation": "ADDENDUM_RECOMMENDED_OR_FUTURE_GATE_ONLY"
+    },
+    {
+      "impact_id": "G10B-FREEZE-009",
+      "field_name": "depth_nm",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-010",
+      "field_name": "W_bottom_unclipped_nm",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-011",
+      "field_name": "W_bottom_runtime_clipped_nm",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-012",
+      "field_name": "closure_status",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-013",
+      "field_name": "closure_policy",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-014",
+      "field_name": "runtime_guard_status",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-015",
+      "field_name": "min_aperture_descriptor_nm",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-016",
+      "field_name": "cross_section_geometry_version",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-017",
+      "field_name": "geometry_claim_level",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_review_optional_or_future_gate",
+      "requiredness_for_sidewall_descriptor": "recommended",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "false",
+      "recommendation": "ADDENDUM_RECOMMENDED_OR_FUTURE_GATE_ONLY"
+    },
+    {
+      "impact_id": "G10B-FREEZE-018",
+      "field_name": "geometry_surrogate_status",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_review_optional_or_future_gate",
+      "requiredness_for_sidewall_descriptor": "recommended",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "false",
+      "recommendation": "ADDENDUM_RECOMMENDED_OR_FUTURE_GATE_ONLY"
+    }
+  ],
+  "descriptor_schema": [
+    {
+      "schema_id": "G10C-SCHEMA-001",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "geometry_descriptor_id",
+      "field_type": "string",
+      "requiredness": "required",
+      "semantics": "stable descriptor id",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-002",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "geometry_descriptor_sha256",
+      "field_type": "sha256",
+      "requiredness": "required",
+      "semantics": "hash over core geometry fields",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-003",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "sidewall_angle_convention",
+      "field_type": "enum",
+      "requiredness": "required",
+      "semantics": "comsol_from_horizontal_nodi_taper_from_vertical_v1",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-004",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "sidewall_deg_comsol",
+      "field_type": "float_deg",
+      "requiredness": "required",
+      "semantics": "from substrate/horizontal; 90 vertical",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-005",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "sidewall_taper_angle_deg_nodi",
+      "field_type": "float_deg",
+      "requiredness": "required",
+      "semantics": "from vertical; equals 90-sidewall_deg_comsol",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-006",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "angle_conversion_formula_id",
+      "field_type": "enum",
+      "requiredness": "required",
+      "semantics": "sidewall_from_horizontal_to_taper_from_vertical_v1",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-007",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "W_top_nm",
+      "field_type": "float_nm",
+      "requiredness": "required",
+      "semantics": "top channel width",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-008",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "D_nm",
+      "field_type": "float_nm",
+      "requiredness": "alias_required",
+      "semantics": "depth alias for existing route vocabulary",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-009",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "depth_nm",
+      "field_type": "float_nm",
+      "requiredness": "required",
+      "semantics": "etched depth",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-010",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "W_bottom_unclipped_nm",
+      "field_type": "float_nm",
+      "requiredness": "required",
+      "semantics": "W_top - 2*D/tan(sidewall_deg_comsol)",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-011",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "W_bottom_runtime_clipped_nm",
+      "field_type": "float_nm",
+      "requiredness": "required",
+      "semantics": "max(unclipped,0); runtime guard only",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-012",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "closure_status",
+      "field_type": "enum",
+      "requiredness": "required",
+      "semantics": "open|near_closed|geometry_closed from unclipped width",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-013",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "closure_policy",
+      "field_type": "enum",
+      "requiredness": "required",
+      "semantics": "preserve_unclipped_descriptor",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-014",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "runtime_guard_status",
+      "field_type": "enum",
+      "requiredness": "required",
+      "semantics": "none|solver_guard|validation_guard",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-015",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "min_aperture_descriptor_nm",
+      "field_type": "float_nm",
+      "requiredness": "required",
+      "semantics": "descriptor aperture may be negative",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-016",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "cross_section_geometry_version",
+      "field_type": "enum",
+      "requiredness": "required",
+      "semantics": "trapezoid_straight_sidewall_v1",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-017",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "geometry_claim_level",
+      "field_type": "enum",
+      "requiredness": "required",
+      "semantics": "not measured geometry",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-018",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "geometry_surrogate_status",
+      "field_type": "enum",
+      "requiredness": "required",
+      "semantics": "review-only descriptor status",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-019",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "not_measured_geometry",
+      "field_type": "boolean",
+      "requiredness": "required",
+      "semantics": "must be true",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-020",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "not_runtime_configuration",
+      "field_type": "boolean",
+      "requiredness": "required",
+      "semantics": "must be true",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-021",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "not_production_ingestion",
+      "field_type": "boolean",
+      "requiredness": "required",
+      "semantics": "must be true",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-022",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "allowed_use",
+      "field_type": "text",
+      "requiredness": "required",
+      "semantics": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-023",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "blocked_use",
+      "field_type": "text",
+      "requiredness": "required",
+      "semantics": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    }
+  ],
+  "positive_fixtures": [
+    {
+      "geometry_descriptor_id": "G10E-POS-001-process_anchor_open",
+      "geometry_descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "sidewall_angle_convention": "comsol_from_horizontal_nodi_taper_from_vertical_v1",
+      "sidewall_deg_comsol": "85",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "angle_conversion_formula_id": "sidewall_from_horizontal_to_taper_from_vertical_v1",
+      "W_top_nm": "500",
+      "D_nm": "900",
+      "depth_nm": "900",
+      "W_bottom_unclipped_nm": "342.520405653",
+      "W_bottom_runtime_clipped_nm": "342.520405653",
+      "closure_status": "open",
+      "closure_policy": "preserve_unclipped_descriptor",
+      "runtime_guard_status": "none",
+      "min_aperture_descriptor_nm": "342.520405653",
+      "cross_section_geometry_version": "trapezoid_straight_sidewall_v1",
+      "geometry_claim_level": "parameterized_geometry_descriptor_not_measured",
+      "geometry_surrogate_status": "review_only_parameterized_trapezoid_descriptor",
+      "not_measured_geometry": "true",
+      "not_runtime_configuration": "true",
+      "not_production_ingestion": "true",
+      "allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "geometry_descriptor_sha256": "9f111cf7e07dfe495457512a6ab5fc329e0cf58d0f40e842e6f37a0ea562654d",
+      "fixture_id": "G10E-POS-001",
+      "fixture_family": "positive_descriptor",
+      "fixture_label": "process_anchor_open",
+      "expected_result": "PASS",
+      "observed_result": "PASS",
+      "issues": ""
+    },
+    {
+      "geometry_descriptor_id": "G10E-POS-002-vertical_sidewall_rectangle_limit",
+      "geometry_descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "sidewall_angle_convention": "comsol_from_horizontal_nodi_taper_from_vertical_v1",
+      "sidewall_deg_comsol": "90",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "angle_conversion_formula_id": "sidewall_from_horizontal_to_taper_from_vertical_v1",
+      "W_top_nm": "500",
+      "D_nm": "900",
+      "depth_nm": "900",
+      "W_bottom_unclipped_nm": "500",
+      "W_bottom_runtime_clipped_nm": "500",
+      "closure_status": "open",
+      "closure_policy": "preserve_unclipped_descriptor",
+      "runtime_guard_status": "none",
+      "min_aperture_descriptor_nm": "500",
+      "cross_section_geometry_version": "trapezoid_straight_sidewall_v1",
+      "geometry_claim_level": "parameterized_geometry_descriptor_not_measured",
+      "geometry_surrogate_status": "review_only_parameterized_trapezoid_descriptor",
+      "not_measured_geometry": "true",
+      "not_runtime_configuration": "true",
+      "not_production_ingestion": "true",
+      "allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "geometry_descriptor_sha256": "e6c51eb662ac30d354ae84d29640bfd8d65a0a911ca7c45417573989de117531",
+      "fixture_id": "G10E-POS-002",
+      "fixture_family": "positive_descriptor",
+      "fixture_label": "vertical_sidewall_rectangle_limit",
+      "expected_result": "PASS",
+      "observed_result": "PASS",
+      "issues": ""
+    },
+    {
+      "geometry_descriptor_id": "G10E-POS-003-near_closed_formula_pass",
+      "geometry_descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "sidewall_angle_convention": "comsol_from_horizontal_nodi_taper_from_vertical_v1",
+      "sidewall_deg_comsol": "70",
+      "sidewall_taper_angle_deg_nodi": "20",
+      "angle_conversion_formula_id": "sidewall_from_horizontal_to_taper_from_vertical_v1",
+      "W_top_nm": "500",
+      "D_nm": "600",
+      "depth_nm": "600",
+      "W_bottom_unclipped_nm": "63.2357188806",
+      "W_bottom_runtime_clipped_nm": "63.2357188806",
+      "closure_status": "near_closed",
+      "closure_policy": "preserve_unclipped_descriptor",
+      "runtime_guard_status": "solver_guard",
+      "min_aperture_descriptor_nm": "63.2357188806",
+      "cross_section_geometry_version": "trapezoid_straight_sidewall_v1",
+      "geometry_claim_level": "parameterized_geometry_descriptor_not_measured",
+      "geometry_surrogate_status": "review_only_parameterized_trapezoid_descriptor",
+      "not_measured_geometry": "true",
+      "not_runtime_configuration": "true",
+      "not_production_ingestion": "true",
+      "allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "geometry_descriptor_sha256": "4a98697694aebf61a5ee0d334e29cc17c475e47fe479208219b04d61655b032d",
+      "fixture_id": "G10E-POS-003",
+      "fixture_family": "positive_descriptor",
+      "fixture_label": "near_closed_formula_pass",
+      "expected_result": "PASS",
+      "observed_result": "PASS",
+      "issues": ""
+    },
+    {
+      "geometry_descriptor_id": "G10E-POS-004-open_trapezoid_formula_pass",
+      "geometry_descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "sidewall_angle_convention": "comsol_from_horizontal_nodi_taper_from_vertical_v1",
+      "sidewall_deg_comsol": "80",
+      "sidewall_taper_angle_deg_nodi": "10",
+      "angle_conversion_formula_id": "sidewall_from_horizontal_to_taper_from_vertical_v1",
+      "W_top_nm": "800",
+      "D_nm": "600",
+      "depth_nm": "600",
+      "W_bottom_unclipped_nm": "588.40762315",
+      "W_bottom_runtime_clipped_nm": "588.40762315",
+      "closure_status": "open",
+      "closure_policy": "preserve_unclipped_descriptor",
+      "runtime_guard_status": "none",
+      "min_aperture_descriptor_nm": "588.40762315",
+      "cross_section_geometry_version": "trapezoid_straight_sidewall_v1",
+      "geometry_claim_level": "parameterized_geometry_descriptor_not_measured",
+      "geometry_surrogate_status": "review_only_parameterized_trapezoid_descriptor",
+      "not_measured_geometry": "true",
+      "not_runtime_configuration": "true",
+      "not_production_ingestion": "true",
+      "allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "geometry_descriptor_sha256": "2d7a381e820885de5e401304ab2e1ab93a084d966c8a18337749c23c0f2cf324",
+      "fixture_id": "G10E-POS-004",
+      "fixture_family": "positive_descriptor",
+      "fixture_label": "open_trapezoid_formula_pass",
+      "expected_result": "PASS",
+      "observed_result": "PASS",
+      "issues": ""
+    }
+  ],
+  "negative_fixtures": [
+    {
+      "fixture_id": "G10E-NEG-001",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "angle convention mismatch",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "invalid sidewall_angle_convention|descriptor hash mismatch",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-002",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "angle sum not 90",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "angle conversion sum is not 90 deg",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-003",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "wrong bottom width",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "bottom width formula mismatch|runtime clipped bottom width mismatch",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-004",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "missing descriptor hash",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "descriptor hash mismatch",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-005",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "sidewall-aware PRS row without descriptor binding",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "QUARANTINE_MISSING_SIDEWALL_DESCRIPTOR_BINDING",
+      "expected_fail_reason": "geometry_descriptor_id|geometry_descriptor_sha256",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-006",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "closure status inconsistent",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "closure_status inconsistent with bottom width",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-007",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "measured claim without evidence",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "measured geometry claim without evidence",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-008",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "production flag true",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "forbidden authorization flag production_ingestion_authorized=true",
+      "forbidden_promotion_detected": "true",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-009",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "runtime flag true",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "forbidden authorization flag runtime_configuration_authorized=true",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-010",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "JRC authorization spoofing",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "forbidden authorization flag jrc_authorized=true",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-011",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "QCH authorization spoofing",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "forbidden authorization flag qch_weighting_authorized=true",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-012",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "EDGE formula authorization spoofing",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "forbidden authorization flag formula_use_authorized=true",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-013",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "runtime clipped bottom width negative",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "runtime clipped bottom width mismatch",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-014",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "sidewall-aware EAS row without descriptor binding",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "QUARANTINE_MISSING_SIDEWALL_DESCRIPTOR_BINDING",
+      "expected_fail_reason": "geometry_descriptor_id|geometry_descriptor_sha256",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    }
+  ],
+  "mutation_results": [
+    {
+      "result_id": "G10E-POS-001",
+      "fixture_family": "positive_descriptor",
+      "expected_result": "PASS",
+      "observed_result": "PASS",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-POS-002",
+      "fixture_family": "positive_descriptor",
+      "expected_result": "PASS",
+      "observed_result": "PASS",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-POS-003",
+      "fixture_family": "positive_descriptor",
+      "expected_result": "PASS",
+      "observed_result": "PASS",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-POS-004",
+      "fixture_family": "positive_descriptor",
+      "expected_result": "PASS",
+      "observed_result": "PASS",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-001",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-002",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-003",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-004",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-005",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-006",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-007",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-008",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-009",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-010",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-011",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-012",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-013",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-014",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    }
+  ],
+  "unexpected_pass_register": [
+    {
+      "unexpected_pass_count": "0",
+      "forbidden_promotion_count": "0",
+      "status": "PASS_ZERO_UNEXPECTED_PASS"
+    }
+  ],
+  "propagation_matrix": [
+    {
+      "impact_id": "G10D-IMPACT-001",
+      "module_or_workstream": "PRS",
+      "sidewall_impact_path": "position response surface geometry binding",
+      "current_gate_status": "FUTURE_RERUN_REQUIRED_IF_AUTHORIZED",
+      "future_rerun_required_if_authorized": "true",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "must reference descriptor id/hash before sidewall-aware rows"
+    },
+    {
+      "impact_id": "G10D-IMPACT-002",
+      "module_or_workstream": "EAS",
+      "sidewall_impact_path": "effective aperture surrogate sensitivity",
+      "current_gate_status": "FUTURE_RERUN_REQUIRED_IF_AUTHORIZED",
+      "future_rerun_required_if_authorized": "true",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "descriptor must bind optical/reference surrogate claim boundary"
+    },
+    {
+      "impact_id": "G10D-IMPACT-003",
+      "module_or_workstream": "sampler",
+      "sidewall_impact_path": "initial position support",
+      "current_gate_status": "REVIEW_ONLY_DESCRIPTOR_BINDING",
+      "future_rerun_required_if_authorized": "false",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "uniform accessible area oracle exists; flux-weighted remains blocked"
+    },
+    {
+      "impact_id": "G10D-IMPACT-004",
+      "module_or_workstream": "trajectory",
+      "sidewall_impact_path": "boundary and near-wall transport",
+      "current_gate_status": "FUTURE_RERUN_REQUIRED_IF_AUTHORIZED",
+      "future_rerun_required_if_authorized": "true",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "diffusive trapezoid reflection and wall-distance need future solver gate"
+    },
+    {
+      "impact_id": "G10D-IMPACT-005",
+      "module_or_workstream": "fluidic resistance",
+      "sidewall_impact_path": "hydraulic proxy",
+      "current_gate_status": "NO_RUN_AUDIT_ONLY",
+      "future_rerun_required_if_authorized": "false",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "rectangular proxy only; not q_ch or clogging rate"
+    },
+    {
+      "impact_id": "G10D-IMPACT-006",
+      "module_or_workstream": "electrokinetic transport",
+      "sidewall_impact_path": "local wall-distance/electrokinetic grid",
+      "current_gate_status": "BLOCKED_BY_EXISTING_GATE",
+      "future_rerun_required_if_authorized": "false",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "trapezoid geometry not propagated to formal transport"
+    },
+    {
+      "impact_id": "G10D-IMPACT-007",
+      "module_or_workstream": "reference field",
+      "sidewall_impact_path": "optical/reference surrogate",
+      "current_gate_status": "REVIEW_ONLY_DESCRIPTOR_BINDING",
+      "future_rerun_required_if_authorized": "false",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "rectangular proxy or geometry-independent audit only"
+    },
+    {
+      "impact_id": "G10D-IMPACT-008",
+      "module_or_workstream": "local-Q/hydraulic",
+      "sidewall_impact_path": "hydraulic anchor diagnostics",
+      "current_gate_status": "NO_RUN_AUDIT_ONLY",
+      "future_rerun_required_if_authorized": "false",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "review-only; not formal q_ch weighting"
+    },
+    {
+      "impact_id": "G10D-IMPACT-009",
+      "module_or_workstream": "EDGE",
+      "sidewall_impact_path": "edge4/edge20 policy line",
+      "current_gate_status": "BLOCKED_BY_EXISTING_GATE",
+      "future_rerun_required_if_authorized": "false",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "EDGE remains NOT_APPROVED/preauth-only"
+    },
+    {
+      "impact_id": "G10D-IMPACT-010",
+      "module_or_workstream": "QCH",
+      "sidewall_impact_path": "formal q_ch sidecar",
+      "current_gate_status": "BLOCKED_BY_EXISTING_GATE",
+      "future_rerun_required_if_authorized": "false",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "formal q_ch sidecar absent; no weighting"
+    },
+    {
+      "impact_id": "G10D-IMPACT-011",
+      "module_or_workstream": "BINDING",
+      "sidewall_impact_path": "route/view/diameter/bin repairs",
+      "current_gate_status": "BLOCKED_BY_EXISTING_GATE",
+      "future_rerun_required_if_authorized": "false",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "220/D1200/UNBOUND remain fail-closed"
+    },
+    {
+      "impact_id": "G10D-IMPACT-012",
+      "module_or_workstream": "V4 context",
+      "sidewall_impact_path": "surface/context claim ceiling",
+      "current_gate_status": "NO_RUN_AUDIT_ONLY",
+      "future_rerun_required_if_authorized": "false",
+      "current_execution_allowed": "false",
+      "formula_use_authorized": "false",
+      "production_ingestion_authorized": "false",
+      "notes": "review-only claim ceiling; not runtime"
+    }
+  ],
+  "comsol_requirements": [
+    {
+      "requirement_id": "G10F-REQ-001",
+      "field_name": "geometry_descriptor_id",
+      "unit_or_type": "string",
+      "requirement": "stable COMSOL-produced id",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-002",
+      "field_name": "geometry_descriptor_sha256",
+      "unit_or_type": "sha256",
+      "requirement": "hash over core descriptor fields",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-003",
+      "field_name": "sidewall_angle_convention",
+      "unit_or_type": "enum",
+      "requirement": "comsol_from_horizontal_nodi_taper_from_vertical_v1",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-004",
+      "field_name": "sidewall_deg_comsol",
+      "unit_or_type": "deg",
+      "requirement": "from substrate/horizontal; 90 vertical",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-005",
+      "field_name": "sidewall_taper_angle_deg_nodi",
+      "unit_or_type": "deg",
+      "requirement": "must equal 90-sidewall_deg_comsol",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-006",
+      "field_name": "W_top_nm",
+      "unit_or_type": "nm",
+      "requirement": "top channel width",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-007",
+      "field_name": "depth_nm",
+      "unit_or_type": "nm",
+      "requirement": "etched depth",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-008",
+      "field_name": "W_bottom_unclipped_nm",
+      "unit_or_type": "nm",
+      "requirement": "formula-preserved unclipped bottom width",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-009",
+      "field_name": "W_bottom_runtime_clipped_nm",
+      "unit_or_type": "nm",
+      "requirement": "runtime guard value, not measured geometry",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-010",
+      "field_name": "closure_status",
+      "unit_or_type": "enum",
+      "requirement": "open|near_closed|geometry_closed",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-011",
+      "field_name": "runtime_guard_status",
+      "unit_or_type": "enum",
+      "requirement": "none|solver_guard|validation_guard",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-012",
+      "field_name": "source_artifact",
+      "unit_or_type": "path",
+      "requirement": "source descriptor or package path",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-013",
+      "field_name": "source_sha256",
+      "unit_or_type": "sha256",
+      "requirement": "source artifact hash",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-014",
+      "field_name": "row_count",
+      "unit_or_type": "integer",
+      "requirement": "package row count/provenance",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-015",
+      "field_name": "geometry_root",
+      "unit_or_type": "string",
+      "requirement": "route/view/geometry root identity",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-016",
+      "field_name": "claim_boundary",
+      "unit_or_type": "text",
+      "requirement": "review-only geometry identity not measured",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-017",
+      "field_name": "allowed_use",
+      "unit_or_type": "text",
+      "requirement": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-018",
+      "field_name": "blocked_use",
+      "unit_or_type": "text",
+      "requirement": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-019",
+      "field_name": "not_evidence",
+      "unit_or_type": "boolean",
+      "requirement": "true unless future gate explicitly changes",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    },
+    {
+      "requirement_id": "G10F-REQ-020",
+      "field_name": "authorization_flags",
+      "unit_or_type": "boolean false",
+      "requirement": "all authorization flags false",
+      "missing_behavior": "quarantine_or_hard_fail_closed",
+      "nodi_allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
+      "nodi_blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
+      "required_next_gate": "Gate10_SIDEWALL_DESCRIPTOR_RECEIPT_REVIEW"
+    }
+  ],
+  "self_review": [
+    {
+      "review_id": "G10G-REVIEW-001",
+      "review_dimension": "angle convention",
+      "status": "PASS",
+      "finding": "COMSOL horizontal and NODI taper are complementary",
+      "p0_p1_issue": "false"
+    },
+    {
+      "review_id": "G10G-REVIEW-002",
+      "review_dimension": "formula and units",
+      "status": "PASS",
+      "finding": "bottom width formula is nm-based and tested",
+      "p0_p1_issue": "false"
+    },
+    {
+      "review_id": "G10G-REVIEW-003",
+      "review_dimension": "descriptor hash identity",
+      "status": "PASS",
+      "finding": "hash covers core descriptor fields",
+      "p0_p1_issue": "false"
+    },
+    {
+      "review_id": "G10G-REVIEW-004",
+      "review_dimension": "freeze impact semantics",
+      "status": "PASS",
+      "finding": "RC5.1 left intact; addendum required for sidewall-aware rows",
+      "p0_p1_issue": "false"
+    },
+    {
+      "review_id": "G10G-REVIEW-005",
+      "review_dimension": "module propagation",
+      "status": "PASS",
+      "finding": "runtime modules remain guarded/proxy unless future authorized",
+      "p0_p1_issue": "false"
+    },
+    {
+      "review_id": "G10G-REVIEW-006",
+      "review_dimension": "no-auth leakage",
+      "status": "PASS",
+      "finding": "all authorization flags false; negative controls fail",
+      "p0_p1_issue": "false"
+    },
+    {
+      "review_id": "G10G-REVIEW-007",
+      "review_dimension": "negative controls",
+      "status": "PASS",
+      "finding": "unexpected pass zero",
+      "p0_p1_issue": "false"
+    },
+    {
+      "review_id": "G10G-REVIEW-008",
+      "review_dimension": "git staging hygiene",
+      "status": "PASS",
+      "finding": "Gate10 outputs only; no production rerun",
+      "p0_p1_issue": "false"
+    }
+  ],
+  "validator_report": [
+    {
+      "validator_check_id": "G10C-VAL-001",
+      "check_name": "positive_descriptor_fixtures",
+      "rows_checked": "4",
+      "status": "PASS"
+    },
+    {
+      "validator_check_id": "G10C-VAL-002",
+      "check_name": "negative_descriptor_fixtures",
+      "rows_checked": "14",
+      "status": "PASS"
+    },
+    {
+      "validator_check_id": "G10C-VAL-003",
+      "check_name": "rc51_sidewall_binding_presence",
+      "rows_checked": "18",
+      "status": "PASS_ADDENDUM_REQUIRED"
+    },
+    {
+      "validator_check_id": "G10C-VAL-004",
+      "check_name": "authorization_flags",
+      "rows_checked": "18",
+      "status": "PASS_ALL_FALSE_OR_NEGATIVE_CONTROL"
+    }
+  ]
+}
