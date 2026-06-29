@@ -167,6 +167,55 @@ class TrapezoidCrossSection:
         right_m = max(right_m, 0.0)
         return -right_m, right_m
 
+    def center_accessible_support_at_depth_m(
+        self,
+        u_m: float,
+        particle_radius_m: float,
+        *,
+        narrow_width_threshold_m: float = 0.0,
+    ) -> dict[str, float | str]:
+        """Return particle-center support status for one depth slice."""
+        radius_m = float(particle_radius_m)
+        threshold_m = float(narrow_width_threshold_m)
+        if radius_m < 0.0:
+            raise ValueError(f"particle_radius_m must be non-negative, got {radius_m}")
+        if threshold_m < 0.0:
+            raise ValueError(
+                "narrow_width_threshold_m must be non-negative, got "
+                f"{threshold_m}"
+            )
+
+        u = float(u_m)
+        width_m = self.center_accessible_width_at_depth_m(u, radius_m)
+        if width_m <= 0.0:
+            status = "blocked"
+            if self.center_accessible_u_bounds_m(radius_m) is None:
+                reason = "zero_center_accessible_area"
+            elif u < radius_m:
+                reason = "top_clearance_below_particle_radius"
+            elif u > self.depth_m - radius_m:
+                reason = "bottom_clearance_below_particle_radius"
+            else:
+                reason = "sidewall_clearance_below_particle_radius"
+        elif threshold_m > 0.0 and width_m <= threshold_m:
+            status = "narrow"
+            reason = ""
+        else:
+            status = "open"
+            reason = ""
+
+        x_left_m, x_right_m = self.center_accessible_x_bounds_at_depth_m(
+            u,
+            radius_m,
+        )
+        return {
+            "particle_center_support_status": status,
+            "steric_block_reason": reason,
+            "center_accessible_width_m": width_m,
+            "x_left_m": x_left_m,
+            "x_right_m": x_right_m,
+        }
+
     def center_accessible_area_m2(self, particle_radius_m: float) -> float:
         radius_m = float(particle_radius_m)
         if radius_m < 0.0:

@@ -104,6 +104,54 @@ def test_center_accessible_width_blocks_too_deep_tail_particle_slice() -> None:
     assert geom.center_accessible_width_at_depth_m(600.0e-9, 110.0e-9) == 0.0
 
 
+def test_center_accessible_support_status_reports_open_narrow_and_blocked() -> None:
+    geom = TrapezoidCrossSection(
+        top_width_m=500.0e-9,
+        depth_m=900.0e-9,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(70.0),
+    )
+
+    open_slice = geom.center_accessible_support_at_depth_m(120.0e-9, 110.0e-9)
+    narrow_slice = geom.center_accessible_support_at_depth_m(
+        300.0e-9,
+        110.0e-9,
+        narrow_width_threshold_m=60.0e-9,
+    )
+    blocked_slice = geom.center_accessible_support_at_depth_m(600.0e-9, 110.0e-9)
+    top_blocked_slice = geom.center_accessible_support_at_depth_m(
+        50.0e-9,
+        110.0e-9,
+    )
+
+    assert open_slice["particle_center_support_status"] == "open"
+    assert open_slice["steric_block_reason"] == ""
+    assert narrow_slice["particle_center_support_status"] == "narrow"
+    assert narrow_slice["steric_block_reason"] == ""
+    assert blocked_slice["particle_center_support_status"] == "blocked"
+    assert (
+        blocked_slice["steric_block_reason"]
+        == "sidewall_clearance_below_particle_radius"
+    )
+    assert top_blocked_slice["particle_center_support_status"] == "blocked"
+    assert (
+        top_blocked_slice["steric_block_reason"]
+        == "top_clearance_below_particle_radius"
+    )
+
+
+def test_center_accessible_support_status_reports_zero_area_block() -> None:
+    geom = TrapezoidCrossSection(
+        top_width_m=120.0e-9,
+        depth_m=400.0e-9,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+    )
+
+    support = geom.center_accessible_support_at_depth_m(200.0e-9, 110.0e-9)
+
+    assert support["particle_center_support_status"] == "blocked"
+    assert support["steric_block_reason"] == "zero_center_accessible_area"
+
+
 def test_project_particle_center_into_trapezoid_support() -> None:
     geom = TrapezoidCrossSection(
         top_width_m=500.0e-9,
