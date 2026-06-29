@@ -81,6 +81,7 @@ Completed NODI-side guardrails:
 - Added cache-status hard-fail so `blocked_old_rectangular_cache` cannot satisfy propagated sidewall PRS/EAS rows and is limited to blocked/non-propagated audit semantics.
 - Added Package B particle-center support slice oracle for `open` / `narrow` / `blocked` status and steric block reasons, then routed trapezoid sampler diagnostics through that oracle.
 - Added initial-position sampler support model, particle-center support status, and steric block reason to observation signatures so sampler-support diagnostics cannot reuse stale cache identities.
+- Added PRS sidewall v2 validator checks requiring initial-position sampler-support signature fragments and binding `sampler_support_model` to `initial_position_sampler_support_model`; EAS sidewall v2 remains aperture-surrogate scoped and is not forced to carry PRS bin semantics.
 
 Still blocked in this roadmap:
 

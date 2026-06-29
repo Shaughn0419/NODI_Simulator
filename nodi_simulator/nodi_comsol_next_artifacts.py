@@ -935,6 +935,11 @@ SIDEWALL_V2_TRAPEZOID_SIGNATURE_REQUIRED_FRAGMENTS: tuple[str, ...] = (
     "surface_charge_transport_claim_level=",
     "electrokinetic_diagnostic_gate_passed=",
 )
+PRS_SIDEWALL_V2_INITIAL_POSITION_SIGNATURE_REQUIRED_FRAGMENTS: tuple[str, ...] = (
+    "initial_position_sampler_support_model=",
+    "initial_position_particle_center_support_status=",
+    "initial_position_steric_block_reason=",
+)
 SIDEWALL_V2_ACCEPTANCE_GUARD_REQUIRED_FIELDS: tuple[str, ...] = (
     "roadmap_status",
     "not_accepted_for_formula_use",
@@ -9479,6 +9484,11 @@ def _validate_position_response_sidewall_v2_fields(
         issues,
         require_trapezoid_signature=channel_model == "trapezoid_tapered_sidewalls",
     )
+    _validate_prs_sidewall_v2_initial_position_signature_context(
+        row,
+        row_index,
+        issues,
+    )
     _validate_sidewall_v2_runtime_propagation_guards(
         row,
         row_index,
@@ -10132,6 +10142,35 @@ def _validate_sidewall_v2_observation_cache_context(
                     rule_id,
                     f"trapezoid sidewall row observation_signature lacks {fragment}",
                 )
+
+
+def _validate_prs_sidewall_v2_initial_position_signature_context(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> None:
+    if _value(row, "channel_cross_section_model") != "trapezoid_tapered_sidewalls":
+        return
+    observation_signature = _value(row, "observation_signature")
+    if not observation_signature:
+        return
+    for fragment in PRS_SIDEWALL_V2_INITIAL_POSITION_SIGNATURE_REQUIRED_FRAGMENTS:
+        if fragment not in observation_signature:
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                f"trapezoid PRS row observation_signature lacks {fragment}",
+            )
+    _validate_observation_signature_field_binding(
+        row,
+        observation_signature,
+        field="sampler_support_model",
+        signature_key="initial_position_sampler_support_model",
+        row_index=row_index,
+        rule_id="PRS-SIDEWALL-V2",
+        issues=issues,
+    )
 
 
 def _observation_signature_value(observation_signature: str, key: str) -> str:

@@ -324,6 +324,9 @@ def _sidewall_observation_cache_fields(
         f"|geometry_propagation_scope={geometry_propagation_scope}"
         "|particle_radius_m=1.1e-07"
         "|center_accessible_support_model=wall_normal_half_plane_offset_v1"
+        "|initial_position_sampler_support_model=wall_normal_half_plane_offset_v1"
+        "|initial_position_particle_center_support_status=open"
+        "|initial_position_steric_block_reason="
         "|sampler_geometry_model=trapezoid_accessible_area_v1"
         "|trajectory_boundary_model=not_applicable_pure_advection"
         "|wall_distance_model=not_applicable_diffusion_hindrance_none"
@@ -360,6 +363,9 @@ def _sidewall_observation_cache_fields(
         ).replace(
             "sampler_geometry_model=trapezoid_accessible_area_v1",
             "sampler_geometry_model=rectangle_accessible_area_v1",
+        ).replace(
+            "initial_position_sampler_support_model=wall_normal_half_plane_offset_v1",
+            "initial_position_sampler_support_model=rectangular_half_span_v1",
         )
     )
     signature = (
@@ -990,6 +996,30 @@ def test_position_response_sidewall_v2_rejects_signature_sampler_mismatch() -> N
     row["observation_signature"] = str(row["observation_signature"]).replace(
         "sampler_geometry_model=trapezoid_accessible_area_v1",
         "sampler_geometry_model=rectangular_half_span_v1",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_signature_sampler_support_mismatch() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "initial_position_sampler_support_model=wall_normal_half_plane_offset_v1",
+        "initial_position_sampler_support_model=rectangular_half_span_v1",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_signature_sampler_support_status() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "|initial_position_particle_center_support_status=open",
+        "",
     )
 
     issues = validate_position_response_surface_rows([row])
