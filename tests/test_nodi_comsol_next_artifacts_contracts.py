@@ -403,6 +403,14 @@ def test_position_response_rejects_v4_event_rate_or_pass_probability_columns() -
     _assert_has_issue(issues, "PRS-V41")
 
 
+def test_position_response_rejects_exact_sidewall_claim_columns() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_row(q_ch="1.0", route_score="0.7")]
+    )
+
+    _assert_has_issue(issues, "PRS-V41")
+
+
 @pytest.mark.parametrize(
     ("n_events_bin", "status", "decision_use", "expected_rule"),
     [
@@ -455,6 +463,14 @@ def test_effective_aperture_rejects_old_w_eff_field_name() -> None:
     issues = validate_effective_aperture_surrogate_rows([row])
 
     _assert_has_issue(issues, "EAS-V03")
+
+
+def test_effective_aperture_rejects_exact_sidewall_claim_columns() -> None:
+    row = _valid_eas_row(W_eff=500.0, JRC="candidate")
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-V26")
 
 
 def test_effective_aperture_rejects_true_weff_or_solver_claim_drift() -> None:
@@ -539,6 +555,14 @@ def test_effective_aperture_rejects_nonpositive_min_aperture_proxy_invention() -
 
 def test_geometry_descriptor_accepts_nominal_surrogate_descriptor_rules() -> None:
     assert validate_geometry_descriptor_rows([_valid_descriptor_row()]) == []
+
+
+def test_geometry_descriptor_rejects_exact_sidewall_claim_columns() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [_valid_descriptor_row(W_eff=500.0, route_score=0.7)]
+    )
+
+    _assert_has_issue(issues, "EAS-V06")
 
 
 def test_geometry_descriptor_rejects_clipped_negative_min_aperture() -> None:

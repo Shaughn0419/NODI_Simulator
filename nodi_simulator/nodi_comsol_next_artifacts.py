@@ -414,6 +414,27 @@ FORBIDDEN_POSITIVE_FIELD_FRAGMENTS = (
     "runtime_configuration",
 )
 
+SIDEWALL_ROADMAP_FORBIDDEN_EXACT_COLUMNS = frozenset(
+    {
+        "w_eff",
+        "score",
+        "route_score",
+        "sidewall_score",
+        "winner",
+        "chi_selected",
+        "jrc",
+        "q_ch",
+        "q_ch_eta",
+        "q_ch_chi_eta",
+        "yield",
+        "detection_probability",
+        "wet_pass_probability",
+        "clogging_rate",
+        "time_to_clog",
+        "recovery",
+    }
+)
+
 COMSOL_V4_CONTEXT_SCHEMA_VERSION = "nodi_comsol_v4_readonly_context_v1"
 COMSOL_V4_ASSUMPTION_SET_ID = "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627"
 COMSOL_V4_ASSUMPTION_SET_VERSION = "4.0.0"
@@ -1206,6 +1227,13 @@ def validate_geometry_descriptor_rows(rows: Sequence[Mapping[str, Any]]) -> list
     grain_counter: Counter[tuple[str, str]] = Counter()
     for row_index, row in enumerate(rows, start=1):
         _require_fields(row, DESCRIPTOR_REQUIRED_FIELDS, "EAS-V06", row_index, issues)
+        _reject_forbidden_positive_fields(
+            row,
+            allowed_negative_fields=set(),
+            row_index=row_index,
+            rule_id="EAS-V06",
+            issues=issues,
+        )
         grain_counter[(_value(row, "route_geometry_id_comsol"), _value(row, "process_state"))] += 1
         _validate_constant(
             row,
@@ -8818,6 +8846,9 @@ def _reject_forbidden_positive_fields(
     for field in row:
         normalized = field.lower()
         if field in allowed_negative_fields or normalized in NEGATIVE_BOUNDARY_FIELD_NAMES:
+            continue
+        if normalized in SIDEWALL_ROADMAP_FORBIDDEN_EXACT_COLUMNS:
+            _issue(issues, row_index, rule_id, f"forbidden sidewall roadmap claim column {field}")
             continue
         for fragment in FORBIDDEN_POSITIVE_FIELD_FRAGMENTS:
             if fragment in normalized:
