@@ -1520,6 +1520,7 @@ def _validate_geometry_descriptor_v2_sidewall_fields(
             )
 
     w_top_nm = _float_field(row, "W_top_nm", row_index, "DESC-V2", issues)
+    _validate_descriptor_v2_runtime_top_binding(row, row_index, w_top_nm, issues)
     depth_nm = _float_field(row, "D_nm", row_index, "DESC-V2", issues)
     w_bottom_unclipped_nm = _float_field(
         row,
@@ -1572,6 +1573,32 @@ def _validate_geometry_descriptor_v2_sidewall_fields(
             )
         if not _value(row, "closure_policy"):
             _issue(issues, row_index, "DESC-V2", "nonpositive bottom width lacks closure_policy")
+
+
+def _validate_descriptor_v2_runtime_top_binding(
+    row: Mapping[str, Any],
+    row_index: int,
+    w_top_nm: float | None,
+    issues: list[str],
+) -> None:
+    if _value(row, "W_top_semantics") != "runtime_top_aperture":
+        return
+    runtime_top_aperture_nm = _float_field(
+        row,
+        "runtime_top_aperture_nm",
+        row_index,
+        "DESC-V2",
+        issues,
+    )
+    if w_top_nm is not None and runtime_top_aperture_nm is not None:
+        _validate_close(
+            runtime_top_aperture_nm,
+            w_top_nm,
+            row_index,
+            "DESC-V2",
+            "runtime_top_aperture_nm",
+            issues,
+        )
 
 
 def position_response_smoke_manifest_rows() -> list[dict[str, str]]:

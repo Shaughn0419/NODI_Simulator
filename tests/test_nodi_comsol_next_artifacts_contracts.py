@@ -856,6 +856,41 @@ def test_geometry_descriptor_v2_rejects_open_status_for_nonpositive_bottom() -> 
     _assert_has_issue(issues, "DESC-V2")
 
 
+def test_geometry_descriptor_v2_runtime_top_semantics_requires_runtime_aperture() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [_valid_descriptor_v2_row(W_top_semantics="runtime_top_aperture")]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
+def test_geometry_descriptor_v2_accepts_bound_runtime_top_aperture() -> None:
+    assert (
+        validate_geometry_descriptor_rows(
+            [
+                _valid_descriptor_v2_row(
+                    W_top_semantics="runtime_top_aperture",
+                    runtime_top_aperture_nm=500.0,
+                )
+            ]
+        )
+        == []
+    )
+
+
+def test_geometry_descriptor_v2_rejects_runtime_top_aperture_mismatch() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [
+            _valid_descriptor_v2_row(
+                W_top_semantics="runtime_top_aperture",
+                runtime_top_aperture_nm=480.0,
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
 def test_geometry_descriptor_rejects_exact_sidewall_claim_columns() -> None:
     issues = validate_geometry_descriptor_rows(
         [_valid_descriptor_row(W_eff=500.0, route_score=0.7)]
