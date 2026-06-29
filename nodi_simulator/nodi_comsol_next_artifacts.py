@@ -369,6 +369,8 @@ NEGATIVE_BOUNDARY_FIELD_NAMES = frozenset(
         "not_optical_solver_output",
         "not_fabrication_release",
         "not_winner",
+        "not_clogging_rate",
+        "not_time_to_clog",
         "not_p3_solver_conclusion",
     }
 )
@@ -671,6 +673,44 @@ PRS_REQUIRED_FIELDS: tuple[str, ...] = (
     "source_artifact",
     "source_sha256",
 )
+SIDEWALL_V2_RUNTIME_PROPAGATION_GUARD_REQUIRED_FIELDS: tuple[str, ...] = (
+    "reference_geometry_propagation_status",
+    "geometry_not_propagated_to_reference_field",
+    "not_optical_solver_output",
+    "fluidic_clogging_risk_band_claim_level",
+    "not_clogging_rate",
+    "not_time_to_clog",
+    "fluidic_geometry_model",
+    "hydraulic_resistance_model",
+    "hydraulic_resistance_claim_level",
+    "fluidic_geometry_propagation_status",
+    "geometry_not_propagated_to_fluidic_resistance",
+    "fluidic_network_geometry_model",
+    "fluidic_network_hydraulic_resistance_model",
+    "fluidic_network_hydraulic_resistance_claim_level",
+    "fluidic_network_geometry_propagation_status",
+    "geometry_not_propagated_to_fluidic_network",
+    "fluidic_network_not_qch_weighted",
+    "electrokinetic_transport_geometry_model",
+    "electrokinetic_wall_distance_model",
+    "electrokinetic_geometry_propagation_status",
+    "geometry_not_propagated_to_electrokinetic_transport",
+    "surface_charge_transport_claim_level",
+    "electrokinetic_diagnostic_gate_passed",
+)
+SIDEWALL_V2_TRUE_RUNTIME_GUARD_FIELDS: tuple[str, ...] = (
+    "not_optical_solver_output",
+    "not_clogging_rate",
+    "not_time_to_clog",
+    "fluidic_network_not_qch_weighted",
+)
+SIDEWALL_V2_BOOL_RUNTIME_GUARD_FIELDS: tuple[str, ...] = (
+    "geometry_not_propagated_to_reference_field",
+    "geometry_not_propagated_to_fluidic_resistance",
+    "geometry_not_propagated_to_fluidic_network",
+    "geometry_not_propagated_to_electrokinetic_transport",
+    "electrokinetic_diagnostic_gate_passed",
+)
 PRS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
     {
         "channel_cross_section_model",
@@ -728,6 +768,7 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "flow_control_mode",
     "reference_field_model",
     "reference_spatial_mode",
+    *SIDEWALL_V2_RUNTIME_PROPAGATION_GUARD_REQUIRED_FIELDS,
 )
 PRS_SIDEWALL_V2_BLOCKED_RESPONSE_VALUE_FIELDS: tuple[str, ...] = (
     "response_value",
@@ -941,6 +982,7 @@ EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "not_optical_solver_output",
     "not_qch_weighted",
     "not_detection_probability",
+    *SIDEWALL_V2_RUNTIME_PROPAGATION_GUARD_REQUIRED_FIELDS,
 )
 EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS: tuple[str, ...] = (
     "W_eff_optical_surrogate_nm",
@@ -9313,6 +9355,12 @@ def _validate_position_response_sidewall_v2_fields(
         issues,
         require_trapezoid_signature=channel_model == "trapezoid_tapered_sidewalls",
     )
+    _validate_sidewall_v2_runtime_propagation_guards(
+        row,
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+    )
     geometry_status = _value(row, "geometry_propagation_status")
     if geometry_status not in PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED:
         _issue(
@@ -9859,6 +9907,117 @@ def _validate_sidewall_v2_acceptance_guards(
         if field == "roadmap_status":
             continue
         _validate_bool_equals(row, field, True, row_index, rule_id, issues)
+
+
+def _validate_sidewall_v2_runtime_propagation_guards(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+) -> None:
+    _require_fields(
+        row,
+        SIDEWALL_V2_RUNTIME_PROPAGATION_GUARD_REQUIRED_FIELDS,
+        rule_id,
+        row_index,
+        issues,
+    )
+    for field in SIDEWALL_V2_TRUE_RUNTIME_GUARD_FIELDS:
+        _validate_bool_equals(row, field, True, row_index, rule_id, issues)
+    for field in SIDEWALL_V2_BOOL_RUNTIME_GUARD_FIELDS:
+        _validate_bool_field(row, field, row_index, rule_id, issues)
+
+    nonblank_fields = (
+        "reference_geometry_propagation_status",
+        "fluidic_clogging_risk_band_claim_level",
+        "fluidic_geometry_model",
+        "hydraulic_resistance_model",
+        "hydraulic_resistance_claim_level",
+        "fluidic_geometry_propagation_status",
+        "fluidic_network_geometry_model",
+        "fluidic_network_hydraulic_resistance_model",
+        "fluidic_network_hydraulic_resistance_claim_level",
+        "fluidic_network_geometry_propagation_status",
+        "electrokinetic_transport_geometry_model",
+        "electrokinetic_wall_distance_model",
+        "electrokinetic_geometry_propagation_status",
+        "surface_charge_transport_claim_level",
+    )
+    for field in nonblank_fields:
+        if not _value(row, field):
+            _issue(issues, row_index, rule_id, f"{field} is blank")
+
+    reference_not_propagated = _bool_field(
+        row,
+        "geometry_not_propagated_to_reference_field",
+        row_index,
+        rule_id,
+        issues,
+    )
+    if reference_not_propagated and "not_propagated" not in _value(
+        row,
+        "reference_geometry_propagation_status",
+    ).lower():
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            "reference not-propagated flag lacks matching reference propagation status",
+        )
+
+    fluidic_not_propagated = _bool_field(
+        row,
+        "geometry_not_propagated_to_fluidic_resistance",
+        row_index,
+        rule_id,
+        issues,
+    )
+    if fluidic_not_propagated:
+        hydraulic_claim = _value(row, "hydraulic_resistance_claim_level").lower()
+        if "proxy" not in hydraulic_claim or "trapezoid_poiseuille" not in hydraulic_claim:
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "fluidic resistance not-propagated flag lacks proxy/not-trapezoid-Poiseuille claim",
+            )
+
+    network_not_propagated = _bool_field(
+        row,
+        "geometry_not_propagated_to_fluidic_network",
+        row_index,
+        rule_id,
+        issues,
+    )
+    if network_not_propagated:
+        network_claim = _value(
+            row,
+            "fluidic_network_hydraulic_resistance_claim_level",
+        ).lower()
+        if "not_qch" not in network_claim:
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "fluidic network not-propagated flag lacks not_qch claim",
+            )
+
+    electrokinetic_not_propagated = _bool_field(
+        row,
+        "geometry_not_propagated_to_electrokinetic_transport",
+        row_index,
+        rule_id,
+        issues,
+    )
+    if electrokinetic_not_propagated:
+        surface_charge_claim = _value(row, "surface_charge_transport_claim_level").lower()
+        if "blocked" not in surface_charge_claim and "not_propagated" not in surface_charge_claim:
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "electrokinetic not-propagated flag lacks blocked/not-propagated claim",
+            )
 
 
 def _validate_sidewall_v2_artifact_metadata(
@@ -10439,6 +10598,12 @@ def _validate_effective_aperture_sidewall_v2_fields(
         "EAS-SIDEWALL-V2",
         issues,
         require_trapezoid_signature=True,
+    )
+    _validate_sidewall_v2_runtime_propagation_guards(
+        row,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
     )
     _validate_sidewall_v2_eas_runtime_geometry_context(row, row_index, issues)
     _validate_sidewall_v2_descriptor_context(row, row_index, "EAS-SIDEWALL-V2", issues)

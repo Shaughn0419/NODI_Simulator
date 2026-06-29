@@ -349,6 +349,58 @@ def _sidewall_observation_cache_fields(
     }
 
 
+def _sidewall_runtime_propagation_guard_fields() -> dict[str, object]:
+    return {
+        "reference_geometry_propagation_status": (
+            "blocked_trapezoid_geometry_not_propagated_to_reference_field"
+        ),
+        "geometry_not_propagated_to_reference_field": "true",
+        "not_optical_solver_output": "true",
+        "fluidic_clogging_risk_band_claim_level": (
+            "static_throat_clearance_proxy_not_clogging_rate"
+        ),
+        "not_clogging_rate": "true",
+        "not_time_to_clog": "true",
+        "fluidic_geometry_model": (
+            "trapezoid_descriptor_with_rectangular_proxy_fluidics"
+        ),
+        "hydraulic_resistance_model": (
+            "rectangular_hydraulic_resistance_proxy_under_trapezoid"
+        ),
+        "hydraulic_resistance_claim_level": (
+            "proxy_not_trapezoid_poiseuille_not_accepted_for_formula_use"
+        ),
+        "fluidic_geometry_propagation_status": (
+            "geometry_not_propagated_to_fluidic_resistance"
+        ),
+        "geometry_not_propagated_to_fluidic_resistance": "true",
+        "fluidic_network_geometry_model": (
+            "trapezoid_descriptor_with_rectangular_proxy_network"
+        ),
+        "fluidic_network_hydraulic_resistance_model": (
+            "rectangular_hydraulic_resistance_network_proxy_under_trapezoid"
+        ),
+        "fluidic_network_hydraulic_resistance_claim_level": (
+            "diagnostic_only_rectangular_proxy_not_trapezoid_poiseuille_not_qch"
+        ),
+        "fluidic_network_geometry_propagation_status": (
+            "geometry_not_propagated_to_fluidic_network"
+        ),
+        "geometry_not_propagated_to_fluidic_network": "true",
+        "fluidic_network_not_qch_weighted": "true",
+        "electrokinetic_transport_geometry_model": (
+            "blocked_trapezoid_requires_profile_aware_grid"
+        ),
+        "electrokinetic_wall_distance_model": "blocked_rectangular_wall_distance_grid",
+        "electrokinetic_geometry_propagation_status": "blocked_geometry_not_propagated",
+        "geometry_not_propagated_to_electrokinetic_transport": "true",
+        "surface_charge_transport_claim_level": (
+            "blocked_trapezoid_geometry_not_propagated_to_electrokinetic_transport"
+        ),
+        "electrokinetic_diagnostic_gate_passed": "false",
+    }
+
+
 def _sidewall_acceptance_guard_fields() -> dict[str, object]:
     return {
         "roadmap_status": "surrogate_sensitivity_only",
@@ -417,6 +469,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         **_sidewall_artifact_metadata_fields("NODI_POSITION_RESPONSE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
         **_sidewall_observation_cache_fields(),
+        **_sidewall_runtime_propagation_guard_fields(),
         **_sidewall_descriptor_context_fields(),
     )
     row.update(overrides)
@@ -492,6 +545,7 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         **_sidewall_artifact_metadata_fields("NODI_EFFECTIVE_APERTURE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
         **_sidewall_observation_cache_fields(),
+        **_sidewall_runtime_propagation_guard_fields(),
         **_sidewall_descriptor_context_fields(),
     )
     row.update(overrides)
@@ -919,6 +973,28 @@ def test_position_response_sidewall_v2_requires_signature_guard_fragments() -> N
                     "|sidewall_taper_angle_deg=5.000000000e+00"
                     f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
                 )
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_runtime_guard_columns() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["fluidic_network_not_qch_weighted"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_runtime_guard_claim_promotion() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                not_clogging_rate="false",
+                surface_charge_transport_claim_level="calibrated_transport_result",
             )
         ]
     )
@@ -1445,6 +1521,28 @@ def test_effective_aperture_sidewall_v2_requires_signature_guard_fragments() -> 
                     "|sidewall_taper_angle_deg=5.000000000e+00"
                     f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
                 )
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_runtime_guard_columns() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["geometry_not_propagated_to_electrokinetic_transport"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_runtime_guard_claim_promotion() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                fluidic_network_not_qch_weighted="false",
+                hydraulic_resistance_claim_level="trapezoid_poiseuille_result",
             )
         ]
     )
