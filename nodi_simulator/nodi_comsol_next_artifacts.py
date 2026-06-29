@@ -789,6 +789,32 @@ SIDEWALL_V2_OBSERVATION_CACHE_REQUIRED_FIELDS: tuple[str, ...] = (
     "observation_signature_version",
     "cache_geometry_match_status",
 )
+SIDEWALL_V2_TRAPEZOID_SIGNATURE_REQUIRED_FRAGMENTS: tuple[str, ...] = (
+    "cross_section_geometry_version=",
+    "geometry_profile_sha256=",
+    "particle_radius_m=",
+    "center_accessible_support_model=",
+    "sampler_geometry_model=",
+    "trajectory_boundary_model=",
+    "wall_distance_model=",
+    "flow_profile_geometry_model=",
+    "geometry_propagation_status=",
+    "reference_geometry_propagation_status=",
+    "geometry_not_propagated_to_reference_field=",
+    "not_optical_solver_output=True",
+    "fluidic_clogging_risk_band_claim_level=",
+    "not_clogging_rate=True",
+    "not_time_to_clog=True",
+    "fluidic_geometry_propagation_status=",
+    "geometry_not_propagated_to_fluidic_resistance=",
+    "fluidic_network_geometry_propagation_status=",
+    "geometry_not_propagated_to_fluidic_network=",
+    "fluidic_network_not_qch_weighted=True",
+    "electrokinetic_geometry_propagation_status=",
+    "geometry_not_propagated_to_electrokinetic_transport=",
+    "surface_charge_transport_claim_level=",
+    "electrokinetic_diagnostic_gate_passed=",
+)
 SIDEWALL_V2_ACCEPTANCE_GUARD_REQUIRED_FIELDS: tuple[str, ...] = (
     "roadmap_status",
     "not_accepted_for_formula_use",
@@ -9805,6 +9831,14 @@ def _validate_sidewall_v2_observation_cache_context(
                 rule_id,
                 "trapezoid sidewall row observation_signature lacks trapezoid geometry",
             )
+        for fragment in SIDEWALL_V2_TRAPEZOID_SIGNATURE_REQUIRED_FRAGMENTS:
+            if fragment not in observation_signature:
+                _issue(
+                    issues,
+                    row_index,
+                    rule_id,
+                    f"trapezoid sidewall row observation_signature lacks {fragment}",
+                )
 
 
 def _validate_sidewall_v2_acceptance_guards(

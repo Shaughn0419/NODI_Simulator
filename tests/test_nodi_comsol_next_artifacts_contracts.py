@@ -308,13 +308,42 @@ def _without_sidewall_descriptor_context(row: dict[str, object]) -> dict[str, ob
 def _sidewall_observation_cache_fields(
     channel_model: str = "trapezoid_tapered_sidewalls",
 ) -> dict[str, object]:
+    trapezoid_guard_fragments = (
+        "|cross_section_geometry_version=trapezoid_straight_sidewall_v1"
+        f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
+        "|particle_radius_m=1.1e-07"
+        "|center_accessible_support_model=wall_normal_half_plane_offset_v1"
+        "|sampler_geometry_model=trapezoid_accessible_area_v1"
+        "|trajectory_boundary_model=not_applicable_pure_advection"
+        "|wall_distance_model=not_applicable_diffusion_hindrance_none"
+        "|flow_profile_geometry_model=plug_flow_geometry_independent_v1"
+        "|geometry_propagation_status=sidewall_sampler_and_pure_advection_propagated"
+        "|reference_geometry_propagation_status=blocked_trapezoid_geometry_not_propagated_to_reference_field"
+        "|geometry_not_propagated_to_reference_field=True"
+        "|not_optical_solver_output=True"
+        "|fluidic_clogging_risk_band_claim_level=static_throat_clearance_proxy_not_clogging_rate"
+        "|not_clogging_rate=True"
+        "|not_time_to_clog=True"
+        "|fluidic_geometry_propagation_status=geometry_not_propagated_to_fluidic_resistance"
+        "|geometry_not_propagated_to_fluidic_resistance=True"
+        "|fluidic_network_geometry_propagation_status=geometry_not_propagated_to_fluidic_network"
+        "|geometry_not_propagated_to_fluidic_network=True"
+        "|fluidic_network_not_qch_weighted=True"
+        "|electrokinetic_geometry_propagation_status=blocked_geometry_not_propagated"
+        "|geometry_not_propagated_to_electrokinetic_transport=True"
+        "|surface_charge_transport_claim_level=blocked_trapezoid_geometry_not_propagated_to_electrokinetic_transport"
+        "|electrokinetic_diagnostic_gate_passed=False"
+    )
+    signature = (
+        f"channel_cross_section_model={channel_model}"
+        "|sidewall_taper_angle_deg=5.000000000e+00"
+    )
+    if channel_model == "trapezoid_tapered_sidewalls":
+        signature += trapezoid_guard_fragments
+    else:
+        signature += f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
     return {
-        "observation_signature": (
-            f"channel_cross_section_model={channel_model}"
-            "|sidewall_taper_angle_deg=5.000000000e+00"
-            "|geometry_profile_sha256="
-            f"{GEOMETRY_DESCRIPTOR_SHA256}"
-        ),
+        "observation_signature": signature,
         "observation_signature_version": "sidewall_observation_signature_v1",
         "cache_geometry_match_status": "matched_current_geometry",
     }
@@ -881,6 +910,22 @@ def test_position_response_sidewall_v2_rejects_rectangular_cache_signature() -> 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_requires_signature_guard_fragments() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                observation_signature=(
+                    "channel_cross_section_model=trapezoid_tapered_sidewalls"
+                    "|sidewall_taper_angle_deg=5.000000000e+00"
+                    f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
+                )
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_requires_geometry_profile_sha() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(geometry_profile_sha256="not-a-sha")]
@@ -1384,6 +1429,22 @@ def test_effective_aperture_sidewall_v2_rejects_rectangular_cache_signature() ->
         [
             _valid_eas_sidewall_v2_row(
                 **_sidewall_observation_cache_fields("ideal_rectangle"),
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_signature_guard_fragments() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                observation_signature=(
+                    "channel_cross_section_model=trapezoid_tapered_sidewalls"
+                    "|sidewall_taper_angle_deg=5.000000000e+00"
+                    f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
+                )
             )
         ]
     )
