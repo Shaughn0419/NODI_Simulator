@@ -309,6 +309,7 @@ def _sidewall_observation_cache_fields(
     channel_model: str = "trapezoid_tapered_sidewalls",
     *,
     geometry_propagation_scope: str | None = None,
+    geometry_propagation_status: str = "propagated",
 ) -> dict[str, object]:
     if geometry_propagation_scope is None:
         if channel_model == "trapezoid_tapered_sidewalls":
@@ -327,7 +328,7 @@ def _sidewall_observation_cache_fields(
         "|trajectory_boundary_model=not_applicable_pure_advection"
         "|wall_distance_model=not_applicable_diffusion_hindrance_none"
         "|flow_profile_geometry_model=plug_flow_geometry_independent_v1"
-        "|geometry_propagation_status=sidewall_sampler_and_pure_advection_propagated"
+        f"|geometry_propagation_status={geometry_propagation_status}"
         "|reference_geometry_propagation_status=blocked_trapezoid_geometry_not_propagated_to_reference_field"
         "|geometry_not_propagated_to_reference_field=True"
         "|not_optical_solver_output=True"
@@ -354,6 +355,7 @@ def _sidewall_observation_cache_fields(
         signature += (
             f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
             f"|geometry_propagation_scope={geometry_propagation_scope}"
+            f"|geometry_propagation_status={geometry_propagation_status}"
         )
     return {
         "observation_signature": signature,
@@ -779,6 +781,24 @@ def test_position_response_sidewall_v2_keeps_ideal_rectangle_context_path() -> N
     )
 
     assert validate_position_response_surface_rows([row]) == []
+
+
+def test_position_response_sidewall_v2_rejects_signature_model_mismatch() -> None:
+    row = _without_sidewall_descriptor_context(
+        _valid_prs_sidewall_v2_row(
+            channel_cross_section_model="ideal_rectangle",
+            cross_section_geometry_version="ideal_rectangle_v1",
+            geometry_propagation_scope="rectangle_native_or_non_sidewall_geometry",
+            sampler_geometry_model="rectangle_accessible_area_v1",
+            **_sidewall_observation_cache_fields(
+                geometry_propagation_scope="rectangle_native_or_non_sidewall_geometry"
+            ),
+        )
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
 def test_position_response_sidewall_v2_requires_complete_geometry_fields() -> None:
@@ -1276,7 +1296,8 @@ def test_position_response_sidewall_v2_keeps_non_propagated_audit_row_blocked() 
                 decision_use_allowed="false",
                 steric_support_source="not_available",
                 **_sidewall_observation_cache_fields(
-                    geometry_propagation_scope="blocked_non_propagated_audit"
+                    geometry_propagation_scope="blocked_non_propagated_audit",
+                    geometry_propagation_status="not_propagated",
                 ),
             )
         ]
@@ -1579,6 +1600,18 @@ def test_effective_aperture_sidewall_v2_rejects_signature_scope_mismatch() -> No
     row["observation_signature"] = str(row["observation_signature"]).replace(
         f"geometry_propagation_scope={eas_scope}",
         f"geometry_propagation_scope={prs_scope}",
+    )
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_signature_status_mismatch() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "geometry_propagation_status=propagated",
+        "geometry_propagation_status=not_propagated",
     )
 
     issues = validate_effective_aperture_surrogate_rows([row])

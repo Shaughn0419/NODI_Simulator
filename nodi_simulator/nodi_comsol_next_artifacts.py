@@ -9961,6 +9961,15 @@ def _validate_sidewall_v2_observation_cache_context(
     )
     if not observation_signature:
         return
+    for field in ("channel_cross_section_model", "geometry_propagation_status"):
+        value = _value(row, field)
+        if value and f"{field}={value}" not in observation_signature:
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                f"observation_signature does not bind {field}={value}",
+            )
     geometry_propagation_scope = _value(row, "geometry_propagation_scope")
     if (
         geometry_propagation_scope
