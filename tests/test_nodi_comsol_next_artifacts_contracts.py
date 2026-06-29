@@ -260,6 +260,38 @@ def _valid_prs_row(**overrides: object) -> dict[str, object]:
     return row
 
 
+def _sidewall_descriptor_context_fields() -> dict[str, object]:
+    sidewall_deg = 85.0
+    w_top_nm = 500.0
+    depth_nm = 900.0
+    w_bottom_unclipped_nm = w_top_nm - 2.0 * depth_nm / math.tan(
+        math.radians(sidewall_deg)
+    )
+    return {
+        "geometry_profile_source": "comsol_descriptor",
+        "geometry_profile_sha256": GEOMETRY_DESCRIPTOR_SHA256,
+        "geometry_claim_level": "descriptor_only",
+        "metrology_status": "not_measured",
+        "sidewall_angle_convention": "sidewall_angle_from_substrate_plane_90deg_vertical",
+        "sidewall_deg_comsol": sidewall_deg,
+        "sidewall_taper_angle_deg_nodi": 90.0 - sidewall_deg,
+        "angle_conversion_formula_id": "sidewall_from_horizontal_to_taper_from_vertical_v1",
+        "W_top_nm": w_top_nm,
+        "W_top_semantics": "comsol_descriptor",
+        "W_bottom_unclipped_nm": w_bottom_unclipped_nm,
+        "W_bottom_runtime_clipped_nm": max(w_bottom_unclipped_nm, 0.0),
+        "closure_status": "open" if w_bottom_unclipped_nm > 0.0 else "geometry_closed",
+        "closure_policy": "preserve_unclipped_descriptor",
+        "runtime_guard_status": "none",
+    }
+
+
+def _without_sidewall_descriptor_context(row: dict[str, object]) -> dict[str, object]:
+    for field in _sidewall_descriptor_context_fields():
+        row.pop(field, None)
+    return row
+
+
 def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
     row = _valid_prs_row(
         diameter_nm=220,
@@ -299,6 +331,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         neighbor_fill_used="false",
         source_geometry_descriptor_id="descriptor-404-W500-D900-sidewall-85",
         source_geometry_descriptor_sha=GEOMETRY_DESCRIPTOR_SHA256,
+        **_sidewall_descriptor_context_fields(),
     )
     row.update(overrides)
     return row
@@ -357,6 +390,7 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         rank_under_surrogate="",
         not_qch_weighted="true",
         not_detection_probability="true",
+        **_sidewall_descriptor_context_fields(),
     )
     row.update(overrides)
     return row
@@ -467,6 +501,18 @@ def test_position_response_accepts_sidewall_v2_geometry_fields_when_consistent()
     assert validate_position_response_surface_rows([_valid_prs_sidewall_v2_row()]) == []
 
 
+def test_position_response_sidewall_v2_keeps_ideal_rectangle_context_path() -> None:
+    row = _without_sidewall_descriptor_context(
+        _valid_prs_sidewall_v2_row(
+            channel_cross_section_model="ideal_rectangle",
+            cross_section_geometry_version="ideal_rectangle_v1",
+            sampler_geometry_model="rectangle_accessible_area_v1",
+        )
+    )
+
+    assert validate_position_response_surface_rows([row]) == []
+
+
 def test_position_response_sidewall_v2_requires_complete_geometry_fields() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_row(channel_cross_section_model="trapezoid_tapered_sidewalls")]
@@ -558,6 +604,31 @@ def test_position_response_sidewall_v2_requires_source_geometry_descriptor_id() 
 def test_position_response_sidewall_v2_requires_source_geometry_descriptor_sha() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(source_geometry_descriptor_sha="not-a-sha")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_descriptor_context_fields() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["sidewall_angle_convention"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_descriptor_angle_mismatch() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(sidewall_taper_angle_deg_nodi=85.0)]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_geometry_profile_sha() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(geometry_profile_sha256="not-a-sha")]
     )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
@@ -772,6 +843,31 @@ def test_effective_aperture_sidewall_v2_requires_source_geometry_descriptor_id()
 def test_effective_aperture_sidewall_v2_requires_source_geometry_descriptor_sha() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(source_geometry_descriptor_sha="not-a-sha")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_descriptor_context_fields() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["sidewall_angle_convention"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_descriptor_angle_mismatch() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(sidewall_taper_angle_deg_nodi=85.0)]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_geometry_profile_sha() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(geometry_profile_sha256="not-a-sha")]
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")

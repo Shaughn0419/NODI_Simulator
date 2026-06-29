@@ -736,6 +736,37 @@ PRS_SIDEWALL_V2_GEOMETRY_STATUS_ALLOWED = frozenset(
         "blocked_rectangular_geometry_leakage",
     }
 )
+SIDEWALL_V2_DESCRIPTOR_CONTEXT_REQUIRED_FIELDS: tuple[str, ...] = (
+    "geometry_profile_source",
+    "geometry_profile_sha256",
+    "geometry_claim_level",
+    "metrology_status",
+    "sidewall_angle_convention",
+    "sidewall_deg_comsol",
+    "sidewall_taper_angle_deg_nodi",
+    "angle_conversion_formula_id",
+    "W_top_nm",
+    "W_top_semantics",
+    "W_bottom_unclipped_nm",
+    "W_bottom_runtime_clipped_nm",
+    "closure_status",
+    "closure_policy",
+    "runtime_guard_status",
+)
+SIDEWALL_V2_GEOMETRY_CLAIM_LEVEL_ALLOWED = frozenset(
+    {
+        "descriptor_only",
+        "surrogate_sensitivity",
+        "surrogate_sensitivity_only",
+        "parameterized_geometry_descriptor_not_measured",
+    }
+)
+SIDEWALL_V2_METROLOGY_STATUS_ALLOWED = frozenset(
+    {"not_measured", "pending", "measured_unvalidated"}
+)
+SIDEWALL_V2_RUNTIME_GUARD_STATUS_ALLOWED = frozenset(
+    {"none", "solver_guard", "validation_guard", "resource_guard"}
+)
 
 EAS_REQUIRED_FIELDS: tuple[str, ...] = (
     "aperture_artifact_version",
@@ -1538,7 +1569,12 @@ def _validate_geometry_descriptor_v2_sidewall_fields(
             )
 
     w_top_nm = _float_field(row, "W_top_nm", row_index, "DESC-V2", issues)
-    _validate_descriptor_v2_runtime_top_binding(row, row_index, w_top_nm, issues)
+    _validate_descriptor_v2_runtime_top_binding(
+        row,
+        row_index,
+        w_top_nm,
+        issues,
+    )
     depth_nm = _float_field(row, "D_nm", row_index, "DESC-V2", issues)
     w_bottom_unclipped_nm = _float_field(
         row,
@@ -1656,6 +1692,7 @@ def _validate_descriptor_v2_runtime_top_binding(
     row_index: int,
     w_top_nm: float | None,
     issues: list[str],
+    rule_id: str = "DESC-V2",
 ) -> None:
     if _value(row, "W_top_semantics") != "runtime_top_aperture":
         return
@@ -1663,7 +1700,7 @@ def _validate_descriptor_v2_runtime_top_binding(
         row,
         "runtime_top_aperture_nm",
         row_index,
-        "DESC-V2",
+        rule_id,
         issues,
     )
     if w_top_nm is not None and runtime_top_aperture_nm is not None:
@@ -1671,7 +1708,7 @@ def _validate_descriptor_v2_runtime_top_binding(
             runtime_top_aperture_nm,
             w_top_nm,
             row_index,
-            "DESC-V2",
+            rule_id,
             "runtime_top_aperture_nm",
             issues,
         )
@@ -9037,6 +9074,7 @@ def _validate_position_response_sidewall_v2_fields(
             f"invalid geometry_propagation_status={geometry_status}",
         )
     if channel_model == "trapezoid_tapered_sidewalls":
+        _validate_sidewall_v2_descriptor_context(row, row_index, "PRS-SIDEWALL-V2", issues)
         if not _value(row, "cross_section_geometry_version"):
             _issue(
                 issues,
@@ -9178,6 +9216,157 @@ def _validate_sidewall_v2_source_geometry_descriptor_binding(
         issues=issues,
         allow_pending=False,
     )
+
+
+def _validate_sidewall_v2_descriptor_context(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+) -> None:
+    _require_fields(
+        row,
+        SIDEWALL_V2_DESCRIPTOR_CONTEXT_REQUIRED_FIELDS,
+        rule_id,
+        row_index,
+        issues,
+    )
+    _validate_enum(
+        row,
+        "sidewall_angle_convention",
+        DESCRIPTOR_V2_SIDEWALL_ANGLE_CONVENTIONS,
+        row_index,
+        rule_id,
+        issues,
+    )
+    _validate_constant(
+        row,
+        "angle_conversion_formula_id",
+        DESCRIPTOR_V2_ANGLE_CONVERSION_FORMULA_ID,
+        row_index,
+        rule_id,
+        issues,
+    )
+    _validate_enum(row, "W_top_semantics", DESCRIPTOR_V2_W_TOP_SEMANTICS, row_index, rule_id, issues)
+    _validate_enum(row, "closure_status", DESCRIPTOR_V2_CLOSURE_STATUS, row_index, rule_id, issues)
+    _validate_enum(row, "closure_policy", DESCRIPTOR_V2_CLOSURE_POLICY, row_index, rule_id, issues)
+    _validate_enum(
+        row,
+        "runtime_guard_status",
+        SIDEWALL_V2_RUNTIME_GUARD_STATUS_ALLOWED,
+        row_index,
+        rule_id,
+        issues,
+    )
+    _validate_enum(
+        row,
+        "geometry_claim_level",
+        SIDEWALL_V2_GEOMETRY_CLAIM_LEVEL_ALLOWED,
+        row_index,
+        rule_id,
+        issues,
+    )
+    _validate_enum(
+        row,
+        "metrology_status",
+        SIDEWALL_V2_METROLOGY_STATUS_ALLOWED,
+        row_index,
+        rule_id,
+        issues,
+    )
+    _validate_source_hash(
+        row,
+        field="geometry_profile_sha256",
+        row_index=row_index,
+        rule_id=rule_id,
+        issues=issues,
+        allow_pending=False,
+    )
+    if not _value(row, "geometry_profile_source"):
+        _issue(issues, row_index, rule_id, "geometry_profile_source is blank")
+
+    sidewall_deg = _float_field(row, "sidewall_deg_comsol", row_index, rule_id, issues)
+    taper_deg = _float_field(row, "sidewall_taper_angle_deg_nodi", row_index, rule_id, issues)
+    if sidewall_deg is not None and taper_deg is not None:
+        if not math.isclose(sidewall_deg + taper_deg, 90.0, abs_tol=1.0e-6):
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "sidewall_deg_comsol and sidewall_taper_angle_deg_nodi are not complementary",
+            )
+
+    w_top_nm = _float_field(row, "W_top_nm", row_index, rule_id, issues)
+    _validate_descriptor_v2_runtime_top_binding(
+        row,
+        row_index,
+        w_top_nm,
+        issues,
+        rule_id,
+    )
+    depth_nm = _float_field(row, "D_nm", row_index, rule_id, issues)
+    w_bottom_unclipped_nm = _float_field(
+        row,
+        "W_bottom_unclipped_nm",
+        row_index,
+        rule_id,
+        issues,
+    )
+    w_bottom_runtime_clipped_nm = _float_field(
+        row,
+        "W_bottom_runtime_clipped_nm",
+        row_index,
+        rule_id,
+        issues,
+    )
+    if (
+        sidewall_deg is not None
+        and w_top_nm is not None
+        and depth_nm is not None
+        and w_bottom_unclipped_nm is not None
+    ):
+        tan_theta = math.tan(math.radians(sidewall_deg))
+        if abs(tan_theta) <= 1.0e-12:
+            _issue(issues, row_index, rule_id, "sidewall_deg_comsol has zero tangent")
+        else:
+            expected_bottom = w_top_nm - 2.0 * depth_nm / tan_theta
+            if not math.isclose(
+                w_bottom_unclipped_nm,
+                expected_bottom,
+                rel_tol=1.0e-9,
+                abs_tol=5.0e-2,
+            ):
+                _issue(
+                    issues,
+                    row_index,
+                    rule_id,
+                    "W_bottom_unclipped_nm does not match sidewall formula",
+                )
+    if (
+        w_bottom_unclipped_nm is not None
+        and w_bottom_runtime_clipped_nm is not None
+    ):
+        expected_runtime_bottom = max(w_bottom_unclipped_nm, 0.0)
+        if not math.isclose(
+            w_bottom_runtime_clipped_nm,
+            expected_runtime_bottom,
+            rel_tol=1.0e-9,
+            abs_tol=5.0e-2,
+        ):
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "W_bottom_runtime_clipped_nm does not match clipped bottom width",
+            )
+    if w_bottom_unclipped_nm is not None and w_bottom_unclipped_nm <= 0.0:
+        if _value(row, "closure_status") == "open":
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "nonpositive W_bottom_unclipped_nm marked closure_status=open",
+            )
 
 
 def _validate_sidewall_local_geometry(
@@ -9637,6 +9826,7 @@ def _validate_effective_aperture_sidewall_v2_fields(
         "EAS-SIDEWALL-V2",
         issues,
     )
+    _validate_sidewall_v2_descriptor_context(row, row_index, "EAS-SIDEWALL-V2", issues)
     _validate_constant(
         row,
         "aperture_surrogate_claim_level",
