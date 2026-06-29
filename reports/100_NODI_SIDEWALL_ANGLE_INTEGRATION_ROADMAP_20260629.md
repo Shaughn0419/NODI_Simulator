@@ -93,6 +93,7 @@ Completed NODI-side guardrails:
 - Hardened PRS/EAS sidewall v2 validators so those prefixed channel-geometry wall-distance fields are required, signature-bound, and cannot be promoted to validated hindered-diffusion claims.
 - Expanded Package C precheck enforcement so any PRS basis/source-basis field carrying `wall_distance` semantics requires `includes_trajectory_near_wall_metrics=true` and `package_C_validation_status=pass`, not only `bin_basis`.
 - Bound actual batch sampler diagnostics into summary/reference/intrinsic observation signatures, with an actual-path trapezoid batch test proving `initial_position_wall_distance_model=trapezoid_signed_wall_distance_v1` is emitted by real runtime rather than only by hand-built fixtures.
+- Expanded exact claim-promotion blacklists for sidewall PRS/EAS artifacts to reject `rank`, `route_rank`, `sidewall_rank`, `JOINT_ROUTE_CLASS`, `q_ch_weight`, and `q_ch_weighting` while preserving provenance fields such as `rank_source`.
 
 Still blocked in this roadmap:
 

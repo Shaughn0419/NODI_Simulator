@@ -724,13 +724,19 @@ def _assert_has_issue(issues: list[str], rule_id: str) -> None:
 
 SIDEWALL_FORBIDDEN_EXACT_COLUMNS_FOR_TEST = (
     "W_eff",
+    "rank",
+    "route_rank",
+    "sidewall_rank",
     "score",
     "route_score",
     "sidewall_score",
     "winner",
     "chi_selected",
     "JRC",
+    "JOINT_ROUTE_CLASS",
     "q_ch",
+    "q_ch_weight",
+    "q_ch_weighting",
     "q_ch_eta",
     "q_ch_chi_eta",
     "yield",
@@ -805,6 +811,22 @@ def test_position_response_sidewall_v2_rejects_forbidden_exact_claim_columns(
     )
 
     _assert_has_issue(issues, "PRS-V41")
+
+
+def test_position_response_sidewall_v2_allows_rank_source_provenance_names() -> None:
+    assert (
+        validate_position_response_surface_rows(
+            [
+                _valid_prs_sidewall_v2_row(
+                    rank_source="sidewall_v2_no_rank_context_only",
+                    recommendation_eligible_rank_source=(
+                        "sidewall_v2_not_route_selection"
+                    ),
+                )
+            ]
+        )
+        == []
+    )
 
 
 def test_position_response_sidewall_v2_rejects_rank_promotion() -> None:
