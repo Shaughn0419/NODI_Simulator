@@ -879,6 +879,8 @@ SIDEWALL_V2_DESCRIPTOR_CONTEXT_REQUIRED_FIELDS: tuple[str, ...] = (
     "closure_status",
     "closure_policy",
     "runtime_guard_status",
+    "channel_geometry_wall_distance_model",
+    "channel_geometry_wall_distance_claim_level",
 )
 SIDEWALL_V2_GEOMETRY_CLAIM_LEVEL_ALLOWED = frozenset(
     {
@@ -906,6 +908,8 @@ SIDEWALL_V2_TRAPEZOID_SIGNATURE_REQUIRED_FRAGMENTS: tuple[str, ...] = (
     "geometry_propagation_scope=",
     "particle_radius_m=",
     "center_accessible_support_model=",
+    "channel_geometry_wall_distance_model=trapezoid_signed_wall_distance_v1",
+    "channel_geometry_wall_distance_claim_level=geometry_distance_primitive_not_hindered_diffusion",
     "sampler_geometry_model=",
     "trajectory_boundary_model=",
     "wall_distance_model=",
@@ -10054,6 +10058,8 @@ def _validate_sidewall_v2_observation_cache_context(
         "geometry_propagation_status",
         "geometry_propagation_scope",
         "sampler_geometry_model",
+        "channel_geometry_wall_distance_model",
+        "channel_geometry_wall_distance_claim_level",
         "trajectory_boundary_model",
         "wall_distance_model",
         "flow_profile_geometry_model",

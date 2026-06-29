@@ -90,6 +90,7 @@ Completed NODI-side guardrails:
 - Updated the PRS sidewall v2 propagated scope to `particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic`; legacy particle-center-only scope no longer satisfies wall-distance-bin PRS rows.
 - Renamed sidewall trajectory runtime statuses from `no_wall_metrics` to `no_hindered_wall_metrics`, preserving the geometry-only wall-distance primitive while still blocking hindered-diffusion / wet-wall interpretations.
 - Added prefixed channel-geometry descriptor wall-distance identity fields (`channel_geometry_wall_distance_model`, `channel_geometry_wall_distance_claim_level`) so ideal rectangles remain `rectangular_half_span_gap_v1` while trapezoid rows emit `trapezoid_signed_wall_distance_v1` with `geometry_distance_primitive_not_hindered_diffusion`, without colliding with trajectory `wall_distance_model`.
+- Hardened PRS/EAS sidewall v2 validators so those prefixed channel-geometry wall-distance fields are required, signature-bound, and cannot be promoted to validated hindered-diffusion claims.
 
 Still blocked in this roadmap:
 
