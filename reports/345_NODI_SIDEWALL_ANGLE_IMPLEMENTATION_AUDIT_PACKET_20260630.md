@@ -62,7 +62,7 @@ Additional focused verification after adding runtime top-aperture binding guards
 
 ```text
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q
-356 passed in 61.43s (0:01:01)
+357 passed in 60.75s (0:01:00)
 python -m pytest tests/test_cross_section_geometry.py -q
 38 passed in 0.17s
 python -m pytest tests/test_physics_core.py -k channel_geometry -q

@@ -2496,6 +2496,14 @@ def test_sidewall_package_d_precheck_scans_forbidden_columns_even_when_flag_pass
     _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V06")
 
 
+def test_sidewall_package_d_precheck_rejects_positive_sidewall_aware_shortcut() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [_valid_sidewall_package_d_precheck_row(sidewall_aware="true")]
+    )
+
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V06")
+
+
 def test_sidewall_package_d_precheck_rejects_blocked_status_when_all_gates_pass() -> None:
     issues = validate_sidewall_package_d_precheck_rows(
         [_valid_sidewall_package_d_precheck_row(package_d_precheck_status="blocked")]
