@@ -154,6 +154,7 @@ from .polarization_jones_operator import (
     build_polarization_jones_diagnostics,
 )
 from .reference_field import (
+    REFERENCE_GEOMETRY_PROPAGATION_FIELDS,
     TSUYAMA_BFP_REFERENCE_DIAGNOSTIC_FIELDS,
     compute_reference_field,
     compute_reference_field_trace,
@@ -2479,6 +2480,11 @@ def _build_observation_signature(
         f"|excitation_wavelength_m={reference.get('excitation_wavelength_m', sim_cfg.excitation_wavelength_m)}"
         f"|reference_model={sim_cfg.reference_model}"
         f"|reference_spatial_mode={sim_cfg.reference_spatial_mode}"
+        f"|reference_geometry_model={reference.get('reference_geometry_model', 'unknown')}"
+        f"|reference_geometry_propagation_status={reference.get('reference_geometry_propagation_status', 'unknown')}"
+        f"|geometry_not_propagated_to_reference_field={reference.get('geometry_not_propagated_to_reference_field', 'unknown')}"
+        f"|not_optical_solver_output={reference.get('not_optical_solver_output', 'unknown')}"
+        f"|optical_solver_trigger_is_result={reference.get('optical_solver_trigger_is_result', 'unknown')}"
         f"|reference_phase_grating_mode={sim_cfg.reference_phase_grating_mode}"
         f"|reference_width_saturation_mode={sim_cfg.reference_width_saturation_mode}"
         f"|reference_width_saturation_cutoff_ratio={float(sim_cfg.reference_width_saturation_cutoff_ratio):.9e}"
@@ -7334,6 +7340,12 @@ def run_single_case_batch(
     summary.update(polarization_jones)
     summary.update(bayesian_calibration)
     summary.update(tsuyama_bfp_reference)
+    summary.update(
+        {
+            field: reference.get(field)
+            for field in REFERENCE_GEOMETRY_PROPAGATION_FIELDS
+        }
+    )
     summary.update(reference_operating_point)
     summary.update(collection_operator_state)
     detector_noise_summary = build_detector_noise_diagnostics(
@@ -8247,6 +8259,10 @@ def run_single_case_batch(
             **{
                 field: reference.get(field)
                 for field in TSUYAMA_BFP_REFERENCE_DIAGNOSTIC_FIELDS
+            },
+            **{
+                field: reference.get(field)
+                for field in REFERENCE_GEOMETRY_PROPAGATION_FIELDS
             },
             **{
                 field: reference.get(field)
@@ -10957,6 +10973,7 @@ def run_parameter_sweep(
                     + BFP_DETECTOR_OPERATOR_DIAGNOSTIC_FIELDS
                     + PARTICLE_CHANNEL_PERTURBATION_DIAGNOSTIC_FIELDS
                     + TSUYAMA_BFP_REFERENCE_DIAGNOSTIC_FIELDS
+                    + REFERENCE_GEOMETRY_PROPAGATION_FIELDS
                     + REFERENCE_OPERATING_POINT_DIAGNOSTIC_FIELDS
                     + FLUIDIC_RESISTANCE_DIAGNOSTIC_FIELDS
                     + FLUIDIC_NETWORK_DIAGNOSTIC_FIELDS

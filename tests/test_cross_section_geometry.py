@@ -29,6 +29,7 @@ from nodi_simulator.parameter_sweep import (
     _build_observation_signature,
     _sample_initial_positions_block,
 )
+from nodi_simulator.reference_field import compute_reference_field
 from nodi_simulator.trajectory import (
     axial_transport_velocity_m_s,
     build_trajectory_context,
@@ -439,6 +440,13 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     reference_85 = {
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
+        "reference_geometry_model": "rectangular_width_depth_reference_proxy_under_trapezoid",
+        "reference_geometry_propagation_status": (
+            "blocked_trapezoid_geometry_not_propagated_to_reference_field"
+        ),
+        "geometry_not_propagated_to_reference_field": True,
+        "not_optical_solver_output": True,
+        "optical_solver_trigger_is_result": False,
         **build_trajectory_geometry_diagnostics(cfg_85),
     }
     reference_83 = {
@@ -485,6 +493,17 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         "geometry_propagation_status="
         "sidewall_sampler_and_pure_advection_propagated"
     ) in signature_85
+    assert (
+        "reference_geometry_model="
+        "rectangular_width_depth_reference_proxy_under_trapezoid"
+    ) in signature_85
+    assert (
+        "reference_geometry_propagation_status="
+        "blocked_trapezoid_geometry_not_propagated_to_reference_field"
+    ) in signature_85
+    assert "geometry_not_propagated_to_reference_field=True" in signature_85
+    assert "not_optical_solver_output=True" in signature_85
+    assert "optical_solver_trigger_is_result=False" in signature_85
     assert signature_85 != signature_83
     assert signature_85 != signature_85_larger_particle
 
@@ -548,3 +567,40 @@ def test_trapezoid_fluidic_resistance_is_marked_rectangular_proxy() -> None:
     assert diagnostics["fixed_pressure_diagnostic_status"] == (
         "proxy_only_rectangular_resistance_under_trapezoid"
     )
+
+
+def test_trapezoid_reference_field_is_marked_rectangular_proxy() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        reference_model="geometry_scaled",
+        reference_spatial_mode="cross_section_surrogate",
+    )
+
+    reference = compute_reference_field(
+        Channel(width_m=500.0e-9, depth_m=900.0e-9),
+        BASELINE_OPTICAL,
+        cfg,
+        medium_refractive_index=1.33,
+    )
+
+    assert reference["reference_geometry_model"] == (
+        "rectangular_width_depth_reference_proxy_under_trapezoid"
+    )
+    assert reference["reference_spatial_geometry_model"] == (
+        "rectangular_xz_norm_cross_section_surrogate_under_trapezoid"
+    )
+    assert reference["reference_geometry_claim_level"] == (
+        "proxy_not_sidewall_aware_not_optical_solver_output"
+    )
+    assert reference["reference_geometry_propagation_status"] == (
+        "blocked_trapezoid_geometry_not_propagated_to_reference_field"
+    )
+    assert reference["reference_geometry_not_propagated_reasons"] == (
+        "geometry_not_propagated_to_reference_field",
+    )
+    assert reference["geometry_not_propagated_to_reference_field"] is True
+    assert reference["reference_uses_rectangular_width_depth_surrogate"] is True
+    assert reference["not_optical_solver_output"] is True
+    assert reference["optical_solver_trigger_is_result"] is False

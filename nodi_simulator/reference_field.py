@@ -85,6 +85,92 @@ TSUYAMA_BFP_REFERENCE_DIAGNOSTIC_FIELDS = (
     "bfp_roi_mask_projected_sample_count",
 )
 
+REFERENCE_GEOMETRY_PROPAGATION_FIELDS = (
+    "reference_geometry_model",
+    "reference_spatial_geometry_model",
+    "reference_geometry_claim_level",
+    "reference_geometry_propagation_status",
+    "reference_geometry_not_propagated_reasons",
+    "geometry_not_propagated_to_reference_field",
+    "reference_uses_rectangular_width_depth_surrogate",
+    "not_optical_solver_output",
+    "optical_solver_trigger_is_result",
+)
+
+
+def build_reference_geometry_propagation_diagnostics(
+    channel: Channel,
+    sim_cfg: SimulationConfig,
+) -> dict[str, object]:
+    """Expose whether reference-field geometry is native, surrogate, or blocked."""
+    del channel
+    cross_section_model = str(
+        getattr(sim_cfg, "channel_cross_section_model", "ideal_rectangle")
+    )
+    reference_model = str(sim_cfg.reference_model)
+    spatial_mode = str(sim_cfg.reference_spatial_mode)
+    rectangular_surrogate_active = bool(
+        reference_model
+        in {
+            "geometry_scaled",
+            "channel_angular_surrogate",
+            "paper_aligned_phase_filter",
+            "tsuyama_bfp_integrated",
+        }
+        or spatial_mode == "cross_section_surrogate"
+    )
+    spatial_geometry_model = (
+        "uniform_reference_no_spatial_geometry"
+        if spatial_mode == "uniform"
+        else "rectangular_xz_norm_cross_section_surrogate_v1"
+    )
+
+    if cross_section_model == "trapezoid_tapered_sidewalls":
+        reasons = (
+            ("geometry_not_propagated_to_reference_field",)
+            if rectangular_surrogate_active
+            else ()
+        )
+        return {
+            "reference_geometry_model": (
+                "rectangular_width_depth_reference_proxy_under_trapezoid"
+                if rectangular_surrogate_active
+                else "geometry_independent_reference_under_trapezoid"
+            ),
+            "reference_spatial_geometry_model": (
+                "rectangular_xz_norm_cross_section_surrogate_under_trapezoid"
+                if spatial_mode == "cross_section_surrogate"
+                else spatial_geometry_model
+            ),
+            "reference_geometry_claim_level": (
+                "proxy_not_sidewall_aware_not_optical_solver_output"
+                if rectangular_surrogate_active
+                else "geometry_independent_not_sidewall_aware"
+            ),
+            "reference_geometry_propagation_status": (
+                "blocked_trapezoid_geometry_not_propagated_to_reference_field"
+                if rectangular_surrogate_active
+                else "trapezoid_geometry_not_used_by_reference_model"
+            ),
+            "reference_geometry_not_propagated_reasons": reasons,
+            "geometry_not_propagated_to_reference_field": rectangular_surrogate_active,
+            "reference_uses_rectangular_width_depth_surrogate": rectangular_surrogate_active,
+            "not_optical_solver_output": True,
+            "optical_solver_trigger_is_result": False,
+        }
+
+    return {
+        "reference_geometry_model": "ideal_rectangle_reference_width_depth_v1",
+        "reference_spatial_geometry_model": spatial_geometry_model,
+        "reference_geometry_claim_level": "reference_surrogate_geometry_native_rectangle",
+        "reference_geometry_propagation_status": "rectangle_native_or_non_sidewall_geometry",
+        "reference_geometry_not_propagated_reasons": (),
+        "geometry_not_propagated_to_reference_field": False,
+        "reference_uses_rectangular_width_depth_surrogate": rectangular_surrogate_active,
+        "not_optical_solver_output": True,
+        "optical_solver_trigger_is_result": False,
+    }
+
 
 def _resolve_phase_grating_amplitude_scale(
     phase_delay_rad: float,
@@ -1692,6 +1778,7 @@ def compute_reference_field(
         )
     )
     result.update(_reference_model_metadata(sim_cfg, resolved_reference_route))
+    result.update(build_reference_geometry_propagation_diagnostics(channel, sim_cfg))
     result.update(calibration_diagnostics)
     if sim_cfg.reference_model == "calibrated_lookup":
         result.update({
@@ -1782,6 +1869,7 @@ def compute_reference_field_trace(
         "reference_spatial_min_amplitude_scale": float(sim_cfg.reference_spatial_min_amplitude_scale),
         "reference_wavelength_m": float(optical.wavelength_m),
     }
+    result.update(build_reference_geometry_propagation_diagnostics(channel, sim_cfg))
     if export_full_diagnostics:
         result.update(
             {

@@ -96,7 +96,9 @@ from .mie_engine import (
 )
 from .intrinsic_scattering import compute_intrinsic_scattering
 from .reference_field import (
+    REFERENCE_GEOMETRY_PROPAGATION_FIELDS,
     TSUYAMA_BFP_REFERENCE_DIAGNOSTIC_FIELDS,
+    build_reference_geometry_propagation_diagnostics,
     compute_reference_field,
     compute_reference_field_from_tsuyama_bfp,
     compute_reference_field_trace,
