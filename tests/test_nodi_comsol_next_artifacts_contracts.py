@@ -401,6 +401,28 @@ def _sidewall_runtime_propagation_guard_fields() -> dict[str, object]:
     }
 
 
+def _sidewall_package_d_precheck_fields(
+    target_artifact_family: str = "eas",
+    includes_trajectory_near_wall_metrics: str = "false",
+    package_C_validation_status: str = "not_applicable_for_this_artifact",
+) -> dict[str, object]:
+    return {
+        "sidewall_package_d_precheck_version": "sidewall_package_d_precheck_v1",
+        "target_artifact_family": target_artifact_family,
+        "includes_trajectory_near_wall_metrics": includes_trajectory_near_wall_metrics,
+        "package_A_validation_status": "pass",
+        "package_B_validation_status": "pass",
+        "package_C_validation_status": package_C_validation_status,
+        "no_forbidden_claim_columns": "true",
+        "no_rectangular_cache_reuse": "true",
+        "no_comsol_context_grain_promotion": "true",
+        "no_edge4_to_edge20_direct_mapping": "true",
+        "no_D900_to_D1200_borrowing": "true",
+        "no_auto_220_300nm_admission": "true",
+        "package_d_precheck_status": "pass",
+    }
+
+
 def _sidewall_acceptance_guard_fields() -> dict[str, object]:
     return {
         "roadmap_status": "surrogate_sensitivity_only",
@@ -468,6 +490,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         source_geometry_descriptor_sha=GEOMETRY_DESCRIPTOR_SHA256,
         **_sidewall_artifact_metadata_fields("NODI_POSITION_RESPONSE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
+        **_sidewall_package_d_precheck_fields("prs"),
         **_sidewall_observation_cache_fields(),
         **_sidewall_runtime_propagation_guard_fields(),
         **_sidewall_descriptor_context_fields(),
@@ -544,6 +567,7 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         geometry_not_propagated_reasons="",
         **_sidewall_artifact_metadata_fields("NODI_EFFECTIVE_APERTURE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
+        **_sidewall_package_d_precheck_fields("eas"),
         **_sidewall_observation_cache_fields(),
         **_sidewall_runtime_propagation_guard_fields(),
         **_sidewall_descriptor_context_fields(),
@@ -553,21 +577,7 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
 
 
 def _valid_sidewall_package_d_precheck_row(**overrides: object) -> dict[str, object]:
-    row: dict[str, object] = {
-        "sidewall_package_d_precheck_version": "sidewall_package_d_precheck_v1",
-        "target_artifact_family": "eas",
-        "includes_trajectory_near_wall_metrics": "false",
-        "package_A_validation_status": "pass",
-        "package_B_validation_status": "pass",
-        "package_C_validation_status": "not_applicable_for_this_artifact",
-        "no_forbidden_claim_columns": "true",
-        "no_rectangular_cache_reuse": "true",
-        "no_comsol_context_grain_promotion": "true",
-        "no_edge4_to_edge20_direct_mapping": "true",
-        "no_D900_to_D1200_borrowing": "true",
-        "no_auto_220_300nm_admission": "true",
-        "package_d_precheck_status": "pass",
-    }
+    row: dict[str, object] = _sidewall_package_d_precheck_fields("eas")
     row.update(overrides)
     return row
 
@@ -744,6 +754,36 @@ def test_position_response_sidewall_v2_rejects_formula_use_acceptance() -> None:
 def test_position_response_sidewall_v2_rejects_promoted_roadmap_status() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(roadmap_status="production_ready")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_package_d_precheck_binding() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    del row["package_d_precheck_status"]
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_blocked_package_d_precheck() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                package_B_validation_status="blocked",
+                package_d_precheck_status="blocked",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_eas_package_d_target_family() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(target_artifact_family="eas")]
     )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
@@ -1378,6 +1418,31 @@ def test_effective_aperture_sidewall_v2_rejects_runtime_config_acceptance() -> N
 def test_effective_aperture_sidewall_v2_rejects_promoted_roadmap_status() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(roadmap_status="production_ready")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_requires_package_d_precheck_binding() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    del row["package_A_validation_status"]
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_failed_package_d_gate() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(no_rectangular_cache_reuse="false")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_prs_package_d_target_family() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(target_artifact_family="prs")]
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")

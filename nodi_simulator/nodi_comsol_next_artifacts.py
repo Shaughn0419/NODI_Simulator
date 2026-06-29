@@ -711,6 +711,21 @@ SIDEWALL_V2_BOOL_RUNTIME_GUARD_FIELDS: tuple[str, ...] = (
     "geometry_not_propagated_to_electrokinetic_transport",
     "electrokinetic_diagnostic_gate_passed",
 )
+SIDEWALL_V2_PACKAGE_D_PRECHECK_REQUIRED_FIELDS: tuple[str, ...] = (
+    "sidewall_package_d_precheck_version",
+    "target_artifact_family",
+    "includes_trajectory_near_wall_metrics",
+    "package_A_validation_status",
+    "package_B_validation_status",
+    "package_C_validation_status",
+    "no_forbidden_claim_columns",
+    "no_rectangular_cache_reuse",
+    "no_comsol_context_grain_promotion",
+    "no_edge4_to_edge20_direct_mapping",
+    "no_D900_to_D1200_borrowing",
+    "no_auto_220_300nm_admission",
+    "package_d_precheck_status",
+)
 PRS_SIDEWALL_V2_MARKER_FIELDS = frozenset(
     {
         "channel_cross_section_model",
@@ -768,6 +783,7 @@ PRS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "flow_control_mode",
     "reference_field_model",
     "reference_spatial_mode",
+    *SIDEWALL_V2_PACKAGE_D_PRECHECK_REQUIRED_FIELDS,
     *SIDEWALL_V2_RUNTIME_PROPAGATION_GUARD_REQUIRED_FIELDS,
 )
 PRS_SIDEWALL_V2_BLOCKED_RESPONSE_VALUE_FIELDS: tuple[str, ...] = (
@@ -881,21 +897,7 @@ SIDEWALL_V2_CACHE_GEOMETRY_MATCH_STATUS_ALLOWED = frozenset(
     }
 )
 SIDEWALL_PACKAGE_D_PRECHECK_VERSION = "sidewall_package_d_precheck_v1"
-SIDEWALL_PACKAGE_D_PRECHECK_REQUIRED_FIELDS: tuple[str, ...] = (
-    "sidewall_package_d_precheck_version",
-    "target_artifact_family",
-    "includes_trajectory_near_wall_metrics",
-    "package_A_validation_status",
-    "package_B_validation_status",
-    "package_C_validation_status",
-    "no_forbidden_claim_columns",
-    "no_rectangular_cache_reuse",
-    "no_comsol_context_grain_promotion",
-    "no_edge4_to_edge20_direct_mapping",
-    "no_D900_to_D1200_borrowing",
-    "no_auto_220_300nm_admission",
-    "package_d_precheck_status",
-)
+SIDEWALL_PACKAGE_D_PRECHECK_REQUIRED_FIELDS = SIDEWALL_V2_PACKAGE_D_PRECHECK_REQUIRED_FIELDS
 SIDEWALL_PACKAGE_D_TARGET_ARTIFACT_FAMILY_ALLOWED = frozenset({"prs", "eas", "prs_eas"})
 SIDEWALL_PACKAGE_D_PACKAGE_C_STATUS_ALLOWED = frozenset(
     {"pass", "not_applicable_for_this_artifact"}
@@ -982,6 +984,7 @@ EAS_SIDEWALL_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "not_optical_solver_output",
     "not_qch_weighted",
     "not_detection_probability",
+    *SIDEWALL_V2_PACKAGE_D_PRECHECK_REQUIRED_FIELDS,
     *SIDEWALL_V2_RUNTIME_PROPAGATION_GUARD_REQUIRED_FIELDS,
 )
 EAS_SIDEWALL_V2_SURROGATE_WIDTH_FIELDS: tuple[str, ...] = (
@@ -9333,6 +9336,13 @@ def _validate_position_response_sidewall_v2_fields(
         check_prs_bin_fields=True,
     )
     _validate_sidewall_v2_acceptance_guards(row, row_index, "PRS-SIDEWALL-V2", issues)
+    _validate_sidewall_v2_package_d_precheck_binding(
+        row,
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+        expected_family="prs",
+    )
     _validate_sidewall_v2_artifact_metadata(
         row,
         row_index,
@@ -9907,6 +9917,35 @@ def _validate_sidewall_v2_acceptance_guards(
         if field == "roadmap_status":
             continue
         _validate_bool_equals(row, field, True, row_index, rule_id, issues)
+
+
+def _validate_sidewall_v2_package_d_precheck_binding(
+    row: Mapping[str, Any],
+    row_index: int,
+    rule_id: str,
+    issues: list[str],
+    *,
+    expected_family: str,
+) -> None:
+    allowed_target_families = {
+        "prs": {"prs", "prs_eas"},
+        "eas": {"eas", "prs_eas"},
+    }[expected_family]
+    target_family = _value(row, "target_artifact_family")
+    if target_family and target_family not in allowed_target_families:
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"target_artifact_family={target_family} incompatible with {expected_family} row",
+        )
+    for precheck_issue in validate_sidewall_package_d_precheck_rows([row]):
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            f"Package D precheck binding failed: {precheck_issue}",
+        )
 
 
 def _validate_sidewall_v2_runtime_propagation_guards(
@@ -10585,6 +10624,13 @@ def _validate_effective_aperture_sidewall_v2_fields(
         check_prs_bin_fields=False,
     )
     _validate_sidewall_v2_acceptance_guards(row, row_index, "EAS-SIDEWALL-V2", issues)
+    _validate_sidewall_v2_package_d_precheck_binding(
+        row,
+        row_index,
+        "EAS-SIDEWALL-V2",
+        issues,
+        expected_family="eas",
+    )
     _validate_sidewall_v2_artifact_metadata(
         row,
         row_index,
