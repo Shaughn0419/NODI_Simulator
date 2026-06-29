@@ -55,7 +55,7 @@ python -m pytest tests/test_cross_section_geometry.py tests/test_nodi_comsol_nex
 Latest result:
 
 ```text
-420 passed in 81.71s (0:01:21)
+422 passed in 80.95s (0:01:20)
 ```
 
 Additional focused verification after adding runtime top-aperture binding guards:
