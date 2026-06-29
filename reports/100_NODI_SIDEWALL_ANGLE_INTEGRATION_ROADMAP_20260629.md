@@ -58,7 +58,7 @@ Three independent read-only reviews converged on the same hazards:
 | COMSOL-focused review | COMSOL sidewall/depth evidence can only enter NODI as bounded context unless grain/claim gates are satisfied. | Roadmap keeps Stage119/Gate2C/Gate2D as `context-only` and blocks promotion to scoring. |
 | Cross-project risk review | A scalar sidewall field would create false confidence if sampling, trajectory, near-wall distance, and bins remain rectangular. | Roadmap requires mutation tests proving geometry propagation or explicit `not_propagated` flags. |
 
-### 1.4 Implementation progress as of 2026-06-29
+### 1.4 Implementation progress as of 2026-06-30
 
 Completed NODI-side guardrails:
 
@@ -72,6 +72,9 @@ Completed NODI-side guardrails:
 - Added PRS/EAS sidewall v2 row-level hard-fails for runtime propagation guard fields, Package D precheck binding, source route/depth/bin grain binding, and explicit `geometry_propagation_scope`.
 - Added EAS geometry-marker triggering so `channel_cross_section_model=trapezoid_tapered_sidewalls` cannot bypass sidewall v2 validation.
 - Added PRS trajectory guard columns for boundary model version, claim level, wall-distance claim level, flow-geometry claim level, not-propagated trajectory flags, and `sidewall_aware_runtime_status`.
+- Added PRS/EAS sidewall v2 observation-signature hard-fails that bind `geometry_propagation_scope`, `channel_cross_section_model`, and `geometry_propagation_status`, so ideal-rectangle and trapezoid cache/signature states cannot satisfy each other.
+- Expanded PRS/EAS sidewall v2 forbidden exact-column tests for `W_eff`, `score`, `route_score`, `sidewall_score`, `winner`, `chi_selected`, `JRC`, `q_ch`, `q_ch_eta`, `q_ch_chi_eta`, `yield`, `detection_probability`, `wet_pass_probability`, `clogging_rate`, `time_to_clog`, and `recovery`.
+- Added PRS sidewall v2 rank-promotion hard-fail for nonblank `rank_under_surrogate`; legacy EAS rank columns remain blank-only in sidewall v2 rows.
 
 Still blocked in this roadmap:
 
