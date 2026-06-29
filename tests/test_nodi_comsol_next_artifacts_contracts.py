@@ -335,11 +335,19 @@ def _sidewall_observation_cache_fields(
         "|fluidic_clogging_risk_band_claim_level=static_throat_clearance_proxy_not_clogging_rate"
         "|not_clogging_rate=True"
         "|not_time_to_clog=True"
+        "|fluidic_geometry_model=trapezoid_descriptor_with_rectangular_proxy_fluidics"
+        "|hydraulic_resistance_model=rectangular_hydraulic_resistance_proxy_under_trapezoid"
+        "|hydraulic_resistance_claim_level=proxy_not_trapezoid_poiseuille_not_accepted_for_formula_use"
         "|fluidic_geometry_propagation_status=geometry_not_propagated_to_fluidic_resistance"
         "|geometry_not_propagated_to_fluidic_resistance=True"
+        "|fluidic_network_geometry_model=trapezoid_descriptor_with_rectangular_proxy_network"
+        "|fluidic_network_hydraulic_resistance_model=rectangular_hydraulic_resistance_network_proxy_under_trapezoid"
+        "|fluidic_network_hydraulic_resistance_claim_level=diagnostic_only_rectangular_proxy_not_trapezoid_poiseuille_not_qch"
         "|fluidic_network_geometry_propagation_status=geometry_not_propagated_to_fluidic_network"
         "|geometry_not_propagated_to_fluidic_network=True"
         "|fluidic_network_not_qch_weighted=True"
+        "|electrokinetic_transport_geometry_model=blocked_trapezoid_requires_profile_aware_grid"
+        "|electrokinetic_wall_distance_model=blocked_rectangular_wall_distance_grid"
         "|electrokinetic_geometry_propagation_status=blocked_geometry_not_propagated"
         "|geometry_not_propagated_to_electrokinetic_transport=True"
         "|surface_charge_transport_claim_level=blocked_trapezoid_geometry_not_propagated_to_electrokinetic_transport"
@@ -1707,6 +1715,18 @@ def test_effective_aperture_sidewall_v2_rejects_signature_runtime_guard_mismatch
     row["observation_signature"] = str(row["observation_signature"]).replace(
         "geometry_not_propagated_to_reference_field=True",
         "geometry_not_propagated_to_reference_field=False",
+    )
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_signature_fluidic_model_mismatch() -> None:
+    row = _valid_eas_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "hydraulic_resistance_model=rectangular_hydraulic_resistance_proxy_under_trapezoid",
+        "hydraulic_resistance_model=stale_hydraulic_proxy",
     )
 
     issues = validate_effective_aperture_surrogate_rows([row])
