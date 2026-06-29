@@ -9939,6 +9939,13 @@ def _validate_sidewall_v2_package_d_precheck_binding(
             rule_id,
             f"target_artifact_family={target_family} incompatible with {expected_family} row",
         )
+    if _value(row, "package_d_precheck_status") != "pass":
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            "sidewall PRS/EAS row requires package_d_precheck_status=pass",
+        )
     for precheck_issue in validate_sidewall_package_d_precheck_rows([row]):
         _issue(
             issues,

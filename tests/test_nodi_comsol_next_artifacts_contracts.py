@@ -781,6 +781,14 @@ def test_position_response_sidewall_v2_rejects_blocked_package_d_precheck() -> N
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_blocked_precheck_status_alone() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(package_d_precheck_status="blocked")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_eas_package_d_target_family() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(target_artifact_family="eas")]
@@ -1435,6 +1443,14 @@ def test_effective_aperture_sidewall_v2_requires_package_d_precheck_binding() ->
 def test_effective_aperture_sidewall_v2_rejects_failed_package_d_gate() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(no_rectangular_cache_reuse="false")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_blocked_precheck_status_alone() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(package_d_precheck_status="blocked")]
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
