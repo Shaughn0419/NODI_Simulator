@@ -1381,7 +1381,7 @@ class SimulationConfig:
     post_readout_drift_slope: float = 0.0  # post-readout baseline drift (signal units per second)
     post_readout_colored_noise_std: float = 0.0
     post_readout_colored_noise_tau_s: float = 1.0e-3
-    reflecting_boundary: bool = True  # reflecting boundary for Brownian diffusion
+    reflecting_boundary: bool = True  # enable Brownian boundary guard/projection
     score_mode: str = "single"  # "single" or "joint"
     joint_alpha: float = 0.5  # weight for object A in joint scoring
     reference_route: str = "auto"  # appended for positional compatibility

@@ -36,6 +36,7 @@ from nodi_simulator.trajectory import (
     build_trajectory_geometry_diagnostics,
     hindered_diffusion_factors,
     simulate_particle_trajectory,
+    simulate_particle_trajectory_block,
 )
 from nodi_simulator.utils import sample_initial_position
 
@@ -345,7 +346,7 @@ def test_trapezoid_hindered_diffusion_rejects_rectangular_wall_distance() -> Non
         )
 
 
-def test_trapezoid_trajectory_rejects_diffusive_rectangular_reflection() -> None:
+def test_trapezoid_trajectory_rejects_unbounded_diffusive_boundary() -> None:
     cfg = replace(
         DEFAULT_SIM_CFG,
         channel_cross_section_model="trapezoid_tapered_sidewalls",
@@ -353,14 +354,179 @@ def test_trapezoid_trajectory_rejects_diffusive_rectangular_reflection() -> None
         flow_profile_model="plug",
         diffusion_hindrance_model="none",
         include_diffusion=True,
+        reflecting_boundary=False,
     )
 
-    with pytest.raises(ValueError, match="sloped-wall reflection"):
+    with pytest.raises(ValueError, match="reflecting_boundary=True"):
         build_trajectory_context(
             Channel(width_m=500.0e-9, depth_m=900.0e-9),
             cfg,
             particle_radius_m=110.0e-9,
         )
+
+
+def test_trapezoid_diffusive_runtime_rejects_rectangular_flow_profile() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="rect_series",
+        diffusion_hindrance_model="none",
+        include_diffusion=True,
+        reflecting_boundary=True,
+    )
+
+    with pytest.raises(ValueError, match="rectangular and not sidewall-aware"):
+        build_trajectory_context(channel, cfg, particle_radius_m=110.0e-9)
+
+    with pytest.raises(ValueError, match="rectangular and not sidewall-aware"):
+        simulate_particle_trajectory(
+            channel,
+            BASELINE_OPTICAL,
+            cfg,
+            initial_x_m=0.0,
+            initial_z_m=0.0,
+            particle_radius_m=110.0e-9,
+            diffusion_coefficient=8.0e-12,
+        )
+
+
+def test_trapezoid_diffusive_block_rejects_rectangular_near_wall_model() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="near_wall_surrogate",
+        include_diffusion=True,
+        reflecting_boundary=True,
+    )
+
+    with pytest.raises(ValueError, match="rectangular wall-distance"):
+        build_trajectory_context(channel, cfg, particle_radius_m=110.0e-9)
+
+    with pytest.raises(ValueError, match="rectangular wall-distance"):
+        simulate_particle_trajectory_block(
+            channel,
+            BASELINE_OPTICAL,
+            cfg,
+            initial_x_m=np.asarray([0.0]),
+            initial_z_m=np.asarray([0.0]),
+            particle_radius_m=110.0e-9,
+            diffusion_coefficient=8.0e-12,
+        )
+
+
+def test_trapezoid_projected_diffusive_trajectory_stays_in_support() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    radius_m = 110.0e-9
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=True,
+        reflecting_boundary=True,
+        total_time_s=1.0e-3,
+        sampling_rate_Hz=1.0e4,
+    )
+    x0, z0, _ = sample_initial_position(
+        channel,
+        np.random.default_rng(123),
+        radius_m,
+        sim_cfg=cfg,
+        unit_position_sample=(0.85, 0.8, 0.5),
+    )
+
+    trajectory = simulate_particle_trajectory(
+        channel,
+        BASELINE_OPTICAL,
+        cfg,
+        x0,
+        z0,
+        particle_radius_m=radius_m,
+        diffusion_coefficient=8.0e-12,
+        rng=np.random.default_rng(456),
+    )
+
+    geom = TrapezoidCrossSection(
+        top_width_m=channel.width_m,
+        depth_m=channel.depth_m,
+        sidewall_taper_angle_deg=cfg.sidewall_taper_angle_deg,
+    )
+    for x_m, z_m in zip(trajectory["x_m"], trajectory["z_m"]):
+        assert geom.contains_particle_center(
+            float(x_m),
+            float(z_m) + 0.5 * channel.depth_m,
+            radius_m,
+            tolerance_m=1.0e-18,
+        )
+    assert np.any(np.diff(trajectory["x_m"]) != 0.0)
+    np.testing.assert_allclose(trajectory["v_y_m_s"], cfg.mean_flow_velocity_m_s)
+
+
+def test_trapezoid_projected_diffusive_block_stays_in_support() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    radius_m = 110.0e-9
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=True,
+        reflecting_boundary=True,
+        total_time_s=1.0e-3,
+        sampling_rate_Hz=1.0e4,
+    )
+    initial_positions = [
+        sample_initial_position(
+            channel,
+            np.random.default_rng(123),
+            radius_m,
+            sim_cfg=cfg,
+            unit_position_sample=unit_sample,
+        )
+        for unit_sample in [(0.2, 0.25, 0.5), (0.9, 0.9, 0.5)]
+    ]
+    x0 = np.asarray([position[0] for position in initial_positions])
+    z0 = np.asarray([position[1] for position in initial_positions])
+    diffusion_draws = np.full((2, 2 * (cfg.n_samples - 1)), 18.0, dtype=float)
+
+    trajectory = simulate_particle_trajectory_block(
+        channel,
+        BASELINE_OPTICAL,
+        cfg,
+        x0,
+        z0,
+        particle_radius_m=radius_m,
+        diffusion_coefficient=8.0e-12,
+        diffusion_draws=diffusion_draws,
+        export_velocity_trace=True,
+    )
+
+    geom = TrapezoidCrossSection(
+        top_width_m=channel.width_m,
+        depth_m=channel.depth_m,
+        sidewall_taper_angle_deg=cfg.sidewall_taper_angle_deg,
+    )
+    for event_index in range(x0.size):
+        for x_m, z_m in zip(
+            trajectory["x_m"][event_index],
+            trajectory["z_m"][event_index],
+        ):
+            assert geom.contains_particle_center(
+                float(x_m),
+                float(z_m) + 0.5 * channel.depth_m,
+                radius_m,
+                tolerance_m=1.0e-18,
+            )
+    assert trajectory["x_m"].shape == (2, cfg.n_samples)
+    assert trajectory["z_m"].shape == (2, cfg.n_samples)
+    np.testing.assert_allclose(trajectory["v_y_m_s"], cfg.mean_flow_velocity_m_s)
 
 
 def test_trapezoid_trajectory_rejects_initial_point_outside_oracle_support() -> None:
@@ -433,6 +599,34 @@ def test_trapezoid_trajectory_diagnostics_mark_pure_advection_boundary() -> None
     )
 
 
+def test_trapezoid_trajectory_diagnostics_mark_projection_boundary() -> None:
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=True,
+        reflecting_boundary=True,
+    )
+
+    diagnostics = build_trajectory_geometry_diagnostics(cfg)
+
+    assert diagnostics["trajectory_boundary_model"] == (
+        "trapezoid_center_support_projection_boundary_v1"
+    )
+    assert diagnostics["trajectory_boundary_claim_level"] == (
+        "sidewall_projection_boundary_surrogate_not_specular_reflection"
+    )
+    assert diagnostics["geometry_propagation_status"] == (
+        "sidewall_projection_boundary_surrogate_propagated"
+    )
+    assert diagnostics["geometry_not_propagated_reasons"] == ()
+    assert diagnostics["sidewall_aware_runtime_status"] == (
+        "partial_sidewall_runtime_projection_boundary_no_wall_metrics"
+    )
+
+
 def test_trapezoid_trajectory_diagnostics_mark_blocked_rectangular_leakage() -> None:
     cfg = replace(
         DEFAULT_SIM_CFG,
@@ -450,11 +644,13 @@ def test_trapezoid_trajectory_diagnostics_mark_blocked_rectangular_leakage() -> 
     )
     assert diagnostics["geometry_not_propagated_to_flow_model"] is True
     assert diagnostics["geometry_not_propagated_to_near_wall_metrics"] is True
-    assert diagnostics["geometry_not_propagated_to_trajectory_boundary"] is True
+    assert diagnostics["trajectory_boundary_model"] == (
+        "trapezoid_center_support_projection_boundary_v1"
+    )
+    assert diagnostics["geometry_not_propagated_to_trajectory_boundary"] is False
     assert set(diagnostics["geometry_not_propagated_reasons"]) == {
         "geometry_not_propagated_to_flow_model",
         "geometry_not_propagated_to_near_wall_metrics",
-        "geometry_not_propagated_to_trajectory_boundary",
     }
 
 
@@ -488,6 +684,16 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
         **build_trajectory_geometry_diagnostics(cfg_83),
     }
+    cfg_85_diffusive = replace(
+        cfg_85,
+        include_diffusion=True,
+        reflecting_boundary=True,
+    )
+    reference_85_diffusive = {
+        "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+        "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
+        **build_trajectory_geometry_diagnostics(cfg_85_diffusive),
+    }
 
     signature_85 = _build_observation_signature(
         "operator=test",
@@ -507,6 +713,12 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         cfg_85,
         particle_radius_m=150.0e-9,
     )
+    signature_85_diffusive = _build_observation_signature(
+        "operator=test",
+        reference_85_diffusive,
+        cfg_85_diffusive,
+        particle_radius_m=110.0e-9,
+    )
 
     assert "channel_cross_section_model=trapezoid_tapered_sidewalls" in signature_85
     assert "sidewall_taper_angle_deg=5.000000000e+00" in signature_85
@@ -519,9 +731,21 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         in signature_85
     )
     assert "trajectory_boundary_model=not_applicable_pure_advection" in signature_85
+    assert "trajectory_boundary_claim_level=no_diffusive_boundary_claim" in signature_85
     assert (
         "wall_distance_model=not_applicable_diffusion_hindrance_none"
         in signature_85
+    )
+    assert "wall_distance_claim_level=not_used" in signature_85
+    assert (
+        "flow_profile_geometry_claim_level="
+        "geometry_independent_uniform_flow_surrogate"
+        in signature_85
+    )
+    assert (
+        "trajectory_boundary_claim_level="
+        "sidewall_projection_boundary_surrogate_not_specular_reflection"
+        in signature_85_diffusive
     )
     assert (
         "geometry_propagation_status="
@@ -539,6 +763,7 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     assert "not_optical_solver_output=True" in signature_85
     assert "optical_solver_trigger_is_result=False" in signature_85
     assert signature_85 != signature_83
+    assert signature_85 != signature_85_diffusive
     assert signature_85 != signature_85_larger_particle
 
 

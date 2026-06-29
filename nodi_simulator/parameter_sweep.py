@@ -2541,8 +2541,11 @@ def _build_observation_signature(
         f"|trapezoid_closure_policy={reference.get('trapezoid_closure_policy', 'unknown')}"
         f"|trapezoid_runtime_guard_status={reference.get('trapezoid_runtime_guard_status', 'unknown')}"
         f"|trajectory_boundary_model={reference.get('trajectory_boundary_model', 'unknown')}"
+        f"|trajectory_boundary_claim_level={reference.get('trajectory_boundary_claim_level', 'unknown')}"
         f"|wall_distance_model={reference.get('wall_distance_model', 'unknown')}"
+        f"|wall_distance_claim_level={reference.get('wall_distance_claim_level', 'unknown')}"
         f"|flow_profile_geometry_model={reference.get('flow_profile_geometry_model', 'unknown')}"
+        f"|flow_profile_geometry_claim_level={reference.get('flow_profile_geometry_claim_level', 'unknown')}"
         f"|geometry_propagation_status={reference.get('geometry_propagation_status', 'unknown')}"
         f"|geometry_not_propagated_reasons={reference.get('geometry_not_propagated_reasons', ())}"
     )

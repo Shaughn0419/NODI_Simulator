@@ -9,7 +9,7 @@ Coordinate convention:
     z: channel depth direction, [-H/2, H/2]
 
 Supports pure advection (y = v·t, x = const, z = const) and optional
-Brownian diffusion with reflecting boundary conditions, position-dependent
+Brownian diffusion with geometry-specific boundary surrogates, position-dependent
 axial flow, and near-wall diffusion hindrance surrogates.
 """
 
@@ -115,11 +115,19 @@ def _require_trapezoid_trajectory_compatibility(sim_cfg: SimulationConfig) -> No
         return
     _require_trapezoid_flow_compatibility(sim_cfg)
     _require_trapezoid_wall_distance_compatibility(sim_cfg)
-    if bool(sim_cfg.include_diffusion):
+    if bool(sim_cfg.include_diffusion) and not bool(sim_cfg.reflecting_boundary):
         raise ValueError(
             "diffusive trajectory under trapezoid_tapered_sidewalls requires "
-            "a sloped-wall reflection/boundary model; the current trajectory "
-            "boundary is rectangular_half_span"
+            "reflecting_boundary=True so particle centers stay inside the "
+            "trapezoid support"
+        )
+    if (
+        bool(sim_cfg.include_diffusion)
+        and str(sim_cfg.flow_profile_model) != "plug"
+    ):
+        raise ValueError(
+            "diffusive trajectory under trapezoid_tapered_sidewalls requires "
+            "plug flow until a trapezoid-compatible flow model is available"
         )
 
 
@@ -162,7 +170,12 @@ def build_trajectory_geometry_diagnostics(sim_cfg: SimulationConfig) -> dict[str
         flow_claim_level = "rectangular_flow_surrogate"
 
     if bool(sim_cfg.include_diffusion):
-        if bool(sim_cfg.reflecting_boundary):
+        if is_trapezoid and bool(sim_cfg.reflecting_boundary):
+            boundary_model = "trapezoid_center_support_projection_boundary_v1"
+            boundary_claim_level = (
+                "sidewall_projection_boundary_surrogate_not_specular_reflection"
+            )
+        elif bool(sim_cfg.reflecting_boundary):
             boundary_model = "rectangular_half_span_reflection_v1"
             boundary_claim_level = "rectangular_boundary_surrogate"
         else:
@@ -184,13 +197,18 @@ def build_trajectory_geometry_diagnostics(sim_cfg: SimulationConfig) -> dict[str
         reasons.append("geometry_not_propagated_to_flow_model")
     if is_trapezoid and hindrance_model != "none":
         reasons.append("geometry_not_propagated_to_near_wall_metrics")
-    if is_trapezoid and bool(sim_cfg.include_diffusion):
+    if is_trapezoid and bool(sim_cfg.include_diffusion) and not bool(sim_cfg.reflecting_boundary):
         reasons.append("geometry_not_propagated_to_trajectory_boundary")
 
     if is_trapezoid:
         if reasons:
             propagation_status = "blocked_rectangular_geometry_leakage"
             sidewall_status = "blocked_not_sidewall_aware_runtime"
+        elif bool(sim_cfg.include_diffusion):
+            propagation_status = "sidewall_projection_boundary_surrogate_propagated"
+            sidewall_status = (
+                "partial_sidewall_runtime_projection_boundary_no_wall_metrics"
+            )
         else:
             propagation_status = "sidewall_sampler_and_pure_advection_propagated"
             sidewall_status = "partial_sidewall_runtime_no_diffusion_no_wall_metrics"
@@ -833,6 +851,137 @@ def _reflect_kernel(value: float, lo: float, hi: float) -> float:
     return value
 
 
+def _project_trapezoid_centered_position(
+    geometry: TrapezoidCrossSection,
+    channel: Channel,
+    x_m: float,
+    z_m: float,
+    particle_radius_m: float,
+) -> tuple[float, float]:
+    projected_x_m, projected_u_m = geometry.project_particle_center_into_support(
+        x_m,
+        float(z_m) + 0.5 * float(channel.depth_m),
+        particle_radius_m,
+    )
+    return projected_x_m, projected_u_m - 0.5 * float(channel.depth_m)
+
+
+def _simulate_trapezoid_projected_diffusive_trajectory(
+    channel: Channel,
+    sim_cfg: SimulationConfig,
+    *,
+    n_samples: int,
+    dt: float,
+    initial_x_m: float,
+    initial_z_m: float,
+    y_start: float,
+    initial_v_y: float,
+    particle_radius_m: float,
+    diffusion_step_scale: float,
+    diffusion_draws: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    geometry = _trapezoid_geometry(channel, sim_cfg)
+    x_m = np.empty(n_samples, dtype=float)
+    z_m = np.empty(n_samples, dtype=float)
+    y_m = np.empty(n_samples, dtype=float)
+    v_y_m_s = np.full(n_samples, float(initial_v_y), dtype=float)
+
+    x_m[0], z_m[0] = _project_trapezoid_centered_position(
+        geometry,
+        channel,
+        initial_x_m,
+        initial_z_m,
+        particle_radius_m,
+    )
+    y_m[0] = y_start
+
+    for index in range(n_samples - 1):
+        x_next = x_m[index] + diffusion_step_scale * float(diffusion_draws[2 * index])
+        z_next = z_m[index] + diffusion_step_scale * float(diffusion_draws[2 * index + 1])
+        x_next, z_next = _project_trapezoid_centered_position(
+            geometry,
+            channel,
+            x_next,
+            z_next,
+            particle_radius_m,
+        )
+        x_m[index + 1] = x_next
+        z_m[index + 1] = z_next
+        y_m[index + 1] = y_m[index] + float(initial_v_y) * dt
+
+    return x_m, y_m, z_m, v_y_m_s
+
+
+def _simulate_trapezoid_projected_diffusive_trajectory_block(
+    channel: Channel,
+    sim_cfg: SimulationConfig,
+    *,
+    n_samples: int,
+    dt: float,
+    initial_x_m: np.ndarray,
+    initial_z_m: np.ndarray,
+    y_start: np.ndarray,
+    initial_v_y: np.ndarray,
+    particle_radius_m: float,
+    diffusion_step_scale: float,
+    diffusion_draws: np.ndarray,
+    store_velocity_trace: bool,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    geometry = _trapezoid_geometry(channel, sim_cfg)
+    block_size = int(initial_x_m.shape[0])
+    x_m = np.empty((block_size, n_samples), dtype=float)
+    z_m = np.empty((block_size, n_samples), dtype=float)
+    y_m = np.empty((block_size, n_samples), dtype=float)
+    v_y_m_s = (
+        np.empty((block_size, n_samples), dtype=float)
+        if store_velocity_trace
+        else np.empty((block_size, 0), dtype=float)
+    )
+
+    for event_index in range(block_size):
+        x0, z0 = _project_trapezoid_centered_position(
+            geometry,
+            channel,
+            float(initial_x_m[event_index]),
+            float(initial_z_m[event_index]),
+            particle_radius_m,
+        )
+        x_m[event_index, 0] = x0
+        z_m[event_index, 0] = z0
+        y_m[event_index, 0] = float(y_start[event_index])
+        v_y = float(initial_v_y[event_index])
+        if store_velocity_trace:
+            v_y_m_s[event_index, 0] = v_y
+
+        for sample_index in range(n_samples - 1):
+            draw_offset = 2 * sample_index
+            x_next = (
+                x_m[event_index, sample_index]
+                + diffusion_step_scale * float(diffusion_draws[event_index, draw_offset])
+            )
+            z_next = (
+                z_m[event_index, sample_index]
+                + diffusion_step_scale
+                * float(diffusion_draws[event_index, draw_offset + 1])
+            )
+            x_next, z_next = _project_trapezoid_centered_position(
+                geometry,
+                channel,
+                x_next,
+                z_next,
+                particle_radius_m,
+            )
+            x_m[event_index, sample_index + 1] = x_next
+            z_m[event_index, sample_index + 1] = z_next
+            y_m[event_index, sample_index + 1] = (
+                y_m[event_index, sample_index] + v_y * dt
+            )
+            if store_velocity_trace:
+                v_y_m_s[event_index, sample_index + 1] = v_y
+
+    return x_m, y_m, z_m, v_y_m_s
+
+
 @_optional_njit(cache=True)
 def _single_wall_parallel_factor_kernel(gap_m: float, particle_radius_m: float) -> float:
     denom = max(gap_m + particle_radius_m, 1e-18)
@@ -1016,11 +1165,12 @@ def simulate_particle_trajectory(
     of total_time, ensuring the first 20% of the trace is background-only.
 
     When include_diffusion=True and diffusion_coefficient is provided,
-    x(t) and z(t) undergo Brownian random walk with reflecting boundary
-    conditions at the channel walls.
+    x(t) and z(t) undergo Brownian random walk. Rectangular geometries use
+    half-span reflection; trapezoid sidewalls currently use the
+    `trapezoid_center_support_projection_boundary_v1` surrogate.
 
     Args:
-        channel: Channel geometry (for boundary validation and reflection).
+        channel: Channel geometry (for boundary validation/projection).
         optical: Optical system (provides beam_waist_y, focus_y for y_start).
         sim_cfg: Simulation config (provides velocity, timing, diffusion settings).
         initial_x_m: Initial x position within channel.
@@ -1114,41 +1264,56 @@ def simulate_particle_trajectory(
             rng.standard_normal(2 * max(n_samples - 1, 0)),
             dtype=float,
         )
-        if sim_cfg.flow_profile_model == "plug":
-            flow_profile_code = _FLOW_PROFILE_PLUG
-        elif sim_cfg.flow_profile_model == "parabolic_rect":
-            flow_profile_code = _FLOW_PROFILE_PARABOLIC_RECT
+        if _is_trapezoid_active(sim_cfg):
+            x_m, y_m, z_m, v_y_m_s = _simulate_trapezoid_projected_diffusive_trajectory(
+                channel,
+                sim_cfg,
+                n_samples=n_samples,
+                dt=dt,
+                initial_x_m=initial_x_m,
+                initial_z_m=initial_z_m,
+                y_start=y_start,
+                initial_v_y=initial_v_y,
+                particle_radius_m=particle_radius_m,
+                diffusion_step_scale=diffusion_step_scale,
+                diffusion_draws=diffusion_draws,
+            )
         else:
-            flow_profile_code = _FLOW_PROFILE_RECT_SERIES
+            if sim_cfg.flow_profile_model == "plug":
+                flow_profile_code = _FLOW_PROFILE_PLUG
+            elif sim_cfg.flow_profile_model == "parabolic_rect":
+                flow_profile_code = _FLOW_PROFILE_PARABOLIC_RECT
+            else:
+                flow_profile_code = _FLOW_PROFILE_RECT_SERIES
 
-        if sim_cfg.diffusion_hindrance_model == "none":
-            hindrance_code = _HINDRANCE_NONE
-        elif sim_cfg.diffusion_hindrance_model == "near_wall_surrogate":
-            hindrance_code = _HINDRANCE_NEAR_WALL
-        else:
-            hindrance_code = _HINDRANCE_TENSOR
+            if sim_cfg.diffusion_hindrance_model == "none":
+                hindrance_code = _HINDRANCE_NONE
+            elif sim_cfg.diffusion_hindrance_model == "near_wall_surrogate":
+                hindrance_code = _HINDRANCE_NEAR_WALL
+            else:
+                hindrance_code = _HINDRANCE_TENSOR
 
-        x_m, y_m, z_m, v_y_m_s = _simulate_diffusive_trajectory_kernel(
-            n_samples,
-            dt,
-            initial_x_m,
-            initial_z_m,
-            y_start,
-            initial_v_y,
-            half_w,
-            half_h,
-            particle_radius_m,
-            diffusion_step_scale,
-            diffusion_draws,
-            float(sim_cfg.mean_flow_velocity_m_s),
-            bool(sim_cfg.reflecting_boundary),
-            flow_profile_code,
-            hindrance_code,
-            0.0 if rect_series_mean_raw is None else float(rect_series_mean_raw),
-            _EMPTY_FLOAT_ARRAY if rect_series_lam_arr is None else rect_series_lam_arr,
-            _EMPTY_FLOAT_ARRAY if rect_series_cosh_den_arr is None else rect_series_cosh_den_arr,
-            _EMPTY_FLOAT_ARRAY if rect_series_inv_n3_arr is None else rect_series_inv_n3_arr,
-        )
+            x_m, y_m, z_m, v_y_m_s = _simulate_diffusive_trajectory_kernel(
+                n_samples,
+                dt,
+                initial_x_m,
+                initial_z_m,
+                y_start,
+                initial_v_y,
+                half_w,
+                half_h,
+                particle_radius_m,
+                diffusion_step_scale,
+                diffusion_draws,
+                float(sim_cfg.mean_flow_velocity_m_s),
+                bool(sim_cfg.reflecting_boundary),
+                flow_profile_code,
+                hindrance_code,
+                0.0 if rect_series_mean_raw is None else float(rect_series_mean_raw),
+                _EMPTY_FLOAT_ARRAY if rect_series_lam_arr is None else rect_series_lam_arr,
+                _EMPTY_FLOAT_ARRAY if rect_series_cosh_den_arr is None else rect_series_cosh_den_arr,
+                _EMPTY_FLOAT_ARRAY if rect_series_inv_n3_arr is None else rect_series_inv_n3_arr,
+            )
 
     else:
         # Pure advection: constant x, z and streamline-specific axial velocity.
@@ -1493,7 +1658,22 @@ def simulate_particle_trajectory_block(
                     "diffusion_draws must have shape "
                     f"{expected_shape}, got {diffusion_draw_arr.shape}"
                 )
-        if (
+        if _is_trapezoid_active(sim_cfg):
+            x_m, y_m, z_m, v_y_m_s = _simulate_trapezoid_projected_diffusive_trajectory_block(
+                channel,
+                sim_cfg,
+                n_samples=n_samples,
+                dt=trajectory_context.dt_s,
+                initial_x_m=x0,
+                initial_z_m=z0,
+                y_start=y_start,
+                initial_v_y=initial_v_y,
+                particle_radius_m=particle_radius_m,
+                diffusion_step_scale=diffusion_step_scale,
+                diffusion_draws=diffusion_draw_arr,
+                store_velocity_trace=bool(export_velocity_trace),
+            )
+        elif (
             sim_cfg.flow_profile_model == "plug"
             and sim_cfg.diffusion_hindrance_model == "none"
         ):
