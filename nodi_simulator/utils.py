@@ -30,6 +30,7 @@ from .calibration_models import (
 from .cross_section_geometry import (
     CENTER_ACCESSIBLE_SUPPORT_MODEL,
     TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+    TRAPEZOID_WALL_DISTANCE_MODEL,
     TrapezoidCrossSection,
 )
 from .data_objects import (
@@ -3984,6 +3985,11 @@ def _sample_trapezoid_initial_position(
         u0,
         particle_radius_m,
     )
+    wall_gap = geometry.particle_wall_gap_diagnostics_m(
+        x0,
+        u0,
+        particle_radius_m,
+    )
     local_center_half_width_m = max(0.5 * (x_right_m - x_left_m), 1e-18)
     z_half_span_m = max(0.5 * channel.depth_m - particle_radius_m, 1e-18)
     if mode == "uniform_accessible_area":
@@ -4018,6 +4024,19 @@ def _sample_trapezoid_initial_position(
         "initial_position_z_norm": float(z0 / z_half_span_m),
         "initial_position_sampler_geometry_model": "trapezoid_tapered_sidewalls",
         "initial_position_sampler_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
+        "initial_position_wall_distance_model": TRAPEZOID_WALL_DISTANCE_MODEL,
+        "initial_position_wall_distance_claim_level": wall_gap[
+            "wall_distance_claim_level"
+        ],
+        "initial_position_d_top_m": wall_gap["d_top_m"],
+        "initial_position_d_bottom_m": wall_gap["d_bottom_m"],
+        "initial_position_d_side_left_m": wall_gap["d_side_left_m"],
+        "initial_position_d_side_right_m": wall_gap["d_side_right_m"],
+        "initial_position_d_nearest_wall_m": wall_gap["d_nearest_wall_m"],
+        "initial_position_nearest_wall_id": wall_gap["nearest_wall_id"],
+        "initial_position_surface_gap_for_particle_m": wall_gap[
+            "surface_gap_for_particle_m"
+        ],
         "initial_position_particle_center_support_status": support_slice[
             "particle_center_support_status"
         ],

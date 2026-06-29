@@ -342,12 +342,41 @@ def test_trapezoid_uniform_sampler_stays_in_particle_center_support() -> None:
         )
         u0 = z0 + 0.5 * channel.depth_m
         assert geom.contains_particle_center(x0, u0, radius_m, tolerance_m=1.0e-18)
+        expected_wall_gap = geom.particle_wall_gap_diagnostics_m(x0, u0, radius_m)
         assert diag["initial_position_sampler_geometry_model"] == (
             "trapezoid_tapered_sidewalls"
         )
         assert diag["initial_position_sampler_support_model"] == (
             CENTER_ACCESSIBLE_SUPPORT_MODEL
         )
+        assert diag["initial_position_wall_distance_model"] == (
+            TRAPEZOID_WALL_DISTANCE_MODEL
+        )
+        assert diag["initial_position_wall_distance_claim_level"] == (
+            "geometry_distance_primitive_not_hindered_diffusion"
+        )
+        assert diag["initial_position_d_top_m"] == pytest.approx(
+            expected_wall_gap["d_top_m"]
+        )
+        assert diag["initial_position_d_bottom_m"] == pytest.approx(
+            expected_wall_gap["d_bottom_m"]
+        )
+        assert diag["initial_position_d_side_left_m"] == pytest.approx(
+            expected_wall_gap["d_side_left_m"]
+        )
+        assert diag["initial_position_d_side_right_m"] == pytest.approx(
+            expected_wall_gap["d_side_right_m"]
+        )
+        assert diag["initial_position_d_nearest_wall_m"] == pytest.approx(
+            expected_wall_gap["d_nearest_wall_m"]
+        )
+        assert diag["initial_position_nearest_wall_id"] == (
+            expected_wall_gap["nearest_wall_id"]
+        )
+        assert diag["initial_position_surface_gap_for_particle_m"] == pytest.approx(
+            expected_wall_gap["surface_gap_for_particle_m"]
+        )
+        assert diag["initial_position_surface_gap_for_particle_m"] >= 0.0
         assert diag["initial_position_particle_center_support_status"] == "open"
         assert diag["initial_position_steric_block_reason"] == ""
         assert diag["geometry_not_propagated_to_sampler"] is False
@@ -871,6 +900,10 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
         "initial_position_sampler_geometry_model": "trapezoid_tapered_sidewalls",
         "initial_position_sampler_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
+        "initial_position_wall_distance_model": TRAPEZOID_WALL_DISTANCE_MODEL,
+        "initial_position_wall_distance_claim_level": (
+            "geometry_distance_primitive_not_hindered_diffusion"
+        ),
         "initial_position_particle_center_support_status": "open",
         "initial_position_steric_block_reason": "",
         "sampler_geometry_model": "trapezoid_accessible_area_v1",
@@ -976,6 +1009,14 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         f"initial_position_sampler_support_model={CENTER_ACCESSIBLE_SUPPORT_MODEL}"
         in signature_85
     )
+    assert (
+        f"initial_position_wall_distance_model={TRAPEZOID_WALL_DISTANCE_MODEL}"
+        in signature_85
+    )
+    assert (
+        "initial_position_wall_distance_claim_level="
+        "geometry_distance_primitive_not_hindered_diffusion"
+    ) in signature_85
     assert "initial_position_particle_center_support_status=open" in signature_85
     assert "|initial_position_steric_block_reason=" in signature_85
     assert "sampler_geometry_model=trapezoid_accessible_area_v1" in signature_85
@@ -1119,6 +1160,10 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
             "initial_position_steric_block_reason": (
                 "sidewall_clearance_below_particle_radius"
             ),
+        },
+        {
+            **reference_85,
+            "initial_position_wall_distance_model": "rectangular_half_span_gap_v1",
         },
         {
             **reference_85,

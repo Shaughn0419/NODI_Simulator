@@ -2579,6 +2579,8 @@ def _build_observation_signature(
         f"|center_accessible_support_model={reference.get('center_accessible_support_model', 'unknown')}"
         f"|initial_position_sampler_geometry_model={reference.get('initial_position_sampler_geometry_model', 'unknown')}"
         f"|initial_position_sampler_support_model={reference.get('initial_position_sampler_support_model', 'unknown')}"
+        f"|initial_position_wall_distance_model={reference.get('initial_position_wall_distance_model', 'unknown')}"
+        f"|initial_position_wall_distance_claim_level={reference.get('initial_position_wall_distance_claim_level', 'unknown')}"
         f"|initial_position_particle_center_support_status={reference.get('initial_position_particle_center_support_status', 'unknown')}"
         f"|initial_position_steric_block_reason={reference.get('initial_position_steric_block_reason', 'unknown')}"
         f"|sampler_geometry_model={reference.get('sampler_geometry_model', 'unknown')}"

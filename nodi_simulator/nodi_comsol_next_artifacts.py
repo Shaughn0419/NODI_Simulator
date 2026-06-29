@@ -937,6 +937,8 @@ SIDEWALL_V2_TRAPEZOID_SIGNATURE_REQUIRED_FRAGMENTS: tuple[str, ...] = (
 )
 PRS_SIDEWALL_V2_INITIAL_POSITION_SIGNATURE_REQUIRED_FRAGMENTS: tuple[str, ...] = (
     "initial_position_sampler_support_model=",
+    "initial_position_wall_distance_model=",
+    "initial_position_wall_distance_claim_level=",
     "initial_position_particle_center_support_status=",
     "initial_position_steric_block_reason=",
 )

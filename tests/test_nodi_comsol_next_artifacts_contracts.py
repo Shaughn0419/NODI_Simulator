@@ -325,6 +325,8 @@ def _sidewall_observation_cache_fields(
         "|particle_radius_m=1.1e-07"
         "|center_accessible_support_model=wall_normal_half_plane_offset_v1"
         "|initial_position_sampler_support_model=wall_normal_half_plane_offset_v1"
+        "|initial_position_wall_distance_model=trapezoid_signed_wall_distance_v1"
+        "|initial_position_wall_distance_claim_level=geometry_distance_primitive_not_hindered_diffusion"
         "|initial_position_particle_center_support_status=open"
         "|initial_position_steric_block_reason="
         "|sampler_geometry_model=trapezoid_accessible_area_v1"
@@ -366,6 +368,9 @@ def _sidewall_observation_cache_fields(
         ).replace(
             "initial_position_sampler_support_model=wall_normal_half_plane_offset_v1",
             "initial_position_sampler_support_model=rectangular_half_span_v1",
+        ).replace(
+            "initial_position_wall_distance_model=trapezoid_signed_wall_distance_v1",
+            "initial_position_wall_distance_model=rectangular_half_span_gap_v1",
         )
     )
     signature = (
@@ -1019,6 +1024,18 @@ def test_position_response_sidewall_v2_requires_signature_sampler_support_status
     row = _valid_prs_sidewall_v2_row()
     row["observation_signature"] = str(row["observation_signature"]).replace(
         "|initial_position_particle_center_support_status=open",
+        "",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_signature_wall_distance_model() -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "|initial_position_wall_distance_model=trapezoid_signed_wall_distance_v1",
         "",
     )
 

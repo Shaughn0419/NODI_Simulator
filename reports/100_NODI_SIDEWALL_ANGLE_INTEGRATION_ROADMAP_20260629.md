@@ -84,6 +84,7 @@ Completed NODI-side guardrails:
 - Added PRS sidewall v2 validator checks requiring initial-position sampler-support signature fragments and binding `sampler_support_model` to `initial_position_sampler_support_model`; EAS sidewall v2 remains aperture-surrogate scoped and is not forced to carry PRS bin semantics.
 - Added a trapezoid wall-distance / particle surface-gap primitive that emits nearest-wall geometry diagnostics only; it is not a hindered-diffusion, adhesion, wet-pass, clogging, recovery, or passability model.
 - Added PRS sidewall v2 formula-level local-geometry checks for `W(u)`, sidewall-normal distances, top/bottom distances, nearest-wall identity, and particle surface gap while preserving the explicit ideal-rectangle context path.
+- Added trapezoid initial-position wall-distance diagnostics and signature fragments for the geometry-only wall-distance model/claim level; PRS sidewall v2 now rejects signatures missing those sampler wall-distance identifiers.
 
 Still blocked in this roadmap:
 
