@@ -48,8 +48,8 @@ CHANNEL_GEOMETRY_DIAGNOSTIC_FIELDS = (
     "trapezoid_center_accessible_area_m2",
     "trapezoid_center_accessible_area_fraction",
     "center_accessible_support_model",
-    "wall_distance_model",
-    "wall_distance_claim_level",
+    "channel_geometry_wall_distance_model",
+    "channel_geometry_wall_distance_claim_level",
     "cross_section_geometry_version",
     "geometry_surrogate_status",
     "geometry_model_discrepancy_flag",
@@ -145,8 +145,10 @@ def build_channel_geometry_diagnostics(
     trapezoid_center_accessible_area_m2: float | None = None
     trapezoid_center_accessible_area_fraction: float | None = None
     center_accessible_support_model = "rectangular_half_span_v1"
-    wall_distance_model = "rectangular_half_span_gap_v1"
-    wall_distance_claim_level = "geometry_distance_primitive_not_hindered_diffusion"
+    channel_geometry_wall_distance_model = "rectangular_half_span_gap_v1"
+    channel_geometry_wall_distance_claim_level = (
+        "geometry_distance_primitive_not_hindered_diffusion"
+    )
     cross_section_geometry_version = "ideal_rectangle_v1"
     geometry_surrogate_status = "ideal_rectangle_no_active_surrogate"
 
@@ -202,7 +204,7 @@ def build_channel_geometry_diagnostics(
             effective_phase_mask_area_m2,
         )
         center_accessible_support_model = CENTER_ACCESSIBLE_SUPPORT_MODEL
-        wall_distance_model = TRAPEZOID_WALL_DISTANCE_MODEL
+        channel_geometry_wall_distance_model = TRAPEZOID_WALL_DISTANCE_MODEL
         cross_section_geometry_version = TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION
         geometry_surrogate_status = "trapezoid_sidewall_area_surrogate_active"
 
@@ -276,8 +278,10 @@ def build_channel_geometry_diagnostics(
             trapezoid_center_accessible_area_fraction
         ),
         "center_accessible_support_model": center_accessible_support_model,
-        "wall_distance_model": wall_distance_model,
-        "wall_distance_claim_level": wall_distance_claim_level,
+        "channel_geometry_wall_distance_model": channel_geometry_wall_distance_model,
+        "channel_geometry_wall_distance_claim_level": (
+            channel_geometry_wall_distance_claim_level
+        ),
         "cross_section_geometry_version": cross_section_geometry_version,
         "geometry_surrogate_status": geometry_surrogate_status,
         "geometry_model_discrepancy_flag": discrepancy,

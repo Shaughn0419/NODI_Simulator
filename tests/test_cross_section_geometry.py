@@ -245,8 +245,11 @@ def test_channel_diagnostics_emit_unclipped_and_runtime_clipped_bottom_widths() 
     assert diagnostics["trapezoid_closure_policy"] == "preserve_unclipped_descriptor"
     assert diagnostics["trapezoid_runtime_guard_status"] == "validation_guard"
     assert diagnostics["center_accessible_support_model"] == CENTER_ACCESSIBLE_SUPPORT_MODEL
-    assert diagnostics["wall_distance_model"] == TRAPEZOID_WALL_DISTANCE_MODEL
-    assert diagnostics["wall_distance_claim_level"] == (
+    assert (
+        diagnostics["channel_geometry_wall_distance_model"]
+        == TRAPEZOID_WALL_DISTANCE_MODEL
+    )
+    assert diagnostics["channel_geometry_wall_distance_claim_level"] == (
         "geometry_distance_primitive_not_hindered_diffusion"
     )
     assert (
@@ -269,8 +272,11 @@ def test_channel_diagnostics_keep_ideal_rectangle_wall_distance_identity() -> No
 
     assert diagnostics["channel_cross_section_model"] == "ideal_rectangle"
     assert diagnostics["center_accessible_support_model"] == "rectangular_half_span_v1"
-    assert diagnostics["wall_distance_model"] == "rectangular_half_span_gap_v1"
-    assert diagnostics["wall_distance_claim_level"] == (
+    assert (
+        diagnostics["channel_geometry_wall_distance_model"]
+        == "rectangular_half_span_gap_v1"
+    )
+    assert diagnostics["channel_geometry_wall_distance_claim_level"] == (
         "geometry_distance_primitive_not_hindered_diffusion"
     )
     assert diagnostics["cross_section_geometry_version"] == "ideal_rectangle_v1"
@@ -1036,6 +1042,14 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     assert f"center_accessible_support_model={CENTER_ACCESSIBLE_SUPPORT_MODEL}" in (
         signature_85
     )
+    assert (
+        f"channel_geometry_wall_distance_model={TRAPEZOID_WALL_DISTANCE_MODEL}"
+        in signature_85
+    )
+    assert (
+        "channel_geometry_wall_distance_claim_level="
+        "geometry_distance_primitive_not_hindered_diffusion"
+    ) in signature_85
     assert (
         "initial_position_sampler_geometry_model=trapezoid_tapered_sidewalls"
         in signature_85

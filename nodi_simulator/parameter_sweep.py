@@ -2577,6 +2577,8 @@ def _build_observation_signature(
         f"|particle_radius_m={particle_radius_m}"
         f"|cross_section_geometry_version={reference.get('cross_section_geometry_version', 'unknown')}"
         f"|center_accessible_support_model={reference.get('center_accessible_support_model', 'unknown')}"
+        f"|channel_geometry_wall_distance_model={reference.get('channel_geometry_wall_distance_model', 'unknown')}"
+        f"|channel_geometry_wall_distance_claim_level={reference.get('channel_geometry_wall_distance_claim_level', 'unknown')}"
         f"|initial_position_sampler_geometry_model={reference.get('initial_position_sampler_geometry_model', 'unknown')}"
         f"|initial_position_sampler_support_model={reference.get('initial_position_sampler_support_model', 'unknown')}"
         f"|initial_position_wall_distance_model={reference.get('initial_position_wall_distance_model', 'unknown')}"
