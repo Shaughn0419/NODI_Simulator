@@ -11393,7 +11393,9 @@ class TestIntegration:
         assert "wall_interaction_model=none" in signature
         assert "channel_cross_section_model=ideal_rectangle" in signature
         assert "sidewall_taper_angle_deg=0.000000000e+00" in signature
+        assert f"particle_radius_m={BASELINE_PARTICLE.radius_m}" in signature
         assert "cross_section_geometry_version=ideal_rectangle_v1" in signature
+        assert "center_accessible_support_model=rectangular_half_span_v1" in signature
         assert "trajectory_boundary_model=not_applicable_pure_advection" in signature
         assert (
             "wall_distance_model=not_applicable_diffusion_hindrance_none"

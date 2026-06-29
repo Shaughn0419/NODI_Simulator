@@ -2351,6 +2351,7 @@ def _build_observation_signature(
     operator_signature: str | None,
     reference: dict,
     sim_cfg: SimulationConfig,
+    particle_radius_m: float | None = None,
 ) -> str:
     """
     Build an auditable signature for the full observable chain.
@@ -2527,7 +2528,9 @@ def _build_observation_signature(
         f"|calibration_extrapolated={bool(reference.get('calibration_extrapolated', False))}"
         f"|channel_cross_section_model={sim_cfg.channel_cross_section_model}"
         f"|sidewall_taper_angle_deg={float(sim_cfg.sidewall_taper_angle_deg):.9e}"
+        f"|particle_radius_m={particle_radius_m}"
         f"|cross_section_geometry_version={reference.get('cross_section_geometry_version', 'unknown')}"
+        f"|center_accessible_support_model={reference.get('center_accessible_support_model', 'unknown')}"
         f"|trapezoid_closure_status={reference.get('trapezoid_closure_status', 'unknown')}"
         f"|trapezoid_closure_policy={reference.get('trapezoid_closure_policy', 'unknown')}"
         f"|trapezoid_runtime_guard_status={reference.get('trapezoid_runtime_guard_status', 'unknown')}"
@@ -7454,6 +7457,7 @@ def run_single_case_batch(
         collection.get("operator_signature"),
         reference,
         sim_cfg,
+        particle_radius_m=particle.radius_m,
     )
 
     return {

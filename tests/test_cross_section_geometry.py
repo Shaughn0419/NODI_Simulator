@@ -433,18 +433,40 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     )
     reference_85 = {
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+        "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
         **build_trajectory_geometry_diagnostics(cfg_85),
     }
     reference_83 = {
         "cross_section_geometry_version": TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION,
+        "center_accessible_support_model": CENTER_ACCESSIBLE_SUPPORT_MODEL,
         **build_trajectory_geometry_diagnostics(cfg_83),
     }
 
-    signature_85 = _build_observation_signature("operator=test", reference_85, cfg_85)
-    signature_83 = _build_observation_signature("operator=test", reference_83, cfg_83)
+    signature_85 = _build_observation_signature(
+        "operator=test",
+        reference_85,
+        cfg_85,
+        particle_radius_m=110.0e-9,
+    )
+    signature_83 = _build_observation_signature(
+        "operator=test",
+        reference_83,
+        cfg_83,
+        particle_radius_m=110.0e-9,
+    )
+    signature_85_larger_particle = _build_observation_signature(
+        "operator=test",
+        reference_85,
+        cfg_85,
+        particle_radius_m=150.0e-9,
+    )
 
     assert "channel_cross_section_model=trapezoid_tapered_sidewalls" in signature_85
     assert "sidewall_taper_angle_deg=5.000000000e+00" in signature_85
+    assert "particle_radius_m=1.1e-07" in signature_85
+    assert f"center_accessible_support_model={CENTER_ACCESSIBLE_SUPPORT_MODEL}" in (
+        signature_85
+    )
     assert (
         f"cross_section_geometry_version={TRAPEZOID_CROSS_SECTION_GEOMETRY_VERSION}"
         in signature_85
@@ -459,3 +481,4 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         "sidewall_sampler_and_pure_advection_propagated"
     ) in signature_85
     assert signature_85 != signature_83
+    assert signature_85 != signature_85_larger_particle
