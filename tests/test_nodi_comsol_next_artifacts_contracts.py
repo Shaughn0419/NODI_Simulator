@@ -533,7 +533,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         geometry_not_propagated_to_flow_model="false",
         geometry_not_propagated_to_near_wall_metrics="false",
         geometry_not_propagated_to_trajectory_boundary="false",
-        sidewall_aware_runtime_status="partial_sidewall_runtime_no_diffusion_no_wall_metrics",
+        sidewall_aware_runtime_status="partial_sidewall_runtime_no_diffusion_no_hindered_wall_metrics",
         reference_field_model="geometry_scaled",
         reference_spatial_mode="cross_section_surrogate",
         source_geometry_descriptor_id="descriptor-404-W500-D900-sidewall-85",

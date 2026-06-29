@@ -789,7 +789,7 @@ def test_trapezoid_trajectory_diagnostics_mark_pure_advection_boundary() -> None
     )
     assert diagnostics["geometry_not_propagated_reasons"] == ()
     assert diagnostics["sidewall_aware_runtime_status"] == (
-        "partial_sidewall_runtime_no_diffusion_no_wall_metrics"
+        "partial_sidewall_runtime_no_diffusion_no_hindered_wall_metrics"
     )
 
 
@@ -817,7 +817,7 @@ def test_trapezoid_trajectory_diagnostics_mark_projection_boundary() -> None:
     )
     assert diagnostics["geometry_not_propagated_reasons"] == ()
     assert diagnostics["sidewall_aware_runtime_status"] == (
-        "partial_sidewall_runtime_projection_boundary_no_wall_metrics"
+        "partial_sidewall_runtime_projection_boundary_no_hindered_wall_metrics"
     )
 
 

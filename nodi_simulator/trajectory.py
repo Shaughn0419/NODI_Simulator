@@ -223,11 +223,11 @@ def build_trajectory_geometry_diagnostics(sim_cfg: SimulationConfig) -> dict[str
         elif bool(sim_cfg.include_diffusion):
             propagation_status = "sidewall_projection_boundary_surrogate_propagated"
             sidewall_status = (
-                "partial_sidewall_runtime_projection_boundary_no_wall_metrics"
+                "partial_sidewall_runtime_projection_boundary_no_hindered_wall_metrics"
             )
         else:
             propagation_status = "sidewall_sampler_and_pure_advection_propagated"
-            sidewall_status = "partial_sidewall_runtime_no_diffusion_no_wall_metrics"
+            sidewall_status = "partial_sidewall_runtime_no_diffusion_no_hindered_wall_metrics"
     else:
         propagation_status = "rectangle_native_or_non_sidewall_geometry"
         sidewall_status = "not_sidewall_geometry"
