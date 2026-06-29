@@ -138,6 +138,15 @@ def test_decision_dossier_has_three_unapproved_mutually_exclusive_choices() -> N
     assert all(row["mutually_exclusive"] == "true" for row in decisions)
 
 
+def test_executive_brief_marks_trajectory_diagnostic_as_not_passability() -> None:
+    brief = gate12.executive_brief_support()
+
+    row = next(row for row in brief if row["topic"] == "trajectory_diagnostic_scope")
+    assert "config-only" in row["verdict"]
+    assert "not a closure or passability verdict" in row["verdict"]
+    assert "PRS/EAS validators" in row["support"]
+
+
 def test_mutation_expansion_and_no_auth_sweep_are_clean() -> None:
     payload = gate12.build_payload(gate12.DEFAULT_COMSOL_ROOT)
 

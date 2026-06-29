@@ -17338,7 +17338,7 @@
       "commit": "CURRENT_GATE12_PENDING_COMMIT",
       "artifact_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator（usb）\\reports\\joint_interface_20260629\\NODI_COMSOL_GATE12_SIDEWALL_MANIFEST_20260629.csv",
       "row_count": "35",
-      "sha256": "9461101c7046cb8a2c1e5f155f687487d09ceabad9014f96b945db25a93a2eda",
+      "sha256": "2e2c39c7296aa049b85fbbc9cf993585e16f7a6b05777fa172dec052465c3ef5",
       "status": "CURRENT",
       "boundary": "review_only_no_auth"
     },
@@ -17403,6 +17403,12 @@
       "topic": "next_user_decision",
       "verdict": "choose freeze-only, descriptor dry-run next gate, or defer",
       "support": "decision dossier default AWAITING_USER_DECISION"
+    },
+    {
+      "brief_id": "G12K-005",
+      "topic": "trajectory_diagnostic_scope",
+      "verdict": "build_trajectory_geometry_diagnostics is config-only and is not a closure or passability verdict",
+      "support": "closure authority remains channel geometry runtime guards and PRS/EAS validators"
     }
   ],
   "self_review": [

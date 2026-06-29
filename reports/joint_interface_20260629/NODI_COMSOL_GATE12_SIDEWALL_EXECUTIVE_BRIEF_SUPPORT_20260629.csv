@@ -3,3 +3,4 @@ G12K-001,where_sidewall_interface_stands,RC5.1 sidewall descriptor addendum rele
 G12K-002,why_freeze_candidate_is_safe,"addendum is hash-bound, no-auth, and does not rewrite historical RC5.1",Gate2D remains 4; EDGE/QCH/BINDING states unchanged
 G12K-003,why_evidence_production_still_closed,descriptor receipt does not provide route/view/diameter/bin binding or numeric PRS/EAS output,11 blockers retained; mutation 720 unexpected pass 0
 G12K-004,next_user_decision,"choose freeze-only, descriptor dry-run next gate, or defer",decision dossier default AWAITING_USER_DECISION
+G12K-005,trajectory_diagnostic_scope,build_trajectory_geometry_diagnostics is config-only and is not a closure or passability verdict,closure authority remains channel geometry runtime guards and PRS/EAS validators

@@ -773,6 +773,12 @@ def executive_brief_support() -> list[dict[str, str]]:
             "verdict": "choose freeze-only, descriptor dry-run next gate, or defer",
             "support": "decision dossier default AWAITING_USER_DECISION",
         },
+        {
+            "brief_id": "G12K-005",
+            "topic": "trajectory_diagnostic_scope",
+            "verdict": "build_trajectory_geometry_diagnostics is config-only and is not a closure or passability verdict",
+            "support": "closure authority remains channel geometry runtime guards and PRS/EAS validators",
+        },
     ]
 
 
@@ -1015,6 +1021,7 @@ def write_reports(payload: dict[str, Any], reports: dict[str, Path]) -> None:
     ])
     write_md(reports["323"], "323 - Gate12K User-Facing Executive Brief", [
         "Sidewall interface is ready for review-only addendum release-candidate signoff, not evidence acceptance.",
+        "`build_trajectory_geometry_diagnostics` is config-only and is not a closure/passability verdict; closure authority remains channel geometry runtime guards and PRS/EAS validators.",
         "If the user authorizes a future step, the first safe action is descriptor receipt dry-run only.",
     ])
     write_md(reports["324"], "324 - Gate12L Reports Sidecars Tests", [
@@ -1026,6 +1033,7 @@ def write_reports(payload: dict[str, Any], reports: dict[str, Path]) -> None:
     write_md(reports["326"], "326 - Gate12N Final Handoff", [
         f"Disposition: `{DISPOSITION}`.",
         "No COMSOL run, no NODI production rerun, no PRS/EAS numeric output, no q_ch/JRC/yield/winner/detection_probability/runtime/production authorization.",
+        "`build_trajectory_geometry_diagnostics` is config-only and is not a closure/passability verdict; closure authority remains channel geometry runtime guards and PRS/EAS validators.",
     ])
 
 
@@ -1041,6 +1049,7 @@ def write_outputs(payload: dict[str, Any]) -> dict[str, Path]:
     write_md(paths["notes"], "Gate12 RC5.1 Sidewall Addendum Release Notes", [
         f"Release candidate: `{RELEASE_NAME}`.",
         "Review-only/no-auth. Does not rewrite historical RC5.1 and does not authorize descriptor evidence, runtime, production, PRS/EAS numeric output, EDGE, QCH, or JRC.",
+        "`build_trajectory_geometry_diagnostics` is config-only and is not a closure/passability verdict.",
     ])
     write_csv_rows(paths["dryrun"], payload["descriptor_dryrun_results"])
     write_csv_rows(paths["ledger"], payload["descriptor_review_ledger"])
