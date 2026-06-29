@@ -523,6 +523,28 @@ def test_position_response_sidewall_v2_rejects_inconsistent_local_geometry() -> 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_wrong_nearest_wall_distance() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                d_top_nm=10.0,
+                d_nearest_wall_nm=171.0,
+                nearest_wall_id="left_side",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_surface_gap_mismatch() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(surface_gap_for_particle_nm=100.0)]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_non_propagated_open_decision_row() -> None:
     issues = validate_position_response_surface_rows(
         [
@@ -884,6 +906,20 @@ def test_geometry_descriptor_v2_rejects_runtime_top_aperture_mismatch() -> None:
             _valid_descriptor_v2_row(
                 W_top_semantics="runtime_top_aperture",
                 runtime_top_aperture_nm=480.0,
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
+def test_geometry_descriptor_v2_rejects_runtime_clipped_bottom_mismatch() -> None:
+    issues = validate_geometry_descriptor_rows(
+        [
+            _valid_descriptor_v2_row(
+                sidewall_deg_comsol=70.0,
+                D_nm=700.0,
+                W_bottom_runtime_clipped_nm=50.0,
             )
         ]
     )

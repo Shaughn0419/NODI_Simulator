@@ -38,6 +38,17 @@ REPORT_DIR = PROJECT_ROOT / "reports"
 DESCRIPTOR_VERSION = "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY"
 ANGLE_CONVENTION = "comsol_from_horizontal_nodi_taper_from_vertical_v1"
 ANGLE_FORMULA_ID = "sidewall_from_horizontal_to_taper_from_vertical_v1"
+W_TOP_SEMANTICS = "comsol_descriptor"
+RUNTIME_TOP_APERTURE_SEMANTICS = "runtime_top_aperture"
+W_TOP_SEMANTICS_ALLOWED = frozenset(
+    {
+        RUNTIME_TOP_APERTURE_SEMANTICS,
+        "mask_width",
+        "top_cd",
+        "post_bias_top_cd",
+        W_TOP_SEMANTICS,
+    }
+)
 DISPOSITION = (
     "PASS_GATE10_SIDEWALL_GEOMETRY_DESCRIPTOR_ADDENDUM_REVIEW_ONLY_NO_AUTH"
 )
@@ -72,6 +83,8 @@ CORE_DESCRIPTOR_FIELDS = (
     "sidewall_taper_angle_deg_nodi",
     "angle_conversion_formula_id",
     "W_top_nm",
+    "W_top_semantics",
+    "runtime_top_aperture_nm",
     "depth_nm",
     "W_bottom_unclipped_nm",
     "W_bottom_runtime_clipped_nm",
@@ -92,6 +105,8 @@ RC51_SIDEWALL_FIELDS = (
     "sidewall_taper_angle_deg_nodi",
     "angle_conversion_formula_id",
     "W_top_nm",
+    "W_top_semantics",
+    "runtime_top_aperture_nm",
     "D_nm",
     "depth_nm",
     "W_bottom_unclipped_nm",
@@ -188,6 +203,8 @@ def build_descriptor(
         "sidewall_taper_angle_deg_nodi": fmt_float(taper_deg),
         "angle_conversion_formula_id": ANGLE_FORMULA_ID,
         "W_top_nm": fmt_float(w_top_nm),
+        "W_top_semantics": W_TOP_SEMANTICS,
+        "runtime_top_aperture_nm": "",
         "D_nm": fmt_float(depth_nm),
         "depth_nm": fmt_float(depth_nm),
         "W_bottom_unclipped_nm": fmt_float(bottom_unclipped_nm),
@@ -230,6 +247,21 @@ def validate_descriptor(row: dict[str, Any]) -> list[str]:
     expected_runtime_nm = max(bottom_nm, 0.0)
     if not math.isclose(runtime_bottom_nm, expected_runtime_nm, rel_tol=0.0, abs_tol=1e-9):
         issues.append("runtime clipped bottom width mismatch")
+    w_top_semantics = str(row.get("W_top_semantics", "")).strip()
+    if w_top_semantics not in W_TOP_SEMANTICS_ALLOWED:
+        issues.append("invalid W_top_semantics")
+    if w_top_semantics == RUNTIME_TOP_APERTURE_SEMANTICS:
+        runtime_top_text = str(row.get("runtime_top_aperture_nm", "")).strip()
+        if not runtime_top_text:
+            issues.append("runtime_top_aperture_nm required for runtime top semantics")
+        else:
+            try:
+                runtime_top_nm = float(runtime_top_text)
+            except ValueError:
+                issues.append("runtime_top_aperture_nm parse failure")
+            else:
+                if not math.isclose(runtime_top_nm, w_top_nm, rel_tol=0.0, abs_tol=1e-9):
+                    issues.append("runtime_top_aperture_nm mismatch")
     expected_closure = closure_status_from_bottom_nm(bottom_nm)
     if row.get("closure_status") != expected_closure:
         issues.append("closure_status inconsistent with bottom width")
@@ -431,6 +463,8 @@ def build_freeze_impact() -> list[dict[str, str]]:
         "sidewall_taper_angle_deg_nodi",
         "angle_conversion_formula_id",
         "W_top_nm",
+        "W_top_semantics",
+        "runtime_top_aperture_nm",
         "depth_nm",
         "W_bottom_unclipped_nm",
         "W_bottom_runtime_clipped_nm",
@@ -484,6 +518,8 @@ def build_schema_rows() -> list[dict[str, str]]:
         ("sidewall_taper_angle_deg_nodi", "float_deg", "required", "from vertical; equals 90-sidewall_deg_comsol"),
         ("angle_conversion_formula_id", "enum", "required", ANGLE_FORMULA_ID),
         ("W_top_nm", "float_nm", "required", "top channel width"),
+        ("W_top_semantics", "enum", "required", "comsol_descriptor unless runtime_top_aperture is explicitly bound"),
+        ("runtime_top_aperture_nm", "float_nm_or_blank", "conditional", "required only when W_top_semantics=runtime_top_aperture"),
         ("D_nm", "float_nm", "alias_required", "depth alias for existing route vocabulary"),
         ("depth_nm", "float_nm", "required", "etched depth"),
         ("W_bottom_unclipped_nm", "float_nm", "required", "W_top - 2*D/tan(sidewall_deg_comsol)"),
@@ -631,8 +667,18 @@ def build_negative_fixture_catalog(valid_descriptor: dict[str, str]) -> list[dic
     bad["W_bottom_runtime_clipped_nm"] = "-1"
     bad["geometry_descriptor_sha256"] = descriptor_hash(bad)
     add("G10E-NEG-013", "runtime clipped bottom width negative", bad)
+    bad = dict(base)
+    bad["W_top_semantics"] = RUNTIME_TOP_APERTURE_SEMANTICS
+    bad["runtime_top_aperture_nm"] = ""
+    bad["geometry_descriptor_sha256"] = descriptor_hash(bad)
+    add("G10E-NEG-014", "runtime top aperture missing", bad)
+    bad = dict(base)
+    bad["W_top_semantics"] = RUNTIME_TOP_APERTURE_SEMANTICS
+    bad["runtime_top_aperture_nm"] = "480"
+    bad["geometry_descriptor_sha256"] = descriptor_hash(bad)
+    add("G10E-NEG-015", "runtime top aperture mismatch", bad)
     add(
-        "G10E-NEG-014",
+        "G10E-NEG-016",
         "sidewall-aware EAS row without descriptor binding",
         {"source_artifact": "EAS", "sidewall_aware": "true"},
     )
@@ -916,6 +962,13 @@ def write_report(path: Path, title: str, body_lines: list[str]) -> None:
     path.write_text(text, encoding="utf-8")
 
 
+def normalize_lf(path: Path) -> None:
+    raw = path.read_bytes()
+    normalized = raw.replace(b"\r\n", b"\n")
+    if normalized != raw:
+        path.write_bytes(normalized)
+
+
 def report_paths() -> dict[str, Path]:
     return {
         "293": REPORT_DIR / f"293_NODI_COMSOL_GATE10A_SIDEWALL_IMPLEMENTATION_INVENTORY_{DATE_STAMP}.md",
@@ -1015,6 +1068,9 @@ def write_outputs(payload: dict[str, Any]) -> dict[str, Path]:
     write_json_atomic(paths["report_json"], payload)
     reports = report_paths()
     write_reports(payload, reports)
+    for path in list(paths.values()) + list(reports.values()):
+        if path != paths["manifest"] and path.exists():
+            normalize_lf(path)
 
     manifest_entries: list[dict[str, str]] = []
     for idx, path in enumerate(
@@ -1056,6 +1112,7 @@ def write_outputs(payload: dict[str, Any]) -> dict[str, Path]:
             }
         )
     write_csv_rows(paths["manifest"], manifest_entries)
+    normalize_lf(paths["manifest"])
     return {**paths, **reports}
 
 

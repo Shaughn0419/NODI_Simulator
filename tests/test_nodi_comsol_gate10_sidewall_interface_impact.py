@@ -45,6 +45,8 @@ def test_descriptor_conversion_formula_and_hash_are_stable() -> None:
         abs=1e-9,
     )
     assert descriptor["closure_status"] == "open"
+    assert descriptor["W_top_semantics"] == "comsol_descriptor"
+    assert descriptor["runtime_top_aperture_nm"] == ""
     assert gate10.validate_descriptor(descriptor) == []
     assert descriptor["geometry_descriptor_sha256"] == gate10.descriptor_hash(descriptor)
 
@@ -132,8 +134,33 @@ def test_rc51_freeze_impact_requires_review_only_geometry_descriptor_addendum() 
         "geometry_descriptor_sha256",
         "sidewall_deg_comsol",
         "sidewall_taper_angle_deg_nodi",
+        "W_top_semantics",
+        "runtime_top_aperture_nm",
         "W_bottom_unclipped_nm",
     }
+
+
+def test_runtime_top_aperture_semantics_fail_when_unbound_or_mismatched() -> None:
+    descriptor = gate10.build_descriptor(
+        descriptor_id="TEST-RUNTIME-TOP",
+        sidewall_deg_comsol=85.0,
+        w_top_nm=500.0,
+        depth_nm=900.0,
+    )
+
+    missing = dict(descriptor)
+    missing["W_top_semantics"] = "runtime_top_aperture"
+    missing["runtime_top_aperture_nm"] = ""
+    missing["geometry_descriptor_sha256"] = gate10.descriptor_hash(missing)
+    assert "runtime_top_aperture_nm required for runtime top semantics" in (
+        gate10.validate_descriptor(missing)
+    )
+
+    mismatched = dict(descriptor)
+    mismatched["W_top_semantics"] = "runtime_top_aperture"
+    mismatched["runtime_top_aperture_nm"] = "480"
+    mismatched["geometry_descriptor_sha256"] = gate10.descriptor_hash(mismatched)
+    assert "runtime_top_aperture_nm mismatch" in gate10.validate_descriptor(mismatched)
 
 
 def test_gate10_written_outputs_have_expected_shape_after_builder_run() -> None:

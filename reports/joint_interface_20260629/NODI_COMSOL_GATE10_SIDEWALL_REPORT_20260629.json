@@ -7,12 +7,12 @@
     "gate9_rc51_field_count": 365,
     "gate9_manifest_rows": 38,
     "inventory_rows": 13,
-    "freeze_impact_rows": 18,
-    "sidewall_required_fields_missing": 15,
-    "descriptor_schema_rows": 23,
+    "freeze_impact_rows": 20,
+    "sidewall_required_fields_missing": 17,
+    "descriptor_schema_rows": 25,
     "positive_fixture_rows": 4,
-    "negative_fixture_rows": 14,
-    "mutation_result_rows": 18,
+    "negative_fixture_rows": 16,
+    "mutation_result_rows": 20,
     "unexpected_pass_count": 0,
     "forbidden_promotion_count": 0,
     "rc51_addendum_status": "RC5.1_GEOMETRY_DESCRIPTOR_ADDENDUM_REVIEW_ONLY",
@@ -240,17 +240,17 @@
     },
     {
       "impact_id": "G10B-FREEZE-008",
-      "field_name": "D_nm",
+      "field_name": "W_top_semantics",
       "present_in_gate9_rc51": "false",
-      "freeze_impact": "missing_review_optional_or_future_gate",
-      "requiredness_for_sidewall_descriptor": "recommended",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
       "compatibility_class": "addendum-only",
-      "breaking_change_if_sidewall_aware_without_field": "false",
-      "recommendation": "ADDENDUM_RECOMMENDED_OR_FUTURE_GATE_ONLY"
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
     },
     {
       "impact_id": "G10B-FREEZE-009",
-      "field_name": "depth_nm",
+      "field_name": "runtime_top_aperture_nm",
       "present_in_gate9_rc51": "false",
       "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
       "requiredness_for_sidewall_descriptor": "required",
@@ -260,17 +260,17 @@
     },
     {
       "impact_id": "G10B-FREEZE-010",
-      "field_name": "W_bottom_unclipped_nm",
+      "field_name": "D_nm",
       "present_in_gate9_rc51": "false",
-      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
-      "requiredness_for_sidewall_descriptor": "required",
+      "freeze_impact": "missing_review_optional_or_future_gate",
+      "requiredness_for_sidewall_descriptor": "recommended",
       "compatibility_class": "addendum-only",
-      "breaking_change_if_sidewall_aware_without_field": "true",
-      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+      "breaking_change_if_sidewall_aware_without_field": "false",
+      "recommendation": "ADDENDUM_RECOMMENDED_OR_FUTURE_GATE_ONLY"
     },
     {
       "impact_id": "G10B-FREEZE-011",
-      "field_name": "W_bottom_runtime_clipped_nm",
+      "field_name": "depth_nm",
       "present_in_gate9_rc51": "false",
       "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
       "requiredness_for_sidewall_descriptor": "required",
@@ -280,7 +280,7 @@
     },
     {
       "impact_id": "G10B-FREEZE-012",
-      "field_name": "closure_status",
+      "field_name": "W_bottom_unclipped_nm",
       "present_in_gate9_rc51": "false",
       "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
       "requiredness_for_sidewall_descriptor": "required",
@@ -290,7 +290,7 @@
     },
     {
       "impact_id": "G10B-FREEZE-013",
-      "field_name": "closure_policy",
+      "field_name": "W_bottom_runtime_clipped_nm",
       "present_in_gate9_rc51": "false",
       "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
       "requiredness_for_sidewall_descriptor": "required",
@@ -300,7 +300,7 @@
     },
     {
       "impact_id": "G10B-FREEZE-014",
-      "field_name": "runtime_guard_status",
+      "field_name": "closure_status",
       "present_in_gate9_rc51": "false",
       "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
       "requiredness_for_sidewall_descriptor": "required",
@@ -310,7 +310,7 @@
     },
     {
       "impact_id": "G10B-FREEZE-015",
-      "field_name": "min_aperture_descriptor_nm",
+      "field_name": "closure_policy",
       "present_in_gate9_rc51": "false",
       "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
       "requiredness_for_sidewall_descriptor": "required",
@@ -320,7 +320,7 @@
     },
     {
       "impact_id": "G10B-FREEZE-016",
-      "field_name": "cross_section_geometry_version",
+      "field_name": "runtime_guard_status",
       "present_in_gate9_rc51": "false",
       "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
       "requiredness_for_sidewall_descriptor": "required",
@@ -330,6 +330,26 @@
     },
     {
       "impact_id": "G10B-FREEZE-017",
+      "field_name": "min_aperture_descriptor_nm",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-018",
+      "field_name": "cross_section_geometry_version",
+      "present_in_gate9_rc51": "false",
+      "freeze_impact": "missing_required_for_sidewall_aware_ingestion",
+      "requiredness_for_sidewall_descriptor": "required",
+      "compatibility_class": "addendum-only",
+      "breaking_change_if_sidewall_aware_without_field": "true",
+      "recommendation": "ADDENDUM_REQUIRED_FAIL_CLOSED_FOR_SIDEWALL_AWARE_ROWS"
+    },
+    {
+      "impact_id": "G10B-FREEZE-019",
       "field_name": "geometry_claim_level",
       "present_in_gate9_rc51": "false",
       "freeze_impact": "missing_review_optional_or_future_gate",
@@ -339,7 +359,7 @@
       "recommendation": "ADDENDUM_RECOMMENDED_OR_FUTURE_GATE_ONLY"
     },
     {
-      "impact_id": "G10B-FREEZE-018",
+      "impact_id": "G10B-FREEZE-020",
       "field_name": "geometry_surrogate_status",
       "present_in_gate9_rc51": "false",
       "freeze_impact": "missing_review_optional_or_future_gate",
@@ -423,6 +443,26 @@
     {
       "schema_id": "G10C-SCHEMA-008",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "W_top_semantics",
+      "field_type": "enum",
+      "requiredness": "required",
+      "semantics": "comsol_descriptor unless runtime_top_aperture is explicitly bound",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-009",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
+      "field_name": "runtime_top_aperture_nm",
+      "field_type": "float_nm_or_blank",
+      "requiredness": "conditional",
+      "semantics": "required only when W_top_semantics=runtime_top_aperture",
+      "authorization_default": "false",
+      "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
+    },
+    {
+      "schema_id": "G10C-SCHEMA-010",
+      "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "D_nm",
       "field_type": "float_nm",
       "requiredness": "alias_required",
@@ -431,7 +471,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-009",
+      "schema_id": "G10C-SCHEMA-011",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "depth_nm",
       "field_type": "float_nm",
@@ -441,7 +481,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-010",
+      "schema_id": "G10C-SCHEMA-012",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "W_bottom_unclipped_nm",
       "field_type": "float_nm",
@@ -451,7 +491,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-011",
+      "schema_id": "G10C-SCHEMA-013",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "W_bottom_runtime_clipped_nm",
       "field_type": "float_nm",
@@ -461,7 +501,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-012",
+      "schema_id": "G10C-SCHEMA-014",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "closure_status",
       "field_type": "enum",
@@ -471,7 +511,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-013",
+      "schema_id": "G10C-SCHEMA-015",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "closure_policy",
       "field_type": "enum",
@@ -481,7 +521,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-014",
+      "schema_id": "G10C-SCHEMA-016",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "runtime_guard_status",
       "field_type": "enum",
@@ -491,7 +531,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-015",
+      "schema_id": "G10C-SCHEMA-017",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "min_aperture_descriptor_nm",
       "field_type": "float_nm",
@@ -501,7 +541,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-016",
+      "schema_id": "G10C-SCHEMA-018",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "cross_section_geometry_version",
       "field_type": "enum",
@@ -511,7 +551,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-017",
+      "schema_id": "G10C-SCHEMA-019",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "geometry_claim_level",
       "field_type": "enum",
@@ -521,7 +561,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-018",
+      "schema_id": "G10C-SCHEMA-020",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "geometry_surrogate_status",
       "field_type": "enum",
@@ -531,7 +571,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-019",
+      "schema_id": "G10C-SCHEMA-021",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "not_measured_geometry",
       "field_type": "boolean",
@@ -541,7 +581,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-020",
+      "schema_id": "G10C-SCHEMA-022",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "not_runtime_configuration",
       "field_type": "boolean",
@@ -551,7 +591,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-021",
+      "schema_id": "G10C-SCHEMA-023",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "not_production_ingestion",
       "field_type": "boolean",
@@ -561,7 +601,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-022",
+      "schema_id": "G10C-SCHEMA-024",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "allowed_use",
       "field_type": "text",
@@ -571,7 +611,7 @@
       "claim_boundary": "review_only_geometry_identity_not_measured_not_runtime"
     },
     {
-      "schema_id": "G10C-SCHEMA-023",
+      "schema_id": "G10C-SCHEMA-025",
       "descriptor_version": "SIDEWALL_GEOMETRY_DESCRIPTOR_V2_REVIEW_ONLY",
       "field_name": "blocked_use",
       "field_type": "text",
@@ -590,6 +630,8 @@
       "sidewall_taper_angle_deg_nodi": "5",
       "angle_conversion_formula_id": "sidewall_from_horizontal_to_taper_from_vertical_v1",
       "W_top_nm": "500",
+      "W_top_semantics": "comsol_descriptor",
+      "runtime_top_aperture_nm": "",
       "D_nm": "900",
       "depth_nm": "900",
       "W_bottom_unclipped_nm": "342.520405653",
@@ -606,7 +648,7 @@
       "not_production_ingestion": "true",
       "allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
       "blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
-      "geometry_descriptor_sha256": "9f111cf7e07dfe495457512a6ab5fc329e0cf58d0f40e842e6f37a0ea562654d",
+      "geometry_descriptor_sha256": "8d44c3871249564f85b53b08faeb022f9faca587ae0716d646ccbd888abf1b47",
       "fixture_id": "G10E-POS-001",
       "fixture_family": "positive_descriptor",
       "fixture_label": "process_anchor_open",
@@ -622,6 +664,8 @@
       "sidewall_taper_angle_deg_nodi": "0",
       "angle_conversion_formula_id": "sidewall_from_horizontal_to_taper_from_vertical_v1",
       "W_top_nm": "500",
+      "W_top_semantics": "comsol_descriptor",
+      "runtime_top_aperture_nm": "",
       "D_nm": "900",
       "depth_nm": "900",
       "W_bottom_unclipped_nm": "500",
@@ -638,7 +682,7 @@
       "not_production_ingestion": "true",
       "allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
       "blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
-      "geometry_descriptor_sha256": "e6c51eb662ac30d354ae84d29640bfd8d65a0a911ca7c45417573989de117531",
+      "geometry_descriptor_sha256": "0ef05d0180708969b2a71dac924d1d12434e4dc821937891533d7dc3333805b9",
       "fixture_id": "G10E-POS-002",
       "fixture_family": "positive_descriptor",
       "fixture_label": "vertical_sidewall_rectangle_limit",
@@ -654,6 +698,8 @@
       "sidewall_taper_angle_deg_nodi": "20",
       "angle_conversion_formula_id": "sidewall_from_horizontal_to_taper_from_vertical_v1",
       "W_top_nm": "500",
+      "W_top_semantics": "comsol_descriptor",
+      "runtime_top_aperture_nm": "",
       "D_nm": "600",
       "depth_nm": "600",
       "W_bottom_unclipped_nm": "63.2357188806",
@@ -670,7 +716,7 @@
       "not_production_ingestion": "true",
       "allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
       "blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
-      "geometry_descriptor_sha256": "4a98697694aebf61a5ee0d334e29cc17c475e47fe479208219b04d61655b032d",
+      "geometry_descriptor_sha256": "d2cc4b853d2c85b280334938a87c8b82b2f5ad17b1e1dbeedf6b2646548ff170",
       "fixture_id": "G10E-POS-003",
       "fixture_family": "positive_descriptor",
       "fixture_label": "near_closed_formula_pass",
@@ -686,6 +732,8 @@
       "sidewall_taper_angle_deg_nodi": "10",
       "angle_conversion_formula_id": "sidewall_from_horizontal_to_taper_from_vertical_v1",
       "W_top_nm": "800",
+      "W_top_semantics": "comsol_descriptor",
+      "runtime_top_aperture_nm": "",
       "D_nm": "600",
       "depth_nm": "600",
       "W_bottom_unclipped_nm": "588.40762315",
@@ -702,7 +750,7 @@
       "not_production_ingestion": "true",
       "allowed_use": "review-only geometry identity descriptor;interface schema validation;sidewall-aware package quarantine/preflight",
       "blocked_use": "q_ch weighting;q_ch*eta;q_ch*chi*eta;chi_selected;route_score;JOINT_ROUTE_CLASS/JRC;yield;winner;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;runtime configuration;production ingestion;measured geometry claim;formula use;direct PRS bin;grain-level ingestion;accepted row expansion",
-      "geometry_descriptor_sha256": "2d7a381e820885de5e401304ab2e1ab93a084d966c8a18337749c23c0f2cf324",
+      "geometry_descriptor_sha256": "8c6333d56c2c5a540e6e0716fae7c0780487b163aee46bb26d40a3d179c98dd1",
       "fixture_id": "G10E-POS-004",
       "fixture_family": "positive_descriptor",
       "fixture_label": "open_trapezoid_formula_pass",
@@ -858,6 +906,28 @@
     {
       "fixture_id": "G10E-NEG-014",
       "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "runtime top aperture missing",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "runtime_top_aperture_nm required for runtime top semantics",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-015",
+      "fixture_family": "negative_sidewall_descriptor",
+      "mutation": "runtime top aperture mismatch",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "validator_status": "FAIL_AS_EXPECTED",
+      "expected_fail_reason": "runtime_top_aperture_nm mismatch",
+      "forbidden_promotion_detected": "false",
+      "unexpected_pass": "false"
+    },
+    {
+      "fixture_id": "G10E-NEG-016",
+      "fixture_family": "negative_sidewall_descriptor",
       "mutation": "sidewall-aware EAS row without descriptor binding",
       "expected_result": "FAIL",
       "observed_result": "FAIL_AS_EXPECTED",
@@ -1006,6 +1076,22 @@
     },
     {
       "result_id": "G10E-NEG-014",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-015",
+      "fixture_family": "negative_sidewall_descriptor",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL_AS_EXPECTED",
+      "pass_fail": "PASS",
+      "authorization_promotion": "false"
+    },
+    {
+      "result_id": "G10E-NEG-016",
       "fixture_family": "negative_sidewall_descriptor",
       "expected_result": "FAIL",
       "observed_result": "FAIL_AS_EXPECTED",
@@ -1424,19 +1510,19 @@
     {
       "validator_check_id": "G10C-VAL-002",
       "check_name": "negative_descriptor_fixtures",
-      "rows_checked": "14",
+      "rows_checked": "16",
       "status": "PASS"
     },
     {
       "validator_check_id": "G10C-VAL-003",
       "check_name": "rc51_sidewall_binding_presence",
-      "rows_checked": "18",
+      "rows_checked": "20",
       "status": "PASS_ADDENDUM_REQUIRED"
     },
     {
       "validator_check_id": "G10C-VAL-004",
       "check_name": "authorization_flags",
-      "rows_checked": "18",
+      "rows_checked": "20",
       "status": "PASS_ALL_FALSE_OR_NEGATIVE_CONTROL"
     }
   ]

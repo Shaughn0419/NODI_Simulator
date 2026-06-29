@@ -1,5 +1,5 @@
-validator_check_id,check_name,rows_checked,status
-G10C-VAL-001,positive_descriptor_fixtures,4,PASS
-G10C-VAL-002,negative_descriptor_fixtures,14,PASS
-G10C-VAL-003,rc51_sidewall_binding_presence,18,PASS_ADDENDUM_REQUIRED
-G10C-VAL-004,authorization_flags,18,PASS_ALL_FALSE_OR_NEGATIVE_CONTROL
+validator_check_id,check_name,rows_checked,status
+G10C-VAL-001,positive_descriptor_fixtures,4,PASS
+G10C-VAL-002,negative_descriptor_fixtures,16,PASS
+G10C-VAL-003,rc51_sidewall_binding_presence,20,PASS_ADDENDUM_REQUIRED
+G10C-VAL-004,authorization_flags,20,PASS_ALL_FALSE_OR_NEGATIVE_CONTROL

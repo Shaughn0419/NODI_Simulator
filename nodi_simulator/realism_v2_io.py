@@ -71,7 +71,7 @@ def write_csv_rows(path: Path, rows: list[dict[str, Any]]) -> None:
             if key not in fieldnames:
                 fieldnames.append(key)
     buffer = io.StringIO(newline="")
-    writer = csv.DictWriter(buffer, fieldnames=fieldnames)
+    writer = csv.DictWriter(buffer, fieldnames=fieldnames, lineterminator="\n")
     writer.writeheader()
     writer.writerows(rows)
     _atomic_write_text(path, buffer.getvalue())
@@ -85,6 +85,7 @@ def _atomic_write_text(path: Path, text: str) -> None:
             "w",
             dir=path.parent,
             encoding="utf-8",
+            newline="\n",
             prefix=f".{path.name}.",
             suffix=".tmp",
             delete=False,

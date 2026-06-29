@@ -1563,6 +1563,23 @@ def _validate_geometry_descriptor_v2_sidewall_fields(
 
     if w_bottom_runtime_clipped_nm is not None and w_bottom_runtime_clipped_nm < 0.0:
         _issue(issues, row_index, "DESC-V2", "W_bottom_runtime_clipped_nm is negative")
+    if (
+        w_bottom_unclipped_nm is not None
+        and w_bottom_runtime_clipped_nm is not None
+    ):
+        expected_runtime_bottom = max(w_bottom_unclipped_nm, 0.0)
+        if not math.isclose(
+            w_bottom_runtime_clipped_nm,
+            expected_runtime_bottom,
+            rel_tol=1.0e-9,
+            abs_tol=5.0e-2,
+        ):
+            _issue(
+                issues,
+                row_index,
+                "DESC-V2",
+                "W_bottom_runtime_clipped_nm does not match clipped bottom width",
+            )
     if w_bottom_unclipped_nm is not None and w_bottom_unclipped_nm <= 0.0:
         if _value(row, "closure_status") == "open":
             _issue(
@@ -8899,7 +8916,21 @@ def _validate_position_response_sidewall_v2_fields(
                 "trapezoid row uses rectangular sampler geometry",
             )
 
-    _validate_sidewall_tail_particle_support_guard(row, row_index, issues)
+    diameter_nm = _float_field(row, "diameter_nm", row_index, "PRS-SIDEWALL-V2", issues)
+    particle_radius_nm = _float_field(
+        row,
+        "particle_radius_nm",
+        row_index,
+        "PRS-SIDEWALL-V2",
+        issues,
+    )
+    _validate_sidewall_tail_particle_support_guard(
+        row,
+        row_index,
+        diameter_nm=diameter_nm,
+        particle_radius_nm=particle_radius_nm,
+        issues=issues,
+    )
     local_geometry: dict[str, float] = {}
     for field in (
         "x_nm",
@@ -8929,7 +8960,14 @@ def _validate_position_response_sidewall_v2_fields(
         "PRS-SIDEWALL-V2",
         issues,
     )
-    _validate_sidewall_local_geometry(row_index, local_geometry, issues)
+    nearest_wall_id = _value(row, "nearest_wall_id")
+    _validate_sidewall_local_geometry(
+        row_index,
+        local_geometry,
+        nearest_wall_id=nearest_wall_id,
+        particle_radius_nm=particle_radius_nm,
+        issues=issues,
+    )
 
     bin_accessible = _bool_field(row, "bin_accessible", row_index, "PRS-SIDEWALL-V2", issues)
     neighbor_fill_used = _bool_field(
@@ -8990,6 +9028,9 @@ def _validate_position_response_sidewall_v2_fields(
 def _validate_sidewall_local_geometry(
     row_index: int,
     values: Mapping[str, float],
+    *,
+    nearest_wall_id: str,
+    particle_radius_nm: float | None,
     issues: list[str],
 ) -> None:
     x_left = values.get("x_left_nm")
@@ -9050,6 +9091,49 @@ def _validate_sidewall_local_geometry(
         distance = values.get(field)
         if distance is not None and distance < 0.0:
             _issue(issues, row_index, "PRS-SIDEWALL-V2", f"{field} is negative")
+    wall_distances = {
+        "top": values.get("d_top_nm"),
+        "bottom": values.get("d_bottom_nm"),
+        "left_side": values.get("d_side_left_nm"),
+        "right_side": values.get("d_side_right_nm"),
+    }
+    d_nearest = values.get("d_nearest_wall_nm")
+    if d_nearest is not None and all(value is not None for value in wall_distances.values()):
+        expected_nearest = min(value for value in wall_distances.values() if value is not None)
+        if not math.isclose(d_nearest, expected_nearest, rel_tol=1.0e-9, abs_tol=1.0e-6):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "d_nearest_wall_nm does not match nearest wall distance",
+            )
+        selected_distance = wall_distances.get(nearest_wall_id)
+        if selected_distance is not None and not math.isclose(
+            selected_distance,
+            expected_nearest,
+            rel_tol=1.0e-9,
+            abs_tol=1.0e-6,
+        ):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "nearest_wall_id does not identify a nearest wall",
+            )
+    surface_gap = values.get("surface_gap_for_particle_nm")
+    if (
+        surface_gap is not None
+        and d_nearest is not None
+        and particle_radius_nm is not None
+    ):
+        expected_gap = d_nearest - particle_radius_nm
+        if not math.isclose(surface_gap, expected_gap, rel_tol=1.0e-9, abs_tol=1.0e-6):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "surface_gap_for_particle_nm does not match nearest wall minus particle radius",
+            )
 
 
 def _validate_sidewall_propagation_status_usage(
@@ -9110,16 +9194,11 @@ def _validate_sidewall_propagation_status_usage(
 def _validate_sidewall_tail_particle_support_guard(
     row: Mapping[str, Any],
     row_index: int,
+    *,
+    diameter_nm: float | None,
+    particle_radius_nm: float | None,
     issues: list[str],
 ) -> None:
-    diameter_nm = _float_field(row, "diameter_nm", row_index, "PRS-SIDEWALL-V2", issues)
-    particle_radius_nm = _float_field(
-        row,
-        "particle_radius_nm",
-        row_index,
-        "PRS-SIDEWALL-V2",
-        issues,
-    )
     large_tail = bool(
         (diameter_nm is not None and diameter_nm >= 220.0)
         or (particle_radius_nm is not None and particle_radius_nm >= 110.0)

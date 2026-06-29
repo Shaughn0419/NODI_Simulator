@@ -31,6 +31,16 @@ def test_write_csv_rows_preserves_first_seen_column_order(tmp_path):
         ]
 
 
+def test_write_csv_rows_uses_lf_line_endings(tmp_path):
+    path = tmp_path / "rows.csv"
+
+    write_csv_rows(path, [{"a": "1"}, {"a": "2"}])
+
+    data = path.read_bytes()
+    assert b"\r\n" not in data
+    assert data == b"a\n1\n2\n"
+
+
 def test_write_csv_rows_replaces_atomically(tmp_path, monkeypatch):
     path = tmp_path / "rows.csv"
     replace_calls: list[tuple[str, str, bool]] = []
