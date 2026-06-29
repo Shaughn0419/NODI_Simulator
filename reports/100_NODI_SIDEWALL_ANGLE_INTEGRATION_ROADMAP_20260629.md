@@ -79,6 +79,7 @@ Completed NODI-side guardrails:
 - Expanded observation-signature binding to compare row values for geometry version, sampler/support, trajectory boundary, wall-distance, flow, reference, fluidic, electrokinetic, angle, and particle-radius guard fields rather than accepting stale key-name fragments.
 - Added fluidic, fluidic-network, and electrokinetic model/claim guard fields to required observation signatures so proxy/blocked transport state changes cannot reuse stale sidewall cache identities.
 - Added cache-status hard-fail so `blocked_old_rectangular_cache` cannot satisfy propagated sidewall PRS/EAS rows and is limited to blocked/non-propagated audit semantics.
+- Added Package B particle-center support slice oracle for `open` / `narrow` / `blocked` status and steric block reasons, then routed trapezoid sampler diagnostics through that oracle.
 
 Still blocked in this roadmap:
 
