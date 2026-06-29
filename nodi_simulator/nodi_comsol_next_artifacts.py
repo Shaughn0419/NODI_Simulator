@@ -782,9 +782,13 @@ SIDEWALL_V2_OBSERVATION_CACHE_REQUIRED_FIELDS: tuple[str, ...] = (
     "cache_geometry_match_status",
 )
 SIDEWALL_V2_ACCEPTANCE_GUARD_REQUIRED_FIELDS: tuple[str, ...] = (
+    "roadmap_status",
     "not_accepted_for_formula_use",
     "not_accepted_for_runtime_config",
     "not_accepted_for_production",
+)
+SIDEWALL_V2_ROADMAP_STATUS_ALLOWED = frozenset(
+    {"roadmap_only", "surrogate_sensitivity_only", "descriptor_only", "context-only"}
 )
 SIDEWALL_V2_CACHE_GEOMETRY_MATCH_STATUS_ALLOWED = frozenset(
     {
@@ -9595,7 +9599,10 @@ def _validate_sidewall_v2_acceptance_guards(
         row_index,
         issues,
     )
+    _validate_enum(row, "roadmap_status", SIDEWALL_V2_ROADMAP_STATUS_ALLOWED, row_index, rule_id, issues)
     for field in SIDEWALL_V2_ACCEPTANCE_GUARD_REQUIRED_FIELDS:
+        if field == "roadmap_status":
+            continue
         _validate_bool_equals(row, field, True, row_index, rule_id, issues)
 
 

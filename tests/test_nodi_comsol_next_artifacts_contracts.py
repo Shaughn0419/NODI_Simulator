@@ -308,6 +308,7 @@ def _sidewall_observation_cache_fields(
 
 def _sidewall_acceptance_guard_fields() -> dict[str, object]:
     return {
+        "roadmap_status": "surrogate_sensitivity_only",
         "not_accepted_for_formula_use": "true",
         "not_accepted_for_runtime_config": "true",
         "not_accepted_for_production": "true",
@@ -578,6 +579,14 @@ def test_position_response_sidewall_v2_requires_acceptance_guards() -> None:
 def test_position_response_sidewall_v2_rejects_formula_use_acceptance() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(not_accepted_for_formula_use="false")]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_promoted_roadmap_status() -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(roadmap_status="production_ready")]
     )
 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
@@ -1016,6 +1025,14 @@ def test_effective_aperture_sidewall_v2_requires_acceptance_guards() -> None:
 def test_effective_aperture_sidewall_v2_rejects_runtime_config_acceptance() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(not_accepted_for_runtime_config="false")]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_promoted_roadmap_status() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(roadmap_status="production_ready")]
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
