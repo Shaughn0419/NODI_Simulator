@@ -3,7 +3,7 @@
     "disposition": "NODI_GATE37_SIDEWALL_PACKAGE_C_REFLECTION_METRIC_HARDENING_CANDIDATE_READY_NO_PROOF_REGISTRATION",
     "artifact_id": "GATE37_PACKAGE_C_REFLECTION_METRIC_HARDENING_CANDIDATE_20260630",
     "claim_boundary": "candidate_metric_hardening_not_package_c_proof_registered_not_validated_solver_output",
-    "gate37_build_head": "66dd9d9fbaeca41077e1820e5ef8711d85949024",
+    "gate37_build_head": "a3b56618b8ef81e7f665098afbcedf9cf83c553b",
     "gate33_36_disposition": "NODI_GATE33_36_SIDEWALL_PACKAGE_C_REFLECTION_PROOF_AUTHORIZATION_DESIGN_READY_NO_PROOF_REGISTRATION",
     "gate33_36_expected_disposition": "NODI_GATE33_36_SIDEWALL_PACKAGE_C_REFLECTION_PROOF_AUTHORIZATION_DESIGN_READY_NO_PROOF_REGISTRATION",
     "scenario_metric_rows_inherited": 216,
