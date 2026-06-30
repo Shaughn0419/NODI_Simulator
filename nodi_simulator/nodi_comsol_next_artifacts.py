@@ -10163,6 +10163,19 @@ def _validate_sidewall_v2_descriptor_context(
     )
     if not _value(row, "geometry_profile_source"):
         _issue(issues, row_index, rule_id, "geometry_profile_source is blank")
+    elif (
+        _value(row, "geometry_profile_source").lower() == "comsol_descriptor"
+        and _value(row, "geometry_profile_sha256")
+        and _value(row, "source_geometry_descriptor_sha")
+        and _value(row, "geometry_profile_sha256").lower()
+        != _value(row, "source_geometry_descriptor_sha").lower()
+    ):
+        _issue(
+            issues,
+            row_index,
+            rule_id,
+            "comsol_descriptor geometry_profile_sha256 does not match source_geometry_descriptor_sha",
+        )
 
     sidewall_deg = _float_field(row, "sidewall_deg_comsol", row_index, rule_id, issues)
     taper_deg = _float_field(row, "sidewall_taper_angle_deg_nodi", row_index, rule_id, issues)

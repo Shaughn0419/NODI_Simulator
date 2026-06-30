@@ -1545,6 +1545,19 @@ def test_position_response_sidewall_v2_requires_source_geometry_descriptor_sha()
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_comsol_descriptor_profile_sha_mismatch() -> None:
+    mismatched_profile_sha = "b" * 64
+    row = _valid_prs_sidewall_v2_row(geometry_profile_sha256=mismatched_profile_sha)
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        f"geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}",
+        f"geometry_profile_sha256={mismatched_profile_sha}",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_requires_source_grain_binding_fields() -> None:
     row = _valid_prs_sidewall_v2_row()
     del row["source_route_id_nodi"]
@@ -2382,6 +2395,19 @@ def test_effective_aperture_sidewall_v2_requires_source_geometry_descriptor_sha(
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(source_geometry_descriptor_sha="not-a-sha")]
     )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_effective_aperture_sidewall_v2_rejects_comsol_descriptor_profile_sha_mismatch() -> None:
+    mismatched_profile_sha = "b" * 64
+    row = _valid_eas_sidewall_v2_row(geometry_profile_sha256=mismatched_profile_sha)
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        f"geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}",
+        f"geometry_profile_sha256={mismatched_profile_sha}",
+    )
+
+    issues = validate_effective_aperture_surrogate_rows([row])
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 
