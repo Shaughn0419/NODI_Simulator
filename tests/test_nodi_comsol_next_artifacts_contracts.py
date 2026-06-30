@@ -135,6 +135,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     validate_next_artifacts_runner_authorization_gate_record,
     validate_plan_only_blueprint_bundle,
     validate_bounded_smoke_readiness_report,
+    validate_position_response_production_candidate_rows,
     validate_position_response_surface_rows,
     validate_runner_launch_plan,
     validate_sidewall_package_d_precheck_rows,
@@ -5780,6 +5781,29 @@ def test_production_generation_report_writes_eas_and_blocks_only_prs(
         "COMSOL_descriptor_if_available"
     ]
     assert validate_production_generation_report(report) == []
+
+
+def test_position_response_production_candidate_validator_accepts_edge_primary_candidate(
+    tmp_path: Path,
+) -> None:
+    source_path = tmp_path / "edge_primary_xz_diagnostic_source.csv"
+    write_csv_rows(source_path, _edge_primary_xz_diagnostic_prs_bin_source_rows())
+    candidate = write_position_response_edge_primary_candidate_bundle(
+        source_path=source_path,
+        output_dir=tmp_path / "edge-primary-candidate",
+    )
+
+    rows = read_csv_rows(Path(candidate["candidate_csv"]))
+
+    assert validate_position_response_production_candidate_rows(rows) == []
+
+
+def test_position_response_production_candidate_validator_blocks_sidewall_v2() -> None:
+    issues = validate_position_response_production_candidate_rows(
+        [_valid_prs_sidewall_v2_row()]
+    )
+
+    _assert_has_issue(issues, "PRS-PROD-POLICY")
 
 
 def test_production_generation_report_accepts_valid_prs_candidate(

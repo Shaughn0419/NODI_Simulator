@@ -1565,6 +1565,32 @@ def assert_valid_position_response_surface_csv(csv_path: Path, **kwargs: Any) ->
         raise ContractValidationError(POSITION_RESPONSE_ARTIFACT, issues)
 
 
+def validate_position_response_production_candidate_rows(
+    rows: Sequence[Mapping[str, Any]],
+    *,
+    allow_pending_source_hash: bool = False,
+) -> list[str]:
+    issues = validate_position_response_surface_rows(
+        rows,
+        production_table=True,
+        allow_pending_source_hash=allow_pending_source_hash,
+        require_complete_row_arithmetic=True,
+    )
+    issues.extend(_production_position_response_candidate_policy_issues(rows))
+    return issues
+
+
+def validate_position_response_production_candidate_csv(
+    csv_path: Path,
+    *,
+    allow_pending_source_hash: bool = False,
+) -> list[str]:
+    return validate_position_response_production_candidate_rows(
+        read_csv_rows(csv_path),
+        allow_pending_source_hash=allow_pending_source_hash,
+    )
+
+
 def validate_position_response_surface_rows(
     rows: Sequence[Mapping[str, Any]],
     *,
@@ -5984,15 +6010,8 @@ def build_production_generation_report(
         if position_response_candidate_path.exists():
             prs_candidate_sha = sha256_file(position_response_candidate_path)
             prs_candidate_rows = read_csv_rows(position_response_candidate_path)
-            prs_candidate_issues = validate_position_response_surface_rows(
+            prs_candidate_issues = validate_position_response_production_candidate_rows(
                 prs_candidate_rows,
-                production_table=True,
-                require_complete_row_arithmetic=True,
-            )
-            prs_candidate_issues.extend(
-                _production_position_response_candidate_policy_issues(
-                    prs_candidate_rows
-                )
             )
             issues.extend(
                 f"PROD-PRS-CANDIDATE: {issue}" for issue in prs_candidate_issues
@@ -6296,13 +6315,8 @@ def write_production_generation_bundle(
                         ["PROD-PRS-WRITE: pass status missing PRS candidate path"],
                     )
                 prs_rows = read_csv_rows(position_response_candidate_path)
-                prs_issues = validate_position_response_surface_rows(
+                prs_issues = validate_position_response_production_candidate_rows(
                     prs_rows,
-                    production_table=True,
-                    require_complete_row_arithmetic=True,
-                )
-                prs_issues.extend(
-                    _production_position_response_candidate_policy_issues(prs_rows)
                 )
                 if prs_issues:
                     raise ContractValidationError(

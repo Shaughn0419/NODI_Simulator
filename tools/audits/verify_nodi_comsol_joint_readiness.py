@@ -15,7 +15,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from nodi_simulator.nodi_comsol_next_artifacts import (
     PRS_NEUTRAL_FLOW_CONDITION_ID,
     validate_effective_aperture_surrogate_csv,
-    validate_position_response_surface_csv,
+    validate_position_response_production_candidate_csv,
     validate_production_generation_report,
 )
 from nodi_simulator.realism_v2_io import read_csv_rows, sha256_file, write_json_atomic
@@ -406,11 +406,7 @@ def _validate_matrix(matrix_path: Path, checks: list[dict[str, object]], issues:
 
 
 def _validate_prs(prs_path: Path, checks: list[dict[str, object]], issues: list[str]) -> None:
-    validator_issues = validate_position_response_surface_csv(
-        prs_path,
-        production_table=True,
-        require_complete_row_arithmetic=True,
-    )
+    validator_issues = validate_position_response_production_candidate_csv(prs_path)
     checks.append(
         {
             "label": "prs_contract_validator",
