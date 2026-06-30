@@ -1,0 +1,6 @@
+validation_id,command,required_for_pass,recorded_result
+G23F-VALIDATION-001,python tools/audits/build_nodi_comsol_gate23_sidewall_static_fixture_execution.py --confirm-gate23-static-fixture-execution,true,PENDING_RUNTIME_VALIDATION
+G23F-VALIDATION-002,python -m py_compile tools/audits/build_nodi_comsol_gate23_sidewall_static_fixture_execution.py,true,PENDING_RUNTIME_VALIDATION
+G23F-VALIDATION-003,python -m pytest tests/test_nodi_comsol_gate23_sidewall_static_fixture_execution.py -q,true,PENDING_RUNTIME_VALIDATION
+G23F-VALIDATION-004,python -m pytest tests/test_nodi_comsol_gate22_sidewall_validator_binding.py tests/test_nodi_comsol_gate23_sidewall_static_fixture_execution.py -q,true,PENDING_RUNTIME_VALIDATION
+G23F-VALIDATION-005,python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py tests/test_cross_section_geometry.py -q,true,PENDING_RUNTIME_VALIDATION

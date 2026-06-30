@@ -31,13 +31,16 @@ The current supported split is:
 | Sampler propagation | Trapezoid sampler emits support status, steric block reason, nearest-wall distances, and surface gap diagnostics. | `nodi_simulator/utils.py` |
 | Actual runtime signature | Event-loop and pure-advection block batches bind sampler diagnostics into `observation_signature`. | `test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics` |
 | PRS sidewall v2 signature | PRS rows require exact sampler/support/wall-distance signature fragments and row/signature binding. | `tests/test_nodi_comsol_next_artifacts_contracts.py` |
-| Package C gate | Any PRS basis/source-basis field carrying `wall_distance` requires `includes_trajectory_near_wall_metrics=true` and `package_C_validation_status=pass`. | commit `dc12148` |
+| Package C gate | Any PRS basis/source-basis field carrying `wall_distance` requires `includes_trajectory_near_wall_metrics=true` plus a future authorized Package C proof; current no-auth registry is empty and `package_C_validation_status=pass` fails closed. | `test_sidewall_package_d_precheck_blocks_near_wall_metrics_until_package_c_authorized` |
 | Grain/admission prechecks | Package D and PRS validators reject D900-to-D1200 borrowing, direct edge4-to-edge20 promotion, and 220/300 nm large-tail auto-admission without exact steric support. | `test_position_response_sidewall_v2_rejects_D900_to_D1200_source_borrowing`, `test_position_response_sidewall_v2_rejects_edge4_to_edge20_direct_mapping`, `test_position_response_sidewall_v2_rejects_auto_tail_admission` |
 | Blocked-bin consistency | PRS sidewall v2 rows require `bin_accessible` and `bin_particle_center_support_status` to agree; blocked bins require `blocked_reason`, `decision_use_allowed=false`, no neighbor fill, and no numeric response/proxy values. | `test_position_response_sidewall_v2_rejects_blocked_bin_neighbor_fill`, `test_position_response_sidewall_v2_rejects_blocked_bin_numeric_response`, `test_position_response_sidewall_v2_rejects_inaccessible_open_support_status`, `test_position_response_sidewall_v2_rejects_blocked_support_marked_accessible` |
 | PRS propagated allowlist | Propagated trapezoid PRS rows allow only implemented sampler, flow, flow-control, and boundary states. | `test_position_response_sidewall_v2_rejects_unsupported_propagated_flow_control` |
 | Propagation-status usage | Propagated PRS/EAS sidewall v2 rows cannot carry `geometry_not_propagated_reasons`; non-propagated rows must remain blocked/audit-labeled. | `test_effective_aperture_sidewall_v2_rejects_propagated_not_propagated_reason` |
 | EAS generic surrogate guard | Generic `W_eff_surrogate_nm` must be an explicit numeric alias of a named sidewall surrogate; eta/rank fields stay disabled/no-rank. | commit `c9ea9b7` |
 | Claim blacklist | Sidewall PRS/EAS artifacts and Package D precheck reject claim-promotion aliases including `rank_value`, `route_rank_value`, `sidewall_rank_value`, Package D `rank_under_surrogate`, `route_score_norm`, `sidewall_score_value`, `JRC_value`, `joint_route_class_candidate`, `chi_selected_flag`, `q_ch_weight`, `q_ch_weighting`, bare/unitized `flow_rate` and `Q`, `q_ch_m3_s`, and `comsol_Q_proxy`, plus positive `sidewall_aware=true` shortcuts. | `test_position_response_sidewall_v2_rejects_forbidden_flow_alias_columns`, `test_effective_aperture_sidewall_v2_rejects_forbidden_flow_alias_columns`, `test_sidewall_package_d_precheck_scans_forbidden_columns_even_when_flag_passes` |
+| Validator CLI boundary | PRS, EAS, and Package D sidewall validators print `PASS_CONTEXT_ONLY_NOT_PRODUCTION`, not bare production-style `PASS`. | `test_sidewall_prs_validator_cli_accepts_valid_sidewall_csv`, `test_sidewall_eas_validator_cli_accepts_valid_sidewall_csv`, `test_sidewall_package_d_precheck_cli_accepts_valid_csv` |
+| Production candidate policy | PRS production candidate rows and CSV validation reject sidewall v2 artifacts, `not_accepted_for_production=true`, and roadmap-only statuses. | `test_position_response_production_candidate_csv_blocks_sidewall_v2` |
+| Gate23 static fixture packet | Gate22 source hashes are locked; 29 static fixture execution rows are executable without runtime; Package C proof registry is fail-closed. | `tests/test_nodi_comsol_gate23_sidewall_static_fixture_execution.py` |
 
 ## Still Blocked
 
@@ -54,27 +57,28 @@ The following remain blocked and must not be inferred from current sidewall-awar
 
 ## Verification
 
-Latest clean-tree sidewall mainline regression command:
-
-```text
-python -m pytest tests/test_cross_section_geometry.py tests/test_nodi_comsol_next_artifacts_contracts.py tests/test_nodi_comsol_gate11_sidewall_convergence.py tests/test_nodi_comsol_gate12_sidewall_addendum_release_candidate.py tests/test_nodi_comsol_gate13_sidewall_guard_convergence.py tests/test_nodi_comsol_gate14_sidewall_implementation_contract.py tests/test_physics_core.py::TestIntegration::test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics tests/test_physics_core.py::TestIntegration::test_batch_signature_keeps_measured_profile_lookup_blocked_until_validated -q
-```
-
-Latest result:
-
-```text
-504 passed in 182.35s (0:03:02)
-```
-
-Additional focused verification after adding the latest claim-alias, blocked-bin, profile-hash, and profile-identity guards:
+Latest clean-tree sidewall mainline regression commands:
 
 ```text
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q
-420 passed in 64.19s (0:01:04)
-python -m pytest tests/test_cross_section_geometry.py -q
-38 passed in 0.17s
-python -m pytest tests/test_physics_core.py -k channel_geometry -q
-3 passed, 383 deselected in 0.92s
+476 passed in 168.52s (0:02:48)
+
+python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k "sidewall or production_candidate_validator"
+307 passed, 169 deselected in 15.66s
+
+python -m pytest tests/test_cross_section_geometry.py tests/test_physics_core.py -q -k "ideal_rectangle or sidewall or trapezoid"
+35 passed, 389 deselected in 0.25s
+
+python -m pytest tests/test_nodi_comsol_gate23_sidewall_static_fixture_execution.py -q
+7 passed in 6.19s
+```
+
+Additional CLI/compile verification:
+
+```text
+python -m py_compile nodi_simulator/nodi_comsol_next_artifacts.py tools/audits/validate_nodi_position_response_surface.py tools/audits/validate_nodi_effective_aperture_surrogate_sensitivity.py tools/audits/validate_nodi_sidewall_package_d_precheck.py tools/audits/build_nodi_comsol_gate23_sidewall_static_fixture_execution.py
+python tools/audits/build_nodi_comsol_gate23_sidewall_static_fixture_execution.py --confirm-gate23-static-fixture-execution
+NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH
 ```
 
 ## Current Go/No-Go
@@ -83,8 +87,8 @@ python -m pytest tests/test_physics_core.py -k channel_geometry -q
 | --- | --- | --- |
 | Package A | pass for schema/descriptor/validator guard scope | No PRS/EAS data generation authorized by this packet. |
 | Package B | pass for geometry primitive, sampler support, and actual signature binding | Flux-weighted trapezoid sampling remains blocked. |
-| Package C | partial audit/guard pass | Geometry wall-distance primitive exists; validated hindered diffusion and specular reflection remain blocked. |
-| Package D | validator/preflight guard pass only | Sidewall PRS/EAS pilot generation remains no-claim and blocked unless A/B and relevant C prechecks pass. |
+| Package C | blocked/fail-closed under current no-auth gate | Geometry wall-distance primitive exists, but no Package C physics authorization proof is registered; validated hindered diffusion and specular reflection remain blocked. |
+| Package D | validator/preflight guard pass only | Sidewall PRS/EAS pilot generation remains no-claim and blocked for trajectory/near-wall/wall-distance metrics unless a future Package C gate passes. |
 
 ## Next Safe Actions
 

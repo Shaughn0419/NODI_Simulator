@@ -87,7 +87,8 @@ Completed NODI-side guardrails:
 - Added trapezoid initial-position wall-distance diagnostics and signature fragments for the geometry-only wall-distance model/claim level; PRS sidewall v2 now rejects signatures missing those sampler wall-distance identifiers.
 - Tightened PRS sidewall v2 sampler wall-distance signature checks to require the exact `geometry_distance_primitive_not_hindered_diffusion` no-claim level, preventing hidden promotion to validated hindered-diffusion results.
 - Bound PRS sidewall v2 wall-distance bins to Package C precheck status: any `wall_distance` bin basis must declare `includes_trajectory_near_wall_metrics=true` and `package_C_validation_status=pass`.
-- Updated the PRS sidewall v2 propagated scope to `particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic`; legacy particle-center-only scope no longer satisfies wall-distance-bin PRS rows.
+- After independent review, changed the current default PRS sidewall v2 propagated scope back to `particle_center_support_only_not_reference_fluidic_electrokinetic`; wall-distance-bin PRS rows remain blocked until an explicit future Package C authorization proof is registered.
+- Made Package C proof binding fail-closed in the current no-auth gate: the proof registry is empty, hard-coded fixture hashes are not accepted, and `package_C_validation_status=pass` fails until a real physics authorization artifact is registered.
 - Renamed sidewall trajectory runtime statuses from `no_wall_metrics` to `no_hindered_wall_metrics`, preserving the geometry-only wall-distance primitive while still blocking hindered-diffusion / wet-wall interpretations.
 - Added prefixed channel-geometry descriptor wall-distance identity fields (`channel_geometry_wall_distance_model`, `channel_geometry_wall_distance_claim_level`) so ideal rectangles remain `rectangular_half_span_gap_v1` while trapezoid rows emit `trapezoid_signed_wall_distance_v1` with `geometry_distance_primitive_not_hindered_diffusion`, without colliding with trajectory `wall_distance_model`.
 - Hardened PRS/EAS sidewall v2 validators so those prefixed channel-geometry wall-distance fields are required, signature-bound, and cannot be promoted to validated hindered-diffusion claims.
@@ -115,6 +116,7 @@ Completed NODI-side guardrails:
 - Aligned EAS sidewall v2 propagation-status usage with PRS: `geometry_propagation_status=propagated` now hard-fails if `geometry_not_propagated_reasons` is nonblank.
 - Closed the optional `runtime_top_aperture_nm` signature drift hole found by independent review: when the row has no runtime top-aperture value, PRS/EAS sidewall v2 signatures may only carry `runtime_top_aperture_nm=unknown`, not a numeric value.
 - Added a positive `sidewall_aware=true` shortcut guard so artifacts must use explicit sidewall v2 schema/status fields rather than a broad boolean promotion flag; negative boundary flags such as `sidewall_aware=false` remain allowed.
+- Added Gate23 static fixture execution packet: Gate22 source hashes are locked, 29 static fixture execution rows are executable as no-runtime pytest/validator surfaces, validator CLI success text is `PASS_CONTEXT_ONLY_NOT_PRODUCTION`, and Package C proof remains fail-closed.
 
 Still blocked in this roadmap:
 
@@ -1015,9 +1017,10 @@ Tests:
 
 Go/no-go:
 
-- Package C can emit trajectory-boundary propagation audits, wall-distance diagnostics, and near-wall surrogate diagnostics.
+- Under the current Gate23 no-auth state, Package C is blocked/fail-closed. It cannot be treated as passed by a row-local id/hash fixture.
+- A future explicit Package C gate may emit trajectory-boundary propagation audits, wall-distance diagnostics, and near-wall surrogate diagnostics only after a registered proof artifact and authorization ledger exist.
 - Package C cannot emit clogging rate, adhesion probability, wet pass probability, recovery, or calibrated event probabilities.
-- Package C must pass before Package D can use trajectory, near-wall, hindered-diffusion, or selected-annulus metrics.
+- Package C must pass before Package D can use trajectory, near-wall, hindered-diffusion, wall-distance-bin, or selected-annulus metrics.
 
 ### Package D - PRS/EAS sidewall sensitivity pilot
 

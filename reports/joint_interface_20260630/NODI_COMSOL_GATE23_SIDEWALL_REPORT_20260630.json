@@ -1,0 +1,39 @@
+{
+  "summary": {
+    "disposition": "NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH",
+    "gate23_build_head": "d54cd50908a7e6e56f5f0069a163c7b768190d45",
+    "gate23_package_expected_successor_policy": "final package/report commit may be a clean successor to gate23_build_head; source semantics are pinned to Gate22 manifest hashes",
+    "gate22_build_head": "3e37c764e9f6f778196a85f9d26c3b31f83d2fe3",
+    "gate22_head_is_ancestor_of_current": true,
+    "gate22_disposition": "NODI_GATE22_SIDEWALL_VALIDATOR_BINDING_MATRIX_READY_NO_AUTH",
+    "gate22_no_auth": true,
+    "gate22_review_only": true,
+    "gate22_source_lock_rows": 10,
+    "gate22_source_drift": 0,
+    "gate22_missing_sources": 0,
+    "gate22_readiness_rows": 4,
+    "gate22_readiness_blocked_scopes": 0,
+    "static_fixture_execution_rows": 29,
+    "static_fixture_execution_blocked": 0,
+    "cli_boundary_rows": 3,
+    "cli_boundary_failures": 0,
+    "package_c_proof_lock_rows": 2,
+    "package_c_proof_lock_failures": 0,
+    "future_authorization_blockers": 5,
+    "no_auth_firewall_failures": 0,
+    "runtime_allowed_rows": 0,
+    "production_allowed_rows": 0,
+    "sidewall_numeric_output_rows": 0,
+    "review_only": true,
+    "no_auth": true
+  },
+  "outputs": [
+    "NODI_COMSOL_GATE23_SIDEWALL_GATE22_SOURCE_LOCK_20260630.csv",
+    "NODI_COMSOL_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_MATRIX_20260630.csv",
+    "NODI_COMSOL_GATE23_SIDEWALL_VALIDATOR_CLI_BOUNDARY_MATRIX_20260630.csv",
+    "NODI_COMSOL_GATE23_SIDEWALL_PACKAGE_C_PROOF_FAIL_CLOSED_LOCK_20260630.csv",
+    "NODI_COMSOL_GATE23_SIDEWALL_NO_AUTH_FIREWALL_20260630.csv",
+    "NODI_COMSOL_GATE23_SIDEWALL_FUTURE_AUTHORIZATION_BLOCKERS_20260630.csv",
+    "NODI_COMSOL_GATE23_SIDEWALL_VALIDATION_PLAN_20260630.csv"
+  ]
+}
