@@ -100,7 +100,88 @@
       "rollback": "not applicable"
     }
   ],
-  "dirty_rows": [],
+  "dirty_rows": [
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_DECISION_DOSSIER_20260630.md",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_GATE_STATUS_ROLLUP_20260630.csv",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "tools/audits/build_nodi_comsol_sidewall_static_interop_rc1.py",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    }
+  ],
   "field_families": [
     {
       "allowed_use": "review-only static/contract preflight metadata",
@@ -609,18 +690,6 @@
       "no_auth": "true",
       "qch_state": "ABSENT",
       "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json"
-    },
-    {
-      "binding_state": "FAIL_CLOSED",
-      "disposition": "NODI_GATE25_SIDEWALL_PACKAGE_C_DESIGN_REVIEW_PACKET_READY_NO_AUTH",
-      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
-      "expected_disposition": "SOURCE_STATUS_REQUIRED",
-      "gate": "Gate25",
-      "gate2d_rows": "4",
-      "match_status": "REVIEW_DELTA",
-      "no_auth": "true",
-      "qch_state": "ABSENT",
-      "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json"
     }
   ],
   "no_auth": [
@@ -865,13 +934,13 @@
   ],
   "source_lock": [
     {
-      "artifact_id": "NODI-CURRENT-HEAD-VS-GATE25",
-      "drift_status": "CURRENT_HEAD_INCLUDES_GATE25_RELEASE",
+      "artifact_id": "NODI-SEMANTIC-SOURCE-HEAD-VS-GATE24",
+      "drift_status": "SEMANTIC_SOURCE_HEAD_NOT_GATE24_RELEASE_BLOCKER_FAIL_CLOSED",
       "exists": "true",
-      "path": "3dbc3105c93e8ae226a72b3743c7f4a770f43a19 Refresh sidewall static interop RC1 after source update",
-      "policy_impact": "no_auth_review_only_source_lock",
+      "path": "4496060b41d046cd9e67024186e4eddc97a1b31b Refresh Gate24 sidewall ledger after head advance",
+      "policy_impact": "BLOCKS_RC1_FREEZE_PASS",
       "row_count": "NA",
-      "sha256": "3dbc3105c93e8ae226a72b3743c7f4a770f43a19",
+      "sha256": "4496060b41d046cd9e67024186e4eddc97a1b31b",
       "source_side": "NODI_GIT"
     },
     {
@@ -1115,36 +1184,6 @@
       "source_side": "NODI"
     },
     {
-      "artifact_id": "NODI-GATE25-STATUS",
-      "drift_status": "PRESENT_HASHED",
-      "exists": "true",
-      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
-      "policy_impact": "no_auth_review_only_source_lock",
-      "row_count": "NA",
-      "sha256": "e673752cac45686bfc62cbcf82e7a046d37174174c4822107e61f4cc983872a3",
-      "source_side": "NODI"
-    },
-    {
-      "artifact_id": "NODI-GATE25-MANIFEST",
-      "drift_status": "PRESENT_HASHED",
-      "exists": "true",
-      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
-      "policy_impact": "no_auth_review_only_source_lock",
-      "row_count": "8",
-      "sha256": "67f19f567072db1040a4ee4d5627cdc85ef03fb4cb3752ab31a97f908a4c8ba6",
-      "source_side": "NODI"
-    },
-    {
-      "artifact_id": "NODI-GATE25-REPORT",
-      "drift_status": "PRESENT_HASHED",
-      "exists": "true",
-      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
-      "policy_impact": "no_auth_review_only_source_lock",
-      "row_count": "NA",
-      "sha256": "af14d8321de959dfb3ef9f52ef11a74c3d84ff9e11e5dfffa39c98ca5006a068",
-      "source_side": "NODI"
-    },
-    {
       "artifact_id": "COMSOL-COMSOL_GATE16_STATUS",
       "drift_status": "PRESENT_HASHED",
       "exists": "true",
@@ -1203,6 +1242,106 @@
       "row_count": "432",
       "sha256": "73899702acea1e47039c2c4dc276ef09a6d977004cf6e038bfbc055284548ef6",
       "source_side": "COMSOL"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-001",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-002",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_DECISION_DOSSIER_20260630.md",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-003",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_GATE_STATUS_ROLLUP_20260630.csv",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-004",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-005",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-006",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-007",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-008",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-009",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-010",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "tools/audits/build_nodi_comsol_sidewall_static_interop_rc1.py",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
     }
   ],
   "summary": {
@@ -1212,19 +1351,19 @@
     "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
     "decision_rows": 5,
     "dirty_blocker_count": 0,
-    "disposition": "NODI_SIDEWALL_STATIC_INTEROP_RC1_READY_NO_AUTH",
+    "disposition": "PARTIAL_NODI_SIDEWALL_STATIC_INTEROP_RC1_BLOCKED_FAIL_CLOSED_NO_AUTH",
     "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
     "field_family_rows": 5,
     "gate2d_rows": 4,
     "missing_required_source_count": 0,
     "no_auth_firewall_rows": 16,
-    "nodi_head": "3dbc3105c93e8ae226a72b3743c7f4a770f43a19",
+    "nodi_head": "4496060b41d046cd9e67024186e4eddc97a1b31b",
     "package_c_auth_lock_rows": 3,
     "qch_state": "ABSENT",
     "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
-    "semantic_digest": "1d9aea871ef4b98a9fdc506ae32743eca3b88a51bdda446dd71eb4b4919538c9",
-    "source_lock_blocker_count": 0,
-    "source_lock_rows": 34,
+    "semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+    "source_lock_blocker_count": 1,
+    "source_lock_rows": 41,
     "static_fixture_replay_rows": 29,
     "static_fixture_unknown_rows": 0
   },
@@ -1234,7 +1373,7 @@
     "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
     "date": "20260630",
     "dirty_blocker_count": 0,
-    "disposition": "NODI_SIDEWALL_STATIC_INTEROP_RC1_READY_NO_AUTH",
+    "disposition": "PARTIAL_NODI_SIDEWALL_STATIC_INTEROP_RC1_BLOCKED_FAIL_CLOSED_NO_AUTH",
     "missing_required_source_count": 0,
     "no_auth_locks": {
       "binding_state": "FAIL_CLOSED",
@@ -1246,8 +1385,8 @@
       "qch_weighting_allowed": "false",
       "runtime_allowed": "false"
     },
-    "nodi_gate_range": "Gate17-Gate25",
-    "nodi_head": "3dbc3105c93e8ae226a72b3743c7f4a770f43a19",
+    "nodi_gate_range": "Gate17-Gate24",
+    "nodi_head": "4496060b41d046cd9e67024186e4eddc97a1b31b",
     "package_abd_status": "STATIC_PREFLIGHT_READY_AFTER_SOURCE_LOCK_CLEAN",
     "package_c_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
     "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
@@ -1271,13 +1410,13 @@
         "qch_weighting_allowed": "false",
         "runtime_allowed": "false"
       },
-      "nodi_gate_range": "Gate17-Gate25",
+      "nodi_gate_range": "Gate17-Gate24",
       "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
       "static_preflight_scope": "Package A/B static preflight; Package D contract preflight; Package C blocked",
       "validator_families": 29
     },
-    "semantic_digest": "1d9aea871ef4b98a9fdc506ae32743eca3b88a51bdda446dd71eb4b4919538c9",
-    "source_lock_blocker_count": 0,
+    "semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+    "source_lock_blocker_count": 1,
     "static_preflight_scope": "Package A/B/D static-or-contract preflight only; no runtime; no production"
   }
 }

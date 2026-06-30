@@ -21,7 +21,7 @@ PASS_DISPOSITION = "NODI_SIDEWALL_STATIC_INTEROP_RC1_READY_NO_AUTH"
 PARTIAL_DISPOSITION = "PARTIAL_NODI_SIDEWALL_STATIC_INTEROP_RC1_BLOCKED_FAIL_CLOSED_NO_AUTH"
 RC_ID = "SIDEWALL_STATIC_INTEROP_RC1"
 
-GATE_RANGE = range(17, 26)
+GATE_RANGE = range(17, 25)
 NO_AUTH_LOCKS = {
     "gate2d_rows": "4",
     "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
@@ -90,6 +90,23 @@ def git_status_short(cwd: Path = PROJECT_ROOT) -> list[str]:
     except Exception:
         return ["!! GIT_STATUS_UNREADABLE"]
     return [line for line in out.splitlines() if line.strip()]
+
+
+def rc1_semantic_source_commit() -> tuple[str, str]:
+    """Return the latest non-RC1 packaging commit so lockfiles avoid self-reference drift."""
+    try:
+        out = run_git(["log", "--format=%H%x01%s", "-60"], PROJECT_ROOT)
+    except Exception:
+        return git_head(PROJECT_ROOT), "UNKNOWN_SUBJECT"
+    for line in out.splitlines():
+        if "\x01" not in line:
+            continue
+        commit, subject = line.split("\x01", 1)
+        lowered = subject.lower()
+        if "sidewall static interop rc1" in lowered or "sidewall_static_interop_rc1" in lowered:
+            continue
+        return commit, subject
+    return git_head(PROJECT_ROOT), "UNKNOWN_SUBJECT"
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -186,47 +203,24 @@ def dirty_rows() -> list[dict[str, str]]:
 
 
 def current_head_source_lock_rows() -> list[dict[str, str]]:
-    gate25_status = read_json(OUTPUT_DIR / "NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json")
-    gate25_summary = gate25_status.get("summary", {}) if isinstance(gate25_status.get("summary", {}), dict) else {}
-    gate25_head = str(gate25_summary.get("gate25_build_head") or "")
-    current_head = git_head(PROJECT_ROOT)
-    try:
-        current_subject = run_git(["log", "-1", "--pretty=%s"], PROJECT_ROOT)
-    except Exception:
-        current_subject = "UNKNOWN_SUBJECT"
-    try:
-        includes_gate25 = bool(gate25_head) and subprocess.run(
-            [
-                "git",
-                "-c",
-                f"safe.directory={PROJECT_ROOT.as_posix()}",
-                "merge-base",
-                "--is-ancestor",
-                gate25_head,
-                current_head,
-            ],
-            cwd=PROJECT_ROOT,
-            check=False,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-        ).returncode == 0
-    except Exception:
-        includes_gate25 = False
-    if includes_gate25:
-        drift_status = "CURRENT_HEAD_INCLUDES_GATE25_RELEASE"
+    gate24_status = read_json(OUTPUT_DIR / "NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json")
+    gate24_summary = gate24_status.get("summary", {}) if isinstance(gate24_status.get("summary", {}), dict) else {}
+    gate24_head = str(gate24_summary.get("gate24_build_head") or "")
+    source_head, source_subject = rc1_semantic_source_commit()
+    if source_head == gate24_head:
+        drift_status = "SEMANTIC_SOURCE_HEAD_MATCHES_GATE24_RELEASE"
         policy_impact = "no_auth_review_only_source_lock"
     else:
-        drift_status = "CURRENT_HEAD_DOES_NOT_INCLUDE_GATE25_RELEASE_BLOCKER_FAIL_CLOSED"
+        drift_status = "SEMANTIC_SOURCE_HEAD_NOT_GATE24_RELEASE_BLOCKER_FAIL_CLOSED"
         policy_impact = "BLOCKS_RC1_FREEZE_PASS"
     return [
         {
-            "artifact_id": "NODI-CURRENT-HEAD-VS-GATE25",
+            "artifact_id": "NODI-SEMANTIC-SOURCE-HEAD-VS-GATE24",
             "source_side": "NODI_GIT",
-            "path": f"{current_head} {current_subject}",
+            "path": f"{source_head} {source_subject}",
             "exists": "true",
             "row_count": "NA",
-            "sha256": current_head,
+            "sha256": source_head,
             "drift_status": drift_status,
             "policy_impact": policy_impact,
         }
@@ -308,7 +302,7 @@ def gate_status_rows() -> list[dict[str, str]]:
 def version_lock(dirty: list[dict[str, str]], source_rows: list[dict[str, str]]) -> dict[str, Any]:
     semantic_basis = {
         "rc_id": RC_ID,
-        "nodi_gate_range": "Gate17-Gate25",
+        "nodi_gate_range": "Gate17-Gate24",
         "comsol_gate_range": "Gate16",
         "static_preflight_scope": "Package A/B static preflight; Package D contract preflight; Package C blocked",
         "field_families": [
@@ -334,9 +328,9 @@ def version_lock(dirty: list[dict[str, str]], source_rows: list[dict[str, str]])
             if blocker_count == 0 and source_lock_blocker_count == 0 and missing_count == 0
             else PARTIAL_DISPOSITION
         ),
-        "nodi_head": git_head(PROJECT_ROOT),
+        "nodi_head": rc1_semantic_source_commit()[0],
         "comsol_head": git_head(COMSOL_ROOT),
-        "nodi_gate_range": "Gate17-Gate25",
+        "nodi_gate_range": "Gate17-Gate24",
         "comsol_gate_range": "Gate16",
         "semantic_digest": semantic_digest,
         "anchor_digest": read_json(COMSOL_ROOT / "roadmap" / "COMSOL_GATE16_STATUS_20260630.json").get(

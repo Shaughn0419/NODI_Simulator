@@ -1,10 +1,10 @@
 # SIDEWALL_STATIC_INTEROP_RC1 NODI Master Report
 
-- Disposition: NODI_SIDEWALL_STATIC_INTEROP_RC1_READY_NO_AUTH
-- NODI head: 3dbc3105c93e8ae226a72b3743c7f4a770f43a19
+- Disposition: PARTIAL_NODI_SIDEWALL_STATIC_INTEROP_RC1_BLOCKED_FAIL_CLOSED_NO_AUTH
+- NODI head: 4496060b41d046cd9e67024186e4eddc97a1b31b
 - COMSOL head: 9f8309496930788c2b131e70f3ecac31ed2679be
-- Semantic digest: 1d9aea871ef4b98a9fdc506ae32743eca3b88a51bdda446dd71eb4b4919538c9
-- Source lock rows: 34
+- Semantic digest: 53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0
+- Source lock rows: 41
 - Dirty source-lock blockers: 0
 - Static fixture replay rows: 29 (unknown: 0)
 - COMSOL Gate16 ACK rows: 4 (misaligned: 0)
