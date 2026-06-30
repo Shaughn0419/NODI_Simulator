@@ -73,12 +73,14 @@ def test_comsol_gate12_receipt_and_provenance_repair_are_closed() -> None:
     assert repair["comsol_project_head_actual"]["repair_status"] in {
         "MATCH",
         "HEAD_ADVANCED_TO_KNOWN_GATE14_SUCCESSOR",
+        "HEAD_ADVANCED_TO_KNOWN_GATE15_SUCCESSOR",
     }
     assert repair["comsol_gate12_commit_expected"]["actual_value"] == gate13.COMSOL_GATE12_COMMIT
     assert repair["comsol_gate13_commit_expected"]["actual_value"] in gate13.COMSOL_ALLOWED_CURRENT_HEADS
     assert repair["comsol_gate13_commit_expected"]["repair_status"] in {
         "MATCH",
         "HEAD_ADVANCED_TO_KNOWN_GATE14_SUCCESSOR",
+        "HEAD_ADVANCED_TO_KNOWN_GATE15_SUCCESSOR",
     }
     assert all(row["semantic_conflict"] == "false" for row in payload["provenance_repair"])
     assert all(row["dirty_open"] == "false" for row in payload["provenance_repair"])
