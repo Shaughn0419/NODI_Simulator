@@ -1,0 +1,2 @@
+firewall_id,scope,positive_authorization_count,positive_evidence_acceptance_count,positive_runtime_or_production_count,positive_jrc_weighting_yield_winner_detection_count,gate2d_rows,edge_state,qch_state,binding_state,firewall_status
+G17H-NOAUTH-001,Gate17 outputs plus referenced Gate14/Gate15/Gate16 outputs,0,0,0,0,4,NOT_APPROVED_PREAUTH_ONLY,ABSENT,FAIL_CLOSED,PASS_NO_AUTH_LOCKS_PRESERVED

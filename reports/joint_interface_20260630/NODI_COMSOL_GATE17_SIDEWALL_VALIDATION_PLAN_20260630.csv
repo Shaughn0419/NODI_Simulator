@@ -1,0 +1,8 @@
+validation_id,command,required_for_pass,recorded_result
+G17L-VALIDATION-001,python tools/audits/build_nodi_comsol_gate17_sidewall_current_release_anchor.py --confirm-gate17-sidewall-current-release-anchor,true,PENDING_RUNTIME_VALIDATION
+G17L-VALIDATION-002,python -m py_compile tools/audits/build_nodi_comsol_gate17_sidewall_current_release_anchor.py,true,PENDING_RUNTIME_VALIDATION
+G17L-VALIDATION-003,ruff check tools/audits/build_nodi_comsol_gate17_sidewall_current_release_anchor.py tests/test_nodi_comsol_gate17_sidewall_current_release_anchor.py,true,PENDING_RUNTIME_VALIDATION
+G17L-VALIDATION-004,pytest -q tests/test_nodi_comsol_gate17_sidewall_current_release_anchor.py,true,PENDING_RUNTIME_VALIDATION
+G17L-VALIDATION-005,pytest -q tests/test_nodi_comsol_gate16_sidewall_clean_reintake_receipt.py,true,PENDING_RUNTIME_VALIDATION
+G17L-VALIDATION-006,pytest -q tests/test_nodi_comsol_gate15_sidewall_bilateral_contract_closure.py,true,PENDING_RUNTIME_VALIDATION
+G17L-VALIDATION-007,pytest -q tests/test_nodi_comsol_next_artifacts_contracts.py,true,PENDING_RUNTIME_VALIDATION

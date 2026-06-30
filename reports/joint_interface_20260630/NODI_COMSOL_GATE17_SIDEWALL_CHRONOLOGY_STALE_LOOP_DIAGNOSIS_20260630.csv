@@ -1,0 +1,7 @@
+chronology_id,gate_or_side,observed_build_or_consumed_state,clean_successor_or_status,diagnosis,policy_failure,expected_fail_closed,superseded_by_clean_successor,requires_comsol_reintake
+G17B-CHRONO-001,Gate14,6df1a4a,b456129,status build head advanced to released sidecar package,false,false,true,false
+G17B-CHRONO-002,Gate15,ee1598f/f3dbdba/6cec261,b7dbdc7,builder/package/follow-up regression commits advanced during package closeout,false,false,true,false
+G17B-CHRONO-003,Gate16,b7dbdc7 dirty=2,8db98e7,Gate16 observed generated/dirty build state then committed clean package,false,false,true,true
+G17B-CHRONO-004,COMSOL Gate14,4cb4d1d dirty=18,PARTIAL,COMSOL consumed old dirty NODI and fail-closed,false,true,false,true
+G17B-CHRONO-005,COMSOL Gate15,b456129 dirty=3,PARTIAL,COMSOL consumed stale NODI and fail-closed,false,true,false,true
+G17B-CAUSE-001,stale_loop,multiple packages consumed build-time heads or dirty generated outputs,Gate17 anchor protocol,STALE_LOOP_CAUSE=HEAD_MOVED_DURING_PACKAGE_BUILD_NOT_AUTH_FAILURE,false,true,true,true
