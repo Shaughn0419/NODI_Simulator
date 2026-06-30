@@ -513,6 +513,30 @@ def _sidewall_package_c_proof_fields(
         "angle_depth_mutation_evidence_sha256": "1" * 64,
         "rectangle_limit_evidence_sha256": "2" * 64,
         "authorization_supersedes_no_auth_ledger_sha256": "3" * 64,
+        "reflection_metric_schema_version": "sidewall_reflection_metrics_v1",
+        "reflection_algorithm_source_sha256": "4" * 64,
+        "reflection_test_script_sha256": "5" * 64,
+        "test_environment_lock_sha256": "6" * 64,
+        "dependency_lock_sha256": "7" * 64,
+        "rng_seed_matrix_sha256": "8" * 64,
+        "test_parameter_matrix_sha256": "9" * 64,
+        "dt_grid_s": "1e-5;5e-6;2.5e-6",
+        "diffusion_coefficient_grid_m2_s": "1e-12",
+        "particle_radius_grid_nm": "20;30;50;75;110;150",
+        "sidewall_angle_grid_deg_comsol": "90;89;87;85;83;80;70",
+        "depth_grid_nm": "900;1200",
+        "tolerance_m": "1e-12",
+        "max_reflection_iterations": "8",
+        "substep_policy": "hard_fail_or_reduce_dt_on_nonconvergence",
+        "boundary_atom_threshold": "0.001",
+        "equilibrium_test_method": "u_marginal_and_x_local_norm_ks_v1",
+        "equilibrium_test_threshold": "0.08",
+        "corner_bias_test_threshold": "0.10",
+        "rectangle_limit_tolerance": "0.05",
+        "one_wall_limit_tolerance": "0.05",
+        "raw_metric_artifact_sha256": "a1" * 32,
+        "summary_metric_artifact_sha256": "b2" * 32,
+        "independent_reviewer_id_or_artifact_sha256": "c3" * 32,
         "package_C_proof_manifest_schema_version": "sidewall_package_c_proof_manifest_v1",
         "package_C_proof_evidence_claim_level": (
             "validated_test_evidence_only_no_hydrodynamic_or_wet_claim"
@@ -3635,6 +3659,40 @@ def test_sidewall_package_c_proof_scaffold_rejects_bad_authorization_hash() -> N
         "authorization_supersedes_no_auth_ledger_sha256 is not sha256" in issue
         for issue in issues
     ), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_requires_telemetry_fields() -> None:
+    row = _valid_sidewall_package_d_precheck_row(
+        target_artifact_family="prs",
+        includes_trajectory_near_wall_metrics="true",
+        package_C_validation_status="pass",
+        package_C_proof_artifact_id="future-package-C-proof",
+        package_C_proof_artifact_sha256="d" * 64,
+    )
+    del row["dt_grid_s"]
+
+    issues = validate_sidewall_package_d_precheck_rows([row])
+
+    assert any("dt_grid_s" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_rejects_bad_telemetry_hash() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                raw_metric_artifact_sha256="not-a-sha",
+            )
+        ]
+    )
+
+    assert any("raw_metric_artifact_sha256 is not sha256" in issue for issue in issues), issues
     _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
 
 

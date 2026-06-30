@@ -13,7 +13,7 @@
       "tools/audits/build_nodi_comsol_gate28_sidewall_package_c_proof_review_packet.py"
     ],
     "returncode": 0,
-    "duration_s": 0.527,
+    "duration_s": 0.444,
     "status": "pass",
     "stdout": "",
     "stderr": ""
@@ -30,9 +30,9 @@
       "-q"
     ],
     "returncode": 0,
-    "duration_s": 4.967,
+    "duration_s": 4.847,
     "status": "pass",
-    "stdout": ".....................................................                    [100%]\n53 passed in 0.90s\n",
+    "stdout": ".....................................................                    [100%]\n53 passed in 0.93s\n",
     "stderr": ""
   },
   {
@@ -48,9 +48,9 @@
       "package_c_proof_scaffold or sidewall or production_candidate_validator"
     ],
     "returncode": 0,
-    "duration_s": 25.43,
+    "duration_s": 24.799,
     "status": "pass",
-    "stdout": "........................................................................ [ 22%]\n........................................................................ [ 44%]\n........................................................................ [ 67%]\n........................................................................ [ 89%]\n..................................                                       [100%]\n322 passed, 169 deselected in 21.36s\n",
+    "stdout": "........................................................................ [ 22%]\n........................................................................ [ 44%]\n........................................................................ [ 66%]\n........................................................................ [ 88%]\n....................................                                     [100%]\n324 passed, 169 deselected in 21.00s\n",
     "stderr": ""
   },
   {
@@ -64,9 +64,9 @@
       "-q"
     ],
     "returncode": 0,
-    "duration_s": 11.077,
+    "duration_s": 11.206,
     "status": "pass",
-    "stdout": "........                                                                 [100%]\n8 passed in 7.20s\n",
+    "stdout": "........                                                                 [100%]\n8 passed in 7.54s\n",
     "stderr": ""
   },
   {
@@ -80,9 +80,9 @@
       "-q"
     ],
     "returncode": 0,
-    "duration_s": 7.389,
+    "duration_s": 8.323,
     "status": "pass",
-    "stdout": ".......                                                                  [100%]\n7 passed in 3.90s\n",
+    "stdout": ".......                                                                  [100%]\n7 passed in 4.83s\n",
     "stderr": ""
   },
   {
@@ -94,9 +94,9 @@
       "--check"
     ],
     "returncode": 0,
-    "duration_s": 0.107,
+    "duration_s": 0.123,
     "status": "pass",
     "stdout": "",
-    "stderr": "warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/345_NODI_SIDEWALL_ANGLE_IMPLEMENTATION_AUDIT_PACKET_20260630.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_IMPLEMENTATION_DESIGN_BACKLOG_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_NO_AUTH_FIREWALL_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_PREAUTH_FAIL_CLOSED_MATRIX_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_PROOF_ARTIFACT_CONTRACT_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_VALIDATION_PLAN_20260630.csv', LF will be replaced by CRLF the next time Git touches it\n"
+    "stderr": "warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'nodi_simulator/nodi_comsol_next_artifacts.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/345_NODI_SIDEWALL_ANGLE_IMPLEMENTATION_AUDIT_PACKET_20260630.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_IMPLEMENTATION_DESIGN_BACKLOG_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_NO_AUTH_FIREWALL_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_PREAUTH_FAIL_CLOSED_MATRIX_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_PROOF_ARTIFACT_CONTRACT_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_VALIDATION_PLAN_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE28_SIDEWALL_MANIFEST_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE28_SIDEWALL_REPORT_20260630.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE28_SIDEWALL_SOURCE_LOCK_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE28_SIDEWALL_STATUS_20260630.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE28_SIDEWALL_TEST_EVIDENCE_20260630.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE28_SIDEWALL_TEST_EVIDENCE_SUMMARY_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_nodi_comsol_next_artifacts_contracts.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tools/audits/build_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tools/audits/build_nodi_comsol_gate28_sidewall_package_c_proof_review_packet.py', LF will be replaced by CRLF the next time Git touches it\n"
   }
 ]

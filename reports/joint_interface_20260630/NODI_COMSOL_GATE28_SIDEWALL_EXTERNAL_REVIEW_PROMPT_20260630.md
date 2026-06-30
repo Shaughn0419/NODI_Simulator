@@ -19,13 +19,13 @@ or production ingestion.
 ## Current Gate28 status
 
 - Disposition: `NODI_GATE28_SIDEWALL_PACKAGE_C_PROOF_REVIEW_PACKET_READY_NO_PROOF_REGISTRATION`.
-- Build commit recorded by packet: `0944bca00b740dafac191956f8005b1772780a70`.
+- Build commit recorded by packet: `48de7c4063a68d47316e8463d0dac84c2e7a21f7`.
 - Gate27 disposition: `NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH`.
-- Gate27 proof contract rows: `28`.
+- Gate27 proof contract rows: `52`.
 - Gate27 proof registry/update rows: `0` / `0`.
 - Evidence commands passed: `6` of `6`.
-- Test evidence JSON sha256: `006700559a150ca80e79f296c02cd2a28de0c345af31666847ba996d8af75efa`.
-- Source lock CSV sha256: `073705bc642ad084ce2dfecf1f3fad434d54b581b1f0cdf09a96df967b8625c2`.
+- Test evidence JSON sha256: `d118d10838553735ee37391196c14bb83f99bb7ce53972b9bb6a279216652641`.
+- Source lock CSV sha256: `0c884ffa772bc6d5099bdaa4580dbe1cc37d496fe355367e087e52563ceb8d77`.
 - Proof registration authorized: `False`.
 - Runtime / numeric PRS-EAS / COMSOL / `.mph`: `False` / `False` / `False` / `False`.
 
@@ -93,20 +93,33 @@ review evidence for an external or independent reviewer.
 - `reports/joint_interface_20260630/NODI_COMSOL_GATE28_SIDEWALL_NO_PROOF_FIREWALL_20260630.csv`
 - `reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_PROOF_ARTIFACT_CONTRACT_20260630.csv`
 
-## Gate27 28-field proof scaffold to review
+## Gate27 required-field proof scaffold to review
 
-The Gate27 proof contract must contain exactly these required fields before any
-separate future gate can even consider `package_C_validation_status=pass`:
+The Gate27 proof contract currently contains exactly
+52 required fields. Every field below
+must be present before any separate future gate can even consider
+`package_C_validation_status=pass`:
 
 - `angle_depth_mutation_evidence_sha256`
 - `authorization_supersedes_no_auth_ledger_id`
 - `authorization_supersedes_no_auth_ledger_sha256`
+- `boundary_atom_threshold`
 - `corner_active_set_evidence_sha256`
+- `corner_bias_test_threshold`
+- `dependency_lock_sha256`
+- `depth_grid_nm`
+- `diffusion_coefficient_grid_m2_s`
 - `dt_convergence_evidence_sha256`
+- `dt_grid_s`
+- `equilibrium_test_method`
+- `equilibrium_test_threshold`
 - `equilibrium_uniformity_evidence_sha256`
 - `external_review_artifact_sha256`
 - `implementation_commit_sha`
+- `independent_reviewer_id_or_artifact_sha256`
+- `max_reflection_iterations`
 - `no_boundary_atom_evidence_sha256`
+- `one_wall_limit_tolerance`
 - `package_C_proof_artifact_id`
 - `package_C_proof_artifact_scope`
 - `package_C_proof_artifact_sha256`
@@ -124,8 +137,21 @@ separate future gate can even consider `package_C_validation_status=pass`:
 - `package_C_proof_no_trapezoid_flow_solver_claim`
 - `package_C_proof_no_wet_claim`
 - `package_C_proof_required_test_matrix_status`
+- `particle_radius_grid_nm`
+- `raw_metric_artifact_sha256`
 - `rectangle_limit_evidence_sha256`
+- `rectangle_limit_tolerance`
+- `reflection_algorithm_source_sha256`
+- `reflection_metric_schema_version`
+- `reflection_test_script_sha256`
 - `required_test_result_artifact_sha256`
+- `rng_seed_matrix_sha256`
+- `sidewall_angle_grid_deg_comsol`
+- `substep_policy`
+- `summary_metric_artifact_sha256`
+- `test_environment_lock_sha256`
+- `test_parameter_matrix_sha256`
+- `tolerance_m`
 
 ## Review questions
 

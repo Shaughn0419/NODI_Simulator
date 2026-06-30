@@ -383,7 +383,7 @@ def validate_payload(payload: dict[str, Any], require_evidence_pass: bool = True
         "Gate27 disposition": s["gate27_disposition"] == EXPECTED_GATE27_DISPOSITION,
         "Gate27 no-auth": s["gate27_no_auth"] is True,
         "Gate27 review-only": s["gate27_review_only"] is True,
-        "Gate27 28-field proof contract": s["gate27_proof_contract_rows"]
+        "Gate27 required-field proof contract": s["gate27_proof_contract_rows"]
         == len(GATE27_REQUIRED_PROOF_CONTRACT_FIELDS),
         "Gate27 proof contract field names complete": not s[
             "gate27_proof_contract_missing_required_fields"
@@ -519,10 +519,12 @@ review evidence for an external or independent reviewer.
 - `reports/joint_interface_20260630/NODI_COMSOL_GATE28_SIDEWALL_NO_PROOF_FIREWALL_20260630.csv`
 - `reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_PROOF_ARTIFACT_CONTRACT_20260630.csv`
 
-## Gate27 28-field proof scaffold to review
+## Gate27 required-field proof scaffold to review
 
-The Gate27 proof contract must contain exactly these required fields before any
-separate future gate can even consider `package_C_validation_status=pass`:
+The Gate27 proof contract currently contains exactly
+{len(GATE27_REQUIRED_PROOF_CONTRACT_FIELDS)} required fields. Every field below
+must be present before any separate future gate can even consider
+`package_C_validation_status=pass`:
 
 {proof_fields_text}
 

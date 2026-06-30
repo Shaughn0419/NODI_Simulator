@@ -60,38 +60,11 @@ def test_gate27_proof_artifact_contract_requires_real_future_evidence() -> None:
     payload = gate27.build_payload()
     contract = {row["required_field"]: row for row in payload["proof_artifact_contract"]}
 
-    required = {
-        "package_C_proof_artifact_id",
-        "package_C_proof_artifact_sha256",
-        "package_C_proof_artifact_status",
-        "package_C_proof_artifact_scope",
-        "package_C_proof_claim_boundary",
-        "external_review_artifact_sha256",
-        "implementation_commit_sha",
-        "required_test_result_artifact_sha256",
-        "dt_convergence_evidence_sha256",
-        "equilibrium_uniformity_evidence_sha256",
-        "no_boundary_atom_evidence_sha256",
-        "corner_active_set_evidence_sha256",
-        "angle_depth_mutation_evidence_sha256",
-        "rectangle_limit_evidence_sha256",
-        "authorization_supersedes_no_auth_ledger_sha256",
-        "package_C_proof_manifest_schema_version",
-        "package_C_proof_evidence_claim_level",
-        "package_C_proof_required_test_matrix_status",
-        "package_C_proof_external_review_status",
-        "package_C_proof_authorization_status",
-        "authorization_supersedes_no_auth_ledger_id",
-        "package_C_proof_no_hindered_diffusion_claim",
-        "package_C_proof_no_trapezoid_flow_solver_claim",
-        "package_C_proof_no_electrokinetic_solver_claim",
-        "package_C_proof_no_optical_solver_claim",
-        "package_C_proof_no_wet_claim",
-        "package_C_proof_no_prs_eas_numeric_output",
-        "package_C_proof_no_route_yield_detection_claim",
-    }
-
-    assert required <= set(contract)
+    assert gate27.REQUIRED_PROOF_CONTRACT_FIELDS == set(contract)
+    assert "raw_metric_artifact_sha256" in contract
+    assert "dt_grid_s" in contract
+    assert "one_wall_limit_tolerance" in contract
+    assert "independent_reviewer_id_or_artifact_sha256" in contract
     for row in contract.values():
         assert row["required_before_package_c_pass"] == "true"
         assert row["current_value"] == ""

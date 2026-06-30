@@ -1091,6 +1091,35 @@ SIDEWALL_PACKAGE_C_PROOF_REQUIRED_EVIDENCE_FIELDS: tuple[str, ...] = (
     "rectangle_limit_evidence_sha256",
     "authorization_supersedes_no_auth_ledger_sha256",
 )
+SIDEWALL_PACKAGE_C_PROOF_REQUIRED_TELEMETRY_SHA_FIELDS: tuple[str, ...] = (
+    "reflection_algorithm_source_sha256",
+    "reflection_test_script_sha256",
+    "test_environment_lock_sha256",
+    "dependency_lock_sha256",
+    "rng_seed_matrix_sha256",
+    "test_parameter_matrix_sha256",
+    "raw_metric_artifact_sha256",
+    "summary_metric_artifact_sha256",
+)
+SIDEWALL_PACKAGE_C_PROOF_REQUIRED_TELEMETRY_FIELDS: tuple[str, ...] = (
+    "reflection_metric_schema_version",
+    *SIDEWALL_PACKAGE_C_PROOF_REQUIRED_TELEMETRY_SHA_FIELDS,
+    "dt_grid_s",
+    "diffusion_coefficient_grid_m2_s",
+    "particle_radius_grid_nm",
+    "sidewall_angle_grid_deg_comsol",
+    "depth_grid_nm",
+    "tolerance_m",
+    "max_reflection_iterations",
+    "substep_policy",
+    "boundary_atom_threshold",
+    "equilibrium_test_method",
+    "equilibrium_test_threshold",
+    "corner_bias_test_threshold",
+    "rectangle_limit_tolerance",
+    "one_wall_limit_tolerance",
+    "independent_reviewer_id_or_artifact_sha256",
+)
 SIDEWALL_PACKAGE_C_PROOF_REQUIRED_MANIFEST_FIELDS: tuple[str, ...] = (
     "package_C_proof_manifest_schema_version",
     "package_C_proof_evidence_claim_level",
@@ -1792,6 +1821,7 @@ def _validate_sidewall_package_c_proof_binding(
     proof_required_fields = (
         SIDEWALL_PACKAGE_C_PROOF_REQUIRED_FIELDS
         + SIDEWALL_PACKAGE_C_PROOF_REQUIRED_EVIDENCE_FIELDS
+        + SIDEWALL_PACKAGE_C_PROOF_REQUIRED_TELEMETRY_FIELDS
         + SIDEWALL_PACKAGE_C_PROOF_REQUIRED_MANIFEST_FIELDS
         + SIDEWALL_PACKAGE_C_PROOF_REQUIRED_NO_CLAIM_FIELDS
     )
@@ -1828,6 +1858,18 @@ def _validate_sidewall_package_c_proof_binding(
                 )
                 proof_ok = False
         elif not SHA256_RE.fullmatch(value):
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V03",
+                f"{field} is not sha256",
+            )
+            proof_ok = False
+    for field in SIDEWALL_PACKAGE_C_PROOF_REQUIRED_TELEMETRY_SHA_FIELDS:
+        value = _value(row, field)
+        if not value:
+            continue
+        if not SHA256_RE.fullmatch(value):
             _issue(
                 issues,
                 row_index,

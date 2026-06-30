@@ -1,13 +1,13 @@
 {
   "summary": {
     "disposition": "NODI_GATE28_SIDEWALL_PACKAGE_C_PROOF_REVIEW_PACKET_READY_NO_PROOF_REGISTRATION",
-    "gate28_build_head": "0944bca00b740dafac191956f8005b1772780a70",
+    "gate28_build_head": "48de7c4063a68d47316e8463d0dac84c2e7a21f7",
     "gate27_disposition": "NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH",
     "gate27_no_auth": true,
     "gate27_review_only": true,
-    "gate27_proof_contract_rows": 28,
-    "gate27_proof_contract_required_field_rows": 28,
-    "gate27_proof_contract_field_rows": 28,
+    "gate27_proof_contract_rows": 52,
+    "gate27_proof_contract_required_field_rows": 52,
+    "gate27_proof_contract_field_rows": 52,
     "gate27_proof_contract_missing_required_fields": [],
     "gate27_proof_contract_extra_fields": [],
     "gate27_proof_artifact_registered_rows": 0,
@@ -29,7 +29,7 @@
     "allowed_use": "external review packet;unit-test evidence ledger;proof-readiness review input;no-proof-registration no-runtime no-numeric-output",
     "blocked_use": "Package C proof/pass registration;runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
   },
-  "evidence_sha256": "006700559a150ca80e79f296c02cd2a28de0c345af31666847ba996d8af75efa",
-  "source_lock_sha256": "073705bc642ad084ce2dfecf1f3fad434d54b581b1f0cdf09a96df967b8625c2",
-  "prompt_sha256": "60ac9e424d4e3c33f85fc77aa118125cccfa7aae4823b8322ba0fca6d2919c05"
+  "evidence_sha256": "d118d10838553735ee37391196c14bb83f99bb7ce53972b9bb6a279216652641",
+  "source_lock_sha256": "0c884ffa772bc6d5099bdaa4580dbe1cc37d496fe355367e087e52563ceb8d77",
+  "prompt_sha256": "5483fc53470ab0f6f4c66cc8b7136a0d99fa5757e0bca19d8d352c857bd42499"
 }
