@@ -238,6 +238,11 @@ def boundary_atom_split_rows(raw_payload: dict[str, Any]) -> list[dict[str, str]
             for point in points
         )
         pileup_ratio = (first_band + 0.5) / (second_band + 0.5)
+        candidate_interpretation = (
+            "exact_atom_split_checked_no_exact_atoms_observed_not_proof_registered"
+            if exact_count == 0
+            else "exact_atom_split_checked_exact_atoms_observed_candidate_review_required_not_proof_registered"
+        )
         rows.append(
             {
                 "scenario_id": str(source_row["scenario_id"]),
@@ -251,9 +256,7 @@ def boundary_atom_split_rows(raw_payload: dict[str, Any]) -> list[dict[str, str]
                 "first_gap_band_fraction": str(_fraction(first_band, BOUNDARY_SAMPLE_COUNT)),
                 "adjacent_gap_band_fraction": str(_fraction(second_band, BOUNDARY_SAMPLE_COUNT)),
                 "wall_pileup_ratio": str(round(pileup_ratio, 9)),
-                "candidate_interpretation": (
-                    "exact_atom_split_observed_not_proof_registered"
-                ),
+                "candidate_interpretation": candidate_interpretation,
                 "claim_boundary": CLAIM_BOUNDARY,
                 "allowed_use": ALLOWED_USE,
                 "blocked_use": BLOCKED_USE,

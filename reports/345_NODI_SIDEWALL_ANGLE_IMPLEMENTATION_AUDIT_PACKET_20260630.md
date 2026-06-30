@@ -308,6 +308,27 @@ runtime_allowed=false
 numeric_prs_eas_allowed=false
 comsol_launch_allowed=false
 mph_load_allowed=false
+
+python -m pytest tests/test_nodi_comsol_gate38_sidewall_wall_pileup_refinement_candidate.py -q
+6 passed
+
+python tools/audits/build_nodi_comsol_gate38_sidewall_wall_pileup_refinement_candidate.py --confirm-gate38-wall-pileup-refinement-candidate
+NODI_GATE38_SIDEWALL_WALL_PILEUP_REFINEMENT_CANDIDATE_READY_NO_PROOF_REGISTRATION
+gate37_max_wall_pileup_ratio=9.0
+refined_top_pileup_rows=12
+expanded_sample_count=8192
+algorithmic_pileup_signal_rows=0
+sparse_gate37_proxy_artifact_rows=12
+max_expanded_first_vs_adjacent_gap_band_smoothed_ratio=1.298850575
+max_expanded_wall_pileup_ratio_ci95_low=1.011337147
+max_expanded_wall_pileup_ratio_ci95_high=1.928677789
+wall_pileup_refinement_status=sparse_gate37_proxy_artifact_no_algorithmic_pileup_signal
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
 ```
 
 Additional CLI/compile verification:
@@ -332,14 +353,14 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 | --- | --- | --- |
 | Package A | pass for schema/descriptor/validator guard scope | No PRS/EAS data generation authorized by this packet. |
 | Package B | pass for geometry primitive, sampler support, and actual signature binding | Flux-weighted trapezoid sampling remains blocked. |
-| Package C | implementation candidate plus Gate33-37 metric hardening route present; proof registration/pass still blocked/fail-closed | The Skorokhod finite-step reflection candidate is implemented for trapezoid diffusive plug-flow trajectories with unit tests and validator guards. Gate33-36 captures the external research synthesis, threshold matrix, hardening backlog, authorization placeholder, and hard-fail checklist. Gate37 adds exact/near-boundary atom split, raw histograms, ESS proxy, one-wall folded-normal and negative-control rows, worst-case dt refinement, and corner heatmap. No Package C physics authorization proof is registered; validated reflection proof/pass, hindered diffusion, runtime metrics beyond this candidate, and numeric PRS/EAS remain blocked. |
+| Package C | implementation candidate plus Gate33-38 metric hardening route present; proof registration/pass still blocked/fail-closed | The Skorokhod finite-step reflection candidate is implemented for trapezoid diffusive plug-flow trajectories with unit tests and validator guards. Gate33-36 captures the external research synthesis, threshold matrix, hardening backlog, authorization placeholder, and hard-fail checklist. Gate37 adds exact/near-boundary atom split, raw histograms, ESS proxy, one-wall folded-normal and negative-control rows, worst-case dt refinement, and corner heatmap. Gate38 resolves the Gate37 `max_wall_pileup_ratio=9.0` warning as sparse proxy artifact under expanded sampling. No Package C physics authorization proof is registered; validated reflection proof/pass, hindered diffusion, runtime metrics beyond this candidate, and numeric PRS/EAS remain blocked. |
 | Package D | validator/preflight guard pass only | Sidewall PRS/EAS pilot generation remains no-claim and blocked for trajectory/near-wall/wall-distance metrics unless a future Package C gate passes. |
 
 ## Next Safe Actions
 
-1. Investigate the Gate37 wall-pileup proxy warning (`max_wall_pileup_ratio=9.0`) with focused scenario/bin diagnostics before any proof-level claim.
-2. If the pile-up is finite-sample sparsity, bind the statistical explanation and confidence/expected-count rows; if it is algorithmic, design a substep or active-set refinement candidate.
-3. Regenerate Gate33-37 evidence and source locks after that refinement, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
+1. Fold Gate38 into the next metric-hardening candidate by replacing the brittle Gate37 wall-pileup ratio with expanded-sampling band counts, confidence intervals, and sparse-proxy classification.
+2. Continue tightening remaining proof-level gaps: long-run ESS if timeseries equilibrium tests are introduced, additional `6.25e-6 s` dt refinement for worst cases if needed, and explicit substep/fail policy for large RMS step relative to local feature size.
+3. Regenerate Gate33-38 evidence and source locks after refinement, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
 4. Keep the manual authorization ledger and external-review artifact SHA as explicit placeholders until a separate authorization supersedes the no-auth ledger.
 5. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
 6. Do not register proof or mark Package C as passed in the current gate.

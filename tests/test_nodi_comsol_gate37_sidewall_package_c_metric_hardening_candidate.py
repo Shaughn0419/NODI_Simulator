@@ -46,7 +46,11 @@ def test_gate37_boundary_split_separates_exact_and_near_band() -> None:
     assert "wall_pileup_ratio" in first
     assert first["exact_boundary_atom_eps_nm"] == str(gate37.EXACT_ATOM_EPS_NM)
     assert first["near_boundary_band_eps_nm"] == str(gate37.NEAR_BAND_EPS_NM)
-    assert all(row["candidate_interpretation"] == "exact_atom_split_observed_not_proof_registered" for row in rows)
+    assert all(
+        row["candidate_interpretation"]
+        == "exact_atom_split_checked_no_exact_atoms_observed_not_proof_registered"
+        for row in rows
+    )
     assert all(row["claim_boundary"] == gate37.CLAIM_BOUNDARY for row in rows)
 
 

@@ -1279,13 +1279,31 @@ Gate37 implements the first proof-metric hardening candidate block from the Gate
 
 Gate37 improves the evidence surface substantially: it shows that the current finite-step reflection candidate does not create exact boundary atoms under the tested split, and that the negative-control suite is strong enough to reject projection clamp. It also exposes a wall-pileup proxy risk that must be investigated before any proof-level claim. Therefore Gate37 is useful forward progress, but it still does not register proof/pass.
 
-## 13. Recommended next action
+## 13. Current Gate38 status
 
-Current safe route after Gate37:
+Gate38 refines the Gate37 wall-pileup proxy warning with focused expanded sampling:
 
-1. Investigate the `max_wall_pileup_ratio=9.0` Gate37 candidate warning with a focused corner/near-wall refinement pass: report which scenarios and bins drive it, distinguish finite-sample sparsity from algorithmic pile-up, and decide whether substepping or an active-set correction refinement is needed.
-2. Expand Gate37 into a second hardening candidate only if the pile-up driver is understood; otherwise keep `candidate_metric_revision_required` localized to the affected metric.
-3. Regenerate Gate33-37 source locks and metric evidence after that refinement, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
+- Artifact id: `GATE38_SIDEWALL_WALL_PILEUP_REFINEMENT_CANDIDATE_20260701`.
+- Disposition: `NODI_GATE38_SIDEWALL_WALL_PILEUP_REFINEMENT_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Source warning: Gate37 `max_wall_pileup_ratio=9.0`.
+- Scope: top `12` Gate37 wall-pileup rows, expanded to `8192` samples per row, with band counts, first/adjacent band fractions, Haldane-Anscombe ratio confidence intervals, sparse-proxy classification, source lock, no-proof firewall, status/report/manifest.
+- Result: `algorithmic_pileup_signal_rows=0`.
+- `sparse_gate37_proxy_artifact_rows=12`.
+- `max_expanded_first_vs_adjacent_gap_band_smoothed_ratio=1.298850575`.
+- `max_expanded_wall_pileup_ratio_ci95_low=1.011337147`.
+- `max_expanded_wall_pileup_ratio_ci95_high=1.928677789`.
+- Refinement status: `sparse_gate37_proxy_artifact_no_algorithmic_pileup_signal`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+Gate38 resolves the specific Gate37 `9.0` first-vs-adjacent gap-band smoothed proxy as a small-sample / empty-adjacent-bin artifact rather than an observed algorithmic reflection failure. This does not prove Package C; it only clears that localized candidate warning and improves the statistical diagnostic.
+
+## 14. Recommended next action
+
+Current safe route after Gate38:
+
+1. Fold Gate38 into the next proof-metric hardening candidate by replacing the brittle Gate37 wall-pileup ratio with expanded-sampling band counts, confidence intervals, and sparse-proxy classification.
+2. Continue tightening the remaining proof-level gaps: raw time-series ESS if long-run equilibrium tests are introduced, dt `6.25e-6 s` refinement for additional worst cases if needed, and explicit substep/fail policy for any future geometry with large RMS step relative to local throat/corner feature size.
+3. Regenerate Gate33-38 source locks and metric evidence after any refinement, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
 4. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; the builder must not auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 
