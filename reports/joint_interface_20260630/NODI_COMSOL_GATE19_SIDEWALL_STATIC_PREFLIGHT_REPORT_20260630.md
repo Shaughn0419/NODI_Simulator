@@ -1,0 +1,8 @@
+# NODI COMSOL Gate19 Sidewall Package A/B/D Static Preflight
+
+- Disposition: `NODI_GATE19_SIDEWALL_PACKAGE_ABD_STATIC_PREFLIGHT_PASS_NO_AUTH`
+- Package A: `PASS_STATIC_PREFLIGHT_NO_RUNTIME`
+- Package B: `PASS_STATIC_PREFLIGHT_NO_RUNTIME`
+- Package C: `BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION`
+- Package D: `PASS_CONTRACT_PREFLIGHT_NO_RUNTIME`
+- Boundary: no runtime, no production, no physics claim.

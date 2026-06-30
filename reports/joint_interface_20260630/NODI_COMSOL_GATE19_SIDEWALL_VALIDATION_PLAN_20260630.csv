@@ -1,0 +1,5 @@
+validation_id,command,required_for_pass,recorded_result
+G19F-VALIDATION-001,python tools/audits/build_nodi_comsol_gate19_sidewall_static_preflight.py --confirm-gate19-sidewall-static-preflight,true,PENDING_RUNTIME_VALIDATION
+G19F-VALIDATION-002,python -m py_compile tools/audits/build_nodi_comsol_gate19_sidewall_static_preflight.py,true,PENDING_RUNTIME_VALIDATION
+G19F-VALIDATION-003,python -m pytest tests/test_nodi_comsol_gate19_sidewall_static_preflight.py -q,true,PENDING_RUNTIME_VALIDATION
+G19F-VALIDATION-004,python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py tests/test_cross_section_geometry.py tests/test_physics_core.py::TestIntegration::test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics tests/test_physics_core.py::TestIntegration::test_batch_signature_keeps_measured_profile_lookup_blocked_until_validated -q,true,PENDING_RUNTIME_VALIDATION

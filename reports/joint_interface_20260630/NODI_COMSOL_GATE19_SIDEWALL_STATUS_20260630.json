@@ -1,0 +1,16 @@
+{
+  "disposition": "NODI_GATE19_SIDEWALL_PACKAGE_ABD_STATIC_PREFLIGHT_PASS_NO_AUTH",
+  "summary": {
+    "disposition": "NODI_GATE19_SIDEWALL_PACKAGE_ABD_STATIC_PREFLIGHT_PASS_NO_AUTH",
+    "gate18_unblocked": true,
+    "package_a_status": "PASS_STATIC_PREFLIGHT_NO_RUNTIME",
+    "package_b_status": "PASS_STATIC_PREFLIGHT_NO_RUNTIME",
+    "package_c_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+    "package_d_status": "PASS_CONTRACT_PREFLIGHT_NO_RUNTIME",
+    "no_auth_firewall_failures": 0,
+    "review_only": true,
+    "no_auth": true
+  },
+  "review_only": true,
+  "no_auth": true
+}
