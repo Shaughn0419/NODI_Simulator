@@ -2,9 +2,9 @@
   "summary": {
     "disposition": "NODI_GATE33_36_SIDEWALL_PACKAGE_C_REFLECTION_PROOF_AUTHORIZATION_DESIGN_READY_NO_PROOF_REGISTRATION",
     "artifact_id": "GATE33_36_PACKAGE_C_REFLECTION_PROOF_AUTHORIZATION_DESIGN_PACKET_20260630",
-    "gate33_36_build_head": "53e9a5eec4ae732da840cb6af6aeb803d8820ca0",
-    "gate33_36_worktree_clean_at_build_time": false,
-    "gate33_36_worktree_status_line_count_at_build_time": 27,
+    "gate33_36_build_head": "7d99b293f4efee2f8be1137ab144fc0ee7c251dd",
+    "gate33_36_worktree_clean_at_build_time": true,
+    "gate33_36_worktree_status_line_count_at_build_time": 0,
     "external_verdict": "READY_FOR_PROOF_REGISTRATION_AUTHORIZATION_DESIGN_REVIEW_ONLY",
     "packet_output_status": "authorization_required_no_proof_registration",
     "allowed_output_statuses": [
