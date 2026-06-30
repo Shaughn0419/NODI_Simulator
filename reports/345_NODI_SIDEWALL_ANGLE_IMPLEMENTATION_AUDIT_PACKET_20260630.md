@@ -32,7 +32,7 @@ The current supported split is:
 | PRS propagated allowlist | Propagated trapezoid PRS rows allow only implemented sampler, flow, flow-control, and boundary states. | `test_position_response_sidewall_v2_rejects_unsupported_propagated_flow_control` |
 | Propagation-status usage | Propagated PRS/EAS sidewall v2 rows cannot carry `geometry_not_propagated_reasons`; non-propagated rows must remain blocked/audit-labeled. | `test_effective_aperture_sidewall_v2_rejects_propagated_not_propagated_reason` |
 | EAS generic surrogate guard | Generic `W_eff_surrogate_nm` must be an explicit numeric alias of a named sidewall surrogate; eta/rank fields stay disabled/no-rank. | commit `c9ea9b7` |
-| Claim blacklist | Sidewall PRS/EAS artifacts reject exact claim-promotion aliases including `rank`, `route_rank`, `sidewall_rank`, `JOINT_ROUTE_CLASS`, `q_ch_weight`, `q_ch_weighting`, bare `flow_rate`, and bare `Q`, plus positive `sidewall_aware=true` shortcuts. | `test_position_response_rejects_positive_sidewall_aware_shortcut` |
+| Claim blacklist | Sidewall PRS/EAS artifacts and Package D precheck reject claim-promotion aliases including `rank`, `route_rank`, `sidewall_rank`, `JOINT_ROUTE_CLASS`, `q_ch_weight`, `q_ch_weighting`, bare/unitized `flow_rate` and `Q`, `q_ch_m3_s`, and `comsol_Q_proxy`, plus positive `sidewall_aware=true` shortcuts. | `test_position_response_sidewall_v2_rejects_forbidden_flow_alias_columns`, `test_effective_aperture_sidewall_v2_rejects_forbidden_flow_alias_columns`, `test_sidewall_package_d_precheck_scans_forbidden_columns_even_when_flag_passes` |
 
 ## Still Blocked
 
@@ -58,14 +58,14 @@ python -m pytest tests/test_cross_section_geometry.py tests/test_nodi_comsol_nex
 Latest result:
 
 ```text
-439 passed in 82.55s (0:01:22)
+453 passed in 84.85s (0:01:24)
 ```
 
 Additional focused verification after adding runtime top-aperture binding guards:
 
 ```text
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q
-367 passed in 58.92s
+381 passed in 59.63s
 python -m pytest tests/test_cross_section_geometry.py -q
 38 passed in 0.17s
 python -m pytest tests/test_physics_core.py -k channel_geometry -q
@@ -84,5 +84,5 @@ python -m pytest tests/test_physics_core.py -k channel_geometry -q
 ## Next Safe Actions
 
 1. Keep strengthening no-compute validators and mutation tests for profile/source-hash drift and geometry-source promotion.
-2. Add explicit measured-profile load/hash/validation guards before any `measured_geometry` claim.
+2. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
 3. Design, but do not silently enable, a validated trapezoid trajectory/flow model path.
