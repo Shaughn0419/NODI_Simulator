@@ -103,15 +103,39 @@
   "dirty_rows": [
     {
       "dirty_classification": "RC1_GENERATED_ALLOWED",
-      "git_status": "??",
+      "git_status": "M",
       "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
       "reason": "Allowed generated RC1 output.",
       "source_lock_impact": "ALLOWED_RC1_OUTPUT",
       "stage_in_rc1_commit": "true"
     },
     {
+      "dirty_classification": "UPSTREAM_SOURCE_DRIFT_BLOCKER_FAIL_CLOSED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "reason": "Referenced source changed after Gate24 release.",
+      "source_lock_impact": "BLOCKS_RC1_FREEZE_PASS",
+      "stage_in_rc1_commit": "false"
+    },
+    {
+      "dirty_classification": "UPSTREAM_SOURCE_DRIFT_BLOCKER_FAIL_CLOSED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "reason": "Referenced source changed after Gate24 release.",
+      "source_lock_impact": "BLOCKS_RC1_FREEZE_PASS",
+      "stage_in_rc1_commit": "false"
+    },
+    {
+      "dirty_classification": "UPSTREAM_SOURCE_DRIFT_BLOCKER_FAIL_CLOSED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "reason": "Referenced source changed after Gate24 release.",
+      "source_lock_impact": "BLOCKS_RC1_FREEZE_PASS",
+      "stage_in_rc1_commit": "false"
+    },
+    {
       "dirty_classification": "RC1_GENERATED_ALLOWED",
-      "git_status": "??",
+      "git_status": "M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_DECISION_DOSSIER_20260630.md",
       "reason": "Allowed generated RC1 output.",
       "source_lock_impact": "ALLOWED_RC1_OUTPUT",
@@ -119,7 +143,23 @@
     },
     {
       "dirty_classification": "RC1_GENERATED_ALLOWED",
-      "git_status": "??",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
       "reason": "Allowed generated RC1 output.",
       "source_lock_impact": "ALLOWED_RC1_OUTPUT",
@@ -127,16 +167,32 @@
     },
     {
       "dirty_classification": "RC1_GENERATED_ALLOWED",
-      "git_status": "??",
-      "path": "tests/test_nodi_comsol_sidewall_static_interop_rc1.py",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
       "reason": "Allowed generated RC1 output.",
       "source_lock_impact": "ALLOWED_RC1_OUTPUT",
       "stage_in_rc1_commit": "true"
     },
     {
       "dirty_classification": "RC1_GENERATED_ALLOWED",
-      "git_status": "??",
-      "path": "tools/audits/build_nodi_comsol_sidewall_static_interop_rc1.py",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
       "reason": "Allowed generated RC1 output.",
       "source_lock_impact": "ALLOWED_RC1_OUTPUT",
       "stage_in_rc1_commit": "true"
@@ -797,111 +853,111 @@
   "self_review": [
     {
       "dimension": "git cleanliness",
-      "notes": "No authorization or runtime promotion found.",
+      "notes": "RC1 remains partial until dirty source-lock blockers are cleared.",
       "reviewer_id": "RC1-REVIEW-01",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "source lock",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-02",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "Gate17-25 coverage",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-03",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "COMSOL Gate16 ACK",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-04",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "semantic digest",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-05",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "fixture replay",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-06",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "validator binding",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-07",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "Package A/B/D boundary",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-08",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "Package C auth lock",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-09",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "phrase gate",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-10",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "no-auth leakage",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-11",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "q_ch/JRC aliases",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-12",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "runtime/production locks",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-13",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "manifest/SHA stability",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-14",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "test coverage",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-15",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "decision wording",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-16",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "Git scope",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-17",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     },
     {
       "dimension": "future handoff clarity",
       "notes": "No authorization or runtime promotion found.",
       "reviewer_id": "RC1-REVIEW-18",
-      "verdict": "PASS"
+      "verdict": "PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER"
     }
   ],
   "source_lock": [
@@ -909,10 +965,10 @@
       "artifact_id": "NODI-CURRENT-HEAD-VS-GATE25",
       "drift_status": "CURRENT_HEAD_INCLUDES_GATE25_RELEASE",
       "exists": "true",
-      "path": "c76d783e72131a87a15a3bd5c48b28e151035fda Refresh Gate24 sidewall ledger head",
+      "path": "12b30c0667b5f8cb7f50fb0b976b53fe49f7329f Add sidewall static interop RC1 package",
       "policy_impact": "no_auth_review_only_source_lock",
       "row_count": "NA",
-      "sha256": "c76d783e72131a87a15a3bd5c48b28e151035fda",
+      "sha256": "12b30c0667b5f8cb7f50fb0b976b53fe49f7329f",
       "source_side": "NODI_GIT"
     },
     {
@@ -1132,7 +1188,7 @@
       "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
       "policy_impact": "no_auth_review_only_source_lock",
       "row_count": "NA",
-      "sha256": "3ded7c6d34be6c0446414ac185f4eff54a89995b61a5a324713a812eab0a6794",
+      "sha256": "414278c70608b506773074d428d11fa3412cec402bf76ec289d0ec704b4f5370",
       "source_side": "NODI"
     },
     {
@@ -1142,7 +1198,7 @@
       "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
       "policy_impact": "no_auth_review_only_source_lock",
       "row_count": "8",
-      "sha256": "a08ddc789d49666e465a45b7291a84a6b777b15da11446510372d17dbe841069",
+      "sha256": "ca4fbd328977da7b37cfbcce9af18aca8fd34f19127cbc1c5feac47e1ad30c85",
       "source_side": "NODI"
     },
     {
@@ -1152,7 +1208,7 @@
       "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
       "policy_impact": "no_auth_review_only_source_lock",
       "row_count": "NA",
-      "sha256": "7315f52fced7c49132abf6f0f0664d49a366586d61ee7b7a90907ee753999f83",
+      "sha256": "2756a1001f6b4836d5d914ebf72cfa5a77876d2eec775c8eb0a0a46d7468798f",
       "source_side": "NODI"
     },
     {
@@ -1257,6 +1313,36 @@
     },
     {
       "artifact_id": "DIRTY-WORKTREE-002",
+      "drift_status": "UPSTREAM_SOURCE_DRIFT_BLOCKER_FAIL_CLOSED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "policy_impact": "BLOCKS_RC1_FREEZE_PASS",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-003",
+      "drift_status": "UPSTREAM_SOURCE_DRIFT_BLOCKER_FAIL_CLOSED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "policy_impact": "BLOCKS_RC1_FREEZE_PASS",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-004",
+      "drift_status": "UPSTREAM_SOURCE_DRIFT_BLOCKER_FAIL_CLOSED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "policy_impact": "BLOCKS_RC1_FREEZE_PASS",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-005",
       "drift_status": "RC1_GENERATED_ALLOWED",
       "exists": "true",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_DECISION_DOSSIER_20260630.md",
@@ -1266,7 +1352,27 @@
       "source_side": "NODI_WORKTREE"
     },
     {
-      "artifact_id": "DIRTY-WORKTREE-003",
+      "artifact_id": "DIRTY-WORKTREE-006",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-007",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-008",
       "drift_status": "RC1_GENERATED_ALLOWED",
       "exists": "true",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
@@ -1276,20 +1382,40 @@
       "source_side": "NODI_WORKTREE"
     },
     {
-      "artifact_id": "DIRTY-WORKTREE-004",
+      "artifact_id": "DIRTY-WORKTREE-009",
       "drift_status": "RC1_GENERATED_ALLOWED",
       "exists": "true",
-      "path": "tests/test_nodi_comsol_sidewall_static_interop_rc1.py",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
       "policy_impact": "ALLOWED_RC1_OUTPUT",
       "row_count": "NA",
       "sha256": "NA_DIRTY_WORKTREE_ENTRY",
       "source_side": "NODI_WORKTREE"
     },
     {
-      "artifact_id": "DIRTY-WORKTREE-005",
+      "artifact_id": "DIRTY-WORKTREE-010",
       "drift_status": "RC1_GENERATED_ALLOWED",
       "exists": "true",
-      "path": "tools/audits/build_nodi_comsol_sidewall_static_interop_rc1.py",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-011",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-012",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
       "policy_impact": "ALLOWED_RC1_OUTPUT",
       "row_count": "NA",
       "sha256": "NA_DIRTY_WORKTREE_ENTRY",
@@ -1302,20 +1428,20 @@
     "comsol_ack_rows": 4,
     "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
     "decision_rows": 5,
-    "dirty_blocker_count": 0,
-    "disposition": "NODI_SIDEWALL_STATIC_INTEROP_RC1_READY_NO_AUTH",
+    "dirty_blocker_count": 3,
+    "disposition": "PARTIAL_NODI_SIDEWALL_STATIC_INTEROP_RC1_BLOCKED_FAIL_CLOSED_NO_AUTH",
     "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
     "field_family_rows": 5,
     "gate2d_rows": 4,
     "missing_required_source_count": 0,
     "no_auth_firewall_rows": 16,
-    "nodi_head": "c76d783e72131a87a15a3bd5c48b28e151035fda",
+    "nodi_head": "12b30c0667b5f8cb7f50fb0b976b53fe49f7329f",
     "package_c_auth_lock_rows": 3,
     "qch_state": "ABSENT",
     "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
-    "semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
-    "source_lock_blocker_count": 0,
-    "source_lock_rows": 39,
+    "semantic_digest": "1d9aea871ef4b98a9fdc506ae32743eca3b88a51bdda446dd71eb4b4919538c9",
+    "source_lock_blocker_count": 3,
+    "source_lock_rows": 46,
     "static_fixture_replay_rows": 29,
     "static_fixture_unknown_rows": 0
   },
@@ -1324,8 +1450,8 @@
     "comsol_gate_range": "Gate16",
     "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
     "date": "20260630",
-    "dirty_blocker_count": 0,
-    "disposition": "NODI_SIDEWALL_STATIC_INTEROP_RC1_READY_NO_AUTH",
+    "dirty_blocker_count": 3,
+    "disposition": "PARTIAL_NODI_SIDEWALL_STATIC_INTEROP_RC1_BLOCKED_FAIL_CLOSED_NO_AUTH",
     "missing_required_source_count": 0,
     "no_auth_locks": {
       "binding_state": "FAIL_CLOSED",
@@ -1337,8 +1463,8 @@
       "qch_weighting_allowed": "false",
       "runtime_allowed": "false"
     },
-    "nodi_gate_range": "Gate17-Gate24",
-    "nodi_head": "c76d783e72131a87a15a3bd5c48b28e151035fda",
+    "nodi_gate_range": "Gate17-Gate25",
+    "nodi_head": "12b30c0667b5f8cb7f50fb0b976b53fe49f7329f",
     "package_abd_status": "STATIC_PREFLIGHT_READY_AFTER_SOURCE_LOCK_CLEAN",
     "package_c_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
     "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
@@ -1362,13 +1488,13 @@
         "qch_weighting_allowed": "false",
         "runtime_allowed": "false"
       },
-      "nodi_gate_range": "Gate17-Gate24",
+      "nodi_gate_range": "Gate17-Gate25",
       "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
       "static_preflight_scope": "Package A/B static preflight; Package D contract preflight; Package C blocked",
       "validator_families": 29
     },
-    "semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
-    "source_lock_blocker_count": 0,
+    "semantic_digest": "1d9aea871ef4b98a9fdc506ae32743eca3b88a51bdda446dd71eb4b4919538c9",
+    "source_lock_blocker_count": 3,
     "static_preflight_scope": "Package A/B/D static-or-contract preflight only; no runtime; no production"
   }
 }

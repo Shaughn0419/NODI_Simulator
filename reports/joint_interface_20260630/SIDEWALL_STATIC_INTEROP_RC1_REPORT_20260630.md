@@ -1,11 +1,11 @@
 # SIDEWALL_STATIC_INTEROP_RC1 Report
 
-- Disposition: NODI_SIDEWALL_STATIC_INTEROP_RC1_READY_NO_AUTH
-- NODI head: c76d783e72131a87a15a3bd5c48b28e151035fda
+- Disposition: PARTIAL_NODI_SIDEWALL_STATIC_INTEROP_RC1_BLOCKED_FAIL_CLOSED_NO_AUTH
+- NODI head: 12b30c0667b5f8cb7f50fb0b976b53fe49f7329f
 - COMSOL head: 9f8309496930788c2b131e70f3ecac31ed2679be
-- Semantic digest: 53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0
-- Source lock rows: 39
-- Dirty source-lock blockers: 0
+- Semantic digest: 1d9aea871ef4b98a9fdc506ae32743eca3b88a51bdda446dd71eb4b4919538c9
+- Source lock rows: 46
+- Dirty source-lock blockers: 3
 - Static fixture replay rows: 29 (unknown: 0)
 - COMSOL Gate16 ACK rows: 4 (misaligned: 0)
 - Gate2D exactly 4; EDGE NOT_APPROVED_PREAUTH_ONLY; QCH ABSENT; BINDING FAIL_CLOSED.
