@@ -1202,6 +1202,83 @@ def test_dt_halving_converges_wall_distance_distribution() -> None:
     assert delta_quarter_dt < delta_half_dt < delta_dt
 
 
+def test_angle_and_depth_mutation_change_reflected_wall_distance_distribution() -> None:
+    radius_m = 60.0e-9
+    quantiles = np.array([0.10, 0.50, 0.90])
+
+    def reflected_gap_quantiles(
+        *,
+        sidewall_deg_comsol: float,
+        depth_m: float,
+    ) -> tuple[np.ndarray, float]:
+        channel = Channel(width_m=500.0e-9, depth_m=depth_m)
+        cfg = replace(
+            DEFAULT_SIM_CFG,
+            channel_cross_section_model="trapezoid_tapered_sidewalls",
+            sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(
+                sidewall_deg_comsol
+            ),
+            flow_profile_model="plug",
+            diffusion_hindrance_model="none",
+            include_diffusion=True,
+            reflecting_boundary=True,
+            total_time_s=1.0e-4,
+            sampling_rate_Hz=2.0e4,
+        )
+        geom = TrapezoidCrossSection(
+            top_width_m=channel.width_m,
+            depth_m=channel.depth_m,
+            sidewall_taper_angle_deg=cfg.sidewall_taper_angle_deg,
+        )
+        n_events = 512
+        u_norm = np.linspace(0.25, 0.55, n_events)
+        x0_m = np.zeros(n_events, dtype=float)
+        z0_m = u_norm * depth_m - 0.5 * depth_m
+        diffusion_draws = np.column_stack(
+            (
+                np.linspace(0.4, 0.9, n_events),
+                np.linspace(-0.1, 0.1, n_events),
+            )
+        )
+
+        trajectory = simulate_particle_trajectory_block(
+            channel,
+            BASELINE_OPTICAL,
+            cfg,
+            initial_x_m=x0_m,
+            initial_z_m=z0_m,
+            particle_radius_m=radius_m,
+            diffusion_coefficient=8.0e-12,
+            diffusion_draws=diffusion_draws,
+        )
+        gaps_m = _trapezoid_surface_gaps_m(
+            geom,
+            trajectory["x_m"][:, -1],
+            trajectory["z_m"][:, -1],
+            channel.depth_m,
+            radius_m,
+        )
+        return np.quantile(gaps_m, quantiles), geom.center_accessible_area_m2(radius_m)
+
+    gaps_85_d900_m, area_85_d900_m2 = reflected_gap_quantiles(
+        sidewall_deg_comsol=85.0,
+        depth_m=900.0e-9,
+    )
+    gaps_83_d900_m, area_83_d900_m2 = reflected_gap_quantiles(
+        sidewall_deg_comsol=83.0,
+        depth_m=900.0e-9,
+    )
+    gaps_85_d1200_m, area_85_d1200_m2 = reflected_gap_quantiles(
+        sidewall_deg_comsol=85.0,
+        depth_m=1200.0e-9,
+    )
+
+    assert np.max(np.abs(gaps_85_d900_m - gaps_83_d900_m)) > 5.0e-9
+    assert np.max(np.abs(gaps_85_d900_m - gaps_85_d1200_m)) > 5.0e-9
+    assert abs(area_85_d900_m2 - area_83_d900_m2) > 1.0e-14
+    assert abs(area_85_d900_m2 - area_85_d1200_m2) > 1.0e-14
+
+
 def test_rectangle_limit_matches_rectangular_reflection() -> None:
     channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
     radius_m = 60.0e-9
@@ -1624,6 +1701,11 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     )
     assert "trajectory_boundary_model=not_applicable_pure_advection" in signature_85
     assert "trajectory_boundary_claim_level=no_diffusive_boundary_claim" in signature_85
+    assert "brownian_boundary_target_model=not_applicable_no_diffusion" in signature_85
+    assert "brownian_boundary_numerical_scheme=not_applicable_no_diffusion" in signature_85
+    assert "projection_boundary_surrogate_used=False" in signature_85
+    assert "reflection_update_rule_id=not_applicable" in signature_85
+    assert "reflection_telemetry_scope=not_applicable" in signature_85
     assert "trapezoid_top_width_m=5e-07" in signature_85
     assert "trapezoid_depth_m=9e-07" in signature_85
     assert "trapezoid_bottom_width_unclipped_m=" in signature_85
@@ -1645,6 +1727,30 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         f"{TRAPEZOID_SKOROKHOD_BOUNDARY_CLAIM_LEVEL}"
         in signature_85_diffusive
     )
+    assert (
+        "brownian_boundary_target_model="
+        "skorokhod_normal_reflection_convex_offset_trapezoid_v1"
+        in signature_85_diffusive
+    )
+    assert (
+        "brownian_boundary_numerical_scheme="
+        "finite_step_wall_normal_active_set_reflection_v1"
+        in signature_85_diffusive
+    )
+    assert "not_ballistic_specular_collision_claim=True" in signature_85_diffusive
+    assert "not_hindered_hydrodynamics_claim=True" in signature_85_diffusive
+    assert "projection_boundary_surrogate_used=False" in signature_85_diffusive
+    assert (
+        "reflection_update_rule_id=wall_normal_folded_active_set_iteration_v1"
+        in signature_85_diffusive
+    )
+    assert (
+        "reflection_telemetry_scope=single_step_geometry_diagnostics"
+        in signature_85_diffusive
+    )
+    assert "reflection_active_wall_set_reporting=True" in signature_85_diffusive
+    assert "reflection_iteration_count_reporting=True" in signature_85_diffusive
+    assert "reflection_displacement_reporting=True" in signature_85_diffusive
     assert (
         "geometry_propagation_status="
         "sidewall_sampler_and_pure_advection_propagated"
