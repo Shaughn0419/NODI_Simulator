@@ -14,6 +14,7 @@ def test_gate20_payload_passes_static_continuity_validation() -> None:
     assert payload["summary"]["gate19_head_is_ancestor_of_current"] is True
     assert payload["summary"]["comsol_head_actual"] == gate20.EXPECTED_COMSOL_GATE16_HEAD
     assert payload["summary"]["comsol_anchor_digest"] == gate20.EXPECTED_COMSOL_ANCHOR_DIGEST
+    assert "clean successor" in payload["summary"]["gate20_package_expected_successor_policy"]
 
 
 def test_gate20_locks_gate19_sources_without_reopening_stale_head_loop() -> None:
@@ -24,6 +25,7 @@ def test_gate20_locks_gate19_sources_without_reopening_stale_head_loop() -> None
     assert payload["summary"]["gate19_missing_sources"] == 0
     assert payload["summary"]["comsol_consumed_nodi_head_is_ancestor_of_gate19"] is True
     head_rows = {row["advance_id"]: row for row in payload["post_gate16_head_advance"]}
+    assert head_rows["G20E-HEAD-ADVANCE-003"]["item"] == "Gate20 build-time NODI head"
     assert head_rows["G20E-HEAD-ADVANCE-003"]["stale_head_risk"] == "pass"
 
 

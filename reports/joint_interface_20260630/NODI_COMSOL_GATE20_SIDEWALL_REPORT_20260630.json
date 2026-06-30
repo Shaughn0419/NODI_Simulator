@@ -1,7 +1,8 @@
 {
   "summary": {
     "disposition": "NODI_GATE20_SIDEWALL_STATIC_CONTINUITY_HARD_FAIL_VALIDATOR_READY_NO_AUTH",
-    "nodi_current_head": "e67c404118648d52af2a99a5995cbd1ee024c6ec",
+    "gate20_build_head": "7b4e4c2f089e08c101eb452a5abca03d210faecd",
+    "gate20_package_expected_successor_policy": "final package/report commit may be a clean successor to gate20_build_head; source semantics are pinned to expected_gate19_head",
     "expected_gate19_head": "e67c404118648d52af2a99a5995cbd1ee024c6ec",
     "gate19_head_is_ancestor_of_current": true,
     "comsol_head_actual": "ed4cfc7ff4565f79c025cd206bef0aff29d25d6a",

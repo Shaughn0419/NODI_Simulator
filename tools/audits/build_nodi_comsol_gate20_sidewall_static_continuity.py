@@ -255,7 +255,7 @@ def package_c_blocked_rows() -> list[dict[str, str]]:
 
 def post_gate16_head_advance_rows(comsol_root: Path) -> list[dict[str, str]]:
     comsol_status = read_json(comsol_root / "roadmap" / "COMSOL_GATE16_STATUS_20260630.json")
-    nodi_current_head = safe_git_head(PROJECT_ROOT)
+    gate20_build_head = safe_git_head(PROJECT_ROOT)
     comsol_consumed_nodi_head = str(comsol_status.get("nodi_head", ""))
     return [
         {
@@ -278,10 +278,10 @@ def post_gate16_head_advance_rows(comsol_root: Path) -> list[dict[str, str]]:
         },
         {
             "advance_id": "G20E-HEAD-ADVANCE-003",
-            "item": "current NODI head",
-            "value": nodi_current_head,
-            "interpretation": "may be Gate19 or later Gate20 report/test successor; semantic source remains pinned to Gate19",
-            "stale_head_risk": "pass" if git_is_ancestor(EXPECTED_GATE19_HEAD, nodi_current_head, PROJECT_ROOT) else "fail_closed_gate19_not_ancestor",
+            "item": "Gate20 build-time NODI head",
+            "value": gate20_build_head,
+            "interpretation": "may be Gate19 or later Gate20 report/test successor; final package commit is self-referentially excluded",
+            "stale_head_risk": "pass" if git_is_ancestor(EXPECTED_GATE19_HEAD, gate20_build_head, PROJECT_ROOT) else "fail_closed_gate19_not_ancestor",
             "allowed_use": ALLOWED_USE,
             "blocked_use": BLOCKED_USE,
         },
@@ -339,7 +339,10 @@ def build_payload(comsol_root: Path = DEFAULT_COMSOL_ROOT) -> dict[str, Any]:
     firewall = no_auth_firewall_rows()
     summary = {
         "disposition": DISPOSITION,
-        "nodi_current_head": nodi_current_head,
+        "gate20_build_head": nodi_current_head,
+        "gate20_package_expected_successor_policy": (
+            "final package/report commit may be a clean successor to gate20_build_head; source semantics are pinned to expected_gate19_head"
+        ),
         "expected_gate19_head": EXPECTED_GATE19_HEAD,
         "gate19_head_is_ancestor_of_current": git_is_ancestor(EXPECTED_GATE19_HEAD, nodi_current_head, PROJECT_ROOT),
         "comsol_head_actual": comsol_head,
