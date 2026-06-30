@@ -102,6 +102,7 @@ Completed NODI-side guardrails:
 - Added a batch-level measured-profile lookup regression so `run_single_case_batch` keeps configured-but-unloaded measured profiles as metadata-only/blocked runtime state in both summary output and `observation_signature`.
 - Tightened descriptor v2 measured-geometry claims so `geometry_claim_level=measured_geometry` requires explicit `measured_profile_loaded=true` and `measured_profile_validated=true`, in addition to measured source/path/hash metadata.
 - Added propagated trapezoid PRS `flow_control_mode` allowlist so sidewall-aware PRS rows cannot silently mix fixed-pressure semantics into the current fixed-velocity-only plug-flow surrogate.
+- Aligned EAS sidewall v2 propagation-status usage with PRS: `geometry_propagation_status=propagated` now hard-fails if `geometry_not_propagated_reasons` is nonblank.
 - Closed the optional `runtime_top_aperture_nm` signature drift hole found by independent review: when the row has no runtime top-aperture value, PRS/EAS sidewall v2 signatures may only carry `runtime_top_aperture_nm=unknown`, not a numeric value.
 - Added a positive `sidewall_aware=true` shortcut guard so artifacts must use explicit sidewall v2 schema/status fields rather than a broad boolean promotion flag; negative boundary flags such as `sidewall_aware=false` remain allowed.
 
