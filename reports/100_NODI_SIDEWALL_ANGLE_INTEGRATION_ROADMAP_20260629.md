@@ -118,6 +118,7 @@ Completed NODI-side guardrails:
 - Added a positive `sidewall_aware=true` shortcut guard so artifacts must use explicit sidewall v2 schema/status fields rather than a broad boolean promotion flag; negative boundary flags such as `sidewall_aware=false` remain allowed.
 - Added Gate23 static fixture execution packet: Gate22 source hashes are locked, 29 static fixture execution rows are executable as no-runtime pytest/validator surfaces, validator CLI success text is `PASS_CONTEXT_ONLY_NOT_PRODUCTION`, and Package C proof remains fail-closed.
 - Added Gate24 Package C future-authorization ledger: Gate23 source hashes are locked without drift, the exact future Package C authorization phrase is recorded but still yields `authorized_now=false`, and Package C physics, proof-registry update, runtime configuration, NODI recomputation, COMSOL launch, `.mph` load, sidewall PRS/EAS numeric output, q_ch/JRC/route-score/winner/yield/detection/fabrication permissions all remain false.
+- Added Gate25 Package C design-review packet: Gate24 sources are locked, Package C trajectory/near-wall/flow/electrokinetic/optical questions are separated into design-review rows, a self-contained external-AI prompt records local geometry formulas and current NODI boundaries, and implementation/runtime permissions remain false.
 
 Still blocked in this roadmap:
 
@@ -1020,6 +1021,7 @@ Go/no-go:
 
 - Under the current Gate23 no-auth state, Package C is blocked/fail-closed. It cannot be treated as passed by a row-local id/hash fixture.
 - Under the current Gate24 no-auth ledger, the future authorization phrase is recorded for auditability but does not authorize Package C physics, proof-registry update, runtime configuration, NODI recomputation, COMSOL launch, `.mph` load, or sidewall PRS/EAS numeric output.
+- Gate25 prepares the Package C physics design review and external prompt only. It does not implement sloped-wall reflection, hindered diffusion, trapezoid flow, electrokinetic grids, optical/reference solvers, or any PRS/EAS numeric output.
 - A future explicit Package C gate may emit trajectory-boundary propagation audits, wall-distance diagnostics, and near-wall surrogate diagnostics only after a real registered proof artifact, an external/independent physics review, and an explicit execution authorization path exist.
 - Package C cannot emit clogging rate, adhesion probability, wet pass probability, recovery, or calibrated event probabilities.
 - Package C must pass before Package D can use trajectory, near-wall, hindered-diffusion, wall-distance-bin, or selected-annulus metrics.
@@ -1210,7 +1212,7 @@ Current safe route after Gate24:
 
 1. Keep Package A/B guardrails and no-compute static fixture execution as the active foundation; preserve `ideal_rectangle` as a first-class path while keeping trapezoid paths explicitly schema-bound.
 2. Add production-bypass/static scanners for sidewall artifacts and generated ledgers so no forbidden claim column or production/runtime flag can re-enter through a newer CSV/report surface.
-3. Prepare a separate Package C physics design packet for external/independent review before implementation: sloped-wall reflection, Brownian near-wall behavior, hindered-diffusion claim level, trapezoid-compatible flow, electrokinetic wall-distance grid, and optical/reference solver boundaries.
+3. Use the Gate25 external-AI prompt for independent Package C physics review before implementation: sloped-wall reflection, Brownian near-wall behavior, hindered-diffusion claim level, trapezoid-compatible flow, electrokinetic wall-distance grid, and optical/reference solver boundaries.
 4. Do not register Package C as passed until a real proof artifact exists and the no-auth ledger is deliberately superseded by an explicit future authorization path.
 
 Only after Package A/B remain green and a future Package C proof is explicitly authorized should NODI run any sidewall-aware PRS/EAS pilot involving trajectory, near-wall, hindered-diffusion, or wall-distance-bin metrics. Even then, the result should remain `surrogate_sensitivity_only` / `context-only` until measurement or solver evidence is explicitly added and authorized.

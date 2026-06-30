@@ -42,6 +42,7 @@ The current supported split is:
 | Production candidate policy | PRS production candidate rows and CSV validation reject sidewall v2 artifacts, `not_accepted_for_production=true`, and roadmap-only statuses. | `test_position_response_production_candidate_csv_blocks_sidewall_v2` |
 | Gate23 static fixture packet | Gate22 source hashes are locked; 29 static fixture execution rows are executable without runtime; Package C proof registry is fail-closed. | `tests/test_nodi_comsol_gate23_sidewall_static_fixture_execution.py` |
 | Gate24 Package C authorization ledger | Gate23 source hashes are locked; exact future Package C phrase matching is recorded but does not authorize Package C physics, proof-registry update, runtime, NODI recomputation, COMSOL launch, `.mph` load, or sidewall PRS/EAS numeric output. | `tests/test_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py` |
+| Gate25 Package C design-review packet | Gate24 sources are locked; trajectory, near-wall diffusion, flow, electrokinetic, and optical/reference questions are packaged for external review with local formulas and no-auth boundaries. | `tests/test_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py` |
 
 ## Still Blocked
 
@@ -78,16 +79,24 @@ python -m pytest tests/test_nodi_comsol_gate24_sidewall_package_c_authorization_
 
 python -m pytest tests/test_nodi_comsol_gate23_sidewall_static_fixture_execution.py tests/test_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py -q
 14 passed in 10.69s
+
+python -m pytest tests/test_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py -q
+7 passed in 6.53s
+
+python -m pytest tests/test_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py tests/test_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py -q
+14 passed in 14.82s
 ```
 
 Additional CLI/compile verification:
 
 ```text
-python -m py_compile nodi_simulator/nodi_comsol_next_artifacts.py tools/audits/validate_nodi_position_response_surface.py tools/audits/validate_nodi_effective_aperture_surrogate_sensitivity.py tools/audits/validate_nodi_sidewall_package_d_precheck.py tools/audits/build_nodi_comsol_gate23_sidewall_static_fixture_execution.py tools/audits/write_nodi_sidewall_package_c_authorization_gate.py tools/audits/build_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py
+python -m py_compile nodi_simulator/nodi_comsol_next_artifacts.py tools/audits/validate_nodi_position_response_surface.py tools/audits/validate_nodi_effective_aperture_surrogate_sensitivity.py tools/audits/validate_nodi_sidewall_package_d_precheck.py tools/audits/build_nodi_comsol_gate23_sidewall_static_fixture_execution.py tools/audits/write_nodi_sidewall_package_c_authorization_gate.py tools/audits/build_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py tools/audits/build_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py
 python tools/audits/build_nodi_comsol_gate23_sidewall_static_fixture_execution.py --confirm-gate23-static-fixture-execution
 NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH
 python tools/audits/build_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py --confirm-gate24-package-c-authorization-ledger
 NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH
+python tools/audits/build_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py --confirm-gate25-package-c-design-review
+NODI_GATE25_SIDEWALL_PACKAGE_C_DESIGN_REVIEW_PACKET_READY_NO_AUTH
 ```
 
 ## Current Go/No-Go
@@ -96,11 +105,11 @@ NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH
 | --- | --- | --- |
 | Package A | pass for schema/descriptor/validator guard scope | No PRS/EAS data generation authorized by this packet. |
 | Package B | pass for geometry primitive, sampler support, and actual signature binding | Flux-weighted trapezoid sampling remains blocked. |
-| Package C | blocked/fail-closed under Gate24 no-auth ledger | Geometry wall-distance primitive exists, but no Package C physics authorization proof is registered; exact future phrase matching is audit-only and validated hindered diffusion/specular reflection remain blocked. |
+| Package C | design-review packet ready; implementation still blocked/fail-closed | Gate25 provides a self-contained external-AI review prompt for trajectory/near-wall/flow/electrokinetic/optical questions. No Package C physics authorization proof is registered; validated hindered diffusion/specular reflection remain blocked. |
 | Package D | validator/preflight guard pass only | Sidewall PRS/EAS pilot generation remains no-claim and blocked for trajectory/near-wall/wall-distance metrics unless a future Package C gate passes. |
 
 ## Next Safe Actions
 
 1. Keep strengthening no-compute validators and mutation tests for profile/source-hash drift and geometry-source promotion.
 2. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
-3. Design, but do not silently enable, a validated trapezoid trajectory/flow model path.
+3. Send the Gate25 external-AI prompt for independent physics review before any Package C implementation.
