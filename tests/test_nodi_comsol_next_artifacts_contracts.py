@@ -765,6 +765,8 @@ SIDEWALL_FORBIDDEN_EXACT_COLUMNS_FOR_TEST = (
     "q_ch_weighting",
     "q_ch_eta",
     "q_ch_chi_eta",
+    "flow_rate",
+    "Q",
     "yield",
     "detection_probability",
     "wet_pass_probability",
