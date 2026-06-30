@@ -45,12 +45,13 @@ The current supported split is:
 | Gate25 Package C design-review packet | Gate24 sources are locked; trajectory, near-wall diffusion, flow, electrokinetic, and optical/reference questions are packaged for external review with local formulas and no-auth boundaries. | `tests/test_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py` |
 | Gate26 Package C external-review integration | User-pasted external-AI feedback is captured as a SHA-locked source artifact; `READY_FOR_IMPLEMENTATION_DESIGN_ONLY` is integrated as design constraints only, with Skorokhod Brownian target, required tests/schema fields, blocked model ledgers, and no-auth firewall preserved. | `tests/test_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py` |
 | Gate27 Package C implementation-design preflight | Gate26 constraints are converted into future implementation backlog, proof-artifact contract, fail-closed matrix, validation plan, and no-auth firewall; no Package C proof is registered and `package_C_validation_status=pass` remains blocked. | `tests/test_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py` |
+| Package C Skorokhod implementation candidate | After explicit user authorization for implementation code and unit tests, trapezoid diffusive plug-flow trajectories use `trapezoid_skorokhod_normal_reflection_euler_active_set_v1`; geometry exposes wall constraints and inward normals; validators require `finite_step_reflection_surrogate_not_hindered_hydrodynamics_not_package_c_proof_registered`. | `test_single_wall_reflection_matches_folded_normal_limit`, `test_reflected_trajectory_has_no_boundary_atom_after_sidewall_crossing`, `test_corner_active_set_reflection_converges_inside_support`, `test_rectangle_limit_matches_rectangular_reflection`, `test_position_response_sidewall_v2_accepts_skorokhod_boundary_with_no_proof_claim` |
 
 ## Still Blocked
 
 The following remain blocked and must not be inferred from current sidewall-aware rows:
 
-- validated sloped-wall specular reflection;
+- validated sloped-wall specular reflection or Package C proof/pass for Skorokhod reflected Brownian implementation;
 - validated hindered diffusion under trapezoid Brownian trajectories;
 - trapezoid Poiseuille or flux-weighted trapezoid flow model;
 - trapezoid electrokinetic wall-distance grid;
@@ -69,6 +70,9 @@ python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q
 
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k "sidewall or production_candidate_validator"
 312 passed, 169 deselected in 33.40s
+
+python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k "sidewall or production_candidate_validator"
+314 passed, 169 deselected in 27.57s
 
 python -m pytest tests/test_cross_section_geometry.py tests/test_physics_core.py -q -k "ideal_rectangle or sidewall or trapezoid"
 35 passed, 389 deselected in 0.25s
@@ -99,6 +103,24 @@ python -m pytest tests/test_nodi_comsol_gate27_sidewall_package_c_implementation
 
 python -m pytest tests/test_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py tests/test_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py -q
 19 passed in 15.39s
+
+python -m pytest tests/test_cross_section_geometry.py -q -k "trapezoid or sidewall or skorokhod or reflection or rectangle_limit or corner_active"
+33 passed, 11 deselected in 0.85s
+
+python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k "sidewall_v2 and (boundary or trajectory_guard or propagated_boundary or proof)"
+5 passed, 478 deselected in 0.95s
+
+python -m pytest tests/test_trajectory.py -q
+4 passed in 2.28s
+
+python -m pytest tests/test_cross_section_geometry.py tests/test_physics_core.py -q -k "ideal_rectangle or sidewall or trapezoid or trajectory_boundary"
+37 passed, 392 deselected in 0.35s
+
+python -m pytest tests/test_cross_section_geometry.py tests/test_trajectory.py -q
+48 passed in 0.83s
+
+python -m py_compile nodi_simulator/cross_section_geometry.py nodi_simulator/trajectory.py nodi_simulator/nodi_comsol_next_artifacts.py
+pass
 ```
 
 Additional CLI/compile verification:
@@ -123,11 +145,11 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 | --- | --- | --- |
 | Package A | pass for schema/descriptor/validator guard scope | No PRS/EAS data generation authorized by this packet. |
 | Package B | pass for geometry primitive, sampler support, and actual signature binding | Flux-weighted trapezoid sampling remains blocked. |
-| Package C | implementation-design preflight ready; implementation/proof registration still blocked/fail-closed | Gate27 converts external review constraints into future write scopes, proof contract, fail-closed triggers, and validation plan. No Package C physics authorization proof is registered; validated reflection, hindered diffusion, runtime metrics, and numeric PRS/EAS remain blocked. |
+| Package C | implementation candidate present; proof registration/pass still blocked/fail-closed | The Skorokhod finite-step reflection candidate is implemented for trapezoid diffusive plug-flow trajectories with unit tests and validator guards. No Package C physics authorization proof is registered; validated reflection proof/pass, hindered diffusion, runtime metrics beyond this candidate, and numeric PRS/EAS remain blocked. |
 | Package D | validator/preflight guard pass only | Sidewall PRS/EAS pilot generation remains no-claim and blocked for trajectory/near-wall/wall-distance metrics unless a future Package C gate passes. |
 
 ## Next Safe Actions
 
 1. Keep strengthening no-compute validators and mutation tests for profile/source-hash drift and geometry-source promotion.
 2. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
-3. Use the Gate27 implementation-design preflight as the future Package C checklist, but do not implement, register proof, or mark Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.
+3. Continue Package C code-level tests next: dt-halving distribution checks, pure-Brownian accessible-area equilibrium, and richer corner active-set diagnostics. Do not register proof or mark Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.

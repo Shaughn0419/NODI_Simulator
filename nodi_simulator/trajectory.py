@@ -49,6 +49,14 @@ _HINDRANCE_TENSOR = 2
 
 _EMPTY_FLOAT_ARRAY = np.empty(0, dtype=float)
 
+TRAPEZOID_SKOROKHOD_BOUNDARY_MODEL = (
+    "trapezoid_skorokhod_normal_reflection_euler_active_set_v1"
+)
+TRAPEZOID_SKOROKHOD_BOUNDARY_CLAIM_LEVEL = (
+    "finite_step_reflection_surrogate_not_hindered_hydrodynamics_"
+    "not_package_c_proof_registered"
+)
+
 TRAJECTORY_GEOMETRY_DIAGNOSTIC_FIELDS = (
     "trajectory_boundary_model",
     "trajectory_boundary_model_version",
@@ -187,10 +195,8 @@ def build_trajectory_geometry_diagnostics(sim_cfg: SimulationConfig) -> dict[str
 
     if bool(sim_cfg.include_diffusion):
         if is_trapezoid and bool(sim_cfg.reflecting_boundary):
-            boundary_model = "trapezoid_center_support_projection_boundary_v1"
-            boundary_claim_level = (
-                "sidewall_projection_boundary_surrogate_not_specular_reflection"
-            )
+            boundary_model = TRAPEZOID_SKOROKHOD_BOUNDARY_MODEL
+            boundary_claim_level = TRAPEZOID_SKOROKHOD_BOUNDARY_CLAIM_LEVEL
         elif bool(sim_cfg.reflecting_boundary):
             boundary_model = "rectangular_half_span_reflection_v1"
             boundary_claim_level = "rectangular_boundary_surrogate"
@@ -221,9 +227,9 @@ def build_trajectory_geometry_diagnostics(sim_cfg: SimulationConfig) -> dict[str
             propagation_status = "blocked_rectangular_geometry_leakage"
             sidewall_status = "blocked_not_sidewall_aware_runtime"
         elif bool(sim_cfg.include_diffusion):
-            propagation_status = "sidewall_projection_boundary_surrogate_propagated"
+            propagation_status = "sidewall_skorokhod_boundary_surrogate_propagated"
             sidewall_status = (
-                "partial_sidewall_runtime_projection_boundary_no_hindered_wall_metrics"
+                "partial_sidewall_runtime_skorokhod_boundary_no_hindered_wall_metrics"
             )
         else:
             propagation_status = "sidewall_sampler_and_pure_advection_propagated"
@@ -880,22 +886,22 @@ def _reflect_kernel(value: float, lo: float, hi: float) -> float:
     return value
 
 
-def _project_trapezoid_centered_position(
+def _reflect_trapezoid_centered_position(
     geometry: TrapezoidCrossSection,
     channel: Channel,
     x_m: float,
     z_m: float,
     particle_radius_m: float,
 ) -> tuple[float, float]:
-    projected_x_m, projected_u_m = geometry.project_particle_center_into_support(
+    reflected_x_m, reflected_u_m = geometry.reflect_particle_center_step_into_support(
         x_m,
         float(z_m) + 0.5 * float(channel.depth_m),
         particle_radius_m,
     )
-    return projected_x_m, projected_u_m - 0.5 * float(channel.depth_m)
+    return reflected_x_m, reflected_u_m - 0.5 * float(channel.depth_m)
 
 
-def _simulate_trapezoid_projected_diffusive_trajectory(
+def _simulate_trapezoid_reflected_diffusive_trajectory(
     channel: Channel,
     sim_cfg: SimulationConfig,
     *,
@@ -915,19 +921,14 @@ def _simulate_trapezoid_projected_diffusive_trajectory(
     y_m = np.empty(n_samples, dtype=float)
     v_y_m_s = np.full(n_samples, float(initial_v_y), dtype=float)
 
-    x_m[0], z_m[0] = _project_trapezoid_centered_position(
-        geometry,
-        channel,
-        initial_x_m,
-        initial_z_m,
-        particle_radius_m,
-    )
+    x_m[0] = float(initial_x_m)
+    z_m[0] = float(initial_z_m)
     y_m[0] = y_start
 
     for index in range(n_samples - 1):
         x_next = x_m[index] + diffusion_step_scale * float(diffusion_draws[2 * index])
         z_next = z_m[index] + diffusion_step_scale * float(diffusion_draws[2 * index + 1])
-        x_next, z_next = _project_trapezoid_centered_position(
+        x_next, z_next = _reflect_trapezoid_centered_position(
             geometry,
             channel,
             x_next,
@@ -941,7 +942,7 @@ def _simulate_trapezoid_projected_diffusive_trajectory(
     return x_m, y_m, z_m, v_y_m_s
 
 
-def _simulate_trapezoid_projected_diffusive_trajectory_block(
+def _simulate_trapezoid_reflected_diffusive_trajectory_block(
     channel: Channel,
     sim_cfg: SimulationConfig,
     *,
@@ -968,15 +969,8 @@ def _simulate_trapezoid_projected_diffusive_trajectory_block(
     )
 
     for event_index in range(block_size):
-        x0, z0 = _project_trapezoid_centered_position(
-            geometry,
-            channel,
-            float(initial_x_m[event_index]),
-            float(initial_z_m[event_index]),
-            particle_radius_m,
-        )
-        x_m[event_index, 0] = x0
-        z_m[event_index, 0] = z0
+        x_m[event_index, 0] = float(initial_x_m[event_index])
+        z_m[event_index, 0] = float(initial_z_m[event_index])
         y_m[event_index, 0] = float(y_start[event_index])
         v_y = float(initial_v_y[event_index])
         if store_velocity_trace:
@@ -993,7 +987,7 @@ def _simulate_trapezoid_projected_diffusive_trajectory_block(
                 + diffusion_step_scale
                 * float(diffusion_draws[event_index, draw_offset + 1])
             )
-            x_next, z_next = _project_trapezoid_centered_position(
+            x_next, z_next = _reflect_trapezoid_centered_position(
                 geometry,
                 channel,
                 x_next,
@@ -1195,8 +1189,9 @@ def simulate_particle_trajectory(
 
     When include_diffusion=True and diffusion_coefficient is provided,
     x(t) and z(t) undergo Brownian random walk. Rectangular geometries use
-    half-span reflection; trapezoid sidewalls currently use the
-    `trapezoid_center_support_projection_boundary_v1` surrogate.
+    half-span reflection; trapezoid sidewalls use the
+    `trapezoid_skorokhod_normal_reflection_euler_active_set_v1` finite-step
+    wall-normal reflection surrogate.
 
     Args:
         channel: Channel geometry (for boundary validation/projection).
@@ -1294,7 +1289,7 @@ def simulate_particle_trajectory(
             dtype=float,
         )
         if _is_trapezoid_active(sim_cfg):
-            x_m, y_m, z_m, v_y_m_s = _simulate_trapezoid_projected_diffusive_trajectory(
+            x_m, y_m, z_m, v_y_m_s = _simulate_trapezoid_reflected_diffusive_trajectory(
                 channel,
                 sim_cfg,
                 n_samples=n_samples,
@@ -1688,7 +1683,7 @@ def simulate_particle_trajectory_block(
                     f"{expected_shape}, got {diffusion_draw_arr.shape}"
                 )
         if _is_trapezoid_active(sim_cfg):
-            x_m, y_m, z_m, v_y_m_s = _simulate_trapezoid_projected_diffusive_trajectory_block(
+            x_m, y_m, z_m, v_y_m_s = _simulate_trapezoid_reflected_diffusive_trajectory_block(
                 channel,
                 sim_cfg,
                 n_samples=n_samples,

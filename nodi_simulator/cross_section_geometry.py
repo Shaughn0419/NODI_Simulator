@@ -115,6 +115,31 @@ class TrapezoidCrossSection:
             "right_side": right_side_m,
         }
 
+    def wall_constraint_values_m(
+        self,
+        x_m: float,
+        u_m: float,
+        particle_radius_m: float,
+    ) -> dict[str, float]:
+        """Return particle-center half-plane constraints g_i = d_i - radius."""
+        radius_m = float(particle_radius_m)
+        if radius_m < 0.0:
+            raise ValueError(f"particle_radius_m must be non-negative, got {radius_m}")
+        return {
+            wall_id: distance_m - radius_m
+            for wall_id, distance_m in self.wall_distances_m(x_m, u_m).items()
+        }
+
+    def wall_inward_unit_normals(self) -> dict[str, tuple[float, float]]:
+        """Return inward unit normals in (x, u) coordinates for each wall."""
+        side_norm = math.sqrt(1.0 + self.k_taper**2)
+        return {
+            "top": (0.0, 1.0),
+            "bottom": (0.0, -1.0),
+            "left_side": (1.0 / side_norm, -self.k_taper / side_norm),
+            "right_side": (-1.0 / side_norm, -self.k_taper / side_norm),
+        }
+
     def nearest_wall_distance_m(self, x_m: float, u_m: float) -> float:
         return min(self.wall_distances_m(x_m, u_m).values())
 
@@ -359,3 +384,64 @@ class TrapezoidCrossSection:
         )
         x_projected_m = min(max(float(x_m), x_left_m), x_right_m)
         return x_projected_m, u_projected_m
+
+    def reflect_particle_center_step_into_support(
+        self,
+        x_m: float,
+        u_m: float,
+        particle_radius_m: float,
+        *,
+        max_iterations: int = 64,
+        tolerance_m: float = 1.0e-18,
+    ) -> tuple[float, float]:
+        """
+        Reflect one finite Brownian trial step into particle-center support.
+
+        The update applies wall-normal folded reflections against the active
+        half-plane constraints. It is not a hydrodynamic near-wall model and it
+        is intentionally separate from `project_particle_center_into_support`,
+        which clamps to the support boundary and can create boundary atoms.
+        """
+        radius_m = float(particle_radius_m)
+        if radius_m < 0.0:
+            raise ValueError(f"particle_radius_m must be non-negative, got {radius_m}")
+        if self.center_accessible_u_bounds_m(radius_m) is None:
+            raise ValueError(
+                "particle_radius_m leaves no center-accessible support in "
+                "the trapezoid cross-section"
+            )
+        if max_iterations <= 0:
+            raise ValueError(f"max_iterations must be positive, got {max_iterations}")
+        tol = float(tolerance_m)
+        x_reflected_m = float(x_m)
+        u_reflected_m = float(u_m)
+        normals = self.wall_inward_unit_normals()
+
+        for _ in range(int(max_iterations)):
+            constraints = self.wall_constraint_values_m(
+                x_reflected_m,
+                u_reflected_m,
+                radius_m,
+            )
+            wall_id, min_constraint_m = min(
+                constraints.items(),
+                key=lambda item: item[1],
+            )
+            if min_constraint_m >= -tol:
+                return x_reflected_m, u_reflected_m
+            normal_x, normal_u = normals[wall_id]
+            reflection_distance_m = 2.0 * (-min_constraint_m)
+            x_reflected_m += reflection_distance_m * normal_x
+            u_reflected_m += reflection_distance_m * normal_u
+
+        constraints = self.wall_constraint_values_m(
+            x_reflected_m,
+            u_reflected_m,
+            radius_m,
+        )
+        if min(constraints.values()) >= -tol:
+            return x_reflected_m, u_reflected_m
+        raise ValueError(
+            "trapezoid active-set reflection did not converge; reduce dt or "
+            "substep the Brownian update before claiming Package C runtime"
+        )

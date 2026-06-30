@@ -2028,6 +2028,56 @@ def test_position_response_sidewall_v2_rejects_unsupported_propagated_boundary_m
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_accepts_skorokhod_boundary_with_no_proof_claim() -> None:
+    row = _valid_prs_sidewall_v2_row(
+        trajectory_boundary_model="trapezoid_skorokhod_normal_reflection_euler_active_set_v1",
+        trajectory_boundary_model_version=(
+            "trapezoid_skorokhod_normal_reflection_euler_active_set_v1"
+        ),
+        trajectory_boundary_claim_level=(
+            "finite_step_reflection_surrogate_not_hindered_hydrodynamics_"
+            "not_package_c_proof_registered"
+        ),
+        sidewall_aware_runtime_status=(
+            "partial_sidewall_runtime_skorokhod_boundary_no_hindered_wall_metrics"
+        ),
+    )
+    _replace_observation_signature(
+        row,
+        "trajectory_boundary_model=not_applicable_pure_advection",
+        (
+            "trajectory_boundary_model="
+            "trapezoid_skorokhod_normal_reflection_euler_active_set_v1"
+        ),
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    assert issues == []
+
+
+def test_position_response_sidewall_v2_rejects_skorokhod_boundary_without_no_proof_guard() -> None:
+    row = _valid_prs_sidewall_v2_row(
+        trajectory_boundary_model="trapezoid_skorokhod_normal_reflection_euler_active_set_v1",
+        trajectory_boundary_model_version=(
+            "trapezoid_skorokhod_normal_reflection_euler_active_set_v1"
+        ),
+        trajectory_boundary_claim_level="reflected_brownian_boundary_surrogate",
+    )
+    _replace_observation_signature(
+        row,
+        "trajectory_boundary_model=not_applicable_pure_advection",
+        (
+            "trajectory_boundary_model="
+            "trapezoid_skorokhod_normal_reflection_euler_active_set_v1"
+        ),
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_rectangular_wall_distance_model() -> None:
     issues = validate_position_response_surface_rows(
         [_valid_prs_sidewall_v2_row(wall_distance_model="rectangular_half_span_gap_v1")]

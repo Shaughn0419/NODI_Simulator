@@ -910,6 +910,7 @@ PRS_SIDEWALL_V2_TRAPEZOID_PROPAGATED_BOUNDARY_MODELS = frozenset(
     {
         "not_applicable_pure_advection",
         "trapezoid_center_support_projection_boundary_v1",
+        "trapezoid_skorokhod_normal_reflection_euler_active_set_v1",
     }
 )
 SIDEWALL_V2_DESCRIPTOR_CONTEXT_REQUIRED_FIELDS: tuple[str, ...] = (
@@ -11464,6 +11465,18 @@ def _validate_sidewall_v2_trajectory_guards(
                 row_index,
                 rule_id,
                 "trapezoid projection boundary lacks surrogate/not-specular claim level",
+            )
+    elif boundary_model == "trapezoid_skorokhod_normal_reflection_euler_active_set_v1":
+        if (
+            "finite_step_reflection_surrogate" not in boundary_claim
+            or "not_hindered_hydrodynamics" not in boundary_claim
+            or "not_package_c_proof_registered" not in boundary_claim
+        ):
+            _issue(
+                issues,
+                row_index,
+                rule_id,
+                "trapezoid Skorokhod boundary lacks finite-step/not-hindered/not-proof-registered claim level",
             )
     elif "specular_reflection" in boundary_claim and "not_specular_reflection" not in boundary_claim:
         _issue(

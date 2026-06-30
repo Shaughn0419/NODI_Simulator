@@ -33,6 +33,8 @@ from nodi_simulator.parameter_sweep import (
 )
 from nodi_simulator.reference_field import compute_reference_field
 from nodi_simulator.trajectory import (
+    TRAPEZOID_SKOROKHOD_BOUNDARY_CLAIM_LEVEL,
+    TRAPEZOID_SKOROKHOD_BOUNDARY_MODEL,
     axial_transport_velocity_m_s,
     build_trajectory_context,
     build_trajectory_geometry_diagnostics,
@@ -222,6 +224,133 @@ def test_project_particle_center_raises_when_no_support_exists() -> None:
 
     with pytest.raises(ValueError, match="no center-accessible support"):
         geom.project_particle_center_into_support(0.0, 200.0e-9, 110.0e-9)
+
+
+def test_trapezoid_skorokhod_normals_match_wall_distance_gradients() -> None:
+    geom = TrapezoidCrossSection(
+        top_width_m=500.0e-9,
+        depth_m=900.0e-9,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+    )
+    x_m = 12.0e-9
+    u_m = 260.0e-9
+    radius_m = 60.0e-9
+    eps_m = 1.0e-12
+
+    normals = geom.wall_inward_unit_normals()
+    constraints = geom.wall_constraint_values_m(x_m, u_m, radius_m)
+
+    assert set(normals) == {"top", "bottom", "left_side", "right_side"}
+    for wall_id, (normal_x, normal_u) in normals.items():
+        assert math.hypot(normal_x, normal_u) == pytest.approx(1.0)
+        moved = geom.wall_constraint_values_m(
+            x_m + eps_m * normal_x,
+            u_m + eps_m * normal_u,
+            radius_m,
+        )[wall_id]
+        assert (moved - constraints[wall_id]) / eps_m == pytest.approx(1.0)
+
+
+def test_single_wall_reflection_matches_folded_normal_limit() -> None:
+    geom = TrapezoidCrossSection(
+        top_width_m=500.0e-9,
+        depth_m=900.0e-9,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+    )
+    radius_m = 60.0e-9
+    boundary_u_m = 240.0e-9
+    _, boundary_x_m = geom.center_accessible_x_bounds_at_depth_m(
+        boundary_u_m,
+        radius_m,
+    )
+    normal_x, normal_u = geom.wall_inward_unit_normals()["right_side"]
+    overshoot_m = 24.0e-9
+    trial_x_m = boundary_x_m - overshoot_m * normal_x
+    trial_u_m = boundary_u_m - overshoot_m * normal_u
+
+    reflected_x_m, reflected_u_m = geom.reflect_particle_center_step_into_support(
+        trial_x_m,
+        trial_u_m,
+        radius_m,
+    )
+
+    assert reflected_x_m == pytest.approx(trial_x_m + 2.0 * overshoot_m * normal_x)
+    assert reflected_u_m == pytest.approx(trial_u_m + 2.0 * overshoot_m * normal_u)
+    assert geom.contains_particle_center(reflected_x_m, reflected_u_m, radius_m)
+    assert geom.wall_constraint_values_m(reflected_x_m, reflected_u_m, radius_m)[
+        "right_side"
+    ] == pytest.approx(overshoot_m)
+
+
+def test_reflection_does_not_project_crossing_to_boundary_atom() -> None:
+    geom = TrapezoidCrossSection(
+        top_width_m=500.0e-9,
+        depth_m=900.0e-9,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+    )
+    radius_m = 60.0e-9
+    boundary_u_m = 240.0e-9
+    _, boundary_x_m = geom.center_accessible_x_bounds_at_depth_m(
+        boundary_u_m,
+        radius_m,
+    )
+    normal_x, normal_u = geom.wall_inward_unit_normals()["right_side"]
+    overshoot_m = 18.0e-9
+    trial_x_m = boundary_x_m - overshoot_m * normal_x
+    trial_u_m = boundary_u_m - overshoot_m * normal_u
+
+    projected_x_m, projected_u_m = geom.project_particle_center_into_support(
+        trial_x_m,
+        trial_u_m,
+        radius_m,
+    )
+    reflected_x_m, reflected_u_m = geom.reflect_particle_center_step_into_support(
+        trial_x_m,
+        trial_u_m,
+        radius_m,
+    )
+
+    projected_gap_m = geom.particle_wall_gap_diagnostics_m(
+        projected_x_m,
+        projected_u_m,
+        radius_m,
+    )["surface_gap_for_particle_m"]
+    reflected_gap_m = geom.particle_wall_gap_diagnostics_m(
+        reflected_x_m,
+        reflected_u_m,
+        radius_m,
+    )["surface_gap_for_particle_m"]
+    assert projected_gap_m == pytest.approx(0.0, abs=1.0e-21)
+    assert reflected_gap_m > 10.0e-9
+
+
+def test_corner_active_set_reflection_converges_inside_support() -> None:
+    geom = TrapezoidCrossSection(
+        top_width_m=500.0e-9,
+        depth_m=900.0e-9,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+    )
+    radius_m = 60.0e-9
+    bottom_u_m = geom.depth_m - radius_m
+    _, right_x_m = geom.center_accessible_x_bounds_at_depth_m(bottom_u_m, radius_m)
+    trial_x_m = right_x_m + 35.0e-9
+    trial_u_m = bottom_u_m + 35.0e-9
+
+    reflected_x_m, reflected_u_m = geom.reflect_particle_center_step_into_support(
+        trial_x_m,
+        trial_u_m,
+        radius_m,
+    )
+    constraints = geom.wall_constraint_values_m(
+        reflected_x_m,
+        reflected_u_m,
+        radius_m,
+    )
+
+    assert geom.contains_particle_center(reflected_x_m, reflected_u_m, radius_m)
+    assert min(constraints.values()) >= -1.0e-18
+    assert constraints["bottom"] > 0.0
+    assert constraints["right_side"] > 0.0
 
 
 def test_channel_diagnostics_emit_unclipped_and_runtime_clipped_bottom_widths() -> None:
@@ -685,7 +814,7 @@ def test_trapezoid_diffusive_block_rejects_rectangular_near_wall_model() -> None
         )
 
 
-def test_trapezoid_projected_diffusive_trajectory_stays_in_support() -> None:
+def test_trapezoid_reflected_diffusive_trajectory_stays_in_support() -> None:
     channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
     radius_m = 110.0e-9
     cfg = replace(
@@ -734,7 +863,7 @@ def test_trapezoid_projected_diffusive_trajectory_stays_in_support() -> None:
     np.testing.assert_allclose(trajectory["v_y_m_s"], cfg.mean_flow_velocity_m_s)
 
 
-def test_trapezoid_projected_diffusive_block_stays_in_support() -> None:
+def test_trapezoid_reflected_diffusive_block_stays_in_support() -> None:
     channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
     radius_m = 110.0e-9
     cfg = replace(
@@ -793,6 +922,122 @@ def test_trapezoid_projected_diffusive_block_stays_in_support() -> None:
     assert trajectory["x_m"].shape == (2, cfg.n_samples)
     assert trajectory["z_m"].shape == (2, cfg.n_samples)
     np.testing.assert_allclose(trajectory["v_y_m_s"], cfg.mean_flow_velocity_m_s)
+
+
+def test_reflected_trajectory_has_no_boundary_atom_after_sidewall_crossing() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    radius_m = 60.0e-9
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=True,
+        reflecting_boundary=True,
+        total_time_s=3.0e-4,
+        sampling_rate_Hz=1.0e4,
+    )
+    geom = TrapezoidCrossSection(
+        top_width_m=channel.width_m,
+        depth_m=channel.depth_m,
+        sidewall_taper_angle_deg=cfg.sidewall_taper_angle_deg,
+    )
+    u0_m = 240.0e-9
+    _, x_right_m = geom.center_accessible_x_bounds_at_depth_m(u0_m, radius_m)
+    x0_m = x_right_m - 20.0e-9
+    z0_m = u0_m - 0.5 * channel.depth_m
+    diffusion_draws = np.zeros((1, 2 * (cfg.n_samples - 1)), dtype=float)
+    diffusion_draws[0, 0] = 2.0
+
+    trajectory = simulate_particle_trajectory_block(
+        channel,
+        BASELINE_OPTICAL,
+        cfg,
+        initial_x_m=np.asarray([x0_m]),
+        initial_z_m=np.asarray([z0_m]),
+        particle_radius_m=radius_m,
+        diffusion_coefficient=8.0e-12,
+        diffusion_draws=diffusion_draws,
+    )
+
+    first_reflected_x_m = float(trajectory["x_m"][0, 1])
+    first_reflected_u_m = float(trajectory["z_m"][0, 1] + 0.5 * channel.depth_m)
+    gap_m = geom.particle_wall_gap_diagnostics_m(
+        first_reflected_x_m,
+        first_reflected_u_m,
+        radius_m,
+    )["surface_gap_for_particle_m"]
+    assert gap_m > 1.0e-9
+    for x_m, z_m in zip(trajectory["x_m"][0], trajectory["z_m"][0]):
+        assert geom.contains_particle_center(
+            float(x_m),
+            float(z_m) + 0.5 * channel.depth_m,
+            radius_m,
+            tolerance_m=1.0e-18,
+        )
+
+
+def test_rectangle_limit_matches_rectangular_reflection() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    radius_m = 60.0e-9
+    base_cfg = replace(
+        DEFAULT_SIM_CFG,
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=True,
+        reflecting_boundary=True,
+        total_time_s=8.0e-4,
+        sampling_rate_Hz=1.0e4,
+    )
+    rectangle_cfg = replace(base_cfg, channel_cross_section_model="ideal_rectangle")
+    trapezoid_limit_cfg = replace(
+        base_cfg,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=0.0,
+    )
+    diffusion_draws = np.array(
+        [[4.0, 0.0, 4.0, 0.0, -5.0, 0.0, 0.0, 6.0, 0.0, -7.0, 3.0, 3.0, -4.0, -4.0]],
+        dtype=float,
+    )
+    initial_x = np.asarray([0.0])
+    initial_z = np.asarray([0.0])
+
+    rectangle = simulate_particle_trajectory_block(
+        channel,
+        BASELINE_OPTICAL,
+        rectangle_cfg,
+        initial_x_m=initial_x,
+        initial_z_m=initial_z,
+        particle_radius_m=radius_m,
+        diffusion_coefficient=8.0e-12,
+        diffusion_draws=diffusion_draws,
+    )
+    trapezoid_limit = simulate_particle_trajectory_block(
+        channel,
+        BASELINE_OPTICAL,
+        trapezoid_limit_cfg,
+        initial_x_m=initial_x,
+        initial_z_m=initial_z,
+        particle_radius_m=radius_m,
+        diffusion_coefficient=8.0e-12,
+        diffusion_draws=diffusion_draws,
+    )
+
+    np.testing.assert_allclose(trapezoid_limit["x_m"], rectangle["x_m"], atol=1.0e-18)
+    np.testing.assert_allclose(trapezoid_limit["z_m"], rectangle["z_m"], atol=1.0e-18)
+    assert (
+        build_trajectory_geometry_diagnostics(trapezoid_limit_cfg)[
+            "trajectory_boundary_model"
+        ]
+        == TRAPEZOID_SKOROKHOD_BOUNDARY_MODEL
+    )
+    assert (
+        build_trajectory_geometry_diagnostics(rectangle_cfg)[
+            "trajectory_boundary_model"
+        ]
+        == "rectangular_half_span_reflection_v1"
+    )
 
 
 def test_trapezoid_trajectory_rejects_initial_point_outside_oracle_support() -> None:
@@ -871,7 +1116,7 @@ def test_trapezoid_trajectory_diagnostics_mark_pure_advection_boundary() -> None
     )
 
 
-def test_trapezoid_trajectory_diagnostics_mark_projection_boundary() -> None:
+def test_trapezoid_trajectory_diagnostics_mark_skorokhod_boundary() -> None:
     cfg = replace(
         DEFAULT_SIM_CFG,
         channel_cross_section_model="trapezoid_tapered_sidewalls",
@@ -884,18 +1129,17 @@ def test_trapezoid_trajectory_diagnostics_mark_projection_boundary() -> None:
 
     diagnostics = build_trajectory_geometry_diagnostics(cfg)
 
-    assert diagnostics["trajectory_boundary_model"] == (
-        "trapezoid_center_support_projection_boundary_v1"
-    )
-    assert diagnostics["trajectory_boundary_claim_level"] == (
-        "sidewall_projection_boundary_surrogate_not_specular_reflection"
+    assert diagnostics["trajectory_boundary_model"] == TRAPEZOID_SKOROKHOD_BOUNDARY_MODEL
+    assert (
+        diagnostics["trajectory_boundary_claim_level"]
+        == TRAPEZOID_SKOROKHOD_BOUNDARY_CLAIM_LEVEL
     )
     assert diagnostics["geometry_propagation_status"] == (
-        "sidewall_projection_boundary_surrogate_propagated"
+        "sidewall_skorokhod_boundary_surrogate_propagated"
     )
     assert diagnostics["geometry_not_propagated_reasons"] == ()
     assert diagnostics["sidewall_aware_runtime_status"] == (
-        "partial_sidewall_runtime_projection_boundary_no_hindered_wall_metrics"
+        "partial_sidewall_runtime_skorokhod_boundary_no_hindered_wall_metrics"
     )
 
 
@@ -916,9 +1160,7 @@ def test_trapezoid_trajectory_diagnostics_mark_blocked_rectangular_leakage() -> 
     )
     assert diagnostics["geometry_not_propagated_to_flow_model"] is True
     assert diagnostics["geometry_not_propagated_to_near_wall_metrics"] is True
-    assert diagnostics["trajectory_boundary_model"] == (
-        "trapezoid_center_support_projection_boundary_v1"
-    )
+    assert diagnostics["trajectory_boundary_model"] == TRAPEZOID_SKOROKHOD_BOUNDARY_MODEL
     assert diagnostics["geometry_not_propagated_to_trajectory_boundary"] is False
     assert set(diagnostics["geometry_not_propagated_reasons"]) == {
         "geometry_not_propagated_to_flow_model",
@@ -1150,7 +1392,7 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     )
     assert (
         "trajectory_boundary_claim_level="
-        "sidewall_projection_boundary_surrogate_not_specular_reflection"
+        f"{TRAPEZOID_SKOROKHOD_BOUNDARY_CLAIM_LEVEL}"
         in signature_85_diffusive
     )
     assert (
