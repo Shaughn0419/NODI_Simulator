@@ -9907,6 +9907,20 @@ def _validate_position_response_sidewall_v2_fields(
             "PRS-SIDEWALL-V2",
             f"invalid bin_particle_center_support_status={support_status}",
         )
+    if bin_accessible is False and support_status != "blocked":
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "inaccessible sidewall bin is not blocked at particle support",
+        )
+    if support_status == "blocked" and bin_accessible is not False:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "blocked sidewall particle support is marked bin_accessible",
+        )
     decision_allowed = _bool_field(
         row,
         "decision_use_allowed",
@@ -9921,12 +9935,12 @@ def _validate_position_response_sidewall_v2_fields(
             "PRS-SIDEWALL-V2",
             "blocked sidewall bin is decision-use allowed",
         )
-    if bin_accessible is False and not _value(row, "blocked_reason"):
+    if (bin_accessible is False or support_status == "blocked") and not _value(row, "blocked_reason"):
         _issue(
             issues,
             row_index,
             "PRS-SIDEWALL-V2",
-            "inaccessible sidewall bin lacks blocked_reason",
+            "blocked sidewall bin lacks blocked_reason",
         )
     _validate_sidewall_blocked_bin_response_values(
         row,

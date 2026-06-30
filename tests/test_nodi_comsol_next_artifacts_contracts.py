@@ -146,6 +146,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     PRODUCTION_GENERATION_BLOCKED_STATUS,
     PRODUCTION_GENERATION_PARTIAL_STATUS,
     PRODUCTION_GENERATION_PASS_STATUS,
+    PRS_SIDEWALL_V2_BLOCKED_RESPONSE_VALUE_FIELDS,
     build_position_response_bin_source_rows_from_events,
     build_position_response_event_rows_from_nodi_events,
     build_effective_aperture_first_production_rows,
@@ -1363,7 +1364,10 @@ def test_position_response_sidewall_v2_rejects_blocked_bin_neighbor_fill() -> No
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
-def test_position_response_sidewall_v2_rejects_blocked_bin_numeric_response() -> None:
+@pytest.mark.parametrize("response_field", PRS_SIDEWALL_V2_BLOCKED_RESPONSE_VALUE_FIELDS)
+def test_position_response_sidewall_v2_rejects_blocked_bin_numeric_response(
+    response_field: str,
+) -> None:
     issues = validate_position_response_surface_rows(
         [
             _valid_prs_sidewall_v2_row(
@@ -1373,7 +1377,42 @@ def test_position_response_sidewall_v2_rejects_blocked_bin_numeric_response() ->
                 blocked_reason="steric_blocked",
                 decision_use_allowed="false",
                 steric_support_source="not_available",
-                response_value=0.42,
+                **{response_field: 0.42},
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_inaccessible_open_support_status() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                bin_accessible="false",
+                bin_accessible_area_fraction=0.0,
+                bin_particle_center_support_status="open",
+                blocked_reason="steric_blocked",
+                decision_use_allowed="false",
+                response_value="blocked",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_blocked_support_marked_accessible() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                bin_accessible="true",
+                bin_accessible_area_fraction=1.0,
+                bin_particle_center_support_status="blocked",
+                blocked_reason="steric_blocked",
+                decision_use_allowed="false",
+                response_value="blocked",
+                steric_support_source="not_available",
             )
         ]
     )
