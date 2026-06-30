@@ -1,0 +1,8 @@
+metric_group,scenario_metric_rows,open_candidate_rows,blocked_candidate_rows,dt_halving_rows,seed_count,angle_count,depth_count,dt_grid_count,support_violation_count,max_boundary_atom_fraction,max_equilibrium_uniformity_distance,dt_halving_max_distribution_delta,candidate_status_normalized,risk_grade,registration_status
+summary,216,198,18,66,50,7,2,4,0,0.001302083,0.052822321,0.096354167,candidate_pass_not_proof,stable_enough_for_comsol_no_run_review,not_registerable_without_future_authorization
+runtime_split:blocked_geometry_closed,12,0,12,,50,7,2,4,,,,,blocked_candidate_remains_blocked,blocked_for_registration,not_registerable
+runtime_split:blocked_near_closed_resource_guard,6,0,6,,50,7,2,4,,,,,blocked_candidate_remains_blocked,blocked_for_registration,not_registerable
+runtime_split:candidate_open,198,198,0,,50,7,2,4,,,,,candidate_pass_not_proof,requires_independent_review,not_registerable
+closure_split:geometry_closed,12,0,12,,,,,,,,,,blocked_candidate_remains_blocked,blocked_for_registration,not_registerable
+closure_split:near_closed,6,0,6,,,,,,,,,,blocked_candidate_remains_blocked,blocked_for_registration,not_registerable
+closure_split:open,198,198,0,,,,,,,,,,candidate_pass_not_proof,requires_future_simulation,not_registerable
