@@ -1287,6 +1287,92 @@ def test_sidewall_eas_csv_rejects_unregistered_package_c_proof(
     _assert_has_issue(list(exc_info.value.issues), "SIDEWALL-D-PRECHECK-V03")
 
 
+def test_sidewall_prs_validator_cli_accepts_valid_sidewall_csv(
+    tmp_path: Path,
+) -> None:
+    prs_path = tmp_path / "sidewall_prs.csv"
+    write_csv_rows(prs_path, [_valid_prs_sidewall_v2_row()])
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(PROJECT_ROOT / "tools/audits/validate_nodi_position_response_surface.py"),
+            str(prs_path),
+        ],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "NODI_POSITION_RESPONSE_SURFACE: PASS" in result.stdout
+
+
+def test_sidewall_prs_validator_cli_rejects_bad_package_c_proof(
+    tmp_path: Path,
+) -> None:
+    prs_path = tmp_path / "sidewall_prs_bad_proof.csv"
+    write_csv_rows(
+        prs_path,
+        [
+            _valid_prs_sidewall_v2_row(
+                package_C_proof_artifact_id="unregistered-package-C-proof"
+            )
+        ],
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(PROJECT_ROOT / "tools/audits/validate_nodi_position_response_surface.py"),
+            str(prs_path),
+        ],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 1
+    assert "SIDEWALL-D-PRECHECK-V03" in result.stdout
+
+
+def test_sidewall_eas_validator_cli_rejects_bad_package_c_proof(
+    tmp_path: Path,
+) -> None:
+    eas_path = tmp_path / "sidewall_eas_bad_proof.csv"
+    package_c_proof = _sidewall_package_c_proof_fields("pass")
+    package_c_proof["package_C_proof_artifact_id"] = "unregistered-package-C-proof"
+    write_csv_rows(
+        eas_path,
+        [
+            _valid_eas_sidewall_v2_row(
+                package_C_validation_status="pass",
+                **package_c_proof,
+            )
+        ],
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(
+                PROJECT_ROOT
+                / "tools/audits/validate_nodi_effective_aperture_surrogate_sensitivity.py"
+            ),
+            str(eas_path),
+        ],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 1
+    assert "SIDEWALL-D-PRECHECK-V03" in result.stdout
+
+
 def test_ideal_rectangle_prs_ignores_blank_sidewall_union_columns() -> None:
     assert (
         validate_position_response_surface_rows(
