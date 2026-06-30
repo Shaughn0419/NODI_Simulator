@@ -43,6 +43,9 @@ def test_gate17_dirty_classifier_blocks_unknown_but_allows_gate17_outputs() -> N
     gate20_class, gate20_action = gate17.classify_dirty_path(
         "reports/joint_interface_20260630/NODI_COMSOL_GATE20_SIDEWALL_STATUS_20260630.json"
     )
+    gate21_class, gate21_action = gate17.classify_dirty_path(
+        "reports/joint_interface_20260630/NODI_COMSOL_GATE21_SIDEWALL_STATUS_20260630.json"
+    )
     unknown_class, unknown_action = gate17.classify_dirty_path("notes/unrelated.txt")
 
     assert allowed_class == "GATE17_GENERATED_OR_TEST"
@@ -55,6 +58,8 @@ def test_gate17_dirty_classifier_blocks_unknown_but_allows_gate17_outputs() -> N
     assert gate19_action == "allowed_for_gate17_build"
     assert gate20_class == "GATE20_GENERATED_OR_TEST"
     assert gate20_action == "allowed_for_gate17_build"
+    assert gate21_class == "GATE21_GENERATED_OR_TEST"
+    assert gate21_action == "allowed_for_gate17_build"
     assert unknown_class == "UNKNOWN_DIRTY_BLOCKER"
     assert unknown_action == "blocks_release_anchor"
 

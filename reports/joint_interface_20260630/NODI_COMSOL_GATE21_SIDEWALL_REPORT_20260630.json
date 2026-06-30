@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "disposition": "NODI_GATE21_SIDEWALL_NEGATIVE_MUTATION_SCANNER_READY_NO_AUTH",
+    "gate21_build_head": "9156749856be55a06bef64fc7b4cc9dd307008be",
+    "gate21_package_expected_successor_policy": "final package/report commit may be a clean successor to gate21_build_head; source semantics are pinned to expected_gate20_head",
+    "expected_gate20_head": "9156749856be55a06bef64fc7b4cc9dd307008be",
+    "gate20_head_is_ancestor_of_current": true,
+    "gate20_disposition": "NODI_GATE20_SIDEWALL_STATIC_CONTINUITY_HARD_FAIL_VALIDATOR_READY_NO_AUTH",
+    "gate20_no_auth": true,
+    "gate20_review_only": true,
+    "gate20_hard_fail_validator_rows": 29,
+    "gate20_source_lock_rows": 10,
+    "gate20_source_drift": 0,
+    "gate20_missing_sources": 0,
+    "mutation_families": 29,
+    "negative_fixtures": 87,
+    "scanner_rows": 87,
+    "scanner_unexpected_pass": 0,
+    "scanner_forbidden_promotion": 0,
+    "package_c_state": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+    "no_auth_firewall_failures": 0,
+    "runtime_allowed_rows": 0,
+    "production_allowed_rows": 0,
+    "sidewall_numeric_output_rows": 0,
+    "review_only": true,
+    "no_auth": true
+  },
+  "outputs": [
+    "NODI_COMSOL_GATE21_SIDEWALL_GATE20_SOURCE_LOCK_20260630.csv",
+    "NODI_COMSOL_GATE21_SIDEWALL_MUTATION_FAMILY_CATALOG_20260630.csv",
+    "NODI_COMSOL_GATE21_SIDEWALL_NEGATIVE_FIXTURE_CATALOG_20260630.csv",
+    "NODI_COMSOL_GATE21_SIDEWALL_MUTATION_SCANNER_RESULTS_20260630.csv",
+    "NODI_COMSOL_GATE21_SIDEWALL_PACKAGE_C_AND_NO_AUTH_FIREWALL_20260630.csv",
+    "NODI_COMSOL_GATE21_SIDEWALL_VALIDATION_PLAN_20260630.csv"
+  ]
+}
