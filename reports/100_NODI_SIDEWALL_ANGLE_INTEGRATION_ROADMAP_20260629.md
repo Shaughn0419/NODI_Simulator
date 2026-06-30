@@ -1217,13 +1217,27 @@ Hard fails:
 - Package D preflight manifest passes before any PRS/EAS sidewall sensitivity pilot.
 - Tests include mutation cases for sidewall angle and depth.
 
-## 9. Recommended next action
+## 9. Current Gate30/31 status
 
-Current safe route after Gate29:
+Gate30/31 now adds a GitHub-visible Package C proof-metrics candidate:
 
-1. Keep Package A/B guardrails and no-compute static fixture execution as the active foundation; preserve `ideal_rectangle` as a first-class path while keeping trapezoid paths explicitly schema-bound.
-2. Add production-bypass/static scanners for sidewall artifacts and generated ledgers so no forbidden claim column or production/runtime flag can re-enter through a newer CSV/report surface.
-3. Use Gate29 as the current Package C proof-registration checklist: every future proof/pass attempt must satisfy the 19 hard gates and 24 telemetry/reproducibility fields.
-4. Do not register proof or mark Package C as passed until a real proof artifact exists, all Gate29 hard gates are hash-bound, and the no-auth ledger is deliberately superseded by an explicit future authorization path.
+- Artifact id: `GATE30_31_PACKAGE_C_REFLECTION_PROOF_METRICS_CANDIDATE_20260630`.
+- Disposition: `NODI_GATE30_31_SIDEWALL_PACKAGE_C_PROOF_METRICS_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: finite-step active-set normal-reflection metrics candidate for the trapezoid particle-center support domain.
+- Parameter grid: sidewall angles `90, 89, 87, 85, 83, 80, 70 deg`; depths `900, 1200 nm`; particle radii `20, 30, 50, 75, 110, 150 nm`; dt grid `5e-5, 2.5e-5, 1.25e-5 s`.
+- Generated evidence: raw metrics, summary metrics, parameter matrix, RNG seed matrix, candidate evidence map, 52-field proof-candidate manifest, no-proof firewall, source lock, and external review prompt.
+- Current candidate checks: support invariance, no-boundary-atom, equilibrium uniformity proxy, dt-halving, corner active-set, one-wall limit, rectangle limit, and angle/depth mutation are all `candidate_pass`.
+- Current boundary: `candidate_only`; `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+This Gate30/31 candidate is deliberately stronger than a design-only checklist, but it is still not a proof/pass registration. It is the evidence package that an external reviewer can inspect before any future, separate authorization supersedes the no-auth ledger.
+
+## 10. Recommended next action
+
+Current safe route after Gate30/31:
+
+1. Send the Gate30/31 external review prompt plus the GitHub-visible artifacts for independent review of thresholds, telemetry, and claim language.
+2. If external review returns no claim-boundary issues, create a separate future authorization gate that explicitly supersedes the current no-auth ledger before any proof registry update.
+3. Only after that future authorization may a proof registry row be considered; even then, the allowed claim level should stay `finite_step_reflection_surrogate_validated_by_required_tests`, not hydrodynamic, wet, optical, route, yield, or detection validation.
+4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 
 Only after Package A/B remain green and a future Package C proof is explicitly authorized should NODI run any sidewall-aware PRS/EAS pilot involving trajectory, near-wall, hindered-diffusion, or wall-distance-bin metrics. Even then, the result should remain `surrogate_sensitivity_only` / `context-only` until measurement or solver evidence is explicitly added and authorized.

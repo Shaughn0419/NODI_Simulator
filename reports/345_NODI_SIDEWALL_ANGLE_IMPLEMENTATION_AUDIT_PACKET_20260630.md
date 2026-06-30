@@ -225,6 +225,27 @@ runtime_allowed=false
 numeric_prs_eas_allowed=false
 comsol_launch_allowed=false
 mph_load_allowed=false
+
+python tools/audits/build_nodi_comsol_gate30_31_sidewall_package_c_proof_metrics_candidate.py --confirm-gate30-31-package-c-proof-metrics-candidate
+NODI_GATE30_31_SIDEWALL_PACKAGE_C_PROOF_METRICS_CANDIDATE_READY_NO_PROOF_REGISTRATION
+scenario_metric_rows=216
+open_candidate_metric_rows=198
+blocked_candidate_rows=18
+dt_halving_rows=66
+support_invariance_status=candidate_pass
+boundary_atom_status=candidate_pass
+equilibrium_uniformity_status=candidate_pass
+dt_halving_status=candidate_pass
+corner_active_set_status=candidate_pass
+one_wall_limit_status=candidate_pass
+rectangle_limit_status=candidate_pass
+angle_depth_mutation_status=candidate_pass
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
 ```
 
 Additional CLI/compile verification:
@@ -254,6 +275,7 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 
 ## Next Safe Actions
 
-1. Keep strengthening no-compute validators and mutation tests for profile/source-hash drift and geometry-source promotion.
-2. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
-3. Use Gate29 as the current Package C proof-registration checklist: every future proof/pass attempt must satisfy the 19 hard gates and 24 telemetry/reproducibility fields, then receive a separate explicit authorization that supersedes the current no-auth ledger. Do not register proof or mark Package C as passed in the current gate.
+1. Send the Gate30/31 external review prompt and artifacts for independent review of candidate metrics, thresholds, and claim language.
+2. If external review finds no claim-boundary issues, create a separate future authorization gate that explicitly supersedes the current no-auth ledger before any proof registry update.
+3. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
+4. Do not register proof or mark Package C as passed in the current gate.

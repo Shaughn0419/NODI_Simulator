@@ -1,0 +1,4 @@
+seed_id,rng_seed,use,claim_boundary
+G3031-SEED-001,31031,deterministic proof-metrics candidate sampling,candidate_only_finite_step_reflection_surrogate_not_package_c_proof_registered
+G3031-SEED-002,31032,deterministic proof-metrics candidate sampling,candidate_only_finite_step_reflection_surrogate_not_package_c_proof_registered
+G3031-SEED-003,31033,deterministic proof-metrics candidate sampling,candidate_only_finite_step_reflection_surrogate_not_package_c_proof_registered
