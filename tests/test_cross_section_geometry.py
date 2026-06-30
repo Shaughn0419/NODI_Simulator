@@ -978,6 +978,197 @@ def test_reflected_trajectory_has_no_boundary_atom_after_sidewall_crossing() -> 
         )
 
 
+def _trapezoid_surface_gaps_m(
+    geom: TrapezoidCrossSection,
+    x_m: np.ndarray,
+    z_m: np.ndarray,
+    depth_m: float,
+    radius_m: float,
+) -> np.ndarray:
+    return np.asarray(
+        [
+            geom.particle_wall_gap_diagnostics_m(
+                float(x_val),
+                float(z_val) + 0.5 * depth_m,
+                radius_m,
+            )["surface_gap_for_particle_m"]
+            for x_val, z_val in zip(x_m, z_m)
+        ],
+        dtype=float,
+    )
+
+
+def _trapezoid_x_local_norm(
+    geom: TrapezoidCrossSection,
+    x_m: np.ndarray,
+    z_m: np.ndarray,
+    depth_m: float,
+    radius_m: float,
+) -> np.ndarray:
+    values: list[float] = []
+    for x_val, z_val in zip(x_m, z_m):
+        u_m = float(z_val) + 0.5 * depth_m
+        bounds = geom.center_accessible_x_bounds_at_depth_m(u_m, radius_m)
+        assert bounds is not None
+        x_left_m, x_right_m = bounds
+        half_width_m = 0.5 * (x_right_m - x_left_m)
+        values.append((float(x_val) - 0.5 * (x_left_m + x_right_m)) / half_width_m)
+    return np.asarray(values, dtype=float)
+
+
+def test_pure_brownian_step_preserves_accessible_area_equilibrium_moments() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    radius_m = 60.0e-9
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=True,
+        reflecting_boundary=True,
+        initial_position_distribution_mode="uniform_accessible_area",
+        total_time_s=2.0e-5,
+        sampling_rate_Hz=1.0e5,
+    )
+    n_events = 3072
+    rng = np.random.default_rng(2617)
+    x0_m, z0_m, _ = _sample_initial_positions_block(
+        channel,
+        rng,
+        radius_m,
+        cfg,
+        unit_position_samples=None,
+        start_idx=0,
+        stop_idx=n_events,
+    )
+    diffusion_draws = rng.standard_normal((n_events, 2 * (cfg.n_samples - 1)))
+
+    trajectory = simulate_particle_trajectory_block(
+        channel,
+        BASELINE_OPTICAL,
+        cfg,
+        initial_x_m=x0_m,
+        initial_z_m=z0_m,
+        particle_radius_m=radius_m,
+        diffusion_coefficient=4.0e-12,
+        diffusion_draws=diffusion_draws,
+    )
+
+    geom = TrapezoidCrossSection(
+        top_width_m=channel.width_m,
+        depth_m=channel.depth_m,
+        sidewall_taper_angle_deg=cfg.sidewall_taper_angle_deg,
+    )
+    x1_m = trajectory["x_m"][:, -1]
+    z1_m = trajectory["z_m"][:, -1]
+    initial_u_norm = (z0_m + 0.5 * channel.depth_m) / channel.depth_m
+    final_u_norm = (z1_m + 0.5 * channel.depth_m) / channel.depth_m
+    initial_x_norm = _trapezoid_x_local_norm(
+        geom,
+        x0_m,
+        z0_m,
+        channel.depth_m,
+        radius_m,
+    )
+    final_x_norm = _trapezoid_x_local_norm(
+        geom,
+        x1_m,
+        z1_m,
+        channel.depth_m,
+        radius_m,
+    )
+    final_gaps_m = _trapezoid_surface_gaps_m(
+        geom,
+        x1_m,
+        z1_m,
+        channel.depth_m,
+        radius_m,
+    )
+
+    assert np.mean(final_gaps_m < 1.0e-12) < 0.005
+    assert abs(float(np.mean(final_u_norm) - np.mean(initial_u_norm))) < 0.01
+    assert abs(float(np.var(final_u_norm) - np.var(initial_u_norm))) < 0.01
+    assert abs(float(np.mean(final_x_norm) - np.mean(initial_x_norm))) < 0.03
+    assert abs(float(np.var(final_x_norm) - np.var(initial_x_norm))) < 0.04
+    assert np.all(final_x_norm >= -1.0 - 1.0e-12)
+    assert np.all(final_x_norm <= 1.0 + 1.0e-12)
+
+
+def test_dt_halving_converges_wall_distance_distribution() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    radius_m = 60.0e-9
+    base_cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=True,
+        reflecting_boundary=True,
+        initial_position_distribution_mode="uniform_accessible_area",
+    )
+    geom = TrapezoidCrossSection(
+        top_width_m=channel.width_m,
+        depth_m=channel.depth_m,
+        sidewall_taper_angle_deg=base_cfg.sidewall_taper_angle_deg,
+    )
+    n_events = 1024
+    initial_surface_gap_m = 5.0e-9
+    side_norm = math.sqrt(1.0 + geom.k_taper**2)
+    u0_m = np.linspace(220.0e-9, 500.0e-9, n_events)
+    x0_m = np.empty(n_events, dtype=float)
+    for index, u_m in enumerate(u0_m):
+        bounds = geom.center_accessible_x_bounds_at_depth_m(float(u_m), radius_m)
+        assert bounds is not None
+        _, x_right_m = bounds
+        x0_m[index] = x_right_m - initial_surface_gap_m * side_norm
+    z0_m = u0_m - 0.5 * channel.depth_m
+    unit_draws = np.column_stack(
+        (
+            np.linspace(0.85, 1.25, n_events),
+            np.zeros(n_events, dtype=float),
+        )
+    )
+    initial_gaps_m = _trapezoid_surface_gaps_m(
+        geom,
+        x0_m,
+        z0_m,
+        channel.depth_m,
+        radius_m,
+    )
+    quantiles = np.array([0.10, 0.25, 0.50, 0.75, 0.90])
+    initial_quantiles_m = np.quantile(initial_gaps_m, quantiles)
+
+    def one_wall_quantile_delta(dt_s: float) -> float:
+        cfg = replace(base_cfg, total_time_s=2.0 * dt_s, sampling_rate_Hz=1.0 / dt_s)
+        trajectory = simulate_particle_trajectory_block(
+            channel,
+            BASELINE_OPTICAL,
+            cfg,
+            initial_x_m=x0_m,
+            initial_z_m=z0_m,
+            particle_radius_m=radius_m,
+            diffusion_coefficient=8.0e-12,
+            diffusion_draws=unit_draws,
+        )
+        final_gaps_m = _trapezoid_surface_gaps_m(
+            geom,
+            trajectory["x_m"][:, -1],
+            trajectory["z_m"][:, -1],
+            channel.depth_m,
+            radius_m,
+        )
+        final_quantiles_m = np.quantile(final_gaps_m, quantiles)
+        return float(np.max(np.abs(final_quantiles_m - initial_quantiles_m)))
+
+    delta_dt = one_wall_quantile_delta(5.0e-5)
+    delta_half_dt = one_wall_quantile_delta(2.5e-5)
+    delta_quarter_dt = one_wall_quantile_delta(1.25e-5)
+
+    assert delta_quarter_dt < delta_half_dt < delta_dt
+
+
 def test_rectangle_limit_matches_rectangular_reflection() -> None:
     channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
     radius_m = 60.0e-9
