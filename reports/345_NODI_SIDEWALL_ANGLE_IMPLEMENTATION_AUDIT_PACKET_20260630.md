@@ -48,6 +48,7 @@ The current supported split is:
 | Package C Skorokhod implementation candidate | After explicit user authorization for implementation code and unit tests, trapezoid diffusive plug-flow trajectories use `trapezoid_skorokhod_normal_reflection_euler_active_set_v1`; geometry exposes wall constraints and inward normals; validators require `finite_step_reflection_surrogate_not_hindered_hydrodynamics_not_package_c_proof_registered`. | `test_single_wall_reflection_matches_folded_normal_limit`, `test_reflected_trajectory_has_no_boundary_atom_after_sidewall_crossing`, `test_corner_active_set_reflection_converges_inside_support`, `test_pure_brownian_step_preserves_accessible_area_equilibrium_moments`, `test_dt_halving_converges_wall_distance_distribution`, `test_rectangle_limit_matches_rectangular_reflection`, `test_position_response_sidewall_v2_accepts_skorokhod_boundary_with_no_proof_claim` |
 | Package C reflection telemetry | The geometry primitive can return active wall ids, reflection iteration count, total reflection displacement, and convergence status for one finite-step reflection update while preserving the tuple-return runtime API. Audit-only trajectory diagnostics now expose the Brownian target model, numerical scheme, no-specular/no-hindered guards, projection-surrogate flag, reflection update rule id, and telemetry reporting scope. | `test_reflection_diagnostics_noop_for_inside_trial_point`, `test_single_wall_reflection_matches_folded_normal_limit`, `test_corner_active_set_reflection_converges_inside_support`, `test_trapezoid_trajectory_diagnostics_mark_skorokhod_boundary` |
 | Package C angle/depth mutation coverage | Reflected wall-distance distributions now change under sidewall-angle and depth mutations, and observation signatures include Brownian target/scheme/telemetry fields so cache keys cannot ignore the boundary implementation contract. | `test_angle_and_depth_mutation_change_reflected_wall_distance_distribution`, `test_sidewall_observation_signature_records_geometry_propagation_fields` |
+| Package C equilibrium bin smoke | Pure-Brownian sidewall trajectories now check `x_local_norm` uniformity within u-slices using a KS-style empirical CDF bound plus left/right mean symmetry. | `test_pure_brownian_x_local_norm_uniformity_by_u_slice` |
 
 ## Still Blocked
 
@@ -157,6 +158,15 @@ python -m pytest tests/test_cross_section_geometry.py -q -k "angle_and_depth_mut
 python -m pytest tests/test_cross_section_geometry.py tests/test_trajectory.py -q
 52 passed in 1.48s
 
+python -m pytest tests/test_cross_section_geometry.py -q -k "x_local_norm_uniformity"
+1 passed, 48 deselected in 0.60s
+
+python -m pytest tests/test_cross_section_geometry.py tests/test_trajectory.py -q
+53 passed in 1.32s
+
+python -m pytest tests/test_cross_section_geometry.py -q -k "pure_brownian or x_local_norm_uniformity or dt_halving"
+3 passed, 46 deselected in 0.54s
+
 python -m pytest tests/test_physics_core.py::TestIntegration::test_claim_state_machine_smoke_matrix_exports_route_and_boundaries -q
 1 passed in 0.37s
 
@@ -199,4 +209,4 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 
 1. Keep strengthening no-compute validators and mutation tests for profile/source-hash drift and geometry-source promotion.
 2. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
-3. Continue Package C code-level hardening next: add stronger KS/bin-level equilibrium checks and a future proof-artifact registry/allowlist. Do not register proof or mark Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.
+3. Continue Package C code-level hardening next: expand proof-artifact registry/allowlist tests and, if needed later, move statistical convergence from smoke tests into an explicit proof package. Do not register proof or mark Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.

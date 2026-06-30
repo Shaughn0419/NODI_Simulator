@@ -1128,6 +1128,73 @@ def test_pure_brownian_step_preserves_accessible_area_equilibrium_moments() -> N
     assert np.all(final_x_norm <= 1.0 + 1.0e-12)
 
 
+def test_pure_brownian_x_local_norm_uniformity_by_u_slice() -> None:
+    channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
+    radius_m = 60.0e-9
+    cfg = replace(
+        DEFAULT_SIM_CFG,
+        channel_cross_section_model="trapezoid_tapered_sidewalls",
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+        flow_profile_model="plug",
+        diffusion_hindrance_model="none",
+        include_diffusion=True,
+        reflecting_boundary=True,
+        initial_position_distribution_mode="uniform_accessible_area",
+        total_time_s=2.0e-5,
+        sampling_rate_Hz=1.0e5,
+    )
+    n_events = 4096
+    rng = np.random.default_rng(7717)
+    x0_m, z0_m, _ = _sample_initial_positions_block(
+        channel,
+        rng,
+        radius_m,
+        cfg,
+        unit_position_samples=None,
+        start_idx=0,
+        stop_idx=n_events,
+    )
+    diffusion_draws = rng.standard_normal((n_events, 2 * (cfg.n_samples - 1)))
+
+    trajectory = simulate_particle_trajectory_block(
+        channel,
+        BASELINE_OPTICAL,
+        cfg,
+        initial_x_m=x0_m,
+        initial_z_m=z0_m,
+        particle_radius_m=radius_m,
+        diffusion_coefficient=4.0e-12,
+        diffusion_draws=diffusion_draws,
+    )
+
+    geom = TrapezoidCrossSection(
+        top_width_m=channel.width_m,
+        depth_m=channel.depth_m,
+        sidewall_taper_angle_deg=cfg.sidewall_taper_angle_deg,
+    )
+    final_x_m = trajectory["x_m"][:, -1]
+    final_z_m = trajectory["z_m"][:, -1]
+    final_u_norm = (final_z_m + 0.5 * channel.depth_m) / channel.depth_m
+    final_x_norm = _trapezoid_x_local_norm(
+        geom,
+        final_x_m,
+        final_z_m,
+        channel.depth_m,
+        radius_m,
+    )
+
+    u_edges = np.quantile(final_u_norm, [0.0, 0.25, 0.50, 0.75, 1.0])
+    for low, high in zip(u_edges[:-1], u_edges[1:]):
+        in_slice = (final_u_norm >= low) & (final_u_norm <= high)
+        slice_x = np.sort(final_x_norm[in_slice])
+        assert slice_x.size >= 900
+        uniform_cdf = (slice_x + 1.0) / 2.0
+        empirical_cdf = (np.arange(slice_x.size, dtype=float) + 0.5) / slice_x.size
+        ks_delta = float(np.max(np.abs(empirical_cdf - uniform_cdf)))
+        assert ks_delta < 0.08
+        assert abs(float(np.mean(slice_x))) < 0.08
+
+
 def test_dt_halving_converges_wall_distance_distribution() -> None:
     channel = Channel(width_m=500.0e-9, depth_m=900.0e-9)
     radius_m = 60.0e-9
