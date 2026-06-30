@@ -1454,6 +1454,10 @@ DESCRIPTOR_V2_NON_MEASURED_PROFILE_SOURCES = frozenset(
         "design",
     }
 )
+DESCRIPTOR_V2_MEASURED_PROFILE_TRUE_FIELDS: tuple[str, ...] = (
+    "measured_profile_loaded",
+    "measured_profile_validated",
+)
 DESCRIPTOR_UNAVAILABLE_FIELDS = frozenset(
     {
         "bottom_cd_bias_nm",
@@ -2286,6 +2290,13 @@ def _validate_descriptor_v2_measured_geometry_claim(
     geometry_profile_source = _value(row, "geometry_profile_source")
     geometry_profile_sha256 = _value(row, "geometry_profile_sha256")
     measured_profile_path = _value(row, "measured_profile_path")
+    for field in DESCRIPTOR_V2_MEASURED_PROFILE_TRUE_FIELDS:
+        if not _value(row, field):
+            _issue(issues, row_index, "DESC-V2", f"measured geometry lacks {field}=true")
+            continue
+        actual = _bool_field(row, field, row_index, "DESC-V2", issues)
+        if actual is not True:
+            _issue(issues, row_index, "DESC-V2", f"measured geometry has {field}={actual}")
     if not geometry_profile_source:
         _issue(issues, row_index, "DESC-V2", "measured geometry lacks geometry_profile_source")
     elif geometry_profile_source.lower() in DESCRIPTOR_V2_NON_MEASURED_PROFILE_SOURCES:

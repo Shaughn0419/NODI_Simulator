@@ -2791,7 +2791,28 @@ def test_geometry_descriptor_v2_rejects_unbacked_measured_geometry_claim() -> No
     _assert_has_issue(issues, "DESC-V2")
 
 
-def test_geometry_descriptor_v2_accepts_validated_measured_geometry_metadata() -> None:
+@pytest.mark.parametrize("field", ["measured_profile_loaded", "measured_profile_validated"])
+def test_geometry_descriptor_v2_rejects_unloaded_measured_geometry_metadata(
+    field: str,
+) -> None:
+    row = _valid_descriptor_v2_row(
+        geometry_claim_level="measured_geometry",
+        metrology_status="validated",
+        not_measured_geometry="false",
+        geometry_profile_source="fibsem",
+        geometry_profile_sha256="a" * 64,
+        measured_profile_path="profiles/fibsem_sidewall.csv",
+        measured_profile_loaded="true",
+        measured_profile_validated="true",
+    )
+    row[field] = "false"
+
+    issues = validate_geometry_descriptor_rows([row])
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
+def test_geometry_descriptor_v2_accepts_loaded_validated_measured_geometry_metadata() -> None:
     assert (
         validate_geometry_descriptor_rows(
             [
@@ -2802,6 +2823,8 @@ def test_geometry_descriptor_v2_accepts_validated_measured_geometry_metadata() -
                     geometry_profile_source="fibsem",
                     geometry_profile_sha256="a" * 64,
                     measured_profile_path="profiles/fibsem_sidewall.csv",
+                    measured_profile_loaded="true",
+                    measured_profile_validated="true",
                 )
             ]
         )
@@ -2819,6 +2842,8 @@ def test_geometry_descriptor_v2_rejects_comsol_descriptor_as_measured_profile() 
                 geometry_profile_source="comsol_descriptor",
                 geometry_profile_sha256="a" * 64,
                 measured_profile_path="profiles/fibsem_sidewall.csv",
+                measured_profile_loaded="true",
+                measured_profile_validated="true",
             )
         ]
     )
