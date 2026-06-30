@@ -4,7 +4,7 @@
     "artifact_id": "GATE30_31_PACKAGE_C_REFLECTION_PROOF_METRICS_CANDIDATE_20260630",
     "metric_schema_version": "package_c_reflection_metric_candidate_v1",
     "claim_boundary": "candidate_only_finite_step_reflection_surrogate_not_package_c_proof_registered",
-    "gate30_31_build_base_commit_sha": "3e3dff8021ed3b8b7e4aecd4ccd27a27a2f12381",
+    "gate30_31_build_base_commit_sha": "de471ab597009b799f795a396f830f9425ba7f38",
     "gate30_31_candidate_worktree_state": "candidate_may_include_uncommitted_changes_not_reviewed_commit_binding",
     "scenario_metric_rows": 216,
     "open_candidate_metric_rows": 198,
@@ -526,7 +526,7 @@
   "environment_lock": {
     "python_version": "3.13.13 (tags/v3.13.13:01104ce, Apr  7 2026, 19:25:48) [MSC v.1944 64 bit (AMD64)]",
     "platform": "win32",
-    "git_head": "3e3dff8021ed3b8b7e4aecd4ccd27a27a2f12381",
+    "git_head": "de471ab597009b799f795a396f830f9425ba7f38",
     "metric_schema_version": "package_c_reflection_metric_candidate_v1"
   },
   "parameter_grid": {
