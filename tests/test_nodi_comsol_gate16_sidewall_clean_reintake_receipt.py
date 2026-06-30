@@ -15,6 +15,7 @@ def test_gate16_payload_passes_stale_fail_closed_receipt_thresholds() -> None:
     assert payload["summary"]["comsol_gate15_blocking_drift"] == 0
     assert payload["summary"]["comsol_gate15_missing_required"] == 0
     assert payload["summary"]["comsol_gate15_claim_firewall_drift"] == 0
+    assert payload["summary"]["comsol_head_actual"] in gate16.ALLOWED_COMSOL_CURRENT_HEADS
 
 
 def test_gate16_detects_comsol_gate15_is_not_current_clean_reintake() -> None:

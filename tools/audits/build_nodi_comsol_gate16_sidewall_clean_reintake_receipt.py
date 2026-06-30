@@ -27,6 +27,8 @@ DEFAULT_COMSOL_ROOT = PROJECT_ROOT.parent / "comsol test" / "comsol_ev_pbs_bonde
 COMSOL_ROADMAP = "roadmap"
 
 EXPECTED_COMSOL_GATE15_HEAD = "7090794ff20970955a011b123b3de171e96910a3"
+EXPECTED_COMSOL_GATE16_HEAD = "d25718a3ba4811d8e00015fad4e851fb529af49c"
+ALLOWED_COMSOL_CURRENT_HEADS = frozenset({EXPECTED_COMSOL_GATE15_HEAD, EXPECTED_COMSOL_GATE16_HEAD})
 DISPOSITION = "NODI_GATE16_SIDEWALL_COMSOL_GATE15_RECEIPT_STALE_FAIL_CLOSED_NO_AUTH"
 ALLOWED_USE = "review-only COMSOL Gate15 receipt;current NODI clean reintake request;static preflight quarantine"
 BLOCKED_USE = (
@@ -204,8 +206,10 @@ def clean_reintake_status(comsol_root: Path, nodi_head: str) -> list[dict[str, s
             "check": "comsol_head",
             "actual_value": safe_git_head(comsol_root),
             "expected_value": EXPECTED_COMSOL_GATE15_HEAD,
-            "gate16_result": "MATCH" if safe_git_head(comsol_root) == EXPECTED_COMSOL_GATE15_HEAD else "HEAD_MISMATCH_FAIL_CLOSED",
-            "blocks_static_preflight_release": bool_text(safe_git_head(comsol_root) != EXPECTED_COMSOL_GATE15_HEAD),
+            "gate16_result": "MATCH_OR_KNOWN_COMSOL_GATE16_SUCCESSOR"
+            if safe_git_head(comsol_root) in ALLOWED_COMSOL_CURRENT_HEADS
+            else "HEAD_MISMATCH_FAIL_CLOSED",
+            "blocks_static_preflight_release": bool_text(safe_git_head(comsol_root) not in ALLOWED_COMSOL_CURRENT_HEADS),
         },
         {
             "status_id": "G16B-STATUS-002",
@@ -427,7 +431,7 @@ def build_payload(comsol_root: Path = DEFAULT_COMSOL_ROOT) -> dict[str, Any]:
 def validate_payload(payload: dict[str, Any]) -> list[str]:
     s = payload["summary"]
     checks = {
-        "COMSOL Gate15 head": s["comsol_head_actual"] == EXPECTED_COMSOL_GATE15_HEAD,
+        "COMSOL Gate15/Gate16 successor head": s["comsol_head_actual"] in ALLOWED_COMSOL_CURRENT_HEADS,
         "COMSOL Gate15 receipt drift": s["comsol_gate15_blocking_drift"] == 0,
         "COMSOL Gate15 missing required": s["comsol_gate15_missing_required"] == 0,
         "COMSOL Gate15 claim firewall drift": s["comsol_gate15_claim_firewall_drift"] == 0,

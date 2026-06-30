@@ -1,14 +1,14 @@
 {
   "anchor_id": "NODI_SIDEWALL_CURRENT_RELEASE_ANCHOR_V1_20260630",
   "anchor_name": "NODI_SIDEWALL_CURRENT_RELEASE_ANCHOR_V1",
-  "semantic_base_head": "8db98e7ef0c97cdd486f708024bf46d0a3039817",
-  "anchor_build_head": "8db98e7ef0c97cdd486f708024bf46d0a3039817",
+  "semantic_base_head": "454d2462d101b6934945bce95884104e0eeb67ce",
+  "anchor_build_head": "454d2462d101b6934945bce95884104e0eeb67ce",
   "anchor_package_expected_successor_policy": "CLEAN_SUCCESSOR_ALLOWED_FOR_ANCHOR_REPORT_SIDECAR_TEST_ONLY_NO_GUARDED_SEMANTIC_CHANGE",
   "anchor_manifest_sha256": "SELF_REFERENTIAL_MANIFEST_SHA_EXCLUDED_FROM_ANCHOR_SEMANTIC_DIGEST_SEE_MANIFEST_SIDECAR",
-  "semantic_digest_sha256": "dd537ecbfd5e69a0613a2b2c436ecfe640d5d0295845ad9bf973bb40eb11391c",
+  "semantic_digest_sha256": "4255d9533a8d150d6a740d03ead267323e868b5560b7051ce5d5ccc0ed3c2c16",
   "semantic_digest_inputs": {
     "anchor_name": "NODI_SIDEWALL_CURRENT_RELEASE_ANCHOR_V1",
-    "semantic_base_head": "8db98e7ef0c97cdd486f708024bf46d0a3039817",
+    "semantic_base_head": "454d2462d101b6934945bce95884104e0eeb67ce",
     "sidewall_contract_semantics": "Gate14/Gate15/Gate16 review-only sidewall descriptor/static-preflight guard semantics",
     "gate2d_rows": 4,
     "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
