@@ -1409,6 +1409,9 @@ DESCRIPTOR_V2_REQUIRED_FIELDS: tuple[str, ...] = (
     "runtime_guard_status",
     "min_aperture_descriptor_nm",
 )
+DESCRIPTOR_V2_AMBIGUOUS_ANGLE_FIELDS = frozenset(
+    {"sidewall_deg", "sidewall_angle", "taper_angle"}
+)
 DESCRIPTOR_V2_SIDEWALL_ANGLE_CONVENTIONS = frozenset(
     {
         "sidewall_angle_from_substrate_plane_90deg_vertical",
@@ -1946,6 +1949,15 @@ def _validate_geometry_descriptor_v2_sidewall_fields(
     row_index: int,
     issues: list[str],
 ) -> None:
+    if any(field in row for field in DESCRIPTOR_V2_AMBIGUOUS_ANGLE_FIELDS) and not (
+        _value(row, "sidewall_angle_convention") or _value(row, "angle_convention")
+    ):
+        _issue(
+            issues,
+            row_index,
+            "DESC-V2",
+            "bare sidewall/taper angle field lacks angle convention",
+        )
     if not any(field in row for field in DESCRIPTOR_V2_MARKER_FIELDS):
         return
 

@@ -2640,6 +2640,13 @@ def test_geometry_descriptor_v2_requires_angle_convention() -> None:
     _assert_has_issue(issues, "DESC-V2")
 
 
+@pytest.mark.parametrize("field", ["sidewall_deg", "sidewall_angle", "taper_angle"])
+def test_geometry_descriptor_v2_rejects_bare_ambiguous_angle_fields(field: str) -> None:
+    issues = validate_geometry_descriptor_rows([_valid_descriptor_row(**{field: 85.0})])
+
+    _assert_has_issue(issues, "DESC-V2")
+
+
 def test_geometry_descriptor_v2_rejects_angle_conversion_mismatch() -> None:
     issues = validate_geometry_descriptor_rows(
         [_valid_descriptor_v2_row(sidewall_taper_angle_deg_nodi=85.0)]
