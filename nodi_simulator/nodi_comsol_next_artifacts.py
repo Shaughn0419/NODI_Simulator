@@ -9910,6 +9910,53 @@ def _validate_position_response_sidewall_v2_fields(
             "PRS-SIDEWALL-V2",
             f"invalid bin_particle_center_support_status={support_status}",
         )
+    bin_accessible_area_fraction = local_geometry.get("bin_accessible_area_fraction")
+    if bin_accessible_area_fraction is not None:
+        if not (0.0 <= bin_accessible_area_fraction <= 1.0):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "bin_accessible_area_fraction outside [0, 1]",
+            )
+        if (
+            bin_accessible is False or support_status == "blocked"
+        ) and not math.isclose(
+            bin_accessible_area_fraction,
+            0.0,
+            rel_tol=0.0,
+            abs_tol=1.0e-12,
+        ):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "blocked sidewall bin has positive accessible area fraction",
+            )
+    if support_status in {"open", "narrow"}:
+        d_nearest_wall_nm = local_geometry.get("d_nearest_wall_nm")
+        surface_gap_for_particle_nm = local_geometry.get("surface_gap_for_particle_nm")
+        if (
+            d_nearest_wall_nm is not None
+            and particle_radius_nm is not None
+            and d_nearest_wall_nm < particle_radius_nm - 5.0e-2
+        ):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "open/narrow particle support is outside wall-normal support",
+            )
+        if (
+            surface_gap_for_particle_nm is not None
+            and surface_gap_for_particle_nm < -5.0e-2
+        ):
+            _issue(
+                issues,
+                row_index,
+                "PRS-SIDEWALL-V2",
+                "open/narrow particle support has negative surface gap",
+            )
     if bin_accessible is False and support_status != "blocked":
         _issue(
             issues,
@@ -11426,6 +11473,36 @@ def _validate_sidewall_tail_particle_support_guard(
         (diameter_nm is not None and diameter_nm >= 220.0)
         or (particle_radius_nm is not None and particle_radius_nm >= 110.0)
     )
+
+    steric_support_source = _value(row, "steric_support_source")
+    if not steric_support_source:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "sidewall row lacks steric_support_source",
+        )
+        return
+    if steric_support_source not in PRS_SIDEWALL_V2_STERIC_SUPPORT_SOURCE:
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            f"invalid steric_support_source={steric_support_source}",
+        )
+
+    support_status = _value(row, "bin_particle_center_support_status")
+    if (
+        support_status in {"open", "narrow"}
+        and steric_support_source != "exact_geometry_primitive"
+    ):
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            "open/narrow sidewall support lacks exact geometry primitive source",
+        )
+
     if not large_tail:
         return
 
@@ -11452,35 +11529,6 @@ def _validate_sidewall_tail_particle_support_guard(
                 "large-tail sidewall row auto-admits particle support",
             )
 
-    steric_support_source = _value(row, "steric_support_source")
-    if not steric_support_source:
-        _issue(
-            issues,
-            row_index,
-            "PRS-SIDEWALL-V2",
-            "large-tail sidewall row lacks steric_support_source",
-        )
-        return
-    if steric_support_source not in PRS_SIDEWALL_V2_STERIC_SUPPORT_SOURCE:
-        _issue(
-            issues,
-            row_index,
-            "PRS-SIDEWALL-V2",
-            f"invalid steric_support_source={steric_support_source}",
-        )
-
-    support_status = _value(row, "bin_particle_center_support_status")
-    if (
-        support_status in {"open", "narrow"}
-        and steric_support_source != "exact_geometry_primitive"
-    ):
-        _issue(
-            issues,
-            row_index,
-            "PRS-SIDEWALL-V2",
-            "large-tail open/narrow support lacks exact geometry primitive source",
-        )
-
 
 def _validate_sidewall_blocked_bin_response_values(
     row: Mapping[str, Any],
@@ -11496,17 +11544,12 @@ def _validate_sidewall_blocked_bin_response_values(
         value = _value(row, field)
         if not value or value.lower() in {"blocked", "none", "null", "na", "n/a"}:
             continue
-        try:
-            numeric_value = float(value)
-        except ValueError:
-            continue
-        if math.isfinite(numeric_value):
-            _issue(
-                issues,
-                row_index,
-                "PRS-SIDEWALL-V2",
-                f"blocked sidewall bin has numeric {field}",
-            )
+        _issue(
+            issues,
+            row_index,
+            "PRS-SIDEWALL-V2",
+            f"blocked sidewall bin has nonblank {field}",
+        )
 
 
 def _validate_sample_status(

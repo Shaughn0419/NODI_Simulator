@@ -1388,6 +1388,87 @@ def test_position_response_sidewall_v2_rejects_blocked_bin_numeric_response(
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+def test_position_response_sidewall_v2_rejects_blocked_bin_symbolic_response() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                bin_accessible="false",
+                bin_accessible_area_fraction=0.0,
+                bin_particle_center_support_status="blocked",
+                blocked_reason="steric_blocked",
+                decision_use_allowed="false",
+                steric_support_source="not_available",
+                response_value="computed_proxy",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_blocked_bin_positive_area_fraction() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                bin_accessible="false",
+                bin_accessible_area_fraction=1.0,
+                bin_particle_center_support_status="blocked",
+                blocked_reason="steric_blocked",
+                decision_use_allowed="false",
+                steric_support_source="not_available",
+                response_value="blocked",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_rejects_open_status_outside_center_support() -> None:
+    x_left_nm = -210.630101413
+    x_right_nm = 210.630101413
+    local_half_width_nm = 210.630101413
+    side_norm = math.sqrt(1.0 + math.tan(math.radians(5.0)) ** 2)
+    d_side_right_nm = 90.0
+    x_nm = x_right_nm - d_side_right_nm * side_norm
+    d_side_left_nm = (x_nm - x_left_nm) / side_norm
+
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_sidewall_v2_row(
+                x_nm=x_nm,
+                x_local_norm=x_nm / local_half_width_nm,
+                d_side_left_nm=d_side_left_nm,
+                d_side_right_nm=d_side_right_nm,
+                d_nearest_wall_nm=d_side_right_nm,
+                nearest_wall_id="right_side",
+                surface_gap_for_particle_nm=-20.0,
+                bin_particle_center_support_status="open",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
+def test_position_response_sidewall_v2_requires_exact_support_source_for_small_open_particle() -> None:
+    row = _valid_prs_sidewall_v2_row(
+        diameter_nm=40,
+        particle_kind="small_calibration_particle",
+        particle_radius_nm=20.0,
+        surface_gap_for_particle_nm=189.828590286,
+        steric_support_source="not_available",
+    )
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        "particle_radius_m=1.1e-07",
+        "particle_radius_m=2e-08",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_rejects_inaccessible_open_support_status() -> None:
     issues = validate_position_response_surface_rows(
         [
