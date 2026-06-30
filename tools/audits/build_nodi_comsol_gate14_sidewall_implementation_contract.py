@@ -28,6 +28,7 @@ DEFAULT_COMSOL_ROOT = PROJECT_ROOT.parent / "comsol test" / "comsol_ev_pbs_bonde
 COMSOL_ROADMAP = "roadmap"
 BASE_GATE13_COMMIT = "0c90ae07f6cc648bf50b9c22e85b9fd82ad614fa"
 EXPECTED_COMSOL_GATE13_HEAD = "64dfa64b766750f91813c3cd470d369dec61f384"
+EXPECTED_COMSOL_GATE14_HEAD = "a378398eea8af883e1ec89fc80d93b60ff33a47c"
 DISPOSITION = "NODI_GATE14_SIDEWALL_IMPLEMENTATION_GUARD_RELEASE_AND_COMSOL_CONTRACT_V3_NO_AUTH"
 CONTRACT_NAME = "NODI_SIDEWALL_IMPLEMENTATION_GUARD_CONTRACT_V3_RELEASED_CLEAN_REVIEW_ONLY_NO_AUTH"
 ALLOWED_USE = "review-only implementation guard release;COMSOL producer schema request;static validator/dry-run harness"
@@ -137,6 +138,7 @@ def current_release_intake() -> list[dict[str, str]]:
         for line in dirty_lines
         if "GATE14" in line
         or "gate14_sidewall_implementation_contract" in line
+        or "gate13_sidewall_guard_convergence" in line
         or "NODI_COMSOL_GATE14_SIDEWALL_" in line
     ]
     non_gate14_lines = [line for line in dirty_lines if line not in gate14_lines]
@@ -653,6 +655,8 @@ def build_payload(comsol_root: Path) -> dict[str, Any]:
         "comsol_gate13_blocking_drift": sum(row["receipt_status"] == "BLOCKING_DATA_DRIFT" for row in payload["comsol_gate13_receipt"]),
         "comsol_gate13_missing_required": sum(row["receipt_status"] == "MISSING_REQUIRED_ARTIFACT" for row in payload["comsol_gate13_receipt"]),
         "comsol_head_actual": safe_git_head(comsol_root),
+        "comsol_gate13_package_head_expected": EXPECTED_COMSOL_GATE13_HEAD,
+        "comsol_head_advanced_after_gate13": safe_git_head(comsol_root) == EXPECTED_COMSOL_GATE14_HEAD,
         "stale_intake_closed": payload["stale_intake_closure"][0]["closure_status"] == "CLOSED_BY_NODI_GATE14_RELEASED_CLEAN",
         "receiver_harness_rows": len(coverage),
         "receiver_harness_missing_required_for_v3": sum(row["coverage_status"] == "MISSING_REQUIRED_FOR_V3" for row in coverage),
@@ -682,7 +686,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "blocked guard rows": summary["implementation_guard_blocked_rows"] == 2,
         "COMSOL Gate13 receipt drift": summary["comsol_gate13_blocking_drift"] == 0,
         "COMSOL Gate13 required missing": summary["comsol_gate13_missing_required"] == 0,
-        "COMSOL Gate13 head": summary["comsol_head_actual"] == EXPECTED_COMSOL_GATE13_HEAD,
+        "COMSOL Gate14 head": summary["comsol_head_actual"] == EXPECTED_COMSOL_GATE14_HEAD,
         "stale intake closure": summary["stale_intake_closed"],
         "harness no missing required": summary["receiver_harness_missing_required_for_v3"] == 0,
         "mutation row threshold": summary["mutation_rows"] >= 50000,

@@ -18,7 +18,7 @@ def test_gate13_payload_passes_guard_convergence_thresholds() -> None:
     assert payload["summary"]["disposition"] == gate13.DISPOSITION
     assert payload["summary"]["comsol_gate12_commit_expected"] == gate13.COMSOL_GATE12_COMMIT
     assert payload["summary"]["comsol_gate13_commit_expected"] == gate13.COMSOL_GATE13_COMMIT
-    assert payload["summary"]["comsol_project_head_actual"] == gate13.COMSOL_GATE13_COMMIT
+    assert payload["summary"]["comsol_project_head_actual"] in gate13.COMSOL_ALLOWED_CURRENT_HEADS
     assert payload["summary"]["unknown_dirty_blockers"] == 0
     assert payload["summary"]["comsol_gate12_receipt_rows"] == 11
     assert payload["summary"]["comsol_gate13_receipt_rows"] == 16
@@ -49,6 +49,7 @@ def test_worktree_reconciliation_has_no_unknown_dirty_blockers() -> None:
         "LEGIT_SIDEWALL_HARDENING_CODE",
         "LEGIT_GATE11_GATE12_REPORT_REFRESH",
         "LEGIT_COMSOL_GATE12_PROVENANCE_SYNC",
+        "LEGIT_GATE14_GENERATED_OUTPUT_PENDING_COMMIT",
     }
 
 
@@ -68,9 +69,17 @@ def test_comsol_gate12_receipt_and_provenance_repair_are_closed() -> None:
     assert not any(row["receipt_status"] == "MISSING_REQUIRED_ARTIFACT" for row in payload["comsol_gate12_receipt"])
     repair = {row["field"]: row for row in payload["provenance_repair"]}
     assert repair["comsol_gate11_commit_expected"]["actual_value"] == gate13.COMSOL_GATE11_COMMIT
-    assert repair["comsol_project_head_actual"]["actual_value"] == gate13.COMSOL_GATE13_COMMIT
+    assert repair["comsol_project_head_actual"]["actual_value"] in gate13.COMSOL_ALLOWED_CURRENT_HEADS
+    assert repair["comsol_project_head_actual"]["repair_status"] in {
+        "MATCH",
+        "HEAD_ADVANCED_TO_KNOWN_GATE14_SUCCESSOR",
+    }
     assert repair["comsol_gate12_commit_expected"]["actual_value"] == gate13.COMSOL_GATE12_COMMIT
-    assert repair["comsol_gate13_commit_expected"]["actual_value"] == gate13.COMSOL_GATE13_COMMIT
+    assert repair["comsol_gate13_commit_expected"]["actual_value"] in gate13.COMSOL_ALLOWED_CURRENT_HEADS
+    assert repair["comsol_gate13_commit_expected"]["repair_status"] in {
+        "MATCH",
+        "HEAD_ADVANCED_TO_KNOWN_GATE14_SUCCESSOR",
+    }
     assert all(row["semantic_conflict"] == "false" for row in payload["provenance_repair"])
     assert all(row["dirty_open"] == "false" for row in payload["provenance_repair"])
 
