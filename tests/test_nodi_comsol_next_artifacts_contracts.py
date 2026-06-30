@@ -779,6 +779,8 @@ SIDEWALL_FORBIDDEN_ALIAS_COLUMNS_FOR_TEST = (
     "Q_m3_s",
     "q_ch_m3_s",
     "comsol_Q_proxy",
+    "route_score_norm",
+    "sidewall_score_value",
 )
 
 

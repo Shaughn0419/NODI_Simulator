@@ -402,6 +402,8 @@ FORBIDDEN_POSITIVE_FIELD_FRAGMENTS = (
     "throughput_detection",
     "scalar_joint_score",
     "joint_score",
+    "route_score",
+    "sidewall_score",
     "p3_conclusion",
     "p3_solver_conclusion",
     "p3_solver_execution",
