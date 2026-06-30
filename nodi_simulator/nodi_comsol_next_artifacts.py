@@ -1026,6 +1026,7 @@ SIDEWALL_V2_CACHE_GEOMETRY_MATCH_STATUS_ALLOWED = frozenset(
     }
 )
 SIDEWALL_PACKAGE_D_PRECHECK_VERSION = "sidewall_package_d_precheck_v1"
+SIDEWALL_PACKAGE_D_PRECHECK_ARTIFACT = "NODI_SIDEWALL_PACKAGE_D_PRECHECK"
 SIDEWALL_PACKAGE_D_PRECHECK_REQUIRED_FIELDS = SIDEWALL_V2_PACKAGE_D_PRECHECK_REQUIRED_FIELDS
 SIDEWALL_PACKAGE_D_TARGET_ARTIFACT_FAMILY_ALLOWED = frozenset({"prs", "eas", "prs_eas"})
 SIDEWALL_PACKAGE_D_PACKAGE_C_STATUS_ALLOWED = frozenset(
@@ -1889,6 +1890,16 @@ def validate_sidewall_package_d_precheck_rows(rows: Sequence[Mapping[str, Any]])
             )
 
     return issues
+
+
+def validate_sidewall_package_d_precheck_csv(csv_path: Path) -> list[str]:
+    return validate_sidewall_package_d_precheck_rows(read_csv_rows(csv_path))
+
+
+def assert_valid_sidewall_package_d_precheck_csv(csv_path: Path) -> None:
+    issues = validate_sidewall_package_d_precheck_csv(csv_path)
+    if issues:
+        raise ContractValidationError(SIDEWALL_PACKAGE_D_PRECHECK_ARTIFACT, issues)
 
 
 def validate_effective_aperture_surrogate_rows(

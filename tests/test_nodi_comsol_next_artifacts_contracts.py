@@ -122,6 +122,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     build_position_response_runner_launch_plan,
     assert_valid_effective_aperture_surrogate_csv,
     assert_valid_position_response_surface_csv,
+    assert_valid_sidewall_package_d_precheck_csv,
     default_comsol_v4_readonly_context,
     effective_aperture_smoke_manifest_rows,
     evaluate_next_artifacts_future_authorization_request,
@@ -137,6 +138,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     validate_position_response_surface_rows,
     validate_runner_launch_plan,
     validate_sidewall_package_d_precheck_rows,
+    validate_sidewall_package_d_precheck_csv,
     NEXT_ARTIFACTS_BOUNDED_SMOKE_READINESS_REPORT_FILENAME,
     NEXT_ARTIFACTS_BOUNDED_SMOKE_READINESS_ISSUES_FILENAME,
     NEXT_ARTIFACTS_BOUNDED_SMOKE_EXECUTION_REPORT_FILENAME,
@@ -3308,6 +3310,66 @@ def test_effective_aperture_sidewall_v2_rejects_source_route_borrowing() -> None
 
 def test_sidewall_package_d_precheck_accepts_eas_without_near_wall_metrics() -> None:
     assert validate_sidewall_package_d_precheck_rows([_valid_sidewall_package_d_precheck_row()]) == []
+
+
+def test_sidewall_package_d_precheck_csv_asserts_valid_rows(tmp_path: Path) -> None:
+    path = tmp_path / "sidewall_package_d_precheck.csv"
+    write_csv_rows(path, [_valid_sidewall_package_d_precheck_row()])
+
+    assert validate_sidewall_package_d_precheck_csv(path) == []
+    assert_valid_sidewall_package_d_precheck_csv(path)
+
+
+def test_sidewall_package_d_precheck_cli_accepts_valid_csv(tmp_path: Path) -> None:
+    path = tmp_path / "sidewall_package_d_precheck.csv"
+    write_csv_rows(path, [_valid_sidewall_package_d_precheck_row()])
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(PROJECT_ROOT / "tools/audits/validate_nodi_sidewall_package_d_precheck.py"),
+            str(path),
+        ],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "NODI_SIDEWALL_PACKAGE_D_PRECHECK: PASS" in result.stdout
+
+
+def test_sidewall_package_d_precheck_cli_rejects_bad_package_c_proof(
+    tmp_path: Path,
+) -> None:
+    path = tmp_path / "sidewall_package_d_precheck_bad_proof.csv"
+    write_csv_rows(
+        path,
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="unregistered-package-C-proof",
+            )
+        ],
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(PROJECT_ROOT / "tools/audits/validate_nodi_sidewall_package_d_precheck.py"),
+            str(path),
+        ],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 1
+    assert "SIDEWALL-D-PRECHECK-V03" in result.stdout
 
 
 def test_sidewall_package_d_precheck_requires_package_a_and_b_pass() -> None:
