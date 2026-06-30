@@ -1,0 +1,5 @@
+validation_id,command,required_for_pass,recorded_result
+G26-VALIDATION-001,python tools/audits/build_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py --confirm-gate26-package-c-external-review-integration,true,PENDING_RUNTIME_VALIDATION
+G26-VALIDATION-002,python -m py_compile tools/audits/build_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py,true,PENDING_RUNTIME_VALIDATION
+G26-VALIDATION-003,python -m pytest tests/test_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py -q,true,PENDING_RUNTIME_VALIDATION
+G26-VALIDATION-004,python -m pytest tests/test_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py tests/test_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py -q,true,PENDING_RUNTIME_VALIDATION

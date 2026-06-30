@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "disposition": "NODI_GATE26_SIDEWALL_PACKAGE_C_EXTERNAL_REVIEW_INTEGRATION_DESIGN_CONSTRAINTS_READY_NO_AUTH",
+    "gate26_build_head": "685767ef51af9b263143cfb13f0ebcd1743636f2",
+    "gate25_build_head": "685767ef51af9b263143cfb13f0ebcd1743636f2",
+    "gate25_head_is_ancestor_of_current": true,
+    "gate25_disposition": "NODI_GATE25_SIDEWALL_PACKAGE_C_DESIGN_REVIEW_PACKET_READY_NO_AUTH",
+    "gate25_no_auth": true,
+    "gate25_review_only": true,
+    "gate25_source_lock_rows": 11,
+    "gate25_source_drift": 0,
+    "gate25_missing_sources": 0,
+    "external_review_verdict": "READY_FOR_IMPLEMENTATION_DESIGN_ONLY",
+    "external_review_rows": 1,
+    "brownian_requirement_rows": 12,
+    "required_test_rows": 20,
+    "required_schema_field_rows": 46,
+    "blocked_model_rows": 8,
+    "validation_plan_rows": 4,
+    "implementation_authorized_rows": 0,
+    "runtime_allowed_rows": 0,
+    "no_auth_firewall_failures": 0,
+    "review_only": true,
+    "no_auth": true
+  },
+  "outputs": [
+    "NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+    "NODI_COMSOL_GATE26_SIDEWALL_EXTERNAL_REVIEW_INTAKE_20260630.csv",
+    "NODI_COMSOL_GATE26_SIDEWALL_BROWNIAN_REFLECTION_REQUIREMENTS_20260630.csv",
+    "NODI_COMSOL_GATE26_SIDEWALL_PACKAGE_C_REQUIRED_TEST_MATRIX_20260630.csv",
+    "NODI_COMSOL_GATE26_SIDEWALL_REQUIRED_SCHEMA_FIELDS_20260630.csv",
+    "NODI_COMSOL_GATE26_SIDEWALL_BLOCKED_MODEL_LEDGER_20260630.csv",
+    "NODI_COMSOL_GATE26_SIDEWALL_NO_AUTH_FIREWALL_20260630.csv",
+    "NODI_COMSOL_GATE26_SIDEWALL_VALIDATION_PLAN_20260630.csv"
+  ]
+}

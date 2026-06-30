@@ -2,8 +2,8 @@
   "disposition": "NODI_GATE25_SIDEWALL_PACKAGE_C_DESIGN_REVIEW_PACKET_READY_NO_AUTH",
   "summary": {
     "disposition": "NODI_GATE25_SIDEWALL_PACKAGE_C_DESIGN_REVIEW_PACKET_READY_NO_AUTH",
-    "gate25_build_head": "ea1c6b710f801d29a8d74162b6241571dc8363f0",
-    "gate24_build_head": "ea1c6b710f801d29a8d74162b6241571dc8363f0",
+    "gate25_build_head": "685767ef51af9b263143cfb13f0ebcd1743636f2",
+    "gate24_build_head": "c76d783e72131a87a15a3bd5c48b28e151035fda",
     "gate24_head_is_ancestor_of_current": true,
     "gate24_disposition": "NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH",
     "gate24_no_auth": true,
