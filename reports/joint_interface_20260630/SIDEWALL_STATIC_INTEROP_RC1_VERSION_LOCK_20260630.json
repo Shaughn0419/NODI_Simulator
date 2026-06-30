@@ -1,0 +1,52 @@
+{
+  "anchor_digest": "4255d9533a8d150d6a740d03ead267323e868b5560b7051ce5d5ccc0ed3c2c16",
+  "comsol_gate_range": "Gate16",
+  "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
+  "date": "20260630",
+  "dirty_blocker_count": 0,
+  "disposition": "NODI_SIDEWALL_STATIC_INTEROP_RC1_READY_NO_AUTH",
+  "missing_required_source_count": 0,
+  "no_auth_locks": {
+    "binding_state": "FAIL_CLOSED",
+    "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+    "gate2d_rows": "4",
+    "jrc_allowed": "false",
+    "production_allowed": "false",
+    "qch_state": "ABSENT",
+    "qch_weighting_allowed": "false",
+    "runtime_allowed": "false"
+  },
+  "nodi_gate_range": "Gate17-Gate24",
+  "nodi_head": "c76d783e72131a87a15a3bd5c48b28e151035fda",
+  "package_abd_status": "STATIC_PREFLIGHT_READY_AFTER_SOURCE_LOCK_CLEAN",
+  "package_c_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+  "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
+  "semantic_basis": {
+    "comsol_gate_range": "Gate16",
+    "field_families": [
+      "Package A geometry descriptor/profile",
+      "Package B sampler/support/signature",
+      "Package D PRS/EAS contract precheck",
+      "cross-cutting no-auth aliases",
+      "Package C physics blockers"
+    ],
+    "negative_fixture_families": 29,
+    "no_auth_locks": {
+      "binding_state": "FAIL_CLOSED",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "gate2d_rows": "4",
+      "jrc_allowed": "false",
+      "production_allowed": "false",
+      "qch_state": "ABSENT",
+      "qch_weighting_allowed": "false",
+      "runtime_allowed": "false"
+    },
+    "nodi_gate_range": "Gate17-Gate24",
+    "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
+    "static_preflight_scope": "Package A/B static preflight; Package D contract preflight; Package C blocked",
+    "validator_families": 29
+  },
+  "semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+  "source_lock_blocker_count": 0,
+  "static_preflight_scope": "Package A/B/D static-or-contract preflight only; no runtime; no production"
+}

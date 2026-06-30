@@ -1,0 +1,1374 @@
+{
+  "comsol_ack": [
+    {
+      "alignment_status": "ACK_ALIGNED_NO_AUTH",
+      "comsol_ack_status": "ACK_READY_FOR_NODI_GATE17_STATIC_RECEIPT_NO_AUTH",
+      "expected_ack_status": "ACK_READY_FOR_NODI_GATE17_STATIC_RECEIPT_NO_AUTH",
+      "nodi_gate18_disposition": "NODI_GATE18_SIDEWALL_COMSOL_GATE16_CLEAN_REINTAKE_RECEIPT_STATIC_PREFLIGHT_UNBLOCK_NO_AUTH",
+      "nodi_gate19_disposition": "NODI_GATE19_SIDEWALL_PACKAGE_ABD_STATIC_PREFLIGHT_PASS_NO_AUTH",
+      "nodi_gate23_disposition": "NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH",
+      "nodi_gate24_disposition": "NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH",
+      "package": "Package A",
+      "production_allowed": "false",
+      "qch_or_jrc_allowed": "false",
+      "runtime_allowed": "false"
+    },
+    {
+      "alignment_status": "ACK_ALIGNED_NO_AUTH",
+      "comsol_ack_status": "ACK_READY_FOR_NODI_GATE17_STATIC_RECEIPT_NO_AUTH",
+      "expected_ack_status": "ACK_READY_FOR_NODI_GATE17_STATIC_RECEIPT_NO_AUTH",
+      "nodi_gate18_disposition": "NODI_GATE18_SIDEWALL_COMSOL_GATE16_CLEAN_REINTAKE_RECEIPT_STATIC_PREFLIGHT_UNBLOCK_NO_AUTH",
+      "nodi_gate19_disposition": "NODI_GATE19_SIDEWALL_PACKAGE_ABD_STATIC_PREFLIGHT_PASS_NO_AUTH",
+      "nodi_gate23_disposition": "NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH",
+      "nodi_gate24_disposition": "NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH",
+      "package": "Package B",
+      "production_allowed": "false",
+      "qch_or_jrc_allowed": "false",
+      "runtime_allowed": "false"
+    },
+    {
+      "alignment_status": "ACK_ALIGNED_NO_AUTH",
+      "comsol_ack_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+      "expected_ack_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+      "nodi_gate18_disposition": "NODI_GATE18_SIDEWALL_COMSOL_GATE16_CLEAN_REINTAKE_RECEIPT_STATIC_PREFLIGHT_UNBLOCK_NO_AUTH",
+      "nodi_gate19_disposition": "NODI_GATE19_SIDEWALL_PACKAGE_ABD_STATIC_PREFLIGHT_PASS_NO_AUTH",
+      "nodi_gate23_disposition": "NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH",
+      "nodi_gate24_disposition": "NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH",
+      "package": "Package C",
+      "production_allowed": "false",
+      "qch_or_jrc_allowed": "false",
+      "runtime_allowed": "false"
+    },
+    {
+      "alignment_status": "ACK_ALIGNED_NO_AUTH",
+      "comsol_ack_status": "ACK_READY_FOR_NODI_GATE17_STATIC_RECEIPT_NO_AUTH",
+      "expected_ack_status": "ACK_READY_FOR_NODI_GATE17_STATIC_RECEIPT_NO_AUTH",
+      "nodi_gate18_disposition": "NODI_GATE18_SIDEWALL_COMSOL_GATE16_CLEAN_REINTAKE_RECEIPT_STATIC_PREFLIGHT_UNBLOCK_NO_AUTH",
+      "nodi_gate19_disposition": "NODI_GATE19_SIDEWALL_PACKAGE_ABD_STATIC_PREFLIGHT_PASS_NO_AUTH",
+      "nodi_gate23_disposition": "NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH",
+      "nodi_gate24_disposition": "NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH",
+      "package": "Package D",
+      "production_allowed": "false",
+      "qch_or_jrc_allowed": "false",
+      "runtime_allowed": "false"
+    }
+  ],
+  "decision_dossier": [
+    {
+      "allowed": "freeze review-only static interop RC1 after source-lock blockers are cleared",
+      "decision_id": "FREEZE_SIDEWALL_STATIC_INTEROP_RC1_NO_AUTH",
+      "default_status": "AWAITING_USER_DECISION",
+      "exact_signoff_wording": "Freeze SIDEWALL_STATIC_INTEROP_RC1 as review-only/no-auth after source lock is clean.",
+      "forbidden": "evidence authorization;runtime;production;Package C physics;q_ch;JRC",
+      "next_thread_action": "COMSOL reads RC1 source lock and emits producer RC1 ACK package no-run",
+      "rollback": "invalidate RC1 if source lock drifts or no-auth locks fail"
+    },
+    {
+      "allowed": "request COMSOL acknowledgement of RC1 source/field/fixture catalog without running COMSOL",
+      "decision_id": "REQUEST_COMSOL_PRODUCER_RC1_ACK_PACKAGE_NO_RUN",
+      "default_status": "AWAITING_USER_DECISION",
+      "exact_signoff_wording": "Request COMSOL producer RC1 ACK package, no run and no evidence authorization.",
+      "forbidden": "COMSOL launch;.mph load;solver evidence;production",
+      "next_thread_action": "COMSOL generates no-run ACK against RC1 artifacts",
+      "rollback": "return to Gate24 ledger if COMSOL ACK has policy conflict"
+    },
+    {
+      "allowed": "repeat static validator/pytest fixture replay only",
+      "decision_id": "AUTHORIZE_NODI_STATIC_FIXTURE_REPLAY_ONLY_NO_RUNTIME",
+      "default_status": "AWAITING_USER_DECISION",
+      "exact_signoff_wording": "Authorize NODI static fixture replay only, no runtime and no production.",
+      "forbidden": "runtime recompute;production;numeric PRS/EAS sidewall output",
+      "next_thread_action": "NODI reruns static fixture replay suite",
+      "rollback": "discard replay outputs if any no-auth lock fails"
+    },
+    {
+      "allowed": "discussion of prerequisites and risk only",
+      "decision_id": "OPEN_PACKAGE_C_PHYSICS_AUTHORIZATION_DISCUSSION_ONLY",
+      "default_status": "AWAITING_USER_DECISION",
+      "exact_signoff_wording": "Open Package C physics authorization discussion only, no code or run authorization.",
+      "forbidden": "code execution;COMSOL run;physics proof registry update;Package C authorization",
+      "next_thread_action": "draft Package C physics authorization checklist",
+      "rollback": "close discussion and keep Gate24 no-auth ledger"
+    },
+    {
+      "allowed": "keep current no-auth ledger and do nothing else",
+      "decision_id": "DEFER_AND_KEEP_GATE24_NO_AUTH_LEDGER",
+      "default_status": "AWAITING_USER_DECISION",
+      "exact_signoff_wording": "Defer RC1 and keep Gate24 no-auth ledger.",
+      "forbidden": "freeze RC1;new ACK request;runtime;production",
+      "next_thread_action": "none",
+      "rollback": "not applicable"
+    }
+  ],
+  "dirty_rows": [
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "??",
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "??",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_DECISION_DOSSIER_20260630.md",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "??",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "??",
+      "path": "tests/test_nodi_comsol_sidewall_static_interop_rc1.py",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    },
+    {
+      "dirty_classification": "RC1_GENERATED_ALLOWED",
+      "git_status": "??",
+      "path": "tools/audits/build_nodi_comsol_sidewall_static_interop_rc1.py",
+      "reason": "Allowed generated RC1 output.",
+      "source_lock_impact": "ALLOWED_RC1_OUTPUT",
+      "stage_in_rc1_commit": "true"
+    }
+  ],
+  "field_families": [
+    {
+      "allowed_use": "review-only static/contract preflight metadata",
+      "blocked_use": "runtime;production;validated physics;q_ch weighting;JRC;yield;winner;detection_probability",
+      "comsol_expectation": "preserve no-run no-auth boundary; acknowledge Package A/B/D; keep Package C blocked",
+      "family": "Package A",
+      "field_family": "geometry descriptor/profile",
+      "fixture": "Gate21 negative fixtures; Gate23 static fixture replay",
+      "future_auth_gate": "none for static RC1",
+      "owner": "NODI receiver guard; COMSOL producer metadata/fixture expectation",
+      "row_count": "10",
+      "validator": "Gate22 binding matrix; Gate23 fixture matrix; Gate24 authorization ledger"
+    },
+    {
+      "allowed_use": "review-only static/contract preflight metadata",
+      "blocked_use": "runtime;production;validated physics;q_ch weighting;JRC;yield;winner;detection_probability",
+      "comsol_expectation": "preserve no-run no-auth boundary; acknowledge Package A/B/D; keep Package C blocked",
+      "family": "Package B",
+      "field_family": "sampler/support/signature",
+      "fixture": "Gate21 negative fixtures; Gate23 static fixture replay",
+      "future_auth_gate": "none for static RC1",
+      "owner": "NODI receiver guard; COMSOL producer metadata/fixture expectation",
+      "row_count": "7",
+      "validator": "Gate22 binding matrix; Gate23 fixture matrix; Gate24 authorization ledger"
+    },
+    {
+      "allowed_use": "review-only static/contract preflight metadata",
+      "blocked_use": "runtime;production;validated physics;q_ch weighting;JRC;yield;winner;detection_probability",
+      "comsol_expectation": "preserve no-run no-auth boundary; acknowledge Package A/B/D; keep Package C blocked",
+      "family": "Package D",
+      "field_family": "PRS/EAS contract precheck",
+      "fixture": "Gate21 negative fixtures; Gate23 static fixture replay",
+      "future_auth_gate": "none for static RC1",
+      "owner": "NODI receiver guard; COMSOL producer metadata/fixture expectation",
+      "row_count": "10",
+      "validator": "Gate22 binding matrix; Gate23 fixture matrix; Gate24 authorization ledger"
+    },
+    {
+      "allowed_use": "review-only static/contract preflight metadata",
+      "blocked_use": "runtime;production;validated physics;q_ch weighting;JRC;yield;winner;detection_probability",
+      "comsol_expectation": "preserve no-run no-auth boundary; acknowledge Package A/B/D; keep Package C blocked",
+      "family": "Cross-cutting",
+      "field_family": "no-auth aliases",
+      "fixture": "Gate21 negative fixtures; Gate23 static fixture replay",
+      "future_auth_gate": "none for static RC1",
+      "owner": "NODI receiver guard; COMSOL producer metadata/fixture expectation",
+      "row_count": "2",
+      "validator": "Gate22 binding matrix; Gate23 fixture matrix; Gate24 authorization ledger"
+    },
+    {
+      "allowed_use": "review-only static/contract preflight metadata",
+      "blocked_use": "runtime;production;validated physics;q_ch weighting;JRC;yield;winner;detection_probability",
+      "comsol_expectation": "preserve no-run no-auth boundary; acknowledge Package A/B/D; keep Package C blocked",
+      "family": "Package C",
+      "field_family": "physics blockers",
+      "fixture": "Gate21 negative fixtures; Gate23 static fixture replay",
+      "future_auth_gate": "Package C explicit physics authorization only",
+      "owner": "NODI receiver guard; COMSOL producer metadata/fixture expectation",
+      "row_count": "5",
+      "validator": "Gate22 binding matrix; Gate23 fixture matrix; Gate24 authorization ledger"
+    }
+  ],
+  "fixture_rollup": [
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "missing_angle_convention",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package A",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_geometry_descriptor_v2_requires_angle_convention",
+      "validator_entrypoint": "validate_geometry_descriptor_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "angle_conversion_mismatch",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package A",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_geometry_descriptor_v2_rejects_angle_conversion_mismatch",
+      "validator_entrypoint": "validate_geometry_descriptor_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "bare_W_top_runtime_binding",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package A",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_geometry_descriptor_v2_runtime_top_semantics_requires_runtime_aperture",
+      "validator_entrypoint": "validate_geometry_descriptor_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "silent_bottom_clip",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_cross_section_geometry.py",
+      "runtime_allowed": "false",
+      "source_package": "Package A",
+      "static_command": "python -m pytest tests/test_cross_section_geometry.py -q -k test_trapezoid_formula_examples_preserve_unclipped_bottom_width",
+      "validator_entrypoint": "validate_geometry_descriptor_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "nonpositive_bottom_marked_open",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package A",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_geometry_descriptor_v2_rejects_open_status_for_nonpositive_bottom",
+      "validator_entrypoint": "validate_geometry_descriptor_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "missing_closure_policy",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package A",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_rejects_signature_closure_policy_mismatch",
+      "validator_entrypoint": "validate_geometry_descriptor_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "min_aperture_used_as_passability",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package A",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_geometry_descriptor_v2_rejects_min_aperture_passability_evidence",
+      "validator_entrypoint": "validate_geometry_descriptor_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "measured_geometry_without_profile",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package A",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_geometry_descriptor_v2_rejects_unbacked_measured_geometry_claim",
+      "validator_entrypoint": "validate_geometry_descriptor_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "source_hash_missing_for_comsol_context",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package A",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_requires_source_geometry_descriptor_sha",
+      "validator_entrypoint": "validate_geometry_descriptor_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "claim_boundary_missing",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package A",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k claim_boundary",
+      "validator_entrypoint": "validate_geometry_descriptor_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "trapezoid_runtime_without_geometry_primitive",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package B",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_requires_complete_geometry_fields",
+      "validator_entrypoint": "tests/test_cross_section_geometry.py"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "rectangular_sampler_under_trapezoid",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package B",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_rejects_rectangular_sampler_under_trapezoid",
+      "validator_entrypoint": "tests/test_cross_section_geometry.py"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "uniform_accessible_area_label_mismatch",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_cross_section_geometry.py",
+      "runtime_allowed": "false",
+      "source_package": "Package B",
+      "static_command": "python -m pytest tests/test_cross_section_geometry.py -q -k test_trapezoid_uniform_sampler_stays_in_particle_center_support",
+      "validator_entrypoint": "tests/test_cross_section_geometry.py"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "sample_outside_center_support",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_cross_section_geometry.py",
+      "runtime_allowed": "false",
+      "source_package": "Package B",
+      "static_command": "python -m pytest tests/test_cross_section_geometry.py -q -k test_trapezoid_trajectory_rejects_initial_point_outside_oracle_support",
+      "validator_entrypoint": "tests/test_cross_section_geometry.py"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "blocked_bin_has_response",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package B",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_rejects_blocked_bin_numeric_response",
+      "validator_entrypoint": "validate_position_response_surface_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "neighbor_fill_blocked_bin",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package B",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_rejects_blocked_bin_neighbor_fill",
+      "validator_entrypoint": "validate_position_response_surface_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "flux_weighted_without_trapezoid_flow_model",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_cross_section_geometry.py",
+      "runtime_allowed": "false",
+      "source_package": "Package B",
+      "static_command": "python -m pytest tests/test_cross_section_geometry.py -q -k test_trapezoid_sampler_rejects_flux_weighted_without_flow_model",
+      "validator_entrypoint": "tests/test_cross_section_geometry.py"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "prs_without_geometry_basis",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package D",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_requires_complete_geometry_fields",
+      "validator_entrypoint": "validate_position_response_surface_rows;validate_sidewall_package_d_precheck_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "prs_without_particle_radius_support",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package D",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_requires_large_tail_support_guard",
+      "validator_entrypoint": "validate_position_response_surface_rows;validate_sidewall_package_d_precheck_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "edge4_to_edge20_direct_mapping",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package D",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_rejects_edge4_to_edge20_direct_mapping",
+      "validator_entrypoint": "validate_position_response_surface_rows;validate_sidewall_package_d_precheck_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "D900_to_D1200_borrowing",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package D",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_rejects_D900_to_D1200_source_borrowing",
+      "validator_entrypoint": "validate_position_response_surface_rows;validate_sidewall_package_d_precheck_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "auto_admit_220_or_300nm",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package D",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_rejects_auto_tail_admission",
+      "validator_entrypoint": "validate_position_response_surface_rows;validate_sidewall_package_d_precheck_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "comsol_context_as_prs_grain",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package D",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_requires_source_grain_binding_fields",
+      "validator_entrypoint": "validate_position_response_surface_rows;validate_sidewall_package_d_precheck_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "bare_W_eff",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package D",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_effective_aperture_sidewall_v2_rejects_exact_claim_columns",
+      "validator_entrypoint": "validate_effective_aperture_surrogate_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "solver_trigger_as_solver_output",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package D",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_effective_aperture_sidewall_v2_rejects_solver_trigger_as_result",
+      "validator_entrypoint": "validate_effective_aperture_surrogate_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "rank_or_score_field_present",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package D",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_effective_aperture_sidewall_v2_rejects_rank_promotion",
+      "validator_entrypoint": "validate_position_response_surface_rows;validate_effective_aperture_surrogate_rows;validate_sidewall_package_d_precheck_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "claim_flags_missing",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "Package D",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_requires_acceptance_guards",
+      "validator_entrypoint": "validate_position_response_surface_rows;validate_effective_aperture_surrogate_rows;validate_sidewall_package_d_precheck_rows"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "old_rectangular_cache_reuse",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "G8 cache/signature",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_rejects_rectangular_cache_signature",
+      "validator_entrypoint": "validate_position_response_surface_rows;validate_effective_aperture_surrogate_rows;tests/test_physics_core.py"
+    },
+    {
+      "binding_status": "PASS_CALLABLE_STATIC_BINDING",
+      "coverage_status": "COVERED_STATIC_NO_RUNTIME",
+      "fixture_execution_status": "PASS_STATIC_FIXTURE_EXECUTABLE_NO_RUNTIME",
+      "hard_fail_code": "sidewall_aware_with_not_propagated_status",
+      "production_allowed": "false",
+      "pytest_file": "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "runtime_allowed": "false",
+      "source_package": "G8 cache/signature",
+      "static_command": "python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k test_position_response_sidewall_v2_rejects_non_propagated_open_decision_row",
+      "validator_entrypoint": "validate_position_response_surface_rows;validate_effective_aperture_surrogate_rows;tests/test_physics_core.py"
+    }
+  ],
+  "gate_status": [
+    {
+      "binding_state": "FAIL_CLOSED",
+      "disposition": "NODI_GATE17_SIDEWALL_CURRENT_CLEAN_RELEASE_ANCHOR_AND_COMSOL_REINTAKE_UNBLOCK_NO_AUTH",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "expected_disposition": "SOURCE_STATUS_REQUIRED",
+      "gate": "Gate17",
+      "gate2d_rows": "4",
+      "match_status": "MATCH_OR_REFERENCE",
+      "no_auth": "true",
+      "qch_state": "ABSENT",
+      "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE17_SIDEWALL_STATUS_20260630.json"
+    },
+    {
+      "binding_state": "FAIL_CLOSED",
+      "disposition": "NODI_GATE18_SIDEWALL_COMSOL_GATE16_CLEAN_REINTAKE_RECEIPT_STATIC_PREFLIGHT_UNBLOCK_NO_AUTH",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "expected_disposition": "NODI_GATE18_SIDEWALL_COMSOL_GATE16_CLEAN_REINTAKE_RECEIPT_STATIC_PREFLIGHT_UNBLOCK_NO_AUTH",
+      "gate": "Gate18",
+      "gate2d_rows": "4",
+      "match_status": "MATCH_OR_REFERENCE",
+      "no_auth": "true",
+      "qch_state": "ABSENT",
+      "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE18_SIDEWALL_STATUS_20260630.json"
+    },
+    {
+      "binding_state": "FAIL_CLOSED",
+      "disposition": "NODI_GATE19_SIDEWALL_PACKAGE_ABD_STATIC_PREFLIGHT_PASS_NO_AUTH",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "expected_disposition": "NODI_GATE19_SIDEWALL_PACKAGE_ABD_STATIC_PREFLIGHT_PASS_NO_AUTH",
+      "gate": "Gate19",
+      "gate2d_rows": "4",
+      "match_status": "MATCH_OR_REFERENCE",
+      "no_auth": "true",
+      "qch_state": "ABSENT",
+      "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE19_SIDEWALL_STATUS_20260630.json"
+    },
+    {
+      "binding_state": "FAIL_CLOSED",
+      "disposition": "NODI_GATE20_SIDEWALL_STATIC_CONTINUITY_HARD_FAIL_VALIDATOR_READY_NO_AUTH",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "expected_disposition": "NODI_GATE20_SIDEWALL_STATIC_CONTINUITY_HARD_FAIL_VALIDATOR_READY_NO_AUTH",
+      "gate": "Gate20",
+      "gate2d_rows": "4",
+      "match_status": "MATCH_OR_REFERENCE",
+      "no_auth": "true",
+      "qch_state": "ABSENT",
+      "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE20_SIDEWALL_STATUS_20260630.json"
+    },
+    {
+      "binding_state": "FAIL_CLOSED",
+      "disposition": "NODI_GATE21_SIDEWALL_NEGATIVE_MUTATION_SCANNER_READY_NO_AUTH",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "expected_disposition": "NODI_GATE21_SIDEWALL_NEGATIVE_MUTATION_SCANNER_READY_NO_AUTH",
+      "gate": "Gate21",
+      "gate2d_rows": "4",
+      "match_status": "MATCH_OR_REFERENCE",
+      "no_auth": "true",
+      "qch_state": "ABSENT",
+      "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE21_SIDEWALL_STATUS_20260630.json"
+    },
+    {
+      "binding_state": "FAIL_CLOSED",
+      "disposition": "NODI_GATE22_SIDEWALL_VALIDATOR_BINDING_MATRIX_READY_NO_AUTH",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "expected_disposition": "NODI_GATE22_SIDEWALL_VALIDATOR_BINDING_MATRIX_READY_NO_AUTH",
+      "gate": "Gate22",
+      "gate2d_rows": "4",
+      "match_status": "MATCH_OR_REFERENCE",
+      "no_auth": "true",
+      "qch_state": "ABSENT",
+      "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE22_SIDEWALL_STATUS_20260630.json"
+    },
+    {
+      "binding_state": "FAIL_CLOSED",
+      "disposition": "NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "expected_disposition": "NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH",
+      "gate": "Gate23",
+      "gate2d_rows": "4",
+      "match_status": "MATCH_OR_REFERENCE",
+      "no_auth": "true",
+      "qch_state": "ABSENT",
+      "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE23_SIDEWALL_STATUS_20260630.json"
+    },
+    {
+      "binding_state": "FAIL_CLOSED",
+      "disposition": "NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "expected_disposition": "NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH",
+      "gate": "Gate24",
+      "gate2d_rows": "4",
+      "match_status": "MATCH_OR_REFERENCE",
+      "no_auth": "true",
+      "qch_state": "ABSENT",
+      "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json"
+    },
+    {
+      "binding_state": "FAIL_CLOSED",
+      "disposition": "NODI_GATE25_SIDEWALL_PACKAGE_C_DESIGN_REVIEW_PACKET_READY_NO_AUTH",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "expected_disposition": "SOURCE_STATUS_REQUIRED",
+      "gate": "Gate25",
+      "gate2d_rows": "4",
+      "match_status": "REVIEW_DELTA",
+      "no_auth": "true",
+      "qch_state": "ABSENT",
+      "status_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json"
+    }
+  ],
+  "no_auth": [
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "runtime_allowed",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "production_allowed",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "production_ingestion_authorized",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "runtime_configuration_authorized",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "qch_weighting_authorized",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "jrc_authorized",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "route_score_authorized",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "winner_authorized",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "yield_authorized",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "detection_probability_authorized",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "comsol_launch_authorized",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "negative_fixture_or_blocked_use_mention_only",
+      "field": "mph_load_authorized",
+      "positive_authorized_count": "0",
+      "rc1_status": "PASS_NO_POSITIVE_AUTHORIZATION"
+    },
+    {
+      "allowed_context": "exactly four context-only rows",
+      "field": "Gate2D accepted ledger row count",
+      "positive_authorized_count": "4",
+      "rc1_status": "PASS_LOCKED"
+    },
+    {
+      "allowed_context": "not approved preauth only",
+      "field": "EDGE state",
+      "positive_authorized_count": "NOT_APPROVED_PREAUTH_ONLY",
+      "rc1_status": "PASS_LOCKED"
+    },
+    {
+      "allowed_context": "formal sidecar absent",
+      "field": "QCH state",
+      "positive_authorized_count": "ABSENT",
+      "rc1_status": "PASS_LOCKED"
+    },
+    {
+      "allowed_context": "fail closed",
+      "field": "BINDING state",
+      "positive_authorized_count": "FAIL_CLOSED",
+      "rc1_status": "PASS_LOCKED"
+    }
+  ],
+  "package_c_lock": [
+    {
+      "authorization_status": "PHRASE_MATCH_BUT_PREREQUISITES_BLOCKED_NO_EXECUTION",
+      "authorized_now": "false",
+      "case": "exact_required_phrase",
+      "case_id": "G24C-PHRASE-001",
+      "package_c_physics_authorized": "false",
+      "phrase_exact_match": "true",
+      "rc1_verdict": "LOCKED_NOT_AUTHORIZED",
+      "reason": "Exact phrase is insufficient because Package C prerequisites remain blocked."
+    },
+    {
+      "authorization_status": "PHRASE_MISMATCH_NOT_AUTHORIZED",
+      "authorized_now": "false",
+      "case": "generic_continue",
+      "case_id": "G24C-PHRASE-002",
+      "package_c_physics_authorized": "false",
+      "phrase_exact_match": "false",
+      "rc1_verdict": "LOCKED_NOT_AUTHORIZED",
+      "reason": "Generic continue is not authorization."
+    },
+    {
+      "authorization_status": "PASS_AUTHORIZATION_GATE_RECORD_NOT_AUTHORIZED",
+      "authorized_now": "false",
+      "case": "authorization_gate_record",
+      "case_id": "G24-GATE-RECORD",
+      "package_c_physics_authorized": "false",
+      "phrase_exact_match": "NA",
+      "rc1_verdict": "LOCKED_NOT_AUTHORIZED",
+      "reason": "Only a future explicit Package C physics authorization gate can change state."
+    }
+  ],
+  "self_review": [
+    {
+      "dimension": "git cleanliness",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-01",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "source lock",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-02",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "Gate17-25 coverage",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-03",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "COMSOL Gate16 ACK",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-04",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "semantic digest",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-05",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "fixture replay",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-06",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "validator binding",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-07",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "Package A/B/D boundary",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-08",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "Package C auth lock",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-09",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "phrase gate",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-10",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "no-auth leakage",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-11",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "q_ch/JRC aliases",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-12",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "runtime/production locks",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-13",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "manifest/SHA stability",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-14",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "test coverage",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-15",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "decision wording",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-16",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "Git scope",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-17",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "future handoff clarity",
+      "notes": "No authorization or runtime promotion found.",
+      "reviewer_id": "RC1-REVIEW-18",
+      "verdict": "PASS"
+    }
+  ],
+  "source_lock": [
+    {
+      "artifact_id": "NODI-CURRENT-HEAD-VS-GATE25",
+      "drift_status": "CURRENT_HEAD_INCLUDES_GATE25_RELEASE",
+      "exists": "true",
+      "path": "c76d783e72131a87a15a3bd5c48b28e151035fda Refresh Gate24 sidewall ledger head",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "c76d783e72131a87a15a3bd5c48b28e151035fda",
+      "source_side": "NODI_GIT"
+    },
+    {
+      "artifact_id": "NODI-GATE17-STATUS",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE17_SIDEWALL_STATUS_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "9c7bd0522669df8e130a94a11a3fed7c8f8063573aa820938c5e4392c41c2570",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE17-MANIFEST",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE17_SIDEWALL_MANIFEST_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "16",
+      "sha256": "f5949c1026d0a34d3bdfd93564d12be547ee7591e56862807b93a11925418a09",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE17-REPORT",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE17_SIDEWALL_REPORT_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "70d00abe79b3776f58445c86ff266b7d77f08dccd806bd1553533b25ea1f774d",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE18-STATUS",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE18_SIDEWALL_STATUS_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "93620624ca0d8e6d215b6bdb48469ca208e44b2c33d11ff8bf292578598fa25d",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE18-MANIFEST",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE18_SIDEWALL_MANIFEST_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "8",
+      "sha256": "1961fdb53e8c89be577adcc4735dd3fe1d1d2eb7a2cc1b3f6a7e44ebe2158a23",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE18-REPORT",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE18_SIDEWALL_REPORT_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "eebce95fc952e03147b6cc2aa480bd472cc2803df7274568e6da8f0d9c660645",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE19-STATUS",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE19_SIDEWALL_STATUS_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "f68a702f367fc2299b01aeaea4729e2ffed5e0abdd54fd00bc8d8fbb403e8186",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE19-MANIFEST",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE19_SIDEWALL_MANIFEST_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "6",
+      "sha256": "c9ac63cc2e04013896f7f01c2aa19caa0de476634dbf3edd54056046632a0819",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE19-REPORT",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE19_SIDEWALL_REPORT_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "fc6d6f8ede303ea42e1587988d60f044437516201ad3e47686d8712baae5e79b",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE20-STATUS",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE20_SIDEWALL_STATUS_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "19fefb53fff8daf9cf948868f8c74d6e31460c3b42a88e56feffb962b430a928",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE20-MANIFEST",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE20_SIDEWALL_MANIFEST_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "10",
+      "sha256": "f3d8cdb15337cfa98fb570fc4003a297fd902bed533c8201c4db30a2bb20acb9",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE20-REPORT",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE20_SIDEWALL_REPORT_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "451bd38ddbde986f369e46d387b15412c3a30f045aa76dd913305d6672d47760",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE21-STATUS",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE21_SIDEWALL_STATUS_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "cb11217a58514a1aaf5df2d0c2c2d89473302aacb5721eb2a131687cc217092d",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE21-MANIFEST",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE21_SIDEWALL_MANIFEST_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "9",
+      "sha256": "6d73a90f80a46baa780694c4a547780aadb4185bcbb71c99a246d804f63cee68",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE21-REPORT",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE21_SIDEWALL_REPORT_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "cd37f708fee1caf5f3f403ae392367e08725490ca6ed6a238593c9aaaa7a7606",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE22-STATUS",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE22_SIDEWALL_STATUS_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "8b97bff9cbe8efe030a62980faf1fc9a39226e3eab68da44d1044bc4e15c619e",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE22-MANIFEST",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE22_SIDEWALL_MANIFEST_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "10",
+      "sha256": "64f40e702c01a0ac859280d1cf4a956d6f307d9f9ecb1809b96951a1b81e1085",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE22-REPORT",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE22_SIDEWALL_REPORT_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "bb5edb3626d2c358b51e2068dc228cae5ce946d85cf22635afbb151607829b5a",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE23-STATUS",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE23_SIDEWALL_STATUS_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "54026da17ea16121df26baa82cc991cd0b1fa61228dc3ca18f0d14ee1e0455ad",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE23-MANIFEST",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE23_SIDEWALL_MANIFEST_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "10",
+      "sha256": "7d78be1156cffc7f53b136e4edfee6456db670896603168a7bf4c013ba27e9eb",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE23-REPORT",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE23_SIDEWALL_REPORT_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "c688721810cecb83d60a48c4d5c6a611868e4bf2559e29b7db0f5f155560655f",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE24-STATUS",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "3ded7c6d34be6c0446414ac185f4eff54a89995b61a5a324713a812eab0a6794",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE24-MANIFEST",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "8",
+      "sha256": "a08ddc789d49666e465a45b7291a84a6b777b15da11446510372d17dbe841069",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE24-REPORT",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "7315f52fced7c49132abf6f0f0664d49a366586d61ee7b7a90907ee753999f83",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE25-STATUS",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "e673752cac45686bfc62cbcf82e7a046d37174174c4822107e61f4cc983872a3",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE25-MANIFEST",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "8",
+      "sha256": "67f19f567072db1040a4ee4d5627cdc85ef03fb4cb3752ab31a97f908a4c8ba6",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "NODI-GATE25-REPORT",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\nodi_simulator\uff08usb\uff09\\reports\\joint_interface_20260630\\NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "af14d8321de959dfb3ef9f52ef11a74c3d84ff9e11e5dfffa39c98ca5006a068",
+      "source_side": "NODI"
+    },
+    {
+      "artifact_id": "COMSOL-COMSOL_GATE16_STATUS",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE16_STATUS_20260630.json",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "NA",
+      "sha256": "e1a1bf03dba3b273f9c9780ac88d9700e7fbc740a5f7e5fbf797684252203dae",
+      "source_side": "COMSOL"
+    },
+    {
+      "artifact_id": "COMSOL-COMSOL_GATE16_MANIFEST",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE16_MANIFEST_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "9",
+      "sha256": "c86ebdc766c8ebfb48388d1a15e495f766cc17b00d1389a6863088c153e3a3f6",
+      "source_side": "COMSOL"
+    },
+    {
+      "artifact_id": "COMSOL-COMSOL_GATE16_VALIDATION",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE16_VALIDATION_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "11",
+      "sha256": "4ef97c070a94fa126204663b258fac9a53cd2770c04e37633f9d96fccea0b259",
+      "source_side": "COMSOL"
+    },
+    {
+      "artifact_id": "COMSOL-COMSOL_GATE16_STATIC_PREFLIGHT_ACK",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE16_STATIC_PREFLIGHT_ACK_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "4",
+      "sha256": "3b9a6885e0d6ab4fe824fd86c7a7b06035544074aa41b047285b876d201839b1",
+      "source_side": "COMSOL"
+    },
+    {
+      "artifact_id": "COMSOL-COMSOL_GATE16_NO_AUTH_FIREWALL",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE16_NO_AUTH_FIREWALL_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "1",
+      "sha256": "9a9f0bb8efbd0ff84d2b312a302e3ff88cf0097f674bda8daab916402323fb68",
+      "source_side": "COMSOL"
+    },
+    {
+      "artifact_id": "COMSOL-COMSOL_GATE16_PRODUCER_REPLAY_BUNDLE_V5",
+      "drift_status": "PRESENT_HASHED",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE16_PRODUCER_REPLAY_BUNDLE_V5_20260630.csv",
+      "policy_impact": "no_auth_review_only_source_lock",
+      "row_count": "432",
+      "sha256": "73899702acea1e47039c2c4dc276ef09a6d977004cf6e038bfbc055284548ef6",
+      "source_side": "COMSOL"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-001",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-002",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_DECISION_DOSSIER_20260630.md",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-003",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-004",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "tests/test_nodi_comsol_sidewall_static_interop_rc1.py",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    },
+    {
+      "artifact_id": "DIRTY-WORKTREE-005",
+      "drift_status": "RC1_GENERATED_ALLOWED",
+      "exists": "true",
+      "path": "tools/audits/build_nodi_comsol_sidewall_static_interop_rc1.py",
+      "policy_impact": "ALLOWED_RC1_OUTPUT",
+      "row_count": "NA",
+      "sha256": "NA_DIRTY_WORKTREE_ENTRY",
+      "source_side": "NODI_WORKTREE"
+    }
+  ],
+  "summary": {
+    "binding_state": "FAIL_CLOSED",
+    "comsol_ack_misaligned_rows": 0,
+    "comsol_ack_rows": 4,
+    "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
+    "decision_rows": 5,
+    "dirty_blocker_count": 0,
+    "disposition": "NODI_SIDEWALL_STATIC_INTEROP_RC1_READY_NO_AUTH",
+    "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+    "field_family_rows": 5,
+    "gate2d_rows": 4,
+    "missing_required_source_count": 0,
+    "no_auth_firewall_rows": 16,
+    "nodi_head": "c76d783e72131a87a15a3bd5c48b28e151035fda",
+    "package_c_auth_lock_rows": 3,
+    "qch_state": "ABSENT",
+    "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
+    "semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+    "source_lock_blocker_count": 0,
+    "source_lock_rows": 39,
+    "static_fixture_replay_rows": 29,
+    "static_fixture_unknown_rows": 0
+  },
+  "version_lock": {
+    "anchor_digest": "4255d9533a8d150d6a740d03ead267323e868b5560b7051ce5d5ccc0ed3c2c16",
+    "comsol_gate_range": "Gate16",
+    "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
+    "date": "20260630",
+    "dirty_blocker_count": 0,
+    "disposition": "NODI_SIDEWALL_STATIC_INTEROP_RC1_READY_NO_AUTH",
+    "missing_required_source_count": 0,
+    "no_auth_locks": {
+      "binding_state": "FAIL_CLOSED",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "gate2d_rows": "4",
+      "jrc_allowed": "false",
+      "production_allowed": "false",
+      "qch_state": "ABSENT",
+      "qch_weighting_allowed": "false",
+      "runtime_allowed": "false"
+    },
+    "nodi_gate_range": "Gate17-Gate24",
+    "nodi_head": "c76d783e72131a87a15a3bd5c48b28e151035fda",
+    "package_abd_status": "STATIC_PREFLIGHT_READY_AFTER_SOURCE_LOCK_CLEAN",
+    "package_c_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+    "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
+    "semantic_basis": {
+      "comsol_gate_range": "Gate16",
+      "field_families": [
+        "Package A geometry descriptor/profile",
+        "Package B sampler/support/signature",
+        "Package D PRS/EAS contract precheck",
+        "cross-cutting no-auth aliases",
+        "Package C physics blockers"
+      ],
+      "negative_fixture_families": 29,
+      "no_auth_locks": {
+        "binding_state": "FAIL_CLOSED",
+        "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+        "gate2d_rows": "4",
+        "jrc_allowed": "false",
+        "production_allowed": "false",
+        "qch_state": "ABSENT",
+        "qch_weighting_allowed": "false",
+        "runtime_allowed": "false"
+      },
+      "nodi_gate_range": "Gate17-Gate24",
+      "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
+      "static_preflight_scope": "Package A/B static preflight; Package D contract preflight; Package C blocked",
+      "validator_families": 29
+    },
+    "semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+    "source_lock_blocker_count": 0,
+    "static_preflight_scope": "Package A/B/D static-or-contract preflight only; no runtime; no production"
+  }
+}

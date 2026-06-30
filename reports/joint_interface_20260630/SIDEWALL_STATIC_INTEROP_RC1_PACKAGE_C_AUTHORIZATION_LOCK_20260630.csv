@@ -1,0 +1,4 @@
+case_id,case,phrase_exact_match,authorization_status,authorized_now,package_c_physics_authorized,rc1_verdict,reason
+G24C-PHRASE-001,exact_required_phrase,true,PHRASE_MATCH_BUT_PREREQUISITES_BLOCKED_NO_EXECUTION,false,false,LOCKED_NOT_AUTHORIZED,Exact phrase is insufficient because Package C prerequisites remain blocked.
+G24C-PHRASE-002,generic_continue,false,PHRASE_MISMATCH_NOT_AUTHORIZED,false,false,LOCKED_NOT_AUTHORIZED,Generic continue is not authorization.
+G24-GATE-RECORD,authorization_gate_record,NA,PASS_AUTHORIZATION_GATE_RECORD_NOT_AUTHORIZED,false,false,LOCKED_NOT_AUTHORIZED,Only a future explicit Package C physics authorization gate can change state.
