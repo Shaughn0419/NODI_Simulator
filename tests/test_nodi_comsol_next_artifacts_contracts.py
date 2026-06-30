@@ -2503,9 +2503,12 @@ def test_sidewall_package_d_precheck_rejects_forbidden_gate_false() -> None:
     _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V05")
 
 
-def test_sidewall_package_d_precheck_scans_forbidden_columns_even_when_flag_passes() -> None:
+@pytest.mark.parametrize("field", ["route_score", "flow_rate", "Q"])
+def test_sidewall_package_d_precheck_scans_forbidden_columns_even_when_flag_passes(
+    field: str,
+) -> None:
     issues = validate_sidewall_package_d_precheck_rows(
-        [_valid_sidewall_package_d_precheck_row(route_score=1.0)]
+        [_valid_sidewall_package_d_precheck_row(**{field: 1.0})]
     )
 
     _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V06")
