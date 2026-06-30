@@ -503,6 +503,39 @@ def _sidewall_package_c_proof_fields(
         "package_C_proof_artifact_status": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
         "package_C_proof_artifact_scope": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
         "package_C_proof_claim_boundary": SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
+        "external_review_artifact_sha256": "a" * 64,
+        "implementation_commit_sha": "752420d",
+        "required_test_result_artifact_sha256": "b" * 64,
+        "dt_convergence_evidence_sha256": "c" * 64,
+        "equilibrium_uniformity_evidence_sha256": "d" * 64,
+        "no_boundary_atom_evidence_sha256": "e" * 64,
+        "corner_active_set_evidence_sha256": "f" * 64,
+        "angle_depth_mutation_evidence_sha256": "1" * 64,
+        "rectangle_limit_evidence_sha256": "2" * 64,
+        "authorization_supersedes_no_auth_ledger_sha256": "3" * 64,
+        "package_C_proof_manifest_schema_version": "sidewall_package_c_proof_manifest_v1",
+        "package_C_proof_evidence_claim_level": (
+            "validated_test_evidence_only_no_hydrodynamic_or_wet_claim"
+        ),
+        "package_C_proof_required_test_matrix_status": (
+            "all_required_tests_passed_reviewed_artifact"
+        ),
+        "package_C_proof_external_review_status": (
+            "external_review_completed_for_package_c_proof"
+        ),
+        "package_C_proof_authorization_status": (
+            "explicit_authorization_supersedes_no_auth_ledger"
+        ),
+        "authorization_supersedes_no_auth_ledger_id": (
+            "future_gate_package_c_authorization_ledger"
+        ),
+        "package_C_proof_no_hindered_diffusion_claim": "true",
+        "package_C_proof_no_trapezoid_flow_solver_claim": "true",
+        "package_C_proof_no_electrokinetic_solver_claim": "true",
+        "package_C_proof_no_optical_solver_claim": "true",
+        "package_C_proof_no_wet_claim": "true",
+        "package_C_proof_no_prs_eas_numeric_output": "true",
+        "package_C_proof_no_route_yield_detection_claim": "true",
     }
 
 
@@ -3529,6 +3562,128 @@ def test_sidewall_package_d_precheck_blocks_near_wall_metrics_until_package_c_au
         ]
     )
 
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_requires_evidence_fields() -> None:
+    row = _valid_sidewall_package_d_precheck_row(
+        target_artifact_family="prs",
+        includes_trajectory_near_wall_metrics="true",
+        package_C_validation_status="pass",
+        package_C_proof_artifact_id="future-package-C-proof",
+        package_C_proof_artifact_sha256="d" * 64,
+    )
+    del row["dt_convergence_evidence_sha256"]
+
+    issues = validate_sidewall_package_d_precheck_rows([row])
+
+    assert any("dt_convergence_evidence_sha256" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_rejects_bad_evidence_hash() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                dt_convergence_evidence_sha256="not-a-sha",
+            )
+        ]
+    )
+
+    assert any("dt_convergence_evidence_sha256 is not sha256" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_rejects_bad_commit_sha() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                implementation_commit_sha="not-a-git-sha",
+            )
+        ]
+    )
+
+    assert any("implementation_commit_sha is not a git sha" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_rejects_bad_authorization_hash() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                authorization_supersedes_no_auth_ledger_sha256="not-a-sha",
+            )
+        ]
+    )
+
+    assert any(
+        "authorization_supersedes_no_auth_ledger_sha256 is not sha256" in issue
+        for issue in issues
+    ), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_requires_no_claim_flags() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                package_C_proof_no_wet_claim="false",
+            )
+        ]
+    )
+
+    assert any("package_C_proof_no_wet_claim" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+@pytest.mark.parametrize(
+    "authorization_ledger_id",
+    [
+        "not_superseded_current_no_auth_ledger",
+        "future-no-auth-ledger",
+        "future_noauth_ledger",
+    ],
+)
+def test_sidewall_package_c_proof_scaffold_requires_superseding_authorization(
+    authorization_ledger_id: str,
+) -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                authorization_supersedes_no_auth_ledger_id=authorization_ledger_id,
+            )
+        ]
+    )
+
+    assert any(
+        "authorization_supersedes_no_auth_ledger_id does not supersede" in issue
+        for issue in issues
+    ), issues
     _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
 
 

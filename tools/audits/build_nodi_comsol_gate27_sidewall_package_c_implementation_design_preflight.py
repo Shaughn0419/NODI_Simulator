@@ -39,6 +39,38 @@ BLOCKED_USE = (
     "route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;"
     "clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
 )
+REQUIRED_PROOF_CONTRACT_FIELDS = frozenset(
+    {
+        "package_C_proof_artifact_id",
+        "package_C_proof_artifact_sha256",
+        "package_C_proof_artifact_status",
+        "package_C_proof_artifact_scope",
+        "package_C_proof_claim_boundary",
+        "external_review_artifact_sha256",
+        "implementation_commit_sha",
+        "required_test_result_artifact_sha256",
+        "dt_convergence_evidence_sha256",
+        "equilibrium_uniformity_evidence_sha256",
+        "no_boundary_atom_evidence_sha256",
+        "corner_active_set_evidence_sha256",
+        "angle_depth_mutation_evidence_sha256",
+        "rectangle_limit_evidence_sha256",
+        "authorization_supersedes_no_auth_ledger_sha256",
+        "package_C_proof_manifest_schema_version",
+        "package_C_proof_evidence_claim_level",
+        "package_C_proof_required_test_matrix_status",
+        "package_C_proof_external_review_status",
+        "package_C_proof_authorization_status",
+        "authorization_supersedes_no_auth_ledger_id",
+        "package_C_proof_no_hindered_diffusion_claim",
+        "package_C_proof_no_trapezoid_flow_solver_claim",
+        "package_C_proof_no_electrokinetic_solver_claim",
+        "package_C_proof_no_optical_solver_claim",
+        "package_C_proof_no_wet_claim",
+        "package_C_proof_no_prs_eas_numeric_output",
+        "package_C_proof_no_route_yield_detection_claim",
+    }
+)
 
 GATE26_FILES = {
     "status": OUTPUT_DIR / "NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
@@ -238,7 +270,26 @@ def proof_artifact_contract_rows() -> list[dict[str, str]]:
         ("dt_convergence_evidence_sha256", "must bind dt-halving convergence evidence"),
         ("equilibrium_uniformity_evidence_sha256", "must bind pure Brownian equilibrium evidence"),
         ("no_boundary_atom_evidence_sha256", "must bind no projection-spike evidence"),
+        ("corner_active_set_evidence_sha256", "must bind corner active-set evidence"),
+        ("angle_depth_mutation_evidence_sha256", "must bind angle/depth mutation evidence"),
+        ("rectangle_limit_evidence_sha256", "must bind rectangle-limit evidence"),
+        (
+            "authorization_supersedes_no_auth_ledger_sha256",
+            "must bind explicit superseding authorization artifact hash",
+        ),
+        ("package_C_proof_manifest_schema_version", "must bind proof manifest schema version"),
+        ("package_C_proof_evidence_claim_level", "must remain validated-test-evidence only"),
+        ("package_C_proof_required_test_matrix_status", "must show all required tests passed in reviewed artifact"),
+        ("package_C_proof_external_review_status", "must show external review completed for proof"),
+        ("package_C_proof_authorization_status", "must show explicit authorization supersedes no-auth ledger"),
         ("authorization_supersedes_no_auth_ledger_id", "must name explicit future authorization path"),
+        ("package_C_proof_no_hindered_diffusion_claim", "must remain true unless future solver authorization exists"),
+        ("package_C_proof_no_trapezoid_flow_solver_claim", "must remain true unless future flow solver authorization exists"),
+        ("package_C_proof_no_electrokinetic_solver_claim", "must remain true unless future electrokinetic solver authorization exists"),
+        ("package_C_proof_no_optical_solver_claim", "must remain true unless future optical solver authorization exists"),
+        ("package_C_proof_no_wet_claim", "must remain true"),
+        ("package_C_proof_no_prs_eas_numeric_output", "must remain true before Package C proof/pass"),
+        ("package_C_proof_no_route_yield_detection_claim", "must remain true"),
     ]
     return [
         {
@@ -423,15 +474,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
             "optical_reference_guard",
         }
         <= backlog_components,
-        "Proof contract fields": {
-            "package_C_proof_artifact_id",
-            "package_C_proof_artifact_sha256",
-            "external_review_artifact_sha256",
-            "implementation_commit_sha",
-            "required_test_result_artifact_sha256",
-            "authorization_supersedes_no_auth_ledger_id",
-        }
-        <= proof_fields,
+        "Proof contract fields": REQUIRED_PROOF_CONTRACT_FIELDS <= proof_fields,
         "Fail-closed triggers": {
             "missing_real_proof_artifact",
             "projection_named_validated_reflection",

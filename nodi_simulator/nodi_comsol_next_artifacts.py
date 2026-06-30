@@ -365,6 +365,7 @@ FUTURE_AUTHORIZATION_PHRASE_MISMATCH = "PHRASE_MISMATCH_NOT_AUTHORIZED"
 FUTURE_AUTHORIZATION_ACTION_INVALID = "INVALID_FUTURE_AUTHORIZATION_ACTION"
 
 SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
+GIT_SHA_RE = re.compile(r"^[0-9a-fA-F]{7,40}$")
 ROUTE_RE = re.compile(r"^(?P<lambda_nm>\d+)/W(?P<W_nominal_nm>\d+)/D(?P<D_nm>\d+)$")
 
 NEGATIVE_BOUNDARY_FIELD_NAMES = frozenset(
@@ -1063,6 +1064,50 @@ SIDEWALL_PACKAGE_C_PROOF_REQUIRED_FIELDS: tuple[str, ...] = (
     "package_C_proof_artifact_scope",
     "package_C_proof_claim_boundary",
 )
+SIDEWALL_PACKAGE_C_PROOF_SCAFFOLD_SCHEMA_VERSION = (
+    "sidewall_package_c_proof_manifest_v1"
+)
+SIDEWALL_PACKAGE_C_PROOF_SCAFFOLD_CLAIM_LEVEL = (
+    "validated_test_evidence_only_no_hydrodynamic_or_wet_claim"
+)
+SIDEWALL_PACKAGE_C_PROOF_REQUIRED_TEST_MATRIX_STATUS = (
+    "all_required_tests_passed_reviewed_artifact"
+)
+SIDEWALL_PACKAGE_C_PROOF_EXTERNAL_REVIEW_STATUS = (
+    "external_review_completed_for_package_c_proof"
+)
+SIDEWALL_PACKAGE_C_PROOF_AUTHORIZATION_STATUS = (
+    "explicit_authorization_supersedes_no_auth_ledger"
+)
+SIDEWALL_PACKAGE_C_PROOF_REQUIRED_EVIDENCE_FIELDS: tuple[str, ...] = (
+    "external_review_artifact_sha256",
+    "implementation_commit_sha",
+    "required_test_result_artifact_sha256",
+    "dt_convergence_evidence_sha256",
+    "equilibrium_uniformity_evidence_sha256",
+    "no_boundary_atom_evidence_sha256",
+    "corner_active_set_evidence_sha256",
+    "angle_depth_mutation_evidence_sha256",
+    "rectangle_limit_evidence_sha256",
+    "authorization_supersedes_no_auth_ledger_sha256",
+)
+SIDEWALL_PACKAGE_C_PROOF_REQUIRED_MANIFEST_FIELDS: tuple[str, ...] = (
+    "package_C_proof_manifest_schema_version",
+    "package_C_proof_evidence_claim_level",
+    "package_C_proof_required_test_matrix_status",
+    "package_C_proof_external_review_status",
+    "package_C_proof_authorization_status",
+    "authorization_supersedes_no_auth_ledger_id",
+)
+SIDEWALL_PACKAGE_C_PROOF_REQUIRED_NO_CLAIM_FIELDS: tuple[str, ...] = (
+    "package_C_proof_no_hindered_diffusion_claim",
+    "package_C_proof_no_trapezoid_flow_solver_claim",
+    "package_C_proof_no_electrokinetic_solver_claim",
+    "package_C_proof_no_optical_solver_claim",
+    "package_C_proof_no_wet_claim",
+    "package_C_proof_no_prs_eas_numeric_output",
+    "package_C_proof_no_route_yield_detection_claim",
+)
 SIDEWALL_PACKAGE_D_PRECHECK_TRUE_FIELDS: tuple[str, ...] = (
     "no_forbidden_claim_columns",
     "no_rectangular_cache_reuse",
@@ -1744,7 +1789,13 @@ def _validate_sidewall_package_c_proof_binding(
             ),
         )
         proof_ok = False
-    for field in SIDEWALL_PACKAGE_C_PROOF_REQUIRED_FIELDS:
+    proof_required_fields = (
+        SIDEWALL_PACKAGE_C_PROOF_REQUIRED_FIELDS
+        + SIDEWALL_PACKAGE_C_PROOF_REQUIRED_EVIDENCE_FIELDS
+        + SIDEWALL_PACKAGE_C_PROOF_REQUIRED_MANIFEST_FIELDS
+        + SIDEWALL_PACKAGE_C_PROOF_REQUIRED_NO_CLAIM_FIELDS
+    )
+    for field in proof_required_fields:
         if not _value(row, field):
             _issue(
                 issues,
@@ -1763,6 +1814,27 @@ def _validate_sidewall_package_c_proof_binding(
             "package_C_proof_artifact_sha256 is not sha256",
         )
         proof_ok = False
+    for field in SIDEWALL_PACKAGE_C_PROOF_REQUIRED_EVIDENCE_FIELDS:
+        value = _value(row, field)
+        if not value:
+            continue
+        if field == "implementation_commit_sha":
+            if not GIT_SHA_RE.fullmatch(value):
+                _issue(
+                    issues,
+                    row_index,
+                    "SIDEWALL-D-PRECHECK-V03",
+                    "implementation_commit_sha is not a git sha",
+                )
+                proof_ok = False
+        elif not SHA256_RE.fullmatch(value):
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V03",
+                f"{field} is not sha256",
+            )
+            proof_ok = False
     proof_id = _value(row, "package_C_proof_artifact_id")
     registered_sha = SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256_BY_ID.get(proof_id)
     if proof_id and registered_sha is None:
@@ -1787,6 +1859,21 @@ def _validate_sidewall_package_c_proof_binding(
         "package_C_proof_artifact_status": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
         "package_C_proof_artifact_scope": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
         "package_C_proof_claim_boundary": SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
+        "package_C_proof_manifest_schema_version": (
+            SIDEWALL_PACKAGE_C_PROOF_SCAFFOLD_SCHEMA_VERSION
+        ),
+        "package_C_proof_evidence_claim_level": (
+            SIDEWALL_PACKAGE_C_PROOF_SCAFFOLD_CLAIM_LEVEL
+        ),
+        "package_C_proof_required_test_matrix_status": (
+            SIDEWALL_PACKAGE_C_PROOF_REQUIRED_TEST_MATRIX_STATUS
+        ),
+        "package_C_proof_external_review_status": (
+            SIDEWALL_PACKAGE_C_PROOF_EXTERNAL_REVIEW_STATUS
+        ),
+        "package_C_proof_authorization_status": (
+            SIDEWALL_PACKAGE_C_PROOF_AUTHORIZATION_STATUS
+        ),
     }
     for field, expected in expected_values.items():
         actual = _value(row, field)
@@ -1797,6 +1884,27 @@ def _validate_sidewall_package_c_proof_binding(
                 "SIDEWALL-D-PRECHECK-V03",
                 f"{field}={actual} does not match required Package C proof binding",
             )
+            proof_ok = False
+    authorization_ledger_id = _value(row, "authorization_supersedes_no_auth_ledger_id")
+    normalized_authorization_ledger_id = (
+        authorization_ledger_id.lower().replace("-", "_")
+    )
+    if authorization_ledger_id and (
+        "noauth" in normalized_authorization_ledger_id
+        or "no_auth" in normalized_authorization_ledger_id
+        or "not_superseded" in normalized_authorization_ledger_id
+    ):
+        _issue(
+            issues,
+            row_index,
+            "SIDEWALL-D-PRECHECK-V03",
+            "authorization_supersedes_no_auth_ledger_id does not supersede no-auth ledger",
+        )
+        proof_ok = False
+    for field in SIDEWALL_PACKAGE_C_PROOF_REQUIRED_NO_CLAIM_FIELDS:
+        before_count = len(issues)
+        _validate_bool_equals(row, field, True, row_index, "SIDEWALL-D-PRECHECK-V03", issues)
+        if len(issues) != before_count:
             proof_ok = False
 
     return proof_ok

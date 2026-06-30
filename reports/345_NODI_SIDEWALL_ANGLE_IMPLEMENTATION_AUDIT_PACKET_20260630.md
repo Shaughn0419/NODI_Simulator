@@ -49,6 +49,7 @@ The current supported split is:
 | Package C reflection telemetry | The geometry primitive can return active wall ids, reflection iteration count, total reflection displacement, and convergence status for one finite-step reflection update while preserving the tuple-return runtime API. Audit-only trajectory diagnostics now expose the Brownian target model, numerical scheme, no-specular/no-hindered guards, projection-surrogate flag, reflection update rule id, and telemetry reporting scope. | `test_reflection_diagnostics_noop_for_inside_trial_point`, `test_single_wall_reflection_matches_folded_normal_limit`, `test_corner_active_set_reflection_converges_inside_support`, `test_trapezoid_trajectory_diagnostics_mark_skorokhod_boundary` |
 | Package C angle/depth mutation coverage | Reflected wall-distance distributions now change under sidewall-angle and depth mutations, and observation signatures include Brownian target/scheme/telemetry fields so cache keys cannot ignore the boundary implementation contract. | `test_angle_and_depth_mutation_change_reflected_wall_distance_distribution`, `test_sidewall_observation_signature_records_geometry_propagation_fields` |
 | Package C equilibrium bin smoke | Pure-Brownian sidewall trajectories now check `x_local_norm` uniformity within u-slices using a KS-style empirical CDF bound plus left/right mean symmetry. | `test_pure_brownian_x_local_norm_uniformity_by_u_slice` |
+| Package C proof scaffold | Package C proof/pass remains fail-closed, but any future `package_C_validation_status=pass` row must now carry a 28-field proof manifest scaffold: reviewed evidence hashes, implementation commit, external review status, required-test matrix status, explicit authorization id/hash superseding the no-auth ledger, and no-claim flags for hindered diffusion, flow, electrokinetic, optical, wet, PRS/EAS numeric, route/yield/detection claims. | `test_sidewall_package_c_proof_scaffold_requires_evidence_fields`, `test_sidewall_package_c_proof_scaffold_rejects_bad_evidence_hash`, `test_sidewall_package_c_proof_scaffold_rejects_bad_authorization_hash`, `test_sidewall_package_c_proof_scaffold_requires_no_claim_flags`, `test_gate27_proof_artifact_contract_requires_real_future_evidence` |
 
 ## Still Blocked
 
@@ -176,8 +177,27 @@ python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k "sidew
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k "sidewall or production_candidate_validator"
 314 passed, 169 deselected in 24.11s
 
+python -m py_compile nodi_simulator/nodi_comsol_next_artifacts.py tools/audits/build_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py
+pass
+
+python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k "package_c_proof_scaffold or package_d_precheck_blocks_near_wall or bad_package_c_proof"
+12 passed, 479 deselected in 9.25s
+
+python -m pytest tests/test_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py -q
+8 passed in 6.66s
+
+python tools/audits/build_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py --confirm-gate27-package-c-implementation-design-preflight
+NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
+proof_contract_rows=28
+
 python -m py_compile nodi_simulator/cross_section_geometry.py nodi_simulator/trajectory.py nodi_simulator/nodi_comsol_next_artifacts.py
 pass
+
+python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k "sidewall or production_candidate_validator"
+322 passed, 169 deselected in 24.54s
+
+python -m pytest tests/test_cross_section_geometry.py tests/test_trajectory.py -q
+53 passed in 0.94s
 ```
 
 Additional CLI/compile verification:
@@ -209,4 +229,4 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 
 1. Keep strengthening no-compute validators and mutation tests for profile/source-hash drift and geometry-source promotion.
 2. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
-3. Continue Package C code-level hardening next: expand proof-artifact registry/allowlist tests and, if needed later, move statistical convergence from smoke tests into an explicit proof package. Do not register proof or mark Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.
+3. Continue Package C proof work next by preparing an external-review packet for the 28-field proof scaffold and the current smoke/statistical evidence. Do not register proof or mark Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.
