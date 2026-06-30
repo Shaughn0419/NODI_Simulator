@@ -784,6 +784,9 @@ SIDEWALL_FORBIDDEN_ALIAS_COLUMNS_FOR_TEST = (
     "JRC_value",
     "joint_route_class_candidate",
     "chi_selected_flag",
+    "rank_value",
+    "route_rank_value",
+    "sidewall_rank_value",
 )
 
 
@@ -2544,7 +2547,13 @@ def test_sidewall_package_d_precheck_rejects_forbidden_gate_false() -> None:
 
 @pytest.mark.parametrize(
     "field",
-    ["route_score", "flow_rate", "Q", *SIDEWALL_FORBIDDEN_ALIAS_COLUMNS_FOR_TEST],
+    [
+        "route_score",
+        "flow_rate",
+        "Q",
+        "rank_under_surrogate",
+        *SIDEWALL_FORBIDDEN_ALIAS_COLUMNS_FOR_TEST,
+    ],
 )
 def test_sidewall_package_d_precheck_scans_forbidden_columns_even_when_flag_passes(
     field: str,

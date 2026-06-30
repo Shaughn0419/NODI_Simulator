@@ -411,6 +411,9 @@ FORBIDDEN_POSITIVE_FIELD_FRAGMENTS = (
     "joint_score",
     "route_score",
     "sidewall_score",
+    "rank_value",
+    "route_rank_value",
+    "sidewall_rank_value",
     "p3_conclusion",
     "p3_solver_conclusion",
     "p3_solver_execution",
@@ -1684,6 +1687,13 @@ def validate_sidewall_package_d_precheck_rows(rows: Sequence[Mapping[str, Any]])
             rule_id="SIDEWALL-D-PRECHECK-V06",
             issues=issues,
         )
+        if _value(row, "rank_under_surrogate"):
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V06",
+                "Package D precheck forbids rank_under_surrogate",
+            )
         _validate_constant(
             row,
             "sidewall_package_d_precheck_version",
