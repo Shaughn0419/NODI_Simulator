@@ -774,6 +774,12 @@ SIDEWALL_FORBIDDEN_EXACT_COLUMNS_FOR_TEST = (
     "time_to_clog",
     "recovery",
 )
+SIDEWALL_FORBIDDEN_ALIAS_COLUMNS_FOR_TEST = (
+    "flow_rate_m3_s",
+    "Q_m3_s",
+    "q_ch_m3_s",
+    "comsol_Q_proxy",
+)
 
 
 def test_comsol_v4_default_context_is_readonly_and_out_of_scope_for_dry_optical() -> None:
@@ -832,6 +838,20 @@ def test_position_response_accepts_sidewall_v2_geometry_fields_when_consistent()
     SIDEWALL_FORBIDDEN_EXACT_COLUMNS_FOR_TEST,
 )
 def test_position_response_sidewall_v2_rejects_forbidden_exact_claim_columns(
+    forbidden_column: str,
+) -> None:
+    issues = validate_position_response_surface_rows(
+        [_valid_prs_sidewall_v2_row(**{forbidden_column: "claim"})]
+    )
+
+    _assert_has_issue(issues, "PRS-V41")
+
+
+@pytest.mark.parametrize(
+    "forbidden_column",
+    SIDEWALL_FORBIDDEN_ALIAS_COLUMNS_FOR_TEST,
+)
+def test_position_response_sidewall_v2_rejects_forbidden_flow_alias_columns(
     forbidden_column: str,
 ) -> None:
     issues = validate_position_response_surface_rows(
@@ -2262,6 +2282,20 @@ def test_effective_aperture_sidewall_v2_rejects_forbidden_exact_claim_columns(
     _assert_has_issue(issues, "EAS-V26")
 
 
+@pytest.mark.parametrize(
+    "forbidden_column",
+    SIDEWALL_FORBIDDEN_ALIAS_COLUMNS_FOR_TEST,
+)
+def test_effective_aperture_sidewall_v2_rejects_forbidden_flow_alias_columns(
+    forbidden_column: str,
+) -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [_valid_eas_sidewall_v2_row(**{forbidden_column: "claim"})]
+    )
+
+    _assert_has_issue(issues, "EAS-V26")
+
+
 def test_effective_aperture_sidewall_v2_rejects_exact_claim_columns() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [
@@ -2503,7 +2537,10 @@ def test_sidewall_package_d_precheck_rejects_forbidden_gate_false() -> None:
     _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V05")
 
 
-@pytest.mark.parametrize("field", ["route_score", "flow_rate", "Q"])
+@pytest.mark.parametrize(
+    "field",
+    ["route_score", "flow_rate", "Q", *SIDEWALL_FORBIDDEN_ALIAS_COLUMNS_FOR_TEST],
+)
 def test_sidewall_package_d_precheck_scans_forbidden_columns_even_when_flag_passes(
     field: str,
 ) -> None:
