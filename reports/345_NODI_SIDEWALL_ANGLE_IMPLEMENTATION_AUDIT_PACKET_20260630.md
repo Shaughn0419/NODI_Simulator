@@ -31,7 +31,7 @@ The current supported split is:
 | PRS propagated allowlist | Propagated trapezoid PRS rows allow only implemented sampler, flow, flow-control, and boundary states. | `test_position_response_sidewall_v2_rejects_unsupported_propagated_flow_control` |
 | Propagation-status usage | Propagated PRS/EAS sidewall v2 rows cannot carry `geometry_not_propagated_reasons`; non-propagated rows must remain blocked/audit-labeled. | `test_effective_aperture_sidewall_v2_rejects_propagated_not_propagated_reason` |
 | EAS generic surrogate guard | Generic `W_eff_surrogate_nm` must be an explicit numeric alias of a named sidewall surrogate; eta/rank fields stay disabled/no-rank. | commit `c9ea9b7` |
-| Claim blacklist | Sidewall PRS/EAS artifacts reject exact claim-promotion aliases including `rank`, `route_rank`, `sidewall_rank`, `JOINT_ROUTE_CLASS`, `q_ch_weight`, and `q_ch_weighting`, plus positive `sidewall_aware=true` shortcuts. | `test_position_response_rejects_positive_sidewall_aware_shortcut` |
+| Claim blacklist | Sidewall PRS/EAS artifacts reject exact claim-promotion aliases including `rank`, `route_rank`, `sidewall_rank`, `JOINT_ROUTE_CLASS`, `q_ch_weight`, `q_ch_weighting`, bare `flow_rate`, and bare `Q`, plus positive `sidewall_aware=true` shortcuts. | `test_position_response_rejects_positive_sidewall_aware_shortcut` |
 
 ## Still Blocked
 
@@ -57,14 +57,14 @@ python -m pytest tests/test_cross_section_geometry.py tests/test_nodi_comsol_nex
 Latest result:
 
 ```text
-432 passed in 82.52s (0:01:22)
+436 passed in 82.06s (0:01:22)
 ```
 
 Additional focused verification after adding runtime top-aperture binding guards:
 
 ```text
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q
-360 passed in 58.68s
+364 passed in 60.59s (0:01:00)
 python -m pytest tests/test_cross_section_geometry.py -q
 38 passed in 0.17s
 python -m pytest tests/test_physics_core.py -k channel_geometry -q
