@@ -262,6 +262,29 @@ runtime_allowed=false
 numeric_prs_eas_allowed=false
 comsol_launch_allowed=false
 mph_load_allowed=false
+
+python -m pytest tests/test_nodi_comsol_gate33_36_sidewall_package_c_reflection_proof_authorization_design_packet.py -q
+8 passed
+
+python tools/audits/build_nodi_comsol_gate33_36_sidewall_package_c_reflection_proof_authorization_design_packet.py --confirm-gate33-36-package-c-proof-authorization-design
+NODI_GATE33_36_SIDEWALL_PACKAGE_C_REFLECTION_PROOF_AUTHORIZATION_DESIGN_READY_NO_PROOF_REGISTRATION
+external_verdict=READY_FOR_PROOF_REGISTRATION_AUTHORIZATION_DESIGN_REVIEW_ONLY
+packet_output_status=authorization_required_no_proof_registration
+proof_hardening_backlog_rows=10
+metric_expansion_spec_rows=8
+threshold_matrix_rows=10
+authorization_ledger_placeholder_rows=22
+hard_fail_checklist_rows=14
+evidence_chain_rows=9
+review_request_rows=5
+mutation_fail_count=0
+self_review_fail_count=0
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
 ```
 
 Additional CLI/compile verification:
@@ -286,12 +309,13 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 | --- | --- | --- |
 | Package A | pass for schema/descriptor/validator guard scope | No PRS/EAS data generation authorized by this packet. |
 | Package B | pass for geometry primitive, sampler support, and actual signature binding | Flux-weighted trapezoid sampling remains blocked. |
-| Package C | implementation candidate present; proof registration/pass still blocked/fail-closed | The Skorokhod finite-step reflection candidate is implemented for trapezoid diffusive plug-flow trajectories with unit tests and validator guards. No Package C physics authorization proof is registered; validated reflection proof/pass, hindered diffusion, runtime metrics beyond this candidate, and numeric PRS/EAS remain blocked. |
+| Package C | implementation candidate plus Gate33-36 authorization-design hardening route present; proof registration/pass still blocked/fail-closed | The Skorokhod finite-step reflection candidate is implemented for trapezoid diffusive plug-flow trajectories with unit tests and validator guards. Gate33-36 now captures the external research synthesis, threshold matrix, hardening backlog, authorization placeholder, and hard-fail checklist. No Package C physics authorization proof is registered; validated reflection proof/pass, hindered diffusion, runtime metrics beyond this candidate, and numeric PRS/EAS remain blocked. |
 | Package D | validator/preflight guard pass only | Sidewall PRS/EAS pilot generation remains no-claim and blocked for trajectory/near-wall/wall-distance metrics unless a future Package C gate passes. |
 
 ## Next Safe Actions
 
-1. Send the Gate32 external research/synthesis handoff prompt and GitHub path map for source-backed analysis of Brownian reflection methods, thresholds, proof evidence, blocked physics boundaries, and go-forward route.
-2. If external review finds no claim-boundary issues, create a separate future authorization gate that explicitly supersedes the current no-auth ledger before any proof registry update.
-3. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
-4. Do not register proof or mark Package C as passed in the current gate.
+1. Implement the Gate33-36 hardening backlog as one proof-metric expansion block: exact/near-boundary atom split, raw histograms, ESS/autocorrelation, one-wall folded-normal suite, projection/rejection negative controls, worst-case dt refinement, and corner heatmap.
+2. Regenerate Gate33-36 evidence and source locks after that block, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
+3. Keep the manual authorization ledger and external-review artifact SHA as explicit placeholders until a separate authorization supersedes the no-auth ledger.
+4. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
+5. Do not register proof or mark Package C as passed in the current gate.

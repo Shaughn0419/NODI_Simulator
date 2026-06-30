@@ -1244,13 +1244,29 @@ Gate32 packages the Gate30/31 candidate into a GitHub-visible external AI resear
 
 Gate32 is the correct packet to send to an external AI because it does not assume local file visibility, and it does not merely ask for another audit. It explicitly asks the external AI to search broader technical/literature sources, compare methods, propose thresholds and test matrices, identify claim-boundary risks, and return a route that should support several future gates. It still asks for one of three verdicts: `READY_FOR_PROOF_REGISTRATION_AUTHORIZATION_DESIGN_REVIEW_ONLY`, `NEEDS_MORE_CANDIDATE_EVIDENCE`, or `BLOCKED_CLAIM_PROMOTION`.
 
-## 11. Recommended next action
+## 11. Current Gate33-36 status
 
-Current safe route after Gate32:
+Gate33-36 absorbs the external AI research synthesis into a single combined authorization-design packet:
 
-1. Send the Gate32 external research/synthesis handoff prompt plus the GitHub-visible artifact map for source-backed analysis of Brownian reflection methods, thresholds, proof evidence, blocked physics boundaries, and go-forward route.
-2. If external review returns no claim-boundary issues, create a separate future authorization gate that explicitly supersedes the current no-auth ledger before any proof registry update.
-3. Only after that future authorization may a proof registry row be considered; even then, the allowed claim level should stay `finite_step_reflection_surrogate_validated_by_required_tests`, not hydrodynamic, wet, optical, route, yield, or detection validation.
+- Artifact id: `GATE33_36_PACKAGE_C_REFLECTION_PROOF_AUTHORIZATION_DESIGN_PACKET_20260630`.
+- Disposition: `NODI_GATE33_36_SIDEWALL_PACKAGE_C_REFLECTION_PROOF_AUTHORIZATION_DESIGN_READY_NO_PROOF_REGISTRATION`.
+- External verdict captured: `READY_FOR_PROOF_REGISTRATION_AUTHORIZATION_DESIGN_REVIEW_ONLY`.
+- Output status: `authorization_required_no_proof_registration`.
+- Scope: source lock, evidence chain, external research capture, proof-metric hardening backlog, metric expansion spec, threshold matrix, authorization ledger placeholder, hard-fail checklist, review request, mutation results, self-review, no-proof firewall, status/report/manifest.
+- Proof-hardening backlog rows: `10`, covering clean reviewed commit binding, exact/near-boundary atom split, raw histograms, ESS/autocorrelation, one-wall folded-normal tests, projection/rejection negative controls, worst-case dt refinement, corner heatmap, and line-broken review artifacts.
+- Threshold matrix rows: `10`, including candidate `dt_halving_distribution_delta <= 0.10`, future proof hard line `<= 0.075`, candidate `equilibrium_uniformity_distance <= 0.06`, future proof hard line `<= 0.04`, exact atom separation, one-wall kernel distance, rectangle limit, corner active-set, corner pile-up, and mutation requirements.
+- Authorization placeholder rows: `22`; hard-fail checklist rows: `14`; evidence chain rows: `9`; review request rows: `5`; mutation result rows: `9`; self-review rows: `5`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+Gate33-36 is intentionally a merged evidence railway rather than a sequence of small review pauses. It allows implementation to proceed toward proof-metric hardening while keeping proof registration, Package C pass, runtime ingestion, numeric PRS/EAS, COMSOL launch, `.mph` load, and all route/yield/detection/wet/fabrication/production claims fail-closed.
+
+## 12. Recommended next action
+
+Current safe route after Gate33-36:
+
+1. Implement the Gate33-36 hardening backlog as a single proof-metric expansion block: exact/near-boundary atom split, raw histograms, ESS/autocorrelation, one-wall folded-normal suite, negative controls, worst-case dt refinement, and corner heatmap.
+2. Regenerate the Gate33-36 source lock and metric evidence after the hardening block, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
+3. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; the builder must not auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 
 Only after Package A/B remain green and a future Package C proof is explicitly authorized should NODI run any sidewall-aware PRS/EAS pilot involving trajectory, near-wall, hindered-diffusion, or wall-distance-bin metrics. Even then, the result should remain `surrogate_sensitivity_only` / `context-only` until measurement or solver evidence is explicitly added and authorized.
