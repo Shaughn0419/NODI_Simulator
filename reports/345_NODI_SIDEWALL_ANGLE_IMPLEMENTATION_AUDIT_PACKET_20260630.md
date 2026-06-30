@@ -33,7 +33,7 @@ The current supported split is:
 | PRS propagated allowlist | Propagated trapezoid PRS rows allow only implemented sampler, flow, flow-control, and boundary states. | `test_position_response_sidewall_v2_rejects_unsupported_propagated_flow_control` |
 | Propagation-status usage | Propagated PRS/EAS sidewall v2 rows cannot carry `geometry_not_propagated_reasons`; non-propagated rows must remain blocked/audit-labeled. | `test_effective_aperture_sidewall_v2_rejects_propagated_not_propagated_reason` |
 | EAS generic surrogate guard | Generic `W_eff_surrogate_nm` must be an explicit numeric alias of a named sidewall surrogate; eta/rank fields stay disabled/no-rank. | commit `c9ea9b7` |
-| Claim blacklist | Sidewall PRS/EAS artifacts and Package D precheck reject claim-promotion aliases including `rank`, `route_rank`, `sidewall_rank`, `JOINT_ROUTE_CLASS`, `q_ch_weight`, `q_ch_weighting`, bare/unitized `flow_rate` and `Q`, `q_ch_m3_s`, and `comsol_Q_proxy`, plus positive `sidewall_aware=true` shortcuts. | `test_position_response_sidewall_v2_rejects_forbidden_flow_alias_columns`, `test_effective_aperture_sidewall_v2_rejects_forbidden_flow_alias_columns`, `test_sidewall_package_d_precheck_scans_forbidden_columns_even_when_flag_passes` |
+| Claim blacklist | Sidewall PRS/EAS artifacts and Package D precheck reject claim-promotion aliases including `rank`, `route_rank`, `sidewall_rank`, `route_score_norm`, `sidewall_score_value`, `JOINT_ROUTE_CLASS`, `q_ch_weight`, `q_ch_weighting`, bare/unitized `flow_rate` and `Q`, `q_ch_m3_s`, and `comsol_Q_proxy`, plus positive `sidewall_aware=true` shortcuts. | `test_position_response_sidewall_v2_rejects_forbidden_flow_alias_columns`, `test_effective_aperture_sidewall_v2_rejects_forbidden_flow_alias_columns`, `test_sidewall_package_d_precheck_scans_forbidden_columns_even_when_flag_passes` |
 
 ## Still Blocked
 
@@ -59,14 +59,14 @@ python -m pytest tests/test_cross_section_geometry.py tests/test_nodi_comsol_nex
 Latest result:
 
 ```text
-453 passed in 84.85s (0:01:24)
+459 passed in 85.10s (0:01:25)
 ```
 
 Additional focused verification after adding runtime top-aperture binding guards:
 
 ```text
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q
-381 passed in 59.63s
+387 passed in 58.62s
 python -m pytest tests/test_cross_section_geometry.py -q
 38 passed in 0.17s
 python -m pytest tests/test_physics_core.py -k channel_geometry -q
