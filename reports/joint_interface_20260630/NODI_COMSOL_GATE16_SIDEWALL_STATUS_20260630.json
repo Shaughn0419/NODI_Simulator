@@ -1,0 +1,26 @@
+{
+  "disposition": "NODI_GATE16_SIDEWALL_COMSOL_GATE15_RECEIPT_STALE_FAIL_CLOSED_NO_AUTH",
+  "summary": {
+    "disposition": "NODI_GATE16_SIDEWALL_COMSOL_GATE15_RECEIPT_STALE_FAIL_CLOSED_NO_AUTH",
+    "nodi_current_head_at_gate16_build": "b7dbdc7c9404cdef82fceee5a8be5bf828afa952",
+    "nodi_dirty_count_at_gate16_build": 2,
+    "comsol_head_actual": "7090794ff20970955a011b123b3de171e96910a3",
+    "comsol_gate15_receipt_rows": 16,
+    "comsol_gate15_blocking_drift": 0,
+    "comsol_gate15_missing_required": 0,
+    "comsol_gate15_claim_firewall_drift": 0,
+    "stale_reintake_blockers": 6,
+    "clean_current_reintake_accepted": false,
+    "current_reintake_request_rows": 3,
+    "static_preflight_rows": 4,
+    "firewall_status": "PASS_NO_AUTH_LOCKS_PRESERVED",
+    "gate2d_rows": "4",
+    "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+    "qch_state": "ABSENT",
+    "binding_state": "FAIL_CLOSED",
+    "review_only": true,
+    "no_auth": true
+  },
+  "review_only": true,
+  "no_auth": true
+}

@@ -1,0 +1,5 @@
+decision_id,package,scope,gate16_decision,runtime_allowed,production_allowed,validated_physics_claim,static_preflight_allowed_now,future_condition
+G16D-Package-A,Package A,schema/descriptor/profile guard only,WAITING_FOR_COMSOL_CLEAN_REINTAKE_AGAINST_CURRENT_NODI_HEAD,false,false,false,false,COMSOL clean reintake consumes current NODI release head with dirty_count=0
+G16D-Package-B,Package B,geometry/sampler/signature guard only,WAITING_FOR_COMSOL_CLEAN_REINTAKE_AGAINST_CURRENT_NODI_HEAD,false,false,false,false,COMSOL clean reintake consumes current NODI release head with dirty_count=0
+G16D-Package-C,Package C,near-wall/optical/wet physics not validated,BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION,false,false,false,false,explicit Package C physics authorization
+G16D-Package-D,Package D,PRS/EAS contract precheck only,WAITING_FOR_COMSOL_CLEAN_REINTAKE_AGAINST_CURRENT_NODI_HEAD,false,false,false,false,COMSOL clean reintake consumes current NODI release head with dirty_count=0

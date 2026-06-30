@@ -1,0 +1,5 @@
+validation_id,command,required_for_pass,recorded_result
+G16F-VALIDATION-001,python tools/audits/build_nodi_comsol_gate16_sidewall_clean_reintake_receipt.py --confirm-gate16-sidewall-clean-reintake-receipt,true,PENDING_RUNTIME_VALIDATION
+G16F-VALIDATION-002,python -m py_compile tools/audits/build_nodi_comsol_gate16_sidewall_clean_reintake_receipt.py,true,PENDING_RUNTIME_VALIDATION
+G16F-VALIDATION-003,python -m pytest tests/test_nodi_comsol_gate16_sidewall_clean_reintake_receipt.py -q,true,PENDING_RUNTIME_VALIDATION
+G16F-VALIDATION-004,python -m pytest tests/test_nodi_comsol_gate13_sidewall_guard_convergence.py tests/test_nodi_comsol_gate14_sidewall_implementation_contract.py tests/test_nodi_comsol_gate15_sidewall_bilateral_contract_closure.py tests/test_nodi_comsol_gate16_sidewall_clean_reintake_receipt.py -q,true,PENDING_RUNTIME_VALIDATION
