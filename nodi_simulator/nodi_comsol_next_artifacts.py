@@ -11924,6 +11924,13 @@ def _validate_sidewall_v2_eas_runtime_geometry_context(
             "EAS-SIDEWALL-V2",
             f"invalid geometry_propagation_status={geometry_status}",
         )
+    if geometry_status == "propagated" and _value(row, "geometry_not_propagated_reasons"):
+        _issue(
+            issues,
+            row_index,
+            "EAS-SIDEWALL-V2",
+            "propagated sidewall EAS row carries geometry_not_propagated_reasons",
+        )
     if geometry_status != "propagated" and not _value(row, "geometry_not_propagated_reasons"):
         _issue(
             issues,

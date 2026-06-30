@@ -2341,6 +2341,19 @@ def test_effective_aperture_sidewall_v2_rejects_closed_geometry_as_propagated() 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 
 
+def test_effective_aperture_sidewall_v2_rejects_propagated_not_propagated_reason() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_sidewall_v2_row(
+                geometry_propagation_status="propagated",
+                geometry_not_propagated_reasons="geometry_not_propagated_to_reference_field",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
 def test_effective_aperture_sidewall_v2_requires_geometry_profile_sha() -> None:
     issues = validate_effective_aperture_surrogate_rows(
         [_valid_eas_sidewall_v2_row(geometry_profile_sha256="not-a-sha")]
