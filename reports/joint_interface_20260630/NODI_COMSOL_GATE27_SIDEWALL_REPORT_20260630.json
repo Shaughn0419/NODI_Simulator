@@ -1,0 +1,34 @@
+{
+  "summary": {
+    "disposition": "NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH",
+    "gate27_build_head": "3f4140a88c5dcdc4847cf7ebb8fd09421df6de8a",
+    "gate26_build_head": "3f4140a88c5dcdc4847cf7ebb8fd09421df6de8a",
+    "gate26_head_is_ancestor_of_current": true,
+    "gate26_disposition": "NODI_GATE26_SIDEWALL_PACKAGE_C_EXTERNAL_REVIEW_INTEGRATION_DESIGN_CONSTRAINTS_READY_NO_AUTH",
+    "gate26_no_auth": true,
+    "gate26_review_only": true,
+    "gate26_source_lock_rows": 10,
+    "gate26_source_missing": 0,
+    "implementation_backlog_rows": 8,
+    "proof_contract_rows": 12,
+    "fail_closed_rows": 12,
+    "validation_plan_rows": 4,
+    "implementation_authorized_rows": 0,
+    "runtime_allowed_rows": 0,
+    "proof_artifact_registered_rows": 0,
+    "can_emit_runtime_rows": 0,
+    "can_emit_numeric_prs_eas_rows": 0,
+    "can_update_proof_registry_rows": 0,
+    "no_auth_firewall_failures": 0,
+    "review_only": true,
+    "no_auth": true
+  },
+  "outputs": [
+    "NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+    "NODI_COMSOL_GATE27_SIDEWALL_IMPLEMENTATION_DESIGN_BACKLOG_20260630.csv",
+    "NODI_COMSOL_GATE27_SIDEWALL_PROOF_ARTIFACT_CONTRACT_20260630.csv",
+    "NODI_COMSOL_GATE27_SIDEWALL_PREAUTH_FAIL_CLOSED_MATRIX_20260630.csv",
+    "NODI_COMSOL_GATE27_SIDEWALL_VALIDATION_PLAN_20260630.csv",
+    "NODI_COMSOL_GATE27_SIDEWALL_NO_AUTH_FIREWALL_20260630.csv"
+  ]
+}

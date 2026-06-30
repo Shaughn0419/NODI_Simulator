@@ -44,6 +44,7 @@ The current supported split is:
 | Gate24 Package C authorization ledger | Gate23 source hashes are locked; exact future Package C phrase matching is recorded but does not authorize Package C physics, proof-registry update, runtime, NODI recomputation, COMSOL launch, `.mph` load, or sidewall PRS/EAS numeric output. | `tests/test_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py` |
 | Gate25 Package C design-review packet | Gate24 sources are locked; trajectory, near-wall diffusion, flow, electrokinetic, and optical/reference questions are packaged for external review with local formulas and no-auth boundaries. | `tests/test_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py` |
 | Gate26 Package C external-review integration | User-pasted external-AI feedback is captured as a SHA-locked source artifact; `READY_FOR_IMPLEMENTATION_DESIGN_ONLY` is integrated as design constraints only, with Skorokhod Brownian target, required tests/schema fields, blocked model ledgers, and no-auth firewall preserved. | `tests/test_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py` |
+| Gate27 Package C implementation-design preflight | Gate26 constraints are converted into future implementation backlog, proof-artifact contract, fail-closed matrix, validation plan, and no-auth firewall; no Package C proof is registered and `package_C_validation_status=pass` remains blocked. | `tests/test_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py` |
 
 ## Still Blocked
 
@@ -92,12 +93,18 @@ python -m pytest tests/test_nodi_comsol_gate26_sidewall_package_c_external_revie
 
 python -m pytest tests/test_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py tests/test_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py -q
 18 passed in 14.11s
+
+python -m pytest tests/test_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py -q
+8 passed in 8.14s
+
+python -m pytest tests/test_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py tests/test_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py -q
+19 passed in 15.39s
 ```
 
 Additional CLI/compile verification:
 
 ```text
-python -m py_compile nodi_simulator/nodi_comsol_next_artifacts.py tools/audits/validate_nodi_position_response_surface.py tools/audits/validate_nodi_effective_aperture_surrogate_sensitivity.py tools/audits/validate_nodi_sidewall_package_d_precheck.py tools/audits/build_nodi_comsol_gate23_sidewall_static_fixture_execution.py tools/audits/write_nodi_sidewall_package_c_authorization_gate.py tools/audits/build_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py tools/audits/build_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py tools/audits/build_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py
+python -m py_compile nodi_simulator/nodi_comsol_next_artifacts.py tools/audits/validate_nodi_position_response_surface.py tools/audits/validate_nodi_effective_aperture_surrogate_sensitivity.py tools/audits/validate_nodi_sidewall_package_d_precheck.py tools/audits/build_nodi_comsol_gate23_sidewall_static_fixture_execution.py tools/audits/write_nodi_sidewall_package_c_authorization_gate.py tools/audits/build_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py tools/audits/build_nodi_comsol_gate25_sidewall_package_c_design_review_packet.py tools/audits/build_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py tools/audits/build_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py
 python tools/audits/build_nodi_comsol_gate23_sidewall_static_fixture_execution.py --confirm-gate23-static-fixture-execution
 NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH
 python tools/audits/build_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py --confirm-gate24-package-c-authorization-ledger
@@ -106,6 +113,8 @@ python tools/audits/build_nodi_comsol_gate25_sidewall_package_c_design_review_pa
 NODI_GATE25_SIDEWALL_PACKAGE_C_DESIGN_REVIEW_PACKET_READY_NO_AUTH
 python tools/audits/build_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py --confirm-gate26-package-c-external-review-integration
 NODI_GATE26_SIDEWALL_PACKAGE_C_EXTERNAL_REVIEW_INTEGRATION_DESIGN_CONSTRAINTS_READY_NO_AUTH
+python tools/audits/build_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py --confirm-gate27-package-c-implementation-design-preflight
+NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 ```
 
 ## Current Go/No-Go
@@ -114,11 +123,11 @@ NODI_GATE26_SIDEWALL_PACKAGE_C_EXTERNAL_REVIEW_INTEGRATION_DESIGN_CONSTRAINTS_RE
 | --- | --- | --- |
 | Package A | pass for schema/descriptor/validator guard scope | No PRS/EAS data generation authorized by this packet. |
 | Package B | pass for geometry primitive, sampler support, and actual signature binding | Flux-weighted trapezoid sampling remains blocked. |
-| Package C | external-review design constraints ready; implementation still blocked/fail-closed | Gate26 integrates external review feedback into required Brownian reflection tests, schema fields, and hindered/flow/electrokinetic/optical blockers. No Package C physics authorization proof is registered; validated reflection, hindered diffusion, and runtime metrics remain blocked. |
+| Package C | implementation-design preflight ready; implementation/proof registration still blocked/fail-closed | Gate27 converts external review constraints into future write scopes, proof contract, fail-closed triggers, and validation plan. No Package C physics authorization proof is registered; validated reflection, hindered diffusion, runtime metrics, and numeric PRS/EAS remain blocked. |
 | Package D | validator/preflight guard pass only | Sidewall PRS/EAS pilot generation remains no-claim and blocked for trajectory/near-wall/wall-distance metrics unless a future Package C gate passes. |
 
 ## Next Safe Actions
 
 1. Keep strengthening no-compute validators and mutation tests for profile/source-hash drift and geometry-source promotion.
 2. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
-3. Use the Gate26 external-review integration ledger as the future Package C implementation-design checklist, but do not implement or register Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.
+3. Use the Gate27 implementation-design preflight as the future Package C checklist, but do not implement, register proof, or mark Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.
