@@ -61,6 +61,16 @@ TRAJECTORY_GEOMETRY_DIAGNOSTIC_FIELDS = (
     "trajectory_boundary_model",
     "trajectory_boundary_model_version",
     "trajectory_boundary_claim_level",
+    "brownian_boundary_target_model",
+    "brownian_boundary_numerical_scheme",
+    "not_ballistic_specular_collision_claim",
+    "not_hindered_hydrodynamics_claim",
+    "projection_boundary_surrogate_used",
+    "reflection_update_rule_id",
+    "reflection_telemetry_scope",
+    "reflection_active_wall_set_reporting",
+    "reflection_iteration_count_reporting",
+    "reflection_displacement_reporting",
     "wall_distance_model",
     "wall_distance_model_version",
     "wall_distance_claim_level",
@@ -197,15 +207,47 @@ def build_trajectory_geometry_diagnostics(sim_cfg: SimulationConfig) -> dict[str
         if is_trapezoid and bool(sim_cfg.reflecting_boundary):
             boundary_model = TRAPEZOID_SKOROKHOD_BOUNDARY_MODEL
             boundary_claim_level = TRAPEZOID_SKOROKHOD_BOUNDARY_CLAIM_LEVEL
+            brownian_target_model = "skorokhod_normal_reflection_convex_offset_trapezoid_v1"
+            brownian_numerical_scheme = "finite_step_wall_normal_active_set_reflection_v1"
+            projection_boundary_surrogate_used = False
+            reflection_update_rule_id = "wall_normal_folded_active_set_iteration_v1"
+            reflection_telemetry_scope = "single_step_geometry_diagnostics"
+            reflection_active_wall_set_reporting = True
+            reflection_iteration_count_reporting = True
+            reflection_displacement_reporting = True
         elif bool(sim_cfg.reflecting_boundary):
             boundary_model = "rectangular_half_span_reflection_v1"
             boundary_claim_level = "rectangular_boundary_surrogate"
+            brownian_target_model = "rectangular_reflection_surrogate"
+            brownian_numerical_scheme = "rectangular_half_span_reflection_kernel_v1"
+            projection_boundary_surrogate_used = False
+            reflection_update_rule_id = "rectangular_half_span_reflection_v1"
+            reflection_telemetry_scope = "not_available"
+            reflection_active_wall_set_reporting = False
+            reflection_iteration_count_reporting = False
+            reflection_displacement_reporting = False
         else:
             boundary_model = "unbounded_diffusion_no_reflection_v1"
             boundary_claim_level = "no_reflection_boundary"
+            brownian_target_model = "unbounded_no_reflection"
+            brownian_numerical_scheme = "not_applicable_unbounded_diffusion"
+            projection_boundary_surrogate_used = False
+            reflection_update_rule_id = "not_applicable"
+            reflection_telemetry_scope = "not_applicable"
+            reflection_active_wall_set_reporting = False
+            reflection_iteration_count_reporting = False
+            reflection_displacement_reporting = False
     else:
         boundary_model = "not_applicable_pure_advection"
         boundary_claim_level = "no_diffusive_boundary_claim"
+        brownian_target_model = "not_applicable_no_diffusion"
+        brownian_numerical_scheme = "not_applicable_no_diffusion"
+        projection_boundary_surrogate_used = False
+        reflection_update_rule_id = "not_applicable"
+        reflection_telemetry_scope = "not_applicable"
+        reflection_active_wall_set_reporting = False
+        reflection_iteration_count_reporting = False
+        reflection_displacement_reporting = False
 
     if hindrance_model == "none":
         wall_distance_model = "not_applicable_diffusion_hindrance_none"
@@ -248,6 +290,16 @@ def build_trajectory_geometry_diagnostics(sim_cfg: SimulationConfig) -> dict[str
         "trajectory_boundary_model": boundary_model,
         "trajectory_boundary_model_version": boundary_model,
         "trajectory_boundary_claim_level": boundary_claim_level,
+        "brownian_boundary_target_model": brownian_target_model,
+        "brownian_boundary_numerical_scheme": brownian_numerical_scheme,
+        "not_ballistic_specular_collision_claim": True,
+        "not_hindered_hydrodynamics_claim": is_trapezoid,
+        "projection_boundary_surrogate_used": projection_boundary_surrogate_used,
+        "reflection_update_rule_id": reflection_update_rule_id,
+        "reflection_telemetry_scope": reflection_telemetry_scope,
+        "reflection_active_wall_set_reporting": reflection_active_wall_set_reporting,
+        "reflection_iteration_count_reporting": reflection_iteration_count_reporting,
+        "reflection_displacement_reporting": reflection_displacement_reporting,
         "wall_distance_model": wall_distance_model,
         "wall_distance_model_version": wall_distance_model,
         "wall_distance_claim_level": wall_distance_claim_level,

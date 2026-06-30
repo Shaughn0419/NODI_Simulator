@@ -46,7 +46,7 @@ The current supported split is:
 | Gate26 Package C external-review integration | User-pasted external-AI feedback is captured as a SHA-locked source artifact; `READY_FOR_IMPLEMENTATION_DESIGN_ONLY` is integrated as design constraints only, with Skorokhod Brownian target, required tests/schema fields, blocked model ledgers, and no-auth firewall preserved. | `tests/test_nodi_comsol_gate26_sidewall_package_c_external_review_integration.py` |
 | Gate27 Package C implementation-design preflight | Gate26 constraints are converted into future implementation backlog, proof-artifact contract, fail-closed matrix, validation plan, and no-auth firewall; no Package C proof is registered and `package_C_validation_status=pass` remains blocked. | `tests/test_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py` |
 | Package C Skorokhod implementation candidate | After explicit user authorization for implementation code and unit tests, trapezoid diffusive plug-flow trajectories use `trapezoid_skorokhod_normal_reflection_euler_active_set_v1`; geometry exposes wall constraints and inward normals; validators require `finite_step_reflection_surrogate_not_hindered_hydrodynamics_not_package_c_proof_registered`. | `test_single_wall_reflection_matches_folded_normal_limit`, `test_reflected_trajectory_has_no_boundary_atom_after_sidewall_crossing`, `test_corner_active_set_reflection_converges_inside_support`, `test_pure_brownian_step_preserves_accessible_area_equilibrium_moments`, `test_dt_halving_converges_wall_distance_distribution`, `test_rectangle_limit_matches_rectangular_reflection`, `test_position_response_sidewall_v2_accepts_skorokhod_boundary_with_no_proof_claim` |
-| Package C reflection telemetry | The geometry primitive can return active wall ids, reflection iteration count, total reflection displacement, and convergence status for one finite-step reflection update while preserving the tuple-return runtime API. | `test_reflection_diagnostics_noop_for_inside_trial_point`, `test_single_wall_reflection_matches_folded_normal_limit`, `test_corner_active_set_reflection_converges_inside_support` |
+| Package C reflection telemetry | The geometry primitive can return active wall ids, reflection iteration count, total reflection displacement, and convergence status for one finite-step reflection update while preserving the tuple-return runtime API. Audit-only trajectory diagnostics now expose the Brownian target model, numerical scheme, no-specular/no-hindered guards, projection-surrogate flag, reflection update rule id, and telemetry reporting scope. | `test_reflection_diagnostics_noop_for_inside_trial_point`, `test_single_wall_reflection_matches_folded_normal_limit`, `test_corner_active_set_reflection_converges_inside_support`, `test_trapezoid_trajectory_diagnostics_mark_skorokhod_boundary` |
 
 ## Still Blocked
 
@@ -135,6 +135,18 @@ pass
 python -m pytest tests/test_cross_section_geometry.py tests/test_trajectory.py -q
 51 passed in 0.79s
 
+python -m pytest tests/test_cross_section_geometry.py -q -k "trajectory_diagnostics"
+3 passed, 44 deselected in 0.49s
+
+python -m py_compile nodi_simulator/trajectory.py
+pass
+
+python -m pytest tests/test_cross_section_geometry.py tests/test_trajectory.py -q
+51 passed in 4.60s
+
+python -m pytest tests/test_physics_core.py::TestIntegration::test_claim_state_machine_smoke_matrix_exports_route_and_boundaries -q
+1 passed in 0.20s
+
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k "sidewall or production_candidate_validator"
 314 passed, 169 deselected in 29.14s
 
@@ -174,4 +186,4 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 
 1. Keep strengthening no-compute validators and mutation tests for profile/source-hash drift and geometry-source promotion.
 2. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
-3. Continue Package C code-level hardening next: propagate reflection telemetry into audit-only diagnostics and add a future proof-artifact registry/allowlist. Do not register proof or mark Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.
+3. Continue Package C code-level hardening next: add angle/depth mutation checks on reflected wall-distance distributions and add a future proof-artifact registry/allowlist. Do not register proof or mark Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.

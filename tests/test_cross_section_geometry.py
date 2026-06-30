@@ -1325,6 +1325,14 @@ def test_trapezoid_trajectory_diagnostics_mark_pure_advection_boundary() -> None
         "channel_geometry_runtime_guards_and_prs_eas_validators"
     )
     assert diagnostics["trajectory_boundary_model"] == "not_applicable_pure_advection"
+    assert diagnostics["brownian_boundary_target_model"] == "not_applicable_no_diffusion"
+    assert diagnostics["brownian_boundary_numerical_scheme"] == (
+        "not_applicable_no_diffusion"
+    )
+    assert diagnostics["reflection_telemetry_scope"] == "not_applicable"
+    assert diagnostics["reflection_active_wall_set_reporting"] is False
+    assert diagnostics["reflection_iteration_count_reporting"] is False
+    assert diagnostics["reflection_displacement_reporting"] is False
     assert diagnostics["wall_distance_model"] == (
         "not_applicable_diffusion_hindrance_none"
     )
@@ -1358,6 +1366,24 @@ def test_trapezoid_trajectory_diagnostics_mark_skorokhod_boundary() -> None:
         diagnostics["trajectory_boundary_claim_level"]
         == TRAPEZOID_SKOROKHOD_BOUNDARY_CLAIM_LEVEL
     )
+    assert diagnostics["brownian_boundary_target_model"] == (
+        "skorokhod_normal_reflection_convex_offset_trapezoid_v1"
+    )
+    assert diagnostics["brownian_boundary_numerical_scheme"] == (
+        "finite_step_wall_normal_active_set_reflection_v1"
+    )
+    assert diagnostics["not_ballistic_specular_collision_claim"] is True
+    assert diagnostics["not_hindered_hydrodynamics_claim"] is True
+    assert diagnostics["projection_boundary_surrogate_used"] is False
+    assert diagnostics["reflection_update_rule_id"] == (
+        "wall_normal_folded_active_set_iteration_v1"
+    )
+    assert diagnostics["reflection_telemetry_scope"] == (
+        "single_step_geometry_diagnostics"
+    )
+    assert diagnostics["reflection_active_wall_set_reporting"] is True
+    assert diagnostics["reflection_iteration_count_reporting"] is True
+    assert diagnostics["reflection_displacement_reporting"] is True
     assert diagnostics["geometry_propagation_status"] == (
         "sidewall_skorokhod_boundary_surrogate_propagated"
     )
