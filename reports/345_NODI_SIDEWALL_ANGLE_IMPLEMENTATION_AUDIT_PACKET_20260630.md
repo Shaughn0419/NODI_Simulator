@@ -25,6 +25,7 @@ The current supported split is:
 | Descriptor identity signature binding | PRS/EAS sidewall v2 signatures bind angle convention, COMSOL angle, top/depth/bottom dimensions, source descriptor hash, runtime binding version, closure status/policy, runtime guard status, and reject numeric `runtime_top_aperture_nm` when the row has no runtime aperture value. | `test_position_response_sidewall_v2_rejects_signature_runtime_aperture_without_row_value`, `test_effective_aperture_sidewall_v2_rejects_signature_runtime_aperture_without_row_value` |
 | COMSOL descriptor profile hash binding | When `geometry_profile_source=comsol_descriptor`, sidewall PRS/EAS rows require `geometry_profile_sha256` to match `source_geometry_descriptor_sha`. | `test_position_response_sidewall_v2_rejects_comsol_descriptor_profile_sha_mismatch`, `test_effective_aperture_sidewall_v2_rejects_comsol_descriptor_profile_sha_mismatch` |
 | Profile identity signature binding | Observation signatures bind `geometry_profile_source`, `geometry_claim_level`, and `metrology_status` in both actual batch signatures and PRS/EAS sidewall v2 rows. | `test_sidewall_observation_signature_records_geometry_propagation_fields`, `test_position_response_sidewall_v2_rejects_signature_profile_identity_mismatch`, `test_effective_aperture_sidewall_v2_rejects_signature_profile_identity_mismatch` |
+| Gate14 no-auth implementation contract | Gate14 release contract keeps NODI sidewall guards review-only and accepts the known COMSOL Gate14 successor head while preserving the Gate13 package receipt boundary. | `test_nodi_comsol_gate14_sidewall_implementation_contract.py`, `test_nodi_comsol_gate13_sidewall_guard_convergence.py` |
 | Measured-profile lookup guard | Runtime channel-geometry diagnostics and batch outputs keep `measured_profile_lookup` blocked metadata-only until profile load/hash/validation exists, and bind measured-profile status fields into observation signatures. | `test_measured_profile_lookup_with_path_stays_blocked_until_loaded_and_validated`, `test_observation_signature_separates_secondary_geometry_descriptors`, `test_batch_signature_keeps_measured_profile_lookup_blocked_until_validated` |
 | Measured-geometry claim guard | Descriptor v2 measured-geometry claims require loaded and validated measured-profile metadata; path/hash/source alone are insufficient. | `test_geometry_descriptor_v2_rejects_unloaded_measured_geometry_metadata` |
 | Sampler propagation | Trapezoid sampler emits support status, steric block reason, nearest-wall distances, and surface gap diagnostics. | `nodi_simulator/utils.py` |
@@ -56,13 +57,13 @@ The following remain blocked and must not be inferred from current sidewall-awar
 Latest clean-tree sidewall mainline regression command:
 
 ```text
-python -m pytest tests/test_cross_section_geometry.py tests/test_nodi_comsol_next_artifacts_contracts.py tests/test_nodi_comsol_gate11_sidewall_convergence.py tests/test_nodi_comsol_gate12_sidewall_addendum_release_candidate.py tests/test_nodi_comsol_gate13_sidewall_guard_convergence.py tests/test_physics_core.py::TestIntegration::test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics tests/test_physics_core.py::TestIntegration::test_batch_signature_keeps_measured_profile_lookup_blocked_until_validated -q
+python -m pytest tests/test_cross_section_geometry.py tests/test_nodi_comsol_next_artifacts_contracts.py tests/test_nodi_comsol_gate11_sidewall_convergence.py tests/test_nodi_comsol_gate12_sidewall_addendum_release_candidate.py tests/test_nodi_comsol_gate13_sidewall_guard_convergence.py tests/test_nodi_comsol_gate14_sidewall_implementation_contract.py tests/test_physics_core.py::TestIntegration::test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics tests/test_physics_core.py::TestIntegration::test_batch_signature_keeps_measured_profile_lookup_blocked_until_validated -q
 ```
 
 Latest result:
 
 ```text
-492 passed in 137.42s (0:02:17)
+504 passed in 182.35s (0:03:02)
 ```
 
 Additional focused verification after adding the latest claim-alias, blocked-bin, profile-hash, and profile-identity guards:
