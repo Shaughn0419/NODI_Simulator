@@ -1,19 +1,19 @@
 reviewer_id,dimension,verdict,notes
-RC1-REVIEW-01,git cleanliness,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,RC1 remains partial until dirty source-lock blockers are cleared.
-RC1-REVIEW-02,source lock,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-03,Gate17-25 coverage,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-04,COMSOL Gate16 ACK,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-05,semantic digest,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-06,fixture replay,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-07,validator binding,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-08,Package A/B/D boundary,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-09,Package C auth lock,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-10,phrase gate,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-11,no-auth leakage,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-12,q_ch/JRC aliases,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-13,runtime/production locks,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-14,manifest/SHA stability,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-15,test coverage,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-16,decision wording,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-17,Git scope,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
-RC1-REVIEW-18,future handoff clarity,PASS_WITH_FAIL_CLOSED_SOURCE_LOCK_BLOCKER,No authorization or runtime promotion found.
+RC1-REVIEW-01,git cleanliness,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-02,source lock,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-03,Gate17-25 coverage,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-04,COMSOL Gate16 ACK,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-05,semantic digest,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-06,fixture replay,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-07,validator binding,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-08,Package A/B/D boundary,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-09,Package C auth lock,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-10,phrase gate,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-11,no-auth leakage,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-12,q_ch/JRC aliases,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-13,runtime/production locks,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-14,manifest/SHA stability,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-15,test coverage,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-16,decision wording,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-17,Git scope,PASS,No authorization or runtime promotion found.
+RC1-REVIEW-18,future handoff clarity,PASS,No authorization or runtime promotion found.
