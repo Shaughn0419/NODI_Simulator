@@ -1231,11 +1231,24 @@ Gate30/31 now adds a GitHub-visible Package C proof-metrics candidate:
 
 This Gate30/31 candidate is deliberately stronger than a design-only checklist, but it is still not a proof/pass registration. It is the evidence package that an external reviewer can inspect before any future, separate authorization supersedes the no-auth ledger.
 
-## 10. Recommended next action
+## 10. Current Gate32 status
 
-Current safe route after Gate30/31:
+Gate32 packages the Gate30/31 candidate into a GitHub-visible external AI research/synthesis handoff:
 
-1. Send the Gate30/31 external review prompt plus the GitHub-visible artifacts for independent review of thresholds, telemetry, and claim language.
+- Disposition: `NODI_GATE32_SIDEWALL_PACKAGE_C_EXTERNAL_REVIEW_HANDOFF_READY_NO_PROOF_REGISTRATION`.
+- Scope: external research/synthesis prompt, review intake, GitHub path map, research agenda, authorization-supersession preflight, and no-proof firewall.
+- GitHub path map rows: `15`, covering the prompt, Gate30/31 status, raw/summary metrics, candidate manifest, evidence map, firewall, parameter/seed matrices, geometry and trajectory source, builder/tests, roadmap, and audit packet.
+- Research synthesis questions: `10`, covering reflected Brownian / Skorokhod foundations, finite-step algorithms, one-wall tests, equilibrium uniformity, boundary atom diagnostics, corner active-set behavior, dt-convergence thresholds, proof schema, blocked physics boundaries, and go-forward engineering route.
+- Authorization-supersession preflight rows: `21`, including required external review verdict/hash, reviewed candidate hashes, reviewed commit sha, manual authorization record, proof-registry update plan, and all no-claim guards.
+- Current boundary remains: `external_review_received=false`; `authorization_supersedes_no_auth_ledger=false`; `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+Gate32 is the correct packet to send to an external AI because it does not assume local file visibility, and it does not merely ask for another audit. It explicitly asks the external AI to search broader technical/literature sources, compare methods, propose thresholds and test matrices, identify claim-boundary risks, and return a route that should support several future gates. It still asks for one of three verdicts: `READY_FOR_PROOF_REGISTRATION_AUTHORIZATION_DESIGN_REVIEW_ONLY`, `NEEDS_MORE_CANDIDATE_EVIDENCE`, or `BLOCKED_CLAIM_PROMOTION`.
+
+## 11. Recommended next action
+
+Current safe route after Gate32:
+
+1. Send the Gate32 external research/synthesis handoff prompt plus the GitHub-visible artifact map for source-backed analysis of Brownian reflection methods, thresholds, proof evidence, blocked physics boundaries, and go-forward route.
 2. If external review returns no claim-boundary issues, create a separate future authorization gate that explicitly supersedes the current no-auth ledger before any proof registry update.
 3. Only after that future authorization may a proof registry row be considered; even then, the allowed claim level should stay `finite_step_reflection_surrogate_validated_by_required_tests`, not hydrodynamic, wet, optical, route, yield, or detection validation.
 4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.

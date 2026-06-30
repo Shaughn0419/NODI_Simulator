@@ -246,6 +246,22 @@ runtime_allowed=false
 numeric_prs_eas_allowed=false
 comsol_launch_allowed=false
 mph_load_allowed=false
+
+python tools/audits/build_nodi_comsol_gate32_sidewall_package_c_external_review_handoff.py --confirm-gate32-package-c-external-review-handoff
+NODI_GATE32_SIDEWALL_PACKAGE_C_EXTERNAL_REVIEW_HANDOFF_READY_NO_PROOF_REGISTRATION
+gate30_31_metric_statuses_pass=true
+github_path_map_rows=15
+research_synthesis_question_rows=10
+authorization_supersession_preflight_rows=21
+source_missing_rows=0
+external_review_received=false
+authorization_supersedes_no_auth_ledger=false
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
 ```
 
 Additional CLI/compile verification:
@@ -275,7 +291,7 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 
 ## Next Safe Actions
 
-1. Send the Gate30/31 external review prompt and artifacts for independent review of candidate metrics, thresholds, and claim language.
+1. Send the Gate32 external research/synthesis handoff prompt and GitHub path map for source-backed analysis of Brownian reflection methods, thresholds, proof evidence, blocked physics boundaries, and go-forward route.
 2. If external review finds no claim-boundary issues, create a separate future authorization gate that explicitly supersedes the current no-auth ledger before any proof registry update.
 3. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
 4. Do not register proof or mark Package C as passed in the current gate.
