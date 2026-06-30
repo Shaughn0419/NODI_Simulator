@@ -1,0 +1,33 @@
+{
+  "disposition": "NODI_GATE20_SIDEWALL_STATIC_CONTINUITY_HARD_FAIL_VALIDATOR_READY_NO_AUTH",
+  "summary": {
+    "disposition": "NODI_GATE20_SIDEWALL_STATIC_CONTINUITY_HARD_FAIL_VALIDATOR_READY_NO_AUTH",
+    "nodi_current_head": "e67c404118648d52af2a99a5995cbd1ee024c6ec",
+    "expected_gate19_head": "e67c404118648d52af2a99a5995cbd1ee024c6ec",
+    "gate19_head_is_ancestor_of_current": true,
+    "comsol_head_actual": "ed4cfc7ff4565f79c025cd206bef0aff29d25d6a",
+    "expected_comsol_gate16_head": "ed4cfc7ff4565f79c025cd206bef0aff29d25d6a",
+    "comsol_gate16_status": "COMSOL_GATE16_CURRENT_NODI_CLEAN_REINTAKE_CONSUMED_CONTEXT_ONLY_NO_AUTH",
+    "comsol_anchor_digest": "4255d9533a8d150d6a740d03ead267323e868b5560b7051ce5d5ccc0ed3c2c16",
+    "comsol_consumed_nodi_head": "cc5bd20251dd6ebd2b0428ad8d121100991d1bfb",
+    "comsol_consumed_nodi_head_is_ancestor_of_gate19": true,
+    "gate19_disposition": "NODI_GATE19_SIDEWALL_PACKAGE_ABD_STATIC_PREFLIGHT_PASS_NO_AUTH",
+    "gate19_manifest_rows": 6,
+    "gate19_source_drift": 0,
+    "gate19_missing_sources": 0,
+    "gate19_package_a_status": "PASS_STATIC_PREFLIGHT_NO_RUNTIME",
+    "gate19_package_b_status": "PASS_STATIC_PREFLIGHT_NO_RUNTIME",
+    "gate19_package_c_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+    "gate19_package_d_status": "PASS_CONTRACT_PREFLIGHT_NO_RUNTIME",
+    "hard_fail_validator_rows": 29,
+    "runtime_allowed_rows": 0,
+    "production_allowed_rows": 0,
+    "package_c_state": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+    "no_auth_firewall_failures": 0,
+    "external_ai_needed_now": false,
+    "review_only": true,
+    "no_auth": true
+  },
+  "review_only": true,
+  "no_auth": true
+}
