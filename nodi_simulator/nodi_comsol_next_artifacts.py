@@ -1032,6 +1032,20 @@ SIDEWALL_PACKAGE_D_PACKAGE_C_STATUS_ALLOWED = frozenset(
     {"pass", "not_applicable_for_this_artifact"}
 )
 SIDEWALL_PACKAGE_D_PRECHECK_STATUS_ALLOWED = frozenset({"pass", "blocked"})
+SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS = "package_C_validation_proof_pass"
+SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE = (
+    "trajectory_boundary_and_wall_distance_runtime_propagation"
+)
+SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY = (
+    "runtime_geometry_propagation_only_no_hindered_diffusion_no_flow_no_wet_claim"
+)
+SIDEWALL_PACKAGE_C_PROOF_REQUIRED_FIELDS: tuple[str, ...] = (
+    "package_C_proof_artifact_id",
+    "package_C_proof_artifact_sha256",
+    "package_C_proof_artifact_status",
+    "package_C_proof_artifact_scope",
+    "package_C_proof_claim_boundary",
+)
 SIDEWALL_PACKAGE_D_PRECHECK_TRUE_FIELDS: tuple[str, ...] = (
     "no_forbidden_claim_columns",
     "no_rectangular_cache_reuse",
@@ -1670,6 +1684,51 @@ def assert_valid_effective_aperture_surrogate_csv(csv_path: Path, **kwargs: Any)
         raise ContractValidationError(APERTURE_SURROGATE_ARTIFACT, issues)
 
 
+def _validate_sidewall_package_c_proof_binding(
+    row: Mapping[str, Any],
+    row_index: int,
+    issues: list[str],
+) -> bool:
+    proof_ok = True
+    for field in SIDEWALL_PACKAGE_C_PROOF_REQUIRED_FIELDS:
+        if not _value(row, field):
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V03",
+                f"package_C_validation_status=pass requires {field}",
+            )
+            proof_ok = False
+
+    proof_sha = _value(row, "package_C_proof_artifact_sha256")
+    if proof_sha and not SHA256_RE.fullmatch(proof_sha):
+        _issue(
+            issues,
+            row_index,
+            "SIDEWALL-D-PRECHECK-V03",
+            "package_C_proof_artifact_sha256 is not sha256",
+        )
+        proof_ok = False
+
+    expected_values = {
+        "package_C_proof_artifact_status": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
+        "package_C_proof_artifact_scope": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
+        "package_C_proof_claim_boundary": SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
+    }
+    for field, expected in expected_values.items():
+        actual = _value(row, field)
+        if actual and actual != expected:
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V03",
+                f"{field}={actual} does not match required Package C proof binding",
+            )
+            proof_ok = False
+
+    return proof_ok
+
+
 def validate_sidewall_package_d_precheck_rows(rows: Sequence[Mapping[str, Any]]) -> list[str]:
     issues: list[str] = []
     if not rows:
@@ -1753,6 +1812,13 @@ def validate_sidewall_package_d_precheck_rows(rows: Sequence[Mapping[str, Any]])
                 "SIDEWALL-D-PRECHECK-V03",
                 "trajectory/near-wall Package D artifacts require package_C_validation_status=pass",
             )
+        package_c_proof_ok = package_c_status != "pass"
+        if package_c_status == "pass":
+            package_c_proof_ok = _validate_sidewall_package_c_proof_binding(
+                row,
+                row_index,
+                issues,
+            )
 
         true_fields_ok = True
         for field in SIDEWALL_PACKAGE_D_PRECHECK_TRUE_FIELDS:
@@ -1774,7 +1840,13 @@ def validate_sidewall_package_d_precheck_rows(rows: Sequence[Mapping[str, Any]])
                 "SIDEWALL-D-PRECHECK-V05",
                 f"invalid package_d_precheck_status={precheck_status}",
             )
-        package_c_ok = package_c_status == "pass" or includes_near_wall is False
+        package_c_ok = (
+            (package_c_status == "pass" and package_c_proof_ok)
+            or (
+                includes_near_wall is False
+                and package_c_status == "not_applicable_for_this_artifact"
+            )
+        )
         if precheck_status == "pass" and not (package_a_ok and package_b_ok and package_c_ok and true_fields_ok):
             _issue(
                 issues,

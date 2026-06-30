@@ -5,7 +5,7 @@ import math
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import pytest
 
@@ -146,6 +146,9 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     PRODUCTION_GENERATION_BLOCKED_STATUS,
     PRODUCTION_GENERATION_PARTIAL_STATUS,
     PRODUCTION_GENERATION_PASS_STATUS,
+    SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
+    SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
+    SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
     PRS_SIDEWALL_V2_BLOCKED_RESPONSE_VALUE_FIELDS,
     build_position_response_bin_source_rows_from_events,
     build_position_response_event_rows_from_nodi_events,
@@ -466,6 +469,29 @@ def _sidewall_runtime_propagation_guard_fields() -> dict[str, object]:
     }
 
 
+def _sidewall_package_c_proof_fields(
+    package_C_validation_status: str,
+) -> dict[str, object]:
+    if package_C_validation_status != "pass":
+        return {
+            "package_C_proof_artifact_id": "",
+            "package_C_proof_artifact_sha256": "",
+            "package_C_proof_artifact_status": "",
+            "package_C_proof_artifact_scope": "",
+            "package_C_proof_claim_boundary": "",
+        }
+
+    return {
+        "package_C_proof_artifact_id": (
+            "package-C-trajectory-wall-distance-validation-fixture"
+        ),
+        "package_C_proof_artifact_sha256": "c" * 64,
+        "package_C_proof_artifact_status": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
+        "package_C_proof_artifact_scope": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
+        "package_C_proof_claim_boundary": SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
+    }
+
+
 def _sidewall_package_d_precheck_fields(
     target_artifact_family: str = "eas",
     includes_trajectory_near_wall_metrics: str = "false",
@@ -485,6 +511,7 @@ def _sidewall_package_d_precheck_fields(
         "no_D900_to_D1200_borrowing": "true",
         "no_auto_220_300nm_admission": "true",
         "package_d_precheck_status": "pass",
+        **_sidewall_package_c_proof_fields(package_C_validation_status),
     }
 
 
@@ -684,7 +711,21 @@ def _valid_eas_sidewall_v2_row(**overrides: object) -> dict[str, object]:
 
 
 def _valid_sidewall_package_d_precheck_row(**overrides: object) -> dict[str, object]:
-    row: dict[str, object] = _sidewall_package_d_precheck_fields("eas")
+    target_artifact_family = str(overrides.pop("target_artifact_family", "eas"))
+    includes_trajectory_near_wall_metrics = str(
+        overrides.pop("includes_trajectory_near_wall_metrics", "false")
+    )
+    package_C_validation_status = str(
+        overrides.pop(
+            "package_C_validation_status",
+            "not_applicable_for_this_artifact",
+        )
+    )
+    row: dict[str, object] = _sidewall_package_d_precheck_fields(
+        target_artifact_family=target_artifact_family,
+        includes_trajectory_near_wall_metrics=includes_trajectory_near_wall_metrics,
+        package_C_validation_status=package_C_validation_status,
+    )
     row.update(overrides)
     return row
 
@@ -792,6 +833,351 @@ SIDEWALL_FORBIDDEN_ALIAS_COLUMNS_FOR_TEST = (
     "route_rank_value",
     "sidewall_rank_value",
 )
+
+
+def _without_fields(row: dict[str, object], *fields: str) -> dict[str, object]:
+    for field in fields:
+        row.pop(field, None)
+    return row
+
+
+def _replace_observation_signature(
+    row: dict[str, object],
+    old: str,
+    new: str,
+) -> dict[str, object]:
+    row["observation_signature"] = str(row["observation_signature"]).replace(old, new)
+    return row
+
+
+SIDEWALL_ROADMAP_HARD_FAIL_EXECUTION_MATRIX: tuple[
+    tuple[str, Callable[[], list[str]], tuple[str, ...]],
+    ...,
+] = (
+    (
+        "A_missing_angle_convention",
+        lambda: validate_geometry_descriptor_rows(
+            [_without_fields(_valid_descriptor_v2_row(), "sidewall_angle_convention")]
+        ),
+        ("DESC-V2",),
+    ),
+    (
+        "A_angle_conversion_mismatch",
+        lambda: validate_geometry_descriptor_rows(
+            [_valid_descriptor_v2_row(sidewall_taper_angle_deg_nodi=85.0)]
+        ),
+        ("DESC-V2",),
+    ),
+    (
+        "A_bare_runtime_top_aperture_binding",
+        lambda: validate_geometry_descriptor_rows(
+            [_valid_descriptor_v2_row(W_top_semantics="runtime_top_aperture")]
+        ),
+        ("DESC-V2",),
+    ),
+    (
+        "A_silent_negative_bottom_clip_proxy",
+        lambda: validate_geometry_descriptor_rows(
+            [
+                _valid_descriptor_v2_row(
+                    sidewall_deg_comsol=70.0,
+                    D_nm=700.0,
+                    min_aperture_nm=0.0,
+                    min_aperture_descriptor_nm=0.0,
+                )
+            ]
+        ),
+        ("DESC-V2",),
+    ),
+    (
+        "A_nonpositive_bottom_marked_open",
+        lambda: validate_geometry_descriptor_rows(
+            [
+                _valid_descriptor_v2_row(
+                    sidewall_deg_comsol=70.0,
+                    D_nm=700.0,
+                    closure_status="open",
+                )
+            ]
+        ),
+        ("DESC-V2",),
+    ),
+    (
+        "A_min_aperture_used_as_passability",
+        lambda: validate_geometry_descriptor_rows(
+            [
+                _valid_descriptor_v2_row(
+                    min_aperture_descriptor_passability_evidence="particle_admitted"
+                )
+            ]
+        ),
+        ("DESC-V2",),
+    ),
+    (
+        "A_measured_geometry_without_profile",
+        lambda: validate_geometry_descriptor_rows(
+            [_valid_descriptor_v2_row(geometry_claim_level="measured_geometry")]
+        ),
+        ("DESC-V2",),
+    ),
+    (
+        "A_source_hash_missing_for_context",
+        lambda: validate_position_response_surface_rows(
+            [_valid_prs_sidewall_v2_row(source_geometry_descriptor_sha="not-a-sha")]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "A_claim_boundary_missing",
+        lambda: validate_effective_aperture_surrogate_rows(
+            [_without_fields(_valid_eas_sidewall_v2_row(), "claim_boundary")]
+        ),
+        ("EAS-V01",),
+    ),
+    (
+        "B_runtime_without_geometry_primitive",
+        lambda: validate_position_response_surface_rows(
+            [_valid_prs_sidewall_v2_row(cross_section_geometry_version="")]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "B_rectangular_sampler_under_trapezoid",
+        lambda: validate_position_response_surface_rows(
+            [_valid_prs_sidewall_v2_row(sampler_geometry_model="rectangular_half_span_v1")]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "B_uniform_accessible_area_label_mismatch",
+        lambda: validate_position_response_surface_rows(
+            [_valid_prs_sidewall_v2_row(sampler_geometry_model="uniform_accessible_area")]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "B_sample_outside_center_support",
+        lambda: validate_position_response_surface_rows(
+            [_valid_prs_sidewall_v2_row(surface_gap_for_particle_nm=-1.0)]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "B_blocked_bin_has_response",
+        lambda: validate_position_response_surface_rows(
+            [
+                _valid_prs_sidewall_v2_row(
+                    bin_accessible="false",
+                    bin_accessible_area_fraction=0.0,
+                    bin_particle_center_support_status="blocked",
+                    blocked_reason="steric_blocked",
+                    decision_use_allowed="false",
+                    steric_support_source="not_available",
+                    response_value=0.42,
+                )
+            ]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "B_neighbor_fill_blocked_bin",
+        lambda: validate_position_response_surface_rows(
+            [
+                _valid_prs_sidewall_v2_row(
+                    bin_accessible="false",
+                    bin_accessible_area_fraction=0.0,
+                    bin_particle_center_support_status="blocked",
+                    blocked_reason="steric_blocked",
+                    decision_use_allowed="false",
+                    neighbor_fill_used="true",
+                )
+            ]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "B_flux_weighted_without_trapezoid_flow_model",
+        lambda: validate_position_response_surface_rows(
+            [_valid_prs_sidewall_v2_row(sampler_geometry_model="trapezoid_flux_weighted_v1")]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "D_prs_without_geometry_basis",
+        lambda: validate_position_response_surface_rows(
+            [_without_fields(_valid_prs_sidewall_v2_row(), "position_distribution_basis")]
+        ),
+        ("PRS",),
+    ),
+    (
+        "D_prs_without_particle_radius_support",
+        lambda: validate_position_response_surface_rows(
+            [_without_fields(_valid_prs_sidewall_v2_row(), "particle_radius_nm")]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "D_edge4_to_edge20_direct_mapping",
+        lambda: validate_position_response_surface_rows(
+            [
+                _valid_prs_sidewall_v2_row(
+                    source_bin_basis="edge_norm_1d_edge4",
+                    bin_basis="edge_norm_1d_edge20",
+                )
+            ]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "D_D900_to_D1200_borrowing",
+        lambda: validate_position_response_surface_rows(
+            [
+                _valid_prs_sidewall_v2_row(
+                    route_id_nodi="404/W500/D1200",
+                    D_nm=1200,
+                    source_D_nm=900,
+                    **_sidewall_descriptor_context_fields(depth_nm=1200.0),
+                )
+            ]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "D_auto_220_300nm_admission",
+        lambda: validate_position_response_surface_rows(
+            [
+                _valid_prs_sidewall_v2_row(
+                    tail_particle_auto_admitted="true",
+                    steric_support_source="not_available",
+                )
+            ]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "D_comsol_context_not_exact_prs_grain",
+        lambda: validate_position_response_surface_rows(
+            [
+                _without_fields(
+                    _valid_prs_sidewall_v2_row(),
+                    "source_route_id_nodi",
+                    "source_bin_id",
+                )
+            ]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "D_bare_W_eff",
+        lambda: validate_effective_aperture_surrogate_rows(
+            [_valid_eas_sidewall_v2_row(W_eff=500.0)]
+        ),
+        ("EAS-V26",),
+    ),
+    (
+        "D_solver_trigger_as_solver_output",
+        lambda: validate_effective_aperture_surrogate_rows(
+            [_valid_eas_sidewall_v2_row(optical_solver_trigger_is_result="true")]
+        ),
+        ("EAS-SIDEWALL-V2",),
+    ),
+    (
+        "D_rank_or_score_field_present",
+        lambda: validate_effective_aperture_surrogate_rows(
+            [_valid_eas_sidewall_v2_row(rank_under_surrogate=1)]
+        ),
+        ("EAS-SIDEWALL-V2",),
+    ),
+    (
+        "D_claim_flags_missing",
+        lambda: validate_effective_aperture_surrogate_rows(
+            [_valid_eas_sidewall_v2_row(not_detection_probability="false")]
+        ),
+        ("EAS-SIDEWALL-V2",),
+    ),
+    (
+        "D_package_c_pass_without_proof_artifact",
+        lambda: validate_sidewall_package_d_precheck_rows(
+            [
+                _without_fields(
+                    _valid_sidewall_package_d_precheck_row(
+                        target_artifact_family="prs",
+                        includes_trajectory_near_wall_metrics="true",
+                        package_C_validation_status="pass",
+                    ),
+                    "package_C_proof_artifact_id",
+                    "package_C_proof_artifact_sha256",
+                    "package_C_proof_artifact_status",
+                    "package_C_proof_artifact_scope",
+                    "package_C_proof_claim_boundary",
+                )
+            ]
+        ),
+        ("SIDEWALL-D-PRECHECK-V03",),
+    ),
+    (
+        "D_package_c_pass_with_bad_proof_hash",
+        lambda: validate_sidewall_package_d_precheck_rows(
+            [
+                _valid_sidewall_package_d_precheck_row(
+                    target_artifact_family="prs",
+                    includes_trajectory_near_wall_metrics="true",
+                    package_C_validation_status="pass",
+                    package_C_proof_artifact_sha256="not-a-sha",
+                )
+            ]
+        ),
+        ("SIDEWALL-D-PRECHECK-V03",),
+    ),
+    (
+        "G8_old_rectangular_cache_reuse",
+        lambda: validate_position_response_surface_rows(
+            [
+                _valid_prs_sidewall_v2_row(
+                    cache_geometry_match_status="blocked_old_rectangular_cache"
+                )
+            ]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "G8_signature_closure_policy_drift",
+        lambda: validate_position_response_surface_rows(
+            [
+                _replace_observation_signature(
+                    _valid_prs_sidewall_v2_row(),
+                    "trapezoid_closure_policy=preserve_unclipped_descriptor",
+                    "trapezoid_closure_policy=blocked_runtime",
+                )
+            ]
+        ),
+        ("PRS-SIDEWALL-V2",),
+    ),
+    (
+        "G8_positive_sidewall_aware_shortcut",
+        lambda: validate_sidewall_package_d_precheck_rows(
+            [_valid_sidewall_package_d_precheck_row(sidewall_aware="true")]
+        ),
+        ("SIDEWALL-D-PRECHECK-V06",),
+    ),
+)
+
+
+@pytest.mark.parametrize(
+    ("case_id", "issue_factory", "expected_rule_ids"),
+    SIDEWALL_ROADMAP_HARD_FAIL_EXECUTION_MATRIX,
+    ids=[case_id for case_id, _, _ in SIDEWALL_ROADMAP_HARD_FAIL_EXECUTION_MATRIX],
+)
+def test_sidewall_roadmap_hard_fail_matrix_executes_real_validators(
+    case_id: str,
+    issue_factory: Callable[[], list[str]],
+    expected_rule_ids: tuple[str, ...],
+) -> None:
+    issues = issue_factory()
+
+    assert issues, f"{case_id} unexpectedly passed without validator issues"
+    for rule_id in expected_rule_ids:
+        _assert_has_issue(issues, rule_id)
 
 
 def test_comsol_v4_default_context_is_readonly_and_out_of_scope_for_dry_optical() -> None:
