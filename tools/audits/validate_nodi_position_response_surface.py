@@ -56,7 +56,7 @@ def main(argv: list[str] | None = None) -> int:
         for issue in issues:
             print(f"- {issue}")
         return 1
-    print(f"{POSITION_RESPONSE_ARTIFACT}: PASS")
+    print(f"{POSITION_RESPONSE_ARTIFACT}: PASS_CONTEXT_ONLY_NOT_PRODUCTION")
     return 0
 
 

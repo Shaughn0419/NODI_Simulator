@@ -761,6 +761,7 @@ SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPE_REQUIRED_FIELDS: tuple[str, ...] = (
 )
 SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPES = frozenset(
     {
+        "particle_center_support_only_not_reference_fluidic_electrokinetic",
         "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic",
         "aperture_surrogate_only_not_true_runtime",
         "blocked_non_propagated_audit",
@@ -768,7 +769,7 @@ SIDEWALL_V2_GEOMETRY_PROPAGATION_SCOPES = frozenset(
     }
 )
 PRS_SIDEWALL_V2_PROPAGATED_SCOPE = (
-    "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
+    "particle_center_support_only_not_reference_fluidic_electrokinetic"
 )
 EAS_SIDEWALL_V2_PROPAGATED_SCOPE = "aperture_surrogate_only_not_true_runtime"
 PRS_SIDEWALL_V2_SOURCE_BIN_REQUIRED_FIELDS: tuple[str, ...] = (
@@ -1033,20 +1034,18 @@ SIDEWALL_PACKAGE_D_PACKAGE_C_STATUS_ALLOWED = frozenset(
     {"pass", "not_applicable_for_this_artifact"}
 )
 SIDEWALL_PACKAGE_D_PRECHECK_STATUS_ALLOWED = frozenset({"pass", "blocked"})
-SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS = "package_C_validation_proof_pass"
+SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS = (
+    "package_C_validation_proof_not_authorized_in_current_no_auth_gate"
+)
 SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE = (
     "trajectory_boundary_and_wall_distance_runtime_propagation"
 )
 SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY = (
     "runtime_geometry_propagation_only_no_hindered_diffusion_no_flow_no_wet_claim"
 )
-SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_ID = (
-    "package-C-trajectory-wall-distance-validation-fixture"
-)
-SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256 = "c" * 64
-SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256_BY_ID: dict[str, str] = {
-    SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_ID: SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256,
-}
+SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_ID = ""
+SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256 = ""
+SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256_BY_ID: dict[str, str] = {}
 SIDEWALL_PACKAGE_C_PROOF_REQUIRED_FIELDS: tuple[str, ...] = (
     "package_C_proof_artifact_id",
     "package_C_proof_artifact_sha256",
@@ -1724,6 +1723,17 @@ def _validate_sidewall_package_c_proof_binding(
     issues: list[str],
 ) -> bool:
     proof_ok = True
+    if not SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256_BY_ID:
+        _issue(
+            issues,
+            row_index,
+            "SIDEWALL-D-PRECHECK-V03",
+            (
+                "package_C_validation_status=pass is blocked until an explicit "
+                "Package C physics authorization proof artifact is registered"
+            ),
+        )
+        proof_ok = False
     for field in SIDEWALL_PACKAGE_C_PROOF_REQUIRED_FIELDS:
         if not _value(row, field):
             _issue(

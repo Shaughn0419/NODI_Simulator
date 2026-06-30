@@ -135,6 +135,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     validate_next_artifacts_runner_authorization_gate_record,
     validate_plan_only_blueprint_bundle,
     validate_bounded_smoke_readiness_report,
+    validate_position_response_production_candidate_csv,
     validate_position_response_production_candidate_rows,
     validate_position_response_surface_rows,
     validate_runner_launch_plan,
@@ -330,7 +331,7 @@ def _sidewall_observation_cache_fields(
     if geometry_propagation_scope is None:
         if channel_model == "trapezoid_tapered_sidewalls":
             geometry_propagation_scope = (
-                "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
+                "particle_center_support_only_not_reference_fluidic_electrokinetic"
             )
         else:
             geometry_propagation_scope = "rectangle_native_or_non_sidewall_geometry"
@@ -546,7 +547,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         cross_section_geometry_version="trapezoid_straight_sidewall_v1",
         geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
         geometry_propagation_status="propagated",
-        geometry_propagation_scope="particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic",
+        geometry_propagation_scope="particle_center_support_only_not_reference_fluidic_electrokinetic",
         geometry_not_propagated_reasons="",
         sampler_geometry_model="trapezoid_accessible_area_v1",
         sampler_support_model="wall_normal_half_plane_offset_v1",
@@ -572,7 +573,7 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         d_nearest_wall_nm=209.828590286,
         nearest_wall_id="left_side",
         surface_gap_for_particle_nm=99.828590286,
-        bin_basis="edge_norm_1d_trapezoid_wall_distance_v1",
+        bin_basis="edge_norm_1d_trapezoid_center_support_v1",
         bin_accessible="true",
         bin_accessible_area_fraction=1.0,
         bin_particle_center_support_status="open",
@@ -600,20 +601,16 @@ def _valid_prs_sidewall_v2_row(**overrides: object) -> dict[str, object]:
         source_route_id_nodi="404/W500/D900",
         source_D_nm=900,
         source_distribution_type="edge_norm_1d",
-        source_bin_basis="edge_norm_1d_trapezoid_wall_distance_v1",
+        source_bin_basis="edge_norm_1d_trapezoid_center_support_v1",
         source_bin_id="edge_00",
         **_sidewall_artifact_metadata_fields("NODI_POSITION_RESPONSE_SIDEWALL_V2"),
         **_sidewall_acceptance_guard_fields(),
         **_sidewall_package_d_precheck_fields(
             "prs",
-            includes_trajectory_near_wall_metrics="true",
-            package_C_validation_status="pass",
+            includes_trajectory_near_wall_metrics="false",
+            package_C_validation_status="not_applicable_for_this_artifact",
         ),
-        **_sidewall_observation_cache_fields(
-            geometry_propagation_scope=(
-                "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
-            )
-        ),
+        **_sidewall_observation_cache_fields(),
         **_sidewall_runtime_propagation_guard_fields(),
         **_sidewall_descriptor_context_fields(),
     )
@@ -1169,14 +1166,18 @@ SIDEWALL_ROADMAP_HARD_FAIL_EXECUTION_MATRIX: tuple[
         ("SIDEWALL-D-PRECHECK-V03",),
     ),
     (
-        "D_package_c_pass_with_registered_hash_mismatch",
+        "D_package_c_pass_without_authorized_registry",
         lambda: validate_sidewall_package_d_precheck_rows(
             [
                 _valid_sidewall_package_d_precheck_row(
                     target_artifact_family="prs",
                     includes_trajectory_near_wall_metrics="true",
                     package_C_validation_status="pass",
+                    package_C_proof_artifact_id="future-package-C-proof",
                     package_C_proof_artifact_sha256="d" * 64,
+                    package_C_proof_artifact_status=SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
+                    package_C_proof_artifact_scope=SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
+                    package_C_proof_claim_boundary=SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
                 )
             ]
         ),
@@ -1257,7 +1258,13 @@ def test_sidewall_prs_csv_rejects_unregistered_package_c_proof(
         prs_path,
         [
             _valid_prs_sidewall_v2_row(
-                package_C_proof_artifact_id="unregistered-package-C-proof"
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="unregistered-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                package_C_proof_artifact_status=SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
+                package_C_proof_artifact_scope=SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
+                package_C_proof_claim_boundary=SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
             )
         ],
     )
@@ -1309,7 +1316,35 @@ def test_sidewall_prs_validator_cli_accepts_valid_sidewall_csv(
     )
 
     assert result.returncode == 0, result.stderr
-    assert "NODI_POSITION_RESPONSE_SURFACE: PASS" in result.stdout
+    assert "NODI_POSITION_RESPONSE_SURFACE: PASS_CONTEXT_ONLY_NOT_PRODUCTION" in result.stdout
+
+
+def test_sidewall_eas_validator_cli_accepts_valid_sidewall_csv(
+    tmp_path: Path,
+) -> None:
+    eas_path = tmp_path / "sidewall_eas.csv"
+    write_csv_rows(eas_path, [_valid_eas_sidewall_v2_row()])
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(
+                PROJECT_ROOT
+                / "tools/audits/validate_nodi_effective_aperture_surrogate_sensitivity.py"
+            ),
+            str(eas_path),
+        ],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert (
+        "NODI_EFFECTIVE_APERTURE_SURROGATE_SENSITIVITY: "
+        "PASS_CONTEXT_ONLY_NOT_PRODUCTION"
+    ) in result.stdout
 
 
 def test_sidewall_prs_validator_cli_rejects_bad_package_c_proof(
@@ -1320,7 +1355,13 @@ def test_sidewall_prs_validator_cli_rejects_bad_package_c_proof(
         prs_path,
         [
             _valid_prs_sidewall_v2_row(
-                package_C_proof_artifact_id="unregistered-package-C-proof"
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="unregistered-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                package_C_proof_artifact_status=SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
+                package_C_proof_artifact_scope=SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
+                package_C_proof_claim_boundary=SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
             )
         ],
     )
@@ -1415,6 +1456,19 @@ def test_ideal_rectangle_eas_rejects_nonblank_sidewall_marker() -> None:
     )
 
     _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+def test_ideal_rectangle_prs_rejects_nonblank_sidewall_marker() -> None:
+    issues = validate_position_response_surface_rows(
+        [
+            _valid_prs_row(
+                channel_cross_section_model="ideal_rectangle",
+                geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
 def test_comsol_v4_default_context_is_readonly_and_out_of_scope_for_dry_optical() -> None:
@@ -1653,6 +1707,8 @@ def test_position_response_sidewall_v2_requires_package_c_for_wall_distance_bins
     issues = validate_position_response_surface_rows(
         [
             _valid_prs_sidewall_v2_row(
+                bin_basis="edge_norm_1d_trapezoid_wall_distance_v1",
+                source_bin_basis="edge_norm_1d_trapezoid_wall_distance_v1",
                 includes_trajectory_near_wall_metrics="false",
                 package_C_validation_status="not_applicable_for_this_artifact",
             )
@@ -1706,7 +1762,7 @@ def test_position_response_sidewall_v2_requires_geometry_propagation_scope() -> 
 
 
 def test_position_response_sidewall_v2_rejects_signature_scope_mismatch() -> None:
-    prs_scope = "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
+    prs_scope = "particle_center_support_only_not_reference_fluidic_electrokinetic"
     eas_scope = "aperture_surrogate_only_not_true_runtime"
     row = _valid_prs_sidewall_v2_row()
     row["observation_signature"] = str(row["observation_signature"]).replace(
@@ -1865,8 +1921,8 @@ def test_position_response_sidewall_v2_rejects_ambiguous_propagation_scope() -> 
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
-def test_position_response_sidewall_v2_rejects_legacy_particle_only_scope() -> None:
-    legacy_scope = "particle_center_support_only_not_reference_fluidic_electrokinetic"
+def test_position_response_sidewall_v2_rejects_wall_distance_scope_without_package_c() -> None:
+    legacy_scope = "particle_center_support_and_wall_distance_only_not_reference_fluidic_electrokinetic"
     issues = validate_position_response_surface_rows(
         [
             _valid_prs_sidewall_v2_row(
@@ -3338,7 +3394,7 @@ def test_sidewall_package_d_precheck_cli_accepts_valid_csv(tmp_path: Path) -> No
     )
 
     assert result.returncode == 0, result.stderr
-    assert "NODI_SIDEWALL_PACKAGE_D_PRECHECK: PASS" in result.stdout
+    assert "NODI_SIDEWALL_PACKAGE_D_PRECHECK: PASS_CONTEXT_ONLY_NOT_PRODUCTION" in result.stdout
 
 
 def test_sidewall_package_d_precheck_cli_rejects_bad_package_c_proof(
@@ -3400,18 +3456,23 @@ def test_sidewall_package_d_precheck_requires_package_c_for_near_wall_metrics() 
     _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
 
 
-def test_sidewall_package_d_precheck_accepts_near_wall_metrics_after_package_c_pass() -> None:
+def test_sidewall_package_d_precheck_blocks_near_wall_metrics_until_package_c_authorized() -> None:
     issues = validate_sidewall_package_d_precheck_rows(
         [
             _valid_sidewall_package_d_precheck_row(
                 target_artifact_family="prs",
                 includes_trajectory_near_wall_metrics="true",
                 package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                package_C_proof_artifact_status=SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
+                package_C_proof_artifact_scope=SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
+                package_C_proof_claim_boundary=SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
             )
         ]
     )
 
-    assert issues == []
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
 
 
 def test_sidewall_package_d_precheck_rejects_forbidden_gate_false() -> None:
@@ -5798,10 +5859,36 @@ def test_position_response_production_candidate_validator_accepts_edge_primary_c
     assert validate_position_response_production_candidate_rows(rows) == []
 
 
+def test_position_response_production_candidate_csv_accepts_edge_primary_candidate(
+    tmp_path: Path,
+) -> None:
+    source_path = tmp_path / "edge_primary_xz_diagnostic_source.csv"
+    write_csv_rows(source_path, _edge_primary_xz_diagnostic_prs_bin_source_rows())
+    candidate = write_position_response_edge_primary_candidate_bundle(
+        source_path=source_path,
+        output_dir=tmp_path / "edge-primary-candidate",
+    )
+
+    assert validate_position_response_production_candidate_csv(
+        Path(candidate["candidate_csv"])
+    ) == []
+
+
 def test_position_response_production_candidate_validator_blocks_sidewall_v2() -> None:
     issues = validate_position_response_production_candidate_rows(
         [_valid_prs_sidewall_v2_row()]
     )
+
+    _assert_has_issue(issues, "PRS-PROD-POLICY")
+
+
+def test_position_response_production_candidate_csv_blocks_sidewall_v2(
+    tmp_path: Path,
+) -> None:
+    sidewall_candidate = tmp_path / "sidewall_prs_candidate.csv"
+    write_csv_rows(sidewall_candidate, [_valid_prs_sidewall_v2_row()])
+
+    issues = validate_position_response_production_candidate_csv(sidewall_candidate)
 
     _assert_has_issue(issues, "PRS-PROD-POLICY")
 
