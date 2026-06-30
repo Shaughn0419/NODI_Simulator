@@ -23,6 +23,7 @@ The current supported split is:
 | Runtime top-aperture binding | `mask_width`, `top_cd`, and `post_bias_top_cd` cannot become propagated/runtime top apertures without `runtime_top_aperture_nm`, `top_cd_bias_nm`, `top_cd_bias_source`, and numeric consistency. | `test_geometry_descriptor_v2_accepts_mask_width_runtime_binding_with_bias_metadata` |
 | Descriptor identity signature binding | PRS/EAS sidewall v2 signatures bind angle convention, COMSOL angle, top/depth/bottom dimensions, source descriptor hash, runtime binding version, closure status/policy, runtime guard status, and reject numeric `runtime_top_aperture_nm` when the row has no runtime aperture value. | `test_position_response_sidewall_v2_rejects_signature_runtime_aperture_without_row_value`, `test_effective_aperture_sidewall_v2_rejects_signature_runtime_aperture_without_row_value` |
 | Measured-profile lookup guard | Runtime channel-geometry diagnostics and batch outputs keep `measured_profile_lookup` blocked metadata-only until profile load/hash/validation exists, and bind measured-profile status fields into observation signatures. | `test_measured_profile_lookup_with_path_stays_blocked_until_loaded_and_validated`, `test_observation_signature_separates_secondary_geometry_descriptors`, `test_batch_signature_keeps_measured_profile_lookup_blocked_until_validated` |
+| Measured-geometry claim guard | Descriptor v2 measured-geometry claims require loaded and validated measured-profile metadata; path/hash/source alone are insufficient. | `test_geometry_descriptor_v2_rejects_unloaded_measured_geometry_metadata` |
 | Sampler propagation | Trapezoid sampler emits support status, steric block reason, nearest-wall distances, and surface gap diagnostics. | `nodi_simulator/utils.py` |
 | Actual runtime signature | Event-loop and pure-advection block batches bind sampler diagnostics into `observation_signature`. | `test_trapezoid_batch_signature_binds_actual_sampler_wall_distance_diagnostics` |
 | PRS sidewall v2 signature | PRS rows require exact sampler/support/wall-distance signature fragments and row/signature binding. | `tests/test_nodi_comsol_next_artifacts_contracts.py` |
@@ -55,14 +56,14 @@ python -m pytest tests/test_cross_section_geometry.py tests/test_nodi_comsol_nex
 Latest result:
 
 ```text
-429 passed in 81.66s (0:01:21)
+431 passed in 82.37s (0:01:22)
 ```
 
 Additional focused verification after adding runtime top-aperture binding guards:
 
 ```text
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q
-357 passed in 60.75s (0:01:00)
+359 passed in 59.79s
 python -m pytest tests/test_cross_section_geometry.py -q
 38 passed in 0.17s
 python -m pytest tests/test_physics_core.py -k channel_geometry -q
