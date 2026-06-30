@@ -1,0 +1,30 @@
+{
+  "anchor_digest": "4255d9533a8d150d6a740d03ead267323e868b5560b7051ce5d5ccc0ed3c2c16",
+  "base_rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
+  "clean_successor_policy": "close report/source-lock/RC1 stabilization and Gate25 review-only no-auth successors; fail closed on runtime/production/auth drift",
+  "comsol_producer_ack_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
+  "date": "20260630",
+  "dirty_blocker_count": 0,
+  "disposition": "PASS_NODI_SIDEWALL_STATIC_INTEROP_RC1_FINAL_READY_NO_AUTH",
+  "final_nodi_head": "aefc93d9adfdb1736ca7422d27d8a8ce8e46f0e6",
+  "gate25_backlog_binding": "RC2_BACKLOG_DESIGN_REVIEW_ONLY_NO_IMPLEMENTATION_PERMISSION",
+  "missing_required_source_count": 0,
+  "no_auth_locks": {
+    "binding_state": "FAIL_CLOSED",
+    "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+    "gate2d_rows": "4",
+    "jrc_allowed": "false",
+    "production_allowed": "false",
+    "qch_state": "ABSENT",
+    "qch_weighting_allowed": "false",
+    "runtime_allowed": "false"
+  },
+  "package_abd_status": "STATIC_PREFLIGHT_READY_NO_AUTH",
+  "package_c_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+  "previous_locked_head": "4496060b41d046cd9e67024186e4eddc97a1b31b",
+  "previous_semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+  "rc_id": "SIDEWALL_STATIC_INTEROP_RC1_FINAL",
+  "semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+  "source_lock_blocker_count": 0,
+  "static_fixture_unknown_rows": 0
+}

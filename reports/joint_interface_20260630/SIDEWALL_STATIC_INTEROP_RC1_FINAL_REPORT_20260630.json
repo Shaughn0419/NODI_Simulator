@@ -1,0 +1,375 @@
+{
+  "comsol_reintake_pointer": [
+    {
+      "allowed_use": "read-only producer ACK context;no-run no-auth",
+      "artifact": "COMSOL_GATE16_STATUS_20260630.json",
+      "blocked_use": "COMSOL run;.mph load;solver evidence;runtime;production;q_ch;JRC",
+      "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
+      "context_status": "PRODUCER_ACK_CONTEXT_PARTIAL_DUE_PRIOR_NODI_RC1_ABSENCE_OR_TIME_DELTA",
+      "expected_next_disposition": "COMSOL_REINTAKE_CAN_CLOSE_NODI_DIRTY_OR_SOURCE_DRIFT_AFTER_READING_RC1_FINAL",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE16_STATUS_20260630.json",
+      "row_count": "NA",
+      "sha256": "e1a1bf03dba3b273f9c9780ac88d9700e7fbc740a5f7e5fbf797684252203dae"
+    },
+    {
+      "allowed_use": "read-only producer ACK context;no-run no-auth",
+      "artifact": "COMSOL_GATE16_MANIFEST_20260630.csv",
+      "blocked_use": "COMSOL run;.mph load;solver evidence;runtime;production;q_ch;JRC",
+      "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
+      "context_status": "PRODUCER_ACK_CONTEXT_PARTIAL_DUE_PRIOR_NODI_RC1_ABSENCE_OR_TIME_DELTA",
+      "expected_next_disposition": "COMSOL_REINTAKE_CAN_CLOSE_NODI_DIRTY_OR_SOURCE_DRIFT_AFTER_READING_RC1_FINAL",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE16_MANIFEST_20260630.csv",
+      "row_count": "9",
+      "sha256": "c86ebdc766c8ebfb48388d1a15e495f766cc17b00d1389a6863088c153e3a3f6"
+    },
+    {
+      "allowed_use": "read-only producer ACK context;no-run no-auth",
+      "artifact": "COMSOL_GATE16_STATIC_PREFLIGHT_ACK_20260630.csv",
+      "blocked_use": "COMSOL run;.mph load;solver evidence;runtime;production;q_ch;JRC",
+      "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
+      "context_status": "PRODUCER_ACK_CONTEXT_PARTIAL_DUE_PRIOR_NODI_RC1_ABSENCE_OR_TIME_DELTA",
+      "expected_next_disposition": "COMSOL_REINTAKE_CAN_CLOSE_NODI_DIRTY_OR_SOURCE_DRIFT_AFTER_READING_RC1_FINAL",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE16_STATIC_PREFLIGHT_ACK_20260630.csv",
+      "row_count": "4",
+      "sha256": "3b9a6885e0d6ab4fe824fd86c7a7b06035544074aa41b047285b876d201839b1"
+    },
+    {
+      "allowed_use": "read-only producer ACK context;no-run no-auth",
+      "artifact": "COMSOL_GATE16_VALIDATION_20260630.csv",
+      "blocked_use": "COMSOL run;.mph load;solver evidence;runtime;production;q_ch;JRC",
+      "comsol_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
+      "context_status": "PRODUCER_ACK_CONTEXT_PARTIAL_DUE_PRIOR_NODI_RC1_ABSENCE_OR_TIME_DELTA",
+      "expected_next_disposition": "COMSOL_REINTAKE_CAN_CLOSE_NODI_DIRTY_OR_SOURCE_DRIFT_AFTER_READING_RC1_FINAL",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE16_VALIDATION_20260630.csv",
+      "row_count": "11",
+      "sha256": "4ef97c070a94fa126204663b258fac9a53cd2770c04e37633f9d96fccea0b259"
+    }
+  ],
+  "current_audit_ledger": [
+    {
+      "artifact_class": "SOURCE_LOCK_OR_REPORT_STABILIZATION",
+      "auth_impact": "NO_AUTH",
+      "clean_successor_allowed": "true",
+      "commit": "3dbc3105c93e8ae226a72b3743c7f4a770f43a19",
+      "semantic_impact": "RC1_SOURCE_LOCK_CLOSURE_ONLY",
+      "short": "3dbc310",
+      "subject": "Refresh sidewall static interop RC1 after source update"
+    },
+    {
+      "artifact_class": "SOURCE_LOCK_OR_REPORT_STABILIZATION",
+      "auth_impact": "NO_AUTH",
+      "clean_successor_allowed": "true",
+      "commit": "b49ef32506dd79be073f5c2eaecad923816b2f96",
+      "semantic_impact": "RC1_SOURCE_LOCK_CLOSURE_ONLY",
+      "short": "b49ef32",
+      "subject": "Refresh sidewall static interop RC1 ready lock"
+    },
+    {
+      "artifact_class": "SOURCE_LOCK_OR_REPORT_STABILIZATION",
+      "auth_impact": "NO_AUTH",
+      "clean_successor_allowed": "true",
+      "commit": "aefc93d9adfdb1736ca7422d27d8a8ce8e46f0e6",
+      "semantic_impact": "RC1_SOURCE_LOCK_CLOSURE_ONLY",
+      "short": "aefc93d",
+      "subject": "Stabilize sidewall static interop RC1 lock"
+    }
+  ],
+  "dirty_worktree_audit": [
+    {
+      "classification": "RC1_FINAL_GENERATED_ALLOWED",
+      "git_status": "??",
+      "impact": "NO_BLOCKER",
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md"
+    },
+    {
+      "classification": "RC1_FINAL_GENERATED_ALLOWED",
+      "git_status": "??",
+      "impact": "NO_BLOCKER",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md"
+    },
+    {
+      "classification": "RC1_FINAL_GENERATED_ALLOWED",
+      "git_status": "??",
+      "impact": "NO_BLOCKER",
+      "path": "tests/test_nodi_comsol_sidewall_static_interop_rc1_final_closure.py"
+    },
+    {
+      "classification": "RC1_FINAL_GENERATED_ALLOWED",
+      "git_status": "??",
+      "impact": "NO_BLOCKER",
+      "path": "tools/audits/build_nodi_comsol_sidewall_static_interop_rc1_final_closure.py"
+    }
+  ],
+  "final_version_lock": {
+    "anchor_digest": "4255d9533a8d150d6a740d03ead267323e868b5560b7051ce5d5ccc0ed3c2c16",
+    "base_rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
+    "clean_successor_policy": "close report/source-lock/RC1 stabilization and Gate25 review-only no-auth successors; fail closed on runtime/production/auth drift",
+    "comsol_producer_ack_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
+    "date": "20260630",
+    "dirty_blocker_count": 0,
+    "disposition": "PASS_NODI_SIDEWALL_STATIC_INTEROP_RC1_FINAL_READY_NO_AUTH",
+    "final_nodi_head": "aefc93d9adfdb1736ca7422d27d8a8ce8e46f0e6",
+    "gate25_backlog_binding": "RC2_BACKLOG_DESIGN_REVIEW_ONLY_NO_IMPLEMENTATION_PERMISSION",
+    "missing_required_source_count": 0,
+    "no_auth_locks": {
+      "binding_state": "FAIL_CLOSED",
+      "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+      "gate2d_rows": "4",
+      "jrc_allowed": "false",
+      "production_allowed": "false",
+      "qch_state": "ABSENT",
+      "qch_weighting_allowed": "false",
+      "runtime_allowed": "false"
+    },
+    "package_abd_status": "STATIC_PREFLIGHT_READY_NO_AUTH",
+    "package_c_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+    "previous_locked_head": "4496060b41d046cd9e67024186e4eddc97a1b31b",
+    "previous_semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+    "rc_id": "SIDEWALL_STATIC_INTEROP_RC1_FINAL",
+    "semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+    "source_lock_blocker_count": 0,
+    "static_fixture_unknown_rows": 0
+  },
+  "no_auth_firewall": [
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "q_ch weighting",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "q_ch*eta",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "q_ch*chi*eta",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "chi_selected",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "route_score",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "JOINT_ROUTE_CLASS",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "JRC",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "yield",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "winner",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "detection_probability",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "runtime configuration",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    },
+    {
+      "allowed_context": "blocked_use_or_negative_fixture_mention_only",
+      "field_or_claim": "production ingestion",
+      "positive_authorized_count": "0",
+      "status": "PASS_NO_AUTH"
+    }
+  ],
+  "rc2_backlog": [
+    {
+      "allowed": "future read-only receipt, quarantine, formula/hash validation, mutation replay",
+      "backlog_id": "RC2-DESCRIPTOR-RECEIPT-DRYRUN",
+      "category": "DESCRIPTOR_RECEIPT_DRYRUN_ONLY",
+      "exact_signoff_wording": "Authorize descriptor receipt dry-run only, no evidence acceptance.",
+      "forbidden": "evidence acceptance;runtime;production;PRS/EAS numeric sidewall outputs",
+      "next_owner": "NODI receiver after user decision",
+      "required_evidence": "COMSOL descriptor export manifest/hash and NODI receipt harness input",
+      "rollback": "discard dry-run outputs if no-auth locks fail",
+      "status": "BACKLOG_NO_AUTH"
+    },
+    {
+      "allowed": "route/view/diameter/bin policy discussion and negative fixtures",
+      "backlog_id": "RC2-BINDING-POLICY-REVIEW",
+      "category": "BINDING_POLICY_REVIEW",
+      "exact_signoff_wording": "Open binding policy review only, no accepted rows.",
+      "forbidden": "UNBOUND promotion;micro-as-nano binding;borrowed grains",
+      "next_owner": "Total control plus NODI/COMSOL review",
+      "required_evidence": "explicit route/view/diameter/bin binding sidecar",
+      "rollback": "keep binding FAIL_CLOSED",
+      "status": "BACKLOG_FAIL_CLOSED"
+    },
+    {
+      "allowed": "discussion of wall distance, near-wall, optical, trajectory, solver evidence requirements",
+      "backlog_id": "RC2-PACKAGE-C-PHYSICS-DISCUSSION",
+      "category": "PACKAGE_C_PHYSICS_AUTHORIZATION_DISCUSSION_ONLY",
+      "exact_signoff_wording": "Open Package C physics authorization discussion only, no run and no code execution.",
+      "forbidden": "COMSOL run;runtime recompute;physics proof registry update",
+      "next_owner": "User/total control",
+      "required_evidence": "future explicit Package C authorization checklist",
+      "rollback": "return to Gate24 no-auth ledger",
+      "status": "BACKLOG_DISCUSSION_ONLY"
+    },
+    {
+      "allowed": "COMSOL reads NODI RC1 final package and updates producer ACK status",
+      "backlog_id": "RC2-COMSOL-PRODUCER-FINAL-ACK",
+      "category": "COMSOL_PRODUCER_FINAL_ACK_REINTAKE",
+      "exact_signoff_wording": "Request COMSOL producer final ACK re-intake, no run.",
+      "forbidden": "COMSOL simulation;.mph load;solver evidence",
+      "next_owner": "COMSOL producer thread",
+      "required_evidence": "NODI RC1 final status/version/source-lock/manifest",
+      "rollback": "treat stale/dirty ACK as context-only partial",
+      "status": "BACKLOG_NO_RUN"
+    }
+  ],
+  "self_review": [
+    {
+      "dimension": "source lock",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-01",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "semantic digest",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-02",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "Gate25 backlog",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-03",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "COMSOL ACK context",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-04",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "Package A/B/D",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-05",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "Package C",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-06",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "no-auth aliases",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-07",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "manifest/SHA",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-08",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "test coverage",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-09",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "Git scope",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-10",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "future handoff",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-11",
+      "verdict": "PASS"
+    },
+    {
+      "dimension": "user decision text",
+      "notes": "No runtime, production, q_ch, JRC, or Package C authorization opened.",
+      "reviewer_id": "RC1F-REVIEW-12",
+      "verdict": "PASS"
+    }
+  ],
+  "source_lock_closure": [
+    {
+      "auth_impact": "NO_AUTH_CHANGE",
+      "blocker": "NODI-SEMANTIC-SOURCE-HEAD-VS-GATE24",
+      "closure_id": "RC1F-B-001",
+      "closure_status": "CLOSED_CLEAN_SUCCESSOR_REVIEW_ONLY_NO_AUTH",
+      "current_head": "aefc93d9adfdb1736ca7422d27d8a8ce8e46f0e6",
+      "notes": "Gate25 is bound to RC2 backlog/design-review only; it does not grant implementation permission.",
+      "previous_locked_head": "4496060b41d046cd9e67024186e4eddc97a1b31b",
+      "previous_status": "SEMANTIC_SOURCE_HEAD_NOT_GATE24_RELEASE_BLOCKER_FAIL_CLOSED",
+      "semantic_digest_after": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+      "semantic_digest_before": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0"
+    },
+    {
+      "auth_impact": "NO_AUTH_CHANGE",
+      "blocker": "GATE25_REVIEW_ONLY_SUCCESSOR",
+      "closure_id": "RC1F-B-002",
+      "closure_status": "CLOSED_AS_RC2_BACKLOG_NO_AUTH",
+      "current_head": "aefc93d9adfdb1736ca7422d27d8a8ce8e46f0e6",
+      "notes": "implementation_permission_rows=0 and no_auth_firewall_failures=0.",
+      "previous_locked_head": "4496060b41d046cd9e67024186e4eddc97a1b31b",
+      "previous_status": "not_in_rc1_lock",
+      "semantic_digest_after": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+      "semantic_digest_before": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0"
+    }
+  ],
+  "summary": {
+    "anchor_digest": "4255d9533a8d150d6a740d03ead267323e868b5560b7051ce5d5ccc0ed3c2c16",
+    "binding_state": "FAIL_CLOSED",
+    "comsol_producer_ack_head": "9f8309496930788c2b131e70f3ecac31ed2679be",
+    "comsol_reintake_pointer_rows": 4,
+    "dirty_blocker_count": 0,
+    "disposition": "PASS_NODI_SIDEWALL_STATIC_INTEROP_RC1_FINAL_READY_NO_AUTH",
+    "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+    "final_nodi_head": "aefc93d9adfdb1736ca7422d27d8a8ce8e46f0e6",
+    "gate25_backlog_rows": 1,
+    "gate2d_rows": 4,
+    "missing_required_source_count": 0,
+    "no_auth_firewall_rows": 12,
+    "previous_locked_head": "4496060b41d046cd9e67024186e4eddc97a1b31b",
+    "qch_state": "ABSENT",
+    "rc2_backlog_rows": 4,
+    "rc_id": "SIDEWALL_STATIC_INTEROP_RC1_FINAL",
+    "self_review_rows": 12,
+    "semantic_digest": "53da34a93341eac39ff5d13527dc07203f50b0fe6ee53c6d4518f2ead013bcc0",
+    "source_lock_blocker_count": 0,
+    "static_fixture_unknown_rows": 0
+  }
+}

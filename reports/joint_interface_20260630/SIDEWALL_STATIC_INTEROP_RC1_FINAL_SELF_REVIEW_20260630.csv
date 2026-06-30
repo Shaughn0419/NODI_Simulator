@@ -1,0 +1,13 @@
+reviewer_id,dimension,verdict,notes
+RC1F-REVIEW-01,source lock,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-02,semantic digest,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-03,Gate25 backlog,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-04,COMSOL ACK context,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-05,Package A/B/D,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-06,Package C,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-07,no-auth aliases,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-08,manifest/SHA,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-09,test coverage,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-10,Git scope,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-11,future handoff,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
+RC1F-REVIEW-12,user decision text,PASS,"No runtime, production, q_ch, JRC, or Package C authorization opened."
