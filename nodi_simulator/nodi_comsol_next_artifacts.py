@@ -1039,6 +1039,13 @@ SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE = (
 SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY = (
     "runtime_geometry_propagation_only_no_hindered_diffusion_no_flow_no_wet_claim"
 )
+SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_ID = (
+    "package-C-trajectory-wall-distance-validation-fixture"
+)
+SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256 = "c" * 64
+SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256_BY_ID: dict[str, str] = {
+    SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_ID: SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256,
+}
 SIDEWALL_PACKAGE_C_PROOF_REQUIRED_FIELDS: tuple[str, ...] = (
     "package_C_proof_artifact_id",
     "package_C_proof_artifact_sha256",
@@ -1709,6 +1716,25 @@ def _validate_sidewall_package_c_proof_binding(
             "package_C_proof_artifact_sha256 is not sha256",
         )
         proof_ok = False
+    proof_id = _value(row, "package_C_proof_artifact_id")
+    registered_sha = SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256_BY_ID.get(proof_id)
+    if proof_id and registered_sha is None:
+        _issue(
+            issues,
+            row_index,
+            "SIDEWALL-D-PRECHECK-V03",
+            f"package_C_proof_artifact_id={proof_id} is not registered",
+        )
+        proof_ok = False
+    if proof_id and registered_sha is not None and proof_sha:
+        if proof_sha.lower() != registered_sha.lower():
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V03",
+                "package_C_proof_artifact_sha256 does not match registered proof",
+            )
+            proof_ok = False
 
     expected_values = {
         "package_C_proof_artifact_status": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,

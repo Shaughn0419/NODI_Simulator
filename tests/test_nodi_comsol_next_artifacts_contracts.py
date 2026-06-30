@@ -120,6 +120,8 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     build_effective_aperture_runner_launch_plan,
     build_bounded_smoke_readiness_report,
     build_position_response_runner_launch_plan,
+    assert_valid_effective_aperture_surrogate_csv,
+    assert_valid_position_response_surface_csv,
     default_comsol_v4_readonly_context,
     effective_aperture_smoke_manifest_rows,
     evaluate_next_artifacts_future_authorization_request,
@@ -127,6 +129,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     effective_aperture_plan_blueprint_rows,
     position_response_plan_blueprint_rows,
     validate_effective_aperture_surrogate_rows,
+    validate_geometry_descriptor_csv,
     validate_geometry_descriptor_rows,
     validate_next_artifacts_runner_authorization_gate_record,
     validate_plan_only_blueprint_bundle,
@@ -146,6 +149,8 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     PRODUCTION_GENERATION_BLOCKED_STATUS,
     PRODUCTION_GENERATION_PARTIAL_STATUS,
     PRODUCTION_GENERATION_PASS_STATUS,
+    SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_ID,
+    SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256,
     SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
     SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
     SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
@@ -482,10 +487,8 @@ def _sidewall_package_c_proof_fields(
         }
 
     return {
-        "package_C_proof_artifact_id": (
-            "package-C-trajectory-wall-distance-validation-fixture"
-        ),
-        "package_C_proof_artifact_sha256": "c" * 64,
+        "package_C_proof_artifact_id": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_ID,
+        "package_C_proof_artifact_sha256": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SHA256,
         "package_C_proof_artifact_status": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
         "package_C_proof_artifact_scope": SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
         "package_C_proof_claim_boundary": SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
@@ -1130,6 +1133,34 @@ SIDEWALL_ROADMAP_HARD_FAIL_EXECUTION_MATRIX: tuple[
         ("SIDEWALL-D-PRECHECK-V03",),
     ),
     (
+        "D_package_c_pass_with_unregistered_proof_artifact",
+        lambda: validate_sidewall_package_d_precheck_rows(
+            [
+                _valid_sidewall_package_d_precheck_row(
+                    target_artifact_family="prs",
+                    includes_trajectory_near_wall_metrics="true",
+                    package_C_validation_status="pass",
+                    package_C_proof_artifact_id="unregistered-package-C-proof",
+                )
+            ]
+        ),
+        ("SIDEWALL-D-PRECHECK-V03",),
+    ),
+    (
+        "D_package_c_pass_with_registered_hash_mismatch",
+        lambda: validate_sidewall_package_d_precheck_rows(
+            [
+                _valid_sidewall_package_d_precheck_row(
+                    target_artifact_family="prs",
+                    includes_trajectory_near_wall_metrics="true",
+                    package_C_validation_status="pass",
+                    package_C_proof_artifact_sha256="d" * 64,
+                )
+            ]
+        ),
+        ("SIDEWALL-D-PRECHECK-V03",),
+    ),
+    (
         "G8_old_rectangular_cache_reuse",
         lambda: validate_position_response_surface_rows(
             [
@@ -1178,6 +1209,41 @@ def test_sidewall_roadmap_hard_fail_matrix_executes_real_validators(
     assert issues, f"{case_id} unexpectedly passed without validator issues"
     for rule_id in expected_rule_ids:
         _assert_has_issue(issues, rule_id)
+
+
+def test_sidewall_v2_csv_validation_paths_preserve_package_guards(
+    tmp_path: Path,
+) -> None:
+    prs_path = tmp_path / "sidewall_prs.csv"
+    eas_path = tmp_path / "sidewall_eas.csv"
+    descriptor_path = tmp_path / "sidewall_descriptor.csv"
+
+    write_csv_rows(prs_path, [_valid_prs_sidewall_v2_row()])
+    write_csv_rows(eas_path, [_valid_eas_sidewall_v2_row()])
+    write_csv_rows(descriptor_path, [_valid_descriptor_v2_row()])
+
+    assert_valid_position_response_surface_csv(prs_path)
+    assert_valid_effective_aperture_surrogate_csv(eas_path)
+    assert validate_geometry_descriptor_csv(descriptor_path) == []
+
+
+def test_sidewall_prs_csv_rejects_unregistered_package_c_proof(
+    tmp_path: Path,
+) -> None:
+    prs_path = tmp_path / "sidewall_prs_bad_proof.csv"
+    write_csv_rows(
+        prs_path,
+        [
+            _valid_prs_sidewall_v2_row(
+                package_C_proof_artifact_id="unregistered-package-C-proof"
+            )
+        ],
+    )
+
+    with pytest.raises(ContractValidationError) as exc_info:
+        assert_valid_position_response_surface_csv(prs_path)
+
+    _assert_has_issue(list(exc_info.value.issues), "SIDEWALL-D-PRECHECK-V03")
 
 
 def test_comsol_v4_default_context_is_readonly_and_out_of_scope_for_dry_optical() -> None:
