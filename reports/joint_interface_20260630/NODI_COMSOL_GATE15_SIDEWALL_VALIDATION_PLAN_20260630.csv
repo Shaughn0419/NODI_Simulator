@@ -1,0 +1,7 @@
+validation_id,command,required_for_pass,recorded_result
+G15L-VALIDATION-001,python tools/audits/build_nodi_comsol_gate15_sidewall_bilateral_contract_closure.py --confirm-gate15-sidewall-bilateral-closure,true,PENDING_RUNTIME_VALIDATION
+G15L-VALIDATION-002,python -m py_compile tools/audits/build_nodi_comsol_gate15_sidewall_bilateral_contract_closure.py,true,PENDING_RUNTIME_VALIDATION
+G15L-VALIDATION-003,ruff check tools/audits/build_nodi_comsol_gate15_sidewall_bilateral_contract_closure.py tests/test_nodi_comsol_gate15_sidewall_bilateral_contract_closure.py,true,PENDING_RUNTIME_VALIDATION
+G15L-VALIDATION-004,pytest -q tests/test_nodi_comsol_gate15_sidewall_bilateral_contract_closure.py,true,PENDING_RUNTIME_VALIDATION
+G15L-VALIDATION-005,pytest -q tests/test_nodi_comsol_gate14_sidewall_implementation_contract.py,true,PENDING_RUNTIME_VALIDATION
+G15L-VALIDATION-006,pytest -q tests/test_nodi_comsol_next_artifacts_contracts.py,true,PENDING_RUNTIME_VALIDATION

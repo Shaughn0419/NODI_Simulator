@@ -1,0 +1,5 @@
+board_id,package,readiness,scope,runtime_allowed,production_allowed,validated_physics_claim,requires_comsol_gate15_clean_reintake,future_authorization_required
+G15E-Package-A,Package A,READY_FOR_STATIC_PREFLIGHT_AFTER_COMSOL_CLEAN_REINTAKE,schema/descriptor/profile guard only,false,false,false,true,false
+G15E-Package-B,Package B,READY_FOR_STATIC_PREFLIGHT_AFTER_COMSOL_CLEAN_REINTAKE,geometry/sampler/signature guard only,false,false,false,true,false
+G15E-Package-C,Package C,BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION,near-wall/optical/wet physics not validated,false,false,false,false,true
+G15E-Package-D,Package D,READY_FOR_CONTRACT_PREFLIGHT_AFTER_COMSOL_CLEAN_REINTAKE,PRS/EAS contract precheck only,false,false,false,true,false

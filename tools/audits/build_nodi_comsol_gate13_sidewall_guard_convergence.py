@@ -33,7 +33,10 @@ COMSOL_GATE11_COMMIT = "b16b16b8c61e9ceb3a38debc1dc7a2bd4e635962"
 COMSOL_GATE12_COMMIT = "8823515d220a2a5b25a43f00b998205344e5960f"
 COMSOL_GATE13_COMMIT = "64dfa64b766750f91813c3cd470d369dec61f384"
 COMSOL_GATE14_COMMIT = "a378398eea8af883e1ec89fc80d93b60ff33a47c"
-COMSOL_ALLOWED_CURRENT_HEADS = frozenset({COMSOL_GATE13_COMMIT, COMSOL_GATE14_COMMIT})
+COMSOL_GATE15_COMMIT = "7090794ff20970955a011b123b3de171e96910a3"
+COMSOL_ALLOWED_CURRENT_HEADS = frozenset(
+    {COMSOL_GATE13_COMMIT, COMSOL_GATE14_COMMIT, COMSOL_GATE15_COMMIT}
+)
 DISPOSITION = "PASS_GATE13_SIDEWALL_GUARD_CONVERGENCE_AND_RC51_ADDENDUM_SIGNOFF_READY_NO_AUTH"
 RELEASE_NAME = "RC5.1_SIDEWALL_GEOMETRY_DESCRIPTOR_ADDENDUM_V1_SIGNOFF_READY_REVIEW_ONLY_NO_AUTH"
 ALLOWED_USE = "review-only descriptor receipt;geometry guard convergence;sidewall addendum signoff readiness"
@@ -400,6 +403,8 @@ def provenance_repair_matrix(root: Path) -> list[dict[str, str]]:
         if actual_head == COMSOL_GATE13_COMMIT
         else "HEAD_ADVANCED_TO_KNOWN_GATE14_SUCCESSOR"
         if actual_head == COMSOL_GATE14_COMMIT
+        else "HEAD_ADVANCED_TO_KNOWN_GATE15_SUCCESSOR"
+        if actual_head == COMSOL_GATE15_COMMIT
         else "HEAD_MISMATCH_FAIL_CLOSED"
     )
     rows = [
@@ -419,7 +424,10 @@ def provenance_repair_matrix(root: Path) -> list[dict[str, str]]:
             "field": "comsol_project_head_actual",
             "old_or_ambiguous_semantics": "Gate12 expected head became stale after COMSOL Gate13 handshake package",
             "gate13_semantics": "actual read-only COMSOL project head for Gate13 guard handshake receipt",
-            "expected_value": f"{COMSOL_GATE13_COMMIT};allowed_successor={COMSOL_GATE14_COMMIT}",
+            "expected_value": (
+                f"{COMSOL_GATE13_COMMIT};"
+                f"allowed_successors={COMSOL_GATE14_COMMIT},{COMSOL_GATE15_COMMIT}"
+            ),
             "actual_value": actual_head,
             "repair_status": head_repair_status,
             "semantic_conflict": bool_text(not head_allowed),
@@ -441,7 +449,10 @@ def provenance_repair_matrix(root: Path) -> list[dict[str, str]]:
             "field": "comsol_gate13_commit_expected",
             "old_or_ambiguous_semantics": "not present before COMSOL Gate13 producer package",
             "gate13_semantics": "expected COMSOL Gate13 sidewall guard handshake package commit",
-            "expected_value": f"{COMSOL_GATE13_COMMIT};allowed_successor={COMSOL_GATE14_COMMIT}",
+            "expected_value": (
+                f"{COMSOL_GATE13_COMMIT};"
+                f"allowed_successors={COMSOL_GATE14_COMMIT},{COMSOL_GATE15_COMMIT}"
+            ),
             "actual_value": actual_head,
             "repair_status": head_repair_status,
             "semantic_conflict": bool_text(not head_allowed),
@@ -937,7 +948,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "COMSOL receipt blocking drift": summary["comsol_receipt_blocking_drift"] == 0,
         "COMSOL receipt missing required": summary["comsol_receipt_missing_required"] == 0,
         "COMSOL validation failures": summary["comsol_validation_failures"] == 0,
-        "COMSOL current head is Gate13 or known Gate14 successor": summary["comsol_project_head_actual"] in COMSOL_ALLOWED_CURRENT_HEADS,
+        "COMSOL current head is Gate13 or known Gate14/Gate15 successor": summary["comsol_project_head_actual"] in COMSOL_ALLOWED_CURRENT_HEADS,
         "provenance semantic conflicts": summary["provenance_semantic_conflicts"] == 0,
         "provenance dirty open": summary["provenance_dirty_open"] == 0,
         "closed sidewall unexpected pass": summary["closed_sidewall_unexpected_pass"] == 0,

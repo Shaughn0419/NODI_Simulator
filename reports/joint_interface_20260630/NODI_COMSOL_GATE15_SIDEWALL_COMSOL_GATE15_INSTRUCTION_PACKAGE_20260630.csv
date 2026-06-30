@@ -1,0 +1,8 @@
+instruction_id,action,instruction,requiredness,comsol_run_allowed,mph_load_allowed,authorization_promotion_allowed
+G15F-COMSOL-NEXT-001,read_nodi_current_release,Read NODI current release head and Gate15 sidecars.,required,false,false,false
+G15F-COMSOL-NEXT-002,close_old_dirty_intake,Close old 4cb4d1d dirty=18 observed-unreleased intake as superseded.,required,false,false,false
+G15F-COMSOL-NEXT-003,rebuild_intake_receipt,Rebuild NODI intake receipt against current clean NODI package.,required,false,false,false
+G15F-COMSOL-NEXT-004,update_stale_intake_closure,Set stale-intake closure to closed only after clean re-intake.,required,false,false,false
+G15F-COMSOL-NEXT-005,preserve_no_auth_locks,"Keep Gate2D=4, EDGE NOT_APPROVED, QCH ABSENT, BINDING FAIL_CLOSED.",required,false,false,false
+G15F-COMSOL-NEXT-006,emit_no_run_preflight_package,"Emit no-run producer preflight package, not evidence acceptance.",required,false,false,false
+G15F-COMSOL-NEXT-007,avoid_unrelated_dirty,Do not stage unrelated dirty/untracked COMSOL files.,required,false,false,false

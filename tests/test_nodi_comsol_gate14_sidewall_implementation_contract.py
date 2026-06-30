@@ -23,7 +23,7 @@ def test_gate14_payload_passes_release_contract_thresholds() -> None:
     assert payload["summary"]["comsol_gate13_blocking_drift"] == 0
     assert payload["summary"]["comsol_gate13_missing_required"] == 0
     assert payload["summary"]["comsol_gate13_package_head_expected"] == gate14.EXPECTED_COMSOL_GATE13_HEAD
-    assert payload["summary"]["comsol_head_actual"] == gate14.EXPECTED_COMSOL_GATE14_HEAD
+    assert payload["summary"]["comsol_head_actual"] in gate14.ALLOWED_COMSOL_CURRENT_HEADS
     assert payload["summary"]["comsol_head_advanced_after_gate13"] is True
     assert payload["summary"]["stale_intake_closed"] is True
     assert payload["summary"]["mutation_rows"] == 50000

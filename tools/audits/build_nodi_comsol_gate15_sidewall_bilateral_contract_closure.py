@@ -144,7 +144,25 @@ def classify_dirty_path(path: str) -> tuple[str, str, str]:
             "Gate15 generated report/sidecar/builder/test",
             "stage_with_gate15_commit_after_tests",
         )
+    if path in {
+        "tools/audits/build_nodi_comsol_gate13_sidewall_guard_convergence.py",
+        "tools/audits/build_nodi_comsol_gate14_sidewall_implementation_contract.py",
+        "tests/test_nodi_comsol_gate14_sidewall_implementation_contract.py",
+    }:
+        return (
+            "LEGIT_SIDEWALL_SUCCESSOR_HEAD_COMPATIBILITY_UPDATE",
+            "Gate13/Gate14 regression compatibility for known COMSOL Gate15 successor head; no authorization change",
+            "stage_with_gate15_commit_after_tests",
+        )
     return ("UNKNOWN_USER_CHANGE_BLOCKER", "Unclassified dirty file", "do_not_stage")
+
+
+def parse_git_status_path(line: str) -> str:
+    if " -> " in line:
+        line = line.rsplit(" -> ", 1)[1]
+    if len(line) >= 3 and line[2] == " ":
+        return line[3:].replace("\\", "/")
+    return line[2:].lstrip().replace("\\", "/")
 
 
 def current_release_reconciliation() -> list[dict[str, str]]:
@@ -201,7 +219,7 @@ def current_release_reconciliation() -> list[dict[str, str]]:
         }
     )
     for idx, line in enumerate(dirty_lines, start=1):
-        path = line[3:].replace("\\", "/")
+        path = parse_git_status_path(line)
         classification, intent, action = classify_dirty_path(path)
         rows.append(
             {

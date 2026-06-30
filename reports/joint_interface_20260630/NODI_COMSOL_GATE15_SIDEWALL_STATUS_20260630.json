@@ -1,0 +1,32 @@
+{
+  "disposition": "NODI_GATE15_SIDEWALL_BILATERAL_CONTRACT_V3_CLOSURE_AND_STATIC_PREFLIGHT_READINESS_NO_AUTH",
+  "summary": {
+    "disposition": "NODI_GATE15_SIDEWALL_BILATERAL_CONTRACT_V3_CLOSURE_AND_STATIC_PREFLIGHT_READINESS_NO_AUTH",
+    "nodi_current_head": "ee1598f0fb6e834f9e88d9149a8bc7ecb9502f4a",
+    "nodi_gate14_release_head": "b4561298c8e5ba1ef083f0114ed183882117282e",
+    "current_head_supersedes_gate14_status_build_head": true,
+    "dirty_unknown_blockers": 3,
+    "comsol_head_actual": "7090794ff20970955a011b123b3de171e96910a3",
+    "comsol_gate14_status": "PARTIAL_COMSOL_GATE14_NODI_SIDEWALL_IMPLEMENTATION_GUARD_INTAKE_OBSERVED_UNRELEASED_REVIEW_ONLY_NO_AUTH",
+    "comsol_gate14_partial_is_time_delta": true,
+    "comsol_gate14_receipt_rows": 16,
+    "comsol_gate14_blocking_drift": 0,
+    "comsol_gate14_missing_required": 0,
+    "schema_cross_signoff_rows": 33,
+    "schema_semantic_conflicts": 0,
+    "producer_request_resolution_rows": 8,
+    "static_preflight_rows": 4,
+    "comsol_instruction_rows": 7,
+    "mutation_rows": 100000,
+    "mutation_unexpected_pass": 0,
+    "mutation_forbidden_promotion": 0,
+    "no_auth_firewall_failures": 0,
+    "self_review_rows": 19,
+    "gate2d_rows": 4,
+    "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+    "qch_state": "ABSENT",
+    "binding_state": "FAIL_CLOSED"
+  },
+  "review_only": true,
+  "no_auth": true
+}

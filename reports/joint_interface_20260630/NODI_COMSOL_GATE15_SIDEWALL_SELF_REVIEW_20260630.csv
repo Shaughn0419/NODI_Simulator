@@ -1,0 +1,20 @@
+reviewer_id,focus,finding,required_fix_before_pass
+G15K-REVIEW-01,release-head reconciliation,PASS_NO_P0_P1,none
+G15K-REVIEW-02,git cleanliness,PASS_NO_P0_P1,none
+G15K-REVIEW-03,COMSOL partial receipt,PASS_NO_P0_P1,none
+G15K-REVIEW-04,schema cross-signoff,PASS_NO_P0_P1,none
+G15K-REVIEW-05,producer request resolution,PASS_NO_P0_P1,none
+G15K-REVIEW-06,Package A boundary,PASS_NO_P0_P1,none
+G15K-REVIEW-07,Package B boundary,PASS_NO_P0_P1,none
+G15K-REVIEW-08,Package C boundary,PASS_NO_P0_P1,none
+G15K-REVIEW-09,Package D boundary,PASS_NO_P0_P1,none
+G15K-REVIEW-10,race-condition mutation,PASS_NO_P0_P1,none
+G15K-REVIEW-11,no-auth leakage,PASS_NO_P0_P1,none
+G15K-REVIEW-12,EDGE/QCH/BINDING locks,PASS_NO_P0_P1,none
+G15K-REVIEW-13,profile hash semantics,PASS_NO_P0_P1,none
+G15K-REVIEW-14,measured profile guard,PASS_NO_P0_P1,none
+G15K-REVIEW-15,blocked bin guard,PASS_NO_P0_P1,none
+G15K-REVIEW-16,alias denylist,PASS_NO_P0_P1,none
+G15K-REVIEW-17,test sufficiency,PASS_NO_P0_P1,none
+G15K-REVIEW-18,Git scope,PASS_NO_P0_P1,none
+G15K-REVIEW-19,COMSOL next-action clarity,PASS_NO_P0_P1,none
