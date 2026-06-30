@@ -4,7 +4,7 @@
     "disposition": "NODI_GATE38_SIDEWALL_WALL_PILEUP_REFINEMENT_CANDIDATE_READY_NO_PROOF_REGISTRATION",
     "artifact_id": "GATE38_SIDEWALL_WALL_PILEUP_REFINEMENT_CANDIDATE_20260701",
     "claim_boundary": "wall_pileup_refinement_candidate_not_package_c_proof_registered_not_runtime",
-    "gate38_build_head": "3222104f74c5eeeb273d194aaed22d12837942b6",
+    "gate38_build_head": "8463a0f78b5f7c3da46d580750a10c7cc91291fd",
     "gate37_disposition": "NODI_GATE37_SIDEWALL_PACKAGE_C_REFLECTION_METRIC_HARDENING_CANDIDATE_READY_NO_PROOF_REGISTRATION",
     "gate37_expected_disposition": "NODI_GATE37_SIDEWALL_PACKAGE_C_REFLECTION_METRIC_HARDENING_CANDIDATE_READY_NO_PROOF_REGISTRATION",
     "gate37_max_wall_pileup_ratio": 9.0,

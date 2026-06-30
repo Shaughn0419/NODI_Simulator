@@ -1,7 +1,7 @@
 # GATE38C NO PROOF FIREWALL
 
 - Gate38 disposition: `NODI_GATE38_SIDEWALL_WALL_PILEUP_REFINEMENT_CANDIDATE_READY_NO_PROOF_REGISTRATION`
-- Source head: `3222104f74c5eeeb273d194aaed22d12837942b6`
+- Source head: `8463a0f78b5f7c3da46d580750a10c7cc91291fd`
 - Refinement status: `sparse_gate37_proxy_artifact_no_algorithmic_pileup_signal`
 - Algorithmic signal rows: 0.
 - Sparse proxy artifact rows: 12.
