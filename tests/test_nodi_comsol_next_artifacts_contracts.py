@@ -158,6 +158,9 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
     SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
     SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
+    SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_ISSUES_FILENAME,
+    SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_RECORD_FILENAME,
+    SIDEWALL_PACKAGE_C_AUTHORIZATION_PHRASE,
     PRS_SIDEWALL_V2_BLOCKED_RESPONSE_VALUE_FIELDS,
     build_position_response_bin_source_rows_from_events,
     build_position_response_event_rows_from_nodi_events,
@@ -172,7 +175,9 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     build_bounded_smoke_execution_report,
     build_production_generation_report,
     build_position_response_edge_primary_candidate_rows,
+    build_sidewall_package_c_authorization_gate_record,
     default_position_response_source_candidate_paths,
+    evaluate_sidewall_package_c_future_authorization_request,
     write_design_only_smoke_manifest_bundle,
     write_effective_aperture_runner_launch_plan,
     write_bounded_smoke_execution_bundle,
@@ -191,6 +196,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     write_position_response_source_sufficiency_bundle,
     write_production_generation_bundle,
     write_position_response_edge_primary_candidate_bundle,
+    write_sidewall_package_c_authorization_gate_record,
     ContractValidationError,
     effective_aperture_bounded_smoke_execution_manifest_rows,
     position_response_bounded_smoke_execution_manifest_rows,
@@ -208,6 +214,7 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     validate_position_response_source_preflight_report,
     validate_position_response_source_sufficiency_report,
     validate_production_generation_report,
+    validate_sidewall_package_c_authorization_gate_record,
 )
 from nodi_simulator.realism_v2_io import read_csv_rows, write_csv_rows
 from tools.audits.run_nodi_position_response_runner_slice_source_export import (
@@ -4423,6 +4430,176 @@ def test_future_authorization_phrase_guard_blocks_downstream_phrases_without_pre
     assert result["this_check_authorizes_production_generation"] is False
     assert result["this_check_authorizes_nodi_run"] is False
     assert result["this_check_authorizes_comsol_run"] is False
+
+
+def _write_gate23_status_fixture(
+    tmp_path: Path,
+    **summary_overrides: object,
+) -> tuple[Path, Path]:
+    status_path = tmp_path / "gate23_status.json"
+    manifest_path = tmp_path / "gate23_manifest.csv"
+    summary: dict[str, object] = {
+        "static_fixture_execution_blocked": 0,
+        "package_c_proof_lock_failures": 0,
+        "runtime_allowed_rows": 0,
+        "production_allowed_rows": 0,
+    }
+    summary.update(summary_overrides)
+    status_path.write_text(
+        json.dumps(
+            {
+                "disposition": "NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH",
+                "summary": summary,
+                "review_only": True,
+                "no_auth": True,
+            },
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+    write_csv_rows(
+        manifest_path,
+        [
+            {
+                "manifest_id": "G23-MANIFEST-001",
+                "path": "gate23_status.json",
+                "row_count": "NA",
+                "sha256": "0" * 64,
+            }
+        ],
+    )
+    return status_path, manifest_path
+
+
+def test_sidewall_package_c_authorization_gate_record_stays_not_authorized(
+    tmp_path: Path,
+) -> None:
+    status_path, manifest_path = _write_gate23_status_fixture(tmp_path)
+
+    record = build_sidewall_package_c_authorization_gate_record(
+        gate23_status_path=status_path,
+        gate23_manifest_path=manifest_path,
+    )
+
+    assert record["status"] == AUTHORIZATION_GATE_PASS_STATUS
+    assert record["authorization_gate_decision"] == "not_authorized_pending_explicit_future_request"
+    assert record["required_future_authorization_phrase"] == SIDEWALL_PACKAGE_C_AUTHORIZATION_PHRASE
+    assert record["package_c_physics_authorized"] is False
+    assert record["package_c_proof_registry_update_authorized"] is False
+    assert record["wall_distance_bin_prs_authorized"] is False
+    assert record["nodi_runtime_recompute_authorized"] is False
+    assert record["comsol_launch_authorized"] is False
+    assert record["mph_load_authorized"] is False
+    assert record["not_qch_weighted"] is True
+    assert validate_sidewall_package_c_authorization_gate_record(record) == []
+
+
+def test_sidewall_package_c_authorization_gate_blocks_bad_gate23_status(
+    tmp_path: Path,
+) -> None:
+    status_path, manifest_path = _write_gate23_status_fixture(
+        tmp_path,
+        package_c_proof_lock_failures=1,
+    )
+
+    record = build_sidewall_package_c_authorization_gate_record(
+        gate23_status_path=status_path,
+        gate23_manifest_path=manifest_path,
+    )
+
+    assert record["status"] == "BLOCKED_AUTHORIZATION_GATE_INPUTS"
+    assert any("Package C proof lock failure" in issue for issue in record["issues"])
+    assert record["package_c_physics_authorized"] is False
+
+
+def test_sidewall_package_c_authorization_gate_cli_requires_confirm_write(
+    tmp_path: Path,
+) -> None:
+    status_path, manifest_path = _write_gate23_status_fixture(tmp_path)
+    output_dir = tmp_path / "blocked"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(PROJECT_ROOT / "tools/audits/write_nodi_sidewall_package_c_authorization_gate.py"),
+            "--gate23-status",
+            str(status_path),
+            "--gate23-manifest",
+            str(manifest_path),
+            "--output-dir",
+            str(output_dir),
+        ],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode != 0
+    assert "without --confirm-write" in result.stderr
+    assert not output_dir.exists()
+
+
+def test_sidewall_package_c_authorization_gate_cli_writes_no_auth_record(
+    tmp_path: Path,
+) -> None:
+    status_path, manifest_path = _write_gate23_status_fixture(tmp_path)
+    output_dir = tmp_path / "gate"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(PROJECT_ROOT / "tools/audits/write_nodi_sidewall_package_c_authorization_gate.py"),
+            "--confirm-write",
+            "--gate23-status",
+            str(status_path),
+            "--gate23-manifest",
+            str(manifest_path),
+            "--output-dir",
+            str(output_dir),
+        ],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert (
+        "NODI_SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE: "
+        "PASS_AUTHORIZATION_GATE_RECORD_NOT_AUTHORIZED"
+    ) in result.stdout
+    payload = json.loads(
+        (output_dir / SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_RECORD_FILENAME).read_text(
+            encoding="utf-8"
+        )
+    )
+    assert payload["package_c_physics_authorized"] is False
+    assert payload["package_c_proof_registry_update_authorized"] is False
+    assert (output_dir / SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_ISSUES_FILENAME).exists()
+
+
+def test_sidewall_package_c_future_authorization_phrase_never_authorizes_runtime(
+    tmp_path: Path,
+) -> None:
+    status_path, manifest_path = _write_gate23_status_fixture(tmp_path)
+    record = build_sidewall_package_c_authorization_gate_record(
+        gate23_status_path=status_path,
+        gate23_manifest_path=manifest_path,
+    )
+
+    result = evaluate_sidewall_package_c_future_authorization_request(
+        supplied_phrase=SIDEWALL_PACKAGE_C_AUTHORIZATION_PHRASE,
+        gate_record=record,
+    )
+
+    assert result["status"] == FUTURE_AUTHORIZATION_PHRASE_MATCH_BLOCKED_NO_EXECUTION
+    assert result["phrase_exact_match"] is True
+    assert result["authorized_now"] is False
+    assert result["package_c_physics_authorized"] is False
+    assert result["proof_registry_update_authorized"] is False
+    assert result["nodi_runtime_recompute_authorized"] is False
+    assert result["comsol_launch_authorized"] is False
 
 
 def test_future_authorization_phrase_cli_rejects_generic_continue() -> None:

@@ -1,0 +1,30 @@
+{
+  "disposition": "NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH",
+  "summary": {
+    "disposition": "NODI_GATE24_SIDEWALL_PACKAGE_C_AUTHORIZATION_LEDGER_READY_NO_AUTH",
+    "gate24_build_head": "2bb50e5c35b83a2691b5edb7be5ddca667a51d2d",
+    "gate23_build_head": "d54cd50908a7e6e56f5f0069a163c7b768190d45",
+    "gate23_head_is_ancestor_of_current": true,
+    "gate23_disposition": "NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH",
+    "gate23_no_auth": true,
+    "gate23_review_only": true,
+    "gate23_source_lock_rows": 10,
+    "gate23_source_drift": 0,
+    "gate23_missing_sources": 0,
+    "authorization_gate_status": "PASS_AUTHORIZATION_GATE_RECORD_NOT_AUTHORIZED",
+    "authorization_gate_issues": 0,
+    "phrase_eval_rows": 2,
+    "phrase_exact_match_rows": 1,
+    "phrase_authorized_now_rows": 0,
+    "package_c_physics_authorized_rows": 0,
+    "proof_registry_update_authorized_rows": 0,
+    "runtime_allowed_rows": 0,
+    "comsol_launch_authorized_rows": 0,
+    "mph_load_authorized_rows": 0,
+    "no_auth_firewall_failures": 0,
+    "review_only": true,
+    "no_auth": true
+  },
+  "review_only": true,
+  "no_auth": true
+}

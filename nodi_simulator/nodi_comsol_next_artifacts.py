@@ -93,6 +93,12 @@ NEXT_ARTIFACTS_AUTHORIZATION_GATE_RECORD_FILENAME = (
 NEXT_ARTIFACTS_AUTHORIZATION_GATE_ISSUES_FILENAME = (
     "NODI_NEXT_ARTIFACTS_RUNNER_AUTHORIZATION_GATE_ISSUES_20260617.csv"
 )
+SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_RECORD_FILENAME = (
+    "NODI_SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_RECORD_20260630.json"
+)
+SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_ISSUES_FILENAME = (
+    "NODI_SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_ISSUES_20260630.csv"
+)
 PRS_RUNNER_LAUNCH_PLAN_FILENAME = (
     "NODI_POSITION_RESPONSE_SURFACE_RUNNER_LAUNCH_PLAN_20260618.json"
 )
@@ -345,6 +351,9 @@ PRODUCTION_GENERATION_AUTHORIZATION_PHRASE = (
 )
 PRS_SOURCE_ACCUMULATION_BOUNDED_SHARD_AUTHORIZATION_PHRASE = (
     "authorize NODI PRS source accumulation bounded shard execution"
+)
+SIDEWALL_PACKAGE_C_AUTHORIZATION_PHRASE = (
+    "authorize NODI sidewall Package C physics preauthorization"
 )
 FUTURE_AUTHORIZATION_PHRASE_MATCH_RUNNER_IMPLEMENTATION = (
     "PHRASE_MATCH_RUNNER_IMPLEMENTATION_ONLY_NO_EXECUTION"
@@ -3388,6 +3397,275 @@ def evaluate_next_artifacts_future_authorization_request(
         "no_production_artifact": True,
         "no_joint_route_class_regeneration": True,
         "claim_boundary": "future_authorization_phrase_check_only_no_execution_state_change",
+    }
+
+
+_SIDEWALL_PACKAGE_C_AUTHORIZATION_FALSE_FIELDS: tuple[str, ...] = (
+    "package_c_physics_authorized",
+    "package_c_proof_registry_update_authorized",
+    "trajectory_boundary_authorized",
+    "near_wall_diffusion_authorized",
+    "wall_distance_bin_prs_authorized",
+    "trapezoid_flow_authorized",
+    "flux_weighted_sampling_authorized",
+    "electrokinetic_grid_authorized",
+    "optical_solver_output_authorized",
+    "sidewall_prs_eas_numeric_output_authorized",
+    "runtime_configuration_authorized",
+    "production_ingestion_authorized",
+    "nodi_runtime_recompute_authorized",
+    "comsol_launch_authorized",
+    "mph_load_authorized",
+    "qch_weighting_authorized",
+    "jrc_authorized",
+    "route_score_authorized",
+    "winner_authorized",
+    "yield_authorized",
+    "detection_probability_authorized",
+    "fabrication_release_authorized",
+    "authorization_phrase_already_received",
+)
+
+_SIDEWALL_PACKAGE_C_AUTHORIZATION_TRUE_FIELDS: tuple[str, ...] = (
+    "explicit_future_authorization_required",
+    "contract_sidecar_writing_authorized",
+    "no_nodi_runtime_recompute",
+    "no_comsol_launch",
+    "no_mph_load",
+    "no_sidewall_prs_eas_numeric_output",
+    "not_qch_weighted",
+    "not_jrc",
+    "not_route_score",
+    "not_winner",
+    "not_yield",
+    "not_detection_probability",
+    "not_fabrication_release",
+)
+
+
+def _read_sidewall_gate_json(path: Path, issues: list[str], label: str) -> dict[str, Any]:
+    if not path.exists():
+        issues.append(f"{label}: missing {path}")
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        issues.append(f"{label}: unreadable JSON: {exc}")
+        return {}
+    if not isinstance(payload, dict):
+        issues.append(f"{label}: JSON payload is not an object")
+        return {}
+    return payload
+
+
+def _sidewall_package_c_authorization_source_files(
+    *,
+    gate23_status_path: Path,
+    gate23_manifest_path: Path,
+) -> list[dict[str, str]]:
+    return [
+        {
+            "label": "gate23_status",
+            "path": str(gate23_status_path),
+            "exists": str(gate23_status_path.exists()).lower(),
+            "sha256": sha256_file(gate23_status_path) if gate23_status_path.exists() else "",
+        },
+        {
+            "label": "gate23_manifest",
+            "path": str(gate23_manifest_path),
+            "exists": str(gate23_manifest_path.exists()).lower(),
+            "sha256": sha256_file(gate23_manifest_path) if gate23_manifest_path.exists() else "",
+        },
+    ]
+
+
+def build_sidewall_package_c_authorization_gate_record(
+    *,
+    gate23_status_path: Path,
+    gate23_manifest_path: Path,
+) -> dict[str, Any]:
+    """Build a no-execution Package C authorization gate record."""
+    issues: list[str] = []
+    gate23_status = _read_sidewall_gate_json(
+        gate23_status_path,
+        issues,
+        "SIDEWALL-PACKAGE-C-GATE23-STATUS",
+    )
+    gate23_summary = gate23_status.get("summary", {}) if gate23_status else {}
+    if gate23_status:
+        if gate23_status.get("disposition") != "NODI_GATE23_SIDEWALL_STATIC_FIXTURE_EXECUTION_READY_NO_AUTH":
+            issues.append("SIDEWALL-PACKAGE-C-GATE23-STATUS: unexpected disposition")
+        if gate23_status.get("review_only") is not True:
+            issues.append("SIDEWALL-PACKAGE-C-GATE23-STATUS: review_only is not true")
+        if gate23_status.get("no_auth") is not True:
+            issues.append("SIDEWALL-PACKAGE-C-GATE23-STATUS: no_auth is not true")
+        if gate23_summary.get("static_fixture_execution_blocked") != 0:
+            issues.append("SIDEWALL-PACKAGE-C-GATE23-STATUS: static fixtures are blocked")
+        if gate23_summary.get("package_c_proof_lock_failures") != 0:
+            issues.append("SIDEWALL-PACKAGE-C-GATE23-STATUS: Package C proof lock failure")
+        if gate23_summary.get("runtime_allowed_rows") != 0:
+            issues.append("SIDEWALL-PACKAGE-C-GATE23-STATUS: runtime allowed row leakage")
+        if gate23_summary.get("production_allowed_rows") != 0:
+            issues.append("SIDEWALL-PACKAGE-C-GATE23-STATUS: production allowed row leakage")
+    if not gate23_manifest_path.exists():
+        issues.append(f"SIDEWALL-PACKAGE-C-GATE23-MANIFEST: missing {gate23_manifest_path}")
+
+    status = AUTHORIZATION_GATE_PASS_STATUS if not issues else AUTHORIZATION_GATE_BLOCKED_STATUS
+    record: dict[str, Any] = {
+        "schema_version": "nodi_sidewall_package_c_authorization_gate_v1",
+        "record_role": "future_sidewall_package_c_authorization_gate_no_runtime_no_physics",
+        "status": status,
+        "issues": issues,
+        "authorization_gate_decision": "not_authorized_pending_explicit_future_request",
+        "required_future_authorization_phrase": SIDEWALL_PACKAGE_C_AUTHORIZATION_PHRASE,
+        "authorization_phrase_already_received": False,
+        "package_c_physics_authorized": False,
+        "package_c_proof_registry_update_authorized": False,
+        "trajectory_boundary_authorized": False,
+        "near_wall_diffusion_authorized": False,
+        "wall_distance_bin_prs_authorized": False,
+        "trapezoid_flow_authorized": False,
+        "flux_weighted_sampling_authorized": False,
+        "electrokinetic_grid_authorized": False,
+        "optical_solver_output_authorized": False,
+        "sidewall_prs_eas_numeric_output_authorized": False,
+        "runtime_configuration_authorized": False,
+        "production_ingestion_authorized": False,
+        "nodi_runtime_recompute_authorized": False,
+        "comsol_launch_authorized": False,
+        "mph_load_authorized": False,
+        "qch_weighting_authorized": False,
+        "jrc_authorized": False,
+        "route_score_authorized": False,
+        "winner_authorized": False,
+        "yield_authorized": False,
+        "detection_probability_authorized": False,
+        "fabrication_release_authorized": False,
+        "explicit_future_authorization_required": True,
+        "contract_sidecar_writing_authorized": True,
+        "no_nodi_runtime_recompute": True,
+        "no_comsol_launch": True,
+        "no_mph_load": True,
+        "no_sidewall_prs_eas_numeric_output": True,
+        "not_qch_weighted": True,
+        "not_jrc": True,
+        "not_route_score": True,
+        "not_winner": True,
+        "not_yield": True,
+        "not_detection_probability": True,
+        "not_fabrication_release": True,
+        "claim_boundary": (
+            "future_sidewall_package_c_authorization_gate_only_no_runtime_no_physics"
+        ),
+        "gate23_status_path": str(gate23_status_path),
+        "gate23_status_sha256": sha256_file(gate23_status_path) if gate23_status_path.exists() else "",
+        "gate23_manifest_path": str(gate23_manifest_path),
+        "gate23_manifest_sha256": sha256_file(gate23_manifest_path) if gate23_manifest_path.exists() else "",
+        "source_files": _sidewall_package_c_authorization_source_files(
+            gate23_status_path=gate23_status_path,
+            gate23_manifest_path=gate23_manifest_path,
+        ),
+    }
+    gate_issues = validate_sidewall_package_c_authorization_gate_record(record)
+    if gate_issues:
+        record["status"] = AUTHORIZATION_GATE_BLOCKED_STATUS
+        record["issues"] = [*issues, *gate_issues]
+    return record
+
+
+def validate_sidewall_package_c_authorization_gate_record(
+    record: Mapping[str, Any],
+) -> list[str]:
+    issues: list[str] = []
+    if record.get("schema_version") != "nodi_sidewall_package_c_authorization_gate_v1":
+        issues.append("SIDEWALL-PACKAGE-C-GATE: unexpected schema_version")
+    if (
+        record.get("record_role")
+        != "future_sidewall_package_c_authorization_gate_no_runtime_no_physics"
+    ):
+        issues.append("SIDEWALL-PACKAGE-C-GATE: record_role drifted")
+    if record.get("status") not in {
+        AUTHORIZATION_GATE_PASS_STATUS,
+        AUTHORIZATION_GATE_BLOCKED_STATUS,
+    }:
+        issues.append("SIDEWALL-PACKAGE-C-GATE: invalid status")
+    if record.get("authorization_gate_decision") != "not_authorized_pending_explicit_future_request":
+        issues.append("SIDEWALL-PACKAGE-C-GATE: authorization_gate_decision drifted")
+    if record.get("required_future_authorization_phrase") != SIDEWALL_PACKAGE_C_AUTHORIZATION_PHRASE:
+        issues.append("SIDEWALL-PACKAGE-C-GATE: future authorization phrase drifted")
+    for field in _SIDEWALL_PACKAGE_C_AUTHORIZATION_FALSE_FIELDS:
+        if record.get(field) is not False:
+            issues.append(f"SIDEWALL-PACKAGE-C-GATE: {field} must remain false")
+    for field in _SIDEWALL_PACKAGE_C_AUTHORIZATION_TRUE_FIELDS:
+        if record.get(field) is not True:
+            issues.append(f"SIDEWALL-PACKAGE-C-GATE: {field} must remain true")
+    if (
+        record.get("claim_boundary")
+        != "future_sidewall_package_c_authorization_gate_only_no_runtime_no_physics"
+    ):
+        issues.append("SIDEWALL-PACKAGE-C-GATE: claim_boundary drifted")
+    return issues
+
+
+def write_sidewall_package_c_authorization_gate_record(
+    *,
+    gate23_status_path: Path,
+    gate23_manifest_path: Path,
+    output_dir: Path,
+) -> dict[str, Any]:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    record = build_sidewall_package_c_authorization_gate_record(
+        gate23_status_path=gate23_status_path,
+        gate23_manifest_path=gate23_manifest_path,
+    )
+    issue_path = output_dir / SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_ISSUES_FILENAME
+    issue_rows = [
+        {"issue_index": index, "issue": issue}
+        for index, issue in enumerate(record["issues"], start=1)
+    ] or [{"issue_index": "", "issue": "none"}]
+    write_csv_rows(issue_path, issue_rows)
+    record["issue_csv"] = str(issue_path)
+    record["issue_csv_sha256"] = sha256_file(issue_path)
+    record_path = output_dir / SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_RECORD_FILENAME
+    write_json_atomic(record_path, record, sort_keys=True)
+    record["record_path"] = str(record_path)
+    record["record_sha256"] = sha256_file(record_path)
+    return record
+
+
+def evaluate_sidewall_package_c_future_authorization_request(
+    *,
+    supplied_phrase: str,
+    gate_record: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    issues: list[str] = []
+    gate_status = "not_supplied"
+    if gate_record is not None:
+        gate_status = str(gate_record.get("status", "missing_status"))
+        gate_issues = validate_sidewall_package_c_authorization_gate_record(gate_record)
+        issues.extend(f"SIDEWALL-PACKAGE-C-AUTH-GATE: {issue}" for issue in gate_issues)
+
+    phrase_exact_match = supplied_phrase == SIDEWALL_PACKAGE_C_AUTHORIZATION_PHRASE
+    if not phrase_exact_match:
+        status = FUTURE_AUTHORIZATION_PHRASE_MISMATCH
+        issues.append("SIDEWALL-PACKAGE-C-AUTH-PHRASE: phrase mismatch")
+    else:
+        status = FUTURE_AUTHORIZATION_PHRASE_MATCH_BLOCKED_NO_EXECUTION
+
+    return {
+        "requested_action": "sidewall_package_c_physics_preauthorization",
+        "required_phrase": SIDEWALL_PACKAGE_C_AUTHORIZATION_PHRASE,
+        "phrase_exact_match": phrase_exact_match,
+        "status": status,
+        "authorized_now": False,
+        "runtime_configuration_authorized": False,
+        "package_c_physics_authorized": False,
+        "proof_registry_update_authorized": False,
+        "nodi_runtime_recompute_authorized": False,
+        "comsol_launch_authorized": False,
+        "mph_load_authorized": False,
+        "gate_status": gate_status,
+        "issues": issues,
     }
 
 

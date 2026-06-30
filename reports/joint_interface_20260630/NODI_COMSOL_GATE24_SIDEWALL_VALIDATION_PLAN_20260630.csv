@@ -1,0 +1,6 @@
+validation_id,command,required_for_pass,recorded_result
+G24E-VALIDATION-001,python tools/audits/build_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py --confirm-gate24-package-c-authorization-ledger,true,PENDING_RUNTIME_VALIDATION
+G24E-VALIDATION-002,python -m py_compile tools/audits/build_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py tools/audits/write_nodi_sidewall_package_c_authorization_gate.py,true,PENDING_RUNTIME_VALIDATION
+G24E-VALIDATION-003,python -m pytest tests/test_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py -q,true,PENDING_RUNTIME_VALIDATION
+G24E-VALIDATION-004,python -m pytest tests/test_nodi_comsol_gate23_sidewall_static_fixture_execution.py tests/test_nodi_comsol_gate24_sidewall_package_c_authorization_ledger.py -q,true,PENDING_RUNTIME_VALIDATION
+G24E-VALIDATION-005,python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k sidewall_package_c_authorization,true,PENDING_RUNTIME_VALIDATION
