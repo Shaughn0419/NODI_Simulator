@@ -1005,6 +1005,9 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
         "runtime_top_aperture_nm": 500.0,
         "source_geometry_descriptor_sha": "a" * 64,
         "geometry_profile_sha256": "b" * 64,
+        "geometry_profile_source": "comsol_descriptor",
+        "geometry_claim_level": "descriptor_only",
+        "metrology_status": "not_measured",
         "geometry_profile_descriptor_version": "geometry_profile_descriptor_v2",
         "geometry_runtime_binding_version": "geometry_runtime_binding_manifest_v1",
         "reference_geometry_model": "rectangular_width_depth_reference_proxy_under_trapezoid",
@@ -1081,6 +1084,9 @@ def test_sidewall_observation_signature_records_geometry_propagation_fields() ->
     assert "runtime_top_aperture_nm=500.0" in signature_85
     assert f"source_geometry_descriptor_sha={'a' * 64}" in signature_85
     assert f"geometry_profile_sha256={'b' * 64}" in signature_85
+    assert "geometry_profile_source=comsol_descriptor" in signature_85
+    assert "geometry_claim_level=descriptor_only" in signature_85
+    assert "metrology_status=not_measured" in signature_85
     assert (
         "geometry_profile_descriptor_version=geometry_profile_descriptor_v2"
         in signature_85

@@ -331,6 +331,9 @@ def _sidewall_observation_cache_fields(
         "|runtime_top_aperture_nm=unknown"
         f"|source_geometry_descriptor_sha={GEOMETRY_DESCRIPTOR_SHA256}"
         f"|geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}"
+        "|geometry_profile_source=comsol_descriptor"
+        "|geometry_claim_level=descriptor_only"
+        "|metrology_status=not_measured"
         "|geometry_runtime_binding_version=geometry_runtime_binding_manifest_v1"
         "|trapezoid_top_width_m=5e-07"
         "|trapezoid_depth_m=9e-07"
@@ -1558,6 +1561,29 @@ def test_position_response_sidewall_v2_rejects_comsol_descriptor_profile_sha_mis
     _assert_has_issue(issues, "PRS-SIDEWALL-V2")
 
 
+@pytest.mark.parametrize(
+    ("field", "replacement"),
+    [
+        ("geometry_profile_source", "fibsem"),
+        ("geometry_claim_level", "measured_geometry"),
+        ("metrology_status", "validated"),
+    ],
+)
+def test_position_response_sidewall_v2_rejects_signature_profile_identity_mismatch(
+    field: str,
+    replacement: str,
+) -> None:
+    row = _valid_prs_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        f"{field}={row[field]}",
+        f"{field}={replacement}",
+    )
+
+    issues = validate_position_response_surface_rows([row])
+
+    _assert_has_issue(issues, "PRS-SIDEWALL-V2")
+
+
 def test_position_response_sidewall_v2_requires_source_grain_binding_fields() -> None:
     row = _valid_prs_sidewall_v2_row()
     del row["source_route_id_nodi"]
@@ -2405,6 +2431,29 @@ def test_effective_aperture_sidewall_v2_rejects_comsol_descriptor_profile_sha_mi
     row["observation_signature"] = str(row["observation_signature"]).replace(
         f"geometry_profile_sha256={GEOMETRY_DESCRIPTOR_SHA256}",
         f"geometry_profile_sha256={mismatched_profile_sha}",
+    )
+
+    issues = validate_effective_aperture_surrogate_rows([row])
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
+
+
+@pytest.mark.parametrize(
+    ("field", "replacement"),
+    [
+        ("geometry_profile_source", "fibsem"),
+        ("geometry_claim_level", "measured_geometry"),
+        ("metrology_status", "validated"),
+    ],
+)
+def test_effective_aperture_sidewall_v2_rejects_signature_profile_identity_mismatch(
+    field: str,
+    replacement: str,
+) -> None:
+    row = _valid_eas_sidewall_v2_row()
+    row["observation_signature"] = str(row["observation_signature"]).replace(
+        f"{field}={row[field]}",
+        f"{field}={replacement}",
     )
 
     issues = validate_effective_aperture_surrogate_rows([row])
