@@ -138,6 +138,8 @@ def parse_status_path(line: str) -> str:
 def classify_dirty_path(path: str) -> tuple[str, str]:
     if "GATE17" in path or "gate17_sidewall_current_release_anchor" in path:
         return ("GATE17_GENERATED_OR_TEST", "allowed_for_gate17_build")
+    if "GATE18" in path or "gate18_sidewall_comsol_gate16_receipt" in path:
+        return ("GATE18_GENERATED_OR_TEST", "allowed_for_gate17_build")
     if path in {
         "tools/audits/build_nodi_comsol_gate16_sidewall_clean_reintake_receipt.py",
         "tests/test_nodi_comsol_gate16_sidewall_clean_reintake_receipt.py",

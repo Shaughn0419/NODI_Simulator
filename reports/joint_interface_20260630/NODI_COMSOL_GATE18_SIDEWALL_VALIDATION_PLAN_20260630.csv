@@ -1,0 +1,4 @@
+validation_id,command,required_for_pass,recorded_result
+G18E-VALIDATION-001,python tools/audits/build_nodi_comsol_gate18_sidewall_comsol_gate16_receipt.py --confirm-gate18-comsol-gate16-receipt,true,PENDING_RUNTIME_VALIDATION
+G18E-VALIDATION-002,python -m py_compile tools/audits/build_nodi_comsol_gate18_sidewall_comsol_gate16_receipt.py,true,PENDING_RUNTIME_VALIDATION
+G18E-VALIDATION-003,python -m pytest tests/test_nodi_comsol_gate18_sidewall_comsol_gate16_receipt.py -q,true,PENDING_RUNTIME_VALIDATION

@@ -34,12 +34,17 @@ def test_gate17_dirty_classifier_blocks_unknown_but_allows_gate17_outputs() -> N
     successor_class, successor_action = gate17.classify_dirty_path(
         "tools/audits/build_nodi_comsol_gate16_sidewall_clean_reintake_receipt.py"
     )
+    gate18_class, gate18_action = gate17.classify_dirty_path(
+        "reports/joint_interface_20260630/NODI_COMSOL_GATE18_SIDEWALL_STATUS_20260630.json"
+    )
     unknown_class, unknown_action = gate17.classify_dirty_path("notes/unrelated.txt")
 
     assert allowed_class == "GATE17_GENERATED_OR_TEST"
     assert allowed_action == "allowed_for_gate17_build"
     assert successor_class == "GATE17_KNOWN_GATE16_SUCCESSOR_HEAD_COMPATIBILITY_UPDATE"
     assert successor_action == "allowed_for_gate17_build"
+    assert gate18_class == "GATE18_GENERATED_OR_TEST"
+    assert gate18_action == "allowed_for_gate17_build"
     assert unknown_class == "UNKNOWN_DIRTY_BLOCKER"
     assert unknown_action == "blocks_release_anchor"
 

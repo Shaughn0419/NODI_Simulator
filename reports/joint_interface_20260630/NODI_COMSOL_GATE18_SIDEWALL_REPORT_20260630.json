@@ -1,0 +1,26 @@
+{
+  "summary": {
+    "disposition": "NODI_GATE18_SIDEWALL_COMSOL_GATE16_CLEAN_REINTAKE_RECEIPT_STATIC_PREFLIGHT_UNBLOCK_NO_AUTH",
+    "comsol_head_actual": "ed4cfc7ff4565f79c025cd206bef0aff29d25d6a",
+    "comsol_gate16_receipt_rows": 9,
+    "comsol_gate16_blocking_drift": 0,
+    "comsol_gate16_missing_required": 0,
+    "comsol_gate16_claim_firewall_drift": 0,
+    "clean_reintake_acceptance_failures": 0,
+    "package_abd_static_preflight_allowed": 3,
+    "package_c_state": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
+    "firewall_status": "PASS_NO_AUTH_LOCKS_PRESERVED",
+    "edge_state": "NOT_APPROVED_PREAUTH_ONLY",
+    "qch_state": "ABSENT",
+    "binding_state": "FAIL_CLOSED",
+    "review_only": true,
+    "no_auth": true
+  },
+  "outputs": [
+    "NODI_COMSOL_GATE18_SIDEWALL_COMSOL_GATE16_RECEIPT_20260630.csv",
+    "NODI_COMSOL_GATE18_SIDEWALL_CLEAN_REINTAKE_ACCEPTANCE_20260630.csv",
+    "NODI_COMSOL_GATE18_SIDEWALL_STATIC_PREFLIGHT_BOARD_20260630.csv",
+    "NODI_COMSOL_GATE18_SIDEWALL_NO_AUTH_FIREWALL_20260630.csv",
+    "NODI_COMSOL_GATE18_SIDEWALL_VALIDATION_PLAN_20260630.csv"
+  ]
+}
