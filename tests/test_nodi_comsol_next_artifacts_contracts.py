@@ -853,6 +853,25 @@ def _replace_observation_signature(
     return row
 
 
+def _blank_sidewall_union_columns() -> dict[str, object]:
+    return {
+        "artifact_id": "",
+        "artifact_version": "",
+        "roadmap_status": "",
+        "not_accepted_for_formula_use": "",
+        "not_accepted_for_runtime_config": "",
+        "not_accepted_for_production": "",
+        "geometry_runtime_binding_version": "",
+        "geometry_propagation_status": "",
+        "geometry_propagation_scope": "",
+        "geometry_not_propagated_reasons": "",
+        "sidewall_package_d_precheck_version": "",
+        "package_C_validation_status": "",
+        "package_d_precheck_status": "",
+        "sidewall_aware": "",
+    }
+
+
 SIDEWALL_ROADMAP_HARD_FAIL_EXECUTION_MATRIX: tuple[
     tuple[str, Callable[[], list[str]], tuple[str, ...]],
     ...,
@@ -1244,6 +1263,69 @@ def test_sidewall_prs_csv_rejects_unregistered_package_c_proof(
         assert_valid_position_response_surface_csv(prs_path)
 
     _assert_has_issue(list(exc_info.value.issues), "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_eas_csv_rejects_unregistered_package_c_proof(
+    tmp_path: Path,
+) -> None:
+    eas_path = tmp_path / "sidewall_eas_bad_proof.csv"
+    package_c_proof = _sidewall_package_c_proof_fields("pass")
+    package_c_proof["package_C_proof_artifact_id"] = "unregistered-package-C-proof"
+    write_csv_rows(
+        eas_path,
+        [
+            _valid_eas_sidewall_v2_row(
+                package_C_validation_status="pass",
+                **package_c_proof,
+            )
+        ],
+    )
+
+    with pytest.raises(ContractValidationError) as exc_info:
+        assert_valid_effective_aperture_surrogate_csv(eas_path)
+
+    _assert_has_issue(list(exc_info.value.issues), "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_ideal_rectangle_prs_ignores_blank_sidewall_union_columns() -> None:
+    assert (
+        validate_position_response_surface_rows(
+            [
+                _valid_prs_row(
+                    channel_cross_section_model="ideal_rectangle",
+                    **_blank_sidewall_union_columns(),
+                )
+            ]
+        )
+        == []
+    )
+
+
+def test_ideal_rectangle_eas_ignores_blank_sidewall_union_columns() -> None:
+    assert (
+        validate_effective_aperture_surrogate_rows(
+            [
+                _valid_eas_row(
+                    channel_cross_section_model="ideal_rectangle",
+                    **_blank_sidewall_union_columns(),
+                )
+            ]
+        )
+        == []
+    )
+
+
+def test_ideal_rectangle_eas_rejects_nonblank_sidewall_marker() -> None:
+    issues = validate_effective_aperture_surrogate_rows(
+        [
+            _valid_eas_row(
+                channel_cross_section_model="ideal_rectangle",
+                geometry_runtime_binding_version="geometry_runtime_binding_manifest_v1",
+            )
+        ]
+    )
+
+    _assert_has_issue(issues, "EAS-SIDEWALL-V2")
 
 
 def test_comsol_v4_default_context_is_readonly_and_out_of_scope_for_dry_optical() -> None:
@@ -5632,6 +5714,37 @@ def test_production_generation_report_blocks_invalid_prs_candidate(
     assert report["status"] == PRODUCTION_GENERATION_BLOCKED_STATUS
     assert report["position_response_surface_status"] == "blocked_missing_position_response_event_source"
     assert report["position_response_candidate_validation_issue_count"] > 0
+    assert {blocker["status"] for blocker in report["blockers"]} == {
+        "blocked_invalid_position_response_candidate"
+    }
+    assert report["position_response_surface_production_generated"] is False
+    assert validate_production_generation_report(report) == []
+
+
+def test_production_generation_report_blocks_sidewall_prs_v2_candidate(
+    tmp_path: Path,
+) -> None:
+    smoke = _write_passing_bounded_smoke_execution(tmp_path)
+    sidewall_candidate = tmp_path / "sidewall_prs_candidate.csv"
+    write_csv_rows(sidewall_candidate, [_valid_prs_sidewall_v2_row()])
+
+    report = build_production_generation_report(
+        smoke_execution_report_path=Path(smoke["report_path"]),
+        geometry_descriptor_path=PROJECT_ROOT / "tmp/COMSOL_GEOMETRY_DESCRIPTOR_V1.csv",
+        rank_source_path=PROJECT_ROOT
+        / "exports/nodi_comsol_handoff_v1/NODI_EVIDENCE_CONNECTOR_fullgrid_route_stability.csv",
+        guardrail_table_path=PROJECT_ROOT
+        / "exports/nodi_comsol_handoff_v1/NODI_REFERENCE_GUARDRAIL_TABLE.csv",
+        position_response_candidate_path=sidewall_candidate,
+        authorization_phrase=PRODUCTION_GENERATION_AUTHORIZATION_PHRASE,
+    )
+
+    assert report["status"] == PRODUCTION_GENERATION_BLOCKED_STATUS
+    assert report["position_response_surface_status"] == (
+        "blocked_missing_position_response_event_source"
+    )
+    assert report["position_response_candidate_validation_issue_count"] > 0
+    assert any("PRS-PROD-POLICY" in issue for issue in report["issues"])
     assert {blocker["status"] for blocker in report["blockers"]} == {
         "blocked_invalid_position_response_candidate"
     }

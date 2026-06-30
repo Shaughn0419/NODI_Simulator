@@ -5978,6 +5978,11 @@ def build_production_generation_report(
                 production_table=True,
                 require_complete_row_arithmetic=True,
             )
+            prs_candidate_issues.extend(
+                _production_position_response_candidate_policy_issues(
+                    prs_candidate_rows
+                )
+            )
             issues.extend(
                 f"PROD-PRS-CANDIDATE: {issue}" for issue in prs_candidate_issues
             )
@@ -6284,6 +6289,9 @@ def write_production_generation_bundle(
                     prs_rows,
                     production_table=True,
                     require_complete_row_arithmetic=True,
+                )
+                prs_issues.extend(
+                    _production_position_response_candidate_policy_issues(prs_rows)
                 )
                 if prs_issues:
                     raise ContractValidationError(
@@ -9184,6 +9192,40 @@ def _production_effective_aperture_blockers(
     return blockers
 
 
+def _production_position_response_candidate_policy_issues(
+    rows: Sequence[Mapping[str, Any]],
+) -> list[str]:
+    issues: list[str] = []
+    for row_index, row in enumerate(rows, start=1):
+        if _sidewall_v2_marker_active(
+            row,
+            explicit_marker_fields=PRS_SIDEWALL_V2_EXPLICIT_MARKER_FIELDS,
+            expected_artifact_version=PRS_SIDEWALL_V2_ARTIFACT_VERSION,
+        ):
+            _issue(
+                issues,
+                row_index,
+                "PRS-PROD-POLICY",
+                "sidewall PRS v2 rows are surrogate/context artifacts, not production PRS candidates",
+            )
+        if _value(row, "not_accepted_for_production").lower() in {"true", "1", "yes"}:
+            _issue(
+                issues,
+                row_index,
+                "PRS-PROD-POLICY",
+                "row is marked not_accepted_for_production",
+            )
+        roadmap_status = _value(row, "roadmap_status")
+        if roadmap_status in SIDEWALL_V2_ROADMAP_STATUS_ALLOWED:
+            _issue(
+                issues,
+                row_index,
+                "PRS-PROD-POLICY",
+                f"roadmap_status={roadmap_status} is not a production PRS candidate status",
+            )
+    return issues
+
+
 def build_effective_aperture_first_production_rows(
     *,
     geometry_descriptor_path: Path,
@@ -9724,7 +9766,11 @@ def _sidewall_v2_marker_active(
         return True
     if _value(row, "artifact_version") == expected_artifact_version:
         return True
-    return any(field in row for field in explicit_marker_fields if field != "artifact_version")
+    return any(
+        _value(row, field)
+        for field in explicit_marker_fields
+        if field != "artifact_version"
+    )
 
 
 def _validate_position_response_sidewall_v2_fields(
