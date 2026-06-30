@@ -30,6 +30,7 @@ The current supported split is:
 | PRS sidewall v2 signature | PRS rows require exact sampler/support/wall-distance signature fragments and row/signature binding. | `tests/test_nodi_comsol_next_artifacts_contracts.py` |
 | Package C gate | Any PRS basis/source-basis field carrying `wall_distance` requires `includes_trajectory_near_wall_metrics=true` and `package_C_validation_status=pass`. | commit `dc12148` |
 | Grain/admission prechecks | Package D and PRS validators reject D900-to-D1200 borrowing, direct edge4-to-edge20 promotion, and 220/300 nm large-tail auto-admission without exact steric support. | `test_position_response_sidewall_v2_rejects_D900_to_D1200_source_borrowing`, `test_position_response_sidewall_v2_rejects_edge4_to_edge20_direct_mapping`, `test_position_response_sidewall_v2_rejects_auto_tail_admission` |
+| Blocked-bin consistency | PRS sidewall v2 rows require `bin_accessible` and `bin_particle_center_support_status` to agree; blocked bins require `blocked_reason`, `decision_use_allowed=false`, no neighbor fill, and no numeric response/proxy values. | `test_position_response_sidewall_v2_rejects_blocked_bin_neighbor_fill`, `test_position_response_sidewall_v2_rejects_blocked_bin_numeric_response`, `test_position_response_sidewall_v2_rejects_inaccessible_open_support_status`, `test_position_response_sidewall_v2_rejects_blocked_support_marked_accessible` |
 | PRS propagated allowlist | Propagated trapezoid PRS rows allow only implemented sampler, flow, flow-control, and boundary states. | `test_position_response_sidewall_v2_rejects_unsupported_propagated_flow_control` |
 | Propagation-status usage | Propagated PRS/EAS sidewall v2 rows cannot carry `geometry_not_propagated_reasons`; non-propagated rows must remain blocked/audit-labeled. | `test_effective_aperture_sidewall_v2_rejects_propagated_not_propagated_reason` |
 | EAS generic surrogate guard | Generic `W_eff_surrogate_nm` must be an explicit numeric alias of a named sidewall surrogate; eta/rank fields stay disabled/no-rank. | commit `c9ea9b7` |
@@ -59,14 +60,14 @@ python -m pytest tests/test_cross_section_geometry.py tests/test_nodi_comsol_nex
 Latest result:
 
 ```text
-478 passed in 84.04s (0:01:24)
+484 passed in 91.67s (0:01:31)
 ```
 
-Additional focused verification after adding the latest claim-alias guards:
+Additional focused verification after adding the latest claim-alias and blocked-bin guards:
 
 ```text
 python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q
-406 passed in 59.78s
+412 passed in 59.41s
 python -m pytest tests/test_cross_section_geometry.py -q
 38 passed in 0.17s
 python -m pytest tests/test_physics_core.py -k channel_geometry -q
