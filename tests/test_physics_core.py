@@ -9666,6 +9666,67 @@ class TestIntegration:
         assert "initial_position_wall_distance_model=unknown" not in signature
         assert "missing_sampler_diagnostic" not in signature
 
+    def test_batch_signature_keeps_measured_profile_lookup_blocked_until_validated(self):
+        theta_grid = np.linspace(0.01, np.pi - 0.01, 160)
+        sim_cfg = SimulationConfig(
+            total_time_s=0.08,
+            sampling_rate_Hz=2000.0,
+            mean_flow_velocity_m_s=2e-4,
+            noise_std=0.0,
+            n_events=1,
+            random_seed=42,
+            channel_cross_section_model="measured_profile_lookup",
+            measured_profile_path="profiles/fibsem_sidewall.csv",
+        )
+        baseline = compute_baseline_normalization(
+            BASELINE_PARTICLE,
+            WATER,
+            BASELINE_OPTICAL,
+            theta_grid,
+            channel=BASELINE_CHANNEL,
+            sim_cfg=sim_cfg,
+        )
+
+        batch = run_single_case_batch(
+            BASELINE_PARTICLE,
+            WATER,
+            BASELINE_CHANNEL,
+            BASELINE_OPTICAL,
+            sim_cfg,
+            baseline["E_sca_ref"],
+            theta_grid,
+            retain_event_traces=False,
+            stream_summary_only=True,
+        )
+
+        summary = batch["summary"]
+        intrinsic = batch["intrinsic"]
+        signature = intrinsic["observation_signature"]
+        assert summary["channel_cross_section_model"] == "measured_profile_lookup"
+        assert summary["measured_profile_configured"] is True
+        assert summary["measured_profile_loaded"] is False
+        assert summary["measured_profile_validated"] is False
+        assert summary["measured_profile_sha256"] == ""
+        assert summary["geometry_surrogate_status"] == (
+            "measured_profile_lookup_metadata_only_not_loaded_or_validated"
+        )
+        assert summary["measured_profile_runtime_status"] == (
+            "blocked_profile_not_loaded_or_validated"
+        )
+        assert summary["geometry_claim_level"] == (
+            "blocked_measured_profile_not_loaded_or_validated"
+        )
+        assert summary["channel_geometry_diagnostic_gate_passed"] is False
+        assert "channel_cross_section_model=measured_profile_lookup" in signature
+        assert "measured_profile_path=profiles/fibsem_sidewall.csv" in signature
+        assert "measured_profile_loaded=False" in signature
+        assert "measured_profile_validated=False" in signature
+        assert "measured_profile_sha256=" in signature
+        assert (
+            "measured_profile_runtime_status="
+            "blocked_profile_not_loaded_or_validated"
+        ) in signature
+
     def test_batch_supports_sobol_sampling_and_adaptive_event_budget(self):
         theta_grid = np.linspace(0.01, np.pi - 0.01, 160)
         baseline = compute_baseline_normalization(
