@@ -146,6 +146,8 @@ def classify_dirty_path(path: str) -> tuple[str, str]:
         return ("GATE20_GENERATED_OR_TEST", "allowed_for_gate17_build")
     if "GATE21" in path or "gate21_sidewall_negative_mutation_scanner" in path:
         return ("GATE21_GENERATED_OR_TEST", "allowed_for_gate17_build")
+    if "GATE22" in path or "gate22_sidewall_validator_binding" in path:
+        return ("GATE22_GENERATED_OR_TEST", "allowed_for_gate17_build")
     if path in {
         "tools/audits/build_nodi_comsol_gate16_sidewall_clean_reintake_receipt.py",
         "tests/test_nodi_comsol_gate16_sidewall_clean_reintake_receipt.py",
