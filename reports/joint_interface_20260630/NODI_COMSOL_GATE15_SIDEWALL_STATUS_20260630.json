@@ -2,10 +2,10 @@
   "disposition": "NODI_GATE15_SIDEWALL_BILATERAL_CONTRACT_V3_CLOSURE_AND_STATIC_PREFLIGHT_READINESS_NO_AUTH",
   "summary": {
     "disposition": "NODI_GATE15_SIDEWALL_BILATERAL_CONTRACT_V3_CLOSURE_AND_STATIC_PREFLIGHT_READINESS_NO_AUTH",
-    "nodi_current_head": "ee1598f0fb6e834f9e88d9149a8bc7ecb9502f4a",
+    "nodi_current_head": "f3dbdbafde0dba036c93de4d6ef503f403a76d62",
     "nodi_gate14_release_head": "b4561298c8e5ba1ef083f0114ed183882117282e",
     "current_head_supersedes_gate14_status_build_head": true,
-    "dirty_unknown_blockers": 3,
+    "dirty_unknown_blockers": 0,
     "comsol_head_actual": "7090794ff20970955a011b123b3de171e96910a3",
     "comsol_gate14_status": "PARTIAL_COMSOL_GATE14_NODI_SIDEWALL_IMPLEMENTATION_GUARD_INTAKE_OBSERVED_UNRELEASED_REVIEW_ONLY_NO_AUTH",
     "comsol_gate14_partial_is_time_delta": true,

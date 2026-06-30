@@ -159,7 +159,7 @@ def classify_dirty_path(path: str) -> tuple[str, str, str]:
 
 def parse_git_status_path(line: str) -> str:
     if " -> " in line:
-        line = line.rsplit(" -> ", 1)[1]
+        return line.rsplit(" -> ", 1)[1].replace("\\", "/")
     if len(line) >= 3 and line[2] == " ":
         return line[3:].replace("\\", "/")
     return line[2:].lstrip().replace("\\", "/")

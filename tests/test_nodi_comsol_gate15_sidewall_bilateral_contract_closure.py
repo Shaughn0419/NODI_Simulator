@@ -97,10 +97,15 @@ def test_gate15_dirty_path_classifier_rejects_unrelated_dirty() -> None:
     generated, _, generated_action = gate15.classify_dirty_path(
         "reports/joint_interface_20260630/NODI_COMSOL_GATE15_SIDEWALL_STATUS_20260630.json"
     )
+    successor, _, successor_action = gate15.classify_dirty_path(
+        "tools/audits/build_nodi_comsol_gate14_sidewall_implementation_contract.py"
+    )
     unknown, _, unknown_action = gate15.classify_dirty_path("unrelated/user_notes.txt")
 
     assert generated == "LEGIT_GATE15_GENERATED_OUTPUT_PENDING_COMMIT"
     assert generated_action == "stage_with_gate15_commit_after_tests"
+    assert successor == "LEGIT_SIDEWALL_SUCCESSOR_HEAD_COMPATIBILITY_UPDATE"
+    assert successor_action == "stage_with_gate15_commit_after_tests"
     assert unknown == "UNKNOWN_USER_CHANGE_BLOCKER"
     assert unknown_action == "do_not_stage"
 
