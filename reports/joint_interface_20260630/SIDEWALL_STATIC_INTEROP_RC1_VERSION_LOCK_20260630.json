@@ -17,7 +17,7 @@
     "runtime_allowed": "false"
   },
   "nodi_gate_range": "Gate17-Gate25",
-  "nodi_head": "4496060b41d046cd9e67024186e4eddc97a1b31b",
+  "nodi_head": "3dbc3105c93e8ae226a72b3743c7f4a770f43a19",
   "package_abd_status": "STATIC_PREFLIGHT_READY_AFTER_SOURCE_LOCK_CLEAN",
   "package_c_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
   "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",

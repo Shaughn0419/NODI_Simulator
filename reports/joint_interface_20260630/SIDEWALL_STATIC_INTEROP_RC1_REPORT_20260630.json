@@ -868,10 +868,10 @@
       "artifact_id": "NODI-CURRENT-HEAD-VS-GATE25",
       "drift_status": "CURRENT_HEAD_INCLUDES_GATE25_RELEASE",
       "exists": "true",
-      "path": "4496060b41d046cd9e67024186e4eddc97a1b31b Refresh Gate24 sidewall ledger after head advance",
+      "path": "3dbc3105c93e8ae226a72b3743c7f4a770f43a19 Refresh sidewall static interop RC1 after source update",
       "policy_impact": "no_auth_review_only_source_lock",
       "row_count": "NA",
-      "sha256": "4496060b41d046cd9e67024186e4eddc97a1b31b",
+      "sha256": "3dbc3105c93e8ae226a72b3743c7f4a770f43a19",
       "source_side": "NODI_GIT"
     },
     {
@@ -1218,7 +1218,7 @@
     "gate2d_rows": 4,
     "missing_required_source_count": 0,
     "no_auth_firewall_rows": 16,
-    "nodi_head": "4496060b41d046cd9e67024186e4eddc97a1b31b",
+    "nodi_head": "3dbc3105c93e8ae226a72b3743c7f4a770f43a19",
     "package_c_auth_lock_rows": 3,
     "qch_state": "ABSENT",
     "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
@@ -1247,7 +1247,7 @@
       "runtime_allowed": "false"
     },
     "nodi_gate_range": "Gate17-Gate25",
-    "nodi_head": "4496060b41d046cd9e67024186e4eddc97a1b31b",
+    "nodi_head": "3dbc3105c93e8ae226a72b3743c7f4a770f43a19",
     "package_abd_status": "STATIC_PREFLIGHT_READY_AFTER_SOURCE_LOCK_CLEAN",
     "package_c_status": "BLOCKED_REQUIRES_EXPLICIT_PHYSICS_AUTHORIZATION",
     "rc_id": "SIDEWALL_STATIC_INTEROP_RC1",
