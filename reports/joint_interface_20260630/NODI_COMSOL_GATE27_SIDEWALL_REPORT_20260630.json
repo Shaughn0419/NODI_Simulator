@@ -1,7 +1,7 @@
 {
   "summary": {
     "disposition": "NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH",
-    "gate27_build_head": "752420d1e80192b492a71387a7a5b612e3da702a",
+    "gate27_build_head": "0944bca00b740dafac191956f8005b1772780a70",
     "gate26_build_head": "3f4140a88c5dcdc4847cf7ebb8fd09421df6de8a",
     "gate26_head_is_ancestor_of_current": true,
     "gate26_disposition": "NODI_GATE26_SIDEWALL_PACKAGE_C_EXTERNAL_REVIEW_INTEGRATION_DESIGN_CONSTRAINTS_READY_NO_AUTH",

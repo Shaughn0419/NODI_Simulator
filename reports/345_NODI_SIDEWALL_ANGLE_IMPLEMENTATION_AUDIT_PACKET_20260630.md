@@ -50,6 +50,7 @@ The current supported split is:
 | Package C angle/depth mutation coverage | Reflected wall-distance distributions now change under sidewall-angle and depth mutations, and observation signatures include Brownian target/scheme/telemetry fields so cache keys cannot ignore the boundary implementation contract. | `test_angle_and_depth_mutation_change_reflected_wall_distance_distribution`, `test_sidewall_observation_signature_records_geometry_propagation_fields` |
 | Package C equilibrium bin smoke | Pure-Brownian sidewall trajectories now check `x_local_norm` uniformity within u-slices using a KS-style empirical CDF bound plus left/right mean symmetry. | `test_pure_brownian_x_local_norm_uniformity_by_u_slice` |
 | Package C proof scaffold | Package C proof/pass remains fail-closed, but any future `package_C_validation_status=pass` row must now carry a 28-field proof manifest scaffold: reviewed evidence hashes, implementation commit, external review status, required-test matrix status, explicit authorization id/hash superseding the no-auth ledger, and no-claim flags for hindered diffusion, flow, electrokinetic, optical, wet, PRS/EAS numeric, route/yield/detection claims. | `test_sidewall_package_c_proof_scaffold_requires_evidence_fields`, `test_sidewall_package_c_proof_scaffold_rejects_bad_evidence_hash`, `test_sidewall_package_c_proof_scaffold_rejects_bad_authorization_hash`, `test_sidewall_package_c_proof_scaffold_requires_no_claim_flags`, `test_gate27_proof_artifact_contract_requires_real_future_evidence` |
+| Gate28 Package C proof-review packet | The current Package C implementation candidate is packaged for external/independent review with source locks, 6 passing no-runtime evidence commands, a self-contained external-AI prompt, and a no-proof firewall; Gate28 CSV/JSON evidence files are explicitly GitHub-visible, the prompt lists the Gate27 proof contract and all 28 required fields, and proof registration, runtime, numeric PRS/EAS, COMSOL launch, and `.mph` load remain false. | `tests/test_nodi_comsol_gate28_sidewall_package_c_proof_review_packet.py`; `NODI_COMSOL_GATE28_SIDEWALL_TEST_EVIDENCE_20260630.json` |
 
 ## Still Blocked
 
@@ -198,6 +199,19 @@ python -m pytest tests/test_nodi_comsol_next_artifacts_contracts.py -q -k "sidew
 
 python -m pytest tests/test_cross_section_geometry.py tests/test_trajectory.py -q
 53 passed in 0.94s
+
+python tools/audits/build_nodi_comsol_gate28_sidewall_package_c_proof_review_packet.py --confirm-gate28-package-c-proof-review-packet
+NODI_GATE28_SIDEWALL_PACKAGE_C_PROOF_REVIEW_PACKET_READY_NO_PROOF_REGISTRATION
+evidence_pass_rows=6
+source_missing_rows=0
+gate27_proof_contract_field_rows=28
+gate27_proof_contract_missing_required_fields=[]
+gate27_proof_contract_extra_fields=[]
+proof_registration_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
 ```
 
 Additional CLI/compile verification:
@@ -229,4 +243,4 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 
 1. Keep strengthening no-compute validators and mutation tests for profile/source-hash drift and geometry-source promotion.
 2. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
-3. Continue Package C proof work next by preparing an external-review packet for the 28-field proof scaffold and the current smoke/statistical evidence. Do not register proof or mark Package C as passed until an explicit future authorization path supersedes the current no-auth ledger.
+3. Submit the Gate28 proof-review packet to external/independent review and use the feedback to decide whether more Package C tests/schema guards are needed. Do not register proof or mark Package C as passed until that review is complete and an explicit future authorization path supersedes the current no-auth ledger.

@@ -1,0 +1,102 @@
+[
+  {
+    "evidence_id": "G28-EVIDENCE-001",
+    "purpose": "compile Package C geometry/trajectory/schema/builders",
+    "argv": [
+      "C:\\Users\\Yan\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+      "-m",
+      "py_compile",
+      "nodi_simulator/cross_section_geometry.py",
+      "nodi_simulator/trajectory.py",
+      "nodi_simulator/nodi_comsol_next_artifacts.py",
+      "tools/audits/build_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py",
+      "tools/audits/build_nodi_comsol_gate28_sidewall_package_c_proof_review_packet.py"
+    ],
+    "returncode": 0,
+    "duration_s": 0.527,
+    "status": "pass",
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "evidence_id": "G28-EVIDENCE-002",
+    "purpose": "run sidewall geometry and trajectory Package C unit tests",
+    "argv": [
+      "C:\\Users\\Yan\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+      "-m",
+      "pytest",
+      "tests/test_cross_section_geometry.py",
+      "tests/test_trajectory.py",
+      "-q"
+    ],
+    "returncode": 0,
+    "duration_s": 4.967,
+    "status": "pass",
+    "stdout": ".....................................................                    [100%]\n53 passed in 0.90s\n",
+    "stderr": ""
+  },
+  {
+    "evidence_id": "G28-EVIDENCE-003",
+    "purpose": "run sidewall artifact and Package C proof-scaffold contract tests",
+    "argv": [
+      "C:\\Users\\Yan\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+      "-m",
+      "pytest",
+      "tests/test_nodi_comsol_next_artifacts_contracts.py",
+      "-q",
+      "-k",
+      "package_c_proof_scaffold or sidewall or production_candidate_validator"
+    ],
+    "returncode": 0,
+    "duration_s": 25.43,
+    "status": "pass",
+    "stdout": "........................................................................ [ 22%]\n........................................................................ [ 44%]\n........................................................................ [ 67%]\n........................................................................ [ 89%]\n..................................                                       [100%]\n322 passed, 169 deselected in 21.36s\n",
+    "stderr": ""
+  },
+  {
+    "evidence_id": "G28-EVIDENCE-004",
+    "purpose": "run Gate27 proof-contract builder tests",
+    "argv": [
+      "C:\\Users\\Yan\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+      "-m",
+      "pytest",
+      "tests/test_nodi_comsol_gate27_sidewall_package_c_implementation_design_preflight.py",
+      "-q"
+    ],
+    "returncode": 0,
+    "duration_s": 11.077,
+    "status": "pass",
+    "stdout": "........                                                                 [100%]\n8 passed in 7.20s\n",
+    "stderr": ""
+  },
+  {
+    "evidence_id": "G28-EVIDENCE-005",
+    "purpose": "run Gate28 review-packet builder tests",
+    "argv": [
+      "C:\\Users\\Yan\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+      "-m",
+      "pytest",
+      "tests/test_nodi_comsol_gate28_sidewall_package_c_proof_review_packet.py",
+      "-q"
+    ],
+    "returncode": 0,
+    "duration_s": 7.389,
+    "status": "pass",
+    "stdout": ".......                                                                  [100%]\n7 passed in 3.90s\n",
+    "stderr": ""
+  },
+  {
+    "evidence_id": "G28-EVIDENCE-006",
+    "purpose": "check staged/unstaged diff whitespace only",
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "returncode": 0,
+    "duration_s": 0.107,
+    "status": "pass",
+    "stdout": "",
+    "stderr": "warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/345_NODI_SIDEWALL_ANGLE_IMPLEMENTATION_AUDIT_PACKET_20260630.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_IMPLEMENTATION_DESIGN_BACKLOG_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_NO_AUTH_FIREWALL_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_PREAUTH_FAIL_CLOSED_MATRIX_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_PROOF_ARTIFACT_CONTRACT_20260630.csv', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_VALIDATION_PLAN_20260630.csv', LF will be replaced by CRLF the next time Git touches it\n"
+  }
+]
