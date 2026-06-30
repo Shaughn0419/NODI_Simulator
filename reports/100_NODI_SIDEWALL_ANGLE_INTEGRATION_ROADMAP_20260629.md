@@ -1260,13 +1260,33 @@ Gate33-36 absorbs the external AI research synthesis into a single combined auth
 
 Gate33-36 is intentionally a merged evidence railway rather than a sequence of small review pauses. It allows implementation to proceed toward proof-metric hardening while keeping proof registration, Package C pass, runtime ingestion, numeric PRS/EAS, COMSOL launch, `.mph` load, and all route/yield/detection/wet/fabrication/production claims fail-closed.
 
-## 12. Recommended next action
+## 12. Current Gate37 status
 
-Current safe route after Gate33-36:
+Gate37 implements the first proof-metric hardening candidate block from the Gate33-36 backlog:
 
-1. Implement the Gate33-36 hardening backlog as a single proof-metric expansion block: exact/near-boundary atom split, raw histograms, ESS/autocorrelation, one-wall folded-normal suite, negative controls, worst-case dt refinement, and corner heatmap.
-2. Regenerate the Gate33-36 source lock and metric evidence after the hardening block, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
-3. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; the builder must not auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
-4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
+- Artifact id: `GATE37_PACKAGE_C_REFLECTION_METRIC_HARDENING_CANDIDATE_20260630`.
+- Disposition: `NODI_GATE37_SIDEWALL_PACKAGE_C_REFLECTION_METRIC_HARDENING_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: exact/near-boundary atom split, reviewer-friendly raw histograms, ESS proxy rows, one-wall folded-normal positive control, projection/rejection negative controls, worst-case dt refinement rows, corner heatmap rows, source lock, no-proof firewall, status/report/manifest.
+- Inherited Gate30/31 scenario rows: `216`.
+- Boundary atom split rows: `198`; raw histogram rows: `396`; ESS proxy rows: `198`.
+- One-wall suite rows: `18`; worst-case dt refinement rows: `10`; corner heatmap rows: `40`.
+- `max_exact_boundary_atom_fraction=0.0`.
+- `max_near_boundary_band_fraction=0.002604167`.
+- `max_one_wall_positive_control_ks=0.019246436`.
+- `projection_negative_control_status=expected_fail_observed`, with `max_projection_negative_control_exact_atom_fraction=0.495849609`.
+- `max_wall_pileup_ratio=9.0`, which is a candidate-level warning for future near-wall/corner refinement and not proof evidence.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+Gate37 improves the evidence surface substantially: it shows that the current finite-step reflection candidate does not create exact boundary atoms under the tested split, and that the negative-control suite is strong enough to reject projection clamp. It also exposes a wall-pileup proxy risk that must be investigated before any proof-level claim. Therefore Gate37 is useful forward progress, but it still does not register proof/pass.
+
+## 13. Recommended next action
+
+Current safe route after Gate37:
+
+1. Investigate the `max_wall_pileup_ratio=9.0` Gate37 candidate warning with a focused corner/near-wall refinement pass: report which scenarios and bins drive it, distinguish finite-sample sparsity from algorithmic pile-up, and decide whether substepping or an active-set correction refinement is needed.
+2. Expand Gate37 into a second hardening candidate only if the pile-up driver is understood; otherwise keep `candidate_metric_revision_required` localized to the affected metric.
+3. Regenerate Gate33-37 source locks and metric evidence after that refinement, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
+4. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; the builder must not auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
+5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 
 Only after Package A/B remain green and a future Package C proof is explicitly authorized should NODI run any sidewall-aware PRS/EAS pilot involving trajectory, near-wall, hindered-diffusion, or wall-distance-bin metrics. Even then, the result should remain `surrogate_sensitivity_only` / `context-only` until measurement or solver evidence is explicitly added and authorized.

@@ -285,6 +285,29 @@ runtime_allowed=false
 numeric_prs_eas_allowed=false
 comsol_launch_allowed=false
 mph_load_allowed=false
+
+python -m pytest tests/test_nodi_comsol_gate37_sidewall_package_c_metric_hardening_candidate.py -q
+8 passed
+
+python tools/audits/build_nodi_comsol_gate37_sidewall_package_c_metric_hardening_candidate.py --confirm-gate37-package-c-metric-hardening-candidate
+NODI_GATE37_SIDEWALL_PACKAGE_C_REFLECTION_METRIC_HARDENING_CANDIDATE_READY_NO_PROOF_REGISTRATION
+boundary_atom_split_rows=198
+histogram_rows=396
+ess_proxy_rows=198
+one_wall_suite_rows=18
+worst_case_dt_refinement_rows=10
+corner_heatmap_rows=40
+max_exact_boundary_atom_fraction=0.0
+max_near_boundary_band_fraction=0.002604167
+max_wall_pileup_ratio=9.0
+max_one_wall_positive_control_ks=0.019246436
+projection_negative_control_status=expected_fail_observed
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
 ```
 
 Additional CLI/compile verification:
@@ -309,13 +332,14 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 | --- | --- | --- |
 | Package A | pass for schema/descriptor/validator guard scope | No PRS/EAS data generation authorized by this packet. |
 | Package B | pass for geometry primitive, sampler support, and actual signature binding | Flux-weighted trapezoid sampling remains blocked. |
-| Package C | implementation candidate plus Gate33-36 authorization-design hardening route present; proof registration/pass still blocked/fail-closed | The Skorokhod finite-step reflection candidate is implemented for trapezoid diffusive plug-flow trajectories with unit tests and validator guards. Gate33-36 now captures the external research synthesis, threshold matrix, hardening backlog, authorization placeholder, and hard-fail checklist. No Package C physics authorization proof is registered; validated reflection proof/pass, hindered diffusion, runtime metrics beyond this candidate, and numeric PRS/EAS remain blocked. |
+| Package C | implementation candidate plus Gate33-37 metric hardening route present; proof registration/pass still blocked/fail-closed | The Skorokhod finite-step reflection candidate is implemented for trapezoid diffusive plug-flow trajectories with unit tests and validator guards. Gate33-36 captures the external research synthesis, threshold matrix, hardening backlog, authorization placeholder, and hard-fail checklist. Gate37 adds exact/near-boundary atom split, raw histograms, ESS proxy, one-wall folded-normal and negative-control rows, worst-case dt refinement, and corner heatmap. No Package C physics authorization proof is registered; validated reflection proof/pass, hindered diffusion, runtime metrics beyond this candidate, and numeric PRS/EAS remain blocked. |
 | Package D | validator/preflight guard pass only | Sidewall PRS/EAS pilot generation remains no-claim and blocked for trajectory/near-wall/wall-distance metrics unless a future Package C gate passes. |
 
 ## Next Safe Actions
 
-1. Implement the Gate33-36 hardening backlog as one proof-metric expansion block: exact/near-boundary atom split, raw histograms, ESS/autocorrelation, one-wall folded-normal suite, projection/rejection negative controls, worst-case dt refinement, and corner heatmap.
-2. Regenerate Gate33-36 evidence and source locks after that block, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
-3. Keep the manual authorization ledger and external-review artifact SHA as explicit placeholders until a separate authorization supersedes the no-auth ledger.
-4. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
-5. Do not register proof or mark Package C as passed in the current gate.
+1. Investigate the Gate37 wall-pileup proxy warning (`max_wall_pileup_ratio=9.0`) with focused scenario/bin diagnostics before any proof-level claim.
+2. If the pile-up is finite-sample sparsity, bind the statistical explanation and confidence/expected-count rows; if it is algorithmic, design a substep or active-set refinement candidate.
+3. Regenerate Gate33-37 evidence and source locks after that refinement, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
+4. Keep the manual authorization ledger and external-review artifact SHA as explicit placeholders until a separate authorization supersedes the no-auth ledger.
+5. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
+6. Do not register proof or mark Package C as passed in the current gate.
