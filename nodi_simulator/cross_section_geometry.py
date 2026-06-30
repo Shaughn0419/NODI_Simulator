@@ -36,6 +36,18 @@ def nodi_taper_deg_to_comsol_sidewall_deg(sidewall_taper_angle_deg: float) -> fl
 
 
 @dataclass(frozen=True)
+class ReflectionStepResult:
+    """Diagnostics for one finite-step trapezoid reflection update."""
+
+    x_m: float
+    u_m: float
+    active_wall_ids: tuple[str, ...]
+    iteration_count: int
+    reflection_displacement_m: float
+    converged: bool
+
+
+@dataclass(frozen=True)
 class TrapezoidCrossSection:
     """Symmetric straight-sidewall trapezoid with x centered and u measured from top."""
 
@@ -394,6 +406,24 @@ class TrapezoidCrossSection:
         max_iterations: int = 64,
         tolerance_m: float = 1.0e-18,
     ) -> tuple[float, float]:
+        result = self.reflect_particle_center_step_with_diagnostics(
+            x_m,
+            u_m,
+            particle_radius_m,
+            max_iterations=max_iterations,
+            tolerance_m=tolerance_m,
+        )
+        return result.x_m, result.u_m
+
+    def reflect_particle_center_step_with_diagnostics(
+        self,
+        x_m: float,
+        u_m: float,
+        particle_radius_m: float,
+        *,
+        max_iterations: int = 64,
+        tolerance_m: float = 1.0e-18,
+    ) -> ReflectionStepResult:
         """
         Reflect one finite Brownian trial step into particle-center support.
 
@@ -416,8 +446,10 @@ class TrapezoidCrossSection:
         x_reflected_m = float(x_m)
         u_reflected_m = float(u_m)
         normals = self.wall_inward_unit_normals()
+        active_wall_ids: list[str] = []
+        total_reflection_displacement_m = 0.0
 
-        for _ in range(int(max_iterations)):
+        for iteration_count in range(int(max_iterations)):
             constraints = self.wall_constraint_values_m(
                 x_reflected_m,
                 u_reflected_m,
@@ -428,11 +460,21 @@ class TrapezoidCrossSection:
                 key=lambda item: item[1],
             )
             if min_constraint_m >= -tol:
-                return x_reflected_m, u_reflected_m
+                return ReflectionStepResult(
+                    x_m=x_reflected_m,
+                    u_m=u_reflected_m,
+                    active_wall_ids=tuple(active_wall_ids),
+                    iteration_count=iteration_count,
+                    reflection_displacement_m=total_reflection_displacement_m,
+                    converged=True,
+                )
+            if wall_id not in active_wall_ids:
+                active_wall_ids.append(wall_id)
             normal_x, normal_u = normals[wall_id]
             reflection_distance_m = 2.0 * (-min_constraint_m)
             x_reflected_m += reflection_distance_m * normal_x
             u_reflected_m += reflection_distance_m * normal_u
+            total_reflection_displacement_m += abs(reflection_distance_m)
 
         constraints = self.wall_constraint_values_m(
             x_reflected_m,
@@ -440,7 +482,14 @@ class TrapezoidCrossSection:
             radius_m,
         )
         if min(constraints.values()) >= -tol:
-            return x_reflected_m, u_reflected_m
+            return ReflectionStepResult(
+                x_m=x_reflected_m,
+                u_m=u_reflected_m,
+                active_wall_ids=tuple(active_wall_ids),
+                iteration_count=int(max_iterations),
+                reflection_displacement_m=total_reflection_displacement_m,
+                converged=True,
+            )
         raise ValueError(
             "trapezoid active-set reflection did not converge; reduce dt or "
             "substep the Brownian update before claiming Package C runtime"

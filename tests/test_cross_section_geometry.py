@@ -268,18 +268,45 @@ def test_single_wall_reflection_matches_folded_normal_limit() -> None:
     trial_x_m = boundary_x_m - overshoot_m * normal_x
     trial_u_m = boundary_u_m - overshoot_m * normal_u
 
-    reflected_x_m, reflected_u_m = geom.reflect_particle_center_step_into_support(
+    result = geom.reflect_particle_center_step_with_diagnostics(
         trial_x_m,
         trial_u_m,
         radius_m,
     )
+    reflected_x_m = result.x_m
+    reflected_u_m = result.u_m
 
     assert reflected_x_m == pytest.approx(trial_x_m + 2.0 * overshoot_m * normal_x)
     assert reflected_u_m == pytest.approx(trial_u_m + 2.0 * overshoot_m * normal_u)
+    assert result.active_wall_ids == ("right_side",)
+    assert result.iteration_count == 1
+    assert result.reflection_displacement_m == pytest.approx(2.0 * overshoot_m)
+    assert result.converged is True
     assert geom.contains_particle_center(reflected_x_m, reflected_u_m, radius_m)
     assert geom.wall_constraint_values_m(reflected_x_m, reflected_u_m, radius_m)[
         "right_side"
     ] == pytest.approx(overshoot_m)
+
+
+def test_reflection_diagnostics_noop_for_inside_trial_point() -> None:
+    geom = TrapezoidCrossSection(
+        top_width_m=500.0e-9,
+        depth_m=900.0e-9,
+        sidewall_taper_angle_deg=comsol_sidewall_deg_to_nodi_taper_deg(85.0),
+    )
+
+    result = geom.reflect_particle_center_step_with_diagnostics(
+        0.0,
+        450.0e-9,
+        60.0e-9,
+    )
+
+    assert result.x_m == pytest.approx(0.0)
+    assert result.u_m == pytest.approx(450.0e-9)
+    assert result.active_wall_ids == ()
+    assert result.iteration_count == 0
+    assert result.reflection_displacement_m == 0.0
+    assert result.converged is True
 
 
 def test_reflection_does_not_project_crossing_to_boundary_atom() -> None:
@@ -336,17 +363,23 @@ def test_corner_active_set_reflection_converges_inside_support() -> None:
     trial_x_m = right_x_m + 35.0e-9
     trial_u_m = bottom_u_m + 35.0e-9
 
-    reflected_x_m, reflected_u_m = geom.reflect_particle_center_step_into_support(
+    result = geom.reflect_particle_center_step_with_diagnostics(
         trial_x_m,
         trial_u_m,
         radius_m,
     )
+    reflected_x_m = result.x_m
+    reflected_u_m = result.u_m
     constraints = geom.wall_constraint_values_m(
         reflected_x_m,
         reflected_u_m,
         radius_m,
     )
 
+    assert result.converged is True
+    assert result.iteration_count >= 2
+    assert set(result.active_wall_ids) >= {"bottom", "right_side"}
+    assert result.reflection_displacement_m > 0.0
     assert geom.contains_particle_center(reflected_x_m, reflected_u_m, radius_m)
     assert min(constraints.values()) >= -1.0e-18
     assert constraints["bottom"] > 0.0
