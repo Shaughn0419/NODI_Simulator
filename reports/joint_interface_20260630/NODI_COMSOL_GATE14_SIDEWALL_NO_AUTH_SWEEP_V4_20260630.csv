@@ -1,0 +1,2 @@
+sweep_id,scope,positive_authorization_count,positive_runtime_or_production_count,positive_jrc_weighting_yield_winner_detection_count,gate2d_rows,edge_state,qch_state,binding_state,sweep_status
+G14K-NOAUTH-001,Gate14 outputs and Gate13/345 references,0,0,0,4,NOT_APPROVED_PREAUTH_ONLY,ABSENT,FAIL_CLOSED,PASS_NO_AUTH

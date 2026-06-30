@@ -1,0 +1,2 @@
+addendum_id,referenced_report,action,reason,sha_drift,status
+G14I-AUDIT-ADDENDUM-001,reports/345_NODI_SIDEWALL_ANGLE_IMPLEMENTATION_AUDIT_PACKET_20260630.md,no_history_rewrite,Gate14 adds COMSOL-facing contract v3 and stale-intake closure as addendum,none,GATE14_ADDENDUM_CREATED

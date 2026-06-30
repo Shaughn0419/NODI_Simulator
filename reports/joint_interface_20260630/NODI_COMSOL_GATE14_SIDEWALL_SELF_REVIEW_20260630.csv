@@ -1,0 +1,18 @@
+reviewer_id,focus,finding,required_fix_before_pass
+G14M-REVIEW-01,post-Gate13 delta,PASS_NO_P0_P1,none
+G14M-REVIEW-02,git cleanliness,PASS_NO_P0_P1,none
+G14M-REVIEW-03,implementation audit,PASS_NO_P0_P1,none
+G14M-REVIEW-04,schema v3 completeness,PASS_NO_P0_P1,none
+G14M-REVIEW-05,COMSOL Gate13 stale-intake closure,PASS_NO_P0_P1,none
+G14M-REVIEW-06,Package A boundary,PASS_NO_P0_P1,none
+G14M-REVIEW-07,Package B boundary,PASS_NO_P0_P1,none
+G14M-REVIEW-08,Package C boundary,PASS_NO_P0_P1,none
+G14M-REVIEW-09,Package D boundary,PASS_NO_P0_P1,none
+G14M-REVIEW-10,profile hash guard,PASS_NO_P0_P1,none
+G14M-REVIEW-11,measured profile guard,PASS_NO_P0_P1,none
+G14M-REVIEW-12,blocked-bin guard,PASS_NO_P0_P1,none
+G14M-REVIEW-13,alias denylist,PASS_NO_P0_P1,none
+G14M-REVIEW-14,mutation strength,PASS_NO_P0_P1,none
+G14M-REVIEW-15,no-auth leakage,PASS_NO_P0_P1,none
+G14M-REVIEW-16,test sufficiency,PASS_NO_P0_P1,none
+G14M-REVIEW-17,Git scope,PASS_NO_P0_P1,none

@@ -1,0 +1,2 @@
+intake_id,nodi_head,worktree_status,dirty_count,gate14_generated_pending_count,expected_clean_release,release_status,auth_impact
+G14A-CURRENT-RELEASE-001,6df1a4a8aabcc29ef04badfe83e01def198b1265,clean,0,5,true,RELEASED_CLEAN,none_no_auth

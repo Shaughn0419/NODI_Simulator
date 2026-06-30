@@ -1,0 +1,5 @@
+board_id,package,scope,go_no_go,boundary,guard_pass_is_model_validation_pass,static_preflight_allowed,future_authorization_required,runtime_or_production_allowed
+G14G-Package-A,Package A,schema/descriptor/profile hash guard,GO_STATIC_PREFLIGHT_ONLY,no evidence auth,false,true,false,false
+G14G-Package-B,Package B,geometry primitive/sampler/actual signature guard,GO_STATIC_PREFLIGHT_ONLY,not flow-weighted validation,false,true,false,false
+G14G-Package-C,Package C,near-wall/trajectory/optical/wet physics guard,NO_GO_BLOCKED_FOR_PHYSICS,requires explicit future authorization and solver/trajectory evidence,false,false,true,false
+G14G-Package-D,Package D,PRS/EAS sidewall precheck/blocked-bin/alias guard,GO_CONTRACT_PREFLIGHT_ONLY,no numeric sidewall PRS/EAS output,false,true,false,false

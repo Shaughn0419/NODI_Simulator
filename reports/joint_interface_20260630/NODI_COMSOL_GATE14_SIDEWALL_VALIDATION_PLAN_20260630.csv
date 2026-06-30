@@ -1,0 +1,8 @@
+validation_id,command,required_for_pass,recorded_result
+G14J-VALIDATION-001,python tools/audits/build_nodi_comsol_gate14_sidewall_implementation_contract.py --confirm-gate14-sidewall-implementation-contract,true,PENDING_RUNTIME_VALIDATION
+G14J-VALIDATION-002,python -m py_compile tools/audits/build_nodi_comsol_gate14_sidewall_implementation_contract.py,true,PENDING_RUNTIME_VALIDATION
+G14J-VALIDATION-003,ruff check tools/audits/build_nodi_comsol_gate14_sidewall_implementation_contract.py tests/test_nodi_comsol_gate14_sidewall_implementation_contract.py,true,PENDING_RUNTIME_VALIDATION
+G14J-VALIDATION-004,pytest -q tests/test_nodi_comsol_gate14_sidewall_implementation_contract.py,true,PENDING_RUNTIME_VALIDATION
+G14J-VALIDATION-005,pytest -q tests/test_cross_section_geometry.py,true,PENDING_RUNTIME_VALIDATION
+G14J-VALIDATION-006,pytest -q tests/test_nodi_comsol_next_artifacts_contracts.py,true,PENDING_RUNTIME_VALIDATION
+G14J-VALIDATION-007,pytest -q tests/test_physics_core.py -k channel_geometry,true,PENDING_RUNTIME_VALIDATION
