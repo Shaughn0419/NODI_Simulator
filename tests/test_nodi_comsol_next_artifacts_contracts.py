@@ -781,6 +781,9 @@ SIDEWALL_FORBIDDEN_ALIAS_COLUMNS_FOR_TEST = (
     "comsol_Q_proxy",
     "route_score_norm",
     "sidewall_score_value",
+    "JRC_value",
+    "joint_route_class_candidate",
+    "chi_selected_flag",
 )
 
 
