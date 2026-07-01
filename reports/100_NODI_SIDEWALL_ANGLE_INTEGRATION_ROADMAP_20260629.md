@@ -2664,3 +2664,44 @@ to exact W500/D900 executable validation inputs. The next large block should
 either launch or ingest exact W500/D900 pressure-flow evidence, then convert it
 into a formal q_ch sidecar only if the acceptance thresholds and metadata
 contract are satisfied.
+
+## 54. Current pressure-flow result binder status
+
+The pressure-flow branch now has a mechanical result binder for the exact
+W500/D900 requests:
+
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_pressure_flow_result_binder.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_20260701`.
+- Claim boundary:
+  `pressure_flow_result_binder_not_route_score_not_yield_not_detection`.
+
+The binder writes an external-result template and fail-closed binding rows for
+the two exact W500/D900 pressure-flow validation requests. With no external
+COMSOL or measurement result file present, the expected state is:
+
+- `NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_READY_WAITING_FOR_EXTERNAL_RESULT`.
+- `formal_qch_sidecar_current=false`.
+- `formal_qch_weighting_current=false`.
+- `route_score_current=false`.
+- `winner_current=false`.
+- `yield_current=false`.
+- `detection_probability_current=false`.
+
+If a future exact-result CSV is supplied at
+`NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_EXTERNAL_RESULT_ROWS_20260701.csv`, the
+binder may emit formal q_ch sidecar rows only when all request identity,
+geometry hash, model/measurement metadata, quality-gate, positive-flow,
+port-balance, total-flow reconciliation, external-to-candidate ratio, and
+flow-split-delta checks pass for both route candidates. A partial, mismatched,
+or failed result remains a binding-row failure and must not be promoted into
+route score, winner/JRC, yield, or detection probability.
+
+The current binder thresholds are explicit metadata, not hidden code defaults:
+
+- `port_balance_threshold_max=0.01`.
+- `q_total_reconciliation_threshold_max=0.05`.
+- `acceptance_ratio_min/max=0.5/2.0` is a sanity guard for
+  external-to-candidate flow scale, not a calibrated pressure-flow agreement
+  threshold.
