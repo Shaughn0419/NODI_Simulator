@@ -530,3 +530,25 @@ mph_load_allowed=false
 ```
 
 This packet is readiness/context evidence only. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C external-research prompt
+
+The next handoff block converts the readiness index into a copyable external-AI prompt for broad method/literature synthesis:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_external_research_prompt.py --confirm-package-c-external-research-prompt
+NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION
+context_rows=5
+research_question_rows=4
+blocker_rows=5
+prompt_status=copyable_external_research_prompt_ready
+github_visibility_status=local_worktree_pre_commit_urls_valid_after_publish
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+This packet is a research handoff only. It tells external AI to inspect GitHub-visible files, not local Codex files, and to answer the four research questions with sources, thresholds, and next evidence priorities. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.

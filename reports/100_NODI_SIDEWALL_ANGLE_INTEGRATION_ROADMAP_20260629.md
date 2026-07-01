@@ -1404,12 +1404,28 @@ The next block consolidates the Package C metric-hardening state into a single m
 
 This block is the preferred entrypoint for future Package C review or external-AI research. External AI should use the listed research questions for broad method/literature work, not as a repetitive micro-review loop. The index still does not register Package C proof/pass and does not make any runtime, PRS/EAS numeric, COMSOL, `.mph`, route, yield, detection, wet, fabrication, or production claim.
 
-## 20. Recommended next action
+## 20. Current Package C external-research prompt status
 
-Current safe route after the Package C proof-readiness index:
+The next block turns the readiness index into a copyable external-AI prompt that is designed for one larger research pass rather than repeated micro-review:
 
-1. Use `PACKAGE_C_PROOF_READINESS_INDEX_20260701` as the single Package C metric-hardening entrypoint.
-2. Continue tightening the remaining proof-level gaps in one larger block: either launch a broad external-AI/statistical-method research request using the four research questions, or implement a local proof-gap-reduction block for stationarity/ESS and one-wall/wall-pileup thresholds.
+- Artifact id: `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701`.
+- Disposition: `NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION`.
+- Scope: copyable prompt, context rows, research-question rows, blocker rows, source lock, no-proof firewall, status/report/manifest.
+- Context rows: `5`, covering the GitHub-visible entrypoint, artifact roles, current proof gaps, substep runtime cost, and one-wall threshold gap.
+- Research question rows: `4`: stationarity/ESS method, near-boundary band expectation, one-wall/wall-pileup thresholds, and substep runtime-cost strategy.
+- Blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, proof-threshold gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
+- Prompt status: `copyable_external_research_prompt_ready`.
+- GitHub visibility status: `local_worktree_pre_commit_urls_valid_after_publish`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+This block is an external research handoff, not a proof/pass registration. Its prompt explicitly tells external AI that it can only inspect GitHub-visible files, must not assume local Codex/COMSOL/`.mph`/uncommitted artifacts, and should answer the four method/literature questions with sources, thresholds, and next evidence priorities. It does not authorize Package C pass, runtime, sidewall PRS/EAS numeric output, NODI recomputation, COMSOL launch, `.mph` load, route/yield/detection/wet/fabrication/production claims, or true `W_eff`.
+
+## 21. Recommended next action
+
+Current safe route after the Package C external-research prompt:
+
+1. Use `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis.
+2. In parallel or afterward, continue one local proof-gap-reduction block for stationarity/ESS, one-wall/wall-pileup thresholds, and substep runtime-cost policy; local tests/subagents should cover ordinary regression review.
 3. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 5. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.
