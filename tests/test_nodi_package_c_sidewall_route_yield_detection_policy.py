@@ -3,6 +3,10 @@ from __future__ import annotations
 from pathlib import Path
 
 from tools.audits import build_nodi_package_c_sidewall_route_yield_detection_policy as builder
+from nodi_simulator.sidewall_route_yield_detection_policy import (
+    ROUTE_INPUT_READY_BLOCKER_STATUS,
+    ROUTE_POLICY_NOT_READY_STATUS,
+)
 
 
 def test_sidewall_route_yield_detection_policy_packet_builds() -> None:
@@ -22,9 +26,7 @@ def test_sidewall_route_yield_detection_policy_packet_builds() -> None:
     assert summary["yield_allowed_rows"] == 0
     assert summary["detection_probability_allowed_rows"] == 0
     assert summary["wet_pass_probability_allowed_rows"] == 0
-    assert summary["primary_next_execution_blocks"] == [
-        "qch_or_pressure_flow_validation"
-    ]
+    assert summary["primary_next_execution_blocks"] == ["detector_blank_calibration"]
 
 
 def test_policy_rows_bind_current_integrated_ledger_statuses() -> None:
@@ -32,10 +34,11 @@ def test_policy_rows_bind_current_integrated_ledger_statuses() -> None:
 
     assert len(rows) == 2
     for row in rows:
-        assert row["qch_policy_status"] == (
-            "not_ready_grid_refined_split_candidate_absolute_q_requires_validation"
+        assert row["qch_policy_status"] == "ready_formal_qch_sidecar_input_not_route_weighting"
+        assert row["pressure_flow_policy_status"] == (
+            "ready_exact_pressure_flow_validation_for_formal_qch_input"
         )
-        assert row["pressure_flow_policy_status"] == "not_ready_pressure_flow_context_only"
+        assert row["route_policy_status"] == ROUTE_POLICY_NOT_READY_STATUS
         assert row["selected_annulus_policy_status"] == (
             "not_ready_selected_annulus_small_n_not_probability"
         )
@@ -59,7 +62,10 @@ def test_blocker_rows_cover_required_lanes_for_each_route() -> None:
 
     assert len(rows) == 12
     assert {row["evidence_lane"] for row in rows} == set(builder.REQUIRED_LANES)
-    assert {row["blocker_status"] for row in rows} == {"blocked_not_claim_ready"}
+    assert {row["blocker_status"] for row in rows} == {
+        "blocked_not_claim_ready",
+        ROUTE_INPUT_READY_BLOCKER_STATUS,
+    }
     assert {row["route_candidate_id"] for row in rows} == {
         "ROUTE-CAND-001",
         "ROUTE-CAND-002",
@@ -83,6 +89,8 @@ def test_route_policy_promotion_update_remains_not_claim_ready() -> None:
     assert "route_score" in update["blocked_promotion"]
     assert "yield" in update["blocked_promotion"]
     assert "detection_probability" in update["blocked_promotion"]
+    assert "formal qch/pressure validation" not in update["next_required_evidence"]
+    assert "detector/blank calibration" in update["next_required_evidence"]
     assert update["claim_boundary"] == builder.CLAIM_BOUNDARY
 
 

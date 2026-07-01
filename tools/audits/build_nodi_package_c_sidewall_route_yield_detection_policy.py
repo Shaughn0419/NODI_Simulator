@@ -17,6 +17,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from nodi_simulator.realism_v2_io import sha256_file, write_csv_rows, write_json_atomic  # noqa: E402
 from nodi_simulator.sidewall_route_yield_detection_policy import (  # noqa: E402
     REQUIRED_LANES,
+    ROUTE_POLICY_NOT_READY_STATUS,
     SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_CLAIM_BOUNDARY,
     build_route_yield_detection_policy_rows,
     route_yield_detection_policy_promotion_update_rows,
@@ -222,8 +223,7 @@ def build_payload() -> dict[str, Any]:
         row["classification"] == "release_scoped_dirty_blocker" for row in dirty_context
     )
     not_ready_rows = sum(
-        row.route_policy_status
-        == "not_ready_missing_calibrated_flow_detector_blank_wet_evidence"
+        row.route_policy_status == ROUTE_POLICY_NOT_READY_STATUS
         for row in policy_rows
     )
     status = (
@@ -319,8 +319,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
             and row["yield_allowed"] is False
             and row["detection_probability_allowed"] is False
             and row["wet_pass_probability_allowed"] is False
-            and row["route_policy_status"]
-            == "not_ready_missing_calibrated_flow_detector_blank_wet_evidence"
+            and row["route_policy_status"] == ROUTE_POLICY_NOT_READY_STATUS
         )
     return [label for label, ok in checks.items() if not ok]
 
@@ -382,7 +381,7 @@ def report_markdown(payload: dict[str, Any]) -> str:
             f"- Blocker rows: `{s['blocker_rows']}`.",
             f"- Primary next execution blocks: `{';'.join(s['primary_next_execution_blocks'])}`.",
             "- Route score, winner/JRC, yield, wet pass probability, and detection probability are not allowed by this policy packet.",
-            "- The policy prioritizes formal qch/pressure-flow validation, then detector/blank calibration, wet/surface validation, and selected-annulus panel expansion.",
+            "- Formal qch and exact pressure-flow are accepted as route inputs; the policy now prioritizes detector/blank calibration, wet/surface validation, and selected-annulus panel expansion.",
             "",
         ]
     )

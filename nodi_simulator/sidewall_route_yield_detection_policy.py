@@ -18,6 +18,17 @@ SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_VERSION = (
 SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_CLAIM_BOUNDARY = (
     "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability"
 )
+ROUTE_POLICY_READY_STATUS = "ready_for_route_yield_detection_claims"
+ROUTE_POLICY_NOT_READY_STATUS = (
+    "not_ready_missing_detector_blank_wet_selected_annulus_evidence_after_formal_qch_pressure_flow"
+)
+FORMAL_QCH_READY_STATUS = (
+    "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting"
+)
+EXACT_PRESSURE_FLOW_READY_STATUS = (
+    "exact_w500_d900_pressure_flow_result_accepted_formal_qch_sidecar_ready"
+)
+ROUTE_INPUT_READY_BLOCKER_STATUS = "ready_for_route_input_not_final_claim"
 
 REQUIRED_LANES: tuple[str, ...] = (
     "flow_split_qch",
@@ -84,7 +95,7 @@ def build_route_yield_detection_policy_rows(
     blocker_rows: list[SidewallRouteYieldDetectionBlockerRow] = []
     for route_id, lanes in sorted(lanes_by_route.items()):
         representative = next(iter(lanes.values()))
-        blockers = [_lane_blocker(lanes.get(lane, {})) for lane in REQUIRED_LANES]
+        blockers = [_lane_blocker(lane, lanes.get(lane, {})) for lane in REQUIRED_LANES]
         qch_status = _qch_policy_status(lanes.get("flow_split_qch", {}))
         pressure_status = _pressure_flow_policy_status(
             lanes.get("pressure_flow_validation", {})
@@ -95,7 +106,10 @@ def build_route_yield_detection_policy_rows(
         detector_status = _detector_policy_status(lanes.get("detector_response_bridge", {}))
         blank_status = _blank_policy_status(lanes.get("blank_false_positive_trace", {}))
         wet_status = _wet_policy_status(lanes.get("wet_wall_interaction", {}))
-        route_ready = all(blocker == "ready_for_claim_use" for blocker in blockers)
+        route_ready = all(
+            blocker in {"ready_for_claim_use", ROUTE_INPUT_READY_BLOCKER_STATUS}
+            for blocker in blockers
+        )
         next_block = _primary_next_block(
             qch_status,
             pressure_status,
@@ -120,9 +134,9 @@ def build_route_yield_detection_policy_rows(
                 blank_false_positive_policy_status=blank_status,
                 wet_surface_policy_status=wet_status,
                 route_policy_status=(
-                    "ready_for_route_yield_detection_claims"
+                    ROUTE_POLICY_READY_STATUS
                     if route_ready
-                    else "not_ready_missing_calibrated_flow_detector_blank_wet_evidence"
+                    else ROUTE_POLICY_NOT_READY_STATUS
                 ),
                 primary_next_execution_block=next_block,
                 next_required_evidence=next_required,
@@ -142,7 +156,7 @@ def build_route_yield_detection_policy_rows(
                     route_candidate_id=route_id,
                     evidence_lane=lane,
                     current_status=str(row.get("current_status", "lane_missing")),
-                    blocker_status=_lane_blocker(row),
+                    blocker_status=_lane_blocker(lane, row),
                     target_claim=str(row.get("target_claim", "")),
                     next_required_evidence=str(row.get("next_required_evidence", "")),
                     hard_fail_if_promoted_without=str(
@@ -170,8 +184,8 @@ def route_yield_detection_policy_promotion_update_rows(
             "blocked_promotion": "route_score;winner;yield;detection_probability;wet_pass_probability",
             "hard_fail_if": "route_policy_context_promoted_to_route_score_or_probability",
             "next_required_evidence": (
-                "formal qch/pressure validation, detector/blank calibration, selected-annulus "
-                "event panel, and wet/surface validation"
+                "detector/blank calibration, selected-annulus event panel expansion, "
+                "and wet/surface validation"
             ),
             "claim_boundary": SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_CLAIM_BOUNDARY,
         }
@@ -191,9 +205,14 @@ def _lanes_by_route(
     return output
 
 
-def _lane_blocker(row: Mapping[str, Any]) -> str:
+def _lane_blocker(lane: str, row: Mapping[str, Any]) -> str:
     if not row:
         return "missing_lane"
+    status = str(row.get("current_status", ""))
+    if lane == "flow_split_qch" and status == FORMAL_QCH_READY_STATUS:
+        return ROUTE_INPUT_READY_BLOCKER_STATUS
+    if lane == "pressure_flow_validation" and status == EXACT_PRESSURE_FLOW_READY_STATUS:
+        return ROUTE_INPUT_READY_BLOCKER_STATUS
     if str(row.get("target_claim_current", "")).lower() != "true":
         return "blocked_not_claim_ready"
     return "ready_for_claim_use"
@@ -201,6 +220,8 @@ def _lane_blocker(row: Mapping[str, Any]) -> str:
 
 def _qch_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == FORMAL_QCH_READY_STATUS:
+        return "ready_formal_qch_sidecar_input_not_route_weighting"
     if status == "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation":
         return "not_ready_grid_refined_split_candidate_absolute_q_requires_validation"
     return "not_ready_formal_qch_missing"
@@ -208,6 +229,8 @@ def _qch_policy_status(row: Mapping[str, Any]) -> str:
 
 def _pressure_flow_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == EXACT_PRESSURE_FLOW_READY_STATUS:
+        return "ready_exact_pressure_flow_validation_for_formal_qch_input"
     if status == "context_only_not_formal_validation":
         return "not_ready_pressure_flow_context_only"
     return "not_ready_pressure_flow_validation_missing"
@@ -242,14 +265,15 @@ def _wet_policy_status(row: Mapping[str, Any]) -> str:
 
 
 def _primary_next_block(*statuses: str) -> str:
+    actionable = [status for status in statuses if not status.startswith("ready_")]
     priority = (
-        ("qch_or_pressure_flow_validation", ("formal_qch", "pressure_flow")),
+        ("qch_or_pressure_flow_validation", ("qch_missing", "pressure_flow")),
         ("detector_blank_calibration", ("detector", "blank")),
         ("wet_surface_validation", ("wet_surface",)),
         ("selected_annulus_event_panel_expansion", ("selected_annulus",)),
     )
     for block, fragments in priority:
-        if any(any(fragment in status for fragment in fragments) for status in statuses):
+        if any(any(fragment in status for fragment in fragments) for status in actionable):
             return block
     return "no_primary_blocker_detected"
 

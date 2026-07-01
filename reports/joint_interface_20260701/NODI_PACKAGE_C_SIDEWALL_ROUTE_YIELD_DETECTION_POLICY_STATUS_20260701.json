@@ -4,7 +4,7 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_READY_NOT_CLAIM_READY",
     "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_20260701",
     "claim_boundary": "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability",
-    "current_head": "fe05a4993936b8b85d54a5be33ddeb7dc224eabb",
+    "current_head": "275691013dce8b73d920bf451d792fd3f2e48d68",
     "branch": "main",
     "source_ledger_wet_surface_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_READY_PREFLIGHT_ONLY",
     "policy_rows": 2,
@@ -18,15 +18,15 @@
     "detection_probability_allowed_rows": 0,
     "wet_pass_probability_allowed_rows": 0,
     "primary_next_execution_blocks": [
-      "qch_or_pressure_flow_validation"
+      "detector_blank_calibration"
     ],
     "source_lock_rows": 6,
     "source_missing_rows": 0,
-    "dirty_context_rows": 83,
-    "non_release_dirty_context_rows": 73,
+    "dirty_context_rows": 88,
+    "non_release_dirty_context_rows": 80,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "route/yield/detection readiness policy;promotion blocker prioritization",
     "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion",
-    "semantic_digest": "9bea1b6d6780bd10842dbf8c9908861ca2b7492627ada7741839ed9bcc17afae"
+    "semantic_digest": "2bdfd6ed3b12e5d0e7f54c22a8e454fa4e67ecb4725e6d76ad8c826f7a36944d"
   }
 }
