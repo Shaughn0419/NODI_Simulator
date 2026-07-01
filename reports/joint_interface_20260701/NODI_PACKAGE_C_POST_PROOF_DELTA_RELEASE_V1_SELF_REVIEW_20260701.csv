@@ -1,0 +1,9 @@
+review_id,dimension,verdict,notes
+POST-PROOF-SELF-01,proof registration status is positive but narrow,PASS_POST_PROOF_NO_RUN_BOUNDARY,No runtime/COMSOL/solver/wet/route/yield/detection promotion accepted.
+POST-PROOF-SELF-02,runtime and COMSOL are still blocked,PASS_POST_PROOF_NO_RUN_BOUNDARY,No runtime/COMSOL/solver/wet/route/yield/detection promotion accepted.
+POST-PROOF-SELF-03,"runtime guard is handed off as policy, not execution",PASS_POST_PROOF_NO_RUN_BOUNDARY,No runtime/COMSOL/solver/wet/route/yield/detection promotion accepted.
+POST-PROOF-SELF-04,old post-RC2 no-auth/no-proof files are excluded,PASS_POST_PROOF_NO_RUN_BOUNDARY,No runtime/COMSOL/solver/wet/route/yield/detection promotion accepted.
+POST-PROOF-SELF-05,COMSOL mirror asks for no-run receipt only,PASS_POST_PROOF_NO_RUN_BOUNDARY,No runtime/COMSOL/solver/wet/route/yield/detection promotion accepted.
+POST-PROOF-SELF-06,solver/wet branches remain future evidence branches,PASS_POST_PROOF_NO_RUN_BOUNDARY,No runtime/COMSOL/solver/wet/route/yield/detection promotion accepted.
+POST-PROOF-SELF-07,forbidden route/yield/detection/q_ch fields remain blocked,PASS_POST_PROOF_NO_RUN_BOUNDARY,No runtime/COMSOL/solver/wet/route/yield/detection promotion accepted.
+POST-PROOF-SELF-08,"source lock covers code, tests, and proof artifacts",PASS_POST_PROOF_NO_RUN_BOUNDARY,No runtime/COMSOL/solver/wet/route/yield/detection promotion accepted.
