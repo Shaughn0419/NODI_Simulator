@@ -2119,6 +2119,55 @@ per route candidate and keeps the target claim state false:
 - `winner_current=false`
 - `yield_current=false`
 
+## 48. Current wet/surface evidence-contract status
+
+The wet/surface branch now has an explicit evidence contract rather than a
+generic "wet evidence missing" placeholder:
+
+- Module: `nodi_simulator/sidewall_wet_surface_contract.py`.
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_wet_surface_contract.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_WET_SURFACE_EVIDENCE_CONTRACT_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_EVIDENCE_CONTRACT_READY_CONTRACT_ONLY`.
+- Claim boundary:
+  `wet_surface_contract_not_wet_validation_not_yield_not_detection_probability`.
+
+For both W500/D900 route candidates, the contract defines seven endpoint
+families:
+
+1. `material_surface_identity`
+2. `ev_sample_panel`
+3. `adhesion_wall_interaction`
+4. `clogging_time_series`
+5. `recovery_flush`
+6. `wet_pass_probability`
+7. `yield_bridge`
+
+Each endpoint row lists:
+
+- required artifact class;
+- required fields;
+- minimum controls;
+- acceptance basis;
+- hard-fail condition if someone promotes the lane without the evidence.
+
+The packet emits a promotion update for `wet_wall_interaction`:
+
+- new status:
+  `wet_surface_evidence_contract_defined_no_wet_validation`;
+- target claim current:
+  `false`;
+- blocked promotions:
+  `wet_pass_probability`, `clogging_rate`, `time_to_clog`, `recovery`,
+  `yield`, `route_score`, `winner`, and `detection_probability`.
+
+This is the correct post-authorization movement for the wet branch: the work is
+now ready to bind actual wet/surface evidence, COMSOL/experiment transfer
+metadata, or validated sidewall-specific assays without silently converting
+nearest-context or geometry descriptors into wet performance.
+
 The selected-annulus blocker is therefore no longer "no sidewall run exists";
 it is now "small-N context exists but cannot be used as probability or route
 selection evidence." The next large block should attack the remaining evidence
