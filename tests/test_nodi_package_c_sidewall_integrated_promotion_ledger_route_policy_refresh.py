@@ -56,7 +56,8 @@ def test_route_policy_lane_refresh_preserves_claim_boundary() -> None:
         assert row["not_route_score"] == "true"
         assert row["not_winner"] == "true"
         assert row["not_yield"] == "true"
-        assert "formal qch/pressure validation" in row["next_required_evidence"]
+        assert "formal qch/pressure validation" not in row["next_required_evidence"]
+        assert "detector/blank calibration" in row["next_required_evidence"]
 
 
 def test_route_policy_refresh_retains_prior_lane_progress() -> None:
