@@ -45,7 +45,11 @@ def test_external_research_context_rows_include_key_metrics() -> None:
     assert "entrypoint" in by_context
     assert "artifact_roles" in by_context
     assert by_context["substep_runtime_cost"]["context_value"] == "526"
-    assert by_context["one_wall_gap"]["context_value"] == "0.019246436"
+    assert (
+        float(by_context["one_wall_wall_pileup_refinement"]["context_value"])
+        <= 0.01
+    )
+    assert "candidate-only" in by_context["one_wall_wall_pileup_refinement"]["details"]
     assert all(row["claim_boundary"] == prompt.CLAIM_BOUNDARY for row in rows)
 
 

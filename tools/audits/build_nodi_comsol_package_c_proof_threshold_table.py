@@ -54,6 +54,10 @@ TIMESERIES_STATUS = (
 STATIONARITY_ENSEMBLE_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_STATIONARITY_ENSEMBLE_STATUS_20260701.json"
 )
+ONE_WALL_WALL_PILEUP_STATUS = (
+    OUTPUT_DIR
+    / "NODI_COMSOL_PACKAGE_C_ONE_WALL_WALL_PILEUP_STATUS_20260701.json"
+)
 SUBSTEP_HARDENING_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_SUBSTEP_FAIL_POLICY_STATUS_20260701.json"
 )
@@ -65,6 +69,7 @@ SOURCE_FILES = {
     "consolidation_status": CONSOLIDATION_STATUS,
     "timeseries_status": TIMESERIES_STATUS,
     "stationarity_ensemble_status": STATIONARITY_ENSEMBLE_STATUS,
+    "one_wall_wall_pileup_status": ONE_WALL_WALL_PILEUP_STATUS,
     "substep_hardening_status": SUBSTEP_HARDENING_STATUS,
     "dt_refinement_status": DT_REFINEMENT_STATUS,
     "threshold_table_builder": PROJECT_ROOT
@@ -213,6 +218,7 @@ def threshold_rows() -> list[dict[str, str]]:
     c = read_json_summary(CONSOLIDATION_STATUS)
     t = read_json_summary(TIMESERIES_STATUS)
     e = read_json_summary(STATIONARITY_ENSEMBLE_STATUS)
+    ow = read_json_summary(ONE_WALL_WALL_PILEUP_STATUS)
     s = read_json_summary(SUBSTEP_HARDENING_STATUS)
     d = read_json_summary(DT_REFINEMENT_STATUS)
     rows = [
@@ -254,12 +260,15 @@ def threshold_rows() -> list[dict[str, str]]:
         ),
         _threshold_row(
             metric_id="max_one_wall_positive_control_ks",
-            observed_value=c.get("max_one_wall_positive_control_ks", ""),
+            observed_value=ow.get(
+                "max_one_wall_positive_control_ks",
+                c.get("max_one_wall_positive_control_ks", ""),
+            ),
             candidate_acceptance="<=0.02",
             proof_acceptance="<=0.01",
-            current_status="candidate_pass_proof_gap",
-            source_artifact="metric_hardening_consolidation",
-            next_action="tighten one-wall proof threshold or expand samples",
+            current_status="candidate_and_proof_threshold_met_not_registered",
+            source_artifact="one_wall_wall_pileup_refinement",
+            next_action="bind expanded one-wall raw sample artifact sha and statistical method review",
         ),
         _threshold_row(
             metric_id="projection_negative_control_status",
@@ -272,12 +281,15 @@ def threshold_rows() -> list[dict[str, str]]:
         ),
         _threshold_row(
             metric_id="max_expanded_wall_pileup_ratio",
-            observed_value=c.get("max_expanded_first_vs_adjacent_gap_band_smoothed_ratio", ""),
+            observed_value=ow.get(
+                "max_wall_pileup_ratio",
+                c.get("max_expanded_first_vs_adjacent_gap_band_smoothed_ratio", ""),
+            ),
             candidate_acceptance="<=1.5",
             proof_acceptance="<=1.25",
-            current_status="candidate_pass_proof_gap",
-            source_artifact="metric_hardening_consolidation",
-            next_action="expand or justify wall-pileup proof threshold",
+            current_status="candidate_and_proof_threshold_met_not_registered",
+            source_artifact="one_wall_wall_pileup_refinement",
+            next_action="bind wall-pileup CI artifact sha and near-boundary area-expectation method",
         ),
         _threshold_row(
             metric_id="min_effective_sample_size",
@@ -350,6 +362,9 @@ def build_payload() -> dict[str, Any]:
     status_counts = {
         "candidate_pass_rows": sum("candidate_pass" in row["current_status"] for row in rows),
         "proof_gap_rows": sum("proof_gap" in row["current_status"] for row in rows),
+        "proof_method_gap_rows": sum(
+            "proof_method_gap" in row["current_status"] for row in rows
+        ),
         "runtime_policy_gap_rows": sum(
             "runtime" in row["current_status"] for row in rows
         ),
@@ -368,7 +383,9 @@ def build_payload() -> dict[str, Any]:
         "source_lock_rows": len(source_rows),
         "source_missing_rows": sum(row["exists"] != "true" for row in source_rows),
         "threshold_table_status": "candidate_threshold_table_ready_not_proof_registered",
-        "proof_readiness_impact": "proof_gaps_are_explicit_and_machine_readable",
+        "proof_readiness_impact": (
+            "numeric_proof_threshold_gaps_reduced_to_method_authorization_and_runtime_policy_gaps"
+        ),
         "reviewed_commit_binding_status": "pending_future_authorization_not_clean_head_bound",
         "github_visibility_status": GITHUB_VISIBILITY_STATUS,
         "proof_registration_authorized": False,
@@ -395,7 +412,8 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     firewall = payload["no_proof_firewall"][0]
     checks = {
         "Threshold rows present": s["threshold_rows"] >= 10,
-        "Proof gaps explicit": s["proof_gap_rows"] > 0,
+        "Numeric proof gaps closed": s["proof_gap_rows"] == 0,
+        "Proof method gap explicit": s["proof_method_gap_rows"] > 0,
         "Runtime gaps explicit": s["runtime_policy_gap_rows"] > 0,
         "Source lock complete": s["source_missing_rows"] == 0,
         "Threshold table status": s["threshold_table_status"]
@@ -500,6 +518,7 @@ def write_outputs(
             f"- Disposition: `{DISPOSITION}`",
             f"- Threshold rows: `{payload['summary']['threshold_rows']}`.",
             f"- Candidate-pass rows: `{payload['summary']['candidate_pass_rows']}`; proof-gap rows: `{payload['summary']['proof_gap_rows']}`.",
+            f"- Proof-method gap rows: `{payload['summary']['proof_method_gap_rows']}`.",
             f"- Runtime-policy gap rows: `{payload['summary']['runtime_policy_gap_rows']}`.",
             "- Boundary: threshold planning only; no proof/pass registration, no runtime, no COMSOL launch, no .mph load, no numeric PRS/EAS, no route/yield/detection/wet/fab/production claims.",
         ],
@@ -515,9 +534,9 @@ def write_outputs(
             f"- Source head: `{payload['summary']['build_head']}`",
             "- This packet makes candidate/proof thresholds and remaining proof gaps machine-readable.",
             f"- Threshold rows: `{payload['summary']['threshold_rows']}`.",
-            f"- Candidate-pass rows: `{payload['summary']['candidate_pass_rows']}`; proof-gap rows: `{payload['summary']['proof_gap_rows']}`; runtime-policy gap rows: `{payload['summary']['runtime_policy_gap_rows']}`.",
+            f"- Candidate-pass rows: `{payload['summary']['candidate_pass_rows']}`; proof-gap rows: `{payload['summary']['proof_gap_rows']}`; proof-method gap rows: `{payload['summary']['proof_method_gap_rows']}`; runtime-policy gap rows: `{payload['summary']['runtime_policy_gap_rows']}`.",
             f"- GitHub visibility: `{payload['summary']['github_visibility_status']}`.",
-            "- Boundary: this is threshold planning evidence only, not Package C proof registration or runtime authorization.",
+            "- Boundary: this is threshold planning evidence only; no proof/pass registration, no runtime, no COMSOL launch, no .mph load, no numeric PRS/EAS, no route/yield/detection/wet/fab/production claims.",
             f"- Machine-readable support: `{rel(active_output_dir)}`.",
         ],
     )

@@ -23,13 +23,14 @@ def test_threshold_table_payload_separates_candidate_pass_from_proof_gaps() -> N
     assert summary["disposition"] == thresholds.DISPOSITION
     assert summary["threshold_rows"] >= 10
     assert summary["candidate_pass_rows"] > 0
-    assert summary["proof_gap_rows"] > 0
+    assert summary["proof_gap_rows"] == 0
+    assert summary["proof_method_gap_rows"] > 0
     assert summary["runtime_policy_gap_rows"] > 0
     assert summary["threshold_table_status"] == (
         "candidate_threshold_table_ready_not_proof_registered"
     )
     assert summary["proof_readiness_impact"] == (
-        "proof_gaps_are_explicit_and_machine_readable"
+        "numeric_proof_threshold_gaps_reduced_to_method_authorization_and_runtime_policy_gaps"
     )
     assert summary["proof_registration_authorized"] is False
     assert summary["package_c_validation_status_pass_authorized"] is False
@@ -66,6 +67,20 @@ def test_threshold_rows_cover_key_package_c_metrics() -> None:
         "candidate_and_proof_threshold_met_not_registered"
     )
     assert float(by_metric["max_x_local_norm_l1_to_uniform"]["observed_value"]) <= 0.04
+    assert by_metric["max_one_wall_positive_control_ks"]["source_artifact"] == (
+        "one_wall_wall_pileup_refinement"
+    )
+    assert by_metric["max_one_wall_positive_control_ks"]["current_status"] == (
+        "candidate_and_proof_threshold_met_not_registered"
+    )
+    assert float(by_metric["max_one_wall_positive_control_ks"]["observed_value"]) <= 0.01
+    assert by_metric["max_expanded_wall_pileup_ratio"]["source_artifact"] == (
+        "one_wall_wall_pileup_refinement"
+    )
+    assert by_metric["max_expanded_wall_pileup_ratio"]["current_status"] == (
+        "candidate_and_proof_threshold_met_not_registered"
+    )
+    assert float(by_metric["max_expanded_wall_pileup_ratio"]["observed_value"]) <= 1.25
     assert all(row["claim_boundary"] == thresholds.CLAIM_BOUNDARY for row in rows)
 
 

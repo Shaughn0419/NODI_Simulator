@@ -21,7 +21,7 @@ def test_readiness_index_payload_is_single_entrypoint_without_promotion() -> Non
 
     assert failures == []
     assert summary["disposition"] == readiness.DISPOSITION
-    assert summary["readiness_index_rows"] == 6
+    assert summary["readiness_index_rows"] == 7
     assert summary["open_blocker_rows"] >= 5
     assert summary["external_research_question_rows"] >= 4
     assert summary["proof_readiness_index_status"] == (
@@ -43,6 +43,7 @@ def test_readiness_index_covers_current_package_c_artifacts() -> None:
         "metric_hardening_consolidation",
         "timeseries_ess_candidate",
         "stationarity_ensemble_refinement",
+        "one_wall_wall_pileup_refinement",
         "substep_fail_policy_hardening",
         "substep_dt_refinement_requirements",
         "proof_threshold_table",
@@ -54,7 +55,11 @@ def test_readiness_index_covers_current_package_c_artifacts() -> None:
     assert "min_independent_ess=32768.0" in by_role[
         "stationarity_ensemble_refinement"
     ]["key_values"]
-    assert "proof_gap_rows=2" in by_role["proof_threshold_table"]["key_values"]
+    assert "max_one_wall_ks=" in by_role["one_wall_wall_pileup_refinement"]["key_values"]
+    assert "max_wall_pileup_ratio=" in by_role[
+        "one_wall_wall_pileup_refinement"
+    ]["key_values"]
+    assert "proof_gap_rows=0" in by_role["proof_threshold_table"]["key_values"]
     assert all(row["claim_boundary"] == readiness.CLAIM_BOUNDARY for row in rows)
 
 
@@ -64,7 +69,8 @@ def test_readiness_blockers_keep_fail_closed_next_actions() -> None:
 
     assert "manual_authorization_ledger_missing" in blocker_ids
     assert "clean_reviewed_commit_binding_pending" in blocker_ids
-    assert "proof_threshold_gaps_present" in blocker_ids
+    assert "proof_threshold_gaps_present" not in blocker_ids
+    assert "proof_method_gaps_present" in blocker_ids
     assert "runtime_policy_gaps_present" in blocker_ids
     assert {row["blocker_status"] for row in blockers} == {"open_fail_closed"}
 
@@ -75,6 +81,7 @@ def test_readiness_external_questions_are_research_scoped() -> None:
 
     assert "stationarity_ess_method" in question_ids
     assert "substep_runtime_cost" in question_ids
+    assert "one_wall_wall_pileup_method_binding" in question_ids
     assert all("no" in row["scope_guard"].lower() for row in questions)
     assert all(row["claim_boundary"] == readiness.CLAIM_BOUNDARY for row in questions)
 

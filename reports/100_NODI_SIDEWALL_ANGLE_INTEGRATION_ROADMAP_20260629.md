@@ -1379,14 +1379,16 @@ The next block makes candidate/proof thresholds and remaining proof gaps machine
 - Disposition: `NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
 - Scope: threshold table rows, source lock, no-proof firewall, status/report/manifest.
 - Threshold rows: `13`.
-- Candidate-pass rows: `5`.
-- Proof-gap rows: `2`.
+- Candidate-pass rows: `3`.
+- Proof-gap rows: `0`.
+- Proof-method gap rows: `1`.
 - Runtime-policy gap rows: `2`.
-- Proof-threshold-met-not-registered rows: `7`.
+- Proof-threshold-met-not-registered rows: `9`.
 - Threshold table status: `candidate_threshold_table_ready_not_proof_registered`.
-- Proof-readiness impact: `proof_gaps_are_explicit_and_machine_readable`.
+- Proof-readiness impact: `numeric_proof_threshold_gaps_reduced_to_method_authorization_and_runtime_policy_gaps`.
 - Stationarity/ESS rows now use `PACKAGE_C_STATIONARITY_ENSEMBLE_REFINEMENT_20260701`: `min_effective_sample_size=32768.0`, `max_u_accessible_cdf_l1_to_uniform=0.0217651367188`, and `max_x_local_norm_l1_to_uniform=0.0203979492187`, all marked `candidate_and_proof_threshold_met_not_registered`.
-- Remaining proof gaps: `max_one_wall_positive_control_ks=0.019246436` passes candidate `<=0.02` but not proof `<=0.01`; `max_expanded_wall_pileup_ratio=1.298850575` passes candidate `<=1.5` but not proof `<=1.25`.
+- One-wall/wall-pileup rows now use `PACKAGE_C_ONE_WALL_WALL_PILEUP_REFINEMENT_20260701`: `max_one_wall_positive_control_ks=0.005281493`, `max_expanded_wall_pileup_ratio=1.072659525`, and wall-pileup CI95 high `1.214998175`, all marked `candidate_and_proof_threshold_met_not_registered`.
+- Remaining method gap: `max_near_boundary_band_fraction` still requires an accessible-area expected-band-mass method and confidence-interval binding.
 - Runtime-policy gaps remain: `max_required_substeps_to_meet_threshold=526` and `max_projected_trigger_value_after_required_substeps=0.999601207629` require manual runtime-cost/substep-policy review before any runtime/substep policy.
 - Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
 
@@ -1399,9 +1401,9 @@ The next block consolidates the Package C metric-hardening state into a single m
 - Artifact id: `PACKAGE_C_PROOF_READINESS_INDEX_20260701`.
 - Disposition: `NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
 - Scope: readiness index rows, open blocker rows, external-research question rows, source lock, no-proof firewall, status/report/manifest.
-- Readiness index rows: `6`, covering metric-hardening consolidation, timeseries ESS, stationarity ensemble refinement, substep fail-policy hardening, substep dt-refinement requirements, and proof-threshold table.
-- Open blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, remaining proof-threshold gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
-- External research question rows: `4`: stationarity/ESS method review, near-boundary band expectation, one-wall/wall-pileup thresholds, and substep runtime-cost strategy.
+- Readiness index rows: `7`, covering metric-hardening consolidation, timeseries ESS, stationarity ensemble refinement, one-wall/wall-pileup refinement, substep fail-policy hardening, substep dt-refinement requirements, and proof-threshold table.
+- Open blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, proof-method gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
+- External research question rows: `4`: stationarity/ESS method review, near-boundary band expectation, one-wall/wall-pileup method binding, and substep runtime-cost strategy.
 - Proof-readiness index status: `single_entrypoint_ready_not_proof_registered`.
 - Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
 
@@ -1414,9 +1416,9 @@ The next block turns the readiness index into a copyable external-AI prompt that
 - Artifact id: `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701`.
 - Disposition: `NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION`.
 - Scope: copyable prompt, context rows, research-question rows, blocker rows, source lock, no-proof firewall, status/report/manifest.
-- Context rows: `5`, covering the GitHub-visible entrypoint, artifact roles, current proof gaps, substep runtime cost, and one-wall threshold gap.
-- Research question rows: `4`: stationarity/ESS method review, near-boundary band expectation, one-wall/wall-pileup thresholds, and substep runtime-cost strategy.
-- Blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, remaining proof-threshold gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
+- Context rows: `5`, covering the GitHub-visible entrypoint, artifact roles, stationarity method context, one-wall/wall-pileup refinement context, and substep runtime cost.
+- Research question rows: `4`: stationarity/ESS method review, near-boundary band expectation, one-wall/wall-pileup method binding, and substep runtime-cost strategy.
+- Blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, proof-method gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
 - Prompt status: `copyable_external_research_prompt_ready`.
 - GitHub visibility status: `local_worktree_pre_commit_urls_valid_after_publish`.
 - Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
@@ -1442,13 +1444,31 @@ The next local proof-gap reduction block adds independent-ensemble transition-in
 
 This block reduces the stationarity/ESS and u/x-local uniformity gap without registering Package C proof/pass. It is an independent-ensemble candidate check of one-step transition invariance from analytically uniform center support; it is not a validated Brownian solver output, not runtime authorization, and not sidewall PRS/EAS numeric output.
 
-## 22. Recommended next action
+## 22. Current Package C one-wall and wall-pileup refinement status
 
-Current safe route after the Package C stationarity ensemble refinement:
+The next local proof-threshold reduction block expands the two remaining numeric stress diagnostics:
 
-1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees the stationarity ensemble candidate rather than the old stationarity gap alone.
-2. Continue one local proof-gap-reduction block for the two remaining proof-threshold gaps: one-wall positive-control KS and expanded wall-pileup ratio.
-3. In the same or following block, bind near-boundary band expectation to an accessible-area confidence-interval method and keep the substep runtime-cost policy as manual-authorization-only.
+- Artifact id: `PACKAGE_C_ONE_WALL_WALL_PILEUP_REFINEMENT_20260701`.
+- Disposition: `NODI_PACKAGE_C_ONE_WALL_WALL_PILEUP_REFINEMENT_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: expanded one-wall folded-normal positive control and expanded first-vs-adjacent near-wall band pileup diagnostics, source lock, no-proof firewall, status/report/manifest.
+- One-wall rows: `6`, using `65536` samples per d/sigma case.
+- Wall-pileup rows: `12`, using `65536` samples per scenario.
+- Max one-wall KS: `0.005281493` against proof line `<=0.01`.
+- Max wall-pileup ratio: `1.072659525` against proof line `<=1.25`.
+- Max wall-pileup CI95 high: `1.214998175` against proof line `<=1.25`.
+- Candidate status: `candidate_numeric_thresholds_met_not_proof_registered`.
+- Proof-readiness impact: `one_wall_and_wall_pileup_proof_threshold_gaps_reduced_by_expanded_sampling_candidate`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+This block closes the remaining one-wall/wall-pileup numeric threshold gaps in candidate evidence, but it still does not register Package C proof/pass. The remaining Package C blockers are method binding for near-boundary expected band mass, manual authorization/clean commit binding, runtime/substep policy review, and separate solver/wet branches.
+
+## 23. Recommended next action
+
+Current safe route after the Package C one-wall/wall-pileup refinement:
+
+1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees stationarity, one-wall, and wall-pileup candidate evidence rather than the old numeric gaps.
+2. Continue one local method-binding block for near-boundary expected band mass, including accessible-area expectation, confidence intervals, and explicit exact-atom vs near-band semantics.
+3. Keep the substep runtime-cost policy as manual-authorization-only; the current `526` substep worst case remains a runtime-policy blocker, not an automatic runtime setting.
 4. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 6. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.

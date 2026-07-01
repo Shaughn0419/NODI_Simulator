@@ -14,7 +14,7 @@ Primary GitHub-visible entrypoint after publish:
 Current disposition:
 - NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
 - artifact_id=PACKAGE_C_PROOF_READINESS_INDEX_20260701
-- readiness_index_rows=6
+- readiness_index_rows=7
 - open_blocker_rows=5
 - external_research_question_rows=4
 
@@ -27,7 +27,7 @@ Hard boundary:
 Open blockers:
 - manual_authorization_ledger_missing: proof_registration_authorized remains false -> explicit manual authorization ledger that supersedes no-auth ledger
 - clean_reviewed_commit_binding_pending: reviewed_commit_binding_status remains pending in candidate packets -> future proof/pass artifact must bind a reviewed clean commit and source lock
-- proof_threshold_gaps_present: max_one_wall_positive_control_ks;max_expanded_wall_pileup_ratio -> resolve or explicitly accept proof thresholds with external/statistical review
+- proof_method_gaps_present: max_near_boundary_band_fraction -> bind proof-level statistical method, expected-band mass model, and uncertainty review
 - runtime_policy_gaps_present: max_required_substeps_to_meet_threshold;max_projected_trigger_value_after_required_substeps -> manual runtime cost and substep policy review required before runtime use
 - no_solver_or_wet_claim_authorized: hindered diffusion, flow, electrokinetic, optical, wet claims all remain blocked -> separate solver/experiment authorization required
 
@@ -36,9 +36,9 @@ Current threshold rows:
 - nonconverged_reflection_rows: observed=0; candidate=must_equal_0; proof=must_equal_0; status=candidate_and_proof_threshold_met_not_registered
 - max_exact_boundary_atom_fraction: observed=0.0; candidate=<=0.005; proof=must_equal_0; status=candidate_and_proof_threshold_met_not_registered
 - max_near_boundary_band_fraction: observed=0.002604167; candidate=<=0.005; proof=requires_area_expectation_plus_confidence_interval; status=candidate_pass_proof_method_gap
-- max_one_wall_positive_control_ks: observed=0.019246436; candidate=<=0.02; proof=<=0.01; status=candidate_pass_proof_gap
+- max_one_wall_positive_control_ks: observed=0.005281493; candidate=<=0.02; proof=<=0.01; status=candidate_and_proof_threshold_met_not_registered
 - projection_negative_control_status: observed=expected_fail_observed; candidate=expected_fail_observed; proof=expected_fail_observed; status=candidate_and_proof_threshold_met_not_registered
-- max_expanded_wall_pileup_ratio: observed=1.298850575; candidate=<=1.5; proof=<=1.25; status=candidate_pass_proof_gap
+- max_expanded_wall_pileup_ratio: observed=1.072659525; candidate=<=1.5; proof=<=1.25; status=candidate_and_proof_threshold_met_not_registered
 - min_effective_sample_size: observed=32768.0; candidate=>=20; proof=effective_sample_size>=5000_or_confidence_interval_justified; status=candidate_and_proof_threshold_met_not_registered
 - max_u_accessible_cdf_l1_to_uniform: observed=0.0217651367188; candidate=<=0.30; proof=<=0.04_hard_target_<=0.03; status=candidate_and_proof_threshold_met_not_registered
 - max_x_local_norm_l1_to_uniform: observed=0.0203979492187; candidate=<=0.30; proof=<=0.04_hard_target_<=0.03; status=candidate_and_proof_threshold_met_not_registered
@@ -51,8 +51,8 @@ Research questions to answer in one pass:
    Scope guard: Use stationarity ensemble and threshold rows for min ESS and u/x-local L1 gaps; do not infer proof/pass or runtime authorization.
 2. How should near-boundary band mass be compared to accessible-area expectation with confidence intervals?
    Scope guard: Use exact atom split and raw histogram context; keep no wet/hindered hydrodynamic claim.
-3. Are one-wall KS <=0.01 and wall-pileup ratio <=1.25 reasonable proof-level hard lines, or should sample sizes/metrics change?
-   Scope guard: Compare numerical-analysis/statistical sources; no proof/pass or runtime claim, and avoid turning candidate metrics into validated solver output.
+3. Are the expanded one-wall KS <=0.01 and wall-pileup ratio/CI <=1.25 candidate lines sufficient for future proof registration, and what raw evidence should be bound?
+   Scope guard: Use the one-wall/wall-pileup refinement as candidate evidence only; no proof/pass or runtime claim, and avoid turning candidate metrics into validated solver output.
 4. Given max_required_substeps=526, what substep or smaller-dt strategy is numerically defensible before runtime activation?
    Scope guard: Treat this as proof-policy design only; no NODI runtime, COMSOL, PRS/EAS numeric output, or production claim.
 

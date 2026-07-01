@@ -596,3 +596,47 @@ external_research_question_rows=4
 ```
 
 This packet reduces the stationarity/ESS and u/x-local uniformity gap, but it does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C one-wall and wall-pileup refinement
+
+The next proof-threshold reduction block expands the one-wall folded-normal and wall-pileup diagnostics:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_one_wall_wall_pileup_refinement.py --confirm-package-c-one-wall-wall-pileup-refinement
+NODI_PACKAGE_C_ONE_WALL_WALL_PILEUP_REFINEMENT_CANDIDATE_READY_NO_PROOF_REGISTRATION
+one_wall_rows=6
+wall_pileup_rows=12
+one_wall_sample_count=65536
+wall_pileup_sample_count=65536
+max_one_wall_positive_control_ks=0.005281493
+max_wall_pileup_ratio=1.072659525
+max_wall_pileup_ratio_ci95_high=1.214998175
+one_wall_wall_pileup_status=candidate_numeric_thresholds_met_not_proof_registered
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+The refreshed threshold/readiness chain now treats one-wall and wall-pileup numeric proof-threshold gaps as reduced, while leaving proof registration blocked:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_proof_threshold_table.py --confirm-package-c-proof-threshold-table
+NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION
+threshold_rows=13
+proof_gap_rows=0
+proof_method_gap_rows=1
+proof_threshold_met_not_registered_rows=9
+runtime_policy_gap_rows=2
+proof_readiness_impact=numeric_proof_threshold_gaps_reduced_to_method_authorization_and_runtime_policy_gaps
+
+python tools/audits/build_nodi_comsol_package_c_proof_readiness_index.py --confirm-package-c-proof-readiness-index
+NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
+readiness_index_rows=7
+open_blocker_rows=5
+external_research_question_rows=4
+```
+
+This packet closes the remaining one-wall/wall-pileup numeric threshold gaps in candidate evidence only. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims. The remaining blockers are near-boundary expected-band method binding, clean reviewed commit/manual authorization, runtime/substep policy review, and separate solver/wet evidence branches.

@@ -55,6 +55,10 @@ TIMESERIES_STATUS = (
 STATIONARITY_ENSEMBLE_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_STATIONARITY_ENSEMBLE_STATUS_20260701.json"
 )
+ONE_WALL_WALL_PILEUP_STATUS = (
+    OUTPUT_DIR
+    / "NODI_COMSOL_PACKAGE_C_ONE_WALL_WALL_PILEUP_STATUS_20260701.json"
+)
 SUBSTEP_HARDENING_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_SUBSTEP_FAIL_POLICY_STATUS_20260701.json"
 )
@@ -72,6 +76,7 @@ SOURCE_FILES = {
     "metric_hardening_consolidation_status": CONSOLIDATION_STATUS,
     "timeseries_ess_status": TIMESERIES_STATUS,
     "stationarity_ensemble_status": STATIONARITY_ENSEMBLE_STATUS,
+    "one_wall_wall_pileup_status": ONE_WALL_WALL_PILEUP_STATUS,
     "substep_fail_policy_status": SUBSTEP_HARDENING_STATUS,
     "substep_dt_refinement_status": DT_REFINEMENT_STATUS,
     "proof_threshold_status": THRESHOLD_STATUS,
@@ -198,6 +203,7 @@ def readiness_index_rows() -> list[dict[str, str]]:
     c = read_json_summary(CONSOLIDATION_STATUS)
     t = read_json_summary(TIMESERIES_STATUS)
     e = read_json_summary(STATIONARITY_ENSEMBLE_STATUS)
+    ow = read_json_summary(ONE_WALL_WALL_PILEUP_STATUS)
     s = read_json_summary(SUBSTEP_HARDENING_STATUS)
     d = read_json_summary(DT_REFINEMENT_STATUS)
     p = read_json_summary(THRESHOLD_STATUS)
@@ -243,6 +249,20 @@ def readiness_index_rows() -> list[dict[str, str]]:
                 f"total_samples={e.get('total_independent_samples', '')}"
             ),
             "next_action": "use_as_stationarity_gap_reduction_candidate_not_proof",
+        },
+        {
+            "artifact_id": ow.get("artifact_id", ""),
+            "artifact_role": "one_wall_wall_pileup_refinement",
+            "disposition": ow.get("disposition", ""),
+            "candidate_status": ow.get("one_wall_wall_pileup_status", ""),
+            "proof_status": ow.get("proof_readiness_impact", ""),
+            "key_values": (
+                f"max_one_wall_ks={ow.get('max_one_wall_positive_control_ks', '')};"
+                f"max_wall_pileup_ratio={ow.get('max_wall_pileup_ratio', '')};"
+                f"max_wall_pileup_ci95_high={ow.get('max_wall_pileup_ratio_ci95_high', '')};"
+                f"sample_count={ow.get('one_wall_sample_count', '')}"
+            ),
+            "next_action": "use_as_one_wall_wall_pileup_threshold_reduction_candidate_not_proof",
         },
         {
             "artifact_id": s.get("artifact_id", ""),
@@ -302,6 +322,11 @@ def blocker_rows() -> list[dict[str, str]]:
         for row in threshold_rows
         if "proof_gap" in row.get("current_status", "")
     ]
+    proof_method_gap_metrics = [
+        row["metric_id"]
+        for row in threshold_rows
+        if "proof_method_gap" in row.get("current_status", "")
+    ]
     runtime_gap_metrics = [
         row["metric_id"]
         for row in threshold_rows
@@ -319,11 +344,6 @@ def blocker_rows() -> list[dict[str, str]]:
             "future proof/pass artifact must bind a reviewed clean commit and source lock",
         ),
         (
-            "proof_threshold_gaps_present",
-            ";".join(proof_gap_metrics),
-            "resolve or explicitly accept proof thresholds with external/statistical review",
-        ),
-        (
             "runtime_policy_gaps_present",
             ";".join(runtime_gap_metrics),
             "manual runtime cost and substep policy review required before runtime use",
@@ -334,6 +354,24 @@ def blocker_rows() -> list[dict[str, str]]:
             "separate solver/experiment authorization required",
         ),
     ]
+    if proof_gap_metrics:
+        base_rows.insert(
+            2,
+            (
+                "proof_threshold_gaps_present",
+                ";".join(proof_gap_metrics),
+                "resolve or explicitly accept proof thresholds with external/statistical review",
+            ),
+        )
+    if proof_method_gap_metrics:
+        base_rows.insert(
+            2,
+            (
+                "proof_method_gaps_present",
+                ";".join(proof_method_gap_metrics),
+                "bind proof-level statistical method, expected-band mass model, and uncertainty review",
+            ),
+        )
     return [
         {
             "blocker_id": blocker_id,
@@ -361,9 +399,9 @@ def external_research_question_rows() -> list[dict[str, str]]:
             "Use exact atom split and raw histogram context; keep no wet/hindered hydrodynamic claim.",
         ),
         (
-            "one_wall_and_wall_pileup_thresholds",
-            "Are one-wall KS <=0.01 and wall-pileup ratio <=1.25 reasonable proof-level hard lines, or should sample sizes/metrics change?",
-            "Compare numerical-analysis/statistical sources; no proof/pass or runtime claim, and avoid turning candidate metrics into validated solver output.",
+            "one_wall_wall_pileup_method_binding",
+            "Are the expanded one-wall KS <=0.01 and wall-pileup ratio/CI <=1.25 candidate lines sufficient for future proof registration, and what raw evidence should be bound?",
+            "Use the one-wall/wall-pileup refinement as candidate evidence only; no proof/pass or runtime claim, and avoid turning candidate metrics into validated solver output.",
         ),
         (
             "substep_runtime_cost",
@@ -427,7 +465,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     s = payload["summary"]
     firewall = payload["no_proof_firewall"][0]
     checks = {
-        "Readiness rows": s["readiness_index_rows"] == 6,
+        "Readiness rows": s["readiness_index_rows"] == 7,
         "Blockers present": s["open_blocker_rows"] >= 5,
         "External questions present": s["external_research_question_rows"] >= 4,
         "Source lock complete": s["source_missing_rows"] == 0,
@@ -560,7 +598,7 @@ def write_outputs(
             f"- Open blocker rows: `{payload['summary']['open_blocker_rows']}`.",
             f"- External research question rows: `{payload['summary']['external_research_question_rows']}`.",
             f"- GitHub visibility: `{payload['summary']['github_visibility_status']}`.",
-            "- Boundary: this is readiness/context evidence only, not Package C proof registration or runtime authorization.",
+            "- Boundary: this is readiness/context evidence only; no proof/pass registration, no runtime, no COMSOL launch, no .mph load, no numeric PRS/EAS, no route/yield/detection/wet/fab/production claims.",
             f"- Machine-readable support: `{rel(active_output_dir)}`.",
         ],
     )
