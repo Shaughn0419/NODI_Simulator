@@ -2178,6 +2178,47 @@ The following remain false:
 - `yield_allowed=false`
 - `detection_probability_allowed=false`
 - `wet_pass_probability_allowed=false`
+
+## 51. Current integrated promotion ledger route-policy-refresh status
+
+The integrated promotion ledger has now consumed the route/yield/detection
+policy packet:
+
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_integrated_promotion_ledger_route_policy_refresh.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_ROUTE_POLICY_REFRESH_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_ROUTE_POLICY_REFRESH_READY_PREFLIGHT_ONLY`.
+- Claim boundary:
+  `promotion_ledger_route_policy_refresh_not_route_score_not_yield_not_detection`.
+
+This refresh updates only the `integrated_route_ledger` lane. For both W500/D900
+route candidates, that lane is now:
+
+- `route_yield_detection_policy_defined_not_ready_for_claims`
+
+The integrated ledger now retains, in one table, the current status of:
+
+- qch / pressure-flow readiness;
+- selected-annulus context;
+- detector-response context;
+- blank false-positive context;
+- wet/surface evidence contract;
+- route/yield/detection readiness policy.
+
+This is the current decision surface for the sidewall route. It does not select
+a route and it does not compute yield or detection probability; it makes the
+remaining evidence blockers explicit enough to drive the next execution blocks
+without ambiguity.
+
+The following remain false:
+
+- `route_score_current=false`
+- `winner_current=false`
+- `yield_current=false`
+- `detection_probability_current=false`
+- `wet_pass_probability_current=false`
 - `yield_current=false`
 
 ## 48. Current wet/surface evidence-contract status
