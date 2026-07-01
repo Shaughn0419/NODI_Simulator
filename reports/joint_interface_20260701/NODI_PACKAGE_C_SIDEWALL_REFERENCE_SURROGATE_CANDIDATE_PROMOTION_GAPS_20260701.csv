@@ -1,0 +1,4 @@
+target,current_value,surrogate_available,required_before_true,hard_fail_if
+full_wave_or_calibrated_sidewall_optical_solver,false,true,field solver or blank-channel calibration consuming sidewall/trapezoid geometry,optical_solver_true_from_effective_aperture_surrogate
+true_W_eff,false,true,calibrated optical/electromagnetic definition of effective width,true_W_eff_true_from_aperture_factor
+detection_probability,false,true,detector-response calibration plus blank trace validation,detection_probability_true_from_reference_surrogate

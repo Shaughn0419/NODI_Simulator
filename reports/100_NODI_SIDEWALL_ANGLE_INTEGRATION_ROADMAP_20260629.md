@@ -1854,3 +1854,42 @@ The next optical branch step is to replace this smoke/proxy evidence with a
 sidewall-aware optical/reference solver or calibrated lookup that consumes the
 trapezoid geometry, after which detection-response calibration and blank-trace
 validation can be evaluated.
+
+## 38. Current sidewall reference surrogate candidate status
+
+The optical/reference branch now has a geometry-propagated reference surrogate
+candidate:
+
+- Reference model: `trapezoid_effective_aperture_surrogate`.
+- Module: `nodi_simulator/sidewall_reference_surrogate_candidate.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_READY_NOT_OPTICAL_SOLVER`.
+- Rows: rectangle-limit and theta85 W500/D900 at 404 nm and 660 nm.
+
+This candidate consumes trapezoid geometry through an area-equivalent aperture
+factor:
+
+`effective_aperture_width = (W_top + W_bottom_runtime_clipped) / 2`
+
+For W500/D900/theta85, the 404 nm row records a sidewall aperture factor below
+the rectangle-limit row. The 660 nm rows also record the W500 NA cutoff context,
+where the reference amplitude is hard-zeroed by the existing NA guardrail.
+
+This is a real propagation step beyond the previous reference smoke packet:
+
+- `geometry_not_propagated_to_reference_field=false`
+- `reference_uses_rectangular_width_depth_surrogate=false`
+- `reference_geometry_propagation_status=trapezoid_geometry_propagated_to_effective_aperture_reference_surrogate`
+
+It is still not a full optical solver or calibrated detector model:
+
+- `full_wave_or_calibrated_optical_solver_current=false`
+- `true_W_eff_current=false`
+- `detection_probability_current=false`
+- `route_score_current=false`
+
+The next optical branch step is a calibrated lookup or electromagnetic/optical
+field solver that defines true `W_eff`, detector response, and blank-channel
+reference behavior for the sidewall geometry.

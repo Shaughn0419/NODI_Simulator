@@ -1,0 +1,28 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_READY_NOT_OPTICAL_SOLVER",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_READY_NOT_OPTICAL_SOLVER",
+    "artifact_id": "PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_20260701",
+    "claim_boundary": "sidewall_reference_surrogate_not_full_optical_solver_not_detection_probability",
+    "current_head": "ac5ca241b6ec5299e981cae4cf9b5d245536100e",
+    "branch": "main",
+    "surrogate_version": "trapezoid_effective_aperture_reference_surrogate_candidate_v1",
+    "source_optical_smoke_disposition": "NODI_PACKAGE_C_SIDEWALL_OPTICAL_REFERENCE_SMOKE_READY_NOT_OPTICAL_SOLVER",
+    "surrogate_rows": 4,
+    "theta85_404_effective_aperture_factor": 0.842520405653,
+    "rectangle_404_effective_aperture_factor": 1.0,
+    "sidewall_reference_surrogate_current": true,
+    "full_wave_or_calibrated_optical_solver_current": false,
+    "true_W_eff_current": false,
+    "detection_probability_current": false,
+    "route_score_current": false,
+    "source_lock_rows": 9,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 91,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "sidewall-aware reference surrogate candidate;effective aperture sensitivity;optical solver gap reduction",
+    "blocked_use": "full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion",
+    "semantic_digest": "b7d122111f98571be1b8ebe1d5fea028e2f2910a84cc031046f82621ff77f988"
+  }
+}

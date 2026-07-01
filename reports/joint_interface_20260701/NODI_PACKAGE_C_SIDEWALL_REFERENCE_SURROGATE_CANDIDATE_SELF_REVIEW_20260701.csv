@@ -1,0 +1,5 @@
+review_id,dimension,verdict,notes
+REFSUR-SELF-01,trapezoid effective-aperture reference model is available,PASS_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_NOT_SOLVER,Candidate advances sidewall reference propagation while preserving solver and detection prerequisites.
+REFSUR-SELF-02,404 nm rows show sidewall aperture sensitivity without NA hard zero,PASS_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_NOT_SOLVER,Candidate advances sidewall reference propagation while preserving solver and detection prerequisites.
+REFSUR-SELF-03,660 nm rows record NA cutoff context for W500,PASS_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_NOT_SOLVER,Candidate advances sidewall reference propagation while preserving solver and detection prerequisites.
+REFSUR-SELF-04,candidate remains surrogate and not full optical solver output,PASS_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_NOT_SOLVER,Candidate advances sidewall reference propagation while preserving solver and detection prerequisites.

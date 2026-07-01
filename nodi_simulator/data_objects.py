@@ -30,7 +30,10 @@ REFERENCE_ROUTE_MODEL_COMPATIBILITY = {
         "paper_aligned_phase_filter",
         "tsuyama_bfp_integrated",
     },
-    "engineering_fallback": {"channel_angular_surrogate"},
+    "engineering_fallback": {
+        "channel_angular_surrogate",
+        "trapezoid_effective_aperture_surrogate",
+    },
     "legacy_debug": {"constant", "geometry_scaled"},
 }
 REFERENCE_SOLVER_ROUTE_OPTIONS = (
@@ -40,6 +43,7 @@ REFERENCE_SOLVER_ROUTE_OPTIONS = (
     "engineering_channel_angular_surrogate",
     "tsuyama_phase_filter_1d",
     "tsuyama_bfp_integrated",
+    "trapezoid_effective_aperture_surrogate",
     "legacy_debug",
 )
 REFERENCE_NA_EDGE_POLICY_OPTIONS = (
@@ -529,7 +533,7 @@ def resolve_reference_route_name(reference_model: str, reference_route: str = "a
         return "calibrated_primary"
     if model in {"paper_aligned_phase_filter", "tsuyama_bfp_integrated"}:
         return "paper_aligned_comparison"
-    if model == "channel_angular_surrogate":
+    if model in {"channel_angular_surrogate", "trapezoid_effective_aperture_surrogate"}:
         return "engineering_fallback"
     return "legacy_debug"
 
@@ -555,6 +559,8 @@ def resolve_reference_solver_route_name(
         return "paper_aligned_angular_surrogate"
     if model == "channel_angular_surrogate":
         return "engineering_channel_angular_surrogate"
+    if model == "trapezoid_effective_aperture_surrogate":
+        return "trapezoid_effective_aperture_surrogate"
     return "legacy_debug"
 
 
@@ -1636,12 +1642,14 @@ class SimulationConfig:
             "geometry_scaled",
             "calibrated_lookup",
             "channel_angular_surrogate",
+            "trapezoid_effective_aperture_surrogate",
             "paper_aligned_phase_filter",
             "tsuyama_bfp_integrated",
         }:
             raise ValueError(
                 "reference_model must be 'constant', 'geometry_scaled', "
-                "'calibrated_lookup', 'channel_angular_surrogate', or "
+                "'calibrated_lookup', 'channel_angular_surrogate', "
+                "'trapezoid_effective_aperture_surrogate', "
                 "'paper_aligned_phase_filter', or 'tsuyama_bfp_integrated', "
                 f"got {self.reference_model}"
             )

@@ -36,6 +36,7 @@ from .data_objects import (
     resolve_reference_route_name,
     resolve_reference_solver_route_name,
 )
+from .cross_section_geometry import TrapezoidCrossSection
 from .tsuyama_phase_filter import (
     compute_tsuyama_phase_filter_bfp_field,
     integrate_bfp_roi,
@@ -124,6 +125,30 @@ def build_reference_geometry_propagation_diagnostics(
         if spatial_mode == "uniform"
         else "rectangular_xz_norm_cross_section_surrogate_v1"
     )
+
+    if (
+        cross_section_model == "trapezoid_tapered_sidewalls"
+        and reference_model == "trapezoid_effective_aperture_surrogate"
+    ):
+        return {
+            "reference_geometry_model": (
+                "trapezoid_effective_aperture_reference_surrogate_v1"
+            ),
+            "reference_spatial_geometry_model": (
+                "trapezoid_area_equivalent_aperture_surrogate_v1"
+            ),
+            "reference_geometry_claim_level": (
+                "sidewall_geometry_propagated_to_effective_aperture_surrogate_not_optical_solver"
+            ),
+            "reference_geometry_propagation_status": (
+                "trapezoid_geometry_propagated_to_effective_aperture_reference_surrogate"
+            ),
+            "reference_geometry_not_propagated_reasons": (),
+            "geometry_not_propagated_to_reference_field": False,
+            "reference_uses_rectangular_width_depth_surrogate": False,
+            "not_optical_solver_output": True,
+            "optical_solver_trigger_is_result": False,
+        }
 
     if cross_section_model == "trapezoid_tapered_sidewalls":
         reasons = (
@@ -361,6 +386,17 @@ def _reference_model_metadata(
                 "channel diffraction structure."
             ),
         }
+    if model == "trapezoid_effective_aperture_surrogate":
+        return route_metadata | {
+            "reference_model_precision_tier": "geometry_propagated_surrogate",
+            "reference_model_precision_rank": 2,
+            "reference_model_role": "sidewall_geometry_reference_candidate",
+            "reference_model_guidance": (
+                "Use only as a sidewall-aware effective-aperture surrogate until "
+                "an optical solver or calibrated lookup consumes measured/trapezoid "
+                "geometry."
+            ),
+        }
     if model == "paper_aligned_phase_filter":
         return route_metadata | {
             "reference_model_precision_tier": "paper_aligned_comparison_surrogate",
@@ -421,6 +457,56 @@ def _classify_geometry_depth_scaling(ref_beta: float) -> str:
     if beta < 1.0:
         return "sub_amplitude_empirical"
     return "super_intensity_empirical"
+
+
+def _trapezoid_effective_aperture_reference(
+    channel: Channel,
+    optical: OpticalSystem,
+    sim_cfg: SimulationConfig,
+) -> tuple[float, float, float, dict[str, float | str | bool]]:
+    """Return a sidewall-aware effective-aperture reference surrogate."""
+    del optical
+    cross_section_model = str(
+        getattr(sim_cfg, "channel_cross_section_model", "ideal_rectangle")
+    )
+    if cross_section_model == "trapezoid_tapered_sidewalls":
+        geometry = TrapezoidCrossSection(
+            top_width_m=float(channel.width_m),
+            depth_m=float(channel.depth_m),
+            sidewall_taper_angle_deg=float(sim_cfg.sidewall_taper_angle_deg),
+        )
+        bottom_m = geometry.bottom_width_runtime_clipped_m
+        area_equivalent_width_m = 0.5 * (geometry.top_width_m + bottom_m)
+        aperture_factor = area_equivalent_width_m / max(geometry.top_width_m, 1.0e-30)
+        closure_status = geometry.closure_status
+        bottom_unclipped_m = geometry.bottom_width_unclipped_m
+    else:
+        area_equivalent_width_m = float(channel.width_m)
+        aperture_factor = 1.0
+        closure_status = "rectangle_native"
+        bottom_m = float(channel.width_m)
+        bottom_unclipped_m = float(channel.width_m)
+
+    g = max(float(aperture_factor), float(sim_cfg.ref_g_min))
+    A_ref = float(sim_cfg.rho) * g
+    phi_ref = float(sim_cfg.ref_phi0_rad)
+    diagnostics = {
+        "trapezoid_effective_aperture_surrogate_version": (
+            "trapezoid_area_equivalent_aperture_reference_v1"
+        ),
+        "trapezoid_effective_aperture_claim_level": (
+            "geometry_propagated_surrogate_not_optical_solver"
+        ),
+        "trapezoid_effective_aperture_width_m": float(area_equivalent_width_m),
+        "trapezoid_effective_aperture_factor": float(aperture_factor),
+        "trapezoid_effective_aperture_bottom_width_m": float(bottom_m),
+        "trapezoid_effective_aperture_bottom_width_unclipped_m": float(
+            bottom_unclipped_m
+        ),
+        "trapezoid_effective_aperture_closure_status": str(closure_status),
+        "trapezoid_effective_aperture_not_optical_solver_output": True,
+    }
+    return A_ref, phi_ref, g, diagnostics
 
 
 def _optional_float(row: dict, key: str, default: float = float("nan")) -> float:
@@ -1589,6 +1675,7 @@ def compute_reference_field(
                 "channel_angular_surrogate",
                 "paper_aligned_phase_filter",
                 "tsuyama_bfp_integrated",
+                "trapezoid_effective_aperture_surrogate",
             }
         ),
         "reference_phase_calibration_status": "not_calibrated",
@@ -1598,6 +1685,7 @@ def compute_reference_field(
         "phase_wrap_policy": None,
     }
     tsuyama_bfp_reference_diagnostics: dict[str, object] = {}
+    effective_aperture_diagnostics: dict[str, object] = {}
 
     if sim_cfg.reference_model == "constant":
         A_ref = sim_cfg.rho
@@ -1629,6 +1717,13 @@ def compute_reference_field(
                 "geometry_scaled remains an empirical fallback."
             ),
         }
+    elif sim_cfg.reference_model == "trapezoid_effective_aperture_surrogate":
+        (
+            A_ref,
+            phi_ref,
+            g,
+            effective_aperture_diagnostics,
+        ) = _trapezoid_effective_aperture_reference(channel, optical, sim_cfg)
     elif sim_cfg.reference_model in {"channel_angular_surrogate", "paper_aligned_phase_filter"}:
         (
             A_ref,
@@ -1779,6 +1874,7 @@ def compute_reference_field(
     )
     result.update(_reference_model_metadata(sim_cfg, resolved_reference_route))
     result.update(build_reference_geometry_propagation_diagnostics(channel, sim_cfg))
+    result.update(effective_aperture_diagnostics)
     result.update(calibration_diagnostics)
     if sim_cfg.reference_model == "calibrated_lookup":
         result.update({
@@ -1826,6 +1922,21 @@ def compute_reference_field(
     if sim_cfg.reference_model == "geometry_scaled":
         result["reference_solver_route"] = resolved_reference_solver_route
         result.update(geometry_scaled_diagnostics)
+    if sim_cfg.reference_model == "trapezoid_effective_aperture_surrogate":
+        result["reference_solver_route"] = resolved_reference_solver_route
+        result.update({
+            "reference_solver_status": "trapezoid_effective_aperture_surrogate_active",
+            "reference_solver_detector_bridge_status": (
+                "effective_aperture_surrogate_no_detector_bridge"
+            ),
+            "reference_solver_active_field_source": (
+                "trapezoid_effective_aperture_surrogate"
+            ),
+            "paper_aligned_reference_claim": "not_applicable_sidewall_surrogate",
+            "reference_solver_claim_level": (
+                "sidewall_geometry_reference_surrogate_not_optical_solver"
+            ),
+        })
     if sim_cfg.reference_model in {"constant", "calibrated_lookup"}:
         result["reference_solver_route"] = resolved_reference_solver_route
     return result
