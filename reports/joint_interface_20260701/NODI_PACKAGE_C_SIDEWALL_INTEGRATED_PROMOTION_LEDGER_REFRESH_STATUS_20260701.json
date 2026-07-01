@@ -1,0 +1,27 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_REFRESH_READY_PREFLIGHT_ONLY",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_REFRESH_READY_PREFLIGHT_ONLY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_REFRESH_20260701",
+    "claim_boundary": "promotion_ledger_refresh_not_route_score_not_detection_probability",
+    "current_head": "630008acc5f39fc96c05d834b9262ccb99375464",
+    "branch": "main",
+    "source_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_READY_PREFLIGHT_ONLY",
+    "source_selected_annulus_disposition": "NODI_PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_READY_NOT_PROBABILITY",
+    "refreshed_promotion_lane_rows": 18,
+    "selected_annulus_delta_rows": 2,
+    "selected_annulus_context_available_rows": 2,
+    "detection_probability_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_current": false,
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 77,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "integrated promotion ledger refresh;selected-annulus blocker update",
+    "blocked_use": "route_score;winner;JRC;detection_probability;yield;wet pass;production ingestion",
+    "semantic_digest": "28900f96d7f2fb65078335ac87f691e62da93c244ef829cb99b1c17911d7c16a"
+  }
+}

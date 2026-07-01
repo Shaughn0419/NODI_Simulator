@@ -2089,3 +2089,48 @@ The next ledger refresh should consume this packet and update only the
 selected-annulus blocker status, while keeping detection probability and route
 promotion blocked until calibrated optical, blank false-positive, wet, q_ch,
 and route-selection evidence are all available.
+
+## 43. Current integrated promotion ledger refresh status
+
+The selected-annulus context has now been consumed into the integrated promotion
+ledger as a narrow refresh:
+
+- Module:
+  `tools/audits/build_nodi_package_c_sidewall_integrated_promotion_ledger_refresh.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_REFRESH_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_REFRESH_READY_PREFLIGHT_ONLY`.
+- Claim boundary:
+  `promotion_ledger_refresh_not_route_score_not_detection_probability`.
+
+This refresh copies the Gate 530 promotion-lane ledger and updates only the
+`selected_annulus_detection_context` rows. The lane status changes from missing
+rerun evidence to:
+
+- `selected_annulus_context_available_small_n_not_probability`
+
+The source artifact for that lane is now the Gate 531 selected-annulus context
+CSV, SHA-bound through the refresh source lock. The refresh emits one delta row
+per route candidate and keeps the target claim state false:
+
+- `detection_probability_current=false`
+- `route_score_current=false`
+- `winner_current=false`
+- `yield_current=false`
+
+The selected-annulus blocker is therefore no longer "no sidewall run exists";
+it is now "small-N context exists but cannot be used as probability or route
+selection evidence." The next large block should attack the remaining evidence
+lanes directly:
+
+1. calibrated detector response and blank false-positive traces;
+2. accepted sidewall optical/reference calibration or solver output;
+3. wet wall-interaction evidence;
+4. formal q_ch / pressure-flow validation that can be promoted beyond context;
+5. route-selection policy and independent decision audit after the evidence
+   hashes above exist.
+
+This keeps ideal rectangle and trapezoid sidewall branches distinct while
+allowing the route/yield/detection program to move forward as a coordinated
+evidence chain rather than as isolated unmerged diagnostics.
