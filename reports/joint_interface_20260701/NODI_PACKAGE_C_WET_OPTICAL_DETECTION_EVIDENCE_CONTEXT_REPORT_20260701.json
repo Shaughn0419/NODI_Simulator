@@ -3,7 +3,7 @@
     "disposition": "NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_READY_NOT_FINAL",
     "artifact_id": "PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_20260701",
     "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
-    "current_head": "e79051ebeaff1dd2a13f07bbe9897ac143a3ae8d",
+    "current_head": "8a5e8a661e9a7c606a14ca2026c33cb19f059169",
     "branch": "main",
     "evidence_context_version": "wet_optical_detection_evidence_context_from_tsuyama_lane_v1",
     "source_route_disposition": "NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_READY_NOT_FINAL",
@@ -22,12 +22,12 @@
     "JRC_current": false,
     "source_lock_rows": 20,
     "source_missing_rows": 0,
-    "dirty_context_rows": 89,
-    "non_release_dirty_context_rows": 69,
+    "dirty_context_rows": 83,
+    "non_release_dirty_context_rows": 79,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
     "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion",
-    "semantic_digest": "b9004c8fc42a858674f7529b16b1a61284dcda9490aa950691d820e6a48d4648"
+    "semantic_digest": "1e388bef3fc80d85d9e78223236c07d5db6e86d0bebad3484e227d64b957bcf6"
   },
   "evidence_context_rows": [
     {
@@ -39,7 +39,7 @@
       "source_width_nm": "500",
       "source_depth_nm": "900",
       "sidewall_deg_comsol": "90",
-      "route_decision_candidate_metric": "0.150843235006",
+      "route_decision_candidate_metric": "0.608763658817",
       "geometry_match_level": "nearest_width_depth_context_only",
       "nearest_detection_width_nm": "800",
       "nearest_detection_depth_nm": "710",
@@ -57,7 +57,7 @@
       "best_ev_weighted_stable_detection_rate": "0.47585653179",
       "detection_context_weight": "0.25",
       "wet_context_weight": "0.25",
-      "route_detection_context_candidate_metric": "0.00942770218787",
+      "route_detection_context_candidate_metric": "0.0380477286761",
       "selected_annulus_context_status": "selected_annulus_context_missing_rerun_required",
       "sidewall_specific_optical_solver_current": "false",
       "sidewall_specific_wet_evidence_current": "false",
@@ -77,7 +77,7 @@
       "source_width_nm": "500",
       "source_depth_nm": "900",
       "sidewall_deg_comsol": "85",
-      "route_decision_candidate_metric": "0.0991567649945",
+      "route_decision_candidate_metric": "0.391236341183",
       "geometry_match_level": "nearest_width_depth_context_only",
       "nearest_detection_width_nm": "800",
       "nearest_detection_depth_nm": "710",
@@ -95,7 +95,7 @@
       "best_ev_weighted_stable_detection_rate": "0.47585653179",
       "detection_context_weight": "0.25",
       "wet_context_weight": "0.25",
-      "route_detection_context_candidate_metric": "0.00619729781216",
+      "route_detection_context_candidate_metric": "0.0244522713239",
       "selected_annulus_context_status": "selected_annulus_context_missing_rerun_required",
       "sidewall_specific_optical_solver_current": "false",
       "sidewall_specific_wet_evidence_current": "false",
@@ -265,7 +265,7 @@
       "source_id": "route_candidate_status",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "98f4b3973a6bac7a28fde229972b07b73355f50469f2b35c95036aee490f8aeb",
+      "sha256": "2900cf3b39cbab677d87e3242c4a084543c83e8b279f52b14050e412b044970d",
       "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
       "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
       "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
@@ -274,7 +274,7 @@
       "source_id": "route_candidate_rows",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_ROUTE_CANDIDATE_ROWS_20260701.csv",
       "exists": "true",
-      "sha256": "1d35879d5ca13c4603a04c650362a8ae8d8a0128560f3aa0b1bf3f72f88a2acd",
+      "sha256": "ae19ceaa0502c1371e0cac82081fdb93f16c0425ddb9805e5ca11914da7092aa",
       "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
       "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
       "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
@@ -444,14 +444,8 @@
   ],
   "dirty_context": [
     {
-      "path": ".gitignore",
-      "git_status": "M ",
-      "classification": "wet_optical_detection_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "REVIEW_BUILD_MANIFEST.json",
-      "git_status": " M",
+      "git_status": "M ",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
     },
@@ -510,10 +504,10 @@
       "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
     },
     {
-      "path": "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
       "git_status": " M",
-      "classification": "wet_optical_detection_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
     },
     {
       "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
@@ -762,6 +756,60 @@
       "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
     },
     {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -870,22 +918,10 @@
       "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
     },
     {
-      "path": "nodi_simulator/wet_optical_detection_evidence.py",
-      "git_status": "??",
-      "classification": "wet_optical_detection_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "reports/525_NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_20260701.md",
-      "git_status": "??",
-      "classification": "wet_optical_detection_output",
-      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
     },
     {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
@@ -894,88 +930,16 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_BOUNDARY_CONTEXT_ROWS_20260701.csv",
-      "git_status": "??",
-      "classification": "wet_optical_detection_output",
-      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_DIRTY_CONTEXT_20260701.csv",
-      "git_status": "??",
-      "classification": "wet_optical_detection_output",
-      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_EVIDENCE_CONTEXT_ROWS_20260701.csv",
-      "git_status": "??",
-      "classification": "wet_optical_detection_output",
-      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_MANIFEST_20260701.csv",
-      "git_status": "??",
-      "classification": "wet_optical_detection_output",
-      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_PROMOTION_GAPS_20260701.csv",
-      "git_status": "??",
-      "classification": "wet_optical_detection_output",
-      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_REPORT_20260701.json",
-      "git_status": "??",
-      "classification": "wet_optical_detection_output",
-      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_SELF_REVIEW_20260701.csv",
-      "git_status": "??",
-      "classification": "wet_optical_detection_output",
-      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_SOURCE_LOCK_20260701.csv",
-      "git_status": "??",
-      "classification": "wet_optical_detection_output",
-      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_STATUS_20260701.json",
-      "git_status": "??",
-      "classification": "wet_optical_detection_output",
-      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
-    },
-    {
       "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "tests/test_nodi_package_c_wet_optical_detection_evidence_context.py",
-      "git_status": "??",
-      "classification": "wet_optical_detection_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
-      "path": "tests/test_wet_optical_detection_evidence.py",
-      "git_status": "??",
-      "classification": "wet_optical_detection_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "tools/audits/build_nodi_package_c_wet_optical_detection_evidence_context.py",
-      "git_status": "??",
-      "classification": "wet_optical_detection_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
     }
   ],
   "self_review": [

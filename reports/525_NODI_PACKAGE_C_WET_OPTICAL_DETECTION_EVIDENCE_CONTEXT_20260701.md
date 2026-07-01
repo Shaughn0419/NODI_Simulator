@@ -1,7 +1,7 @@
 # NODI Package C Wet/Optical/Detection Evidence Context
 
 - Disposition: `NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_READY_NOT_FINAL`.
-- Current head: `e79051ebeaff1dd2a13f07bbe9897ac143a3ae8d` on `main`.
+- Current head: `8a5e8a661e9a7c606a14ca2026c33cb19f059169` on `main`.
 - Evidence context version: `wet_optical_detection_evidence_context_from_tsuyama_lane_v1`.
 - Evidence context rows: `2`.
 - Detection context rows available: `2`.

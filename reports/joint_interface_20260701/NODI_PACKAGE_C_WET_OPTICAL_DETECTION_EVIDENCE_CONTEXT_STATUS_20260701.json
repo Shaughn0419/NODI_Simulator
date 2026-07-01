@@ -4,7 +4,7 @@
     "disposition": "NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_READY_NOT_FINAL",
     "artifact_id": "PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_20260701",
     "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
-    "current_head": "e79051ebeaff1dd2a13f07bbe9897ac143a3ae8d",
+    "current_head": "8a5e8a661e9a7c606a14ca2026c33cb19f059169",
     "branch": "main",
     "evidence_context_version": "wet_optical_detection_evidence_context_from_tsuyama_lane_v1",
     "source_route_disposition": "NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_READY_NOT_FINAL",
@@ -23,11 +23,11 @@
     "JRC_current": false,
     "source_lock_rows": 20,
     "source_missing_rows": 0,
-    "dirty_context_rows": 89,
-    "non_release_dirty_context_rows": 69,
+    "dirty_context_rows": 83,
+    "non_release_dirty_context_rows": 79,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
     "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion",
-    "semantic_digest": "b9004c8fc42a858674f7529b16b1a61284dcda9490aa950691d820e6a48d4648"
+    "semantic_digest": "1e388bef3fc80d85d9e78223236c07d5db6e86d0bebad3484e227d64b957bcf6"
   }
 }
