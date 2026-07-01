@@ -1371,12 +1371,30 @@ The next block converts the substep-triggered scenarios into explicit dt/substep
 
 This block is a policy-sizing artifact, not a runtime policy. It shows that the worst current candidate (`narrow_tail_theta70_D900_r150`) would require `526` substeps at the current `dt` to bring the rms-step/surface-gap p05 trigger below `1.0`; future proof/pass review should therefore treat sidewall runtime activation as expensive unless a smaller-dt/substep strategy is explicitly authorized and tested.
 
-## 18. Recommended next action
+## 18. Current Package C proof-threshold table status
 
-Current safe route after the consolidation, timeseries ESS candidate, substep/fail-policy hardening, and dt-refinement requirements:
+The next block makes candidate/proof thresholds and remaining proof gaps machine-readable:
 
-1. Use the consolidated evidence index, timeseries ESS candidate, substep/fail-policy hardening packet, and dt-refinement requirements as the Package C metric-hardening entrypoint.
-2. Continue tightening the remaining proof-level gaps in one larger block: bind future proof/pass attempts to clean reviewed commit evidence, explicit threshold tables, and manual authorization ledger inputs while keeping runtime permission separate.
+- Artifact id: `PACKAGE_C_PROOF_THRESHOLD_TABLE_20260701`.
+- Disposition: `NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: threshold table rows, source lock, no-proof firewall, status/report/manifest.
+- Threshold rows: `13`.
+- Candidate-pass rows: `8`.
+- Proof-gap rows: `5`.
+- Runtime-policy gap rows: `2`.
+- Threshold table status: `candidate_threshold_table_ready_not_proof_registered`.
+- Proof-readiness impact: `proof_gaps_are_explicit_and_machine_readable`.
+- Examples of remaining proof gaps: `max_one_wall_positive_control_ks=0.019246436` passes candidate `<=0.02` but not proof `<=0.01`; `max_u_accessible_cdf_l1_to_uniform=0.284598214` and `max_x_local_norm_l1_to_uniform=0.108537946` pass candidate `<=0.30` but not proof `<=0.04`; `max_required_substeps_to_meet_threshold=526` requires manual runtime-cost review before any runtime/substep policy.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+This block is threshold planning evidence only. It does not register Package C proof/pass and does not make any runtime, PRS/EAS numeric, COMSOL, `.mph`, route, yield, detection, wet, fabrication, or production claim.
+
+## 19. Recommended next action
+
+Current safe route after the consolidation, timeseries ESS candidate, substep/fail-policy hardening, dt-refinement requirements, and proof-threshold table:
+
+1. Use the consolidated evidence index, timeseries ESS candidate, substep/fail-policy hardening packet, dt-refinement requirements, and proof-threshold table as the Package C metric-hardening entrypoint.
+2. Continue tightening the remaining proof-level gaps in one larger block: bind future proof/pass attempts to clean reviewed commit evidence and manual authorization ledger inputs while keeping runtime permission separate.
 3. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 5. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.

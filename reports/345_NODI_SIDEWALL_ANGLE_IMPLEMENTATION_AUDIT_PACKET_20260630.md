@@ -486,3 +486,26 @@ mph_load_allowed=false
 ```
 
 This packet is a policy-sizing artifact, not a runtime policy. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C proof-threshold table
+
+The next consolidation block makes candidate/proof thresholds and remaining proof gaps machine-readable:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_proof_threshold_table.py --confirm-package-c-proof-threshold-table
+NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION
+threshold_rows=13
+candidate_pass_rows=8
+proof_gap_rows=5
+runtime_policy_gap_rows=2
+threshold_table_status=candidate_threshold_table_ready_not_proof_registered
+proof_readiness_impact=proof_gaps_are_explicit_and_machine_readable
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+This packet is threshold planning evidence only. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
