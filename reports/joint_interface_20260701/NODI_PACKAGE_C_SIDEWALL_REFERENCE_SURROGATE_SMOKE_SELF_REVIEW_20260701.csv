@@ -1,0 +1,5 @@
+review_id,dimension,verdict,notes
+REFSMOKE-SELF-01,NODI smoke executes both legacy and sidewall reference models,PASS_SIDEWALL_REFERENCE_SURROGATE_SMOKE_NOT_FINAL_CLAIM,Smoke advances sidewall reference propagation inside NODI while preserving calibration and route prerequisites.
+REFSMOKE-SELF-02,rectangle baseline remains first-class,PASS_SIDEWALL_REFERENCE_SURROGATE_SMOKE_NOT_FINAL_CLAIM,Smoke advances sidewall reference propagation inside NODI while preserving calibration and route prerequisites.
+REFSMOKE-SELF-03,theta85 sidewall reference model propagates trapezoid geometry,PASS_SIDEWALL_REFERENCE_SURROGATE_SMOKE_NOT_FINAL_CLAIM,Smoke advances sidewall reference propagation inside NODI while preserving calibration and route prerequisites.
+REFSMOKE-SELF-04,"small-n detection deltas remain context, not probability or route score",PASS_SIDEWALL_REFERENCE_SURROGATE_SMOKE_NOT_FINAL_CLAIM,Smoke advances sidewall reference propagation inside NODI while preserving calibration and route prerequisites.

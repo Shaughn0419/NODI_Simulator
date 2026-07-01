@@ -1,0 +1,1042 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_SMOKE_READY_NOT_OPTICAL_SOLVER",
+    "artifact_id": "PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_SMOKE_20260701",
+    "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability",
+    "current_head": "28c0fc92d7fd97991a099a27ec45e238575af2c0",
+    "branch": "main",
+    "smoke_version": "sidewall_reference_surrogate_smoke_w500_d900_v1",
+    "source_reference_surrogate_disposition": "NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_READY_NOT_OPTICAL_SOLVER",
+    "smoke_rows": 8,
+    "comparison_rows": 4,
+    "theta85_legacy_reference_not_propagated_rows": 2,
+    "theta85_sidewall_reference_propagated_rows": 2,
+    "theta85_404_effective_aperture_factor": 0.842520405653,
+    "theta85_404_sidewall_A_ref": 0.421260202827,
+    "rectangle_baseline_rows": 4,
+    "optical_solver_current": false,
+    "true_W_eff_current": false,
+    "detection_probability_current": false,
+    "yield_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "JRC_current": false,
+    "source_lock_rows": 6,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 79,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "NODI smoke evidence for sidewall reference surrogate propagation;legacy-vs-sidewall reference model comparison;optical solver prioritization",
+    "blocked_use": "full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion",
+    "semantic_digest": "334b23936054e755da29039a815bdecd2e45f80dc724274e9a76b1322229fa5d"
+  },
+  "smoke_rows": [
+    {
+      "row_id": "REFSMOKE-rectangle_limit_theta90_D900_W500_channel_angular_surrogate_404",
+      "smoke_version": "sidewall_reference_surrogate_smoke_w500_d900_v1",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "reference_model": "channel_angular_surrogate",
+      "channel_cross_section_model": "ideal_rectangle",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "sidewall_deg_comsol": "90",
+      "wavelength_nm": "404",
+      "n_events": "8",
+      "random_seed": "528",
+      "detection_rate": "1",
+      "stable_detection_rate": "1",
+      "mean_peak_height": "0.907512753539",
+      "mean_local_snr": "1849.6180208",
+      "A_ref": "1.26174918991",
+      "g_ref": "2.52349837982",
+      "g_ref_geometry": "2.52349837982",
+      "trapezoid_effective_aperture_factor": "nan",
+      "trapezoid_effective_aperture_width_nm": "nan",
+      "bottom_width_runtime_clipped_nm": "nan",
+      "bottom_width_unclipped_nm": "nan",
+      "closure_status": "",
+      "na_cutoff_condition_met": "false",
+      "na_cutoff_active": "false",
+      "reference_geometry_propagation_status": "rectangle_native_or_non_sidewall_geometry",
+      "reference_geometry_claim_level": "reference_surrogate_geometry_native_rectangle",
+      "reference_solver_status": "engineering_channel_angular_surrogate_active",
+      "reference_solver_claim_level": "engineering_ranking_surrogate",
+      "geometry_not_propagated_to_reference_field": "false",
+      "reference_uses_rectangular_width_depth_surrogate": "true",
+      "not_optical_solver_output": "true",
+      "optical_solver_trigger_is_result": "false",
+      "optical_solver_current": "false",
+      "true_W_eff_current": "false",
+      "detection_probability_current": "false",
+      "yield_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "JRC_current": "false",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    },
+    {
+      "row_id": "REFSMOKE-rectangle_limit_theta90_D900_W500_channel_angular_surrogate_660",
+      "smoke_version": "sidewall_reference_surrogate_smoke_w500_d900_v1",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "reference_model": "channel_angular_surrogate",
+      "channel_cross_section_model": "ideal_rectangle",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "sidewall_deg_comsol": "90",
+      "wavelength_nm": "660",
+      "n_events": "8",
+      "random_seed": "528",
+      "detection_rate": "1",
+      "stable_detection_rate": "1",
+      "mean_peak_height": "0.163697210099",
+      "mean_local_snr": "250.993224187",
+      "A_ref": "0",
+      "g_ref": "0",
+      "g_ref_geometry": "0",
+      "trapezoid_effective_aperture_factor": "nan",
+      "trapezoid_effective_aperture_width_nm": "nan",
+      "bottom_width_runtime_clipped_nm": "nan",
+      "bottom_width_unclipped_nm": "nan",
+      "closure_status": "",
+      "na_cutoff_condition_met": "true",
+      "na_cutoff_active": "true",
+      "reference_geometry_propagation_status": "rectangle_native_or_non_sidewall_geometry",
+      "reference_geometry_claim_level": "reference_surrogate_geometry_native_rectangle",
+      "reference_solver_status": "engineering_channel_angular_surrogate_active",
+      "reference_solver_claim_level": "engineering_ranking_surrogate",
+      "geometry_not_propagated_to_reference_field": "false",
+      "reference_uses_rectangular_width_depth_surrogate": "true",
+      "not_optical_solver_output": "true",
+      "optical_solver_trigger_is_result": "false",
+      "optical_solver_current": "false",
+      "true_W_eff_current": "false",
+      "detection_probability_current": "false",
+      "yield_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "JRC_current": "false",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    },
+    {
+      "row_id": "REFSMOKE-rectangle_limit_theta90_D900_W500_trapezoid_effective_aperture_surrogate_404",
+      "smoke_version": "sidewall_reference_surrogate_smoke_w500_d900_v1",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "reference_model": "trapezoid_effective_aperture_surrogate",
+      "channel_cross_section_model": "ideal_rectangle",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "sidewall_deg_comsol": "90",
+      "wavelength_nm": "404",
+      "n_events": "8",
+      "random_seed": "528",
+      "detection_rate": "0.75",
+      "stable_detection_rate": "0.75",
+      "mean_peak_height": "0.219360812245",
+      "mean_local_snr": "338.888816979",
+      "A_ref": "0.5",
+      "g_ref": "1",
+      "g_ref_geometry": "1",
+      "trapezoid_effective_aperture_factor": "1",
+      "trapezoid_effective_aperture_width_nm": "500",
+      "bottom_width_runtime_clipped_nm": "500",
+      "bottom_width_unclipped_nm": "500",
+      "closure_status": "rectangle_native",
+      "na_cutoff_condition_met": "false",
+      "na_cutoff_active": "false",
+      "reference_geometry_propagation_status": "rectangle_native_or_non_sidewall_geometry",
+      "reference_geometry_claim_level": "reference_surrogate_geometry_native_rectangle",
+      "reference_solver_status": "trapezoid_effective_aperture_surrogate_active",
+      "reference_solver_claim_level": "sidewall_geometry_reference_surrogate_not_optical_solver",
+      "geometry_not_propagated_to_reference_field": "false",
+      "reference_uses_rectangular_width_depth_surrogate": "true",
+      "not_optical_solver_output": "true",
+      "optical_solver_trigger_is_result": "false",
+      "optical_solver_current": "false",
+      "true_W_eff_current": "false",
+      "detection_probability_current": "false",
+      "yield_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "JRC_current": "false",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    },
+    {
+      "row_id": "REFSMOKE-rectangle_limit_theta90_D900_W500_trapezoid_effective_aperture_surrogate_660",
+      "smoke_version": "sidewall_reference_surrogate_smoke_w500_d900_v1",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "reference_model": "trapezoid_effective_aperture_surrogate",
+      "channel_cross_section_model": "ideal_rectangle",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "sidewall_deg_comsol": "90",
+      "wavelength_nm": "660",
+      "n_events": "8",
+      "random_seed": "528",
+      "detection_rate": "1",
+      "stable_detection_rate": "1",
+      "mean_peak_height": "0.163697210099",
+      "mean_local_snr": "250.993224187",
+      "A_ref": "0",
+      "g_ref": "0",
+      "g_ref_geometry": "0",
+      "trapezoid_effective_aperture_factor": "1",
+      "trapezoid_effective_aperture_width_nm": "500",
+      "bottom_width_runtime_clipped_nm": "500",
+      "bottom_width_unclipped_nm": "500",
+      "closure_status": "rectangle_native",
+      "na_cutoff_condition_met": "true",
+      "na_cutoff_active": "true",
+      "reference_geometry_propagation_status": "rectangle_native_or_non_sidewall_geometry",
+      "reference_geometry_claim_level": "reference_surrogate_geometry_native_rectangle",
+      "reference_solver_status": "trapezoid_effective_aperture_surrogate_active",
+      "reference_solver_claim_level": "sidewall_geometry_reference_surrogate_not_optical_solver",
+      "geometry_not_propagated_to_reference_field": "false",
+      "reference_uses_rectangular_width_depth_surrogate": "true",
+      "not_optical_solver_output": "true",
+      "optical_solver_trigger_is_result": "false",
+      "optical_solver_current": "false",
+      "true_W_eff_current": "false",
+      "detection_probability_current": "false",
+      "yield_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "JRC_current": "false",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    },
+    {
+      "row_id": "REFSMOKE-taper_theta85_D900_W500_channel_angular_surrogate_404",
+      "smoke_version": "sidewall_reference_surrogate_smoke_w500_d900_v1",
+      "case_id": "taper_theta85_D900_W500",
+      "reference_model": "channel_angular_surrogate",
+      "channel_cross_section_model": "trapezoid_tapered_sidewalls",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "sidewall_deg_comsol": "85",
+      "wavelength_nm": "404",
+      "n_events": "8",
+      "random_seed": "528",
+      "detection_rate": "1",
+      "stable_detection_rate": "1",
+      "mean_peak_height": "0.920066210577",
+      "mean_local_snr": "1712.72946641",
+      "A_ref": "1.26174918991",
+      "g_ref": "2.52349837982",
+      "g_ref_geometry": "2.52349837982",
+      "trapezoid_effective_aperture_factor": "nan",
+      "trapezoid_effective_aperture_width_nm": "nan",
+      "bottom_width_runtime_clipped_nm": "nan",
+      "bottom_width_unclipped_nm": "nan",
+      "closure_status": "",
+      "na_cutoff_condition_met": "false",
+      "na_cutoff_active": "false",
+      "reference_geometry_propagation_status": "blocked_trapezoid_geometry_not_propagated_to_reference_field",
+      "reference_geometry_claim_level": "proxy_not_sidewall_aware_not_optical_solver_output",
+      "reference_solver_status": "engineering_channel_angular_surrogate_active",
+      "reference_solver_claim_level": "engineering_ranking_surrogate",
+      "geometry_not_propagated_to_reference_field": "true",
+      "reference_uses_rectangular_width_depth_surrogate": "true",
+      "not_optical_solver_output": "true",
+      "optical_solver_trigger_is_result": "false",
+      "optical_solver_current": "false",
+      "true_W_eff_current": "false",
+      "detection_probability_current": "false",
+      "yield_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "JRC_current": "false",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    },
+    {
+      "row_id": "REFSMOKE-taper_theta85_D900_W500_channel_angular_surrogate_660",
+      "smoke_version": "sidewall_reference_surrogate_smoke_w500_d900_v1",
+      "case_id": "taper_theta85_D900_W500",
+      "reference_model": "channel_angular_surrogate",
+      "channel_cross_section_model": "trapezoid_tapered_sidewalls",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "sidewall_deg_comsol": "85",
+      "wavelength_nm": "660",
+      "n_events": "8",
+      "random_seed": "528",
+      "detection_rate": "1",
+      "stable_detection_rate": "1",
+      "mean_peak_height": "0.163697210099",
+      "mean_local_snr": "250.993224187",
+      "A_ref": "0",
+      "g_ref": "0",
+      "g_ref_geometry": "0",
+      "trapezoid_effective_aperture_factor": "nan",
+      "trapezoid_effective_aperture_width_nm": "nan",
+      "bottom_width_runtime_clipped_nm": "nan",
+      "bottom_width_unclipped_nm": "nan",
+      "closure_status": "",
+      "na_cutoff_condition_met": "true",
+      "na_cutoff_active": "true",
+      "reference_geometry_propagation_status": "blocked_trapezoid_geometry_not_propagated_to_reference_field",
+      "reference_geometry_claim_level": "proxy_not_sidewall_aware_not_optical_solver_output",
+      "reference_solver_status": "engineering_channel_angular_surrogate_active",
+      "reference_solver_claim_level": "engineering_ranking_surrogate",
+      "geometry_not_propagated_to_reference_field": "true",
+      "reference_uses_rectangular_width_depth_surrogate": "true",
+      "not_optical_solver_output": "true",
+      "optical_solver_trigger_is_result": "false",
+      "optical_solver_current": "false",
+      "true_W_eff_current": "false",
+      "detection_probability_current": "false",
+      "yield_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "JRC_current": "false",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    },
+    {
+      "row_id": "REFSMOKE-taper_theta85_D900_W500_trapezoid_effective_aperture_surrogate_404",
+      "smoke_version": "sidewall_reference_surrogate_smoke_w500_d900_v1",
+      "case_id": "taper_theta85_D900_W500",
+      "reference_model": "trapezoid_effective_aperture_surrogate",
+      "channel_cross_section_model": "trapezoid_tapered_sidewalls",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "sidewall_deg_comsol": "85",
+      "wavelength_nm": "404",
+      "n_events": "8",
+      "random_seed": "528",
+      "detection_rate": "0.875",
+      "stable_detection_rate": "0.875",
+      "mean_peak_height": "0.189208011024",
+      "mean_local_snr": "347.850963708",
+      "A_ref": "0.421260202827",
+      "g_ref": "0.842520405653",
+      "g_ref_geometry": "0.842520405653",
+      "trapezoid_effective_aperture_factor": "0.842520405653",
+      "trapezoid_effective_aperture_width_nm": "421.260202827",
+      "bottom_width_runtime_clipped_nm": "342.520405653",
+      "bottom_width_unclipped_nm": "342.520405653",
+      "closure_status": "open",
+      "na_cutoff_condition_met": "false",
+      "na_cutoff_active": "false",
+      "reference_geometry_propagation_status": "trapezoid_geometry_propagated_to_effective_aperture_reference_surrogate",
+      "reference_geometry_claim_level": "sidewall_geometry_propagated_to_effective_aperture_surrogate_not_optical_solver",
+      "reference_solver_status": "trapezoid_effective_aperture_surrogate_active",
+      "reference_solver_claim_level": "sidewall_geometry_reference_surrogate_not_optical_solver",
+      "geometry_not_propagated_to_reference_field": "false",
+      "reference_uses_rectangular_width_depth_surrogate": "false",
+      "not_optical_solver_output": "true",
+      "optical_solver_trigger_is_result": "false",
+      "optical_solver_current": "false",
+      "true_W_eff_current": "false",
+      "detection_probability_current": "false",
+      "yield_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "JRC_current": "false",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    },
+    {
+      "row_id": "REFSMOKE-taper_theta85_D900_W500_trapezoid_effective_aperture_surrogate_660",
+      "smoke_version": "sidewall_reference_surrogate_smoke_w500_d900_v1",
+      "case_id": "taper_theta85_D900_W500",
+      "reference_model": "trapezoid_effective_aperture_surrogate",
+      "channel_cross_section_model": "trapezoid_tapered_sidewalls",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "sidewall_deg_comsol": "85",
+      "wavelength_nm": "660",
+      "n_events": "8",
+      "random_seed": "528",
+      "detection_rate": "1",
+      "stable_detection_rate": "1",
+      "mean_peak_height": "0.163697210099",
+      "mean_local_snr": "250.993224187",
+      "A_ref": "0",
+      "g_ref": "0",
+      "g_ref_geometry": "0",
+      "trapezoid_effective_aperture_factor": "0.842520405653",
+      "trapezoid_effective_aperture_width_nm": "421.260202827",
+      "bottom_width_runtime_clipped_nm": "342.520405653",
+      "bottom_width_unclipped_nm": "342.520405653",
+      "closure_status": "open",
+      "na_cutoff_condition_met": "true",
+      "na_cutoff_active": "true",
+      "reference_geometry_propagation_status": "trapezoid_geometry_propagated_to_effective_aperture_reference_surrogate",
+      "reference_geometry_claim_level": "sidewall_geometry_propagated_to_effective_aperture_surrogate_not_optical_solver",
+      "reference_solver_status": "trapezoid_effective_aperture_surrogate_active",
+      "reference_solver_claim_level": "sidewall_geometry_reference_surrogate_not_optical_solver",
+      "geometry_not_propagated_to_reference_field": "false",
+      "reference_uses_rectangular_width_depth_surrogate": "false",
+      "not_optical_solver_output": "true",
+      "optical_solver_trigger_is_result": "false",
+      "optical_solver_current": "false",
+      "true_W_eff_current": "false",
+      "detection_probability_current": "false",
+      "yield_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "JRC_current": "false",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    }
+  ],
+  "comparison_rows": [
+    {
+      "comparison_id": "REFSMOKE-CMP-rectangle_limit_theta90_D900_W500_404",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "wavelength_nm": "404",
+      "legacy_reference_model": "channel_angular_surrogate",
+      "sidewall_reference_model": "trapezoid_effective_aperture_surrogate",
+      "legacy_geometry_not_propagated_to_reference_field": "false",
+      "sidewall_geometry_not_propagated_to_reference_field": "false",
+      "legacy_A_ref": "1.26174918991",
+      "sidewall_A_ref": "0.5",
+      "A_ref_delta_sidewall_minus_legacy": "-0.76174918991",
+      "sidewall_effective_aperture_factor": "1",
+      "legacy_detection_rate": "1",
+      "sidewall_detection_rate": "0.75",
+      "detection_rate_delta_sidewall_minus_legacy": "-0.25",
+      "delta_interpretation": "small_n_synthetic_context_not_detection_probability",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    },
+    {
+      "comparison_id": "REFSMOKE-CMP-rectangle_limit_theta90_D900_W500_660",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "wavelength_nm": "660",
+      "legacy_reference_model": "channel_angular_surrogate",
+      "sidewall_reference_model": "trapezoid_effective_aperture_surrogate",
+      "legacy_geometry_not_propagated_to_reference_field": "false",
+      "sidewall_geometry_not_propagated_to_reference_field": "false",
+      "legacy_A_ref": "0",
+      "sidewall_A_ref": "0",
+      "A_ref_delta_sidewall_minus_legacy": "0",
+      "sidewall_effective_aperture_factor": "1",
+      "legacy_detection_rate": "1",
+      "sidewall_detection_rate": "1",
+      "detection_rate_delta_sidewall_minus_legacy": "0",
+      "delta_interpretation": "small_n_synthetic_context_not_detection_probability",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    },
+    {
+      "comparison_id": "REFSMOKE-CMP-taper_theta85_D900_W500_404",
+      "case_id": "taper_theta85_D900_W500",
+      "wavelength_nm": "404",
+      "legacy_reference_model": "channel_angular_surrogate",
+      "sidewall_reference_model": "trapezoid_effective_aperture_surrogate",
+      "legacy_geometry_not_propagated_to_reference_field": "true",
+      "sidewall_geometry_not_propagated_to_reference_field": "false",
+      "legacy_A_ref": "1.26174918991",
+      "sidewall_A_ref": "0.421260202827",
+      "A_ref_delta_sidewall_minus_legacy": "-0.840488987083",
+      "sidewall_effective_aperture_factor": "0.842520405653",
+      "legacy_detection_rate": "1",
+      "sidewall_detection_rate": "0.875",
+      "detection_rate_delta_sidewall_minus_legacy": "-0.125",
+      "delta_interpretation": "small_n_synthetic_context_not_detection_probability",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    },
+    {
+      "comparison_id": "REFSMOKE-CMP-taper_theta85_D900_W500_660",
+      "case_id": "taper_theta85_D900_W500",
+      "wavelength_nm": "660",
+      "legacy_reference_model": "channel_angular_surrogate",
+      "sidewall_reference_model": "trapezoid_effective_aperture_surrogate",
+      "legacy_geometry_not_propagated_to_reference_field": "true",
+      "sidewall_geometry_not_propagated_to_reference_field": "false",
+      "legacy_A_ref": "0",
+      "sidewall_A_ref": "0",
+      "A_ref_delta_sidewall_minus_legacy": "0",
+      "sidewall_effective_aperture_factor": "0.842520405653",
+      "legacy_detection_rate": "1",
+      "sidewall_detection_rate": "1",
+      "detection_rate_delta_sidewall_minus_legacy": "0",
+      "delta_interpretation": "small_n_synthetic_context_not_detection_probability",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability"
+    }
+  ],
+  "promotion_gaps": [
+    {
+      "target": "calibrated_or_full_wave_sidewall_optical_solver",
+      "current_value": "false",
+      "smoke_context_available": "true",
+      "required_before_true": "full-wave optical model or blank-channel calibration consuming sidewall geometry",
+      "hard_fail_if": "solver_claim_true_from_reference_surrogate_smoke"
+    },
+    {
+      "target": "detection_probability",
+      "current_value": "false",
+      "smoke_context_available": "true",
+      "required_before_true": "calibrated detector-response model, blank trace false-positive evidence, and event-count likelihood calibration",
+      "hard_fail_if": "detection_probability_true_from_small_n_smoke"
+    },
+    {
+      "target": "route_score_or_winner",
+      "current_value": "false",
+      "smoke_context_available": "true",
+      "required_before_true": "authorized route scoring ledger binding calibrated optical, flow, wet, and manufacturing evidence",
+      "hard_fail_if": "route_winner_true_from_surrogate_smoke_delta"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "sidewall_reference_surrogate_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "dedcba54a713ebc05ed45a2e162c43f7b3d22699e1e415a5ccb29e7b308b81c0",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability",
+      "allowed_use": "NODI smoke evidence for sidewall reference surrogate propagation;legacy-vs-sidewall reference model comparison;optical solver prioritization",
+      "blocked_use": "full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    },
+    {
+      "source_id": "sidewall_reference_surrogate_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_CANDIDATE_SURROGATE_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "bc2ea4992ad2e97dd933475ba3899efa451d2d0b1597e0529d122d9914c97a34",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability",
+      "allowed_use": "NODI smoke evidence for sidewall reference surrogate propagation;legacy-vs-sidewall reference model comparison;optical solver prioritization",
+      "blocked_use": "full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    },
+    {
+      "source_id": "sidewall_reference_surrogate_smoke_source",
+      "path": "nodi_simulator/sidewall_reference_surrogate_smoke.py",
+      "exists": "true",
+      "sha256": "8da4ed759f356c1d976219eb3c89f7cd9cef68cb413ca6e5cfc8cea676353402",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability",
+      "allowed_use": "NODI smoke evidence for sidewall reference surrogate propagation;legacy-vs-sidewall reference model comparison;optical solver prioritization",
+      "blocked_use": "full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    },
+    {
+      "source_id": "sidewall_reference_surrogate_smoke_tests",
+      "path": "tests/test_sidewall_reference_surrogate_smoke.py",
+      "exists": "true",
+      "sha256": "ba3e3cb7384f5067349513c7deec7fe55c5db72944db50f29c161c4606a3ea52",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability",
+      "allowed_use": "NODI smoke evidence for sidewall reference surrogate propagation;legacy-vs-sidewall reference model comparison;optical solver prioritization",
+      "blocked_use": "full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    },
+    {
+      "source_id": "sidewall_reference_surrogate_smoke_builder",
+      "path": "tools/audits/build_nodi_package_c_sidewall_reference_surrogate_smoke.py",
+      "exists": "true",
+      "sha256": "3c020348f06293fbc4f475d7b310b7d27f3f59846740ec975fe2434b0cff33c3",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability",
+      "allowed_use": "NODI smoke evidence for sidewall reference surrogate propagation;legacy-vs-sidewall reference model comparison;optical solver prioritization",
+      "blocked_use": "full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    },
+    {
+      "source_id": "sidewall_reference_surrogate_smoke_builder_tests",
+      "path": "tests/test_nodi_package_c_sidewall_reference_surrogate_smoke.py",
+      "exists": "true",
+      "sha256": "142ee6b8671102efcf347d8e1f931d57cff6976ae369e5827763753f1c4bd816",
+      "claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability",
+      "allowed_use": "NODI smoke evidence for sidewall reference surrogate propagation;legacy-vs-sidewall reference model comparison;optical solver prioritization",
+      "blocked_use": "full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": ".gitignore",
+      "git_status": "M ",
+      "classification": "sidewall_reference_surrogate_smoke_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
+      "git_status": " M",
+      "classification": "sidewall_reference_surrogate_smoke_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_reference_surrogate_smoke_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_reference_surrogate_smoke.py",
+      "git_status": "??",
+      "classification": "sidewall_reference_surrogate_smoke_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_reference_surrogate_smoke.py",
+      "git_status": "??",
+      "classification": "sidewall_reference_surrogate_smoke_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_sidewall_reference_surrogate_smoke.py",
+      "git_status": "??",
+      "classification": "sidewall_reference_surrogate_smoke_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_reference_surrogate_smoke.py",
+      "git_status": "??",
+      "classification": "sidewall_reference_surrogate_smoke_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ],
+  "self_review": [
+    {
+      "review_id": "REFSMOKE-SELF-01",
+      "dimension": "NODI smoke executes both legacy and sidewall reference models",
+      "verdict": "PASS_SIDEWALL_REFERENCE_SURROGATE_SMOKE_NOT_FINAL_CLAIM",
+      "notes": "Smoke advances sidewall reference propagation inside NODI while preserving calibration and route prerequisites."
+    },
+    {
+      "review_id": "REFSMOKE-SELF-02",
+      "dimension": "rectangle baseline remains first-class",
+      "verdict": "PASS_SIDEWALL_REFERENCE_SURROGATE_SMOKE_NOT_FINAL_CLAIM",
+      "notes": "Smoke advances sidewall reference propagation inside NODI while preserving calibration and route prerequisites."
+    },
+    {
+      "review_id": "REFSMOKE-SELF-03",
+      "dimension": "theta85 sidewall reference model propagates trapezoid geometry",
+      "verdict": "PASS_SIDEWALL_REFERENCE_SURROGATE_SMOKE_NOT_FINAL_CLAIM",
+      "notes": "Smoke advances sidewall reference propagation inside NODI while preserving calibration and route prerequisites."
+    },
+    {
+      "review_id": "REFSMOKE-SELF-04",
+      "dimension": "small-n detection deltas remain context, not probability or route score",
+      "verdict": "PASS_SIDEWALL_REFERENCE_SURROGATE_SMOKE_NOT_FINAL_CLAIM",
+      "notes": "Smoke advances sidewall reference propagation inside NODI while preserving calibration and route prerequisites."
+    }
+  ]
+}

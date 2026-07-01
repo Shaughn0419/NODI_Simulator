@@ -1,0 +1,4 @@
+target,current_value,smoke_context_available,required_before_true,hard_fail_if
+calibrated_or_full_wave_sidewall_optical_solver,false,true,full-wave optical model or blank-channel calibration consuming sidewall geometry,solver_claim_true_from_reference_surrogate_smoke
+detection_probability,false,true,"calibrated detector-response model, blank trace false-positive evidence, and event-count likelihood calibration",detection_probability_true_from_small_n_smoke
+route_score_or_winner,false,true,"authorized route scoring ledger binding calibrated optical, flow, wet, and manufacturing evidence",route_winner_true_from_surrogate_smoke_delta

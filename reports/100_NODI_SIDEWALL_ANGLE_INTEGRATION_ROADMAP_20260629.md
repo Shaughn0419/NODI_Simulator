@@ -1893,3 +1893,56 @@ It is still not a full optical solver or calibrated detector model:
 The next optical branch step is a calibrated lookup or electromagnetic/optical
 field solver that defines true `W_eff`, detector response, and blank-channel
 reference behavior for the sidewall geometry.
+
+## 39. Current NODI smoke status for the sidewall reference surrogate
+
+The sidewall reference surrogate is now exercised inside an executable NODI
+smoke matrix, rather than only as a standalone `compute_reference_field` row:
+
+- Module: `nodi_simulator/sidewall_reference_surrogate_smoke.py`.
+- Smoke version: `sidewall_reference_surrogate_smoke_w500_d900_v1`.
+- Artifact id: `PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_SMOKE_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_SMOKE_READY_NOT_OPTICAL_SOLVER`.
+- Matrix:
+  - `rectangle_limit_theta90_D900_W500`
+  - `taper_theta85_D900_W500`
+  - `channel_angular_surrogate`
+  - `trapezoid_effective_aperture_surrogate`
+  - 404 nm and 660 nm
+
+This packet compares the legacy rectangular reference proxy against the
+trapezoid effective-aperture surrogate in small `run_single_case_batch` smoke
+runs. It keeps the rectangle-limit channel as a first-class baseline while
+showing that the theta85 sidewall row changes from:
+
+- `geometry_not_propagated_to_reference_field=true` under
+  `channel_angular_surrogate`
+
+to:
+
+- `geometry_not_propagated_to_reference_field=false`
+- `reference_geometry_propagation_status=trapezoid_geometry_propagated_to_effective_aperture_reference_surrogate`
+- `reference_solver_status=trapezoid_effective_aperture_surrogate_active`
+
+under `trapezoid_effective_aperture_surrogate`.
+
+The 404 nm theta85 row records the effective-aperture factor without the W500
+NA hard-zero masking the sidewall effect. The 660 nm rows preserve the existing
+NA cutoff context.
+
+Detection-rate deltas in this smoke packet are explicitly small-n synthetic
+context. They are not:
+
+- detection probability;
+- yield;
+- route score;
+- winner/JRC;
+- true `W_eff`;
+- wet pass evidence;
+- full-wave or calibrated optical solver output.
+
+The next large block should therefore use this propagated reference surrogate
+to bridge into a calibrated/validated detector context: either a sidewall-aware
+blank-channel calibration table or an optical solver branch that can define
+true `W_eff`, detector response, and route-level scoring prerequisites.
