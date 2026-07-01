@@ -36,6 +36,16 @@ QCH_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_STATUS_20260701.
 QCH_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_QCH_ROWS_20260701.csv"
 PF_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_STATUS_20260701.json"
 PF_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_COMPARISON_ROWS_20260701.csv"
+FORMAL_QCH_STATUS = (
+    OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_STATUS_20260701.json"
+)
+FORMAL_QCH_ROWS = (
+    OUTPUT_DIR
+    / "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_ROWS_20260701.csv"
+)
+BINDING_ROWS = (
+    OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_BINDING_ROWS_20260701.csv"
+)
 
 ALLOWED_USE = (
     "route/yield/detection candidate metric evidence;candidate ordering preflight;"
@@ -51,6 +61,9 @@ SOURCE_FILES = {
     "qch_sidecar_rows": QCH_ROWS,
     "pressure_flow_status": PF_STATUS,
     "pressure_flow_comparison_rows": PF_ROWS,
+    "formal_qch_binder_status": FORMAL_QCH_STATUS,
+    "formal_qch_sidecar_rows": FORMAL_QCH_ROWS,
+    "formal_qch_binding_rows": BINDING_ROWS,
     "route_yield_detection_source": PROJECT_ROOT
     / "nodi_simulator/route_yield_detection_candidate.py",
     "route_yield_detection_tests": PROJECT_ROOT
@@ -198,10 +211,38 @@ def source_lock_rows() -> list[dict[str, str]]:
 
 
 def candidate_rows() -> list[dict[str, str]]:
-    qch_rows = read_csv_rows(QCH_ROWS)
-    pf_rows = read_csv_rows(PF_ROWS)
+    qch_rows, pf_rows, _qch_source, _pressure_source = route_candidate_input_rows()
     rows = build_route_yield_detection_candidates(qch_rows, pf_rows)
     return [_stringify_row(row.to_dict()) for row in rows]
+
+
+def route_candidate_input_rows() -> tuple[
+    list[dict[str, str]],
+    list[dict[str, str]],
+    str,
+    str,
+]:
+    formal_status = load_json(FORMAL_QCH_STATUS)
+    formal_rows = read_csv_rows(FORMAL_QCH_ROWS)
+    binding_rows = read_csv_rows(BINDING_ROWS)
+    if (
+        formal_status.get("disposition")
+        == "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY"
+        and formal_rows
+        and binding_rows
+    ):
+        return (
+            formal_rows,
+            binding_rows,
+            "formal_qch_sidecar_from_exact_pressure_flow",
+            "exact_pressure_flow_binding_rows",
+        )
+    return (
+        read_csv_rows(QCH_ROWS),
+        read_csv_rows(PF_ROWS),
+        "candidate_qch_sidecar_grid",
+        "context_only_pressure_flow_validation",
+    )
 
 
 def evidence_gap_rows() -> list[dict[str, str]]:
@@ -251,21 +292,38 @@ def self_review_rows() -> list[dict[str, str]]:
 def build_payload() -> dict[str, Any]:
     qch_status = load_json(QCH_STATUS)
     pf_status = load_json(PF_STATUS)
-    rows = candidate_rows()
+    formal_qch_status = load_json(FORMAL_QCH_STATUS)
+    qch_input_rows, pressure_input_rows, qch_input_source, pressure_input_source = (
+        route_candidate_input_rows()
+    )
+    rows = [
+        _stringify_row(row.to_dict())
+        for row in build_route_yield_detection_candidates(
+            qch_input_rows, pressure_input_rows
+        )
+    ]
     source_lock = source_lock_rows()
     dirty_context = dirty_context_rows()
     source_missing = sum(row["exists"] != "true" for row in source_lock)
     release_dirty_blockers = sum(
         row["classification"] == "release_scoped_dirty_blocker" for row in dirty_context
     )
+    legacy_sources_ready = (
+        qch_status.get("disposition")
+        == "NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_READY_NOT_ROUTE"
+        and pf_status.get("disposition")
+        == "NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_READY_NOT_FORMAL_QCH"
+    )
+    formal_sources_ready = (
+        formal_qch_status.get("disposition")
+        == "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY"
+        and qch_input_source == "formal_qch_sidecar_from_exact_pressure_flow"
+    )
     status = (
         DISPOSITION
         if source_missing == 0
         and release_dirty_blockers == 0
-        and qch_status.get("disposition")
-        == "NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_READY_NOT_ROUTE"
-        and pf_status.get("disposition")
-        == "NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_READY_NOT_FORMAL_QCH"
+        and (formal_sources_ready or legacy_sources_ready)
         and len(rows) >= 2
         and all(row["route_score_current"] == "false" for row in rows)
         else BLOCKED_DISPOSITION
@@ -277,8 +335,17 @@ def build_payload() -> dict[str, Any]:
         "current_head": git_head(),
         "branch": git_branch(),
         "candidate_version": ROUTE_YIELD_DETECTION_CANDIDATE_VERSION,
+        "qch_input_source": qch_input_source,
+        "pressure_flow_input_source": pressure_input_source,
         "source_qch_sidecar_disposition": qch_status.get("disposition", ""),
         "source_pressure_flow_disposition": pf_status.get("disposition", ""),
+        "source_formal_qch_binder_disposition": formal_qch_status.get("disposition", ""),
+        "formal_qch_sidecar_input_rows": len(qch_input_rows)
+        if qch_input_source == "formal_qch_sidecar_from_exact_pressure_flow"
+        else 0,
+        "formal_pressure_binding_input_rows": len(pressure_input_rows)
+        if pressure_input_source == "exact_pressure_flow_binding_rows"
+        else 0,
         "route_candidate_rows": len(rows),
         "candidate_metric_rows": sum(
             float(row["route_decision_candidate_metric"]) > 0.0 for row in rows
@@ -388,6 +455,7 @@ def report_markdown(payload: dict[str, Any]) -> str:
             f"- Disposition: `{s['disposition']}`.",
             f"- Current head: `{s['current_head']}` on `{s['branch']}`.",
             f"- Candidate version: `{s['candidate_version']}`.",
+            f"- q_ch input source: `{s['qch_input_source']}`; pressure-flow input source: `{s['pressure_flow_input_source']}`.",
             f"- Route candidate rows: `{s['route_candidate_rows']}`.",
             f"- Candidate metric rows: `{s['candidate_metric_rows']}`.",
             "- Candidate route metrics are computed from q_ch flow split and pressure-flow context weight. They are not formal route_score, winner/JRC, yield, or detection probability.",

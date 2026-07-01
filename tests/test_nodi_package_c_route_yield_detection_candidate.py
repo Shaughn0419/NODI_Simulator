@@ -18,6 +18,13 @@ def test_route_yield_detection_candidate_packet_builds_without_final_claims() ->
     assert summary["source_pressure_flow_disposition"] == (
         "NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_READY_NOT_FORMAL_QCH"
     )
+    assert summary["source_formal_qch_binder_disposition"] == (
+        "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY"
+    )
+    assert summary["qch_input_source"] == "formal_qch_sidecar_from_exact_pressure_flow"
+    assert summary["pressure_flow_input_source"] == "exact_pressure_flow_binding_rows"
+    assert summary["formal_qch_sidecar_input_rows"] == 2
+    assert summary["formal_pressure_binding_input_rows"] == 2
     assert summary["route_candidate_rows"] >= 2
     assert summary["candidate_metric_rows"] >= 2
     assert summary["route_score_current"] is False
@@ -33,6 +40,11 @@ def test_route_candidate_rows_have_metrics_and_explicit_gaps() -> None:
     assert rows
     assert rows[0]["candidate_sort_index_under_context"] == "1"
     for row in rows:
+        assert row["qch_sidecar_status"] == "formal_qch_sidecar_from_exact_pressure_flow"
+        assert row["pressure_flow_validation_status"] == (
+            "exact_pressure_flow_formal_qch_sidecar_accepted"
+        )
+        assert row["pressure_flow_context_weight"] == "1"
         assert float(row["route_decision_candidate_metric"]) > 0.0
         assert row["wet_evidence_status"] == "wet_ev_evidence_contract_missing"
         assert row["optical_detection_status"] == "optical_detection_calibration_missing"

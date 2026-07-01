@@ -32,6 +32,40 @@ def _pressure_rows(status: str = "context_only_not_formal_validation") -> list[d
     ]
 
 
+def _formal_qch_rows() -> list[dict[str, str]]:
+    return [
+        {
+            "qch_sidecar_id": "QCH-CAND-001",
+            "qch_sidecar_status": "formal_qch_sidecar_from_exact_pressure_flow",
+            "route_candidate_id": "ROUTE-CAND-001",
+            "case_id": "rectangle_limit_theta90_D900_W500",
+            "formal_flow_split_fraction": "0.61",
+            "formal_qch_sidecar_current": "true",
+        },
+        {
+            "qch_sidecar_id": "QCH-CAND-002",
+            "qch_sidecar_status": "formal_qch_sidecar_from_exact_pressure_flow",
+            "route_candidate_id": "ROUTE-CAND-002",
+            "case_id": "taper_theta85_D900_W500",
+            "formal_flow_split_fraction": "0.39",
+            "formal_qch_sidecar_current": "true",
+        },
+    ]
+
+
+def _binding_rows() -> list[dict[str, str]]:
+    return [
+        {
+            "qch_sidecar_id": "QCH-CAND-001",
+            "per_route_acceptance_status": "accepted_exact_pressure_flow_for_formal_qch_sidecar",
+        },
+        {
+            "qch_sidecar_id": "QCH-CAND-002",
+            "per_route_acceptance_status": "accepted_exact_pressure_flow_for_formal_qch_sidecar",
+        },
+    ]
+
+
 def test_route_candidate_metric_uses_flow_split_and_context_weight() -> None:
     rows = build_route_yield_detection_candidates(_qch_rows(), _pressure_rows())
 
@@ -51,6 +85,24 @@ def test_formal_validation_candidate_uses_full_context_weight_without_claim_prom
 
     assert rows[0].pressure_flow_context_weight == 1.0
     assert rows[0].route_decision_candidate_metric == 0.6
+    assert rows[0].route_score_current is False
+    assert rows[0].winner_current is False
+    assert rows[0].JRC_current is False
+    assert rows[0].yield_current is False
+    assert rows[0].detection_probability_current is False
+
+
+def test_formal_qch_sidecar_uses_exact_pressure_flow_weight_without_claim_promotion() -> None:
+    rows = build_route_yield_detection_candidates(_formal_qch_rows(), _binding_rows())
+
+    assert [row.route_candidate_id for row in rows] == ["ROUTE-CAND-001", "ROUTE-CAND-002"]
+    assert rows[0].qch_sidecar_status == "formal_qch_sidecar_from_exact_pressure_flow"
+    assert rows[0].pressure_flow_validation_status == (
+        "exact_pressure_flow_formal_qch_sidecar_accepted"
+    )
+    assert rows[0].pressure_flow_context_weight == 1.0
+    assert rows[0].candidate_flow_split_fraction == 0.61
+    assert rows[0].route_decision_candidate_metric == 0.61
     assert rows[0].route_score_current is False
     assert rows[0].winner_current is False
     assert rows[0].JRC_current is False
