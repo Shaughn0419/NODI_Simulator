@@ -1,7 +1,7 @@
 # NODI COMSOL Package C Proof Readiness Index
 
 - Disposition: `NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION`
-- Source head: `6bc630339a99b33ead3fefccf19eca32d45c06ee`
+- Source head: `55e093489b48c48e1ed61b598e8167bf1dc61348`
 - This packet is the single entrypoint for the current Package C metric-hardening state.
 - Readiness rows: `11`.
 - Open blocker rows: `4`.

@@ -1544,15 +1544,33 @@ The refreshed readiness/external-research chain now carries this authorization l
 
 This block resolves the manual authorization blocker as a path authorization. It does not itself register Package C proof/pass, start runtime, launch COMSOL, load `.mph`, emit sidewall PRS/EAS numeric output, or create route/yield/detection/wet/fabrication/production claims.
 
-## 27. Recommended next action
+## 27. Current Package C proof registration artifact status
 
-Current safe route after the Package C user authorization ledger:
+Package C finite-step reflection-surrogate proof evidence is now registered, with a narrow scope and no runtime promotion:
 
-1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees stationarity, one-wall, wall-pileup, near-boundary expected-band, runtime/substep policy-design, authorization-preflight, and accepted user-authorization-ledger candidate evidence.
-2. Next local implementation block should build a proof-registration artifact or runtime/substep execution packet, not another no-auth preflight.
+- Artifact id: `PACKAGE_C_PROOF_REGISTRATION_ARTIFACT_20260701`.
+- Disposition: `NODI_PACKAGE_C_PROOF_REGISTRATION_ARTIFACT_REGISTERED_NO_RUNTIME`.
+- Registered scope: `finite_step_reflection_surrogate_evidence_only`.
+- Reviewed evidence commit: `55e093489b48c48e1ed61b598e8167bf1dc61348`.
+- Proof registration authorized: `true`, via `PACKAGE_C_USER_AUTHORIZATION_LEDGER_20260701`.
+- Package C proof artifact registered: `true`.
+- Package C validation status pass current: `true`, scoped only to finite-step reflection-surrogate evidence.
+- Proof-threshold rows: `16`; proof gap rows: `0`; proof method gap rows: `0`.
+- Runtime-policy gap rows remain: `4`.
+- Post-registration guard rows: `14`.
+- Source-lock rows: `26`.
+
+This registration does not authorize runtime configuration, NODI recomputation, sidewall PRS/EAS numeric output, COMSOL launch, `.mph` load, validated Brownian solver output beyond the finite-step surrogate, hindered diffusion, trapezoid flow, electrokinetic solver output, optical solver output, true `W_eff`, route/yield/detection, wet claims, fabrication release, or production ingestion.
+
+## 28. Recommended next action
+
+Current safe route after Package C proof registration:
+
+1. Treat Package C reflection boundary evidence as registered only for `finite_step_reflection_surrogate_evidence_only`.
+2. Next local implementation block should build the runtime/substep execution packet and implementation tests required by the retained runtime blockers, not jump directly to PRS/EAS numeric output.
 3. Treat runtime/substep and solver/wet branches as authorized paths, but require execution/evidence packets before any runtime output, COMSOL launch record, `.mph` load record, wet claim, solver output, or sidewall PRS/EAS numeric result is reported.
-4. Do not auto-register `package_C_validation_status=pass` from the authorization ledger alone; it must bind evidence/source hashes.
+4. Do not broaden `package_C_validation_status_pass_current=true` beyond finite-step reflection-surrogate evidence without a separate solver/wet/runtime packet.
 5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 6. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.
 
-Only after Package A/B remain green and a future Package C proof is explicitly authorized should NODI run any sidewall-aware PRS/EAS pilot involving trajectory, near-wall, hindered-diffusion, or wall-distance-bin metrics. Even then, the result should remain `surrogate_sensitivity_only` / `context-only` until measurement or solver evidence is explicitly added and authorized.
+Only after Package A/B remain green and the runtime/substep execution packet clears its retained blockers should NODI run any sidewall-aware PRS/EAS pilot involving trajectory, near-wall, hindered-diffusion, or wall-distance-bin metrics. Even then, the result should remain `surrogate_sensitivity_only` / `context-only` until measurement or solver evidence is explicitly added and authorized.

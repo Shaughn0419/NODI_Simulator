@@ -1,0 +1,488 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_PROOF_REGISTRATION_ARTIFACT_REGISTERED_NO_RUNTIME",
+    "artifact_id": "PACKAGE_C_PROOF_REGISTRATION_ARTIFACT_20260701",
+    "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+    "registration_commit_sha": "55e093489b48c48e1ed61b598e8167bf1dc61348",
+    "reviewed_evidence_commit_sha": "55e093489b48c48e1ed61b598e8167bf1dc61348",
+    "proof_registration_authorized": true,
+    "proof_registration_authorization_source": "PACKAGE_C_USER_AUTHORIZATION_LEDGER_20260701",
+    "package_c_proof_artifact_registered": true,
+    "package_c_validation_status_pass_current": true,
+    "package_c_validation_status_pass_scope": "finite_step_reflection_surrogate_evidence_only",
+    "validated_brownian_solver_output_current": false,
+    "runtime_allowed": false,
+    "numeric_prs_eas_allowed": false,
+    "comsol_launch_allowed": false,
+    "mph_load_allowed": false,
+    "sidewall_prs_eas_numeric_output_current": false,
+    "runtime_execution_started": false,
+    "nodi_runtime_recomputation_started": false,
+    "comsol_launch_started": false,
+    "mph_load_started": false,
+    "validated_hindered_diffusion_claim_current": false,
+    "trapezoid_flow_solver_output_current": false,
+    "electrokinetic_solver_output_current": false,
+    "optical_solver_output_current": false,
+    "wet_claim_current": false,
+    "route_yield_detection_claim_current": false,
+    "fabrication_or_production_release_current": false,
+    "proof_threshold_rows": 16,
+    "proof_gap_rows": 0,
+    "proof_method_gap_rows": 0,
+    "runtime_policy_gap_rows": 4,
+    "readiness_path_authorization_accepted": true,
+    "authorization_scope_rows": 4,
+    "source_lock_rows": 26,
+    "source_missing_rows": 0,
+    "registration_decision_rows": 6,
+    "post_registration_guard_rows": 14,
+    "runtime_blocker_rows": 3,
+    "github_visibility_status": "local_worktree_pre_commit_urls_valid_after_publish",
+    "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+    "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+  },
+  "registration_decisions": [
+    {
+      "decision_id": "manual_authorization_bound",
+      "decision_value": "true",
+      "evidence_basis": "user_authorization_ledger_accepts_proof_registration_path",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "decision_id": "proof_threshold_gaps_absent",
+      "decision_value": "true",
+      "evidence_basis": "proof_threshold_table_has_no_proof_gap_rows",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "decision_id": "proof_method_gaps_absent",
+      "decision_value": "true",
+      "evidence_basis": "proof_threshold_table_has_no_proof_method_gap_rows",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "decision_id": "path_authorization_accepted",
+      "decision_value": "true",
+      "evidence_basis": "readiness_index_records_path_authorization_without_runtime_result",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "decision_id": "package_c_proof_artifact_registered",
+      "decision_value": "true",
+      "evidence_basis": "finite_step_reflection_surrogate_evidence_registered",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "decision_id": "package_c_validation_status_pass_current",
+      "decision_value": "true",
+      "evidence_basis": "pass_scope_is_finite_step_reflection_surrogate_evidence_only",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    }
+  ],
+  "source_locks": [
+    {
+      "source_id": "metric_hardening_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_METRIC_HARDENING_CONSOLIDATED_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "b106dcf3709a64ddcad44517ed76e2622d61e3f35bb1cb255fab9eebb5b4ada6",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "timeseries_ess_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_TIMESERIES_ESS_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "833ce77ed4dc66e51d973ff4dd7a3a2d47f4c63f4de5f8b4dca3ac2614d914b6",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "stationarity_ensemble_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_STATIONARITY_ENSEMBLE_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "6be7c289e561284d0bb3314862695f777acd44fed0386fe98efb8bccbce43533",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "one_wall_wall_pileup_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_ONE_WALL_WALL_PILEUP_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "dc4409776fbabe618bc4efacc297c0627b2368b49c5c8f7487adccf8253af0bd",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "near_boundary_expected_band_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_NEAR_BOUNDARY_EXPECTED_BAND_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "7eb1aaf1dd05d9923dad02aa976858b4436ce86b1ca1bd3bb2bae9a3804c7564",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "substep_fail_policy_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_SUBSTEP_FAIL_POLICY_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "dddf1492ffbbb6a76713dbdc4c37d05ac02b1bc4bfa0f4cfebaedd5092060075",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "substep_dt_refinement_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_SUBSTEP_DT_REFINEMENT_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "277fe490b98411e8e7604b333a41cc6e9425213c28f20fad283cca1ff0168952",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "runtime_substep_policy_design_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "eeecbbce0cda51a7bb4e74fd62df7d6204269a69f1258ff365f5a89954bea969",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "proof_threshold_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_PROOF_THRESHOLD_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "1a1321465ea6a5beef509ae545b2577283d8e82db3fbbabfff9643b4c4eceb16",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "proof_readiness_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_PROOF_READINESS_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "1edaca223984dbbd6e2e7c3e7af9a94f16f3b52986f39546b928125cb69e0232",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "user_authorization_ledger_status",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_USER_AUTHORIZATION_LEDGER_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "66d096a0991034790f9584dac60b62a09fc4b83d83cde409dbec6eac990e3b85",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "proof_threshold_table",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_PROOF_THRESHOLD_TABLE_20260701.csv",
+      "exists": "true",
+      "sha256": "496d766bef686478970743da7f057d33d48559266f31927ff0dd14acf8e93086",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "proof_readiness_index",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_PROOF_READINESS_INDEX_20260701.csv",
+      "exists": "true",
+      "sha256": "f4221bdfcaba5174129e9f49b0803ff80edccf45638de2d8a35f7161ac59e3b8",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "proof_readiness_blockers",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_PROOF_READINESS_BLOCKERS_20260701.csv",
+      "exists": "true",
+      "sha256": "b4160a77caaf1e34e2b0ff3491a02ae0abcd1de2c449c54e18b7eaf5be14dc59",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "user_authorization_ledger_scopes",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_USER_AUTHORIZATION_LEDGER_SCOPES_20260701.csv",
+      "exists": "true",
+      "sha256": "e5a956fb910db970afe6269a5080039590125863737d34bc26db0afdcab53951",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "user_authorization_ledger_guards",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_USER_AUTHORIZATION_LEDGER_RESULT_GUARDS_20260701.csv",
+      "exists": "true",
+      "sha256": "52a0526fb62664468f0043332f424bf6a8afc556b60b6b3894bb2b6f4cbd4b76",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "stationarity_histograms",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_STATIONARITY_ENSEMBLE_HISTOGRAMS_20260701.csv",
+      "exists": "true",
+      "sha256": "fe6bdaba5a746a8b1cdeb8f7a21781d66342ca858645c9ed8a41ec2388353969",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "stationarity_confidence_intervals",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_STATIONARITY_ENSEMBLE_CONFIDENCE_INTERVALS_20260701.csv",
+      "exists": "true",
+      "sha256": "5af71e8b75537536ef554cc0d30ac10c87a621914aedcd83a85f6b55213d06da",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "one_wall_rows",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_ONE_WALL_WALL_PILEUP_ONE_WALL_20260701.csv",
+      "exists": "true",
+      "sha256": "0fef508a7424149d75030cd93f6f4fa968545714d940891668472e175b2bd09a",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "wall_pileup_rows",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_ONE_WALL_WALL_PILEUP_WALL_PILEUP_20260701.csv",
+      "exists": "true",
+      "sha256": "17c53edde2616a617957160bb6f8c00f5a75c48d4fc52c65193be4486bb582d7",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "near_boundary_rows",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_NEAR_BOUNDARY_EXPECTED_BAND_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "a3e510f65265b9eba8d2bb1abf47a690392006d573ea99431f0ff1926fcfa915",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "substep_policy_rows",
+      "path": "reports\\joint_interface_20260701\\NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "bce7a988d9269fabe0a6935a8eb45fae9fd6c54c8dbd91180001425c5e661a05",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "cross_section_geometry_source",
+      "path": "nodi_simulator\\cross_section_geometry.py",
+      "exists": "true",
+      "sha256": "1ea0db3cb9979519a3fa98f2bb4a55837cf741755f8074ecc81e473f12520ee9",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "trajectory_source",
+      "path": "nodi_simulator\\trajectory.py",
+      "exists": "true",
+      "sha256": "33f3ad3215c93abb2e4301afffd60a6bbb81062a688620fc6b609c58a7e96e18",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "proof_registration_builder",
+      "path": "tools\\audits\\build_nodi_comsol_package_c_proof_registration_artifact.py",
+      "exists": "true",
+      "sha256": "bdb059eb180fda73c08ebf1d76a5079c7bd943c7cef7b48b4fa2de7c8ee1b449",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "proof_registration_tests",
+      "path": "tests\\test_nodi_comsol_package_c_proof_registration_artifact.py",
+      "exists": "true",
+      "sha256": "5b0d6d31ea5e202e0f8600305fdfc903e891a38efa4ea1cf67672588eb74f51f",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    }
+  ],
+  "post_registration_guards": [
+    {
+      "guard_field": "runtime_allowed",
+      "guard_value": "false",
+      "guard_status": "runtime_execution_packet_still_required",
+      "hard_fail_if": "runtime_allowed_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "runtime_execution_started",
+      "guard_value": "false",
+      "guard_status": "no_runtime_started_by_registration",
+      "hard_fail_if": "runtime_execution_started_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "nodi_runtime_recomputation_started",
+      "guard_value": "false",
+      "guard_status": "no_nodi_recompute_started",
+      "hard_fail_if": "nodi_runtime_recomputation_started_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "sidewall_prs_eas_numeric_output_current",
+      "guard_value": "false",
+      "guard_status": "package_d_precheck_still_required",
+      "hard_fail_if": "sidewall_prs_eas_numeric_output_current_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "comsol_launch_started",
+      "guard_value": "false",
+      "guard_status": "no_comsol_launch_started",
+      "hard_fail_if": "comsol_launch_started_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "mph_load_started",
+      "guard_value": "false",
+      "guard_status": "no_mph_load_started",
+      "hard_fail_if": "mph_load_started_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "validated_brownian_solver_output_current",
+      "guard_value": "false",
+      "guard_status": "finite_step_surrogate_not_exact_solver",
+      "hard_fail_if": "validated_brownian_solver_output_current_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "validated_hindered_diffusion_claim_current",
+      "guard_value": "false",
+      "guard_status": "hindered_diffusion_solver_evidence_required",
+      "hard_fail_if": "validated_hindered_diffusion_claim_current_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "trapezoid_flow_solver_output_current",
+      "guard_value": "false",
+      "guard_status": "flow_solver_branch_evidence_required",
+      "hard_fail_if": "trapezoid_flow_solver_output_current_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "electrokinetic_solver_output_current",
+      "guard_value": "false",
+      "guard_status": "electrokinetic_solver_branch_evidence_required",
+      "hard_fail_if": "electrokinetic_solver_output_current_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "optical_solver_output_current",
+      "guard_value": "false",
+      "guard_status": "optical_solver_branch_evidence_required",
+      "hard_fail_if": "optical_solver_output_current_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "wet_claim_current",
+      "guard_value": "false",
+      "guard_status": "wet_experiment_evidence_required",
+      "hard_fail_if": "wet_claim_current_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "route_yield_detection_claim_current",
+      "guard_value": "false",
+      "guard_status": "route_yield_detection_claims_blocked",
+      "hard_fail_if": "route_yield_detection_claim_current_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "guard_field": "fabrication_or_production_release_current",
+      "guard_value": "false",
+      "guard_status": "production_ingestion_blocked",
+      "hard_fail_if": "fabrication_or_production_release_current_true_without_separate_execution_or_solver_wet_packet",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    }
+  ],
+  "runtime_blockers": [
+    {
+      "blocker_id": "runtime_policy_gap_rows",
+      "current_value": "4",
+      "required_resolution": "runtime/substep implementation evidence remains required before runtime use",
+      "blocker_status": "open_for_runtime_or_solver_wet_not_for_reflection_proof_registration",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "blocker_id": "runtime_allowed",
+      "current_value": "false",
+      "required_resolution": "proof registration does not authorize runtime output",
+      "blocker_status": "open_for_runtime_or_solver_wet_not_for_reflection_proof_registration",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    },
+    {
+      "blocker_id": "solver_wet_claims",
+      "current_value": "false",
+      "required_resolution": "solver/wet branches require separate evidence packets before claims",
+      "blocker_status": "open_for_runtime_or_solver_wet_not_for_reflection_proof_registration",
+      "claim_boundary": "package_c_finite_step_reflection_surrogate_proof_registered_not_runtime_not_solver_not_wet",
+      "allowed_use": "Package C finite-step reflection surrogate proof registration;source/evidence-hash binding;Package C reflection-surrogate validation status",
+      "blocked_use": "runtime configuration;sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
+    }
+  ]
+}

@@ -801,3 +801,26 @@ context_rows=9
 ```
 
 This packet resolves the manual authorization blocker as an authorized path. It does not register proof, mark Package C as passed, start runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C proof registration artifact
+
+The proof-registration artifact now registers Package C finite-step reflection-surrogate evidence, while keeping runtime and downstream claims blocked:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_proof_registration_artifact.py --confirm-package-c-proof-registration-artifact
+NODI_PACKAGE_C_PROOF_REGISTRATION_ARTIFACT_REGISTERED_NO_RUNTIME
+package_c_proof_artifact_registered=true
+package_c_validation_status_pass_current=true
+package_c_validation_status_pass_scope=finite_step_reflection_surrogate_evidence_only
+proof_gap_rows=0
+proof_method_gap_rows=0
+runtime_policy_gap_rows=4
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+post_registration_guard_rows=14
+source_lock_rows=26
+```
+
+This packet registers only finite-step reflection-surrogate proof evidence. It does not start runtime, emit sidewall PRS/EAS numeric output, launch COMSOL, load `.mph`, validate hindered diffusion, validate trapezoid flow/electrokinetic/optical solver output, claim true `W_eff`, or create route/yield/detection/wet/fabrication/production claims.

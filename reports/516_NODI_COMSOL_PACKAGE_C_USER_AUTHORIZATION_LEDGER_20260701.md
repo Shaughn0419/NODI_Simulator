@@ -1,7 +1,7 @@
 # NODI COMSOL Package C User Authorization Ledger
 
 - Disposition: `NODI_PACKAGE_C_USER_AUTHORIZATION_LEDGER_ACCEPTED_NO_RESULT_PROMOTION`
-- Source head: `6bc630339a99b33ead3fefccf19eca32d45c06ee`
+- Source head: `55e093489b48c48e1ed61b598e8167bf1dc61348`
 - Authorization source: `user_explicit_message_current_thread_20260701`.
 - Authorized scope rows: `4`.
 - Authorized scopes: `package_c_proof_registration_path`, `runtime_substep_policy_path`, `solver_branch_path`, `wet_branch_path`.

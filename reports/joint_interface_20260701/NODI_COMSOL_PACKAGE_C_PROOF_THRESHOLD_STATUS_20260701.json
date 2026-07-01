@@ -4,7 +4,7 @@
     "disposition": "NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION",
     "artifact_id": "PACKAGE_C_PROOF_THRESHOLD_TABLE_20260701",
     "claim_boundary": "proof_threshold_table_candidate_not_package_c_proof_registered_not_runtime",
-    "build_head": "62e1eed4a15ff0b7991403f91e5096d50c89c6bb",
+    "build_head": "55e093489b48c48e1ed61b598e8167bf1dc61348",
     "threshold_rows": 16,
     "candidate_pass_rows": 2,
     "proof_gap_rows": 0,

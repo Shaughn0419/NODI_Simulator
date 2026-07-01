@@ -3,7 +3,7 @@
     "disposition": "NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION",
     "artifact_id": "PACKAGE_C_PROOF_READINESS_INDEX_20260701",
     "claim_boundary": "proof_readiness_index_candidate_not_package_c_proof_registered_not_runtime",
-    "build_head": "6bc630339a99b33ead3fefccf19eca32d45c06ee",
+    "build_head": "55e093489b48c48e1ed61b598e8167bf1dc61348",
     "readiness_index_rows": 11,
     "open_blocker_rows": 4,
     "external_research_question_rows": 4,
