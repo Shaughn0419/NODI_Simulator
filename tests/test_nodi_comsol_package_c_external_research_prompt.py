@@ -29,13 +29,19 @@ def test_external_research_prompt_payload_is_copyable_without_promotion() -> Non
     assert "github.com/Shaughn0419/NODI_Simulator" in markdown
     assert "Do not assume access to local Codex files" in markdown
     assert "Do not register Package C proof/pass" in markdown
-    assert "Do not authorize runtime configuration" in markdown
+    assert "do not treat authorization as Package C proof/pass" in markdown
     assert summary["proof_registration_authorized"] is False
     assert summary["package_c_validation_status_pass_authorized"] is False
     assert summary["runtime_allowed"] is False
     assert summary["numeric_prs_eas_allowed"] is False
     assert summary["comsol_launch_allowed"] is False
     assert summary["mph_load_allowed"] is False
+    assert summary["path_authorization_accepted"] is True
+    assert (
+        summary["result_authorization_status"]
+        == "no_result_authorization_path_authorization_only"
+    )
+    assert "no proof/pass/runtime result authorization" in summary["no_auth_semantics"]
 
 
 def test_external_research_context_rows_include_key_metrics() -> None:
@@ -48,13 +54,26 @@ def test_external_research_context_rows_include_key_metrics() -> None:
     assert by_context["runtime_substep_policy_design"]["context_value"] == (
         "policy_design_bound_not_runtime_authorized"
     )
-    assert "runtime remains unauthorized" in by_context[
+    assert "runtime output still requires implementation tests" in by_context[
         "runtime_substep_policy_design"
     ]["details"]
     assert "authorization_preflight" in by_context
     assert "ledger_status=missing_fail_closed" in by_context[
         "authorization_preflight"
     ]["context_value"]
+    assert "Legacy pre-user-authorization" in by_context[
+        "authorization_preflight"
+    ]["details"]
+    assert "superseded by user_authorization_ledger" in by_context[
+        "authorization_preflight"
+    ]["details"]
+    assert "user_authorization_ledger" in by_context
+    assert "authorized_scopes=4" in by_context[
+        "user_authorization_ledger"
+    ]["context_value"]
+    assert "result-promotion guards" in by_context[
+        "user_authorization_ledger"
+    ]["details"]
     assert (
         float(by_context["one_wall_wall_pileup_refinement"]["context_value"])
         <= 0.01

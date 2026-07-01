@@ -76,6 +76,9 @@ RUNTIME_SUBSTEP_POLICY_STATUS = (
 AUTHORIZATION_PREFLIGHT_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_AUTHORIZATION_PREFLIGHT_STATUS_20260701.json"
 )
+USER_AUTHORIZATION_LEDGER_STATUS = (
+    OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_USER_AUTHORIZATION_LEDGER_STATUS_20260701.json"
+)
 THRESHOLD_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_PROOF_THRESHOLD_STATUS_20260701.json"
 )
@@ -93,6 +96,7 @@ SOURCE_FILES = {
     "substep_dt_refinement_status": DT_REFINEMENT_STATUS,
     "runtime_substep_policy_design_status": RUNTIME_SUBSTEP_POLICY_STATUS,
     "authorization_preflight_status": AUTHORIZATION_PREFLIGHT_STATUS,
+    "user_authorization_ledger_status": USER_AUTHORIZATION_LEDGER_STATUS,
     "proof_threshold_status": THRESHOLD_STATUS,
     "proof_threshold_table": THRESHOLD_TABLE,
     "proof_readiness_index_builder": PROJECT_ROOT
@@ -223,6 +227,7 @@ def readiness_index_rows() -> list[dict[str, str]]:
     d = read_json_summary(DT_REFINEMENT_STATUS)
     r = read_json_summary(RUNTIME_SUBSTEP_POLICY_STATUS)
     a = read_json_summary(AUTHORIZATION_PREFLIGHT_STATUS)
+    u = read_json_summary(USER_AUTHORIZATION_LEDGER_STATUS)
     p = read_json_summary(THRESHOLD_STATUS)
     rows = [
         {
@@ -348,6 +353,21 @@ def readiness_index_rows() -> list[dict[str, str]]:
             "next_action": "manual_authorization_ledger_required_before_proof_or_runtime",
         },
         {
+            "artifact_id": u.get("artifact_id", ""),
+            "artifact_role": "user_authorization_ledger",
+            "disposition": u.get("disposition", ""),
+            "candidate_status": u.get("authorization_ledger_status", ""),
+            "proof_status": u.get("proof_readiness_impact", ""),
+            "key_values": (
+                f"authorized_scopes={u.get('authorized_scope_rows', '')};"
+                f"proof_path_auth={u.get('package_c_proof_registration_path_authorized', '')};"
+                f"runtime_auth={u.get('runtime_substep_policy_authorized', '')};"
+                f"solver_auth={u.get('solver_branch_authorized', '')};"
+                f"wet_auth={u.get('wet_branch_authorized', '')}"
+            ),
+            "next_action": "build_evidence_packets_before_result_promotion",
+        },
+        {
             "artifact_id": p.get("artifact_id", ""),
             "artifact_role": "proof_threshold_table",
             "disposition": p.get("disposition", ""),
@@ -374,6 +394,7 @@ def readiness_index_rows() -> list[dict[str, str]]:
 
 def blocker_rows() -> list[dict[str, str]]:
     threshold_rows = read_csv_rows(THRESHOLD_TABLE) if THRESHOLD_TABLE.exists() else []
+    authorization_accepted = user_authorization_accepted()
     proof_gap_metrics = [
         row["metric_id"]
         for row in threshold_rows
@@ -390,11 +411,6 @@ def blocker_rows() -> list[dict[str, str]]:
         if "runtime" in row.get("current_status", "")
     ]
     base_rows = [
-        (
-            "manual_authorization_ledger_missing",
-            "proof_registration_authorized remains false",
-            "explicit manual authorization ledger that supersedes no-auth ledger",
-        ),
         (
             "clean_reviewed_commit_binding_pending",
             (
@@ -415,16 +431,54 @@ def blocker_rows() -> list[dict[str, str]]:
             ),
         ),
         (
-            "runtime_policy_gaps_present",
+            (
+                "runtime_substep_execution_evidence_pending"
+                if authorization_accepted
+                else "runtime_policy_gaps_present"
+            ),
             ";".join(runtime_gap_metrics),
-            "manual runtime cost and substep policy review required before runtime use",
+            (
+                "runtime/substep path is authorized; implementation tests and execution packet are required before runtime output"
+                if authorization_accepted
+                else "manual runtime cost and substep policy review required before runtime use"
+            ),
         ),
         (
-            "no_solver_or_wet_claim_authorized",
-            "hindered diffusion, flow, electrokinetic, optical, wet claims all remain blocked",
-            "separate solver/experiment authorization required",
+            (
+                "solver_wet_evidence_pending"
+                if authorization_accepted
+                else "no_solver_or_wet_claim_authorized"
+            ),
+            (
+                "solver/wet branches authorized, but solver/wet evidence packets have not been produced"
+                if authorization_accepted
+                else "hindered diffusion, flow, electrokinetic, optical, wet claims all remain blocked"
+            ),
+            (
+                "produce solver/experiment evidence before solver or wet claims"
+                if authorization_accepted
+                else "separate solver/experiment authorization required"
+            ),
         ),
     ]
+    if authorization_accepted:
+        base_rows.insert(
+            0,
+            (
+                "proof_artifact_registration_pending",
+                "proof registration path authorized but Package C proof artifact is not registered",
+                "build proof registration artifact with source/evidence hashes before Package C pass",
+            ),
+        )
+    else:
+        base_rows.insert(
+            0,
+            (
+                "manual_authorization_ledger_missing",
+                "proof_registration_authorized remains false",
+                "explicit manual authorization ledger that supersedes no-auth ledger",
+            ),
+        )
     if proof_gap_metrics:
         base_rows.insert(
             2,
@@ -455,6 +509,14 @@ def blocker_rows() -> list[dict[str, str]]:
         }
         for blocker_id, evidence, resolution in base_rows
     ]
+
+
+def user_authorization_accepted() -> bool:
+    user_auth = read_json_summary(USER_AUTHORIZATION_LEDGER_STATUS)
+    return (
+        user_auth.get("authorization_ledger_status")
+        == "accepted_scope_authorization_no_result_promotion"
+    )
 
 
 def external_research_question_rows() -> list[dict[str, str]]:
@@ -499,6 +561,7 @@ def build_payload() -> dict[str, Any]:
     questions = external_research_question_rows()
     sources = source_lock_rows()
     firewall = no_proof_firewall_rows()
+    path_authorization_accepted = user_authorization_accepted()
     summary = {
         "disposition": DISPOSITION,
         "artifact_id": ARTIFACT_ID,
@@ -516,8 +579,18 @@ def build_payload() -> dict[str, Any]:
         "numeric_prs_eas_allowed": False,
         "comsol_launch_allowed": False,
         "mph_load_allowed": False,
+        "path_authorization_accepted": path_authorization_accepted,
+        "result_authorization_status": (
+            "no_result_authorization_path_authorization_only"
+            if path_authorization_accepted
+            else "no_authorization"
+        ),
         "candidate_only": True,
         "no_auth": True,
+        "no_auth_semantics": (
+            "legacy field meaning no proof/pass/runtime result authorization; "
+            "path authorization may be accepted separately"
+        ),
         "github_visibility_status": GITHUB_VISIBILITY_STATUS,
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
@@ -536,7 +609,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     s = payload["summary"]
     firewall = payload["no_proof_firewall"][0]
     checks = {
-        "Readiness rows": s["readiness_index_rows"] == 10,
+        "Readiness rows": s["readiness_index_rows"] == 11,
         "Blockers present": s["open_blocker_rows"] >= 4,
         "External questions present": s["external_research_question_rows"] >= 4,
         "Source lock complete": s["source_missing_rows"] == 0,
@@ -548,10 +621,21 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "No numeric PRS/EAS": s["numeric_prs_eas_allowed"] is False,
         "No COMSOL launch": s["comsol_launch_allowed"] is False,
         "No mph load": s["mph_load_allowed"] is False,
+        "Path authorization accepted": s["path_authorization_accepted"] is True,
+        "No result authorization": (
+            s["result_authorization_status"]
+            == "no_result_authorization_path_authorization_only"
+        ),
     }
     blocker_ids = {row["blocker_id"] for row in payload["blockers"]}
-    checks["Manual authorization blocker"] = "manual_authorization_ledger_missing" in blocker_ids
-    checks["Runtime blocker"] = "runtime_policy_gaps_present" in blocker_ids
+    checks["Authorization accounted"] = (
+        "manual_authorization_ledger_missing" in blocker_ids
+        or "proof_artifact_registration_pending" in blocker_ids
+    )
+    checks["Runtime blocker"] = (
+        "runtime_policy_gaps_present" in blocker_ids
+        or "runtime_substep_execution_evidence_pending" in blocker_ids
+    )
     for key, value in firewall.items():
         if key.endswith("_authorized") or key in {
             "package_c_proof_artifact_registered",

@@ -21,7 +21,7 @@ def test_readiness_index_payload_is_single_entrypoint_without_promotion() -> Non
 
     assert failures == []
     assert summary["disposition"] == readiness.DISPOSITION
-    assert summary["readiness_index_rows"] == 10
+    assert summary["readiness_index_rows"] == 11
     assert summary["open_blocker_rows"] >= 4
     assert summary["external_research_question_rows"] >= 4
     assert summary["proof_readiness_index_status"] == (
@@ -33,6 +33,12 @@ def test_readiness_index_payload_is_single_entrypoint_without_promotion() -> Non
     assert summary["numeric_prs_eas_allowed"] is False
     assert summary["comsol_launch_allowed"] is False
     assert summary["mph_load_allowed"] is False
+    assert summary["path_authorization_accepted"] is True
+    assert (
+        summary["result_authorization_status"]
+        == "no_result_authorization_path_authorization_only"
+    )
+    assert "no proof/pass/runtime result authorization" in summary["no_auth_semantics"]
 
 
 def test_readiness_index_covers_current_package_c_artifacts() -> None:
@@ -49,6 +55,7 @@ def test_readiness_index_covers_current_package_c_artifacts() -> None:
         "substep_dt_refinement_requirements",
         "runtime_substep_policy_design",
         "authorization_preflight",
+        "user_authorization_ledger",
         "proof_threshold_table",
     }
     by_role = {row["artifact_role"]: row for row in rows}
@@ -63,6 +70,12 @@ def test_readiness_index_covers_current_package_c_artifacts() -> None:
     ]["key_values"]
     assert "ledger_status=missing_fail_closed" in by_role[
         "authorization_preflight"
+    ]["key_values"]
+    assert "authorized_scopes=4" in by_role[
+        "user_authorization_ledger"
+    ]["key_values"]
+    assert "runtime_auth=True" in by_role[
+        "user_authorization_ledger"
     ]["key_values"]
     assert "min_independent_ess=32768.0" in by_role[
         "stationarity_ensemble_refinement"
@@ -83,11 +96,13 @@ def test_readiness_blockers_keep_fail_closed_next_actions() -> None:
     blockers = _payload()["blockers"]
     blocker_ids = {row["blocker_id"] for row in blockers}
 
-    assert "manual_authorization_ledger_missing" in blocker_ids
+    assert "manual_authorization_ledger_missing" not in blocker_ids
+    assert "proof_artifact_registration_pending" in blocker_ids
     assert "clean_reviewed_commit_binding_pending" in blocker_ids
     assert "proof_threshold_gaps_present" not in blocker_ids
     assert "proof_method_gaps_present" not in blocker_ids
-    assert "runtime_policy_gaps_present" in blocker_ids
+    assert "runtime_substep_execution_evidence_pending" in blocker_ids
+    assert "solver_wet_evidence_pending" in blocker_ids
     assert {row["blocker_status"] for row in blockers} == {"open_fail_closed"}
     by_blocker = {row["blocker_id"]: row for row in blockers}
     assert "target commit identified" in by_blocker[

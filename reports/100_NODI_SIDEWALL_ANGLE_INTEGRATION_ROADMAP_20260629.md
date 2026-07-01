@@ -1524,14 +1524,34 @@ The refreshed readiness/external-research chain now carries this preflight as ca
 
 This block identifies a GitHub-visible candidate commit and a fail-closed manual-ledger placeholder. It does not supersede the no-auth ledger, register Package C proof/pass, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
 
-## 26. Recommended next action
+## 26. Current Package C user authorization ledger status
 
-Current safe route after the Package C authorization preflight:
+The user has now explicitly authorized the manual authorization ledger, runtime/substep policy path, and solver/wet branch paths. This is recorded as a scope authorization ledger rather than a result-promotion artifact:
 
-1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees stationarity, one-wall, wall-pileup, near-boundary expected-band, runtime/substep policy-design, and authorization-preflight candidate evidence.
-2. Keep the runtime/substep policy as manual-authorization-only; the current `526` substep worst case is explicitly classified as prohibitive-cost and remains a runtime-policy blocker, not an automatic runtime setting.
-3. Treat any future proof/pass or runtime step as requiring an explicit manual ledger that names the reviewed commit and allowed scope; do not auto-register proof/pass from candidate metrics.
-4. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
+- Artifact id: `PACKAGE_C_USER_AUTHORIZATION_LEDGER_20260701`.
+- Disposition: `NODI_PACKAGE_C_USER_AUTHORIZATION_LEDGER_ACCEPTED_NO_RESULT_PROMOTION`.
+- Authorized scopes: `package_c_proof_registration_path`, `runtime_substep_policy_path`, `solver_branch_path`, `wet_branch_path`.
+- Authorized scope rows: `4`.
+- Result-promotion guard rows: `14`.
+- Authorization source: `user_explicit_message_current_thread_20260701`.
+- Current result state remains: `package_c_proof_artifact_registered=false`; `package_c_validation_status_pass_current=false`; `runtime_execution_started=false`; `sidewall_prs_eas_numeric_output_current=false`; `comsol_launch_started=false`; `.mph_load_started=false`.
+
+The refreshed readiness/external-research chain now carries this authorization ledger:
+
+- Proof-readiness rows: `11`, adding `user_authorization_ledger`.
+- Open blocker rows remain `4`, but the manual-ledger blocker is replaced by proof-artifact registration, runtime execution evidence, solver/wet evidence, and final clean-commit binding blockers.
+- External-research context rows: `9`, adding `user_authorization_ledger`.
+
+This block resolves the manual authorization blocker as a path authorization. It does not itself register Package C proof/pass, start runtime, launch COMSOL, load `.mph`, emit sidewall PRS/EAS numeric output, or create route/yield/detection/wet/fabrication/production claims.
+
+## 27. Recommended next action
+
+Current safe route after the Package C user authorization ledger:
+
+1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees stationarity, one-wall, wall-pileup, near-boundary expected-band, runtime/substep policy-design, authorization-preflight, and accepted user-authorization-ledger candidate evidence.
+2. Next local implementation block should build a proof-registration artifact or runtime/substep execution packet, not another no-auth preflight.
+3. Treat runtime/substep and solver/wet branches as authorized paths, but require execution/evidence packets before any runtime output, COMSOL launch record, `.mph` load record, wet claim, solver output, or sidewall PRS/EAS numeric result is reported.
+4. Do not auto-register `package_C_validation_status=pass` from the authorization ledger alone; it must bind evidence/source hashes.
 5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 6. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.
 

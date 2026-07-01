@@ -14,21 +14,22 @@ Primary GitHub-visible entrypoint after publish:
 Current disposition:
 - NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
 - artifact_id=PACKAGE_C_PROOF_READINESS_INDEX_20260701
-- readiness_index_rows=10
+- readiness_index_rows=11
 - open_blocker_rows=4
 - external_research_question_rows=4
 
 Hard boundary:
-- Do not register Package C proof/pass.
-- Do not mark `package_C_validation_status=pass`.
-- Do not authorize runtime configuration, NODI recomputation, COMSOL launch, `.mph` load, numeric PRS/EAS output, route_score, winner, JRC, q_ch weighting, yield, detection_probability, wet pass, clogging, time-to-clog, recovery, fabrication release, or production ingestion.
+- User authorization may open proof-registration, runtime/substep, solver, and wet branch paths, but do not treat authorization as Package C proof/pass, runtime output, solver output, wet evidence, or production readiness.
+- Do not register Package C proof/pass from this research prompt; proof registration requires a separate evidence packet and manual ledger binding.
+- Do not mark `package_C_validation_status=pass` until a proof-registration artifact binds the required evidence/source hashes.
+- Do not report NODI recomputation, COMSOL launch, `.mph` load, numeric PRS/EAS output, route_score, winner, JRC, q_ch weighting, yield, detection_probability, wet pass, clogging, time-to-clog, recovery, fabrication release, or production ingestion unless a separate execution/evidence packet is produced.
 - Treat all current metrics as candidate/readiness evidence, not validated Brownian solver output, hindered hydrodynamics, trapezoid Poiseuille, electrokinetic solver, optical solver, wet behavior, or production evidence.
 
 Open blockers:
-- manual_authorization_ledger_missing: proof_registration_authorized remains false -> explicit manual authorization ledger that supersedes no-auth ledger
+- proof_artifact_registration_pending: proof registration path authorized but Package C proof artifact is not registered -> build proof registration artifact with source/evidence hashes before Package C pass
 - clean_reviewed_commit_binding_pending: authorization_preflight target commit identified -> future proof/pass artifact must bind final reviewed clean commit and manual ledger
-- runtime_policy_gaps_present: max_required_substeps_to_meet_threshold;max_projected_trigger_value_after_required_substeps;runtime_substep_policy_design_status;prohibitive_substep_cost_rows -> manual runtime cost and substep policy review required before runtime use
-- no_solver_or_wet_claim_authorized: hindered diffusion, flow, electrokinetic, optical, wet claims all remain blocked -> separate solver/experiment authorization required
+- runtime_substep_execution_evidence_pending: max_required_substeps_to_meet_threshold;max_projected_trigger_value_after_required_substeps;runtime_substep_policy_design_status;prohibitive_substep_cost_rows -> runtime/substep path is authorized; implementation tests and execution packet are required before runtime output
+- solver_wet_evidence_pending: solver/wet branches authorized, but solver/wet evidence packets have not been produced -> produce solver/experiment evidence before solver or wet claims
 
 Current threshold rows:
 - support_violation_rows: observed=0; candidate=must_equal_0; proof=must_equal_0; status=candidate_and_proof_threshold_met_not_registered
@@ -61,5 +62,5 @@ Research questions to answer in one pass:
 Requested output:
 1. Give a concise verdict for each research question: recommended proof-level method/threshold, supporting references or reasoning, and whether current candidate evidence is sufficient, insufficient, or needs a different metric.
 2. Identify the highest-leverage next local evidence block. Prefer one block that can move multiple proof gaps at once.
-3. Keep claim boundaries explicit. If you suggest future runtime/substep policy, state exactly what remains required before runtime can be authorized.
+3. Keep claim boundaries explicit. If you suggest future runtime/substep policy, state exactly what remains required before runtime output can be reported.
 4. Do not provide route, yield, detection, wet, fabrication, or production conclusions.

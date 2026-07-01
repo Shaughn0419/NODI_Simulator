@@ -765,3 +765,39 @@ context_rows=8
 ```
 
 This packet identifies a candidate reviewed commit and an empty manual-ledger placeholder only. It does not supersede the no-auth ledger, register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C user authorization ledger
+
+The user then explicitly authorized the manual ledger, runtime/substep policy path, and solver/wet branch paths. The ledger records scope authorization without promoting results:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_user_authorization_ledger.py --confirm-package-c-user-authorization-ledger
+NODI_PACKAGE_C_USER_AUTHORIZATION_LEDGER_ACCEPTED_NO_RESULT_PROMOTION
+authorized_scope_rows=4
+package_c_proof_registration_path_authorized=true
+runtime_substep_policy_authorized=true
+solver_branch_authorized=true
+wet_branch_authorized=true
+package_c_proof_artifact_registered=false
+package_c_validation_status_pass_current=false
+runtime_execution_started=false
+sidewall_prs_eas_numeric_output_current=false
+comsol_launch_started=false
+mph_load_started=false
+```
+
+The refreshed readiness/external prompt chain now includes the user authorization ledger:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_proof_readiness_index.py --confirm-package-c-proof-readiness-index
+NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
+readiness_index_rows=11
+open_blocker_rows=4
+external_research_question_rows=4
+
+python tools/audits/build_nodi_comsol_package_c_external_research_prompt.py --confirm-package-c-external-research-prompt
+NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION
+context_rows=9
+```
+
+This packet resolves the manual authorization blocker as an authorized path. It does not register proof, mark Package C as passed, start runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.

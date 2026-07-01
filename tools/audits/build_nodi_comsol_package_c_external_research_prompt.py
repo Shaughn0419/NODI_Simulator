@@ -25,7 +25,7 @@ OUTPUT_DIR = PROJECT_ROOT / f"reports/joint_interface_{DATE_STAMP}"
 REPORT_DIR = PROJECT_ROOT / "reports"
 GITHUB_RAW_BASE = "https://raw.githubusercontent.com/Shaughn0419/NODI_Simulator/main"
 GITHUB_BLOB_BASE = "https://github.com/Shaughn0419/NODI_Simulator/blob/main"
-EXPECTED_CONTEXT_ROWS = 8
+EXPECTED_CONTEXT_ROWS = 9
 
 DISPOSITION = "NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION"
 ARTIFACT_ID = "PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701"
@@ -258,7 +258,7 @@ def context_rows() -> list[dict[str, str]]:
                 "observed_value",
                 "",
             ),
-            "details": "Runtime/substep policy classes are now design-bound, including prohibitive cost handling, but runtime remains unauthorized.",
+            "details": "Runtime/substep policy classes are design-bound, including prohibitive cost handling. User ledger authorizes the path; runtime output still requires implementation tests and an execution packet.",
             "github_url": blob_url(THRESHOLD_TABLE),
             "claim_boundary": CLAIM_BOUNDARY,
         },
@@ -272,7 +272,21 @@ def context_rows() -> list[dict[str, str]]:
                 ),
                 "",
             ),
-            "details": "Authorization preflight binds a GitHub-visible candidate commit and an empty fail-closed manual-ledger placeholder; it does not authorize proof/pass or runtime.",
+            "details": "Legacy pre-user-authorization preflight binds a GitHub-visible candidate commit and fail-closed manual-ledger placeholder; it is superseded by user_authorization_ledger for path authorization only and still does not register proof/pass or runtime output.",
+            "github_url": blob_url(READINESS_INDEX),
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+        {
+            "context_id": "user_authorization_ledger",
+            "context_value": next(
+                (
+                    row["key_values"]
+                    for row in index_rows
+                    if row["artifact_role"] == "user_authorization_ledger"
+                ),
+                "",
+            ),
+            "details": "User authorization ledger accepts proof-registration, runtime/substep, solver, and wet branch paths; result-promotion guards still require evidence packets.",
             "github_url": blob_url(READINESS_INDEX),
             "claim_boundary": CLAIM_BOUNDARY,
         },
@@ -336,9 +350,10 @@ Current disposition:
 - external_research_question_rows={readiness.get('external_research_question_rows', '')}
 
 Hard boundary:
-- Do not register Package C proof/pass.
-- Do not mark `package_C_validation_status=pass`.
-- Do not authorize runtime configuration, NODI recomputation, COMSOL launch, `.mph` load, numeric PRS/EAS output, route_score, winner, JRC, q_ch weighting, yield, detection_probability, wet pass, clogging, time-to-clog, recovery, fabrication release, or production ingestion.
+- User authorization may open proof-registration, runtime/substep, solver, and wet branch paths, but do not treat authorization as Package C proof/pass, runtime output, solver output, wet evidence, or production readiness.
+- Do not register Package C proof/pass from this research prompt; proof registration requires a separate evidence packet and manual ledger binding.
+- Do not mark `package_C_validation_status=pass` until a proof-registration artifact binds the required evidence/source hashes.
+- Do not report NODI recomputation, COMSOL launch, `.mph` load, numeric PRS/EAS output, route_score, winner, JRC, q_ch weighting, yield, detection_probability, wet pass, clogging, time-to-clog, recovery, fabrication release, or production ingestion unless a separate execution/evidence packet is produced.
 - Treat all current metrics as candidate/readiness evidence, not validated Brownian solver output, hindered hydrodynamics, trapezoid Poiseuille, electrokinetic solver, optical solver, wet behavior, or production evidence.
 
 Open blockers:
@@ -353,7 +368,7 @@ Research questions to answer in one pass:
 Requested output:
 1. Give a concise verdict for each research question: recommended proof-level method/threshold, supporting references or reasoning, and whether current candidate evidence is sufficient, insufficient, or needs a different metric.
 2. Identify the highest-leverage next local evidence block. Prefer one block that can move multiple proof gaps at once.
-3. Keep claim boundaries explicit. If you suggest future runtime/substep policy, state exactly what remains required before runtime can be authorized.
+3. Keep claim boundaries explicit. If you suggest future runtime/substep policy, state exactly what remains required before runtime output can be reported.
 4. Do not provide route, yield, detection, wet, fabrication, or production conclusions.
 """
 
@@ -367,6 +382,8 @@ def build_payload() -> dict[str, Any]:
     sources = source_lock_rows()
     firewall = no_proof_firewall_rows()
     prompt = prompt_markdown()
+    readiness = read_json_summary(READINESS_STATUS)
+    path_authorization_accepted = readiness.get("path_authorization_accepted") is True
     summary = {
         "disposition": DISPOSITION,
         "artifact_id": ARTIFACT_ID,
@@ -385,8 +402,17 @@ def build_payload() -> dict[str, Any]:
         "numeric_prs_eas_allowed": False,
         "comsol_launch_allowed": False,
         "mph_load_allowed": False,
+        "path_authorization_accepted": path_authorization_accepted,
+        "result_authorization_status": readiness.get(
+            "result_authorization_status",
+            "no_result_authorization",
+        ),
         "candidate_only": True,
         "no_auth": True,
+        "no_auth_semantics": (
+            "legacy field meaning no proof/pass/runtime result authorization; "
+            "path authorization may be accepted separately"
+        ),
         "github_visibility_status": GITHUB_VISIBILITY_STATUS,
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
@@ -413,14 +439,27 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "Source lock complete": s["source_missing_rows"] == 0,
         "Prompt has GitHub entrypoint": "github.com/Shaughn0419/NODI_Simulator" in prompt,
         "Prompt states no local file access": "Do not assume access to local Codex files" in prompt,
-        "Prompt blocks proof/pass": "Do not register Package C proof/pass" in prompt,
-        "Prompt blocks runtime": "Do not authorize runtime configuration" in prompt,
+        "Prompt blocks proof/pass": (
+            "do not treat authorization as Package C proof/pass" in prompt
+            and "Do not mark `package_C_validation_status=pass`" in prompt
+        ),
+        "Prompt blocks runtime result promotion": (
+            "do not treat authorization as Package C proof/pass, runtime output"
+            in prompt
+            and "unless a separate execution/evidence packet is produced"
+            in prompt
+        ),
         "No proof registration": s["proof_registration_authorized"] is False,
         "No Package C pass": s["package_c_validation_status_pass_authorized"] is False,
         "No runtime": s["runtime_allowed"] is False,
         "No numeric PRS/EAS": s["numeric_prs_eas_allowed"] is False,
         "No COMSOL launch": s["comsol_launch_allowed"] is False,
         "No mph load": s["mph_load_allowed"] is False,
+        "Path authorization accepted": s["path_authorization_accepted"] is True,
+        "No result authorization": (
+            s["result_authorization_status"]
+            == "no_result_authorization_path_authorization_only"
+        ),
     }
     for key, value in firewall.items():
         if key.endswith("_authorized") or key in {
