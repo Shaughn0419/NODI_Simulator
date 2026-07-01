@@ -121,7 +121,7 @@ Completed NODI-side guardrails:
 - Added Gate25 Package C design-review packet: Gate24 sources are locked, Package C trajectory/near-wall/flow/electrokinetic/optical questions are separated into design-review rows, a self-contained external-AI prompt records local geometry formulas and current NODI boundaries, and implementation/runtime permissions remain false.
 - Added Gate26 Package C external-review integration packet: the user-pasted external-AI verdict `READY_FOR_IMPLEMENTATION_DESIGN_ONLY` is captured as a SHA-locked source artifact and integrated only as design constraints; Skorokhod normal reflection is recorded as the future Brownian target model, the current projection boundary remains a non-validated surrogate, 20 required Package C tests and 46 schema fields are listed, hindered/flow/electrokinetic/optical blockers are preserved, and implementation/runtime/PRS-EAS numeric/COMSOL/.mph/q_ch/JRC/route/yield/detection/fabrication permissions all remain false.
 - Added Gate27 Package C implementation-design preflight: Gate26 sources are locked, the future Skorokhod/corner/equilibrium/dt/schema/blocker work is mapped into a no-auth backlog, a real proof-artifact contract is defined, current `package_C_validation_status=pass` remains fail-closed without a registered proof, and proof registration/runtime/PRS-EAS numeric/COMSOL/.mph/q_ch/JRC/route/yield/detection/fabrication permissions all remain false.
-- After explicit user authorization for Package C implementation code and unit tests, added the first Skorokhod/finite-step trapezoid reflection implementation candidate: geometry now exposes wall constraints and inward normals, trajectory uses `trapezoid_skorokhod_normal_reflection_euler_active_set_v1` for trapezoid diffusive plug-flow paths, PRS sidewall v2 validators allow that model only with `finite_step_reflection_surrogate_not_hindered_hydrodynamics_not_package_c_proof_registered`, and single-wall/corner/support/no-boundary-atom/rectangle-limit unit tests are in place. This is not a Package C proof/pass registration and emits no PRS/EAS numeric output.
+- After explicit user authorization for Package C implementation code and unit tests, added the first Skorokhod/finite-step trapezoid reflection implementation candidate: geometry now exposes wall constraints and inward normals, trajectory uses `trapezoid_skorokhod_normal_reflection_euler_active_set_v1` for trapezoid diffusive plug-flow paths, PRS sidewall v2 validators now accept the post-registration claim guard `finite_step_reflection_surrogate_package_c_proof_registered_not_validated_brownian_solver_output_not_hindered_hydrodynamics`, and single-wall/corner/support/no-boundary-atom/rectangle-limit unit tests are in place. This remains finite-step surrogate evidence only and emits no PRS/EAS numeric output.
 - Expanded the Package C proof scaffold: any future `package_C_validation_status=pass` row must carry reviewed evidence hashes, implementation commit binding, required-test matrix status, external review completion, explicit authorization id/hash superseding the no-auth ledger, and no-claim flags for hindered diffusion, trapezoid flow solver, electrokinetic solver, optical solver, wet claims, PRS/EAS numeric output, and route/yield/detection claims. The proof registry is still empty and fail-closed.
 - Added Gate28 Package C proof-review packet: the current implementation candidate is packaged for external/independent review with source locks, a 6-command pytest/py_compile/git-diff evidence ledger, a self-contained external-AI prompt, and a no-proof firewall. Gate28 reports `evidence_pass_rows=6`, `source_missing_rows=0`, `proof_registration_authorized=false`, `runtime_allowed=false`, `numeric_prs_eas_allowed=false`, `comsol_launch_allowed=false`, and `mph_load_allowed=false`; it does not register Package C proof/pass.
 - Added Gate29 external proof-review integration: external verdict `READY_FOR_EXTERNAL_PROOF_REGISTRATION_REVIEW_ONLY` is captured as review-only input, the proof scaffold is expanded to 52 required fields with telemetry/reproducibility locks, and Gate29 emits 19 future hard gates plus 24 telemetry/reproducibility fields while keeping proof registration/runtime/numeric/COMSOL/`.mph` permissions false.
@@ -1562,12 +1562,27 @@ Package C finite-step reflection-surrogate proof evidence is now registered, wit
 
 This registration does not authorize runtime configuration, NODI recomputation, sidewall PRS/EAS numeric output, COMSOL launch, `.mph` load, validated Brownian solver output beyond the finite-step surrogate, hindered diffusion, trapezoid flow, electrokinetic solver output, optical solver output, true `W_eff`, route/yield/detection, wet claims, fabrication release, or production ingestion.
 
-## 28. Recommended next action
+## 28. Current runtime/substep guard implementation status
+
+The runtime/substep path now has a code-level preflight guard:
+
+- Module: `nodi_simulator/runtime_substep_policy.py`.
+- Policy version: `trapezoid_runtime_substep_guard_v1`.
+- Trigger metric: `brownian_rms_step_over_surface_gap_quantile`.
+- Default threshold: `1.0`.
+- Default surface-gap quantile: `0.05`.
+- Low-cost runtime guard threshold: `required_substeps <= 16`.
+- Review/prohibitive boundary: `required_substeps > 128` is blocked unless a later execution packet records a manual waiver.
+- PRS/EAS numeric permission remains: `sidewall_prs_eas_numeric_allowed=false`.
+
+This guard can classify rectangle/no-diffusion paths as not applicable, low-cost substep paths as execution-packet required, and the current narrow-tail stress case (`required_substeps=526`) as `blocked_prohibitive_substep_cost` unless a separate execution packet records a manual waiver. It does not itself run NODI, emit sidewall PRS/EAS numeric output, launch COMSOL, load `.mph`, or create solver/wet/route/yield/detection claims.
+
+## 29. Recommended next action
 
 Current safe route after Package C proof registration:
 
 1. Treat Package C reflection boundary evidence as registered only for `finite_step_reflection_surrogate_evidence_only`.
-2. Next local implementation block should build the runtime/substep execution packet and implementation tests required by the retained runtime blockers, not jump directly to PRS/EAS numeric output.
+2. Next local implementation block should bind this runtime/substep guard into an execution packet and then into the narrowest NODI trajectory smoke test; do not jump directly to PRS/EAS numeric output.
 3. Treat runtime/substep and solver/wet branches as authorized paths, but require execution/evidence packets before any runtime output, COMSOL launch record, `.mph` load record, wet claim, solver output, or sidewall PRS/EAS numeric result is reported.
 4. Do not broaden `package_C_validation_status_pass_current=true` beyond finite-step reflection-surrogate evidence without a separate solver/wet/runtime packet.
 5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.

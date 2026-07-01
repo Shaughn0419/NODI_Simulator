@@ -11766,16 +11766,22 @@ def _validate_sidewall_v2_trajectory_guards(
                 "trapezoid projection boundary lacks surrogate/not-specular claim level",
             )
     elif boundary_model == "trapezoid_skorokhod_normal_reflection_euler_active_set_v1":
+        has_not_registered_guard = "not_package_c_proof_registered" in boundary_claim
+        has_registered_guard = (
+            "package_c_proof_registered" in boundary_claim
+            and not has_not_registered_guard
+            and "not_validated_brownian_solver_output" in boundary_claim
+        )
         if (
             "finite_step_reflection_surrogate" not in boundary_claim
             or "not_hindered_hydrodynamics" not in boundary_claim
-            or "not_package_c_proof_registered" not in boundary_claim
+            or not (has_not_registered_guard or has_registered_guard)
         ):
             _issue(
                 issues,
                 row_index,
                 rule_id,
-                "trapezoid Skorokhod boundary lacks finite-step/not-hindered/not-proof-registered claim level",
+                "trapezoid Skorokhod boundary lacks finite-step/not-hindered/proof-registration guard claim level",
             )
     elif "specular_reflection" in boundary_claim and "not_specular_reflection" not in boundary_claim:
         _issue(

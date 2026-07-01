@@ -53,8 +53,8 @@ TRAPEZOID_SKOROKHOD_BOUNDARY_MODEL = (
     "trapezoid_skorokhod_normal_reflection_euler_active_set_v1"
 )
 TRAPEZOID_SKOROKHOD_BOUNDARY_CLAIM_LEVEL = (
-    "finite_step_reflection_surrogate_not_hindered_hydrodynamics_"
-    "not_package_c_proof_registered"
+    "finite_step_reflection_surrogate_package_c_proof_registered_"
+    "not_validated_brownian_solver_output_not_hindered_hydrodynamics"
 )
 
 TRAJECTORY_GEOMETRY_DIAGNOSTIC_FIELDS = (
