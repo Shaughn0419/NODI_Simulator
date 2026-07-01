@@ -1699,3 +1699,36 @@ The promotion path is now explicit:
 Thus q_ch, route, yield, and detection are all being advanced as authorized
 branches, but each branch still has a distinct evidence requirement before its
 final claim can become true.
+
+## 34. Current pressure-flow validation context status
+
+The q_ch branch now has a first COMSOL pressure-flow validation context packet:
+
+- Module: `nodi_simulator/pressure_flow_validation.py`.
+- Validation version: `pressure_flow_validation_candidate_v1`.
+- Artifact id: `PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_20260701`.
+- Disposition: `NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_READY_NOT_FORMAL_QCH`.
+- NODI source: `NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_QCH_ROWS_20260701.csv`.
+- COMSOL context source:
+  `stage11_explicit_nano_pressure_only_p1b_w800_qch_01_sw85_d0p9_hmax0p5_summary.csv`.
+
+This packet ingests existing local COMSOL pressure-flow evidence at sw85/d0.9
+and 5 kPa, locks the source hash, and compares the 522 candidate q_ch rows at
+the COMSOL pressure drop. The comparison is deliberately marked
+`geometry_family_context_only` because the COMSOL source is a W800/route-family
+context row, while the current q_ch sidecar rows come from W500 candidate
+solver cases.
+
+Result:
+
+- COMSOL context is now available and source-locked.
+- The q_ch branch has moved beyond a purely local finite-difference candidate.
+- Formal q_ch acceptance remains false until an exact geometry/route match or
+  an explicitly accepted mapping/calibration evidence hash is provided.
+- Route score, winner/JRC, yield, detection probability, wet pass, fabrication,
+  and production remain downstream promotion targets, not current conclusions.
+
+The next most efficient route is to either run or ingest an exact W500/D900
+pressure-flow comparison for the theta85 candidate, or to add an explicit
+W800-to-W500 mapping/calibration contract if the W800 COMSOL family is intended
+to calibrate the W500 NODI sidecar.

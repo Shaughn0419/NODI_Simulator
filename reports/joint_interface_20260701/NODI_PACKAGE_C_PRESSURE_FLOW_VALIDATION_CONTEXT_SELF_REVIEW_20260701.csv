@@ -1,0 +1,6 @@
+review_id,dimension,verdict,notes
+PRESSURE-FLOW-SELF-01,COMSOL pressure-flow context file exists and is source locked,PASS_PRESSURE_FLOW_CONTEXT_NOT_FORMAL_QCH,Existing COMSOL context advances validation but does not replace exact geometry/route evidence.
+PRESSURE-FLOW-SELF-02,q_ch candidate rows are compared at COMSOL pressure drop,PASS_PRESSURE_FLOW_CONTEXT_NOT_FORMAL_QCH,Existing COMSOL context advances validation but does not replace exact geometry/route evidence.
+PRESSURE-FLOW-SELF-03,geometry-family context is not promoted to formal q_ch,PASS_PRESSURE_FLOW_CONTEXT_NOT_FORMAL_QCH,Existing COMSOL context advances validation but does not replace exact geometry/route evidence.
+PRESSURE-FLOW-SELF-04,route/yield/detection remain promotion targets,PASS_PRESSURE_FLOW_CONTEXT_NOT_FORMAL_QCH,Existing COMSOL context advances validation but does not replace exact geometry/route evidence.
+PRESSURE-FLOW-SELF-05,no COMSOL launch or mph load was required for existing context ingestion,PASS_PRESSURE_FLOW_CONTEXT_NOT_FORMAL_QCH,Existing COMSOL context advances validation but does not replace exact geometry/route evidence.

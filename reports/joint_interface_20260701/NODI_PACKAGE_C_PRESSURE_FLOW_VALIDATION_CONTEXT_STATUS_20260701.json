@@ -1,0 +1,30 @@
+{
+  "disposition": "NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_READY_NOT_FORMAL_QCH",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_READY_NOT_FORMAL_QCH",
+    "artifact_id": "PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_20260701",
+    "claim_boundary": "pressure_flow_context_not_formal_qch_not_route_not_yield_not_detection",
+    "current_head": "022f75cecaf7522e7225f03df3a464aa8bb1289a",
+    "branch": "main",
+    "validation_version": "pressure_flow_validation_candidate_v1",
+    "source_qch_sidecar_disposition": "NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_READY_NOT_ROUTE",
+    "comsol_context_rows": 1,
+    "comparison_rows": 2,
+    "context_only_comparison_rows": 2,
+    "formal_validation_candidate_rows": 0,
+    "formal_gate2_qch_sidecar_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_detection_probability_current": false,
+    "comsol_launch_started": false,
+    "mph_load_started": false,
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 79,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "COMSOL pressure-flow context comparison;formal q_ch sidecar validation preflight;route/yield/detection promotion planning",
+    "blocked_use": "formal q_ch acceptance without exact geometry/route match;route_score;winner;JRC;yield;detection_probability;wet pass claim;fabrication release;production ingestion",
+    "semantic_digest": "2eea77654c60b2918d2938bbc59bef6836f93085b52a684780edc6b15cd393e4"
+  }
+}
