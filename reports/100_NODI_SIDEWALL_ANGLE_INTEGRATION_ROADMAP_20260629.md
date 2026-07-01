@@ -1814,3 +1814,43 @@ The next efficient wet/optical/detection blocks are:
    or recovery can be promoted;
 4. combine accepted q_ch, exact pressure-flow validation, sidewall optical
    calibration, and wet evidence into a future route-score decision ledger.
+
+## 37. Current sidewall optical/reference smoke status
+
+The optical/reference branch now has a first executable NODI smoke packet for
+the W500/D900 route candidates:
+
+- Module: `nodi_simulator/sidewall_optical_reference_smoke.py`.
+- Smoke version: `sidewall_optical_reference_smoke_w500_d900_v1`.
+- Artifact id: `PACKAGE_C_SIDEWALL_OPTICAL_REFERENCE_SMOKE_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_OPTICAL_REFERENCE_SMOKE_READY_NOT_OPTICAL_SOLVER`.
+- Cases:
+  - `rectangle_limit_theta90_D900_W500`
+  - `taper_theta85_D900_W500`
+
+This packet runs small NODI batches for the rectangle-limit and theta85
+trapezoid cases, records synthetic detection context, and exports the reference
+geometry propagation diagnostics. The trapezoid row explicitly records:
+
+- `geometry_not_propagated_to_reference_field=true`
+- `reference_geometry_propagation_status=blocked_trapezoid_geometry_not_propagated_to_reference_field`
+- `reference_geometry_claim_level=proxy_not_sidewall_aware_not_optical_solver_output`
+
+This advances the optical/reference branch from pure gap planning to executable
+smoke evidence. It also proves the current limitation that trapezoid geometry is
+still not consumed by a true optical/reference solver.
+
+Current claim state remains:
+
+- `optical_solver_current=false`
+- `detection_probability_current=false`
+- `yield_current=false`
+- `route_score_current=false`
+- `winner_current=false`
+- `JRC_current=false`
+
+The next optical branch step is to replace this smoke/proxy evidence with a
+sidewall-aware optical/reference solver or calibrated lookup that consumes the
+trapezoid geometry, after which detection-response calibration and blank-trace
+validation can be evaluated.

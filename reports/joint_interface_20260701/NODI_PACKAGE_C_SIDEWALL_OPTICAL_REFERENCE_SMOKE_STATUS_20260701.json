@@ -1,0 +1,29 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_OPTICAL_REFERENCE_SMOKE_READY_NOT_OPTICAL_SOLVER",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_OPTICAL_REFERENCE_SMOKE_READY_NOT_OPTICAL_SOLVER",
+    "artifact_id": "PACKAGE_C_SIDEWALL_OPTICAL_REFERENCE_SMOKE_20260701",
+    "claim_boundary": "synthetic_reference_detection_context_not_optical_solver_not_detection_probability",
+    "current_head": "2170b12a9a946009540ed732ce21c81f1d3fce3c",
+    "branch": "main",
+    "smoke_version": "sidewall_optical_reference_smoke_w500_d900_v1",
+    "source_wet_optical_context_disposition": "NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_READY_NOT_FINAL",
+    "smoke_rows": 2,
+    "trapezoid_reference_not_propagated_rows": 1,
+    "rectangle_native_reference_rows": 1,
+    "optical_solver_current": false,
+    "detection_probability_current": false,
+    "yield_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "JRC_current": false,
+    "source_lock_rows": 6,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 79,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "sidewall optical/reference NODI smoke evidence;synthetic detection context;optical solver gap prioritization",
+    "blocked_use": "true W_eff;sidewall optical solver output;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion",
+    "semantic_digest": "6c71bef241403d2b0ed47fd00fe706d4a81ca0621d684e0c6d6f660011151325"
+  }
+}

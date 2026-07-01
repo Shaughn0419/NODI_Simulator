@@ -1,0 +1,5 @@
+review_id,dimension,verdict,notes
+SOR-SELF-01,rectangle and trapezoid W500/D900 NODI smoke cases executed,PASS_SIDEWALL_OPTICAL_REFERENCE_SMOKE_NOT_SOLVER,Smoke advances optical/reference branch while preserving solver and detection claim prerequisites.
+SOR-SELF-02,trapezoid row records reference geometry not propagated,PASS_SIDEWALL_OPTICAL_REFERENCE_SMOKE_NOT_SOLVER,Smoke advances optical/reference branch while preserving solver and detection claim prerequisites.
+SOR-SELF-03,synthetic detection context is not final detection probability,PASS_SIDEWALL_OPTICAL_REFERENCE_SMOKE_NOT_SOLVER,Smoke advances optical/reference branch while preserving solver and detection claim prerequisites.
+SOR-SELF-04,true W_eff and optical solver output remain false,PASS_SIDEWALL_OPTICAL_REFERENCE_SMOKE_NOT_SOLVER,Smoke advances optical/reference branch while preserving solver and detection claim prerequisites.

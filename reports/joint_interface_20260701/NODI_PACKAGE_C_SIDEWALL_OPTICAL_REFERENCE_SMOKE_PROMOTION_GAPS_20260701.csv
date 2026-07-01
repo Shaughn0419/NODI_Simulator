@@ -1,0 +1,4 @@
+target,current_value,smoke_context_available,required_before_true,hard_fail_if
+sidewall_optical_solver_output,false,true,reference/optical solver or calibration consuming trapezoid geometry instead of rectangular width-depth surrogate,optical_solver_true_from_smoke_detection_context
+detection_probability,false,true,sidewall optical solver plus detector-response calibration and blank trace validation,detection_probability_true_from_synthetic_smoke
+true_W_eff,false,true,optical-field solution or calibrated lookup for sidewall geometry,true_W_eff_true_from_reference_proxy
