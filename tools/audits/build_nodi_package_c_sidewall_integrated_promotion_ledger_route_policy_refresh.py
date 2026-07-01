@@ -294,7 +294,7 @@ def build_payload() -> dict[str, Any]:
         "qch": sum(
             row["evidence_lane"] == "flow_split_qch"
             and row["current_status"]
-            == "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation"
+            == "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting"
             for row in lanes
         ),
         "selected_annulus": sum(
@@ -347,7 +347,7 @@ def build_payload() -> dict[str, Any]:
         "route_policy_delta_rows": len(deltas),
         "route_policy_rows": len(route_policy_rows),
         "integrated_route_policy_defined_rows": integrated_policy,
-        "qch_grid_refined_lane_rows_retained": retained["qch"],
+        "formal_qch_lane_rows_retained": retained["qch"],
         "selected_annulus_context_available_rows_retained": retained["selected_annulus"],
         "detector_context_available_rows_retained": retained["detector"],
         "blank_context_available_rows_retained": retained["blank"],
@@ -387,7 +387,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "two route deltas": summary["route_policy_delta_rows"] == 2,
         "two route policy rows": summary["route_policy_rows"] == 2,
         "integrated policy rows": summary["integrated_route_policy_defined_rows"] == 2,
-        "qch retained": summary["qch_grid_refined_lane_rows_retained"] == 2,
+        "formal qch retained": summary["formal_qch_lane_rows_retained"] == 2,
         "selected retained": summary["selected_annulus_context_available_rows_retained"] == 2,
         "detector retained": summary["detector_context_available_rows_retained"] == 2,
         "blank retained": summary["blank_context_available_rows_retained"] == 2,
