@@ -2117,6 +2117,67 @@ per route candidate and keeps the target claim state false:
 - `detection_probability_current=false`
 - `route_score_current=false`
 - `winner_current=false`
+
+## 50. Current route/yield/detection policy status
+
+The route/yield/detection branch now has a route-level readiness policy packet
+that consumes the latest integrated promotion ledger:
+
+- Module: `nodi_simulator/sidewall_route_yield_detection_policy.py`.
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_route_yield_detection_policy.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_READY_NOT_CLAIM_READY`.
+- Claim boundary:
+  `route_yield_detection_policy_not_route_score_not_yield_not_detection_probability`.
+
+For each W500/D900 route candidate, the policy rolls up six required lanes:
+
+1. `flow_split_qch`
+2. `pressure_flow_validation`
+3. `selected_annulus_detection_context`
+4. `detector_response_bridge`
+5. `blank_false_positive_trace`
+6. `wet_wall_interaction`
+
+The policy currently reports both routes as:
+
+- `not_ready_missing_calibrated_flow_detector_blank_wet_evidence`
+
+and emits blocker rows for all six lanes per route. The current primary next
+execution block is:
+
+- `qch_or_pressure_flow_validation`
+
+This does not mean detector/blank, wet/surface, selected-annulus, yield, or
+detection are out of scope. It means the route-level policy now orders the
+evidence chain:
+
+1. formal qch / pressure-flow validation;
+2. detector and blank calibration;
+3. wet/surface validation;
+4. selected-annulus panel expansion;
+5. only then route score, winner, yield, and detection probability.
+
+The policy emits a promotion update for `integrated_route_ledger`:
+
+- new status:
+  `route_yield_detection_policy_defined_not_ready_for_claims`;
+- target claim current:
+  `false`;
+- blocked promotions:
+  `route_score`, `winner`, `yield`, `detection_probability`, and
+  `wet_pass_probability`.
+
+The following remain false:
+
+- `route_score_allowed=false`
+- `winner_allowed=false`
+- `yield_allowed=false`
+- `detection_probability_allowed=false`
+- `wet_pass_probability_allowed=false`
 - `yield_current=false`
 
 ## 48. Current wet/surface evidence-contract status

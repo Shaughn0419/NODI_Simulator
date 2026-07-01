@@ -1,0 +1,263 @@
+"""Route/yield/detection readiness policy for sidewall promotion lanes.
+
+This module consumes the latest integrated promotion ledger and reduces it to
+route-level readiness rows. It does not compute route_score, winner, yield, or
+detection probability; it records exactly which evidence gates still prevent
+those claims.
+"""
+
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+from typing import Any, Mapping
+
+
+SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_VERSION = (
+    "sidewall_route_yield_detection_readiness_policy_v1"
+)
+SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_CLAIM_BOUNDARY = (
+    "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability"
+)
+
+REQUIRED_LANES: tuple[str, ...] = (
+    "flow_split_qch",
+    "pressure_flow_validation",
+    "selected_annulus_detection_context",
+    "detector_response_bridge",
+    "blank_false_positive_trace",
+    "wet_wall_interaction",
+)
+
+
+@dataclass(frozen=True)
+class SidewallRouteYieldDetectionPolicyRow:
+    policy_row_id: str
+    policy_version: str
+    route_candidate_id: str
+    route_key: str
+    source_case_id: str
+    qch_sidecar_id: str
+    qch_policy_status: str
+    pressure_flow_policy_status: str
+    selected_annulus_policy_status: str
+    detector_response_policy_status: str
+    blank_false_positive_policy_status: str
+    wet_surface_policy_status: str
+    route_policy_status: str
+    primary_next_execution_block: str
+    next_required_evidence: str
+    route_score_allowed: bool
+    winner_allowed: bool
+    yield_allowed: bool
+    detection_probability_allowed: bool
+    wet_pass_probability_allowed: bool
+    claim_boundary: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class SidewallRouteYieldDetectionBlockerRow:
+    blocker_id: str
+    route_candidate_id: str
+    evidence_lane: str
+    current_status: str
+    blocker_status: str
+    target_claim: str
+    next_required_evidence: str
+    hard_fail_if_promoted_without: str
+    claim_boundary: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+def build_route_yield_detection_policy_rows(
+    promotion_lane_rows: list[Mapping[str, Any]],
+) -> tuple[
+    list[SidewallRouteYieldDetectionPolicyRow],
+    list[SidewallRouteYieldDetectionBlockerRow],
+]:
+    lanes_by_route = _lanes_by_route(promotion_lane_rows)
+    policy_rows: list[SidewallRouteYieldDetectionPolicyRow] = []
+    blocker_rows: list[SidewallRouteYieldDetectionBlockerRow] = []
+    for route_id, lanes in sorted(lanes_by_route.items()):
+        representative = next(iter(lanes.values()))
+        blockers = [_lane_blocker(lanes.get(lane, {})) for lane in REQUIRED_LANES]
+        qch_status = _qch_policy_status(lanes.get("flow_split_qch", {}))
+        pressure_status = _pressure_flow_policy_status(
+            lanes.get("pressure_flow_validation", {})
+        )
+        annulus_status = _selected_annulus_policy_status(
+            lanes.get("selected_annulus_detection_context", {})
+        )
+        detector_status = _detector_policy_status(lanes.get("detector_response_bridge", {}))
+        blank_status = _blank_policy_status(lanes.get("blank_false_positive_trace", {}))
+        wet_status = _wet_policy_status(lanes.get("wet_wall_interaction", {}))
+        route_ready = all(blocker == "ready_for_claim_use" for blocker in blockers)
+        next_block = _primary_next_block(
+            qch_status,
+            pressure_status,
+            annulus_status,
+            detector_status,
+            blank_status,
+            wet_status,
+        )
+        next_required = _next_required_evidence(lanes)
+        policy_rows.append(
+            SidewallRouteYieldDetectionPolicyRow(
+                policy_row_id=f"RYD-POLICY-{route_id}",
+                policy_version=SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_VERSION,
+                route_candidate_id=route_id,
+                route_key=str(representative.get("route_key", "")),
+                source_case_id=str(representative.get("source_case_id", "")),
+                qch_sidecar_id=str(representative.get("qch_sidecar_id", "")),
+                qch_policy_status=qch_status,
+                pressure_flow_policy_status=pressure_status,
+                selected_annulus_policy_status=annulus_status,
+                detector_response_policy_status=detector_status,
+                blank_false_positive_policy_status=blank_status,
+                wet_surface_policy_status=wet_status,
+                route_policy_status=(
+                    "ready_for_route_yield_detection_claims"
+                    if route_ready
+                    else "not_ready_missing_calibrated_flow_detector_blank_wet_evidence"
+                ),
+                primary_next_execution_block=next_block,
+                next_required_evidence=next_required,
+                route_score_allowed=False,
+                winner_allowed=False,
+                yield_allowed=False,
+                detection_probability_allowed=False,
+                wet_pass_probability_allowed=False,
+                claim_boundary=SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_CLAIM_BOUNDARY,
+            )
+        )
+        for lane in REQUIRED_LANES:
+            row = lanes.get(lane, {})
+            blocker_rows.append(
+                SidewallRouteYieldDetectionBlockerRow(
+                    blocker_id=f"RYD-BLOCKER-{route_id}-{lane}",
+                    route_candidate_id=route_id,
+                    evidence_lane=lane,
+                    current_status=str(row.get("current_status", "lane_missing")),
+                    blocker_status=_lane_blocker(row),
+                    target_claim=str(row.get("target_claim", "")),
+                    next_required_evidence=str(row.get("next_required_evidence", "")),
+                    hard_fail_if_promoted_without=str(
+                        row.get("hard_fail_if_promoted_without", "")
+                    ),
+                    claim_boundary=SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_CLAIM_BOUNDARY,
+                )
+            )
+    return policy_rows, blocker_rows
+
+
+def route_yield_detection_policy_promotion_update_rows(
+    rows: list[SidewallRouteYieldDetectionPolicyRow],
+) -> list[dict[str, str]]:
+    route_ids = sorted({row.route_candidate_id for row in rows})
+    return [
+        {
+            "target_ledger_lane": "integrated_route_ledger",
+            "covered_route_candidate_ids": ";".join(route_ids),
+            "previous_status": "blocked_missing_calibrated_optical_wet_route_evidence",
+            "new_context_status": (
+                "route_yield_detection_policy_defined_not_ready_for_claims"
+            ),
+            "target_claim_current": "false",
+            "blocked_promotion": "route_score;winner;yield;detection_probability;wet_pass_probability",
+            "hard_fail_if": "route_policy_context_promoted_to_route_score_or_probability",
+            "next_required_evidence": (
+                "formal qch/pressure validation, detector/blank calibration, selected-annulus "
+                "event panel, and wet/surface validation"
+            ),
+            "claim_boundary": SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_CLAIM_BOUNDARY,
+        }
+    ]
+
+
+def _lanes_by_route(
+    rows: list[Mapping[str, Any]],
+) -> dict[str, dict[str, Mapping[str, Any]]]:
+    output: dict[str, dict[str, Mapping[str, Any]]] = {}
+    for row in rows:
+        route_id = str(row.get("route_candidate_id", ""))
+        lane = str(row.get("evidence_lane", ""))
+        if not route_id or not lane:
+            continue
+        output.setdefault(route_id, {})[lane] = row
+    return output
+
+
+def _lane_blocker(row: Mapping[str, Any]) -> str:
+    if not row:
+        return "missing_lane"
+    if str(row.get("target_claim_current", "")).lower() != "true":
+        return "blocked_not_claim_ready"
+    return "ready_for_claim_use"
+
+
+def _qch_policy_status(row: Mapping[str, Any]) -> str:
+    status = str(row.get("current_status", ""))
+    if status == "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation":
+        return "not_ready_grid_refined_split_candidate_absolute_q_requires_validation"
+    return "not_ready_formal_qch_missing"
+
+
+def _pressure_flow_policy_status(row: Mapping[str, Any]) -> str:
+    status = str(row.get("current_status", ""))
+    if status == "context_only_not_formal_validation":
+        return "not_ready_pressure_flow_context_only"
+    return "not_ready_pressure_flow_validation_missing"
+
+
+def _selected_annulus_policy_status(row: Mapping[str, Any]) -> str:
+    status = str(row.get("current_status", ""))
+    if status == "selected_annulus_context_available_small_n_not_probability":
+        return "not_ready_selected_annulus_small_n_not_probability"
+    return "not_ready_selected_annulus_context_missing"
+
+
+def _detector_policy_status(row: Mapping[str, Any]) -> str:
+    status = str(row.get("current_status", ""))
+    if status == "detector_identity_context_available_not_sidewall_response_validation":
+        return "not_ready_detector_identity_context_not_response_validation"
+    return "not_ready_detector_response_validation_missing"
+
+
+def _blank_policy_status(row: Mapping[str, Any]) -> str:
+    status = str(row.get("current_status", ""))
+    if status == "nearest_blank_context_available_not_sidewall_specific_validation":
+        return "not_ready_nearest_blank_context_not_sidewall_specific_validation"
+    return "not_ready_blank_false_positive_validation_missing"
+
+
+def _wet_policy_status(row: Mapping[str, Any]) -> str:
+    status = str(row.get("current_status", ""))
+    if status == "wet_surface_evidence_contract_defined_no_wet_validation":
+        return "not_ready_wet_surface_contract_defined_no_validation"
+    return "not_ready_wet_surface_evidence_missing"
+
+
+def _primary_next_block(*statuses: str) -> str:
+    priority = (
+        ("qch_or_pressure_flow_validation", ("formal_qch", "pressure_flow")),
+        ("detector_blank_calibration", ("detector", "blank")),
+        ("wet_surface_validation", ("wet_surface",)),
+        ("selected_annulus_event_panel_expansion", ("selected_annulus",)),
+    )
+    for block, fragments in priority:
+        if any(any(fragment in status for fragment in fragments) for status in statuses):
+            return block
+    return "no_primary_blocker_detected"
+
+
+def _next_required_evidence(lanes: dict[str, Mapping[str, Any]]) -> str:
+    items: list[str] = []
+    for lane in REQUIRED_LANES:
+        text = str(lanes.get(lane, {}).get("next_required_evidence", "")).strip()
+        if text and text not in items:
+            items.append(text)
+    return " | ".join(items)

@@ -1,0 +1,32 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_READY_NOT_CLAIM_READY",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_READY_NOT_CLAIM_READY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_20260701",
+    "claim_boundary": "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability",
+    "current_head": "fe05a4993936b8b85d54a5be33ddeb7dc224eabb",
+    "branch": "main",
+    "source_ledger_wet_surface_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_READY_PREFLIGHT_ONLY",
+    "policy_rows": 2,
+    "blocker_rows": 12,
+    "required_lanes_per_route": 6,
+    "promotion_update_rows": 1,
+    "not_ready_policy_rows": 2,
+    "route_score_allowed_rows": 0,
+    "winner_allowed_rows": 0,
+    "yield_allowed_rows": 0,
+    "detection_probability_allowed_rows": 0,
+    "wet_pass_probability_allowed_rows": 0,
+    "primary_next_execution_blocks": [
+      "qch_or_pressure_flow_validation"
+    ],
+    "source_lock_rows": 6,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 83,
+    "non_release_dirty_context_rows": 73,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "route/yield/detection readiness policy;promotion blocker prioritization",
+    "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion",
+    "semantic_digest": "9bea1b6d6780bd10842dbf8c9908861ca2b7492627ada7741839ed9bcc17afae"
+  }
+}
