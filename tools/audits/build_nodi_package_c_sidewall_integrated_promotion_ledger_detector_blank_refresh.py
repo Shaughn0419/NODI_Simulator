@@ -36,11 +36,11 @@ CLAIM_BOUNDARY = (
 
 LEDGER_QCH_STATUS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_STATUS_20260701.json"
+    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_FORMAL_QCH_REFRESH_STATUS_20260701.json"
 )
 LEDGER_QCH_LANES = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_PROMOTION_LANE_ROWS_20260701.csv"
+    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_FORMAL_QCH_REFRESH_PROMOTION_LANE_ROWS_20260701.csv"
 )
 DETECTOR_CONTEXT_STATUS = (
     OUTPUT_DIR
@@ -64,8 +64,8 @@ BLOCKED_USE = (
 )
 
 SOURCE_FILES = {
-    "integrated_promotion_ledger_qch_refresh_status": LEDGER_QCH_STATUS,
-    "integrated_promotion_ledger_qch_refresh_lanes": LEDGER_QCH_LANES,
+    "integrated_promotion_ledger_formal_qch_refresh_status": LEDGER_QCH_STATUS,
+    "integrated_promotion_ledger_formal_qch_refresh_lanes": LEDGER_QCH_LANES,
     "detector_blank_context_refresh_status": DETECTOR_CONTEXT_STATUS,
     "detector_blank_context_rows": DETECTOR_CONTEXT_ROWS,
     "detector_blank_promotion_update": DETECTOR_PROMOTION_UPDATE,
@@ -296,7 +296,7 @@ def build_payload() -> dict[str, Any]:
     qch_current = sum(
         row["evidence_lane"] == "flow_split_qch"
         and row["current_status"]
-        == "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation"
+        == "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting"
         for row in lanes
     )
     selected_current = sum(
@@ -321,7 +321,7 @@ def build_payload() -> dict[str, Any]:
         if source_missing == 0
         and release_dirty_blockers == 0
         and ledger_qch_status.get("disposition")
-        == "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_READY_PREFLIGHT_ONLY"
+        == "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_FORMAL_QCH_REFRESH_READY_PREFLIGHT_ONLY"
         and detector_context_status.get("disposition")
         == "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_READY_CONTEXT_ONLY"
         and len(deltas) == 4
@@ -344,7 +344,7 @@ def build_payload() -> dict[str, Any]:
         ),
         "refreshed_promotion_lane_rows": len(lanes),
         "detector_blank_delta_rows": len(deltas),
-        "qch_grid_refined_lane_rows_retained": qch_current,
+        "formal_qch_lane_rows_retained": qch_current,
         "selected_annulus_context_available_rows_retained": selected_current,
         "blank_context_available_rows": blank_context,
         "detector_context_available_rows": detector_context,
@@ -385,7 +385,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "four detector blank deltas": summary["detector_blank_delta_rows"] == 4,
         "two blank contexts": summary["blank_context_available_rows"] == 2,
         "two detector contexts": summary["detector_context_available_rows"] == 2,
-        "qch retained": summary["qch_grid_refined_lane_rows_retained"] == 2,
+        "formal qch retained": summary["formal_qch_lane_rows_retained"] == 2,
         "selected annulus retained": summary["selected_annulus_context_available_rows_retained"]
         == 2,
         "detector validation false": summary["detector_response_validation_current"] is False,

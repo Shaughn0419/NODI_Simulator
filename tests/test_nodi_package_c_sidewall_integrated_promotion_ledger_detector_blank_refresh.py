@@ -16,7 +16,7 @@ def test_sidewall_integrated_promotion_ledger_detector_blank_refresh_packet_buil
     assert summary["disposition"] == builder.DISPOSITION
     assert summary["refreshed_promotion_lane_rows"] == 18
     assert summary["detector_blank_delta_rows"] == 4
-    assert summary["qch_grid_refined_lane_rows_retained"] == 2
+    assert summary["formal_qch_lane_rows_retained"] == 2
     assert summary["selected_annulus_context_available_rows_retained"] == 2
     assert summary["blank_context_available_rows"] == 2
     assert summary["detector_context_available_rows"] == 2
@@ -68,7 +68,7 @@ def test_detector_blank_refresh_retains_upstream_lane_progress() -> None:
 
     assert len(qch_rows) == 2
     assert {row["current_status"] for row in qch_rows} == {
-        "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation"
+        "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting"
     }
     assert len(annulus_rows) == 2
     assert {row["current_status"] for row in annulus_rows} == {
