@@ -2168,6 +2168,56 @@ now ready to bind actual wet/surface evidence, COMSOL/experiment transfer
 metadata, or validated sidewall-specific assays without silently converting
 nearest-context or geometry descriptors into wet performance.
 
+## 49. Current integrated promotion ledger wet/surface-refresh status
+
+The integrated promotion ledger has now consumed the wet/surface evidence
+contract:
+
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_integrated_promotion_ledger_wet_surface_refresh.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_READY_PREFLIGHT_ONLY`.
+- Claim boundary:
+  `promotion_ledger_wet_surface_refresh_not_yield_not_detection_probability`.
+
+This refresh starts from the detector/blank-refreshed integrated ledger and
+updates only the `wet_wall_interaction` lane. For both W500/D900 route
+candidates, the wet lane is now:
+
+- `wet_surface_evidence_contract_defined_no_wet_validation`
+
+The same ledger also retains the earlier lane reductions:
+
+- `flow_split_qch`:
+  `w500_d900_grid_refined_split_candidate_absolute_q_requires_validation`
+- `selected_annulus_detection_context`:
+  `selected_annulus_context_available_small_n_not_probability`
+- `blank_false_positive_trace`:
+  `nearest_blank_context_available_not_sidewall_specific_validation`
+- `detector_response_bridge`:
+  `detector_identity_context_available_not_sidewall_response_validation`
+
+This creates a single promotion-ledger view of the current sidewall evidence
+state. The route/yield/detection branch can now distinguish:
+
+- evidence contexts that are assembled but not calibrated;
+- wet/surface evidence contracts that are defined but not yet satisfied;
+- formal claims that must remain false until calibrated or experimental inputs
+  are bound.
+
+The following remain false in this ledger refresh:
+
+- `wet_pass_probability_current=false`
+- `clogging_rate_current=false`
+- `time_to_clog_current=false`
+- `recovery_current=false`
+- `yield_current=false`
+- `detection_probability_current=false`
+- `route_score_current=false`
+- `winner_current=false`
+
 The selected-annulus blocker is therefore no longer "no sidewall run exists";
 it is now "small-N context exists but cannot be used as probability or route
 selection evidence." The next large block should attack the remaining evidence
