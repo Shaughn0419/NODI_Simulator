@@ -3,14 +3,14 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_READY_PREFLIGHT_ONLY",
     "artifact_id": "PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_20260701",
     "claim_boundary": "promotion_ledger_wet_surface_refresh_not_yield_not_detection_probability",
-    "current_head": "67a9328b8929c628212f5463d04030a625213e39",
+    "current_head": "c23e11bece9d332659977d0cd2036172ab999644",
     "branch": "main",
     "source_ledger_detector_blank_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_REFRESH_READY_PREFLIGHT_ONLY",
     "source_wet_surface_contract_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_EVIDENCE_CONTRACT_READY_CONTRACT_ONLY",
     "refreshed_promotion_lane_rows": 18,
     "wet_surface_delta_rows": 2,
     "wet_surface_contract_rows": 14,
-    "qch_grid_refined_lane_rows_retained": 2,
+    "formal_qch_lane_rows_retained": 2,
     "selected_annulus_context_available_rows_retained": 2,
     "blank_context_available_rows_retained": 2,
     "detector_context_available_rows_retained": 2,
@@ -25,12 +25,12 @@
     "winner_current": false,
     "source_lock_rows": 7,
     "source_missing_rows": 0,
-    "dirty_context_rows": 81,
-    "non_release_dirty_context_rows": 73,
+    "dirty_context_rows": 85,
+    "non_release_dirty_context_rows": 79,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "integrated promotion ledger wet/surface lane refresh;wet blocker update",
     "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;route_score;winner;JRC;detection_probability;production ingestion",
-    "semantic_digest": "079f6a6853f142bcd0cb94de93ff5aefc1b16e1e2f5f1c7add5897d2e7928379"
+    "semantic_digest": "bd271bf2eaababfe6241ac5fe4adf4b1dcf0513b2d991fa92a326db6d37950fb"
   },
   "refreshed_promotion_lane_rows": [
     {
@@ -41,18 +41,18 @@
       "source_case_id": "rectangle_limit_theta90_D900_W500",
       "qch_sidecar_id": "QCH-CAND-001",
       "evidence_lane": "flow_split_qch",
-      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_CONVERGENCE_ROWS_20260701.csv",
-      "source_sha256": "cbf37ca017520c460c9f29725e2d1d0cd7b99be31f7c075ff7e48573fc65d7b0",
-      "source_disposition": "NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_READY_CANDIDATE_ONLY",
-      "current_status": "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation",
+      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_ROWS_20260701.csv",
+      "source_sha256": "83e4a0138cf2c71c478aaca4a21e9153970e370018b806554827a4b5c22c7d62",
+      "source_disposition": "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY",
+      "current_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
       "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
       "target_claim": "route_score;winner;detection_probability",
       "target_claim_current": "false",
-      "required_before_promotion": "exact COMSOL or measurement pressure-flow validation before formal qch use",
-      "hard_fail_if_promoted_without": "grid_refined_split_candidate_promoted_to_formal_qch_or_route_score",
+      "required_before_promotion": "detector/blank calibration, wet/surface validation, and explicit route policy before route scoring",
+      "hard_fail_if_promoted_without": "formal_qch_sidecar_promoted_to_route_score_without_detector_wet_policy",
       "allowed_use": "promotion preflight blocker tracking",
       "blocked_use": "route_score;winner;JRC;q_ch_weighting;yield;detection_probability;wet pass;production ingestion",
-      "next_required_evidence": "exact COMSOL or measurement pressure-flow validation and route policy audit",
+      "next_required_evidence": "detector/blank calibration plus wet/surface validation and explicit route selection policy",
       "not_route_score": "true",
       "not_winner": "true",
       "not_yield": "true",
@@ -66,18 +66,18 @@
       "source_case_id": "rectangle_limit_theta90_D900_W500",
       "qch_sidecar_id": "QCH-CAND-001",
       "evidence_lane": "pressure_flow_validation",
-      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_COMPARISON_ROWS_20260701.csv",
-      "source_sha256": "69134ee8e88c8bcf6e80951c40545ed6bc759effdcc38cdac8d15c20aebb2067",
-      "source_disposition": "context_only_not_formal_validation",
-      "current_status": "context_only_not_formal_validation",
+      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_BINDING_ROWS_20260701.csv",
+      "source_sha256": "d1b70ef4888cc02a5686029cfac4bde545483f1a1a9b06a1b3b9b97620b7ab76",
+      "source_disposition": "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY",
+      "current_status": "exact_w500_d900_pressure_flow_result_accepted_formal_qch_sidecar_ready",
       "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
       "target_claim": "route_score;winner;q_ch_weighting",
       "target_claim_current": "false",
-      "required_before_promotion": "sidewall-matched COMSOL/measurement or accepted pressure-flow validation",
-      "hard_fail_if_promoted_without": "pressure_flow_context_only_not_formal_validation",
+      "required_before_promotion": "route policy plus calibrated detector/wet/yield evidence",
+      "hard_fail_if_promoted_without": "formal_qch_sidecar_promoted_to_route_score_without_route_policy_and_detection_yield_evidence",
       "allowed_use": "promotion preflight blocker tracking",
       "blocked_use": "route_score;winner;JRC;q_ch_weighting;yield;detection_probability;wet pass;production ingestion",
-      "next_required_evidence": "sidewall-matched COMSOL/measurement or accepted pressure-flow validation",
+      "next_required_evidence": "route policy plus calibrated detector/wet/yield evidence",
       "not_route_score": "true",
       "not_winner": "true",
       "not_yield": "true",
@@ -167,7 +167,7 @@
       "qch_sidecar_id": "QCH-CAND-001",
       "evidence_lane": "detector_response_bridge",
       "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_CONTEXT_ROWS_20260701.csv",
-      "source_sha256": "124a22f3db6d9637a1a143d70f6b5881a4c33e6dcae5990d2059eee5974384b6",
+      "source_sha256": "754c6e550c17c007c25e30dd96972f4f3dd6265120b6fcd521cf2ebde0892c2e",
       "source_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_READY_CONTEXT_ONLY",
       "current_status": "detector_identity_context_available_not_sidewall_response_validation",
       "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
@@ -192,7 +192,7 @@
       "qch_sidecar_id": "QCH-CAND-001",
       "evidence_lane": "blank_false_positive_trace",
       "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_CONTEXT_ROWS_20260701.csv",
-      "source_sha256": "124a22f3db6d9637a1a143d70f6b5881a4c33e6dcae5990d2059eee5974384b6",
+      "source_sha256": "754c6e550c17c007c25e30dd96972f4f3dd6265120b6fcd521cf2ebde0892c2e",
       "source_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_READY_CONTEXT_ONLY",
       "current_status": "nearest_blank_context_available_not_sidewall_specific_validation",
       "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
@@ -241,18 +241,18 @@
       "source_case_id": "rectangle_limit_theta90_D900_W500",
       "qch_sidecar_id": "QCH-CAND-001",
       "evidence_lane": "integrated_route_ledger",
-      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_ROUTE_CANDIDATE_ROWS_20260701.csv",
-      "source_sha256": "1d35879d5ca13c4603a04c650362a8ae8d8a0128560f3aa0b1bf3f72f88a2acd",
-      "source_disposition": "route_score_not_authorized_from_seed",
-      "current_status": "route_score_not_authorized_from_seed",
+      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_POLICY_ROWS_20260701.csv",
+      "source_sha256": "f505d1aa2209a2f425a8371fd0b41051c1505ba61adc0c5e8555591cf5ba0c54",
+      "source_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_READY_NOT_CLAIM_READY",
+      "current_status": "route_yield_detection_policy_defined_not_ready_for_claims",
       "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
       "target_claim": "route_score_or_winner",
       "target_claim_current": "false",
-      "required_before_promotion": "ledger binding calibrated optical, flow split, wet evidence, and route-selection policy",
-      "hard_fail_if_promoted_without": "route_winner_from_single_branch_smoke",
+      "required_before_promotion": "formal qch/pressure validation, detector/blank calibration, selected-annulus event panel, and wet/surface validation",
+      "hard_fail_if_promoted_without": "route_policy_context_promoted_to_route_score_or_probability",
       "allowed_use": "promotion preflight blocker tracking",
       "blocked_use": "route_score;winner;JRC;q_ch_weighting;yield;detection_probability;wet pass;production ingestion",
-      "next_required_evidence": "ledger binding calibrated optical, flow split, wet evidence, and route-selection policy",
+      "next_required_evidence": "formal qch/pressure validation, detector/blank calibration, selected-annulus event panel, and wet/surface validation",
       "not_route_score": "true",
       "not_winner": "true",
       "not_yield": "true",
@@ -266,18 +266,18 @@
       "source_case_id": "taper_theta85_D900_W500",
       "qch_sidecar_id": "QCH-CAND-002",
       "evidence_lane": "flow_split_qch",
-      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_CONVERGENCE_ROWS_20260701.csv",
-      "source_sha256": "cbf37ca017520c460c9f29725e2d1d0cd7b99be31f7c075ff7e48573fc65d7b0",
-      "source_disposition": "NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_READY_CANDIDATE_ONLY",
-      "current_status": "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation",
+      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_ROWS_20260701.csv",
+      "source_sha256": "83e4a0138cf2c71c478aaca4a21e9153970e370018b806554827a4b5c22c7d62",
+      "source_disposition": "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY",
+      "current_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
       "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
       "target_claim": "route_score;winner;detection_probability",
       "target_claim_current": "false",
-      "required_before_promotion": "exact COMSOL or measurement pressure-flow validation before formal qch use",
-      "hard_fail_if_promoted_without": "grid_refined_split_candidate_promoted_to_formal_qch_or_route_score",
+      "required_before_promotion": "detector/blank calibration, wet/surface validation, and explicit route policy before route scoring",
+      "hard_fail_if_promoted_without": "formal_qch_sidecar_promoted_to_route_score_without_detector_wet_policy",
       "allowed_use": "promotion preflight blocker tracking",
       "blocked_use": "route_score;winner;JRC;q_ch_weighting;yield;detection_probability;wet pass;production ingestion",
-      "next_required_evidence": "exact COMSOL or measurement pressure-flow validation and route policy audit",
+      "next_required_evidence": "detector/blank calibration plus wet/surface validation and explicit route selection policy",
       "not_route_score": "true",
       "not_winner": "true",
       "not_yield": "true",
@@ -291,18 +291,18 @@
       "source_case_id": "taper_theta85_D900_W500",
       "qch_sidecar_id": "QCH-CAND-002",
       "evidence_lane": "pressure_flow_validation",
-      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_COMPARISON_ROWS_20260701.csv",
-      "source_sha256": "69134ee8e88c8bcf6e80951c40545ed6bc759effdcc38cdac8d15c20aebb2067",
-      "source_disposition": "context_only_not_formal_validation",
-      "current_status": "context_only_not_formal_validation",
+      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_BINDING_ROWS_20260701.csv",
+      "source_sha256": "d1b70ef4888cc02a5686029cfac4bde545483f1a1a9b06a1b3b9b97620b7ab76",
+      "source_disposition": "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY",
+      "current_status": "exact_w500_d900_pressure_flow_result_accepted_formal_qch_sidecar_ready",
       "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
       "target_claim": "route_score;winner;q_ch_weighting",
       "target_claim_current": "false",
-      "required_before_promotion": "sidewall-matched COMSOL/measurement or accepted pressure-flow validation",
-      "hard_fail_if_promoted_without": "pressure_flow_context_only_not_formal_validation",
+      "required_before_promotion": "route policy plus calibrated detector/wet/yield evidence",
+      "hard_fail_if_promoted_without": "formal_qch_sidecar_promoted_to_route_score_without_route_policy_and_detection_yield_evidence",
       "allowed_use": "promotion preflight blocker tracking",
       "blocked_use": "route_score;winner;JRC;q_ch_weighting;yield;detection_probability;wet pass;production ingestion",
-      "next_required_evidence": "sidewall-matched COMSOL/measurement or accepted pressure-flow validation",
+      "next_required_evidence": "route policy plus calibrated detector/wet/yield evidence",
       "not_route_score": "true",
       "not_winner": "true",
       "not_yield": "true",
@@ -392,7 +392,7 @@
       "qch_sidecar_id": "QCH-CAND-002",
       "evidence_lane": "detector_response_bridge",
       "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_CONTEXT_ROWS_20260701.csv",
-      "source_sha256": "124a22f3db6d9637a1a143d70f6b5881a4c33e6dcae5990d2059eee5974384b6",
+      "source_sha256": "754c6e550c17c007c25e30dd96972f4f3dd6265120b6fcd521cf2ebde0892c2e",
       "source_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_READY_CONTEXT_ONLY",
       "current_status": "detector_identity_context_available_not_sidewall_response_validation",
       "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
@@ -417,7 +417,7 @@
       "qch_sidecar_id": "QCH-CAND-002",
       "evidence_lane": "blank_false_positive_trace",
       "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_CONTEXT_ROWS_20260701.csv",
-      "source_sha256": "124a22f3db6d9637a1a143d70f6b5881a4c33e6dcae5990d2059eee5974384b6",
+      "source_sha256": "754c6e550c17c007c25e30dd96972f4f3dd6265120b6fcd521cf2ebde0892c2e",
       "source_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_READY_CONTEXT_ONLY",
       "current_status": "nearest_blank_context_available_not_sidewall_specific_validation",
       "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
@@ -466,18 +466,18 @@
       "source_case_id": "taper_theta85_D900_W500",
       "qch_sidecar_id": "QCH-CAND-002",
       "evidence_lane": "integrated_route_ledger",
-      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_ROUTE_CANDIDATE_ROWS_20260701.csv",
-      "source_sha256": "1d35879d5ca13c4603a04c650362a8ae8d8a0128560f3aa0b1bf3f72f88a2acd",
-      "source_disposition": "route_score_not_authorized_from_seed",
-      "current_status": "route_score_not_authorized_from_seed",
+      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_POLICY_ROWS_20260701.csv",
+      "source_sha256": "f505d1aa2209a2f425a8371fd0b41051c1505ba61adc0c5e8555591cf5ba0c54",
+      "source_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_READY_NOT_CLAIM_READY",
+      "current_status": "route_yield_detection_policy_defined_not_ready_for_claims",
       "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
       "target_claim": "route_score_or_winner",
       "target_claim_current": "false",
-      "required_before_promotion": "ledger binding calibrated optical, flow split, wet evidence, and route-selection policy",
-      "hard_fail_if_promoted_without": "route_winner_from_single_branch_smoke",
+      "required_before_promotion": "formal qch/pressure validation, detector/blank calibration, selected-annulus event panel, and wet/surface validation",
+      "hard_fail_if_promoted_without": "route_policy_context_promoted_to_route_score_or_probability",
       "allowed_use": "promotion preflight blocker tracking",
       "blocked_use": "route_score;winner;JRC;q_ch_weighting;yield;detection_probability;wet pass;production ingestion",
-      "next_required_evidence": "ledger binding calibrated optical, flow split, wet evidence, and route-selection policy",
+      "next_required_evidence": "formal qch/pressure validation, detector/blank calibration, selected-annulus event panel, and wet/surface validation",
       "not_route_score": "true",
       "not_winner": "true",
       "not_yield": "true",
@@ -513,7 +513,7 @@
       "source_id": "integrated_promotion_ledger_detector_blank_status",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_REFRESH_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "faec5bb90fb6cc9e1dfaacb4a4ce1b61b5ab1f733c65407a85432278ca106b40",
+      "sha256": "cd2fed208aec675ac5d150829599102645e83da9176bba82ebdb8e3011ffb7a4",
       "claim_boundary": "promotion_ledger_wet_surface_refresh_not_yield_not_detection_probability",
       "allowed_use": "integrated promotion ledger wet/surface lane refresh;wet blocker update",
       "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;route_score;winner;JRC;detection_probability;production ingestion"
@@ -522,7 +522,7 @@
       "source_id": "integrated_promotion_ledger_detector_blank_lanes",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_REFRESH_PROMOTION_LANE_ROWS_20260701.csv",
       "exists": "true",
-      "sha256": "88f5026ea1f265267f48d2237f8c8d157e0fa75c5125811142779fd1326c452d",
+      "sha256": "6d2640b53864f72afa77b0ccda5793e39e168b4a70d122f2c3a197203bf6149e",
       "claim_boundary": "promotion_ledger_wet_surface_refresh_not_yield_not_detection_probability",
       "allowed_use": "integrated promotion ledger wet/surface lane refresh;wet blocker update",
       "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;route_score;winner;JRC;detection_probability;production ingestion"
@@ -558,7 +558,7 @@
       "source_id": "ledger_wet_surface_refresh_builder",
       "path": "tools/audits/build_nodi_package_c_sidewall_integrated_promotion_ledger_wet_surface_refresh.py",
       "exists": "true",
-      "sha256": "dbdbeb5e9b9abc865eaceab64ad4488d4a7cba98214163690a0303646d05f970",
+      "sha256": "f972c6dc5539c6dffbcd95bb30a9374170a866f9c3070368bf60ebc274b864b8",
       "claim_boundary": "promotion_ledger_wet_surface_refresh_not_yield_not_detection_probability",
       "allowed_use": "integrated promotion ledger wet/surface lane refresh;wet blocker update",
       "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;route_score;winner;JRC;detection_probability;production ingestion"
@@ -567,7 +567,7 @@
       "source_id": "ledger_wet_surface_refresh_builder_tests",
       "path": "tests/test_nodi_package_c_sidewall_integrated_promotion_ledger_wet_surface_refresh.py",
       "exists": "true",
-      "sha256": "1989b92703bb9c9317fb300056fab0e64b74398d4baf86d741262b8ea86fccca",
+      "sha256": "ad3eea78283f43636eb53b07d6aedb4d8fec39da7ff7b4c82cc5f80bdad7a371",
       "claim_boundary": "promotion_ledger_wet_surface_refresh_not_yield_not_detection_probability",
       "allowed_use": "integrated promotion ledger wet/surface lane refresh;wet blocker update",
       "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;route_score;winner;JRC;detection_probability;production ingestion"
@@ -575,14 +575,8 @@
   ],
   "dirty_context": [
     {
-      "path": ".gitignore",
-      "git_status": "M ",
-      "classification": "integrated_promotion_ledger_wet_surface_refresh_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "REVIEW_BUILD_MANIFEST.json",
-      "git_status": " M",
+      "git_status": "M ",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
     },
@@ -641,10 +635,10 @@
       "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
     },
     {
-      "path": "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
       "git_status": " M",
-      "classification": "integrated_promotion_ledger_wet_surface_refresh_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
     },
     {
       "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
@@ -893,6 +887,60 @@
       "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
     },
     {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
+    },
+    {
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -1001,16 +1049,22 @@
       "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
     },
     {
+      "path": "tests/test_nodi_package_c_sidewall_integrated_promotion_ledger_wet_surface_refresh.py",
+      "git_status": " M",
+      "classification": "integrated_promotion_ledger_wet_surface_refresh_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_integrated_promotion_ledger_wet_surface_refresh.py",
+      "git_status": " M",
+      "classification": "integrated_promotion_ledger_wet_surface_refresh_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
-      "git_status": "??",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
     },
     {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
@@ -1019,46 +1073,16 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_COMSOL_MIRROR_REQUEST_20260701.md",
-      "git_status": "??",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
-    },
-    {
       "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "tests/test_nodi_package_c_promotion_surface_quarantine.py",
-      "git_status": "??",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
-    },
-    {
-      "path": "tests/test_nodi_package_c_sidewall_integrated_promotion_ledger_wet_surface_refresh.py",
-      "git_status": "??",
-      "classification": "integrated_promotion_ledger_wet_surface_refresh_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "tools/audits/build_nodi_package_c_promotion_surface_quarantine.py",
-      "git_status": "??",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_integrated_promotion_ledger_wet_surface_refresh_not_source_locked"
-    },
-    {
-      "path": "tools/audits/build_nodi_package_c_sidewall_integrated_promotion_ledger_wet_surface_refresh.py",
-      "git_status": "??",
-      "classification": "integrated_promotion_ledger_wet_surface_refresh_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
     }
   ]
 }

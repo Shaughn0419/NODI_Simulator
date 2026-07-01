@@ -290,7 +290,7 @@ def build_payload() -> dict[str, Any]:
     qch_current = sum(
         row["evidence_lane"] == "flow_split_qch"
         and row["current_status"]
-        == "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation"
+        == "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting"
         for row in lanes
     )
     selected_current = sum(
@@ -348,7 +348,7 @@ def build_payload() -> dict[str, Any]:
         "refreshed_promotion_lane_rows": len(lanes),
         "wet_surface_delta_rows": len(deltas),
         "wet_surface_contract_rows": len(wet_contract_rows),
-        "qch_grid_refined_lane_rows_retained": qch_current,
+        "formal_qch_lane_rows_retained": qch_current,
         "selected_annulus_context_available_rows_retained": selected_current,
         "blank_context_available_rows_retained": blank_context,
         "detector_context_available_rows_retained": detector_context,
@@ -391,7 +391,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "two wet deltas": summary["wet_surface_delta_rows"] == 2,
         "wet contract rows": summary["wet_surface_contract_rows"] == 14,
         "two wet contracts": summary["wet_surface_contract_defined_rows"] == 2,
-        "qch retained": summary["qch_grid_refined_lane_rows_retained"] == 2,
+        "formal qch retained": summary["formal_qch_lane_rows_retained"] == 2,
         "selected annulus retained": summary["selected_annulus_context_available_rows_retained"]
         == 2,
         "blank retained": summary["blank_context_available_rows_retained"] == 2,

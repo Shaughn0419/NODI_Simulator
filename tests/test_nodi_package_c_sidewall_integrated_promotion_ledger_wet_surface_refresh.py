@@ -18,7 +18,7 @@ def test_sidewall_integrated_promotion_ledger_wet_surface_refresh_packet_builds(
     assert summary["wet_surface_delta_rows"] == 2
     assert summary["wet_surface_contract_rows"] == 14
     assert summary["wet_surface_contract_defined_rows"] == 2
-    assert summary["qch_grid_refined_lane_rows_retained"] == 2
+    assert summary["formal_qch_lane_rows_retained"] == 2
     assert summary["selected_annulus_context_available_rows_retained"] == 2
     assert summary["blank_context_available_rows_retained"] == 2
     assert summary["detector_context_available_rows_retained"] == 2
@@ -68,7 +68,7 @@ def test_wet_surface_refresh_retains_prior_lane_progress() -> None:
         row["current_status"]
         for row in rows
         if row["evidence_lane"] == "flow_split_qch"
-    } == {"w500_d900_grid_refined_split_candidate_absolute_q_requires_validation"}
+    } == {"formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting"}
     assert {
         row["current_status"]
         for row in rows
