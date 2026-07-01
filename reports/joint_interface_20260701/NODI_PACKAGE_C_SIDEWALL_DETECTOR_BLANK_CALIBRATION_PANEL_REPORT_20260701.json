@@ -1,0 +1,1158 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CALIBRATION_PANEL_READY_CANDIDATE_NOT_PROBABILITY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CALIBRATION_PANEL_20260701",
+    "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score",
+    "current_head": "94d8cf5142606546f86161fd1b4c5a9be4d5340d",
+    "branch": "main",
+    "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+    "source_detector_blank_context_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_READY_CONTEXT_ONLY",
+    "source_route_policy_refresh_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_ROUTE_POLICY_REFRESH_READY_PREFLIGHT_ONLY",
+    "panel_rows": 12,
+    "route_evidence_matrix_rows": 2,
+    "promotion_update_rows": 3,
+    "ready_panel_rows": 12,
+    "ready_route_evidence_matrix_rows": 2,
+    "n_events_per_run": 64,
+    "random_seed_count": 3,
+    "wavelength_count": 2,
+    "total_selected_annulus_events": 342,
+    "sidewall_specific_blank_trace_current": false,
+    "detector_response_validation_current": false,
+    "sidewall_specific_optical_calibration_current": false,
+    "detection_probability_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_current": false,
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 87,
+    "non_release_dirty_context_rows": 79,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "detector/blank calibration candidate panel;selected-annulus expansion;route evidence matrix planning",
+    "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;sidewall_specific_blank_fpr;detector_response_validation;production ingestion",
+    "semantic_digest": "a9d0e6e58737b477ba6d6b0ee5344eb28af0a2fb9daec570a0e1bcb45aa0c73f"
+  },
+  "panel_rows": [
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-001-404-601",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "route_key": "route_rectangle_limit_theta90_D900_W500",
+      "source_case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "404",
+      "random_seed": "601",
+      "n_events": "64",
+      "selected_annulus_n_events": "27",
+      "selected_annulus_n_detected": "17",
+      "selected_annulus_detection_context_rate": "0.62962962963",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.442289046234",
+      "selected_annulus_detection_rate_wilson_ub_context": "0.784677129321",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0298545106208",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-001-404-602",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "route_key": "route_rectangle_limit_theta90_D900_W500",
+      "source_case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "404",
+      "random_seed": "602",
+      "n_events": "64",
+      "selected_annulus_n_events": "31",
+      "selected_annulus_n_detected": "25",
+      "selected_annulus_detection_context_rate": "0.806451612903",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.637193964445",
+      "selected_annulus_detection_rate_wilson_ub_context": "0.908131164137",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0493825322445",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-001-404-603",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "route_key": "route_rectangle_limit_theta90_D900_W500",
+      "source_case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "404",
+      "random_seed": "603",
+      "n_events": "64",
+      "selected_annulus_n_events": "26",
+      "selected_annulus_n_detected": "21",
+      "selected_annulus_detection_context_rate": "0.807692307692",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.621233638454",
+      "selected_annulus_detection_rate_wilson_ub_context": "0.914930642282",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0403801864995",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-001-660-601",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "route_key": "route_rectangle_limit_theta90_D900_W500",
+      "source_case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "660",
+      "random_seed": "601",
+      "n_events": "64",
+      "selected_annulus_n_events": "27",
+      "selected_annulus_n_detected": "27",
+      "selected_annulus_detection_context_rate": "1",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.875440962855",
+      "selected_annulus_detection_rate_wilson_ub_context": "1",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0590922649927",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-001-660-602",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "route_key": "route_rectangle_limit_theta90_D900_W500",
+      "source_case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "660",
+      "random_seed": "602",
+      "n_events": "64",
+      "selected_annulus_n_events": "31",
+      "selected_annulus_n_detected": "31",
+      "selected_annulus_detection_context_rate": "1",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.889740999265",
+      "selected_annulus_detection_rate_wilson_ub_context": "1",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0689549274431",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-001-660-603",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "route_key": "route_rectangle_limit_theta90_D900_W500",
+      "source_case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "660",
+      "random_seed": "603",
+      "n_events": "64",
+      "selected_annulus_n_events": "26",
+      "selected_annulus_n_detected": "26",
+      "selected_annulus_detection_context_rate": "1",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.871266956195",
+      "selected_annulus_detection_rate_wilson_ub_context": "1",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0566323521527",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-002-404-601",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "route_key": "route_taper_theta85_D900_W500",
+      "source_case_id": "taper_theta85_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "404",
+      "random_seed": "601",
+      "n_events": "64",
+      "selected_annulus_n_events": "31",
+      "selected_annulus_n_detected": "22",
+      "selected_annulus_detection_context_rate": "0.709677419355",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.534073400425",
+      "selected_annulus_detection_rate_wilson_ub_context": "0.839043792816",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0413906885329",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-002-404-602",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "route_key": "route_taper_theta85_D900_W500",
+      "source_case_id": "taper_theta85_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "404",
+      "random_seed": "602",
+      "n_events": "64",
+      "selected_annulus_n_events": "32",
+      "selected_annulus_n_detected": "24",
+      "selected_annulus_detection_context_rate": "0.75",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.578931082298",
+      "selected_annulus_detection_rate_wilson_ub_context": "0.867477560174",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0463144865838",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-002-404-603",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "route_key": "route_taper_theta85_D900_W500",
+      "source_case_id": "taper_theta85_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "404",
+      "random_seed": "603",
+      "n_events": "64",
+      "selected_annulus_n_events": "24",
+      "selected_annulus_n_detected": "20",
+      "selected_annulus_detection_context_rate": "0.833333333333",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.641465296121",
+      "selected_annulus_detection_rate_wilson_ub_context": "0.933214319993",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0384879177673",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-002-660-601",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "route_key": "route_taper_theta85_D900_W500",
+      "source_case_id": "taper_theta85_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "660",
+      "random_seed": "601",
+      "n_events": "64",
+      "selected_annulus_n_events": "31",
+      "selected_annulus_n_detected": "31",
+      "selected_annulus_detection_context_rate": "1",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.889740999265",
+      "selected_annulus_detection_rate_wilson_ub_context": "1",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0689549274431",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-002-660-602",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "route_key": "route_taper_theta85_D900_W500",
+      "source_case_id": "taper_theta85_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "660",
+      "random_seed": "602",
+      "n_events": "64",
+      "selected_annulus_n_events": "32",
+      "selected_annulus_n_detected": "32",
+      "selected_annulus_detection_context_rate": "1",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.892817284943",
+      "selected_annulus_detection_rate_wilson_ub_context": "1",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0714253827954",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "panel_row_id": "DB-CAL-PANEL-ROUTE-CAND-002-660-603",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "route_key": "route_taper_theta85_D900_W500",
+      "source_case_id": "taper_theta85_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "wavelength_nm": "660",
+      "random_seed": "603",
+      "n_events": "64",
+      "selected_annulus_n_events": "24",
+      "selected_annulus_n_detected": "24",
+      "selected_annulus_detection_context_rate": "1",
+      "selected_annulus_detection_rate_wilson_lb_context": "0.862019424171",
+      "selected_annulus_detection_rate_wilson_ub_context": "1",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "selected_annulus_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "panel_evidence_status": "detector_blank_calibration_panel_candidate_ready_not_probability",
+      "panel_evidence_strength": "0.0517211654503",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    }
+  ],
+  "route_evidence_matrix_rows": [
+    {
+      "matrix_row_id": "DB-CAL-MATRIX-ROUTE-CAND-001",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "route_key": "route_rectangle_limit_theta90_D900_W500",
+      "source_case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "panel_run_rows": "6",
+      "total_n_events": "384",
+      "total_selected_annulus_events": "168",
+      "total_selected_annulus_detected": "147",
+      "pooled_selected_annulus_detection_context_rate": "0.875",
+      "pooled_selected_annulus_detection_wilson_lb_context": "0.816462840386",
+      "pooled_selected_annulus_detection_wilson_ub_context": "0.916770555951",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "calibration_evidence_strength": "0.204115710097",
+      "route_evidence_matrix_status": "detector_blank_route_evidence_matrix_candidate_ready_not_probability",
+      "next_required_evidence": "sidewall-specific blank traces, detector response calibration, and wet/surface validation before probability or route claims",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "matrix_row_id": "DB-CAL-MATRIX-ROUTE-CAND-002",
+      "panel_version": "sidewall_detector_blank_calibration_panel_v1",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "route_key": "route_taper_theta85_D900_W500",
+      "source_case_id": "taper_theta85_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "panel_run_rows": "6",
+      "total_n_events": "384",
+      "total_selected_annulus_events": "174",
+      "total_selected_annulus_detected": "153",
+      "pooled_selected_annulus_detection_context_rate": "0.879310344828",
+      "pooled_selected_annulus_detection_wilson_lb_context": "0.822541693892",
+      "pooled_selected_annulus_detection_wilson_ub_context": "0.919691844268",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "blank_guard_status": "nearest_blank_guard_finite_below_threshold_not_sidewall_specific",
+      "detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "optical_calibration_context_status": "synthetic_reference_seed_available_not_blank_channel_calibration",
+      "qch_flow_split_context_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "calibration_evidence_strength": "0.205635423473",
+      "route_evidence_matrix_status": "detector_blank_route_evidence_matrix_candidate_ready_not_probability",
+      "next_required_evidence": "sidewall-specific blank traces, detector response calibration, and wet/surface validation before probability or route claims",
+      "sidewall_specific_blank_trace_current": "false",
+      "detector_response_validation_current": "false",
+      "sidewall_specific_optical_calibration_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_current": "false",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    }
+  ],
+  "promotion_update_rows": [
+    {
+      "target_ledger_lane": "selected_annulus_detection_context",
+      "covered_route_candidate_ids": "ROUTE-CAND-001;ROUTE-CAND-002",
+      "previous_status": "selected_annulus_context_available_small_n_not_probability",
+      "new_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "target_claim_current": "false",
+      "blocked_promotion": "detection_probability;route_score;winner",
+      "hard_fail_if": "expanded_selected_annulus_panel_promoted_to_probability",
+      "next_required_evidence": "detector response validation and sidewall-specific blank transfer model",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "target_ledger_lane": "blank_false_positive_trace",
+      "covered_route_candidate_ids": "ROUTE-CAND-001;ROUTE-CAND-002",
+      "previous_status": "nearest_blank_context_available_not_sidewall_specific_validation",
+      "new_context_status": "nearest_blank_guard_bound_to_panel_not_sidewall_specific",
+      "target_claim_current": "false",
+      "blocked_promotion": "detection_probability;route_score;winner;yield",
+      "hard_fail_if": "nearest_blank_guard_promoted_to_sidewall_blank_fpr",
+      "next_required_evidence": "sidewall-specific blank traces or validated transferable blank false-positive model",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    },
+    {
+      "target_ledger_lane": "detector_response_bridge",
+      "covered_route_candidate_ids": "ROUTE-CAND-001;ROUTE-CAND-002",
+      "previous_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "new_context_status": "detector_response_panel_candidate_not_sidewall_calibrated",
+      "target_claim_current": "false",
+      "blocked_promotion": "detection_probability;route_score;winner;yield",
+      "hard_fail_if": "detector_panel_candidate_promoted_to_response_validation",
+      "next_required_evidence": "detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "detector_blank_context_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "88f751f196dce4fe4779b113de7cb2426a29fd723734fc47b3a5a587c610fc6e",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score",
+      "allowed_use": "detector/blank calibration candidate panel;selected-annulus expansion;route evidence matrix planning",
+      "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;sidewall_specific_blank_fpr;detector_response_validation;production ingestion"
+    },
+    {
+      "source_id": "detector_blank_context_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_CONTEXT_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "754c6e550c17c007c25e30dd96972f4f3dd6265120b6fcd521cf2ebde0892c2e",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score",
+      "allowed_use": "detector/blank calibration candidate panel;selected-annulus expansion;route evidence matrix planning",
+      "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;sidewall_specific_blank_fpr;detector_response_validation;production ingestion"
+    },
+    {
+      "source_id": "route_policy_refresh_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_ROUTE_POLICY_REFRESH_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "dc9d00b56e24f31f173fa24a338df64dce4fb1667384cfd01d45d2361c83050a",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score",
+      "allowed_use": "detector/blank calibration candidate panel;selected-annulus expansion;route evidence matrix planning",
+      "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;sidewall_specific_blank_fpr;detector_response_validation;production ingestion"
+    },
+    {
+      "source_id": "detector_blank_calibration_panel_source",
+      "path": "nodi_simulator/sidewall_detector_blank_calibration_panel.py",
+      "exists": "true",
+      "sha256": "469dbfc9f5b4afa129d52188b5bef9d660161e72ca4b31413d5d63b587a9ac8c",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score",
+      "allowed_use": "detector/blank calibration candidate panel;selected-annulus expansion;route evidence matrix planning",
+      "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;sidewall_specific_blank_fpr;detector_response_validation;production ingestion"
+    },
+    {
+      "source_id": "detector_blank_calibration_panel_tests",
+      "path": "tests/test_sidewall_detector_blank_calibration_panel.py",
+      "exists": "true",
+      "sha256": "49de6d9c43ad3c819478fe95eafa2c3baed2fef2431a22e4f4f33080b4cfb3a5",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score",
+      "allowed_use": "detector/blank calibration candidate panel;selected-annulus expansion;route evidence matrix planning",
+      "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;sidewall_specific_blank_fpr;detector_response_validation;production ingestion"
+    },
+    {
+      "source_id": "detector_blank_calibration_panel_builder",
+      "path": "tools/audits/build_nodi_package_c_sidewall_detector_blank_calibration_panel.py",
+      "exists": "true",
+      "sha256": "80e68281e17ffe592042111e84bd14f336a69bf38da9ebea6855a2dd4c38feb7",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score",
+      "allowed_use": "detector/blank calibration candidate panel;selected-annulus expansion;route evidence matrix planning",
+      "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;sidewall_specific_blank_fpr;detector_response_validation;production ingestion"
+    },
+    {
+      "source_id": "detector_blank_calibration_panel_builder_tests",
+      "path": "tests/test_nodi_package_c_sidewall_detector_blank_calibration_panel.py",
+      "exists": "true",
+      "sha256": "60899c1cff776e9cb8aa9cacc2e9c9ea55038212e6fea0a6859360953501f739",
+      "claim_boundary": "detector_blank_calibration_panel_candidate_not_detection_probability_not_route_score",
+      "allowed_use": "detector/blank calibration candidate panel;selected-annulus expansion;route evidence matrix planning",
+      "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;sidewall_specific_blank_fpr;detector_response_validation;production ingestion"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": "M ",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_calibration_panel_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_detector_blank_calibration_panel.py",
+      "git_status": "??",
+      "classification": "detector_blank_calibration_panel_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_detector_blank_calibration_panel.py",
+      "git_status": "??",
+      "classification": "detector_blank_calibration_panel_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_sidewall_detector_blank_calibration_panel.py",
+      "git_status": "??",
+      "classification": "detector_blank_calibration_panel_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_detector_blank_calibration_panel.py",
+      "git_status": "??",
+      "classification": "detector_blank_calibration_panel_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ]
+}
