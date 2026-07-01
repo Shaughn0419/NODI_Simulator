@@ -4,7 +4,7 @@
     "disposition": "NODI_PACKAGE_C_USER_AUTHORIZATION_LEDGER_ACCEPTED_NO_RESULT_PROMOTION",
     "artifact_id": "PACKAGE_C_USER_AUTHORIZATION_LEDGER_20260701",
     "claim_boundary": "user_authorization_ledger_accepted_not_package_c_proof_pass_not_runtime_result",
-    "build_head": "a0836b538f845b0bdca70f720fde29176620f1fb",
+    "build_head": "6bc630339a99b33ead3fefccf19eca32d45c06ee",
     "authorization_source": "user_explicit_message_current_thread_20260701",
     "authorization_text_sha256": "9f86bfdeedab4c8d689aacc4c2081647c9fd4a106972c20dafca5ec0896fa33b",
     "authorization_scope_rows": 4,
