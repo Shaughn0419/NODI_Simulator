@@ -1389,12 +1389,27 @@ The next block makes candidate/proof thresholds and remaining proof gaps machine
 
 This block is threshold planning evidence only. It does not register Package C proof/pass and does not make any runtime, PRS/EAS numeric, COMSOL, `.mph`, route, yield, detection, wet, fabrication, or production claim.
 
-## 19. Recommended next action
+## 19. Current Package C proof-readiness index status
 
-Current safe route after the consolidation, timeseries ESS candidate, substep/fail-policy hardening, dt-refinement requirements, and proof-threshold table:
+The next block consolidates the Package C metric-hardening state into a single machine-readable entrypoint:
 
-1. Use the consolidated evidence index, timeseries ESS candidate, substep/fail-policy hardening packet, dt-refinement requirements, and proof-threshold table as the Package C metric-hardening entrypoint.
-2. Continue tightening the remaining proof-level gaps in one larger block: bind future proof/pass attempts to clean reviewed commit evidence and manual authorization ledger inputs while keeping runtime permission separate.
+- Artifact id: `PACKAGE_C_PROOF_READINESS_INDEX_20260701`.
+- Disposition: `NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: readiness index rows, open blocker rows, external-research question rows, source lock, no-proof firewall, status/report/manifest.
+- Readiness index rows: `5`, covering metric-hardening consolidation, timeseries ESS, substep fail-policy hardening, substep dt-refinement requirements, and proof-threshold table.
+- Open blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, proof-threshold gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
+- External research question rows: `4`: stationarity/ESS method, near-boundary band expectation, one-wall/wall-pileup thresholds, and substep runtime-cost strategy.
+- Proof-readiness index status: `single_entrypoint_ready_not_proof_registered`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+This block is the preferred entrypoint for future Package C review or external-AI research. External AI should use the listed research questions for broad method/literature work, not as a repetitive micro-review loop. The index still does not register Package C proof/pass and does not make any runtime, PRS/EAS numeric, COMSOL, `.mph`, route, yield, detection, wet, fabrication, or production claim.
+
+## 20. Recommended next action
+
+Current safe route after the Package C proof-readiness index:
+
+1. Use `PACKAGE_C_PROOF_READINESS_INDEX_20260701` as the single Package C metric-hardening entrypoint.
+2. Continue tightening the remaining proof-level gaps in one larger block: either launch a broad external-AI/statistical-method research request using the four research questions, or implement a local proof-gap-reduction block for stationarity/ESS and one-wall/wall-pileup thresholds.
 3. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 5. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.

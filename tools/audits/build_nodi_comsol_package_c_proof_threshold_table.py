@@ -495,7 +495,7 @@ def write_outputs(
     )
     generated.append(active_report)
 
-    public_report = REPORT_DIR / "508_NODI_COMSOL_PACKAGE_C_PROOF_THRESHOLD_TABLE_20260701.md"
+    public_report = active_report_dir / "508_NODI_COMSOL_PACKAGE_C_PROOF_THRESHOLD_TABLE_20260701.md"
     write_md(
         public_report,
         "NODI COMSOL Package C Proof Threshold Table",

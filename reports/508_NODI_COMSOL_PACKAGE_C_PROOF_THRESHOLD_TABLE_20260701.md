@@ -7,4 +7,4 @@
 - Candidate-pass rows: `8`; proof-gap rows: `5`; runtime-policy gap rows: `2`.
 - GitHub visibility: `local_worktree_pre_commit_urls_valid_after_publish`.
 - Boundary: this is threshold planning evidence only, not Package C proof registration or runtime authorization.
-- Machine-readable support: `C:/Users/Yan/AppData/Local/Temp/pytest-of-Yan/pytest-507/test_threshold_written_outputs0/joint_interface`.
+- Machine-readable support: `reports/joint_interface_20260701`.

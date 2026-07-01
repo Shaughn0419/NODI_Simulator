@@ -509,3 +509,24 @@ mph_load_allowed=false
 ```
 
 This packet is threshold planning evidence only. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C proof-readiness index
+
+The current preferred entrypoint consolidates Package C metric-hardening state, blockers, and external-research questions:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_proof_readiness_index.py --confirm-package-c-proof-readiness-index
+NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
+readiness_index_rows=5
+open_blocker_rows=5
+external_research_question_rows=4
+proof_readiness_index_status=single_entrypoint_ready_not_proof_registered
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+This packet is readiness/context evidence only. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
