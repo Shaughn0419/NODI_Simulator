@@ -1,0 +1,29 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_READY_PREFLIGHT_ONLY",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_READY_PREFLIGHT_ONLY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_20260701",
+    "claim_boundary": "promotion_ledger_qch_refresh_not_formal_qch_not_route_score",
+    "current_head": "d24838d4d9cc7fe00d09bffa8d8fc80bec2916af",
+    "branch": "main",
+    "source_ledger_refresh_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_REFRESH_READY_PREFLIGHT_ONLY",
+    "source_qch_grid_disposition": "NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_READY_CANDIDATE_ONLY",
+    "refreshed_promotion_lane_rows": 18,
+    "qch_delta_rows": 2,
+    "qch_grid_refined_lane_rows": 2,
+    "selected_annulus_context_available_rows": 2,
+    "formal_qch_weighting_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_current": false,
+    "detection_probability_current": false,
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 77,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "integrated promotion ledger qch lane refresh;flow-split blocker update",
+    "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;absolute calibrated q_ch;wet pass;production ingestion",
+    "semantic_digest": "c12630a1999d41e2d54b376f0f290e10ee2660aebc6febbff62210884b53127b"
+  }
+}

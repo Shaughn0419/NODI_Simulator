@@ -2181,3 +2181,47 @@ This moves the qch branch forward from generic candidate flow context to an
 exact-geometry W500/D900 split-stability candidate, while preserving the
 remaining validation requirements for calibrated absolute flow and route-level
 claims.
+
+## 45. Current integrated promotion ledger qch-refresh status
+
+The integrated promotion ledger has now consumed the W500/D900 qch
+grid-validation packet:
+
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_integrated_promotion_ledger_qch_refresh.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_READY_PREFLIGHT_ONLY`.
+- Claim boundary:
+  `promotion_ledger_qch_refresh_not_formal_qch_not_route_score`.
+
+This refresh starts from the selected-annulus ledger refresh and updates only
+the `flow_split_qch` promotion-lane rows. The qch lane status is now:
+
+- `w500_d900_grid_refined_split_candidate_absolute_q_requires_validation`
+
+The selected-annulus lane remains:
+
+- `selected_annulus_context_available_small_n_not_probability`
+
+The integrated ledger therefore now reflects two concrete blocker reductions:
+
+1. selected-annulus sidewall context exists, but is still small-N and not a
+   detection probability;
+2. W500/D900 flow-split evidence is grid-refined enough for promotion planning,
+   but absolute calibrated q_ch and formal q_ch weighting still require exact
+   COMSOL, measurement, or a reviewed solver-calibration artifact.
+
+The following values remain false in the integrated ledger:
+
+- `formal_qch_weighting_current=false`
+- `route_score_current=false`
+- `winner_current=false`
+- `yield_current=false`
+- `detection_probability_current=false`
+
+The next large block should now move to the detector/blank/optical calibration
+lane or to exact COMSOL/measurement pressure-flow validation, because those are
+the remaining evidence gates before route/yield/detection can be computed as
+accepted claims rather than candidate planning rows.
