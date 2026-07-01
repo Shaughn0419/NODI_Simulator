@@ -2219,6 +2219,61 @@ The following remain false:
 - `yield_current=false`
 - `detection_probability_current=false`
 - `wet_pass_probability_current=false`
+
+## 52. Current pressure-flow validation harness status
+
+The primary route-policy execution block is now being advanced through an exact
+W500/D900 pressure-flow validation harness:
+
+- Module: `nodi_simulator/sidewall_pressure_flow_validation_harness.py`.
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_pressure_flow_validation_harness.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_READY_EXECUTION_INPUT`.
+- Claim boundary:
+  `pressure_flow_validation_harness_not_formal_qch_not_route_score`.
+
+The harness consumes the W500/D900 41-grid qch candidate rows and emits exact
+validation-request rows for:
+
+1. `ROUTE-CAND-001` / `rectangle_limit_theta90_D900_W500`
+2. `ROUTE-CAND-002` / `taper_theta85_D900_W500`
+
+Each request row records:
+
+- exact geometry and geometry hash;
+- candidate q_ch and split fraction from the 41-grid solver;
+- required validation source:
+  exact W500/D900 sidewall COMSOL pressure-flow run or matched measurement;
+- required observables:
+  `pressure_drop_Pa`, `q_total_m3_s`, `q_upper_ports_m3_s`,
+  `q_lower_ports_m3_s`, `port_balance_rel`, and `quality_gate`;
+- required metadata:
+  geometry descriptor hash, model/measurement id, mesh or instrument
+  resolution, viscosity, channel length, and boundary-condition id;
+- acceptance thresholds:
+  `candidate/reference` ratio between `0.5` and `2.0`, and split absolute
+  delta <= `0.05`.
+
+The closed `theta70/D900/W500` row is preserved as a blocked control:
+
+- `closed_geometry_control_must_remain_blocked`
+
+The packet emits a promotion update for `pressure_flow_validation`:
+
+- new status:
+  `exact_w500_d900_pressure_flow_validation_harness_ready_missing_external_result`;
+- target claim current:
+  `false`;
+- blocked promotions:
+  `formal_qch_weighting`, `route_score`, `winner`, `yield`, and
+  `detection_probability`.
+
+This is an execution input, not a formal validation result. It exists so a
+COMSOL or measurement run can be bound deterministically rather than being
+interpreted by hand after the fact.
 - `yield_current=false`
 
 ## 48. Current wet/surface evidence-contract status

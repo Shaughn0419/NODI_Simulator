@@ -1,0 +1,676 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_READY_EXECUTION_INPUT",
+    "artifact_id": "PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_20260701",
+    "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score",
+    "current_head": "58903ce9a6c78142aa647960ab97ba9ea686c898",
+    "branch": "main",
+    "source_qch_grid_disposition": "NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_READY_CANDIDATE_ONLY",
+    "source_integrated_route_policy_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_ROUTE_POLICY_REFRESH_READY_PREFLIGHT_ONLY",
+    "validation_request_rows": 2,
+    "closed_geometry_control_rows": 1,
+    "promotion_update_rows": 1,
+    "exact_w500_d900_route_requests": 2,
+    "formal_qch_weighting_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_current": false,
+    "detection_probability_current": false,
+    "comsol_launch_started": false,
+    "mph_load_started": false,
+    "source_lock_rows": 8,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 79,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "exact W500/D900 pressure-flow validation execution input;COMSOL/measurement request;ledger update input",
+    "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;wet pass;production ingestion without external validation result",
+    "semantic_digest": "43a069bbd4c3c0e858a78df9f765c777c7ee69a85f67bfd02b138db881accab7"
+  },
+  "validation_request_rows": [
+    {
+      "validation_request_id": "PFV-REQUEST-ROUTE-CAND-001",
+      "harness_version": "sidewall_pressure_flow_validation_harness_w500_d900_v1",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "route_key": "route_rectangle_limit_theta90_D900_W500",
+      "source_geometry_hash": "fc2b8074b0dc240816bf1d891822e3911f839ce691866b5022a2f04af416cb14",
+      "sidewall_deg_comsol": 90.0,
+      "sidewall_taper_angle_deg_nodi": 0.0,
+      "top_width_nm": 500.0,
+      "depth_nm": 900.0,
+      "pressure_drop_Pa": 1000.0,
+      "reference_grid_nx": 41,
+      "reference_grid_nu": 41,
+      "candidate_q_grid_m3_s": 1.34414517438e-16,
+      "candidate_flow_split_fraction": 0.60551911946,
+      "candidate_hydraulic_resistance_Pa_s_m3": 7.43967258195e+18,
+      "required_validation_source": "exact W500/D900 sidewall COMSOL pressure-flow run or matched measurement",
+      "required_observables": "pressure_drop_Pa;q_total_m3_s;q_upper_ports_m3_s;q_lower_ports_m3_s;port_balance_rel;quality_gate",
+      "required_metadata": "geometry_descriptor_sha256;model_or_measurement_id;mesh_or_instrument_resolution;fluid_viscosity_Pa_s;channel_length_m;boundary_condition_id",
+      "acceptance_ratio_min": 0.5,
+      "acceptance_ratio_max": 2.0,
+      "split_abs_delta_max": 0.05,
+      "validation_status": "exact_w500_d900_validation_harness_ready_missing_external_result",
+      "formal_qch_weighting_current": false,
+      "route_score_current": false,
+      "winner_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score"
+    },
+    {
+      "validation_request_id": "PFV-REQUEST-ROUTE-CAND-002",
+      "harness_version": "sidewall_pressure_flow_validation_harness_w500_d900_v1",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "case_id": "taper_theta85_D900_W500",
+      "route_key": "route_taper_theta85_D900_W500",
+      "source_geometry_hash": "033b6382b020bca2f984bd623ad4f2e4eff29417b8f8e36e8733ecef237065f2",
+      "sidewall_deg_comsol": 85.0,
+      "sidewall_taper_angle_deg_nodi": 5.0,
+      "top_width_nm": 500.0,
+      "depth_nm": 900.0,
+      "pressure_drop_Pa": 1000.0,
+      "reference_grid_nx": 41,
+      "reference_grid_nu": 41,
+      "candidate_q_grid_m3_s": 8.75677670487e-17,
+      "candidate_flow_split_fraction": 0.39448088054,
+      "candidate_hydraulic_resistance_Pa_s_m3": 1.1419727072e+19,
+      "required_validation_source": "exact W500/D900 sidewall COMSOL pressure-flow run or matched measurement",
+      "required_observables": "pressure_drop_Pa;q_total_m3_s;q_upper_ports_m3_s;q_lower_ports_m3_s;port_balance_rel;quality_gate",
+      "required_metadata": "geometry_descriptor_sha256;model_or_measurement_id;mesh_or_instrument_resolution;fluid_viscosity_Pa_s;channel_length_m;boundary_condition_id",
+      "acceptance_ratio_min": 0.5,
+      "acceptance_ratio_max": 2.0,
+      "split_abs_delta_max": 0.05,
+      "validation_status": "exact_w500_d900_validation_harness_ready_missing_external_result",
+      "formal_qch_weighting_current": false,
+      "route_score_current": false,
+      "winner_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score"
+    }
+  ],
+  "closed_geometry_control_rows": [
+    {
+      "control_id": "PFV-CONTROL-closed_theta70_D900_W500",
+      "harness_version": "sidewall_pressure_flow_validation_harness_w500_d900_v1",
+      "case_id": "closed_theta70_D900_W500",
+      "sidewall_deg_comsol": 70.0,
+      "sidewall_taper_angle_deg_nodi": 20.0,
+      "top_width_nm": 500.0,
+      "depth_nm": 900.0,
+      "geometry_hash": "8d3265480dd70f20767ec938beb60d83e9536034eb6a4fa751bc8dcb13f721e7",
+      "solver_status": "blocked_geometry_closed",
+      "control_status": "closed_geometry_control_must_remain_blocked",
+      "required_behavior": "no pressure-flow validation request and no qch sidecar",
+      "hard_fail_if": "closed_geometry_enters_formal_qch_or_route_score",
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score"
+    }
+  ],
+  "promotion_update_rows": [
+    {
+      "target_ledger_lane": "pressure_flow_validation",
+      "covered_route_candidate_ids": "ROUTE-CAND-001;ROUTE-CAND-002",
+      "previous_status": "context_only_not_formal_validation",
+      "new_context_status": "exact_w500_d900_pressure_flow_validation_harness_ready_missing_external_result",
+      "target_claim_current": "false",
+      "blocked_promotion": "formal_qch_weighting;route_score;winner;yield;detection_probability",
+      "hard_fail_if": "pressure_flow_validation_harness_promoted_without_exact_external_result",
+      "next_required_evidence": "run exact W500/D900 sidewall COMSOL pressure-flow or matched measurement and bind q_total/q_upper/q_lower/port_balance/quality_gate",
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "sidewall_qch_grid_validation_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "67699c8de92bcc6a317f3cfab0e2057a7e8002e7ca21e2e861e6fdff35c037e5",
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score",
+      "allowed_use": "exact W500/D900 pressure-flow validation execution input;COMSOL/measurement request;ledger update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;wet pass;production ingestion without external validation result"
+    },
+    {
+      "source_id": "sidewall_qch_grid_validation_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_GRID_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "e872a6956712f1ccfd0a8c339fac92b09f3f86e221f38ea5ff585fd8851d7b5e",
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score",
+      "allowed_use": "exact W500/D900 pressure-flow validation execution input;COMSOL/measurement request;ledger update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;wet pass;production ingestion without external validation result"
+    },
+    {
+      "source_id": "integrated_promotion_ledger_route_policy_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_ROUTE_POLICY_REFRESH_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "f78c68d524d02bf3054f18aa3b3091de8ea22c16507e3a35e466782c48c8f1d9",
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score",
+      "allowed_use": "exact W500/D900 pressure-flow validation execution input;COMSOL/measurement request;ledger update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;wet pass;production ingestion without external validation result"
+    },
+    {
+      "source_id": "integrated_promotion_ledger_route_policy_lanes",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_ROUTE_POLICY_REFRESH_PROMOTION_LANE_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "f465289a627a1b4ede5c4039e8a822fbfb0616db4d57a3eff3c3b4c7f5fbaf00",
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score",
+      "allowed_use": "exact W500/D900 pressure-flow validation execution input;COMSOL/measurement request;ledger update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;wet pass;production ingestion without external validation result"
+    },
+    {
+      "source_id": "pressure_flow_validation_harness_source",
+      "path": "nodi_simulator/sidewall_pressure_flow_validation_harness.py",
+      "exists": "true",
+      "sha256": "6ea3de55430c31c9a46819c69c17ae6df9d646e0185f5543e79c209359459476",
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score",
+      "allowed_use": "exact W500/D900 pressure-flow validation execution input;COMSOL/measurement request;ledger update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;wet pass;production ingestion without external validation result"
+    },
+    {
+      "source_id": "pressure_flow_validation_harness_tests",
+      "path": "tests/test_sidewall_pressure_flow_validation_harness.py",
+      "exists": "true",
+      "sha256": "313fd4a25847312da0cf29f895caf807a46c4bcd7d0e632caa2aba2f4c4450d3",
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score",
+      "allowed_use": "exact W500/D900 pressure-flow validation execution input;COMSOL/measurement request;ledger update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;wet pass;production ingestion without external validation result"
+    },
+    {
+      "source_id": "pressure_flow_validation_harness_builder",
+      "path": "tools/audits/build_nodi_package_c_sidewall_pressure_flow_validation_harness.py",
+      "exists": "true",
+      "sha256": "53eea7f36c458b934b5a26a46bc2563df9ddd7641bb6f4cb1636c15aeafdee44",
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score",
+      "allowed_use": "exact W500/D900 pressure-flow validation execution input;COMSOL/measurement request;ledger update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;wet pass;production ingestion without external validation result"
+    },
+    {
+      "source_id": "pressure_flow_validation_harness_builder_tests",
+      "path": "tests/test_nodi_package_c_sidewall_pressure_flow_validation_harness.py",
+      "exists": "true",
+      "sha256": "4d06fcdc1f5090f03b10f04440fa5dd5518d20474b81ad8239ca5ad392470649",
+      "claim_boundary": "pressure_flow_validation_harness_not_formal_qch_not_route_score",
+      "allowed_use": "exact W500/D900 pressure-flow validation execution input;COMSOL/measurement request;ledger update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;wet pass;production ingestion without external validation result"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": ".gitignore",
+      "git_status": "M ",
+      "classification": "pressure_flow_validation_harness_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
+      "git_status": " M",
+      "classification": "pressure_flow_validation_harness_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_validation_harness_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_pressure_flow_validation_harness.py",
+      "git_status": "??",
+      "classification": "pressure_flow_validation_harness_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_pressure_flow_validation_harness.py",
+      "git_status": "??",
+      "classification": "pressure_flow_validation_harness_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_sidewall_pressure_flow_validation_harness.py",
+      "git_status": "??",
+      "classification": "pressure_flow_validation_harness_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_pressure_flow_validation_harness.py",
+      "git_status": "??",
+      "classification": "pressure_flow_validation_harness_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ]
+}
