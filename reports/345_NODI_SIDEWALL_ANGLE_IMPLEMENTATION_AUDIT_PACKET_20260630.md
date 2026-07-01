@@ -429,3 +429,33 @@ mph_load_allowed=false
 ```
 
 The substep rows are design guards only, not runtime policy. This packet does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C substep/fail policy hardening
+
+The next post-consolidation hardening block converts the timeseries substep review rows into explicit future proof/pass validator requirements:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_substep_fail_policy_hardening.py --confirm-package-c-substep-fail-policy-hardening
+NODI_PACKAGE_C_SUBSTEP_FAIL_POLICY_HARDENING_CANDIDATE_READY_NO_PROOF_REGISTRATION
+policy_rows=6
+triggered_policy_rows=6
+substep_trigger_metric=brownian_rms_step_over_surface_gap_p05
+substep_trigger_threshold=1.0
+substep_max_observed_trigger_value=22.925543703
+substep_triggered_scenario_count=6
+substep_policy_bound_trigger_count=6
+substep_policy_scope=proof_guard_only_not_runtime_config
+proof_field_requirement_rows=10
+validator_hardening_status=package_c_proof_pass_requires_substep_policy_fields
+proof_readiness_impact=future_package_c_proof_pass_hard_fails_without_substep_policy_evidence
+github_visibility_status=local_worktree_pre_commit_urls_valid_after_publish
+substep_review_required_for_current_candidate=true
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+The contract validator now rejects future `package_C_validation_status=pass` rows unless substep policy evidence, status, scope, trigger metric, threshold, max observed trigger value, triggered scenario count, bound trigger count, closed review status, and false runtime authorization are all present and consistent. This packet does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.

@@ -158,6 +158,9 @@ from nodi_simulator.nodi_comsol_next_artifacts import (
     SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_SCOPE,
     SIDEWALL_PACKAGE_C_PROOF_ARTIFACT_STATUS,
     SIDEWALL_PACKAGE_C_PROOF_CLAIM_BOUNDARY,
+    SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_POLICY_SCOPE,
+    SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_POLICY_STATUS,
+    SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_TRIGGER_METRIC,
     SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_ISSUES_FILENAME,
     SIDEWALL_PACKAGE_C_AUTHORIZATION_GATE_RECORD_FILENAME,
     SIDEWALL_PACKAGE_C_AUTHORIZATION_PHRASE,
@@ -520,6 +523,7 @@ def _sidewall_package_c_proof_fields(
         "dependency_lock_sha256": "7" * 64,
         "rng_seed_matrix_sha256": "8" * 64,
         "test_parameter_matrix_sha256": "9" * 64,
+        "substep_policy_evidence_sha256": "aa" * 32,
         "dt_grid_s": "1e-5;5e-6;2.5e-6",
         "diffusion_coefficient_grid_m2_s": "1e-12",
         "particle_radius_grid_nm": "20;30;50;75;110;150",
@@ -528,6 +532,15 @@ def _sidewall_package_c_proof_fields(
         "tolerance_m": "1e-12",
         "max_reflection_iterations": "8",
         "substep_policy": "hard_fail_or_reduce_dt_on_nonconvergence",
+        "substep_policy_status": SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_POLICY_STATUS,
+        "substep_policy_scope": SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_POLICY_SCOPE,
+        "substep_trigger_metric": SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_TRIGGER_METRIC,
+        "substep_trigger_threshold": "1.0",
+        "substep_max_observed_trigger_value": "22.925543703",
+        "substep_triggered_scenario_count": "6",
+        "substep_policy_bound_trigger_count": "6",
+        "substep_review_required": "false",
+        "substep_runtime_policy_authorized": "false",
         "boundary_atom_threshold": "0.001",
         "equilibrium_test_method": "u_marginal_and_x_local_norm_ks_v1",
         "equilibrium_test_threshold": "0.08",
@@ -3693,6 +3706,115 @@ def test_sidewall_package_c_proof_scaffold_rejects_bad_telemetry_hash() -> None:
     )
 
     assert any("raw_metric_artifact_sha256 is not sha256" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_requires_substep_policy_evidence() -> None:
+    row = _valid_sidewall_package_d_precheck_row(
+        target_artifact_family="prs",
+        includes_trajectory_near_wall_metrics="true",
+        package_C_validation_status="pass",
+        package_C_proof_artifact_id="future-package-C-proof",
+        package_C_proof_artifact_sha256="d" * 64,
+    )
+    del row["substep_policy_evidence_sha256"]
+
+    issues = validate_sidewall_package_d_precheck_rows([row])
+
+    assert any("substep_policy_evidence_sha256" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_rejects_unclosed_substep_review() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                substep_review_required="true",
+            )
+        ]
+    )
+
+    assert any("substep_review_required" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_rejects_runtime_substep_authorization() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                substep_runtime_policy_authorized="true",
+            )
+        ]
+    )
+
+    assert any("substep_runtime_policy_authorized" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_requires_triggered_substep_coverage() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                substep_policy_status="candidate_review_required",
+                substep_trigger_threshold="1.0",
+                substep_max_observed_trigger_value="22.925543703",
+            )
+        ]
+    )
+
+    assert any("substep policy does not cover triggered" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_rejects_unbound_substep_trigger_count() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                substep_triggered_scenario_count="6",
+                substep_policy_bound_trigger_count="5",
+            )
+        ]
+    )
+
+    assert any("substep_policy_bound_trigger_count" in issue for issue in issues), issues
+    _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
+
+
+def test_sidewall_package_c_proof_scaffold_rejects_weak_substep_threshold() -> None:
+    issues = validate_sidewall_package_d_precheck_rows(
+        [
+            _valid_sidewall_package_d_precheck_row(
+                target_artifact_family="prs",
+                includes_trajectory_near_wall_metrics="true",
+                package_C_validation_status="pass",
+                package_C_proof_artifact_id="future-package-C-proof",
+                package_C_proof_artifact_sha256="d" * 64,
+                substep_trigger_threshold="1.25",
+            )
+        ]
+    )
+
+    assert any("substep_trigger_threshold must be in (0, 1]" in issue for issue in issues), issues
     _assert_has_issue(issues, "SIDEWALL-D-PRECHECK-V03")
 
 

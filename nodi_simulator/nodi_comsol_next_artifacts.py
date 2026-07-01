@@ -1100,6 +1100,16 @@ SIDEWALL_PACKAGE_C_PROOF_REQUIRED_TELEMETRY_SHA_FIELDS: tuple[str, ...] = (
     "test_parameter_matrix_sha256",
     "raw_metric_artifact_sha256",
     "summary_metric_artifact_sha256",
+    "substep_policy_evidence_sha256",
+)
+SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_POLICY_STATUS = (
+    "all_triggered_scenarios_have_fail_or_reduce_dt_policy"
+)
+SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_POLICY_SCOPE = (
+    "proof_guard_only_not_runtime_config"
+)
+SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_TRIGGER_METRIC = (
+    "brownian_rms_step_over_surface_gap_p05"
 )
 SIDEWALL_PACKAGE_C_PROOF_REQUIRED_TELEMETRY_FIELDS: tuple[str, ...] = (
     "reflection_metric_schema_version",
@@ -1112,6 +1122,15 @@ SIDEWALL_PACKAGE_C_PROOF_REQUIRED_TELEMETRY_FIELDS: tuple[str, ...] = (
     "tolerance_m",
     "max_reflection_iterations",
     "substep_policy",
+    "substep_policy_status",
+    "substep_policy_scope",
+    "substep_trigger_metric",
+    "substep_trigger_threshold",
+    "substep_max_observed_trigger_value",
+    "substep_triggered_scenario_count",
+    "substep_policy_bound_trigger_count",
+    "substep_review_required",
+    "substep_runtime_policy_authorized",
     "boundary_atom_threshold",
     "equilibrium_test_method",
     "equilibrium_test_threshold",
@@ -1916,6 +1935,15 @@ def _validate_sidewall_package_c_proof_binding(
         "package_C_proof_authorization_status": (
             SIDEWALL_PACKAGE_C_PROOF_AUTHORIZATION_STATUS
         ),
+        "substep_policy_status": (
+            SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_POLICY_STATUS
+        ),
+        "substep_policy_scope": (
+            SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_POLICY_SCOPE
+        ),
+        "substep_trigger_metric": (
+            SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_TRIGGER_METRIC
+        ),
     }
     for field, expected in expected_values.items():
         actual = _value(row, field)
@@ -1927,6 +1955,127 @@ def _validate_sidewall_package_c_proof_binding(
                 f"{field}={actual} does not match required Package C proof binding",
             )
             proof_ok = False
+    substep_trigger_threshold = _float_field(
+        row,
+        "substep_trigger_threshold",
+        row_index,
+        "SIDEWALL-D-PRECHECK-V03",
+        issues,
+    )
+    substep_max_observed_trigger_value = _float_field(
+        row,
+        "substep_max_observed_trigger_value",
+        row_index,
+        "SIDEWALL-D-PRECHECK-V03",
+        issues,
+    )
+    substep_triggered_scenario_count = _int_field(
+        row,
+        "substep_triggered_scenario_count",
+        row_index,
+        "SIDEWALL-D-PRECHECK-V03",
+        issues,
+    )
+    substep_policy_bound_trigger_count = _int_field(
+        row,
+        "substep_policy_bound_trigger_count",
+        row_index,
+        "SIDEWALL-D-PRECHECK-V03",
+        issues,
+    )
+    if substep_trigger_threshold is not None and (
+        substep_trigger_threshold <= 0.0 or substep_trigger_threshold > 1.0
+    ):
+        _issue(
+            issues,
+            row_index,
+            "SIDEWALL-D-PRECHECK-V03",
+            "substep_trigger_threshold must be in (0, 1]",
+        )
+        proof_ok = False
+    if (
+        substep_triggered_scenario_count is not None
+        and substep_triggered_scenario_count < 0
+    ):
+        _issue(
+            issues,
+            row_index,
+            "SIDEWALL-D-PRECHECK-V03",
+            "substep_triggered_scenario_count is negative",
+        )
+        proof_ok = False
+    if (
+        substep_policy_bound_trigger_count is not None
+        and substep_policy_bound_trigger_count < 0
+    ):
+        _issue(
+            issues,
+            row_index,
+            "SIDEWALL-D-PRECHECK-V03",
+            "substep_policy_bound_trigger_count is negative",
+        )
+        proof_ok = False
+    if (
+        substep_trigger_threshold is not None
+        and substep_max_observed_trigger_value is not None
+        and substep_max_observed_trigger_value > substep_trigger_threshold
+    ):
+        if (
+            _value(row, "substep_policy_status")
+            != SIDEWALL_PACKAGE_C_PROOF_REQUIRED_SUBSTEP_POLICY_STATUS
+        ):
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V03",
+                "substep policy does not cover triggered rms/gap scenarios",
+            )
+            proof_ok = False
+        if (
+            substep_triggered_scenario_count is not None
+            and substep_triggered_scenario_count <= 0
+        ):
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V03",
+                "substep_triggered_scenario_count must be positive when max trigger exceeds threshold",
+            )
+            proof_ok = False
+        if (
+            substep_triggered_scenario_count is not None
+            and substep_policy_bound_trigger_count is not None
+            and substep_policy_bound_trigger_count < substep_triggered_scenario_count
+        ):
+            _issue(
+                issues,
+                row_index,
+                "SIDEWALL-D-PRECHECK-V03",
+                "substep_policy_bound_trigger_count does not cover triggered scenarios",
+            )
+            proof_ok = False
+    before_count = len(issues)
+    _validate_bool_equals(
+        row,
+        "substep_review_required",
+        False,
+        row_index,
+        "SIDEWALL-D-PRECHECK-V03",
+        issues,
+    )
+    if len(issues) != before_count:
+        proof_ok = False
+    before_count = len(issues)
+    _validate_bool_equals(
+        row,
+        "substep_runtime_policy_authorized",
+        False,
+        row_index,
+        "SIDEWALL-D-PRECHECK-V03",
+        issues,
+    )
+    if len(issues) != before_count:
+        proof_ok = False
     authorization_ledger_id = _value(row, "authorization_supersedes_no_auth_ledger_id")
     normalized_authorization_ledger_id = (
         authorization_ledger_id.lower().replace("-", "_")

@@ -1329,12 +1329,34 @@ The first post-consolidation proof-gap hardening block adds long-run time-series
 
 This block reduces the prior `timeseries_ess` gap from missing to candidate-evidenced, but it still does not register Package C proof/pass. Future proof registration would still need a reviewed clean commit binding, manual authorization ledger, proof-level thresholds, and independent review of the statistical method.
 
-## 16. Recommended next action
+## 16. Current Package C substep/fail policy hardening status
+
+The next post-consolidation block converts the timeseries substep review finding into proof/pass validator hard-fail requirements:
+
+- Artifact id: `PACKAGE_C_SUBSTEP_FAIL_POLICY_HARDENING_20260701`.
+- Disposition: `NODI_PACKAGE_C_SUBSTEP_FAIL_POLICY_HARDENING_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: substep fail-policy rows, Package C proof/pass field requirements, source lock, no-proof firewall, status/report/manifest.
+- Trigger metric: `brownian_rms_step_over_surface_gap_p05`.
+- Trigger threshold: `1.0`.
+- Policy rows: `6`; triggered rows: `6`.
+- Max observed trigger value: `22.925543703`.
+- Triggered scenario count: `6`; bound trigger count: `6`.
+- Substep policy scope: `proof_guard_only_not_runtime_config`.
+- Proof field requirement rows: `10`.
+- Validator hardening status: `package_c_proof_pass_requires_substep_policy_fields`.
+- Proof-readiness impact: `future_package_c_proof_pass_hard_fails_without_substep_policy_evidence`.
+- GitHub visibility status: `local_worktree_pre_commit_urls_valid_after_publish`.
+- Current candidate still has `substep_review_required_for_current_candidate=true`; this is a hardening signal, not runtime authorization.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+The contract validator now requires future `package_C_validation_status=pass` rows to include substep policy evidence, status, scope, trigger metric, trigger threshold, max observed trigger value, triggered scenario count, bound trigger count, closed review status, and a false runtime-policy authorization flag. Missing or inconsistent fields raise `SIDEWALL-D-PRECHECK-V03`.
+
+## 17. Recommended next action
 
 Current safe route after the consolidation and timeseries ESS candidate:
 
-1. Use the consolidated evidence index plus the timeseries ESS candidate as the Package C metric-hardening entrypoint, instead of adding another narrow report-only gate.
-2. Continue tightening the remaining proof-level gaps in one larger block: convert the substep/fail policy candidate into explicit fail-closed validator rules, add declared worst-case dt refinement where the substep rows request review, and keep any future proof thresholds separate from runtime permission.
+1. Use the consolidated evidence index, timeseries ESS candidate, and substep/fail-policy hardening packet as the Package C metric-hardening entrypoint, instead of adding another narrow report-only gate.
+2. Continue tightening the remaining proof-level gaps in one larger block: add declared worst-case dt refinement where the substep rows request review, keep any future proof thresholds separate from runtime permission, and bind any future proof/pass attempt to clean reviewed commit evidence.
 3. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 5. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.
