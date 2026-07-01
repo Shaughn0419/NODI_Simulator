@@ -2598,3 +2598,69 @@ The following remain false in this ledger refresh:
 - `route_score_current=false`
 - `winner_current=false`
 - `yield_current=false`
+
+## 53. Current integrated promotion ledger pressure-flow-refresh status
+
+The integrated promotion ledger now consumes the exact W500/D900
+pressure-flow validation harness:
+
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_integrated_promotion_ledger_pressure_flow_refresh.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_READY_PREFLIGHT_ONLY`.
+- Claim boundary:
+  `promotion_ledger_pressure_flow_refresh_not_formal_qch_not_route_score`.
+
+This refresh starts from the route-policy-refreshed integrated ledger and
+updates only the `pressure_flow_validation` lane. For both W500/D900 route
+candidates, the pressure-flow lane is now:
+
+- `exact_w500_d900_pressure_flow_validation_harness_ready_missing_external_result`
+
+The source artifact is the 541 request table:
+
+- `NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_REQUEST_ROWS_20260701.csv`
+
+This is an execution preflight reduction, not a formal q_ch result. It means
+the exact W500/D900 rectangle-limit and theta85-taper pressure-flow validation
+requests are now routed through the ledger, while the theta70 closed-geometry
+case remains a blocked control. The next required evidence is still an exact
+COMSOL pressure-flow run or matched pressure-flow measurement binding:
+
+- `q_total_m3_s`
+- `q_upper_ports_m3_s`
+- `q_lower_ports_m3_s`
+- `port_balance_rel`
+- `quality_gate`
+- the associated geometry/model/mesh/fluid/boundary-condition metadata
+
+The refresh retains the earlier lane reductions:
+
+- `flow_split_qch`:
+  `w500_d900_grid_refined_split_candidate_absolute_q_requires_validation`
+- `selected_annulus_detection_context`:
+  `selected_annulus_context_available_small_n_not_probability`
+- `blank_false_positive_trace`:
+  `nearest_blank_context_available_not_sidewall_specific_validation`
+- `detector_response_bridge`:
+  `detector_identity_context_available_not_sidewall_response_validation`
+- `wet_wall_interaction`:
+  `wet_surface_evidence_contract_defined_no_wet_validation`
+- `integrated_route_ledger`:
+  `route_yield_detection_policy_defined_not_ready_for_claims`
+
+The following remain false in this ledger refresh:
+
+- `formal_qch_weighting_current=false`
+- `route_score_current=false`
+- `winner_current=false`
+- `yield_current=false`
+- `detection_probability_current=false`
+
+The pressure-flow branch has therefore moved from W800 context-only comparison
+to exact W500/D900 executable validation inputs. The next large block should
+either launch or ingest exact W500/D900 pressure-flow evidence, then convert it
+into a formal q_ch sidecar only if the acceptance thresholds and metadata
+contract are satisfied.
