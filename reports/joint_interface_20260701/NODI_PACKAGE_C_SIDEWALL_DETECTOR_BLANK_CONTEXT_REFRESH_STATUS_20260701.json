@@ -4,12 +4,12 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_READY_CONTEXT_ONLY",
     "artifact_id": "PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_20260701",
     "claim_boundary": "detector_blank_context_not_detector_validation_not_detection_probability",
-    "current_head": "84db77c89077e6eae5a237d548b1fa94f166aa5c",
+    "current_head": "a2b23b8b9aeeaadc9d6266a15fb13013f826e877",
     "branch": "main",
     "detector_blank_context_version": "sidewall_detector_blank_context_refresh_w500_d900_v1",
     "source_wet_disposition": "NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_READY_NOT_FINAL",
     "source_selected_annulus_disposition": "NODI_PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_READY_NOT_PROBABILITY",
-    "source_qch_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_READY_PREFLIGHT_ONLY",
+    "source_qch_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_FORMAL_QCH_REFRESH_READY_PREFLIGHT_ONLY",
     "source_optical_bridge_disposition": "NODI_PACKAGE_C_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_READY_SEED_ONLY",
     "context_rows": 2,
     "detector_blank_context_available_rows": 2,
@@ -23,11 +23,11 @@
     "yield_current": false,
     "source_lock_rows": 12,
     "source_missing_rows": 0,
-    "dirty_context_rows": 79,
-    "non_release_dirty_context_rows": 69,
+    "dirty_context_rows": 85,
+    "non_release_dirty_context_rows": 79,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "detector/blank context refresh;integrated promotion lane update input;sidewall route/yield/detection evidence planning",
     "blocked_use": "detector_response_validation;sidewall_specific_blank_trace_validation;detection_probability;route_score;winner;JRC;yield;wet pass;production ingestion",
-    "semantic_digest": "30759c9e258c7d5c04876f1593442435db584a1e3c244ecd0049de2fcdd48dca"
+    "semantic_digest": "9ede233f2f0cc5b3bdc3a1649630a250ad87a04e4bd53d0daea22b26750f6a62"
   }
 }

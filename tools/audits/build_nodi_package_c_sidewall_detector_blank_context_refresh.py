@@ -48,11 +48,11 @@ SELECTED_ANNULUS_ROWS = (
 )
 QCH_LEDGER_STATUS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_STATUS_20260701.json"
+    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_FORMAL_QCH_REFRESH_STATUS_20260701.json"
 )
 QCH_LEDGER_LANES = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_PROMOTION_LANE_ROWS_20260701.csv"
+    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_FORMAL_QCH_REFRESH_PROMOTION_LANE_ROWS_20260701.csv"
 )
 OPTICAL_BRIDGE_STATUS = (
     OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_STATUS_20260701.json"
@@ -76,8 +76,8 @@ SOURCE_FILES = {
     "wet_optical_detection_context_rows": WET_CONTEXT_ROWS,
     "selected_annulus_context_status": SELECTED_ANNULUS_STATUS,
     "selected_annulus_context_rows": SELECTED_ANNULUS_ROWS,
-    "qch_refreshed_ledger_status": QCH_LEDGER_STATUS,
-    "qch_refreshed_ledger_lanes": QCH_LEDGER_LANES,
+    "formal_qch_refreshed_ledger_status": QCH_LEDGER_STATUS,
+    "formal_qch_refreshed_ledger_lanes": QCH_LEDGER_LANES,
     "optical_calibration_bridge_status": OPTICAL_BRIDGE_STATUS,
     "optical_calibration_readiness_rows": OPTICAL_READINESS_ROWS,
     "detector_blank_context_source": PROJECT_ROOT
@@ -299,7 +299,7 @@ def build_payload() -> dict[str, Any]:
         and selected_status.get("disposition")
         == "NODI_PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_READY_NOT_PROBABILITY"
         and qch_ledger_status.get("disposition")
-        == "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_READY_PREFLIGHT_ONLY"
+        == "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_FORMAL_QCH_REFRESH_READY_PREFLIGHT_ONLY"
         and optical_bridge_status.get("disposition")
         == "NODI_PACKAGE_C_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_READY_SEED_ONLY"
         and len(rows) == 2

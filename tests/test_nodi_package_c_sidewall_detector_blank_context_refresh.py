@@ -38,7 +38,7 @@ def test_sidewall_detector_blank_context_rows_are_context_only() -> None:
             "selected_annulus_context_available_small_n_not_probability"
         )
         assert row["qch_flow_split_context_status"] == (
-            "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation"
+            "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting"
         )
         assert row["blank_false_positive_context_status"] == (
             "nearest_blank_context_available_not_sidewall_specific_validation"
