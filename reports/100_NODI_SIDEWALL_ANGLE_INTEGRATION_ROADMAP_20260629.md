@@ -1297,14 +1297,28 @@ Gate38 refines the Gate37 wall-pileup proxy warning with focused expanded sampli
 
 Gate38 resolves the specific Gate37 `9.0` first-vs-adjacent gap-band smoothed proxy as a small-sample / empty-adjacent-bin artifact rather than an observed algorithmic reflection failure. This does not prove Package C; it only clears that localized candidate warning and improves the statistical diagnostic.
 
-## 14. Recommended next action
+## 14. Current Package C metric-hardening consolidation status
 
-Current safe route after Gate38:
+Gate37 and Gate38 are now folded into a single Package C metric-hardening consolidation entrypoint:
 
-1. Fold Gate38 into the next proof-metric hardening candidate by replacing the brittle Gate37 wall-pileup ratio with expanded-sampling band counts, confidence intervals, and sparse-proxy classification.
-2. Continue tightening the remaining proof-level gaps: raw time-series ESS if long-run equilibrium tests are introduced, dt `6.25e-6 s` refinement for additional worst cases if needed, and explicit substep/fail policy for any future geometry with large RMS step relative to local throat/corner feature size.
-3. Regenerate Gate33-38 source locks and metric evidence after any refinement, then require clean reviewed commit binding before any future authorization packet can claim proof readiness.
-4. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; the builder must not auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
-5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
+- Artifact id: `PACKAGE_C_METRIC_HARDENING_CONSOLIDATION_20260701`.
+- Disposition: `NODI_PACKAGE_C_METRIC_HARDENING_CONSOLIDATED_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: one evidence index, one proof-readiness criteria table, one no-proof firewall, one source lock, one manifest, and one human-readable report that consolidate Gate37 exact/near-boundary atom split, raw histograms, ESS proxy, one-wall positive/negative controls, dt refinement, corner heatmap, and Gate38 expanded-sampling wall-pileup refinement.
+- Evidence index rows: `10`; readiness criteria rows: `9`.
+- Proof-readiness status: `not_ready_missing_timeseries_ess_clean_commit_and_authorization`.
+- Gate37 `max_wall_pileup_ratio=9.0` is treated as superseded by Gate38 expanded-sampling diagnostics; `algorithmic_pileup_signal_rows=0`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+This consolidation is the intended forward work style after the Gate37/38 review: use larger implementation/evidence blocks with a single review entrypoint, not a new small gate for every diagnostic. It keeps `ideal_rectangle` as a first-class path while preserving the sidewall/trapezoid analysis branch as schema-bound and cache-distinct.
+
+## 15. Recommended next action
+
+Current safe route after the consolidation:
+
+1. Use the consolidated evidence index as the Package C metric-hardening entrypoint, instead of adding another narrow report-only gate.
+2. Continue tightening the remaining proof-level gaps in one larger block: raw time-series ESS if long-run equilibrium tests are introduced, additional `6.25e-6 s` dt refinement for declared worst cases if needed, and explicit substep/fail policy for any future geometry with large RMS step relative to local throat/corner feature size.
+3. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
+4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
+5. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.
 
 Only after Package A/B remain green and a future Package C proof is explicitly authorized should NODI run any sidewall-aware PRS/EAS pilot involving trajectory, near-wall, hindered-diffusion, or wall-distance-bin metrics. Even then, the result should remain `surrogate_sensitivity_only` / `context-only` until measurement or solver evidence is explicitly added and authorized.

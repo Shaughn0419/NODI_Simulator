@@ -364,3 +364,31 @@ NODI_GATE27_SIDEWALL_PACKAGE_C_IMPLEMENTATION_DESIGN_PREFLIGHT_READY_NO_AUTH
 4. Keep the manual authorization ledger and external-review artifact SHA as explicit placeholders until a separate authorization supersedes the no-auth ledger.
 5. If a real measured-profile loader is added later, add implementation-level loader/hash/profile-schema tests before any `measured_geometry` runtime use.
 6. Do not register proof or mark Package C as passed in the current gate.
+
+## Consolidated Package C metric-hardening entrypoint
+
+After Gate38, the Package C proof-metric hardening work is consolidated into one larger evidence block rather than continuing as many small gate turns:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_metric_hardening_consolidation.py --confirm-package-c-metric-hardening-consolidation
+NODI_PACKAGE_C_METRIC_HARDENING_CONSOLIDATED_CANDIDATE_READY_NO_PROOF_REGISTRATION
+evidence_index_rows=10
+readiness_criteria_rows=9
+boundary_atom_split_rows=198
+raw_histogram_rows=396
+ess_proxy_rows=198
+one_wall_suite_rows=18
+worst_case_dt_refinement_rows=10
+corner_heatmap_rows=40
+wall_pileup_refinement_rows=12
+algorithmic_pileup_signal_rows=0
+proof_readiness_status=not_ready_missing_timeseries_ess_clean_commit_and_authorization
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+This consolidation is the current forward entrypoint for Package C metric hardening. It absorbs Gate37 exact/near-boundary atom split, raw histograms, ESS proxy, one-wall positive/negative controls, dt refinement, corner heatmap, and Gate38 expanded-sampling wall-pileup refinement into a single evidence index and readiness-criteria table. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
