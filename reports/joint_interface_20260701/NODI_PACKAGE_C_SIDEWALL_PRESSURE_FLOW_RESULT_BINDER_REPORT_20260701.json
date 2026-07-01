@@ -1,22 +1,22 @@
 {
   "summary": {
-    "disposition": "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_READY_WAITING_FOR_EXTERNAL_RESULT",
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY",
     "artifact_id": "PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_20260701",
     "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection",
-    "current_head": "55552cdbaec0e0e6a91cec3144574039bad4890d",
+    "current_head": "e35b991ca1783c41becd9de5486aafba694a86c9",
     "branch": "main",
     "source_pressure_flow_harness_disposition": "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_READY_EXECUTION_INPUT",
     "source_pressure_flow_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_READY_PREFLIGHT_ONLY",
     "request_rows": 2,
     "closed_geometry_control_rows": 1,
-    "external_result_input_present": false,
-    "external_result_rows": 0,
+    "external_result_input_present": true,
+    "external_result_rows": 2,
     "external_result_template_rows": 2,
     "binding_rows": 2,
-    "missing_external_result_binding_rows": 2,
-    "accepted_exact_pressure_flow_binding_rows": 0,
-    "formal_qch_sidecar_rows": 0,
-    "formal_qch_sidecar_current": false,
+    "missing_external_result_binding_rows": 0,
+    "accepted_exact_pressure_flow_binding_rows": 2,
+    "formal_qch_sidecar_rows": 2,
+    "formal_qch_sidecar_current": true,
     "formal_qch_weighting_current": false,
     "route_score_current": false,
     "winner_current": false,
@@ -26,14 +26,14 @@
     "q_total_reconciliation_threshold_max": 0.05,
     "acceptance_ratio_threshold_note": "0.5-2.0 is a sanity guard for external-to-candidate flow scale, not a calibrated pressure-flow agreement threshold",
     "promotion_update_rows": 1,
-    "source_lock_rows": 9,
+    "source_lock_rows": 10,
     "source_missing_rows": 0,
-    "dirty_context_rows": 98,
+    "dirty_context_rows": 93,
     "non_release_dirty_context_rows": 79,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "pressure-flow external result binding;formal qch sidecar acceptance preflight",
     "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion",
-    "semantic_digest": "bf33fd841f8a5769626ff3b927b6700264919018eef83d431fc5d54ac31469fc"
+    "semantic_digest": "a46f958d5dd585be338b925b83e2f718bc03c021bf78207912df0e2ac5e2acdc"
   },
   "external_result_template_rows": [
     {
@@ -87,22 +87,22 @@
       "route_candidate_id": "ROUTE-CAND-001",
       "qch_sidecar_id": "QCH-CAND-001",
       "case_id": "rectangle_limit_theta90_D900_W500",
-      "external_result_id": "",
-      "source_type": "",
-      "source_match_status": "missing_external_result",
-      "pressure_drop_Pa": 0.0,
-      "candidate_q_scaled_m3_s": 0.0,
-      "q_total_m3_s": 0.0,
-      "q_upper_ports_m3_s": 0.0,
+      "external_result_id": "COMSOL-PKG-C-W500-D900-001",
+      "source_type": "comsol_pressure_flow",
+      "source_match_status": "exact_request_and_geometry_match",
+      "pressure_drop_Pa": 1000.0,
+      "candidate_q_scaled_m3_s": 1.34414517438e-16,
+      "q_total_m3_s": 1.262945597388e-16,
+      "q_upper_ports_m3_s": 1.262945597388e-16,
       "q_lower_ports_m3_s": 0.0,
-      "port_balance_rel": 0.0,
-      "quality_gate": "",
-      "flow_ratio_external_to_candidate": 0.0,
+      "port_balance_rel": 0.00187136977419,
+      "quality_gate": "pass",
+      "flow_ratio_external_to_candidate": 0.9395901733386395,
       "candidate_flow_split_fraction": 0.60551911946,
-      "external_flow_split_fraction": 0.0,
-      "split_abs_delta": 0.0,
-      "per_route_acceptance_status": "missing_external_result",
-      "formal_qch_sidecar_current": false,
+      "external_flow_split_fraction": 0.6087636588171794,
+      "split_abs_delta": 0.003244539357179388,
+      "per_route_acceptance_status": "accepted_exact_pressure_flow_for_formal_qch_sidecar",
+      "formal_qch_sidecar_current": true,
       "formal_qch_weighting_current": false,
       "route_score_current": false,
       "winner_current": false,
@@ -117,22 +117,22 @@
       "route_candidate_id": "ROUTE-CAND-002",
       "qch_sidecar_id": "QCH-CAND-002",
       "case_id": "taper_theta85_D900_W500",
-      "external_result_id": "",
-      "source_type": "",
-      "source_match_status": "missing_external_result",
-      "pressure_drop_Pa": 0.0,
-      "candidate_q_scaled_m3_s": 0.0,
-      "q_total_m3_s": 0.0,
-      "q_upper_ports_m3_s": 0.0,
+      "external_result_id": "COMSOL-PKG-C-W500-D900-002",
+      "source_type": "comsol_pressure_flow",
+      "source_match_status": "exact_request_and_geometry_match",
+      "pressure_drop_Pa": 1000.0,
+      "candidate_q_scaled_m3_s": 8.756776704870002e-17,
+      "q_total_m3_s": 8.116618123938e-17,
+      "q_upper_ports_m3_s": 8.116618123938e-17,
       "q_lower_ports_m3_s": 0.0,
-      "port_balance_rel": 0.0,
-      "quality_gate": "",
-      "flow_ratio_external_to_candidate": 0.0,
+      "port_balance_rel": 0.000456523737536,
+      "quality_gate": "pass",
+      "flow_ratio_external_to_candidate": 0.9268956372296232,
       "candidate_flow_split_fraction": 0.39448088054,
-      "external_flow_split_fraction": 0.0,
-      "split_abs_delta": 0.0,
-      "per_route_acceptance_status": "missing_external_result",
-      "formal_qch_sidecar_current": false,
+      "external_flow_split_fraction": 0.39123634118282063,
+      "split_abs_delta": 0.003244539357179388,
+      "per_route_acceptance_status": "accepted_exact_pressure_flow_for_formal_qch_sidecar",
+      "formal_qch_sidecar_current": true,
       "formal_qch_weighting_current": false,
       "route_score_current": false,
       "winner_current": false,
@@ -141,18 +141,67 @@
       "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection"
     }
   ],
-  "formal_qch_sidecar_rows": [],
+  "formal_qch_sidecar_rows": [
+    {
+      "formal_qch_sidecar_id": "FORMAL-QCH-W500-D900-001",
+      "formal_qch_sidecar_version": "sidewall_pressure_flow_result_binder_w500_d900_v1",
+      "qch_sidecar_status": "formal_qch_sidecar_from_exact_pressure_flow",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "source_validation_request_id": "PFV-REQUEST-ROUTE-CAND-001",
+      "source_external_result_id": "COMSOL-PKG-C-W500-D900-001",
+      "pressure_drop_Pa": 1000.0,
+      "q_ch_m3_s": 1.262945597388e-16,
+      "q_ch_units": "m3/s",
+      "formal_flow_split_fraction": 0.6087636588171794,
+      "calibration_status": "accepted_exact_w500_d900_pressure_flow_result",
+      "source_match_status": "exact_request_and_geometry_match",
+      "integration_definition": "q_ch_m3_s=q_total_m3_s from exact W500/D900 pressure-flow result; formal_flow_split_fraction=q_ch_i/sum(q_ch_i)",
+      "formal_qch_sidecar_current": true,
+      "formal_qch_weighting_current": false,
+      "route_score_current": false,
+      "winner_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection"
+    },
+    {
+      "formal_qch_sidecar_id": "FORMAL-QCH-W500-D900-002",
+      "formal_qch_sidecar_version": "sidewall_pressure_flow_result_binder_w500_d900_v1",
+      "qch_sidecar_status": "formal_qch_sidecar_from_exact_pressure_flow",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "case_id": "taper_theta85_D900_W500",
+      "source_validation_request_id": "PFV-REQUEST-ROUTE-CAND-002",
+      "source_external_result_id": "COMSOL-PKG-C-W500-D900-002",
+      "pressure_drop_Pa": 1000.0,
+      "q_ch_m3_s": 8.116618123938e-17,
+      "q_ch_units": "m3/s",
+      "formal_flow_split_fraction": 0.39123634118282063,
+      "calibration_status": "accepted_exact_w500_d900_pressure_flow_result",
+      "source_match_status": "exact_request_and_geometry_match",
+      "integration_definition": "q_ch_m3_s=q_total_m3_s from exact W500/D900 pressure-flow result; formal_flow_split_fraction=q_ch_i/sum(q_ch_i)",
+      "formal_qch_sidecar_current": true,
+      "formal_qch_weighting_current": false,
+      "route_score_current": false,
+      "winner_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection"
+    }
+  ],
   "promotion_update_rows": [
     {
       "target_ledger_lane": "pressure_flow_validation",
       "covered_route_candidate_ids": "ROUTE-CAND-001;ROUTE-CAND-002",
       "previous_status": "exact_w500_d900_pressure_flow_validation_harness_ready_missing_external_result",
-      "new_context_status": "exact_w500_d900_pressure_flow_result_missing_or_failed",
+      "new_context_status": "exact_w500_d900_pressure_flow_result_accepted_formal_qch_sidecar_ready",
       "target_claim_current": "false",
-      "formal_qch_sidecar_current": "false",
+      "formal_qch_sidecar_current": "true",
       "blocked_promotion": "route_score;winner;yield;detection_probability",
-      "hard_fail_if": "pressure_flow_result_missing_or_failed_promoted_to_formal_qch",
-      "next_required_evidence": "bind exact W500/D900 pressure-flow external results that satisfy acceptance checks",
+      "hard_fail_if": "formal_qch_sidecar_promoted_to_route_score_without_route_policy_and_detection_yield_evidence",
+      "next_required_evidence": "route policy plus calibrated detector/wet/yield evidence",
       "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection"
     }
   ],
@@ -233,7 +282,16 @@
       "source_id": "pressure_flow_result_binder_builder_tests",
       "path": "tests/test_nodi_package_c_sidewall_pressure_flow_result_binder.py",
       "exists": "true",
-      "sha256": "ab9222249ccae5634aa2ac5587bd9caad8d34f9990209d07fa08eacc411202f8",
+      "sha256": "e607eeaa5fa5444828b646d092ea952952ec122d4a73cea681940630796c048e",
+      "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection",
+      "allowed_use": "pressure-flow external result binding;formal qch sidecar acceptance preflight",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "optional_external_pressure_flow_result_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_EXTERNAL_RESULT_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "881138d223e3b49e2a207663774db9a0c217313258a41fc59d0614513d73eda0",
       "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection",
       "allowed_use": "pressure-flow external result binding;formal qch sidecar acceptance preflight",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -241,14 +299,8 @@
   ],
   "dirty_context": [
     {
-      "path": ".gitignore",
-      "git_status": "M ",
-      "classification": "pressure_flow_result_binder_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "REVIEW_BUILD_MANIFEST.json",
-      "git_status": " M",
+      "git_status": "M ",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
     },
@@ -307,16 +359,16 @@
       "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
     },
     {
-      "path": "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
-      "git_status": " M",
-      "classification": "pressure_flow_result_binder_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/543_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_20260701.md",
+      "git_status": " M",
+      "classification": "pressure_flow_result_binder_output",
+      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
     },
     {
       "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
@@ -619,6 +671,48 @@
       "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
     },
     {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_BINDING_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "pressure_flow_result_binder_output",
+      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "pressure_flow_result_binder_output",
+      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "pressure_flow_result_binder_output",
+      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_PROMOTION_UPDATE_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "pressure_flow_result_binder_output",
+      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "pressure_flow_result_binder_output",
+      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "pressure_flow_result_binder_output",
+      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "pressure_flow_result_binder_output",
+      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
+    },
+    {
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -727,8 +821,8 @@
       "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
     },
     {
-      "path": "nodi_simulator/sidewall_pressure_flow_result_binder.py",
-      "git_status": "??",
+      "path": "tests/test_nodi_package_c_sidewall_pressure_flow_result_binder.py",
+      "git_status": " M",
       "classification": "pressure_flow_result_binder_build_edit",
       "release_decision": "included_in_commit_scope_before_publish"
     },
@@ -739,61 +833,13 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "reports/543_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_20260701.md",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
-    },
-    {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_BINDING_ROWS_20260701.csv",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_DIRTY_CONTEXT_20260701.csv",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_EXTERNAL_RESULT_TEMPLATE_ROWS_20260701.csv",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_MANIFEST_20260701.csv",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_PROMOTION_UPDATE_ROWS_20260701.csv",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_REPORT_20260701.json",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_SOURCE_LOCK_20260701.csv",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_STATUS_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_ROWS_20260701.csv",
       "git_status": "??",
       "classification": "pressure_flow_result_binder_output",
       "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
@@ -805,28 +851,10 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "tests/test_nodi_package_c_sidewall_pressure_flow_result_binder.py",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
-      "path": "tests/test_sidewall_pressure_flow_result_binder.py",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "tools/audits/build_nodi_package_c_sidewall_pressure_flow_result_binder.py",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
     }
   ]
 }

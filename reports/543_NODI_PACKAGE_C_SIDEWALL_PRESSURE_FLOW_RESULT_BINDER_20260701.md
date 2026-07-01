@@ -1,10 +1,10 @@
 # NODI Package C Sidewall Pressure-Flow Result Binder
 
-- Disposition: `NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_READY_WAITING_FOR_EXTERNAL_RESULT`.
-- Current head: `55552cdbaec0e0e6a91cec3144574039bad4890d` on `main`.
-- External result input present: `False`.
+- Disposition: `NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY`.
+- Current head: `e35b991ca1783c41becd9de5486aafba694a86c9` on `main`.
+- External result input present: `True`.
 - Binding rows: `2`.
-- Formal q_ch sidecar rows: `0`.
+- Formal q_ch sidecar rows: `2`.
 - Port-balance threshold: `0.01`.
 - q_total reconciliation threshold: `0.05`.
 - Ratio threshold note: 0.5-2.0 is a sanity guard for external-to-candidate flow scale, not a calibrated pressure-flow agreement threshold.
