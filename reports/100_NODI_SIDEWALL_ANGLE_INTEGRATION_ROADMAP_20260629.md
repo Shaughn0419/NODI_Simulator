@@ -2284,3 +2284,61 @@ The following remain false:
 This is the correct bridge into route/yield/detection computation: the lane has
 usable context for planning, but not yet the calibrated detector/blank evidence
 needed for accepted detection probability.
+
+## 47. Current integrated promotion ledger detector/blank-refresh status
+
+The integrated promotion ledger has now consumed the detector/blank context
+refresh:
+
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_integrated_promotion_ledger_detector_blank_refresh.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_REFRESH_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_REFRESH_READY_PREFLIGHT_ONLY`.
+- Claim boundary:
+  `promotion_ledger_detector_blank_refresh_not_detector_validation_not_detection_probability`.
+
+This refresh starts from the qch-refreshed integrated ledger and updates only
+the detector/blank promotion lanes:
+
+1. `blank_false_positive_trace`
+2. `detector_response_bridge`
+
+For both W500/D900 route candidates, the blank lane now records:
+
+- `nearest_blank_context_available_not_sidewall_specific_validation`
+
+and the detector lane now records:
+
+- `detector_identity_context_available_not_sidewall_response_validation`
+
+The qch lane remains:
+
+- `w500_d900_grid_refined_split_candidate_absolute_q_requires_validation`
+
+and the selected-annulus lane remains:
+
+- `selected_annulus_context_available_small_n_not_probability`
+
+This is a useful mainline reduction: flow split, selected annulus,
+nearest-blank context, and detector identity/readiness are now all represented
+in the same promotion ledger. The remaining large blockers are no longer
+"context not assembled"; they are concrete validation or calibration tasks:
+
+- exact COMSOL/measurement pressure-flow validation or reviewed solver
+  calibration for formal q_ch;
+- sidewall-specific blank traces or a validated transferable blank model;
+- detector operator, ROI/slit throughput, and standard-particle calibration
+  consuming the sidewall reference field;
+- wet/surface evidence for pass/recovery/clogging/yield claims.
+
+The following remain false in this ledger refresh:
+
+- `detector_response_validation_current=false`
+- `sidewall_specific_blank_trace_current=false`
+- `sidewall_specific_optical_calibration_current=false`
+- `detection_probability_current=false`
+- `route_score_current=false`
+- `winner_current=false`
+- `yield_current=false`

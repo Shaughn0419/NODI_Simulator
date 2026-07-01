@@ -1,0 +1,33 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_REFRESH_READY_PREFLIGHT_ONLY",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_REFRESH_READY_PREFLIGHT_ONLY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_REFRESH_20260701",
+    "claim_boundary": "promotion_ledger_detector_blank_refresh_not_detector_validation_not_detection_probability",
+    "current_head": "9476821645fba5fe81aafbbe1f10c0edb926bf75",
+    "branch": "main",
+    "source_ledger_qch_refresh_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_QCH_REFRESH_READY_PREFLIGHT_ONLY",
+    "source_detector_blank_context_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_READY_CONTEXT_ONLY",
+    "refreshed_promotion_lane_rows": 18,
+    "detector_blank_delta_rows": 4,
+    "qch_grid_refined_lane_rows_retained": 2,
+    "selected_annulus_context_available_rows_retained": 2,
+    "blank_context_available_rows": 2,
+    "detector_context_available_rows": 2,
+    "detector_response_validation_current": false,
+    "sidewall_specific_blank_trace_current": false,
+    "sidewall_specific_optical_calibration_current": false,
+    "detection_probability_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_current": false,
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 77,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "integrated promotion ledger detector/blank refresh;detector and blank blocker update",
+    "blocked_use": "detector_response_validation;blank_false_positive_rate;route_score;winner;JRC;q_ch_weighting;yield;detection_probability;wet pass;production ingestion",
+    "semantic_digest": "663881c1f3504f5017541d67218dd572063b7d0556519d0767bfe4c6416c475c"
+  }
+}
