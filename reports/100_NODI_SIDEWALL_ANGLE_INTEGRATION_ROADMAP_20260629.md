@@ -1311,12 +1311,30 @@ Gate37 and Gate38 are now folded into a single Package C metric-hardening consol
 
 This consolidation is the intended forward work style after the Gate37/38 review: use larger implementation/evidence blocks with a single review entrypoint, not a new small gate for every diagnostic. It keeps `ideal_rectangle` as a first-class path while preserving the sidewall/trapezoid analysis branch as schema-bound and cache-distinct.
 
-## 15. Recommended next action
+## 15. Current Package C timeseries ESS candidate status
 
-Current safe route after the consolidation:
+The first post-consolidation proof-gap hardening block adds long-run time-series evidence for the finite-step reflection candidate:
 
-1. Use the consolidated evidence index as the Package C metric-hardening entrypoint, instead of adding another narrow report-only gate.
-2. Continue tightening the remaining proof-level gaps in one larger block: raw time-series ESS if long-run equilibrium tests are introduced, additional `6.25e-6 s` dt refinement for declared worst cases if needed, and explicit substep/fail policy for any future geometry with large RMS step relative to local throat/corner feature size.
+- Artifact id: `PACKAGE_C_TIMESERIES_ESS_CANDIDATE_20260701`.
+- Disposition: `NODI_PACKAGE_C_TIMESERIES_ESS_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: six representative/stress scenarios, long-chain autocorrelation, ESS, retained-sample stationarity proxies, substep/fail policy candidate rows, source lock, no-proof firewall, status/report/manifest.
+- Chain settings: `65536` steps per scenario, `8192` burn-in steps, stride `8`, retained samples per scenario `7168`.
+- Output rows: scenario summary `6`, observable ESS `18`, autocorrelation `144`, substep policy `6`.
+- Current results: `min_effective_sample_size=46.559312675`, `max_u_accessible_cdf_l1_to_uniform=0.284598214`, `max_x_local_norm_l1_to_uniform=0.108537946`, `support_violation_rows=0`, `nonconverged_reflection_rows=0`, `max_exact_boundary_atom_fraction_all_steps=0.0`.
+- Substep guard rows: `substep_review_rows=6`; these are design guards only, not runtime policy.
+- Candidate status: `candidate_artifact_complete_not_proof`; `stationarity_review_required=true`; `substep_policy_review_required=true`.
+- Reviewed commit binding status: `pending_future_authorization_not_clean_head_bound`.
+- Proof-readiness impact: `timeseries_ess_gap_reduced_but_not_proof_registered`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+This block reduces the prior `timeseries_ess` gap from missing to candidate-evidenced, but it still does not register Package C proof/pass. Future proof registration would still need a reviewed clean commit binding, manual authorization ledger, proof-level thresholds, and independent review of the statistical method.
+
+## 16. Recommended next action
+
+Current safe route after the consolidation and timeseries ESS candidate:
+
+1. Use the consolidated evidence index plus the timeseries ESS candidate as the Package C metric-hardening entrypoint, instead of adding another narrow report-only gate.
+2. Continue tightening the remaining proof-level gaps in one larger block: convert the substep/fail policy candidate into explicit fail-closed validator rules, add declared worst-case dt refinement where the substep rows request review, and keep any future proof thresholds separate from runtime permission.
 3. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 5. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.

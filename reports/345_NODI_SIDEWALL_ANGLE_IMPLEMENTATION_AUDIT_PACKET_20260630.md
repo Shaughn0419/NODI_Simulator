@@ -392,3 +392,40 @@ mph_load_allowed=false
 ```
 
 This consolidation is the current forward entrypoint for Package C metric hardening. It absorbs Gate37 exact/near-boundary atom split, raw histograms, ESS proxy, one-wall positive/negative controls, dt refinement, corner heatmap, and Gate38 expanded-sampling wall-pileup refinement into a single evidence index and readiness-criteria table. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C timeseries ESS candidate
+
+The first post-consolidation proof-gap hardening block reduces the prior `timeseries_ess` gap from missing to candidate-evidenced:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_timeseries_ess_candidate.py --confirm-package-c-timeseries-ess-candidate
+NODI_PACKAGE_C_TIMESERIES_ESS_CANDIDATE_READY_NO_PROOF_REGISTRATION
+scenario_rows=6
+observable_ess_rows=18
+autocorrelation_rows=144
+substep_policy_rows=6
+n_steps_per_scenario=65536
+burn_in_steps=8192
+sample_stride=8
+retained_samples_per_scenario=7168
+min_effective_sample_size=46.559312675
+max_u_accessible_cdf_l1_to_uniform=0.284598214
+max_x_local_norm_l1_to_uniform=0.108537946
+support_violation_rows=0
+nonconverged_reflection_rows=0
+max_exact_boundary_atom_fraction_all_steps=0.0
+substep_review_rows=6
+timeseries_ess_candidate_status=candidate_artifact_complete_not_proof
+stationarity_review_required=true
+substep_policy_review_required=true
+reviewed_commit_binding_status=pending_future_authorization_not_clean_head_bound
+proof_readiness_impact=timeseries_ess_gap_reduced_but_not_proof_registered
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+The substep rows are design guards only, not runtime policy. This packet does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
