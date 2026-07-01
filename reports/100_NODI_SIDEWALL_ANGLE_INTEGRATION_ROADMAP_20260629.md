@@ -2134,3 +2134,50 @@ lanes directly:
 This keeps ideal rectangle and trapezoid sidewall branches distinct while
 allowing the route/yield/detection program to move forward as a coordinated
 evidence chain rather than as isolated unmerged diagnostics.
+
+## 44. Current sidewall qch grid-validation refresh status
+
+The flow/qch lane now has an exact W500/D900 grid-refinement candidate packet:
+
+- Module: `nodi_simulator/sidewall_qch_grid_validation.py`.
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_qch_grid_validation_refresh.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_READY_CANDIDATE_ONLY`.
+- Claim boundary:
+  `qch_grid_refinement_candidate_not_formal_qch_not_route_score`.
+
+The packet runs the current trapezoid pressure-flow candidate solver on the
+exact W500/D900 geometry for:
+
+- `rectangle_limit_theta90_D900_W500`
+- `taper_theta85_D900_W500`
+- `closed_theta70_D900_W500`
+
+It evaluates grids `21`, `31`, and `41`, records the closed geometry as blocked,
+and compares candidate flow-split fractions against the 41-grid reference.
+The key interpretation is:
+
+- W500/D900 split-candidate convergence is stable enough for promotion
+  planning;
+- absolute q_ch remains grid-sensitive and still requires exact COMSOL,
+  measurement, or a reviewed solver-calibration artifact before it can become
+  formal q_ch weighting;
+- route score, winner/JRC, yield, and detection probability remain false.
+
+The packet emits a narrow `flow_split_qch` promotion update:
+
+- new status:
+  `w500_d900_grid_refined_split_candidate_absolute_q_requires_validation`;
+- blocked promotion:
+  `formal_qch_weighting`, `route_score`, `winner`, `yield`, and
+  `detection_probability`;
+- next required evidence:
+  exact COMSOL or measurement pressure-flow validation plus route policy audit.
+
+This moves the qch branch forward from generic candidate flow context to an
+exact-geometry W500/D900 split-stability candidate, while preserving the
+remaining validation requirements for calibrated absolute flow and route-level
+claims.

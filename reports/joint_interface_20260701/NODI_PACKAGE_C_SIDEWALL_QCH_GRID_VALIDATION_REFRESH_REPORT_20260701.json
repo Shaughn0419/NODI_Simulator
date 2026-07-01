@@ -1,0 +1,982 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_READY_CANDIDATE_ONLY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_20260701",
+    "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score",
+    "current_head": "f184d84eee469e8f91d2e8760969ad86fb1bd205",
+    "branch": "main",
+    "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+    "source_flow_disposition": "NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_READY_NOT_QCH",
+    "source_qch_disposition": "NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_READY_NOT_ROUTE",
+    "source_ledger_refresh_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_REFRESH_READY_PREFLIGHT_ONLY",
+    "grid_rows": 9,
+    "convergence_rows": 6,
+    "promotion_update_rows": 1,
+    "split_candidate_pass_rows": 6,
+    "absolute_q_review_rows": 2,
+    "max_split_fraction_abs_delta_vs_reference": 0.00214617943736,
+    "max_q_ch_relative_delta_vs_reference": 0.0979590950063,
+    "split_candidate_current": true,
+    "absolute_qch_calibration_current": false,
+    "formal_qch_weighting_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_detection_probability_current": false,
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 79,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "W500/D900 qch grid-refinement evidence;flow-split promotion planning;integrated ledger lane update input",
+    "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;absolute calibrated q_ch;wet pass;fabrication release;production ingestion",
+    "semantic_digest": "f0b6ed4fdfb1a6d8c9ff3a8c2ac3b63503a1613143a231d26df03a7660dcb4dc"
+  },
+  "grid_rows": [
+    {
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "grid_nx": "21",
+      "grid_nu": "21",
+      "sidewall_deg_comsol": "90",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "top_width_nm": "500",
+      "depth_nm": "900",
+      "pressure_drop_Pa": "1000",
+      "solver_status": "candidate_solver_output",
+      "active_cell_count": "441",
+      "hydraulic_resistance_Pa_s_m3": "6.83700780347e+18",
+      "q_ch_grid_candidate_m3_s": "1.46262813901e-16",
+      "candidate_flow_split_fraction": "0.603372940022",
+      "resistance_ratio_vs_rectangle_proxy": "0.83685600321",
+      "geometry_hash": "fc2b8074b0dc240816bf1d891822e3911f839ce691866b5022a2f04af416cb14",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "calibration_status": "grid_refined_split_candidate_absolute_q_requires_validation",
+      "qch_grid_validation_status": "grid_refinement_candidate_row",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "case_id": "taper_theta85_D900_W500",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "grid_nx": "21",
+      "grid_nu": "21",
+      "sidewall_deg_comsol": "85",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "top_width_nm": "500",
+      "depth_nm": "900",
+      "pressure_drop_Pa": "1000",
+      "solver_status": "candidate_solver_output",
+      "active_cell_count": "373",
+      "hydraulic_resistance_Pa_s_m3": "1.0400867504e+19",
+      "q_ch_grid_candidate_m3_s": "9.61458262605e-17",
+      "candidate_flow_split_fraction": "0.396627059978",
+      "resistance_ratio_vs_rectangle_proxy": "1.27307568743",
+      "geometry_hash": "033b6382b020bca2f984bd623ad4f2e4eff29417b8f8e36e8733ecef237065f2",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "calibration_status": "grid_refined_split_candidate_absolute_q_requires_validation",
+      "qch_grid_validation_status": "grid_refinement_candidate_row",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "case_id": "closed_theta70_D900_W500",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "grid_nx": "21",
+      "grid_nu": "21",
+      "sidewall_deg_comsol": "70",
+      "sidewall_taper_angle_deg_nodi": "20",
+      "top_width_nm": "500",
+      "depth_nm": "900",
+      "pressure_drop_Pa": "1000",
+      "solver_status": "blocked_geometry_closed",
+      "active_cell_count": "0",
+      "hydraulic_resistance_Pa_s_m3": "inf",
+      "q_ch_grid_candidate_m3_s": "0",
+      "candidate_flow_split_fraction": "0",
+      "resistance_ratio_vs_rectangle_proxy": "inf",
+      "geometry_hash": "8d3265480dd70f20767ec938beb60d83e9536034eb6a4fa751bc8dcb13f721e7",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "calibration_status": "blocked_geometry_closed_no_qch",
+      "qch_grid_validation_status": "blocked_source_geometry_closed",
+      "split_candidate_current": "false",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "grid_nx": "31",
+      "grid_nu": "31",
+      "sidewall_deg_comsol": "90",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "top_width_nm": "500",
+      "depth_nm": "900",
+      "pressure_drop_Pa": "1000",
+      "solver_status": "candidate_solver_output",
+      "active_cell_count": "961",
+      "hydraulic_resistance_Pa_s_m3": "7.22574059952e+18",
+      "q_ch_grid_candidate_m3_s": "1.38394118392e-16",
+      "candidate_flow_split_fraction": "0.604973382039",
+      "resistance_ratio_vs_rectangle_proxy": "0.884437252694",
+      "geometry_hash": "fc2b8074b0dc240816bf1d891822e3911f839ce691866b5022a2f04af416cb14",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "calibration_status": "grid_refined_split_candidate_absolute_q_requires_validation",
+      "qch_grid_validation_status": "grid_refinement_candidate_row",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "case_id": "taper_theta85_D900_W500",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "grid_nx": "31",
+      "grid_nu": "31",
+      "sidewall_deg_comsol": "85",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "top_width_nm": "500",
+      "depth_nm": "900",
+      "pressure_drop_Pa": "1000",
+      "solver_status": "candidate_solver_output",
+      "active_cell_count": "811",
+      "hydraulic_resistance_Pa_s_m3": "1.10660409438e+19",
+      "q_ch_grid_candidate_m3_s": "9.0366555219e-17",
+      "candidate_flow_split_fraction": "0.395026617961",
+      "resistance_ratio_vs_rectangle_proxy": "1.35449352432",
+      "geometry_hash": "033b6382b020bca2f984bd623ad4f2e4eff29417b8f8e36e8733ecef237065f2",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "calibration_status": "grid_refined_split_candidate_absolute_q_requires_validation",
+      "qch_grid_validation_status": "grid_refinement_candidate_row",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "case_id": "closed_theta70_D900_W500",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "grid_nx": "31",
+      "grid_nu": "31",
+      "sidewall_deg_comsol": "70",
+      "sidewall_taper_angle_deg_nodi": "20",
+      "top_width_nm": "500",
+      "depth_nm": "900",
+      "pressure_drop_Pa": "1000",
+      "solver_status": "blocked_geometry_closed",
+      "active_cell_count": "0",
+      "hydraulic_resistance_Pa_s_m3": "inf",
+      "q_ch_grid_candidate_m3_s": "0",
+      "candidate_flow_split_fraction": "0",
+      "resistance_ratio_vs_rectangle_proxy": "inf",
+      "geometry_hash": "8d3265480dd70f20767ec938beb60d83e9536034eb6a4fa751bc8dcb13f721e7",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "calibration_status": "blocked_geometry_closed_no_qch",
+      "qch_grid_validation_status": "blocked_source_geometry_closed",
+      "split_candidate_current": "false",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "grid_nx": "41",
+      "grid_nu": "41",
+      "sidewall_deg_comsol": "90",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "top_width_nm": "500",
+      "depth_nm": "900",
+      "pressure_drop_Pa": "1000",
+      "solver_status": "candidate_solver_output",
+      "active_cell_count": "1681",
+      "hydraulic_resistance_Pa_s_m3": "7.43967258195e+18",
+      "q_ch_grid_candidate_m3_s": "1.34414517438e-16",
+      "candidate_flow_split_fraction": "0.60551911946",
+      "resistance_ratio_vs_rectangle_proxy": "0.910622722847",
+      "geometry_hash": "fc2b8074b0dc240816bf1d891822e3911f839ce691866b5022a2f04af416cb14",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "calibration_status": "grid_refined_split_candidate_absolute_q_requires_validation",
+      "qch_grid_validation_status": "grid_refinement_candidate_row",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "case_id": "taper_theta85_D900_W500",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "grid_nx": "41",
+      "grid_nu": "41",
+      "sidewall_deg_comsol": "85",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "top_width_nm": "500",
+      "depth_nm": "900",
+      "pressure_drop_Pa": "1000",
+      "solver_status": "candidate_solver_output",
+      "active_cell_count": "1419",
+      "hydraulic_resistance_Pa_s_m3": "1.1419727072e+19",
+      "q_ch_grid_candidate_m3_s": "8.75677670487e-17",
+      "candidate_flow_split_fraction": "0.39448088054",
+      "resistance_ratio_vs_rectangle_proxy": "1.39778502964",
+      "geometry_hash": "033b6382b020bca2f984bd623ad4f2e4eff29417b8f8e36e8733ecef237065f2",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "calibration_status": "grid_refined_split_candidate_absolute_q_requires_validation",
+      "qch_grid_validation_status": "grid_refinement_candidate_row",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "case_id": "closed_theta70_D900_W500",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "grid_nx": "41",
+      "grid_nu": "41",
+      "sidewall_deg_comsol": "70",
+      "sidewall_taper_angle_deg_nodi": "20",
+      "top_width_nm": "500",
+      "depth_nm": "900",
+      "pressure_drop_Pa": "1000",
+      "solver_status": "blocked_geometry_closed",
+      "active_cell_count": "0",
+      "hydraulic_resistance_Pa_s_m3": "inf",
+      "q_ch_grid_candidate_m3_s": "0",
+      "candidate_flow_split_fraction": "0",
+      "resistance_ratio_vs_rectangle_proxy": "inf",
+      "geometry_hash": "8d3265480dd70f20767ec938beb60d83e9536034eb6a4fa751bc8dcb13f721e7",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "calibration_status": "blocked_geometry_closed_no_qch",
+      "qch_grid_validation_status": "blocked_source_geometry_closed",
+      "split_candidate_current": "false",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    }
+  ],
+  "convergence_rows": [
+    {
+      "comparison_id": "QCH-GRID-CONV-001",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "reference_grid_nx": "41",
+      "compared_grid_nx": "21",
+      "reference_q_ch_grid_candidate_m3_s": "1.34414517438e-16",
+      "compared_q_ch_grid_candidate_m3_s": "1.46262813901e-16",
+      "q_ch_relative_delta_vs_reference": "0.0881474463391",
+      "reference_split_fraction": "0.60551911946",
+      "compared_split_fraction": "0.603372940022",
+      "split_fraction_abs_delta_vs_reference": "0.00214617943736",
+      "split_candidate_convergence_status": "candidate_pass",
+      "absolute_q_convergence_status": "candidate_review_required",
+      "calibration_status": "split_stable_absolute_q_requires_comsol_or_measurement_validation",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "comparison_id": "QCH-GRID-CONV-002",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "case_id": "taper_theta85_D900_W500",
+      "reference_grid_nx": "41",
+      "compared_grid_nx": "21",
+      "reference_q_ch_grid_candidate_m3_s": "8.75677670487e-17",
+      "compared_q_ch_grid_candidate_m3_s": "9.61458262605e-17",
+      "q_ch_relative_delta_vs_reference": "0.0979590950063",
+      "reference_split_fraction": "0.39448088054",
+      "compared_split_fraction": "0.396627059978",
+      "split_fraction_abs_delta_vs_reference": "0.00214617943736",
+      "split_candidate_convergence_status": "candidate_pass",
+      "absolute_q_convergence_status": "candidate_review_required",
+      "calibration_status": "split_stable_absolute_q_requires_comsol_or_measurement_validation",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "comparison_id": "QCH-GRID-CONV-003",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "reference_grid_nx": "41",
+      "compared_grid_nx": "31",
+      "reference_q_ch_grid_candidate_m3_s": "1.34414517438e-16",
+      "compared_q_ch_grid_candidate_m3_s": "1.38394118392e-16",
+      "q_ch_relative_delta_vs_reference": "0.0296069281034",
+      "reference_split_fraction": "0.60551911946",
+      "compared_split_fraction": "0.604973382039",
+      "split_fraction_abs_delta_vs_reference": "0.000545737420693",
+      "split_candidate_convergence_status": "candidate_pass",
+      "absolute_q_convergence_status": "candidate_pass",
+      "calibration_status": "split_stable_absolute_q_requires_comsol_or_measurement_validation",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "comparison_id": "QCH-GRID-CONV-004",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "case_id": "taper_theta85_D900_W500",
+      "reference_grid_nx": "41",
+      "compared_grid_nx": "31",
+      "reference_q_ch_grid_candidate_m3_s": "8.75677670487e-17",
+      "compared_q_ch_grid_candidate_m3_s": "9.0366555219e-17",
+      "q_ch_relative_delta_vs_reference": "0.0319613970373",
+      "reference_split_fraction": "0.39448088054",
+      "compared_split_fraction": "0.395026617961",
+      "split_fraction_abs_delta_vs_reference": "0.000545737420693",
+      "split_candidate_convergence_status": "candidate_pass",
+      "absolute_q_convergence_status": "candidate_pass",
+      "calibration_status": "split_stable_absolute_q_requires_comsol_or_measurement_validation",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "comparison_id": "QCH-GRID-CONV-005",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "reference_grid_nx": "41",
+      "compared_grid_nx": "41",
+      "reference_q_ch_grid_candidate_m3_s": "1.34414517438e-16",
+      "compared_q_ch_grid_candidate_m3_s": "1.34414517438e-16",
+      "q_ch_relative_delta_vs_reference": "0",
+      "reference_split_fraction": "0.60551911946",
+      "compared_split_fraction": "0.60551911946",
+      "split_fraction_abs_delta_vs_reference": "0",
+      "split_candidate_convergence_status": "candidate_pass",
+      "absolute_q_convergence_status": "candidate_pass",
+      "calibration_status": "split_stable_absolute_q_requires_comsol_or_measurement_validation",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    },
+    {
+      "comparison_id": "QCH-GRID-CONV-006",
+      "qch_grid_validation_version": "sidewall_qch_grid_validation_w500_d900_v1",
+      "case_id": "taper_theta85_D900_W500",
+      "reference_grid_nx": "41",
+      "compared_grid_nx": "41",
+      "reference_q_ch_grid_candidate_m3_s": "8.75677670487e-17",
+      "compared_q_ch_grid_candidate_m3_s": "8.75677670487e-17",
+      "q_ch_relative_delta_vs_reference": "0",
+      "reference_split_fraction": "0.39448088054",
+      "compared_split_fraction": "0.39448088054",
+      "split_fraction_abs_delta_vs_reference": "0",
+      "split_candidate_convergence_status": "candidate_pass",
+      "absolute_q_convergence_status": "candidate_pass",
+      "calibration_status": "split_stable_absolute_q_requires_comsol_or_measurement_validation",
+      "split_candidate_current": "true",
+      "absolute_qch_calibration_current": "false",
+      "formal_qch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "yield_detection_probability_current": "false",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    }
+  ],
+  "promotion_update_rows": [
+    {
+      "target_ledger_lane": "flow_split_qch",
+      "previous_status": "candidate_flow_split_not_formal_qch_weighting",
+      "new_context_status": "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation",
+      "source_artifact": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_CONVERGENCE_ROWS_20260701.csv",
+      "target_claim_current": "false",
+      "blocked_promotion": "formal_qch_weighting;route_score;winner;yield;detection_probability",
+      "hard_fail_if": "grid_refined_split_candidate_promoted_to_formal_qch_or_route_score",
+      "next_required_evidence": "exact COMSOL or measurement pressure-flow validation and route policy audit",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "flow_solver_candidate_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "9d7f7d888ea164746e2708978045a46515c702f4ab2af0d5d47bb6ea266ea3de",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score",
+      "allowed_use": "W500/D900 qch grid-refinement evidence;flow-split promotion planning;integrated ledger lane update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;absolute calibrated q_ch;wet pass;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "qch_sidecar_candidate_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "c80b9ab2c811423f837a485ff2a044ca35522ef0d07cc504f53e3eb64fbc0b52",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score",
+      "allowed_use": "W500/D900 qch grid-refinement evidence;flow-split promotion planning;integrated ledger lane update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;absolute calibrated q_ch;wet pass;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "integrated_promotion_ledger_refresh_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_REFRESH_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "195a4ef3a0644c105d4304a22af016458831e89195b6a38f889030a00b995bc3",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score",
+      "allowed_use": "W500/D900 qch grid-refinement evidence;flow-split promotion planning;integrated ledger lane update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;absolute calibrated q_ch;wet pass;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "sidewall_qch_grid_validation_source",
+      "path": "nodi_simulator/sidewall_qch_grid_validation.py",
+      "exists": "true",
+      "sha256": "d571579fc9f62d1a6e69e037482caffa739abc66d3363741cf03e8cf394ddce4",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score",
+      "allowed_use": "W500/D900 qch grid-refinement evidence;flow-split promotion planning;integrated ledger lane update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;absolute calibrated q_ch;wet pass;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "sidewall_qch_grid_validation_tests",
+      "path": "tests/test_sidewall_qch_grid_validation.py",
+      "exists": "true",
+      "sha256": "2c82f90589d0ae12062c2e2a7dc0a76e71c6bf5c69d0b96c5228e542362eff1f",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score",
+      "allowed_use": "W500/D900 qch grid-refinement evidence;flow-split promotion planning;integrated ledger lane update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;absolute calibrated q_ch;wet pass;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "sidewall_qch_grid_validation_builder",
+      "path": "tools/audits/build_nodi_package_c_sidewall_qch_grid_validation_refresh.py",
+      "exists": "true",
+      "sha256": "324cf333302eff3b4a87697ee33bc4b70566d38c4cc18bdbb5d5481642fd7b78",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score",
+      "allowed_use": "W500/D900 qch grid-refinement evidence;flow-split promotion planning;integrated ledger lane update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;absolute calibrated q_ch;wet pass;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "sidewall_qch_grid_validation_builder_tests",
+      "path": "tests/test_nodi_package_c_sidewall_qch_grid_validation_refresh.py",
+      "exists": "true",
+      "sha256": "ad559b13f47f4a324ccb50304c71b9ff418af4e50e80dd3e240016755c2cb04d",
+      "claim_boundary": "qch_grid_refinement_candidate_not_formal_qch_not_route_score",
+      "allowed_use": "W500/D900 qch grid-refinement evidence;flow-split promotion planning;integrated ledger lane update input",
+      "blocked_use": "formal_qch_weighting;route_score;winner;JRC;yield;detection_probability;absolute calibrated q_ch;wet pass;fabrication release;production ingestion"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": ".gitignore",
+      "git_status": "M ",
+      "classification": "sidewall_qch_grid_validation_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
+      "git_status": " M",
+      "classification": "sidewall_qch_grid_validation_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_qch_grid_validation_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_qch_grid_validation.py",
+      "git_status": "??",
+      "classification": "sidewall_qch_grid_validation_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_qch_grid_validation_refresh.py",
+      "git_status": "??",
+      "classification": "sidewall_qch_grid_validation_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_sidewall_qch_grid_validation.py",
+      "git_status": "??",
+      "classification": "sidewall_qch_grid_validation_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_qch_grid_validation_refresh.py",
+      "git_status": "??",
+      "classification": "sidewall_qch_grid_validation_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ]
+}
