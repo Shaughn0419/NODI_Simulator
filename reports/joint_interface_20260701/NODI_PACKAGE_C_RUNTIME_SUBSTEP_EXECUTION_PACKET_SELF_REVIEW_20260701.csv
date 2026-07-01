@@ -1,0 +1,7 @@
+review_id,dimension,verdict,notes
+RUNTIME-EXEC-SELF-01,low-cost guarded trajectory smoke executed,PASS_GUARDED_RUNTIME_SMOKE_NOT_FINAL_CLAIM,Runtime smoke evidence is candidate execution evidence only.
+RUNTIME-EXEC-SELF-02,support invariant checked against trapezoid geometry,PASS_GUARDED_RUNTIME_SMOKE_NOT_FINAL_CLAIM,Runtime smoke evidence is candidate execution evidence only.
+RUNTIME-EXEC-SELF-03,prohibitive 526-substep stress case blocked,PASS_GUARDED_RUNTIME_SMOKE_NOT_FINAL_CLAIM,Runtime smoke evidence is candidate execution evidence only.
+RUNTIME-EXEC-SELF-04,no PRS/EAS numeric output emitted,PASS_GUARDED_RUNTIME_SMOKE_NOT_FINAL_CLAIM,Runtime smoke evidence is candidate execution evidence only.
+RUNTIME-EXEC-SELF-05,no COMSOL launch or .mph load,PASS_GUARDED_RUNTIME_SMOKE_NOT_FINAL_CLAIM,Runtime smoke evidence is candidate execution evidence only.
+RUNTIME-EXEC-SELF-06,no solver/wet/route/yield/detection claim promotion,PASS_GUARDED_RUNTIME_SMOKE_NOT_FINAL_CLAIM,Runtime smoke evidence is candidate execution evidence only.

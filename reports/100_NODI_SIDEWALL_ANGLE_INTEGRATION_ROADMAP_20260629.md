@@ -1618,3 +1618,25 @@ The efficient mainline route is:
 4. Bind route/yield/detection promotion only after the runtime, solver, wet, and Package D precheck evidence hashes exist.
 
 This keeps ideal rectangle as a first-class runtime path while allowing trapezoid sidewall evidence to advance as a coordinated downstream program rather than as isolated micro-gates.
+
+## 31. Current runtime/substep execution packet status
+
+The first authorized downstream execution packet converts the runtime/substep guard from design evidence into narrow guarded runtime smoke evidence:
+
+- Artifact id: `PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_20260701`.
+- Disposition: `NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_READY_WITH_GUARDED_SMOKE`.
+- Runtime policy version: `trapezoid_runtime_substep_guard_v1`.
+- Executed smoke case: `low_cost_theta90_D900_r20_seed31031`.
+- Smoke role: `guarded_runtime_smoke_executed`.
+- Stress blocker case: `narrow_tail_theta70_D900_r150`.
+- Stress blocker role: `prohibitive_substep_stress_blocked`.
+- Stress required substeps: `526`.
+
+This packet runs the narrowest local NODI trajectory smoke evidence under the trapezoid runtime guard and records the prohibitive 526-substep stress case as blocked-as-expected. It does not emit sidewall PRS/EAS numeric output, launch COMSOL, load `.mph`, produce solver/wet output, promote route/yield/detection claims, or create fabrication/production evidence.
+
+The next efficient blocks can proceed in parallel:
+
+1. Add a substep-aware runtime kernel or wrapper if the project needs to execute moderate/prohibitive cases rather than only classify them.
+2. Prepare trapezoid flow solver / COMSOL flow comparison preflight before any `q_ch` weighting.
+3. Prepare electrokinetic grid and optical/reference preflights before any true `W_eff` or detection-response claim.
+4. Prepare wet/EV evidence contract before passability, clogging, recovery, yield, or detection probability claims.
