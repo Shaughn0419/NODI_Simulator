@@ -2003,3 +2003,47 @@ sidewall calibration rows or build the integrated promotion ledger that states
 exactly which calibrated optical, flow, wet, and route-selection inputs are
 still missing before detection probability, yield, route score, or winner can
 be claimed.
+
+## 41. Current integrated promotion ledger status
+
+The sidewall Package C evidence chain now has an integrated promotion preflight
+ledger:
+
+- Module: `nodi_simulator/sidewall_integrated_promotion_ledger.py`.
+- Ledger version: `sidewall_integrated_promotion_preflight_ledger_v1`.
+- Artifact id: `PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_READY_PREFLIGHT_ONLY`.
+
+This is not a route ranking table. It deliberately emits:
+
+- route summary ledger rows;
+- blocker catalog rows;
+- `route_candidate_id x evidence_lane x target_claim` promotion-lane rows.
+
+The ledger joins the current q_ch sidecar, pressure-flow validation context,
+route/yield/detection candidate, wet/optical detection context, sidewall
+reference surrogate smoke, and optical calibration bridge. Its output is a
+preflight statement of what still blocks promotion:
+
+- formal q_ch / accepted flow split is still not current;
+- pressure-flow validation is still context-only;
+- selected-annulus context is still missing;
+- sidewall optical calibration is still synthetic seed only;
+- detector response and blank false-positive validation are still missing;
+- wet wall-interaction evidence is still missing;
+- route-selection policy / independent decision audit is still missing.
+
+The ledger keeps these flags false:
+
+- `route_score_current=false`
+- `winner_current=false`
+- `JRC_current=false`
+- `yield_current=false`
+- `detection_probability_current=false`
+- `formal_qch_weighting_current=false`
+
+Allowed use is promotion planning and evidence prioritization. Blocked use is
+route scoring, route selection, q_ch weighting, detection probability, yield,
+wet pass, clogging/time-to-clog/recovery, fabrication release, or production
+ingestion.

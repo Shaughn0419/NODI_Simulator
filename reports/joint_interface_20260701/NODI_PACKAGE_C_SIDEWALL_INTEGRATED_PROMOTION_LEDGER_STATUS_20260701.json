@@ -1,0 +1,33 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_READY_PREFLIGHT_ONLY",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_READY_PREFLIGHT_ONLY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_20260701",
+    "claim_boundary": "promotion_preflight_not_route_score_not_winner_not_yield_not_detection_probability",
+    "current_head": "859e8355d0d11b8f2fe8f7fe8738f8719686485f",
+    "branch": "main",
+    "ledger_version": "sidewall_integrated_promotion_preflight_ledger_v1",
+    "ledger_rows": 2,
+    "blocker_catalog_rows": 9,
+    "promotion_lane_rows": 18,
+    "blocked_promotion_rows": 2,
+    "max_blocker_count": 9,
+    "formal_qch_weighting_current": false,
+    "full_wave_or_calibrated_optical_solver_current": false,
+    "true_W_eff_current": false,
+    "detector_response_validation_current": false,
+    "detection_probability_current": false,
+    "yield_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "JRC_current": false,
+    "source_lock_rows": 10,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 79,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "route-level promotion preflight;integrated evidence blocker ledger;next-evidence prioritization",
+    "blocked_use": "route_score;winner;JRC;q_ch_weighting;detection_probability;yield;wet pass;clogging rate;time-to-clog;recovery;fabrication release;production ingestion",
+    "semantic_digest": "28e893148124bf9a83ab98ab7040226e366040e0e5885cac24b47183371aa6cd"
+  }
+}

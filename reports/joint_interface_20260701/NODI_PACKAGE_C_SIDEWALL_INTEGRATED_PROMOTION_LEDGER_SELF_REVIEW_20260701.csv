@@ -1,0 +1,5 @@
+review_id,dimension,verdict,notes
+PROMO-SELF-01,route-level ledger rows do not contain route_score or winner values,PASS_INTEGRATED_PROMOTION_LEDGER_PREFLIGHT_ONLY,Ledger consolidates blockers without promoting route/yield/detection claims.
+PROMO-SELF-02,q_ch remains candidate and not formal weighting,PASS_INTEGRATED_PROMOTION_LEDGER_PREFLIGHT_ONLY,Ledger consolidates blockers without promoting route/yield/detection claims.
+PROMO-SELF-03,optical calibration bridge remains synthetic seed only,PASS_INTEGRATED_PROMOTION_LEDGER_PREFLIGHT_ONLY,Ledger consolidates blockers without promoting route/yield/detection claims.
+PROMO-SELF-04,"wet, blank-trace, selected-annulus, and detector-response blockers remain explicit",PASS_INTEGRATED_PROMOTION_LEDGER_PREFLIGHT_ONLY,Ledger consolidates blockers without promoting route/yield/detection claims.
