@@ -1,0 +1,6 @@
+review_id,dimension,verdict,notes
+WOD-SELF-01,existing Tsuyama detection lane artifacts are source-locked,PASS_WET_OPTICAL_DETECTION_CONTEXT_NOT_FINAL,This packet advances the wet/optical/detection branch by binding evidence context while preserving final-claim prerequisites.
+WOD-SELF-02,"W500/D900 route candidates are nearest-geometry context, not exact sidewall detection calibration",PASS_WET_OPTICAL_DETECTION_CONTEXT_NOT_FINAL,This packet advances the wet/optical/detection branch by binding evidence context while preserving final-claim prerequisites.
+WOD-SELF-03,blank false-positive guard is bound as context,PASS_WET_OPTICAL_DETECTION_CONTEXT_NOT_FINAL,This packet advances the wet/optical/detection branch by binding evidence context while preserving final-claim prerequisites.
+WOD-SELF-04,"EV weighted panel is bound as surrogate wet/detection context, not wet experiment",PASS_WET_OPTICAL_DETECTION_CONTEXT_NOT_FINAL,This packet advances the wet/optical/detection branch by binding evidence context while preserving final-claim prerequisites.
+WOD-SELF-05,route/yield/detection final claims remain false,PASS_WET_OPTICAL_DETECTION_CONTEXT_NOT_FINAL,This packet advances the wet/optical/detection branch by binding evidence context while preserving final-claim prerequisites.

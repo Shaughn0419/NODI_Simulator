@@ -1766,3 +1766,51 @@ claims can become true is:
 2. route-score decision ledger and independent route audit;
 3. wet EV pass/recovery controls and sample-handling evidence;
 4. optical/reference calibration plus detector-response evidence.
+
+## 36. Current wet/optical/detection evidence-context status
+
+The wet/optical/detection branch now has a first evidence-context packet that
+binds existing NODI/Tsuyama detection materials to the current Package C route
+candidates:
+
+- Module: `nodi_simulator/wet_optical_detection_evidence.py`.
+- Evidence context version:
+  `wet_optical_detection_evidence_context_from_tsuyama_lane_v1`.
+- Artifact id:
+  `PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_READY_NOT_FINAL`.
+- Inputs:
+  - `NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_ROUTE_CANDIDATE_ROWS_20260701.csv`
+  - `results/tsuyama_gold_aligned_detection_lane/gold_targeted_sweep_final_v1.csv`
+  - `results/tsuyama_gold_aligned_detection_lane/blank_fpr_sweep_v1.csv`
+  - `results/tsuyama_gold_aligned_detection_lane/feasible_scenarios_v1.csv`
+  - `results/tsuyama_gold_aligned_detection_lane/ev_targeted_panel_v1.csv`
+  - `results/tsuyama_gold_aligned_detection_lane/ev_ranking_comparison_v1.csv`
+
+This packet changes the state of the wet/optical/detection branch from
+`missing` to source-locked context evidence. It records nearest-geometry
+detection context for the current W500/D900 route candidates, binds blank-FPR
+guardrail evidence, and connects the EV weighted detection panel/ranking context
+to each candidate route row.
+
+It does not claim sidewall-specific optical calibration or wet validation:
+
+- `sidewall_specific_optical_solver_current=false`
+- `sidewall_specific_wet_evidence_current=false`
+- `detection_probability_current=false`
+- `yield_current=false`
+- `route_score_current=false`
+- `winner_current=false`
+- `JRC_current=false`
+
+The next efficient wet/optical/detection blocks are:
+
+1. run or ingest W500/D900 sidewall-specific optical/reference calibration for
+   theta85 and rectangle-limit cases;
+2. rerun the EV detection panel with selected-annulus columns if selected-annulus
+   detection is intended to enter Package D;
+3. add wet EV pass/recovery and wall-interaction evidence contracts before yield
+   or recovery can be promoted;
+4. combine accepted q_ch, exact pressure-flow validation, sidewall optical
+   calibration, and wet evidence into a future route-score decision ledger.

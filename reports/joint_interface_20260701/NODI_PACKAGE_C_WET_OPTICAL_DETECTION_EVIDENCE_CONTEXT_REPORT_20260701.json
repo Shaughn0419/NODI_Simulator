@@ -1,0 +1,1013 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_READY_NOT_FINAL",
+    "artifact_id": "PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_20260701",
+    "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+    "current_head": "e79051ebeaff1dd2a13f07bbe9897ac143a3ae8d",
+    "branch": "main",
+    "evidence_context_version": "wet_optical_detection_evidence_context_from_tsuyama_lane_v1",
+    "source_route_disposition": "NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_READY_NOT_FINAL",
+    "evidence_context_rows": 2,
+    "nearest_geometry_context_rows": 2,
+    "detection_context_available_rows": 2,
+    "wet_context_available_rows": 2,
+    "boundary_context_rows": 11,
+    "deferred_dirty_boundary_context_rows": 4,
+    "sidewall_specific_optical_solver_current": false,
+    "sidewall_specific_wet_evidence_current": false,
+    "detection_probability_current": false,
+    "yield_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "JRC_current": false,
+    "source_lock_rows": 20,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 89,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+    "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion",
+    "semantic_digest": "b9004c8fc42a858674f7529b16b1a61284dcda9490aa950691d820e6a48d4648"
+  },
+  "evidence_context_rows": [
+    {
+      "route_candidate_id": "ROUTE-CAND-001",
+      "evidence_context_version": "wet_optical_detection_evidence_context_from_tsuyama_lane_v1",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "route_key": "route_rectangle_limit_theta90_D900_W500",
+      "source_case_id": "rectangle_limit_theta90_D900_W500",
+      "source_width_nm": "500",
+      "source_depth_nm": "900",
+      "sidewall_deg_comsol": "90",
+      "route_decision_candidate_metric": "0.150843235006",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "detection_context_status": "tsuyama_detection_lane_nearest_geometry_context_not_sidewall_specific",
+      "optical_context_status": "paper_aligned_reference_context_available_not_sidewall_optical_solver",
+      "wet_context_status": "ev_weighted_panel_surrogate_context_available_not_wet_experiment",
+      "detection_context_rows": "40",
+      "feasible_context_rows": "10",
+      "ev_panel_context_rows": "384",
+      "ranking_context_rows": "12",
+      "max_gold_detection_rate": "0.5852",
+      "max_gold_stable_detection_rate": "0.5852",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "best_ev_weighted_stable_detection_rate": "0.47585653179",
+      "detection_context_weight": "0.25",
+      "wet_context_weight": "0.25",
+      "route_detection_context_candidate_metric": "0.00942770218787",
+      "selected_annulus_context_status": "selected_annulus_context_missing_rerun_required",
+      "sidewall_specific_optical_solver_current": "false",
+      "sidewall_specific_wet_evidence_current": "false",
+      "detection_probability_current": "false",
+      "yield_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "JRC_current": "false",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score"
+    },
+    {
+      "route_candidate_id": "ROUTE-CAND-002",
+      "evidence_context_version": "wet_optical_detection_evidence_context_from_tsuyama_lane_v1",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "route_key": "route_taper_theta85_D900_W500",
+      "source_case_id": "taper_theta85_D900_W500",
+      "source_width_nm": "500",
+      "source_depth_nm": "900",
+      "sidewall_deg_comsol": "85",
+      "route_decision_candidate_metric": "0.0991567649945",
+      "geometry_match_level": "nearest_width_depth_context_only",
+      "nearest_detection_width_nm": "800",
+      "nearest_detection_depth_nm": "710",
+      "geometry_distance_nm": "490",
+      "detection_context_status": "tsuyama_detection_lane_nearest_geometry_context_not_sidewall_specific",
+      "optical_context_status": "paper_aligned_reference_context_available_not_sidewall_optical_solver",
+      "wet_context_status": "ev_weighted_panel_surrogate_context_available_not_wet_experiment",
+      "detection_context_rows": "40",
+      "feasible_context_rows": "10",
+      "ev_panel_context_rows": "384",
+      "ranking_context_rows": "12",
+      "max_gold_detection_rate": "0.5852",
+      "max_gold_stable_detection_rate": "0.5852",
+      "min_blank_false_positive_wilson_ub_per_trace": "0.000384012477767",
+      "best_ev_weighted_stable_detection_rate": "0.47585653179",
+      "detection_context_weight": "0.25",
+      "wet_context_weight": "0.25",
+      "route_detection_context_candidate_metric": "0.00619729781216",
+      "selected_annulus_context_status": "selected_annulus_context_missing_rerun_required",
+      "sidewall_specific_optical_solver_current": "false",
+      "sidewall_specific_wet_evidence_current": "false",
+      "detection_probability_current": "false",
+      "yield_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "JRC_current": "false",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score"
+    }
+  ],
+  "promotion_gaps": [
+    {
+      "target": "sidewall_specific_detection_probability",
+      "current_value": "false",
+      "context_available": "true",
+      "required_before_true": "sidewall-specific optical/reference solver or calibration consuming trapezoid geometry plus detector-response validation",
+      "hard_fail_if": "detection_probability_true_from_tsuyama_context_only"
+    },
+    {
+      "target": "wet_yield_or_recovery",
+      "current_value": "false",
+      "context_available": "true",
+      "required_before_true": "wet EV pass/recovery controls, sample handling evidence, and sidewall/roughness/adsorption assumptions",
+      "hard_fail_if": "yield_true_from_ev_panel_surrogate_only"
+    },
+    {
+      "target": "route_score_or_winner",
+      "current_value": "false",
+      "context_available": "true",
+      "required_before_true": "accepted q_ch sidecar, exact pressure-flow validation, sidewall optical/wet evidence, and decision ledger",
+      "hard_fail_if": "route_score_true_from_context_candidate_metric_only"
+    },
+    {
+      "target": "selected_annulus_detection_claim",
+      "current_value": "false",
+      "context_available": "partial",
+      "required_before_true": "rerun EV panel with selected-annulus columns and sidewall-aware PRS/bin mapping",
+      "hard_fail_if": "selected_annulus_claim_true_with_missing_annulus_columns"
+    }
+  ],
+  "boundary_context_rows": [
+    {
+      "context_id": "tsuyama_target_audit",
+      "path": "results/tsuyama_phase2_paper_target_audit_v1/tsuyama_paper_target_audit_report_v1.md",
+      "exists": "true",
+      "source_lock_status": "source_locked_clean_git_context",
+      "sha256": "b77ebf2343dcff69bf4b54fed95d53fd8f75d393039c52a0371b3fba1151bb1e",
+      "context_role": "tsuyama_detection_target_claim_layering_context",
+      "claim_boundary": "direct/inferred/operational/diagnostic-only target separation; does not certify sidewall detection probability",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "context_id": "tsuyama_phase2_selected_annulus",
+      "path": "reports/49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md",
+      "exists": "true",
+      "source_lock_status": "source_locked_clean_git_context",
+      "sha256": "f54931d24fa9acab5f4865ae7d1d45e4f2f476638739e5ca00fd9afea93de455",
+      "context_role": "selected_annulus_negative_or_diagnostic_context",
+      "claim_boundary": "selected-annulus analysis remains diagnostic and requires rerun with current sidewall bins before Package D use",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "context_id": "detector_identity_report_147",
+      "path": "reports/147_detector_forward_identity_full_chain_adversarial_audit_synthesis_20260610.md",
+      "exists": "true",
+      "source_lock_status": "source_locked_clean_git_context",
+      "sha256": "fa1d238186c5ec734a4ee1fc2555391f403e417958b81ee64e83ee653e8c40bb",
+      "context_role": "detector_forward_identity_unresolved_context",
+      "claim_boundary": "detector identity is a high-priority optical boundary; prevents true detector-response claim from context rows alone",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "context_id": "depth_noise_report_146",
+      "path": "reports/146_depth_reference_model_noise_regime_evidence_20260603.md",
+      "exists": "true",
+      "source_lock_status": "source_locked_clean_git_context",
+      "sha256": "c33e65744156a4a09fd50c7c9e035c13c174ccc9f08dc935c686d1b5047ba2aa",
+      "context_role": "depth_reference_noise_sensitivity_context",
+      "claim_boundary": "depth/noise sensitivity motivates measured blank and transfer calibration before detection probability",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "context_id": "bfp_roi_operator_summary",
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "exists": "true",
+      "source_lock_status": "deferred_dirty_local_context_not_source_locked",
+      "sha256": "",
+      "context_role": "bfp_roi_diagnostic_context",
+      "claim_boundary": "BFP ROI rows are diagnostic detector/operator context, not sidewall optical solver output",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "context_id": "noise_readout_route_sensitivity",
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "exists": "true",
+      "source_lock_status": "deferred_dirty_local_context_not_source_locked",
+      "sha256": "",
+      "context_role": "noise_readout_diagnostic_context",
+      "claim_boundary": "noise/readout sensitivity is a calibration requirement, not a final detection probability",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "context_id": "green_tensor_diagnostic",
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "exists": "true",
+      "source_lock_status": "deferred_dirty_local_context_not_source_locked",
+      "sha256": "",
+      "context_role": "full_wave_green_tensor_surrogate_risk_context",
+      "claim_boundary": "physical-ceiling diagnostic flags optical-solver risk; it is not true sidewall reference-field output",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "context_id": "jones_polarization_diagnostic",
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "exists": "true",
+      "source_lock_status": "deferred_dirty_local_context_not_source_locked",
+      "sha256": "",
+      "context_role": "vector_jones_polarization_surrogate_risk_context",
+      "claim_boundary": "polarization diagnostic flags solver/model risk; it is not a calibrated detector response",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "context_id": "calibration_plan_advisor",
+      "path": "nodi_simulator/calibration_plan_advisor.py",
+      "exists": "true",
+      "source_lock_status": "source_locked_clean_git_context",
+      "sha256": "084cb7c7181c504db09970827f8503ea5f4874b3af60374069e35b6c82b72bd7",
+      "context_role": "wet_optical_calibration_plan_context",
+      "claim_boundary": "maps missing evidence to calibration work; it does not unlock wet/yield/detection claims",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "context_id": "calibration_models",
+      "path": "nodi_simulator/calibration_models.py",
+      "exists": "true",
+      "source_lock_status": "source_locked_clean_git_context",
+      "sha256": "9dd754c04bb4b8c33d7b0a717caaff5d854af247ec190ef59d70c9d848f10366",
+      "context_role": "calibration_model_template_context",
+      "claim_boundary": "calibration models remain templates until bound to measured sidewall/optical/wet data",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "context_id": "optical_exposure_safety",
+      "path": "nodi_simulator/optical_exposure_safety.py",
+      "exists": "true",
+      "source_lock_status": "source_locked_clean_git_context",
+      "sha256": "780ed9c60405bb9efc3136b81a6b371138a70bbb5e84982688efc3d4d47d0d12",
+      "context_role": "exposure_photodamage_guard_context",
+      "claim_boundary": "exposure safety guard is a risk/control context, not a safe-power or wet-pass conclusion",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "route_candidate_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "98f4b3973a6bac7a28fde229972b07b73355f50469f2b35c95036aee490f8aeb",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "route_candidate_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_ROUTE_CANDIDATE_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "1d35879d5ca13c4603a04c650362a8ae8d8a0128560f3aa0b1bf3f72f88a2acd",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "tsuyama_gold_detection_rows",
+      "path": "results/tsuyama_gold_aligned_detection_lane/gold_targeted_sweep_final_v1.csv",
+      "exists": "true",
+      "sha256": "a328c009b7115f14dd1260912b853579e867199a850396b28ac8a1859f12c1ef",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "tsuyama_blank_false_positive_rows",
+      "path": "results/tsuyama_gold_aligned_detection_lane/blank_fpr_sweep_v1.csv",
+      "exists": "true",
+      "sha256": "eb537b14dd9cbb2b5f69e74f7e0793369502abe74e2873df60cdb38dc4c15a4a",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "tsuyama_feasible_scenarios",
+      "path": "results/tsuyama_gold_aligned_detection_lane/feasible_scenarios_v1.csv",
+      "exists": "true",
+      "sha256": "46f5d853be51fbcd2841e86586e75261a7a023fb794d32a4dfc9264e45dc4ee7",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "tsuyama_ev_targeted_panel",
+      "path": "results/tsuyama_gold_aligned_detection_lane/ev_targeted_panel_v1.csv",
+      "exists": "true",
+      "sha256": "808ee4fdf29dea6757aa2fb5f79582a12191acb068a8f6c561922e539124366e",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "tsuyama_ev_ranking_comparison",
+      "path": "results/tsuyama_gold_aligned_detection_lane/ev_ranking_comparison_v1.csv",
+      "exists": "true",
+      "sha256": "45d43335ee298d470d5e7ff3e17429550ca46936db9c95b015f97f8ede2d49d1",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "tsuyama_target_audit_report",
+      "path": "results/tsuyama_phase2_paper_target_audit_v1/tsuyama_paper_target_audit_report_v1.md",
+      "exists": "true",
+      "sha256": "b77ebf2343dcff69bf4b54fed95d53fd8f75d393039c52a0371b3fba1151bb1e",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "tsuyama_phase2_selected_annulus_report",
+      "path": "reports/49_Tsuyama_Phase2_paper_calibrated_selected_annulus_analysis.md",
+      "exists": "true",
+      "sha256": "f54931d24fa9acab5f4865ae7d1d45e4f2f476638739e5ca00fd9afea93de455",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "detector_identity_report_147",
+      "path": "reports/147_detector_forward_identity_full_chain_adversarial_audit_synthesis_20260610.md",
+      "exists": "true",
+      "sha256": "fa1d238186c5ec734a4ee1fc2555391f403e417958b81ee64e83ee653e8c40bb",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "depth_noise_report_146",
+      "path": "reports/146_depth_reference_model_noise_regime_evidence_20260603.md",
+      "exists": "true",
+      "sha256": "c33e65744156a4a09fd50c7c9e035c13c174ccc9f08dc935c686d1b5047ba2aa",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "calibration_plan_advisor",
+      "path": "nodi_simulator/calibration_plan_advisor.py",
+      "exists": "true",
+      "sha256": "084cb7c7181c504db09970827f8503ea5f4874b3af60374069e35b6c82b72bd7",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "calibration_models",
+      "path": "nodi_simulator/calibration_models.py",
+      "exists": "true",
+      "sha256": "9dd754c04bb4b8c33d7b0a717caaff5d854af247ec190ef59d70c9d848f10366",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "optical_exposure_safety",
+      "path": "nodi_simulator/optical_exposure_safety.py",
+      "exists": "true",
+      "sha256": "780ed9c60405bb9efc3136b81a6b371138a70bbb5e84982688efc3d4d47d0d12",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "tsuyama_gold_aligned_detection_lane_builder",
+      "path": "tools/audits/tsuyama_gold_aligned_detection_lane.py",
+      "exists": "true",
+      "sha256": "0271edf5a9f33a601580c9790ea50c0c125e4c54e6e089552a160c73997670ee",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "tsuyama_detection_rate_calibration_builder",
+      "path": "tools/audits/tsuyama_detection_rate_calibration.py",
+      "exists": "true",
+      "sha256": "ae97ccb156cf55fc48ece1df14ab9a9f3b1e5c10ab04040fc6d21290e84bde31",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "wet_optical_detection_source",
+      "path": "nodi_simulator/wet_optical_detection_evidence.py",
+      "exists": "true",
+      "sha256": "39f6ff89a5b03e956ccfea951b77ca667eb16e2e1ee64ee6f189ed98bfa6d87d",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "wet_optical_detection_tests",
+      "path": "tests/test_wet_optical_detection_evidence.py",
+      "exists": "true",
+      "sha256": "032e3aa9f7c65134f19e236316eb99654c5beacb97ea9a1b836a5a2020c403a1",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "wet_optical_detection_builder",
+      "path": "tools/audits/build_nodi_package_c_wet_optical_detection_evidence_context.py",
+      "exists": "true",
+      "sha256": "b8d978d9bf02f1e1c25cab2acecfb78c061f5299a50396b77ba07529d772be49",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "wet_optical_detection_builder_tests",
+      "path": "tests/test_nodi_package_c_wet_optical_detection_evidence_context.py",
+      "exists": "true",
+      "sha256": "0c9f0fc3ff7c875570aafe2f7859a6f1f24bf7eb662c3e83f23f141aa428a05a",
+      "claim_boundary": "wet_optical_detection_context_not_final_detection_not_yield_not_route_score",
+      "allowed_use": "wet/optical/detection evidence context for route candidates;sidewall-specific calibration gap prioritization",
+      "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;true W_eff;sidewall optical solver claim;wet pass claim;fabrication release;production ingestion"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": ".gitignore",
+      "git_status": "M ",
+      "classification": "wet_optical_detection_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
+      "git_status": " M",
+      "classification": "wet_optical_detection_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_optical_detection_context_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/wet_optical_detection_evidence.py",
+      "git_status": "??",
+      "classification": "wet_optical_detection_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/525_NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_20260701.md",
+      "git_status": "??",
+      "classification": "wet_optical_detection_output",
+      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_BOUNDARY_CONTEXT_ROWS_20260701.csv",
+      "git_status": "??",
+      "classification": "wet_optical_detection_output",
+      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_DIRTY_CONTEXT_20260701.csv",
+      "git_status": "??",
+      "classification": "wet_optical_detection_output",
+      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_EVIDENCE_CONTEXT_ROWS_20260701.csv",
+      "git_status": "??",
+      "classification": "wet_optical_detection_output",
+      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_MANIFEST_20260701.csv",
+      "git_status": "??",
+      "classification": "wet_optical_detection_output",
+      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_PROMOTION_GAPS_20260701.csv",
+      "git_status": "??",
+      "classification": "wet_optical_detection_output",
+      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_REPORT_20260701.json",
+      "git_status": "??",
+      "classification": "wet_optical_detection_output",
+      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_SELF_REVIEW_20260701.csv",
+      "git_status": "??",
+      "classification": "wet_optical_detection_output",
+      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_SOURCE_LOCK_20260701.csv",
+      "git_status": "??",
+      "classification": "wet_optical_detection_output",
+      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_WET_OPTICAL_DETECTION_EVIDENCE_CONTEXT_STATUS_20260701.json",
+      "git_status": "??",
+      "classification": "wet_optical_detection_output",
+      "release_decision": "included_or_rewritten_by_wet_optical_detection_context"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_wet_optical_detection_evidence_context.py",
+      "git_status": "??",
+      "classification": "wet_optical_detection_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_wet_optical_detection_evidence.py",
+      "git_status": "??",
+      "classification": "wet_optical_detection_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_wet_optical_detection_evidence_context.py",
+      "git_status": "??",
+      "classification": "wet_optical_detection_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ],
+  "self_review": [
+    {
+      "review_id": "WOD-SELF-01",
+      "dimension": "existing Tsuyama detection lane artifacts are source-locked",
+      "verdict": "PASS_WET_OPTICAL_DETECTION_CONTEXT_NOT_FINAL",
+      "notes": "This packet advances the wet/optical/detection branch by binding evidence context while preserving final-claim prerequisites."
+    },
+    {
+      "review_id": "WOD-SELF-02",
+      "dimension": "W500/D900 route candidates are nearest-geometry context, not exact sidewall detection calibration",
+      "verdict": "PASS_WET_OPTICAL_DETECTION_CONTEXT_NOT_FINAL",
+      "notes": "This packet advances the wet/optical/detection branch by binding evidence context while preserving final-claim prerequisites."
+    },
+    {
+      "review_id": "WOD-SELF-03",
+      "dimension": "blank false-positive guard is bound as context",
+      "verdict": "PASS_WET_OPTICAL_DETECTION_CONTEXT_NOT_FINAL",
+      "notes": "This packet advances the wet/optical/detection branch by binding evidence context while preserving final-claim prerequisites."
+    },
+    {
+      "review_id": "WOD-SELF-04",
+      "dimension": "EV weighted panel is bound as surrogate wet/detection context, not wet experiment",
+      "verdict": "PASS_WET_OPTICAL_DETECTION_CONTEXT_NOT_FINAL",
+      "notes": "This packet advances the wet/optical/detection branch by binding evidence context while preserving final-claim prerequisites."
+    },
+    {
+      "review_id": "WOD-SELF-05",
+      "dimension": "route/yield/detection final claims remain false",
+      "verdict": "PASS_WET_OPTICAL_DETECTION_CONTEXT_NOT_FINAL",
+      "notes": "This packet advances the wet/optical/detection branch by binding evidence context while preserving final-claim prerequisites."
+    }
+  ]
+}

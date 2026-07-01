@@ -1,0 +1,5 @@
+target,current_value,context_available,required_before_true,hard_fail_if
+sidewall_specific_detection_probability,false,true,sidewall-specific optical/reference solver or calibration consuming trapezoid geometry plus detector-response validation,detection_probability_true_from_tsuyama_context_only
+wet_yield_or_recovery,false,true,"wet EV pass/recovery controls, sample handling evidence, and sidewall/roughness/adsorption assumptions",yield_true_from_ev_panel_surrogate_only
+route_score_or_winner,false,true,"accepted q_ch sidecar, exact pressure-flow validation, sidewall optical/wet evidence, and decision ledger",route_score_true_from_context_candidate_metric_only
+selected_annulus_detection_claim,false,partial,rerun EV panel with selected-annulus columns and sidewall-aware PRS/bin mapping,selected_annulus_claim_true_with_missing_annulus_columns
