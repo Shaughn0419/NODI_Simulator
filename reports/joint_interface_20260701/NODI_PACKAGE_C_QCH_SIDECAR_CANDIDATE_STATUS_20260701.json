@@ -1,0 +1,33 @@
+{
+  "disposition": "NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_READY_NOT_ROUTE",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_READY_NOT_ROUTE",
+    "artifact_id": "PACKAGE_C_QCH_SIDECAR_CANDIDATE_20260701",
+    "claim_boundary": "qch_sidecar_candidate_not_route_score_not_winner_not_yield_not_detection",
+    "current_head": "3783336790bbf8ae9b02a851bfb9bfdb1c0ee4b6",
+    "branch": "main",
+    "qch_sidecar_version": "qch_sidecar_candidate_from_trapezoid_flow_solver_v1",
+    "source_flow_solver_disposition": "NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_READY_NOT_QCH",
+    "pressure_drop_Pa": 1000.0,
+    "qch_candidate_row_count": 3,
+    "candidate_qch_open_rows": 2,
+    "blocked_qch_rows": 1,
+    "candidate_flow_split_sum": 1.0,
+    "candidate_qch_sidecar_current": true,
+    "formal_gate2_qch_sidecar_current": false,
+    "formal_qch_weighting_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_detection_probability_current": false,
+    "comsol_validation_claim_current": false,
+    "mph_load_started": false,
+    "source_lock_rows": 6,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 88,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "candidate q_ch sidecar evidence;fixed-pressure flow split preflight;route/yield/detection promotion contract input",
+    "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;wet pass claim;fabrication release;production ingestion;COMSOL validation claim without comparison hash",
+    "semantic_digest": "e8ccbfa1b17825a9e65bf84ac68b7deb50f6f4e5d8145235cfac576e7524db81"
+  }
+}

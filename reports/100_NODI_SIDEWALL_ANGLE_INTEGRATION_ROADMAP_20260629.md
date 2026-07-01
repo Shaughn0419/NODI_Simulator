@@ -1666,3 +1666,36 @@ This is real solver-candidate evidence for the flow branch, not a formal `q_ch` 
 - `yield_detection_probability_current=false`
 
 Before any formal `q_ch`, `route_score`, `winner`, `JRC`, yield, or detection-probability claim can become true, this candidate solver must either be validated against COMSOL/pressure-flow evidence or bound to an explicitly accepted flow sidecar with source hashes and the Package D route precheck.
+
+## 33. Current q_ch sidecar candidate status
+
+The flow branch has now advanced from solver-candidate rows into a candidate
+`q_ch` sidecar:
+
+- Module: `nodi_simulator/qch_sidecar.py`.
+- Sidecar version: `qch_sidecar_candidate_from_trapezoid_flow_solver_v1`.
+- Artifact id: `PACKAGE_C_QCH_SIDECAR_CANDIDATE_20260701`.
+- Disposition: `NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_READY_NOT_ROUTE`.
+- Source artifact: `NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_SOLVER_ROWS_20260701.csv`.
+- Candidate definition: `q_ch_candidate_m3_s = pressure_drop_Pa / hydraulic_resistance_Pa_s_m3`.
+- Normalization: `candidate_flow_split_fraction` over open solver rows at fixed pressure.
+
+This is no longer merely a blocker or placeholder. It is a concrete candidate
+sidecar that carries source hashes, geometry hashes, units, pressure drop,
+normalization basis, and blocked-source rows. It remains not-yet-formal because
+pressure-flow calibration or COMSOL comparison evidence is still needed before
+the sidecar can be accepted as a formal Gate2 q_ch source.
+
+The promotion path is now explicit:
+
+1. `formal_gate2_qch_sidecar`: requires pressure-flow calibration or COMSOL
+   comparison evidence hash plus source/geometry hash review.
+2. `route_score`: requires accepted q_ch sidecar plus sidewall PRS/EAS Package D
+   precheck and no-borrowing audit.
+3. `winner_or_JRC`: requires route-score evidence plus independent route audit.
+4. `yield_detection_probability`: requires wet/EV evidence contract plus
+   optical/detection calibration.
+
+Thus q_ch, route, yield, and detection are all being advanced as authorized
+branches, but each branch still has a distinct evidence requirement before its
+final claim can become true.

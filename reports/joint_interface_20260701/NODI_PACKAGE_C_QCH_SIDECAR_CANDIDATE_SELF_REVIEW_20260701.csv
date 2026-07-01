@@ -1,0 +1,6 @@
+review_id,dimension,verdict,notes
+QCH-SIDECAR-SELF-01,q_ch candidate rows computed from flow solver source hash,PASS_QCH_SIDECAR_CANDIDATE_NOT_ROUTE,"Candidate q_ch evidence is present, but route/yield/detection require promotion evidence."
+QCH-SIDECAR-SELF-02,open-row flow split normalizes to one,PASS_QCH_SIDECAR_CANDIDATE_NOT_ROUTE,"Candidate q_ch evidence is present, but route/yield/detection require promotion evidence."
+QCH-SIDECAR-SELF-03,closed geometry remains blocked,PASS_QCH_SIDECAR_CANDIDATE_NOT_ROUTE,"Candidate q_ch evidence is present, but route/yield/detection require promotion evidence."
+QCH-SIDECAR-SELF-04,formal q_ch sidecar still requires calibration/comparison evidence,PASS_QCH_SIDECAR_CANDIDATE_NOT_ROUTE,"Candidate q_ch evidence is present, but route/yield/detection require promotion evidence."
+QCH-SIDECAR-SELF-05,route/winner/yield/detection remain separate promotion targets,PASS_QCH_SIDECAR_CANDIDATE_NOT_ROUTE,"Candidate q_ch evidence is present, but route/yield/detection require promotion evidence."

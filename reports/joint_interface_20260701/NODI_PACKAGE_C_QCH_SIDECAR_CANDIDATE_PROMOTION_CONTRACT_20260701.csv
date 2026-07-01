@@ -1,0 +1,5 @@
+promotion_target,candidate_evidence_now,current_value,authorization_to_implement,minimum_evidence_before_true,required_next_evidence,hard_fail_if
+formal_gate2_qch_sidecar,true,false,true,"candidate q_ch rows exist with units, source hash, geometry hash, pressure drop, and normalization basis",pressure-flow calibration or COMSOL comparison evidence hash reviewed,formal_gate2_qch_sidecar_true_without_required_evidence
+route_score,true,false,true,accepted q_ch sidecar plus sidewall PRS/EAS Package D precheck,route score formula contract and no-borrowing audit hash,route_score_true_without_required_evidence
+winner_or_JRC,true,false,true,route_score evidence plus independent route audit,winner/JRC decision ledger with false-positive negative fixtures,winner_or_JRC_true_without_required_evidence
+yield_detection_probability,true,false,true,wet/EV evidence contract plus optical/detection calibration,experiment/control evidence hash and assay metadata,yield_detection_probability_true_without_required_evidence
