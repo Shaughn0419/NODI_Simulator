@@ -1640,3 +1640,29 @@ The next efficient blocks can proceed in parallel:
 2. Prepare trapezoid flow solver / COMSOL flow comparison preflight before any `q_ch` weighting.
 3. Prepare electrokinetic grid and optical/reference preflights before any true `W_eff` or detection-response claim.
 4. Prepare wet/EV evidence contract before passability, clogging, recovery, yield, or detection probability claims.
+
+## 32. Current trapezoid flow solver candidate status
+
+The flow/q_ch branch now has a first local candidate solver evidence packet:
+
+- Module: `nodi_simulator/trapezoid_flow_solver.py`.
+- Solver version: `trapezoid_poisson_no_slip_fd_candidate_v1`.
+- Artifact id: `PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_20260701`.
+- Disposition: `NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_READY_NOT_QCH`.
+- Solver rows:
+  - `rectangle_limit_theta90_D900_W500`
+  - `taper_theta85_D900_W500`
+  - `closed_theta70_D900_W500`
+- The solver solves a small finite-difference cross-section Poisson/no-slip surrogate, with `Q = (dp/dy)/viscosity * integral(phi dA)`, where `laplacian(phi)=-1`.
+- `taper_theta85_D900_W500` is candidate solver output and increases hydraulic resistance relative to the rectangular proxy.
+- `closed_theta70_D900_W500` is blocked as `blocked_geometry_closed`.
+
+This is real solver-candidate evidence for the flow branch, not a formal `q_ch` sidecar and not route weighting. The packet keeps:
+
+- `not_qch_weighted=true`
+- `q_ch_weighting_current=false`
+- `route_score_current=false`
+- `winner_current=false`
+- `yield_detection_probability_current=false`
+
+Before any formal `q_ch`, `route_score`, `winner`, `JRC`, yield, or detection-probability claim can become true, this candidate solver must either be validated against COMSOL/pressure-flow evidence or bound to an explicitly accepted flow sidecar with source hashes and the Package D route precheck.

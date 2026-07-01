@@ -1,0 +1,743 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_READY_NOT_QCH",
+    "artifact_id": "PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_20260701",
+    "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet",
+    "current_head": "1a330219c5b1bc355a7ba87ccde7165f4726b9d5",
+    "branch": "main",
+    "solver_version": "trapezoid_poisson_no_slip_fd_candidate_v1",
+    "mainline_disposition": "NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_READY_FOR_EXECUTION_PACKETS",
+    "runtime_execution_disposition": "NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_READY_WITH_GUARDED_SMOKE",
+    "solver_candidate_rows": 3,
+    "candidate_solver_output_rows": 2,
+    "blocked_solver_rows": 1,
+    "q_ch_weighting_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_detection_probability_current": false,
+    "comsol_launch_started": false,
+    "mph_load_started": false,
+    "trapezoid_flow_solver_candidate_output_current": true,
+    "trapezoid_flow_solver_final_claim_current": false,
+    "theta85_resistance_ratio_vs_rectangle_proxy": 1.27307568743,
+    "source_lock_rows": 6,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 88,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "Trapezoid flow solver candidate evidence;flow/q_ch preflight;route promotion contract input",
+    "blocked_use": "formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet claim;COMSOL validation claim;.mph evidence claim;fabrication release;production ingestion",
+    "semantic_digest": "71989fed879e7340a434baeda57a7b6dc6e1fef767ead5c5773b3f9552173d77"
+  },
+  "solver_rows": [
+    {
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "solver_version": "trapezoid_poisson_no_slip_fd_candidate_v1",
+      "solver_status": "candidate_solver_output",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "sidewall_deg_comsol": "90",
+      "active_cell_count": "441",
+      "hydraulic_resistance_Pa_s_m3": "6.83700780347e+18",
+      "rectangle_proxy_resistance_Pa_s_m3": "8.16987364283e+18",
+      "resistance_ratio_vs_rectangle_proxy": "0.83685600321",
+      "not_qch_weighted": "true",
+      "q_ch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet"
+    },
+    {
+      "case_id": "taper_theta85_D900_W500",
+      "solver_version": "trapezoid_poisson_no_slip_fd_candidate_v1",
+      "solver_status": "candidate_solver_output",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "sidewall_deg_comsol": "85",
+      "active_cell_count": "373",
+      "hydraulic_resistance_Pa_s_m3": "1.0400867504e+19",
+      "rectangle_proxy_resistance_Pa_s_m3": "8.16987364283e+18",
+      "resistance_ratio_vs_rectangle_proxy": "1.27307568743",
+      "not_qch_weighted": "true",
+      "q_ch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet"
+    },
+    {
+      "case_id": "closed_theta70_D900_W500",
+      "solver_version": "trapezoid_poisson_no_slip_fd_candidate_v1",
+      "solver_status": "blocked_geometry_closed",
+      "solver_claim_level": "candidate_solver_output_not_comsol_validated_not_qch_weighted",
+      "sidewall_taper_angle_deg_nodi": "20",
+      "sidewall_deg_comsol": "70",
+      "active_cell_count": "0",
+      "hydraulic_resistance_Pa_s_m3": "inf",
+      "rectangle_proxy_resistance_Pa_s_m3": "8.16987364283e+18",
+      "resistance_ratio_vs_rectangle_proxy": "inf",
+      "not_qch_weighted": "true",
+      "q_ch_weighting_current": "false",
+      "route_score_current": "false",
+      "winner_current": "false",
+      "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet"
+    }
+  ],
+  "qch_blockers": [
+    {
+      "blocked_target": "q_ch_weighting",
+      "current_value": "false",
+      "implementation_authorized": "true",
+      "candidate_solver_evidence_available": "true",
+      "required_evidence_before_true": "requires_flow_solver_validation_or_COMSOL_pressure_flow_comparison_hash",
+      "hard_fail_if": "q_ch_weighting_true_without_required_evidence"
+    },
+    {
+      "blocked_target": "route_score",
+      "current_value": "false",
+      "implementation_authorized": "true",
+      "candidate_solver_evidence_available": "true",
+      "required_evidence_before_true": "requires_qch_sidecar_and_package_D_route_precheck",
+      "hard_fail_if": "route_score_true_without_required_evidence"
+    },
+    {
+      "blocked_target": "winner",
+      "current_value": "false",
+      "implementation_authorized": "true",
+      "candidate_solver_evidence_available": "true",
+      "required_evidence_before_true": "requires_route_score_audit_and_no_borrowing_guards",
+      "hard_fail_if": "winner_true_without_required_evidence"
+    },
+    {
+      "blocked_target": "yield_detection_probability",
+      "current_value": "false",
+      "implementation_authorized": "true",
+      "candidate_solver_evidence_available": "true",
+      "required_evidence_before_true": "requires_wet_detection_evidence_contract_pass",
+      "hard_fail_if": "yield_detection_probability_true_without_required_evidence"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "authorized_mainline_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "09fc422b583c3cc59a733e2731a4c8a7ace2fd044d389606a141e49f0701137a",
+      "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet",
+      "allowed_use": "Trapezoid flow solver candidate evidence;flow/q_ch preflight;route promotion contract input",
+      "blocked_use": "formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet claim;COMSOL validation claim;.mph evidence claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "runtime_execution_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "b2f3be5bcf9095b6d0a840091713f2c656972a8eed4423d17a2d8338f09090c4",
+      "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet",
+      "allowed_use": "Trapezoid flow solver candidate evidence;flow/q_ch preflight;route promotion contract input",
+      "blocked_use": "formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet claim;COMSOL validation claim;.mph evidence claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "trapezoid_flow_solver_source",
+      "path": "nodi_simulator/trapezoid_flow_solver.py",
+      "exists": "true",
+      "sha256": "2a73cfd450ba885c9dce1e488c25399e894ad6e465f5fee02557515bd58038bc",
+      "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet",
+      "allowed_use": "Trapezoid flow solver candidate evidence;flow/q_ch preflight;route promotion contract input",
+      "blocked_use": "formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet claim;COMSOL validation claim;.mph evidence claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "trapezoid_flow_solver_tests",
+      "path": "tests/test_trapezoid_flow_solver.py",
+      "exists": "true",
+      "sha256": "cc22de17593904bb5c6174f2d89fe0e9a61fbc9dc0b371cec75f57248ec6cb5b",
+      "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet",
+      "allowed_use": "Trapezoid flow solver candidate evidence;flow/q_ch preflight;route promotion contract input",
+      "blocked_use": "formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet claim;COMSOL validation claim;.mph evidence claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "flow_candidate_builder",
+      "path": "tools/audits/build_nodi_package_c_trapezoid_flow_solver_candidate.py",
+      "exists": "true",
+      "sha256": "13da1310d4162bb06b73943812fb0d82179d094939a35147a120bae7e303d90d",
+      "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet",
+      "allowed_use": "Trapezoid flow solver candidate evidence;flow/q_ch preflight;route promotion contract input",
+      "blocked_use": "formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet claim;COMSOL validation claim;.mph evidence claim;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "flow_candidate_tests",
+      "path": "tests/test_nodi_package_c_trapezoid_flow_solver_candidate.py",
+      "exists": "true",
+      "sha256": "a83947a8bd325ff7b2c5cd96005b056e85e1617903958b6d78bb09045eafafa3",
+      "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet",
+      "allowed_use": "Trapezoid flow solver candidate evidence;flow/q_ch preflight;route promotion contract input",
+      "blocked_use": "formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet claim;COMSOL validation claim;.mph evidence claim;fabrication release;production ingestion"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": ".gitignore",
+      "git_status": "M ",
+      "classification": "flow_solver_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
+      "git_status": " M",
+      "classification": "flow_solver_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_flow_solver_candidate_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/trapezoid_flow_solver.py",
+      "git_status": "??",
+      "classification": "flow_solver_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/521_NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_20260701.md",
+      "git_status": "??",
+      "classification": "flow_solver_candidate_output",
+      "release_decision": "included_or_rewritten_by_flow_solver_candidate"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_DIRTY_CONTEXT_20260701.csv",
+      "git_status": "??",
+      "classification": "flow_solver_candidate_output",
+      "release_decision": "included_or_rewritten_by_flow_solver_candidate"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_MANIFEST_20260701.csv",
+      "git_status": "??",
+      "classification": "flow_solver_candidate_output",
+      "release_decision": "included_or_rewritten_by_flow_solver_candidate"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_QCH_PROMOTION_BLOCKERS_20260701.csv",
+      "git_status": "??",
+      "classification": "flow_solver_candidate_output",
+      "release_decision": "included_or_rewritten_by_flow_solver_candidate"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_REPORT_20260701.json",
+      "git_status": "??",
+      "classification": "flow_solver_candidate_output",
+      "release_decision": "included_or_rewritten_by_flow_solver_candidate"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_SELF_REVIEW_20260701.csv",
+      "git_status": "??",
+      "classification": "flow_solver_candidate_output",
+      "release_decision": "included_or_rewritten_by_flow_solver_candidate"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_SOLVER_ROWS_20260701.csv",
+      "git_status": "??",
+      "classification": "flow_solver_candidate_output",
+      "release_decision": "included_or_rewritten_by_flow_solver_candidate"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_SOURCE_LOCK_20260701.csv",
+      "git_status": "??",
+      "classification": "flow_solver_candidate_output",
+      "release_decision": "included_or_rewritten_by_flow_solver_candidate"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_STATUS_20260701.json",
+      "git_status": "??",
+      "classification": "flow_solver_candidate_output",
+      "release_decision": "included_or_rewritten_by_flow_solver_candidate"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_trapezoid_flow_solver_candidate.py",
+      "git_status": "??",
+      "classification": "flow_solver_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_trapezoid_flow_solver.py",
+      "git_status": "??",
+      "classification": "flow_solver_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_trapezoid_flow_solver_candidate.py",
+      "git_status": "??",
+      "classification": "flow_solver_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ],
+  "self_review": [
+    {
+      "review_id": "FLOW-CANDIDATE-SELF-01",
+      "dimension": "candidate trapezoid Poisson solver executed",
+      "verdict": "PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH",
+      "notes": "Candidate flow solver evidence is separated from formal q_ch and route claims."
+    },
+    {
+      "review_id": "FLOW-CANDIDATE-SELF-02",
+      "dimension": "rectangle-limit sanity row present",
+      "verdict": "PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH",
+      "notes": "Candidate flow solver evidence is separated from formal q_ch and route claims."
+    },
+    {
+      "review_id": "FLOW-CANDIDATE-SELF-03",
+      "dimension": "tapered sidewall row changes resistance",
+      "verdict": "PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH",
+      "notes": "Candidate flow solver evidence is separated from formal q_ch and route claims."
+    },
+    {
+      "review_id": "FLOW-CANDIDATE-SELF-04",
+      "dimension": "geometry-closed row blocked",
+      "verdict": "PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH",
+      "notes": "Candidate flow solver evidence is separated from formal q_ch and route claims."
+    },
+    {
+      "review_id": "FLOW-CANDIDATE-SELF-05",
+      "dimension": "q_ch and route fields remain false",
+      "verdict": "PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH",
+      "notes": "Candidate flow solver evidence is separated from formal q_ch and route claims."
+    },
+    {
+      "review_id": "FLOW-CANDIDATE-SELF-06",
+      "dimension": "COMSOL/.mph validation not claimed",
+      "verdict": "PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH",
+      "notes": "Candidate flow solver evidence is separated from formal q_ch and route claims."
+    }
+  ]
+}

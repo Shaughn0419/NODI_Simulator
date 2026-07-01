@@ -1,0 +1,7 @@
+review_id,dimension,verdict,notes
+FLOW-CANDIDATE-SELF-01,candidate trapezoid Poisson solver executed,PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH,Candidate flow solver evidence is separated from formal q_ch and route claims.
+FLOW-CANDIDATE-SELF-02,rectangle-limit sanity row present,PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH,Candidate flow solver evidence is separated from formal q_ch and route claims.
+FLOW-CANDIDATE-SELF-03,tapered sidewall row changes resistance,PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH,Candidate flow solver evidence is separated from formal q_ch and route claims.
+FLOW-CANDIDATE-SELF-04,geometry-closed row blocked,PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH,Candidate flow solver evidence is separated from formal q_ch and route claims.
+FLOW-CANDIDATE-SELF-05,q_ch and route fields remain false,PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH,Candidate flow solver evidence is separated from formal q_ch and route claims.
+FLOW-CANDIDATE-SELF-06,COMSOL/.mph validation not claimed,PASS_FLOW_SOLVER_CANDIDATE_NOT_QCH,Candidate flow solver evidence is separated from formal q_ch and route claims.

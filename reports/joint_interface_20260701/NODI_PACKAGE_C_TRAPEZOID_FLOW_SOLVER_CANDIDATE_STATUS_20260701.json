@@ -1,0 +1,33 @@
+{
+  "disposition": "NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_READY_NOT_QCH",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_READY_NOT_QCH",
+    "artifact_id": "PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_20260701",
+    "claim_boundary": "trapezoid_flow_solver_candidate_not_qch_not_route_not_wet",
+    "current_head": "1a330219c5b1bc355a7ba87ccde7165f4726b9d5",
+    "branch": "main",
+    "solver_version": "trapezoid_poisson_no_slip_fd_candidate_v1",
+    "mainline_disposition": "NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_READY_FOR_EXECUTION_PACKETS",
+    "runtime_execution_disposition": "NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_READY_WITH_GUARDED_SMOKE",
+    "solver_candidate_rows": 3,
+    "candidate_solver_output_rows": 2,
+    "blocked_solver_rows": 1,
+    "q_ch_weighting_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_detection_probability_current": false,
+    "comsol_launch_started": false,
+    "mph_load_started": false,
+    "trapezoid_flow_solver_candidate_output_current": true,
+    "trapezoid_flow_solver_final_claim_current": false,
+    "theta85_resistance_ratio_vs_rectangle_proxy": 1.27307568743,
+    "source_lock_rows": 6,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 88,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "Trapezoid flow solver candidate evidence;flow/q_ch preflight;route promotion contract input",
+    "blocked_use": "formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet claim;COMSOL validation claim;.mph evidence claim;fabrication release;production ingestion",
+    "semantic_digest": "71989fed879e7340a434baeda57a7b6dc6e1fef767ead5c5773b3f9552173d77"
+  }
+}
