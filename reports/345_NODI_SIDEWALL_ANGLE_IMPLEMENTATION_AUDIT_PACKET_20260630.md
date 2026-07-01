@@ -729,3 +729,39 @@ context_rows=7
 ```
 
 This packet makes the `526` substep worst case a machine-readable prohibitive-cost authorization issue, not a runtime setting. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C authorization preflight
+
+The next authorization-design block binds the current GitHub-visible candidate commit and keeps the manual ledger empty/fail-closed:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_authorization_preflight.py --confirm-package-c-authorization-preflight
+NODI_PACKAGE_C_AUTHORIZATION_PREFLIGHT_CANDIDATE_READY_NO_AUTHORIZATION
+target_reviewed_commit_sha=9586f8fc27d80d54b5887dc4ca59560476a86b97
+origin_main_sha=9586f8fc27d80d54b5887dc4ca59560476a86b97
+head_matches_origin_main=true
+manual_authorization_ledger_status=missing_fail_closed
+hard_fail_checklist_rows=9
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+The refreshed readiness/external prompt chain now includes the authorization preflight:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_proof_readiness_index.py --confirm-package-c-proof-readiness-index
+NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
+readiness_index_rows=10
+open_blocker_rows=4
+external_research_question_rows=4
+
+python tools/audits/build_nodi_comsol_package_c_external_research_prompt.py --confirm-package-c-external-research-prompt
+NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION
+context_rows=8
+```
+
+This packet identifies a candidate reviewed commit and an empty manual-ledger placeholder only. It does not supersede the no-auth ledger, register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.

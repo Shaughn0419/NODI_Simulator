@@ -51,6 +51,10 @@ def test_external_research_context_rows_include_key_metrics() -> None:
     assert "runtime remains unauthorized" in by_context[
         "runtime_substep_policy_design"
     ]["details"]
+    assert "authorization_preflight" in by_context
+    assert "ledger_status=missing_fail_closed" in by_context[
+        "authorization_preflight"
+    ]["context_value"]
     assert (
         float(by_context["one_wall_wall_pileup_refinement"]["context_value"])
         <= 0.01

@@ -14,7 +14,7 @@ Primary GitHub-visible entrypoint after publish:
 Current disposition:
 - NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
 - artifact_id=PACKAGE_C_PROOF_READINESS_INDEX_20260701
-- readiness_index_rows=9
+- readiness_index_rows=10
 - open_blocker_rows=4
 - external_research_question_rows=4
 
@@ -26,7 +26,7 @@ Hard boundary:
 
 Open blockers:
 - manual_authorization_ledger_missing: proof_registration_authorized remains false -> explicit manual authorization ledger that supersedes no-auth ledger
-- clean_reviewed_commit_binding_pending: reviewed_commit_binding_status remains pending in candidate packets -> future proof/pass artifact must bind a reviewed clean commit and source lock
+- clean_reviewed_commit_binding_pending: authorization_preflight target commit identified -> future proof/pass artifact must bind final reviewed clean commit and manual ledger
 - runtime_policy_gaps_present: max_required_substeps_to_meet_threshold;max_projected_trigger_value_after_required_substeps;runtime_substep_policy_design_status;prohibitive_substep_cost_rows -> manual runtime cost and substep policy review required before runtime use
 - no_solver_or_wet_claim_authorized: hindered diffusion, flow, electrokinetic, optical, wet claims all remain blocked -> separate solver/experiment authorization required
 

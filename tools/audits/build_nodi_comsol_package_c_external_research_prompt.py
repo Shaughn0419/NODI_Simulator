@@ -25,7 +25,7 @@ OUTPUT_DIR = PROJECT_ROOT / f"reports/joint_interface_{DATE_STAMP}"
 REPORT_DIR = PROJECT_ROOT / "reports"
 GITHUB_RAW_BASE = "https://raw.githubusercontent.com/Shaughn0419/NODI_Simulator/main"
 GITHUB_BLOB_BASE = "https://github.com/Shaughn0419/NODI_Simulator/blob/main"
-EXPECTED_CONTEXT_ROWS = 7
+EXPECTED_CONTEXT_ROWS = 8
 
 DISPOSITION = "NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION"
 ARTIFACT_ID = "PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701"
@@ -260,6 +260,20 @@ def context_rows() -> list[dict[str, str]]:
             ),
             "details": "Runtime/substep policy classes are now design-bound, including prohibitive cost handling, but runtime remains unauthorized.",
             "github_url": blob_url(THRESHOLD_TABLE),
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+        {
+            "context_id": "authorization_preflight",
+            "context_value": next(
+                (
+                    row["key_values"]
+                    for row in index_rows
+                    if row["artifact_role"] == "authorization_preflight"
+                ),
+                "",
+            ),
+            "details": "Authorization preflight binds a GitHub-visible candidate commit and an empty fail-closed manual-ledger placeholder; it does not authorize proof/pass or runtime.",
+            "github_url": blob_url(READINESS_INDEX),
             "claim_boundary": CLAIM_BOUNDARY,
         },
     ]

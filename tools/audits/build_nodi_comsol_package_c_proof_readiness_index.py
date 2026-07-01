@@ -73,6 +73,9 @@ RUNTIME_SUBSTEP_POLICY_STATUS = (
     OUTPUT_DIR
     / "NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_STATUS_20260701.json"
 )
+AUTHORIZATION_PREFLIGHT_STATUS = (
+    OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_AUTHORIZATION_PREFLIGHT_STATUS_20260701.json"
+)
 THRESHOLD_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_PROOF_THRESHOLD_STATUS_20260701.json"
 )
@@ -89,6 +92,7 @@ SOURCE_FILES = {
     "substep_fail_policy_status": SUBSTEP_HARDENING_STATUS,
     "substep_dt_refinement_status": DT_REFINEMENT_STATUS,
     "runtime_substep_policy_design_status": RUNTIME_SUBSTEP_POLICY_STATUS,
+    "authorization_preflight_status": AUTHORIZATION_PREFLIGHT_STATUS,
     "proof_threshold_status": THRESHOLD_STATUS,
     "proof_threshold_table": THRESHOLD_TABLE,
     "proof_readiness_index_builder": PROJECT_ROOT
@@ -218,6 +222,7 @@ def readiness_index_rows() -> list[dict[str, str]]:
     s = read_json_summary(SUBSTEP_HARDENING_STATUS)
     d = read_json_summary(DT_REFINEMENT_STATUS)
     r = read_json_summary(RUNTIME_SUBSTEP_POLICY_STATUS)
+    a = read_json_summary(AUTHORIZATION_PREFLIGHT_STATUS)
     p = read_json_summary(THRESHOLD_STATUS)
     rows = [
         {
@@ -330,6 +335,19 @@ def readiness_index_rows() -> list[dict[str, str]]:
             "next_action": "manual_authorization_and_substep_runtime_tests_before_activation",
         },
         {
+            "artifact_id": a.get("artifact_id", ""),
+            "artifact_role": "authorization_preflight",
+            "disposition": a.get("disposition", ""),
+            "candidate_status": a.get("authorization_preflight_status", ""),
+            "proof_status": a.get("manual_authorization_ledger_status", ""),
+            "key_values": (
+                f"target_commit={a.get('target_reviewed_commit_sha', '')};"
+                f"head_matches_origin={a.get('head_matches_origin_main', '')};"
+                f"ledger_status={a.get('manual_authorization_ledger_status', '')}"
+            ),
+            "next_action": "manual_authorization_ledger_required_before_proof_or_runtime",
+        },
+        {
             "artifact_id": p.get("artifact_id", ""),
             "artifact_role": "proof_threshold_table",
             "disposition": p.get("disposition", ""),
@@ -379,8 +397,22 @@ def blocker_rows() -> list[dict[str, str]]:
         ),
         (
             "clean_reviewed_commit_binding_pending",
-            "reviewed_commit_binding_status remains pending in candidate packets",
-            "future proof/pass artifact must bind a reviewed clean commit and source lock",
+            (
+                "authorization_preflight target commit identified"
+                if read_json_summary(AUTHORIZATION_PREFLIGHT_STATUS).get(
+                    "head_matches_origin_main",
+                    False,
+                )
+                else "reviewed_commit_binding_status remains pending in candidate packets"
+            ),
+            (
+                "future proof/pass artifact must bind final reviewed clean commit and manual ledger"
+                if read_json_summary(AUTHORIZATION_PREFLIGHT_STATUS).get(
+                    "head_matches_origin_main",
+                    False,
+                )
+                else "future proof/pass artifact must bind a reviewed clean commit and source lock"
+            ),
         ),
         (
             "runtime_policy_gaps_present",
@@ -504,7 +536,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     s = payload["summary"]
     firewall = payload["no_proof_firewall"][0]
     checks = {
-        "Readiness rows": s["readiness_index_rows"] == 9,
+        "Readiness rows": s["readiness_index_rows"] == 10,
         "Blockers present": s["open_blocker_rows"] >= 4,
         "External questions present": s["external_research_question_rows"] >= 4,
         "Source lock complete": s["source_missing_rows"] == 0,

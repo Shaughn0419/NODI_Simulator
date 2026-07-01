@@ -1504,13 +1504,33 @@ The refreshed threshold/readiness/external-research chain now carries this runti
 
 This block makes the `526` substep worst case machine-readable as a prohibitive-cost authorization issue, not a runtime setting. It does not register Package C proof/pass, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
 
-## 25. Recommended next action
+## 25. Current Package C authorization preflight status
 
-Current safe route after the Package C runtime/substep policy design binding:
+The next block binds the current GitHub-visible candidate commit into an authorization preflight packet while keeping the manual ledger empty and fail-closed:
 
-1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees stationarity, one-wall, wall-pileup, near-boundary expected-band, and runtime/substep policy-design candidate evidence.
+- Artifact id: `PACKAGE_C_AUTHORIZATION_PREFLIGHT_20260701`.
+- Disposition: `NODI_PACKAGE_C_AUTHORIZATION_PREFLIGHT_CANDIDATE_READY_NO_AUTHORIZATION`.
+- Scope: clean commit binding row, manual authorization ledger placeholder, hard-fail checklist, source lock, no-proof firewall, status/report/manifest.
+- Target reviewed commit: `9586f8fc27d80d54b5887dc4ca59560476a86b97`.
+- Head matches `origin/main`: `true`.
+- Manual authorization ledger status: `missing_fail_closed`.
+- Hard-fail checklist rows: `9`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+The refreshed readiness/external-research chain now carries this preflight as candidate evidence:
+
+- Proof-readiness rows: `10`, adding `authorization_preflight`; open blocker rows remain `4`.
+- External-research context rows: `8`, adding `authorization_preflight`.
+
+This block identifies a GitHub-visible candidate commit and a fail-closed manual-ledger placeholder. It does not supersede the no-auth ledger, register Package C proof/pass, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## 26. Recommended next action
+
+Current safe route after the Package C authorization preflight:
+
+1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees stationarity, one-wall, wall-pileup, near-boundary expected-band, runtime/substep policy-design, and authorization-preflight candidate evidence.
 2. Keep the runtime/substep policy as manual-authorization-only; the current `526` substep worst case is explicitly classified as prohibitive-cost and remains a runtime-policy blocker, not an automatic runtime setting.
-3. Treat the next local block as clean reviewed commit / authorization-design only, or as additional substep implementation tests if runtime activation is later authorized; do not auto-register proof/pass from candidate metrics.
+3. Treat any future proof/pass or runtime step as requiring an explicit manual ledger that names the reviewed commit and allowed scope; do not auto-register proof/pass from candidate metrics.
 4. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 6. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.
