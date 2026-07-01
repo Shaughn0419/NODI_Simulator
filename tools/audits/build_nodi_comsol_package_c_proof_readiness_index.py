@@ -69,6 +69,10 @@ SUBSTEP_HARDENING_STATUS = (
 DT_REFINEMENT_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_SUBSTEP_DT_REFINEMENT_STATUS_20260701.json"
 )
+RUNTIME_SUBSTEP_POLICY_STATUS = (
+    OUTPUT_DIR
+    / "NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_STATUS_20260701.json"
+)
 THRESHOLD_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_PROOF_THRESHOLD_STATUS_20260701.json"
 )
@@ -84,6 +88,7 @@ SOURCE_FILES = {
     "near_boundary_expected_band_status": NEAR_BOUNDARY_EXPECTED_BAND_STATUS,
     "substep_fail_policy_status": SUBSTEP_HARDENING_STATUS,
     "substep_dt_refinement_status": DT_REFINEMENT_STATUS,
+    "runtime_substep_policy_design_status": RUNTIME_SUBSTEP_POLICY_STATUS,
     "proof_threshold_status": THRESHOLD_STATUS,
     "proof_threshold_table": THRESHOLD_TABLE,
     "proof_readiness_index_builder": PROJECT_ROOT
@@ -212,6 +217,7 @@ def readiness_index_rows() -> list[dict[str, str]]:
     nb = read_json_summary(NEAR_BOUNDARY_EXPECTED_BAND_STATUS)
     s = read_json_summary(SUBSTEP_HARDENING_STATUS)
     d = read_json_summary(DT_REFINEMENT_STATUS)
+    r = read_json_summary(RUNTIME_SUBSTEP_POLICY_STATUS)
     p = read_json_summary(THRESHOLD_STATUS)
     rows = [
         {
@@ -309,6 +315,19 @@ def readiness_index_rows() -> list[dict[str, str]]:
                 f"max_projected_trigger={d.get('max_projected_trigger_value_after_required_substeps', '')}"
             ),
             "next_action": "manual_runtime_cost_review_before_any_substep_runtime_policy",
+        },
+        {
+            "artifact_id": r.get("artifact_id", ""),
+            "artifact_role": "runtime_substep_policy_design",
+            "disposition": r.get("disposition", ""),
+            "candidate_status": r.get("runtime_substep_policy_design_status", ""),
+            "proof_status": r.get("proof_readiness_impact", ""),
+            "key_values": (
+                f"max_required_substeps={r.get('max_required_substeps_to_meet_threshold', '')};"
+                f"prohibitive_rows={r.get('prohibitive_substep_cost_rows', '')};"
+                f"runtime_policy_auth={r.get('runtime_policy_authorization_status', '')}"
+            ),
+            "next_action": "manual_authorization_and_substep_runtime_tests_before_activation",
         },
         {
             "artifact_id": p.get("artifact_id", ""),
@@ -485,7 +504,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     s = payload["summary"]
     firewall = payload["no_proof_firewall"][0]
     checks = {
-        "Readiness rows": s["readiness_index_rows"] == 8,
+        "Readiness rows": s["readiness_index_rows"] == 9,
         "Blockers present": s["open_blocker_rows"] >= 4,
         "External questions present": s["external_research_question_rows"] >= 4,
         "Source lock complete": s["source_missing_rows"] == 0,

@@ -1481,13 +1481,36 @@ The next local method-binding block converts the near-boundary band check from a
 
 This block binds the near-boundary expected-band method without registering proof/pass. It is a geometry/statistical method artifact only, not a validated Brownian solver output, not runtime authorization, and not sidewall PRS/EAS numeric output.
 
-## 24. Recommended next action
+## 24. Current Package C runtime/substep policy design status
 
-Current safe route after the Package C near-boundary expected-band method binding:
+The next block converts the substep dt-refinement requirements into a fail-closed runtime/substep policy design:
 
-1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees stationarity, one-wall, wall-pileup, and near-boundary expected-band candidate evidence.
-2. Keep the substep runtime-cost policy as manual-authorization-only; the current `526` substep worst case remains a runtime-policy blocker, not an automatic runtime setting.
-3. Treat the next local block as authorization-design or runtime-policy-design only; do not auto-register proof/pass from candidate metrics.
+- Artifact id: `PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_20260701`.
+- Disposition: `NODI_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_CANDIDATE_READY_NO_RUNTIME_AUTHORIZATION`.
+- Scope: per-scenario runtime/substep policy classes, future runtime-policy field requirements, source lock, no-proof firewall, status/report/manifest.
+- Policy rows: `6`.
+- Field requirement rows: `8`.
+- Low/moderate/high/prohibitive substep-cost rows: `4` / `1` / `0` / `1`.
+- Max required substeps to meet threshold: `526`.
+- Runtime policy design status: `policy_design_bound_not_runtime_authorized`.
+- Runtime policy authorization status: `missing_not_authorized`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+The refreshed threshold/readiness/external-research chain now carries this runtime/substep policy design as candidate evidence:
+
+- Proof-threshold rows: `16`; runtime-policy gap rows: `4`; proof-readiness impact: `numeric_method_and_runtime_policy_candidate_lines_bound_to_authorization_gaps`.
+- Proof-readiness rows: `9`, adding `runtime_substep_policy_design`; open blocker rows remain `4`.
+- External-research context rows: `7`, adding `runtime_substep_policy_design`.
+
+This block makes the `526` substep worst case machine-readable as a prohibitive-cost authorization issue, not a runtime setting. It does not register Package C proof/pass, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## 25. Recommended next action
+
+Current safe route after the Package C runtime/substep policy design binding:
+
+1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees stationarity, one-wall, wall-pileup, near-boundary expected-band, and runtime/substep policy-design candidate evidence.
+2. Keep the runtime/substep policy as manual-authorization-only; the current `526` substep worst case is explicitly classified as prohibitive-cost and remains a runtime-policy blocker, not an automatic runtime setting.
+3. Treat the next local block as clean reviewed commit / authorization-design only, or as additional substep implementation tests if runtime activation is later authorized; do not auto-register proof/pass from candidate metrics.
 4. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 6. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.

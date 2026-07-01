@@ -21,7 +21,7 @@ def test_threshold_table_payload_separates_candidate_pass_from_proof_gaps() -> N
 
     assert failures == []
     assert summary["disposition"] == thresholds.DISPOSITION
-    assert summary["threshold_rows"] >= 10
+    assert summary["threshold_rows"] == thresholds.EXPECTED_THRESHOLD_ROWS
     assert summary["candidate_pass_rows"] > 0
     assert summary["proof_gap_rows"] == 0
     assert summary["proof_method_gap_rows"] == 0
@@ -31,7 +31,7 @@ def test_threshold_table_payload_separates_candidate_pass_from_proof_gaps() -> N
         "candidate_threshold_table_ready_not_proof_registered"
     )
     assert summary["proof_readiness_impact"] == (
-        "numeric_and_method_candidate_lines_bound_to_authorization_and_runtime_policy_gaps"
+        "numeric_method_and_runtime_policy_candidate_lines_bound_to_authorization_gaps"
     )
     assert summary["proof_registration_authorized"] is False
     assert summary["package_c_validation_status_pass_authorized"] is False
@@ -53,10 +53,22 @@ def test_threshold_rows_cover_key_package_c_metrics() -> None:
     assert "max_u_accessible_cdf_l1_to_uniform" in by_metric
     assert "substep_policy_bound_trigger_count" in by_metric
     assert "max_required_substeps_to_meet_threshold" in by_metric
+    assert "runtime_substep_policy_design_status" in by_metric
+    assert "prohibitive_substep_cost_rows" in by_metric
     assert by_metric["max_required_substeps_to_meet_threshold"]["observed_value"] == "526"
     assert (
         by_metric["max_required_substeps_to_meet_threshold"]["current_status"]
         == "candidate_sized_runtime_policy_gap"
+    )
+    assert by_metric["runtime_substep_policy_design_status"]["observed_value"] == (
+        "policy_design_bound_not_runtime_authorized"
+    )
+    assert by_metric["runtime_substep_policy_design_status"]["current_status"] == (
+        "candidate_runtime_policy_design_bound_not_authorized"
+    )
+    assert by_metric["prohibitive_substep_cost_rows"]["observed_value"] == "1"
+    assert by_metric["prohibitive_substep_cost_rows"]["current_status"] == (
+        "candidate_runtime_policy_authorization_gap"
     )
     assert by_metric["min_effective_sample_size"]["source_artifact"] == (
         "stationarity_ensemble_refinement"

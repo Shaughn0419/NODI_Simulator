@@ -683,3 +683,49 @@ external_research_question_rows=4
 ```
 
 This packet binds the near-boundary expected-band method in candidate evidence only. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims. The remaining blockers are clean reviewed commit/manual authorization, runtime/substep policy review, and separate solver/wet evidence branches.
+
+## Package C runtime/substep policy design
+
+The next policy-design block converts the dt-refinement sizing rows into fail-closed runtime/substep authorization classes:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_runtime_substep_policy_design.py --confirm-package-c-runtime-substep-policy-design
+NODI_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_CANDIDATE_READY_NO_RUNTIME_AUTHORIZATION
+policy_rows=6
+field_requirement_rows=8
+low_substep_cost_rows=4
+moderate_substep_cost_rows=1
+high_substep_cost_rows=0
+prohibitive_substep_cost_rows=1
+max_required_substeps_to_meet_threshold=526
+runtime_substep_policy_design_status=policy_design_bound_not_runtime_authorized
+runtime_policy_authorization_status=missing_not_authorized
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+The refreshed threshold/readiness/external prompt chain now includes the runtime/substep policy design:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_proof_threshold_table.py --confirm-package-c-proof-threshold-table
+NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION
+threshold_rows=16
+runtime_policy_gap_rows=4
+proof_readiness_impact=numeric_method_and_runtime_policy_candidate_lines_bound_to_authorization_gaps
+
+python tools/audits/build_nodi_comsol_package_c_proof_readiness_index.py --confirm-package-c-proof-readiness-index
+NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
+readiness_index_rows=9
+open_blocker_rows=4
+external_research_question_rows=4
+
+python tools/audits/build_nodi_comsol_package_c_external_research_prompt.py --confirm-package-c-external-research-prompt
+NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION
+context_rows=7
+```
+
+This packet makes the `526` substep worst case a machine-readable prohibitive-cost authorization issue, not a runtime setting. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.

@@ -21,7 +21,7 @@ def test_readiness_index_payload_is_single_entrypoint_without_promotion() -> Non
 
     assert failures == []
     assert summary["disposition"] == readiness.DISPOSITION
-    assert summary["readiness_index_rows"] == 8
+    assert summary["readiness_index_rows"] == 9
     assert summary["open_blocker_rows"] >= 4
     assert summary["external_research_question_rows"] >= 4
     assert summary["proof_readiness_index_status"] == (
@@ -47,11 +47,18 @@ def test_readiness_index_covers_current_package_c_artifacts() -> None:
         "near_boundary_expected_band_method",
         "substep_fail_policy_hardening",
         "substep_dt_refinement_requirements",
+        "runtime_substep_policy_design",
         "proof_threshold_table",
     }
     by_role = {row["artifact_role"]: row for row in rows}
     assert "max_required_substeps=526" in by_role[
         "substep_dt_refinement_requirements"
+    ]["key_values"]
+    assert "prohibitive_rows=1" in by_role[
+        "runtime_substep_policy_design"
+    ]["key_values"]
+    assert "runtime_policy_auth=missing_not_authorized" in by_role[
+        "runtime_substep_policy_design"
     ]["key_values"]
     assert "min_independent_ess=32768.0" in by_role[
         "stationarity_ensemble_refinement"

@@ -14,7 +14,7 @@ Primary GitHub-visible entrypoint after publish:
 Current disposition:
 - NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
 - artifact_id=PACKAGE_C_PROOF_READINESS_INDEX_20260701
-- readiness_index_rows=8
+- readiness_index_rows=9
 - open_blocker_rows=4
 - external_research_question_rows=4
 
@@ -27,7 +27,7 @@ Hard boundary:
 Open blockers:
 - manual_authorization_ledger_missing: proof_registration_authorized remains false -> explicit manual authorization ledger that supersedes no-auth ledger
 - clean_reviewed_commit_binding_pending: reviewed_commit_binding_status remains pending in candidate packets -> future proof/pass artifact must bind a reviewed clean commit and source lock
-- runtime_policy_gaps_present: max_required_substeps_to_meet_threshold;max_projected_trigger_value_after_required_substeps -> manual runtime cost and substep policy review required before runtime use
+- runtime_policy_gaps_present: max_required_substeps_to_meet_threshold;max_projected_trigger_value_after_required_substeps;runtime_substep_policy_design_status;prohibitive_substep_cost_rows -> manual runtime cost and substep policy review required before runtime use
 - no_solver_or_wet_claim_authorized: hindered diffusion, flow, electrokinetic, optical, wet claims all remain blocked -> separate solver/experiment authorization required
 
 Current threshold rows:
@@ -45,6 +45,8 @@ Current threshold rows:
 - substep_policy_bound_trigger_count: observed=6; candidate=equals_triggered_scenario_count; proof=equals_triggered_scenario_count_and_policy_evidence_sha_bound; status=candidate_pass_proof_authorization_gap
 - max_required_substeps_to_meet_threshold: observed=526; candidate=sized_and_reported; proof=manual_runtime_cost_review_or_smaller_dt_policy_required; status=candidate_sized_runtime_policy_gap
 - max_projected_trigger_value_after_required_substeps: observed=0.999601207629; candidate=<=1.0; proof=<=1.0_with_validated_substep_tests; status=candidate_pass_proof_runtime_gap
+- runtime_substep_policy_design_status: observed=policy_design_bound_not_runtime_authorized; candidate=policy_design_bound_not_runtime_authorized; proof=manual_authorization_ledger_plus_clean_commit_plus_substep_tests; status=candidate_runtime_policy_design_bound_not_authorized
+- prohibitive_substep_cost_rows: observed=1; candidate=reported_and_fail_closed; proof=must_equal_0_or_have_manual_runtime_cost_waiver; status=candidate_runtime_policy_authorization_gap
 
 Research questions to answer in one pass:
 1. What proof-level stationarity and ESS method is appropriate for finite-step reflected Brownian motion in a convex offset trapezoid?

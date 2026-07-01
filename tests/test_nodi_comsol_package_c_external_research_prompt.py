@@ -22,7 +22,7 @@ def test_external_research_prompt_payload_is_copyable_without_promotion() -> Non
 
     assert failures == []
     assert summary["disposition"] == prompt.DISPOSITION
-    assert summary["context_rows"] >= 5
+    assert summary["context_rows"] == prompt.EXPECTED_CONTEXT_ROWS
     assert summary["research_question_rows"] >= 4
     assert summary["blocker_rows"] >= 4
     assert summary["prompt_status"] == "copyable_external_research_prompt_ready"
@@ -45,6 +45,12 @@ def test_external_research_context_rows_include_key_metrics() -> None:
     assert "entrypoint" in by_context
     assert "artifact_roles" in by_context
     assert by_context["substep_runtime_cost"]["context_value"] == "526"
+    assert by_context["runtime_substep_policy_design"]["context_value"] == (
+        "policy_design_bound_not_runtime_authorized"
+    )
+    assert "runtime remains unauthorized" in by_context[
+        "runtime_substep_policy_design"
+    ]["details"]
     assert (
         float(by_context["one_wall_wall_pileup_refinement"]["context_value"])
         <= 0.01

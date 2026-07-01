@@ -24,6 +24,7 @@ OUTPUT_DIR = PROJECT_ROOT / f"reports/joint_interface_{DATE_STAMP}"
 REPORT_DIR = PROJECT_ROOT / "reports"
 GITHUB_RAW_BASE = "https://raw.githubusercontent.com/Shaughn0419/NODI_Simulator/main"
 GITHUB_BLOB_BASE = "https://github.com/Shaughn0419/NODI_Simulator/blob/main"
+EXPECTED_THRESHOLD_ROWS = 16
 
 DISPOSITION = "NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION"
 ARTIFACT_ID = "PACKAGE_C_PROOF_THRESHOLD_TABLE_20260701"
@@ -68,6 +69,10 @@ SUBSTEP_HARDENING_STATUS = (
 DT_REFINEMENT_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_SUBSTEP_DT_REFINEMENT_STATUS_20260701.json"
 )
+RUNTIME_SUBSTEP_POLICY_STATUS = (
+    OUTPUT_DIR
+    / "NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_STATUS_20260701.json"
+)
 
 SOURCE_FILES = {
     "consolidation_status": CONSOLIDATION_STATUS,
@@ -77,6 +82,7 @@ SOURCE_FILES = {
     "near_boundary_expected_band_status": NEAR_BOUNDARY_EXPECTED_BAND_STATUS,
     "substep_hardening_status": SUBSTEP_HARDENING_STATUS,
     "dt_refinement_status": DT_REFINEMENT_STATUS,
+    "runtime_substep_policy_design_status": RUNTIME_SUBSTEP_POLICY_STATUS,
     "threshold_table_builder": PROJECT_ROOT
     / "tools/audits/build_nodi_comsol_package_c_proof_threshold_table.py",
     "threshold_table_tests": PROJECT_ROOT
@@ -227,6 +233,7 @@ def threshold_rows() -> list[dict[str, str]]:
     nb = read_json_summary(NEAR_BOUNDARY_EXPECTED_BAND_STATUS)
     s = read_json_summary(SUBSTEP_HARDENING_STATUS)
     d = read_json_summary(DT_REFINEMENT_STATUS)
+    r = read_json_summary(RUNTIME_SUBSTEP_POLICY_STATUS)
     rows = [
         _threshold_row(
             metric_id="support_violation_rows",
@@ -366,6 +373,24 @@ def threshold_rows() -> list[dict[str, str]]:
             source_artifact="substep_dt_refinement_requirements",
             next_action="validate substep implementation before runtime use",
         ),
+        _threshold_row(
+            metric_id="runtime_substep_policy_design_status",
+            observed_value=r.get("runtime_substep_policy_design_status", ""),
+            candidate_acceptance="policy_design_bound_not_runtime_authorized",
+            proof_acceptance="manual_authorization_ledger_plus_clean_commit_plus_substep_tests",
+            current_status="candidate_runtime_policy_design_bound_not_authorized",
+            source_artifact="runtime_substep_policy_design",
+            next_action="bind manual authorization ledger before runtime policy activation",
+        ),
+        _threshold_row(
+            metric_id="prohibitive_substep_cost_rows",
+            observed_value=r.get("prohibitive_substep_cost_rows", ""),
+            candidate_acceptance="reported_and_fail_closed",
+            proof_acceptance="must_equal_0_or_have_manual_runtime_cost_waiver",
+            current_status="candidate_runtime_policy_authorization_gap",
+            source_artifact="runtime_substep_policy_design",
+            next_action="manual review required for prohibitive substep cost before runtime",
+        ),
     ]
     return rows
 
@@ -403,7 +428,7 @@ def build_payload() -> dict[str, Any]:
         "source_missing_rows": sum(row["exists"] != "true" for row in source_rows),
         "threshold_table_status": "candidate_threshold_table_ready_not_proof_registered",
         "proof_readiness_impact": (
-            "numeric_and_method_candidate_lines_bound_to_authorization_and_runtime_policy_gaps"
+            "numeric_method_and_runtime_policy_candidate_lines_bound_to_authorization_gaps"
         ),
         "reviewed_commit_binding_status": "pending_future_authorization_not_clean_head_bound",
         "github_visibility_status": GITHUB_VISIBILITY_STATUS,
@@ -430,7 +455,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     s = payload["summary"]
     firewall = payload["no_proof_firewall"][0]
     checks = {
-        "Threshold rows present": s["threshold_rows"] >= 10,
+        "Threshold rows present": s["threshold_rows"] == EXPECTED_THRESHOLD_ROWS,
         "Numeric proof gaps closed": s["proof_gap_rows"] == 0,
         "Proof method gaps closed": s["proof_method_gap_rows"] == 0,
         "Proof method bound": s["proof_method_bound_not_registered_rows"] > 0,

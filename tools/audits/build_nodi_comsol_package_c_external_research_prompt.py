@@ -25,6 +25,7 @@ OUTPUT_DIR = PROJECT_ROOT / f"reports/joint_interface_{DATE_STAMP}"
 REPORT_DIR = PROJECT_ROOT / "reports"
 GITHUB_RAW_BASE = "https://raw.githubusercontent.com/Shaughn0419/NODI_Simulator/main"
 GITHUB_BLOB_BASE = "https://github.com/Shaughn0419/NODI_Simulator/blob/main"
+EXPECTED_CONTEXT_ROWS = 7
 
 DISPOSITION = "NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION"
 ARTIFACT_ID = "PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701"
@@ -251,6 +252,16 @@ def context_rows() -> list[dict[str, str]]:
             "github_url": blob_url(THRESHOLD_TABLE),
             "claim_boundary": CLAIM_BOUNDARY,
         },
+        {
+            "context_id": "runtime_substep_policy_design",
+            "context_value": row_by_metric.get("runtime_substep_policy_design_status", {}).get(
+                "observed_value",
+                "",
+            ),
+            "details": "Runtime/substep policy classes are now design-bound, including prohibitive cost handling, but runtime remains unauthorized.",
+            "github_url": blob_url(THRESHOLD_TABLE),
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
     ]
 
 
@@ -382,7 +393,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     prompt = payload["prompt_markdown"]
     firewall = payload["no_proof_firewall"][0]
     checks = {
-        "Context rows": s["context_rows"] >= 5,
+        "Context rows": s["context_rows"] == EXPECTED_CONTEXT_ROWS,
         "Research questions": s["research_question_rows"] >= 4,
         "Blockers": s["blocker_rows"] >= 4,
         "Source lock complete": s["source_missing_rows"] == 0,
