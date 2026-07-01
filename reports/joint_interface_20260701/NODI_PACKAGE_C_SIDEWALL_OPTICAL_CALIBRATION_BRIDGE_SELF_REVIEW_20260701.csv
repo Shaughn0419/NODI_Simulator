@@ -1,0 +1,5 @@
+review_id,dimension,verdict,notes
+SWCAL-SELF-01,synthetic seed table is schema-valid but not experimental calibration,PASS_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_SEED_ONLY,Bridge advances calibration structure while preventing synthetic seed promotion.
+SWCAL-SELF-02,calibrated_lookup misuse is blocked by synthetic fixture role,PASS_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_SEED_ONLY,Bridge advances calibration structure while preventing synthetic seed promotion.
+SWCAL-SELF-03,"readiness rows cover optical, detector, blank, wet, and route lanes",PASS_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_SEED_ONLY,Bridge advances calibration structure while preventing synthetic seed promotion.
+SWCAL-SELF-04,"true W_eff, detection probability, yield, and route winner remain unresolved",PASS_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_SEED_ONLY,Bridge advances calibration structure while preventing synthetic seed promotion.

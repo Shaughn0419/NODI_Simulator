@@ -1,0 +1,21 @@
+{
+  "calibration_kind": "reference_blank_channel",
+  "calibration_data_role": "synthetic_fixture_not_experimental",
+  "synthetic_fixture": true,
+  "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+  "source_claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability",
+  "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability",
+  "units": {
+    "width_nm": "nm",
+    "depth_nm": "nm",
+    "wavelength_nm": "nm",
+    "A_ref": "dimensionless_surrogate_amplitude",
+    "g_ref": "dimensionless_surrogate_geometry_factor",
+    "phi_ref_rad": "rad"
+  },
+  "not_experimental_blank_channel_calibration": true,
+  "not_full_wave_optical_solver": true,
+  "not_true_W_eff": true,
+  "not_detector_response_validation": true,
+  "not_detection_probability": true
+}

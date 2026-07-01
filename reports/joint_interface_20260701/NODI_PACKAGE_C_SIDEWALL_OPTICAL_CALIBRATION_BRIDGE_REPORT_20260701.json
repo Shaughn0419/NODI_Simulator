@@ -1,0 +1,792 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_READY_SEED_ONLY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_20260701",
+    "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability",
+    "current_head": "4dd170e1123e68859a8b01723d52491d78d3a216",
+    "branch": "main",
+    "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+    "source_reference_smoke_disposition": "NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_SMOKE_READY_NOT_OPTICAL_SOLVER",
+    "seed_rows": 4,
+    "readiness_rows": 6,
+    "synthetic_seed_rows": 4,
+    "calibration_seed_table_validation_status": "valid_minimal_schema_by_contract",
+    "calibration_seed_manifest_validation_status": "valid_minimal_manifest_by_contract",
+    "calibrated_lookup_unlock_status": "blocked_synthetic_fixture_not_experimental",
+    "full_wave_or_calibrated_optical_solver_current": false,
+    "true_W_eff_current": false,
+    "detector_response_validation_current": false,
+    "detection_probability_current": false,
+    "yield_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "JRC_current": false,
+    "source_lock_rows": 6,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 79,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "synthetic sidewall optical calibration seed;calibration readiness planning;future solver or blank-channel calibration scaffold",
+    "blocked_use": "measured blank-channel calibration;full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion",
+    "semantic_digest": "a09c5e6511d49935003100096ac81a05aafcfe8623237de6075259e0449327f4"
+  },
+  "seed_rows": [
+    {
+      "calibration_row_id": "SWCAL-SEED-rectangle_limit_theta90_D900_W500_404",
+      "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "wavelength_nm": "404",
+      "A_ref": "0.5",
+      "g_ref": "1",
+      "phi_ref_rad": "0",
+      "phi_ref_source": "surrogate_zero_phase_not_measured",
+      "phi_ref_confidence": "not_measured",
+      "phase_wrap_policy": "not_applicable_surrogate_seed",
+      "channel_cross_section_model": "ideal_rectangle",
+      "sidewall_deg_comsol": "90",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "reference_model_source": "trapezoid_effective_aperture_surrogate",
+      "source_smoke_row_id": "REFSMOKE-rectangle_limit_theta90_D900_W500_trapezoid_effective_aperture_surrogate_404",
+      "calibration_data_role": "synthetic_fixture_not_experimental",
+      "not_experimental_blank_channel_calibration": "true",
+      "not_full_wave_optical_solver": "true",
+      "not_true_W_eff": "true",
+      "not_detector_response_validation": "true",
+      "not_detection_probability": "true",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability"
+    },
+    {
+      "calibration_row_id": "SWCAL-SEED-rectangle_limit_theta90_D900_W500_660",
+      "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+      "case_id": "rectangle_limit_theta90_D900_W500",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "wavelength_nm": "660",
+      "A_ref": "0",
+      "g_ref": "0",
+      "phi_ref_rad": "0",
+      "phi_ref_source": "surrogate_zero_phase_not_measured",
+      "phi_ref_confidence": "not_measured",
+      "phase_wrap_policy": "not_applicable_surrogate_seed",
+      "channel_cross_section_model": "ideal_rectangle",
+      "sidewall_deg_comsol": "90",
+      "sidewall_taper_angle_deg_nodi": "0",
+      "reference_model_source": "trapezoid_effective_aperture_surrogate",
+      "source_smoke_row_id": "REFSMOKE-rectangle_limit_theta90_D900_W500_trapezoid_effective_aperture_surrogate_660",
+      "calibration_data_role": "synthetic_fixture_not_experimental",
+      "not_experimental_blank_channel_calibration": "true",
+      "not_full_wave_optical_solver": "true",
+      "not_true_W_eff": "true",
+      "not_detector_response_validation": "true",
+      "not_detection_probability": "true",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability"
+    },
+    {
+      "calibration_row_id": "SWCAL-SEED-taper_theta85_D900_W500_404",
+      "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+      "case_id": "taper_theta85_D900_W500",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "wavelength_nm": "404",
+      "A_ref": "0.421260202827",
+      "g_ref": "0.842520405653",
+      "phi_ref_rad": "0",
+      "phi_ref_source": "surrogate_zero_phase_not_measured",
+      "phi_ref_confidence": "not_measured",
+      "phase_wrap_policy": "not_applicable_surrogate_seed",
+      "channel_cross_section_model": "trapezoid_tapered_sidewalls",
+      "sidewall_deg_comsol": "85",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "reference_model_source": "trapezoid_effective_aperture_surrogate",
+      "source_smoke_row_id": "REFSMOKE-taper_theta85_D900_W500_trapezoid_effective_aperture_surrogate_404",
+      "calibration_data_role": "synthetic_fixture_not_experimental",
+      "not_experimental_blank_channel_calibration": "true",
+      "not_full_wave_optical_solver": "true",
+      "not_true_W_eff": "true",
+      "not_detector_response_validation": "true",
+      "not_detection_probability": "true",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability"
+    },
+    {
+      "calibration_row_id": "SWCAL-SEED-taper_theta85_D900_W500_660",
+      "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+      "case_id": "taper_theta85_D900_W500",
+      "width_nm": "500",
+      "depth_nm": "900",
+      "wavelength_nm": "660",
+      "A_ref": "0",
+      "g_ref": "0",
+      "phi_ref_rad": "0",
+      "phi_ref_source": "surrogate_zero_phase_not_measured",
+      "phi_ref_confidence": "not_measured",
+      "phase_wrap_policy": "not_applicable_surrogate_seed",
+      "channel_cross_section_model": "trapezoid_tapered_sidewalls",
+      "sidewall_deg_comsol": "85",
+      "sidewall_taper_angle_deg_nodi": "5",
+      "reference_model_source": "trapezoid_effective_aperture_surrogate",
+      "source_smoke_row_id": "REFSMOKE-taper_theta85_D900_W500_trapezoid_effective_aperture_surrogate_660",
+      "calibration_data_role": "synthetic_fixture_not_experimental",
+      "not_experimental_blank_channel_calibration": "true",
+      "not_full_wave_optical_solver": "true",
+      "not_true_W_eff": "true",
+      "not_detector_response_validation": "true",
+      "not_detection_probability": "true",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability"
+    }
+  ],
+  "seed_manifest": {
+    "calibration_kind": "reference_blank_channel",
+    "calibration_data_role": "synthetic_fixture_not_experimental",
+    "synthetic_fixture": true,
+    "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+    "source_claim_boundary": "nodi_reference_surrogate_smoke_not_optical_solver_not_detection_probability",
+    "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability",
+    "units": {
+      "width_nm": "nm",
+      "depth_nm": "nm",
+      "wavelength_nm": "nm",
+      "A_ref": "dimensionless_surrogate_amplitude",
+      "g_ref": "dimensionless_surrogate_geometry_factor",
+      "phi_ref_rad": "rad"
+    },
+    "not_experimental_blank_channel_calibration": true,
+    "not_full_wave_optical_solver": true,
+    "not_true_W_eff": true,
+    "not_detector_response_validation": true,
+    "not_detection_probability": true
+  },
+  "readiness_rows": [
+    {
+      "readiness_id": "SWCAL-READY-001",
+      "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+      "evidence_lane": "blank_channel_reference_amplitude_phase",
+      "current_status": "synthetic_seed_available_not_experimental",
+      "current_artifact_basis": "528 sidewall reference surrogate smoke",
+      "required_before_promotion": "measured blank-channel amplitude and phase table or EM solver output for W500/D900 theta grid",
+      "hard_fail_if_promoted_without": "true_reference_calibration_from_synthetic_seed",
+      "target_claim": "calibrated_or_full_wave_sidewall_optical_solver",
+      "target_claim_current": "false",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability"
+    },
+    {
+      "readiness_id": "SWCAL-READY-002",
+      "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+      "evidence_lane": "sidewall_geometry_coverage",
+      "current_status": "single_W500_D900_theta85_and_rectangle_seed_only",
+      "current_artifact_basis": "528 smoke plus 527 reference surrogate",
+      "required_before_promotion": "coverage for required widths/depths/angles or explicit interpolation/extrapolation guard",
+      "hard_fail_if_promoted_without": "geometry_generalization_from_single_seed",
+      "target_claim": "true_W_eff",
+      "target_claim_current": "false",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability"
+    },
+    {
+      "readiness_id": "SWCAL-READY-003",
+      "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+      "evidence_lane": "detector_response_bridge",
+      "current_status": "not_detector_response_validation",
+      "current_artifact_basis": "BFP/noise context only",
+      "required_before_promotion": "detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field",
+      "hard_fail_if_promoted_without": "detector_response_claim_from_reference_amplitude_only",
+      "target_claim": "detection_probability",
+      "target_claim_current": "false",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability"
+    },
+    {
+      "readiness_id": "SWCAL-READY-004",
+      "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+      "evidence_lane": "blank_false_positive_trace",
+      "current_status": "blank_trace_validation_missing_for_sidewall_geometry",
+      "current_artifact_basis": "Tsuyama-context blank evidence nearest geometry only",
+      "required_before_promotion": "sidewall-specific blank traces or validated transferable blank false-positive model",
+      "hard_fail_if_promoted_without": "false_positive_rate_from_synthetic_smoke",
+      "target_claim": "detection_probability",
+      "target_claim_current": "false",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability"
+    },
+    {
+      "readiness_id": "SWCAL-READY-005",
+      "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+      "evidence_lane": "wet_wall_interaction",
+      "current_status": "wet_sidewall_evidence_missing",
+      "current_artifact_basis": "wet/EV context rows only",
+      "required_before_promotion": "sidewall material/surface/wet EV adhesion, clogging, recovery, and passability evidence",
+      "hard_fail_if_promoted_without": "yield_or_wet_pass_from_geometry_surrogate",
+      "target_claim": "yield",
+      "target_claim_current": "false",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability"
+    },
+    {
+      "readiness_id": "SWCAL-READY-006",
+      "bridge_version": "sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1",
+      "evidence_lane": "integrated_route_ledger",
+      "current_status": "route_score_not_authorized_from_seed",
+      "current_artifact_basis": "q_ch, flow, pressure, optical, and wet candidate packets",
+      "required_before_promotion": "ledger binding calibrated optical, flow split, wet evidence, and route-selection policy",
+      "hard_fail_if_promoted_without": "route_winner_from_single_branch_smoke",
+      "target_claim": "route_score_or_winner",
+      "target_claim_current": "false",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "sidewall_reference_surrogate_smoke_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_SMOKE_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "5f1d86cfe03684f079dabd6e9b493512af8ba67fd56218041d622e1c12877f77",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability",
+      "allowed_use": "synthetic sidewall optical calibration seed;calibration readiness planning;future solver or blank-channel calibration scaffold",
+      "blocked_use": "measured blank-channel calibration;full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    },
+    {
+      "source_id": "sidewall_reference_surrogate_smoke_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REFERENCE_SURROGATE_SMOKE_SMOKE_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "755d84e27c861b3120580d66349908432e1835ed744d71db62940560491422bf",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability",
+      "allowed_use": "synthetic sidewall optical calibration seed;calibration readiness planning;future solver or blank-channel calibration scaffold",
+      "blocked_use": "measured blank-channel calibration;full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    },
+    {
+      "source_id": "sidewall_optical_calibration_bridge_source",
+      "path": "nodi_simulator/sidewall_optical_calibration_bridge.py",
+      "exists": "true",
+      "sha256": "13cfaf21be7995e354e4513374d361e299ec97fcda6d4a864f7c941466658e32",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability",
+      "allowed_use": "synthetic sidewall optical calibration seed;calibration readiness planning;future solver or blank-channel calibration scaffold",
+      "blocked_use": "measured blank-channel calibration;full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    },
+    {
+      "source_id": "sidewall_optical_calibration_bridge_tests",
+      "path": "tests/test_sidewall_optical_calibration_bridge.py",
+      "exists": "true",
+      "sha256": "01c1796685ee43983593988a5fee65e9d6acbc3477b4420413f855ff843ce985",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability",
+      "allowed_use": "synthetic sidewall optical calibration seed;calibration readiness planning;future solver or blank-channel calibration scaffold",
+      "blocked_use": "measured blank-channel calibration;full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    },
+    {
+      "source_id": "sidewall_optical_calibration_bridge_builder",
+      "path": "tools/audits/build_nodi_package_c_sidewall_optical_calibration_bridge.py",
+      "exists": "true",
+      "sha256": "0cd6e4b04e3ed0914a9964b561d825c1689f8ac9e9c735a5527eb742c1c06e68",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability",
+      "allowed_use": "synthetic sidewall optical calibration seed;calibration readiness planning;future solver or blank-channel calibration scaffold",
+      "blocked_use": "measured blank-channel calibration;full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    },
+    {
+      "source_id": "sidewall_optical_calibration_bridge_builder_tests",
+      "path": "tests/test_nodi_package_c_sidewall_optical_calibration_bridge.py",
+      "exists": "true",
+      "sha256": "4d08b29ba472e2088ee18671fbd458be48459712c0c40b178a53e18108201354",
+      "claim_boundary": "synthetic_calibration_seed_not_blank_channel_calibration_not_detection_probability",
+      "allowed_use": "synthetic sidewall optical calibration seed;calibration readiness planning;future solver or blank-channel calibration scaffold",
+      "blocked_use": "measured blank-channel calibration;full-wave optical solver;true W_eff;detector response validation;detection_probability;yield;route_score;winner;JRC;wet pass claim;production ingestion"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": ".gitignore",
+      "git_status": "M ",
+      "classification": "sidewall_optical_calibration_bridge_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
+      "git_status": " M",
+      "classification": "sidewall_optical_calibration_bridge_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_sidewall_optical_calibration_bridge_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_optical_calibration_bridge.py",
+      "git_status": "??",
+      "classification": "sidewall_optical_calibration_bridge_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_optical_calibration_bridge.py",
+      "git_status": "??",
+      "classification": "sidewall_optical_calibration_bridge_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_sidewall_optical_calibration_bridge.py",
+      "git_status": "??",
+      "classification": "sidewall_optical_calibration_bridge_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_optical_calibration_bridge.py",
+      "git_status": "??",
+      "classification": "sidewall_optical_calibration_bridge_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ],
+  "self_review": [
+    {
+      "review_id": "SWCAL-SELF-01",
+      "dimension": "synthetic seed table is schema-valid but not experimental calibration",
+      "verdict": "PASS_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_SEED_ONLY",
+      "notes": "Bridge advances calibration structure while preventing synthetic seed promotion."
+    },
+    {
+      "review_id": "SWCAL-SELF-02",
+      "dimension": "calibrated_lookup misuse is blocked by synthetic fixture role",
+      "verdict": "PASS_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_SEED_ONLY",
+      "notes": "Bridge advances calibration structure while preventing synthetic seed promotion."
+    },
+    {
+      "review_id": "SWCAL-SELF-03",
+      "dimension": "readiness rows cover optical, detector, blank, wet, and route lanes",
+      "verdict": "PASS_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_SEED_ONLY",
+      "notes": "Bridge advances calibration structure while preventing synthetic seed promotion."
+    },
+    {
+      "review_id": "SWCAL-SELF-04",
+      "dimension": "true W_eff, detection probability, yield, and route winner remain unresolved",
+      "verdict": "PASS_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_SEED_ONLY",
+      "notes": "Bridge advances calibration structure while preventing synthetic seed promotion."
+    }
+  ]
+}

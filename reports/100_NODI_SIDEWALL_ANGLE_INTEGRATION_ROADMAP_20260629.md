@@ -1946,3 +1946,60 @@ The next large block should therefore use this propagated reference surrogate
 to bridge into a calibrated/validated detector context: either a sidewall-aware
 blank-channel calibration table or an optical solver branch that can define
 true `W_eff`, detector response, and route-level scoring prerequisites.
+
+## 40. Current sidewall optical calibration bridge status
+
+The optical branch now has a calibration bridge packet that converts the 528
+NODI smoke rows into a replaceable reference-calibration seed table and a
+readiness matrix:
+
+- Module: `nodi_simulator/sidewall_optical_calibration_bridge.py`.
+- Bridge version:
+  `sidewall_optical_calibration_bridge_from_reference_surrogate_smoke_v1`.
+- Artifact id: `PACKAGE_C_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_READY_SEED_ONLY`.
+- Seed table:
+  `NODI_PACKAGE_C_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_SEED_TABLE_20260701.csv`.
+- Seed manifest:
+  `NODI_PACKAGE_C_SIDEWALL_OPTICAL_CALIBRATION_BRIDGE_SEED_TABLE_20260701.csv.manifest.json`.
+
+The seed table is intentionally marked:
+
+- `calibration_data_role=synthetic_fixture_not_experimental`
+- `not_experimental_blank_channel_calibration=true`
+- `not_full_wave_optical_solver=true`
+- `not_true_W_eff=true`
+- `not_detector_response_validation=true`
+- `not_detection_probability=true`
+
+This is deliberate. The table is schema-compatible with the existing
+`calibrated_lookup` path so future measured blank-channel or solver rows can
+replace it, but the current synthetic role must keep runtime lookup from
+unlocking calibrated reference claims.
+
+The readiness matrix currently tracks these promotion lanes:
+
+- blank-channel reference amplitude and phase;
+- sidewall geometry coverage;
+- detector response / BFP / ROI bridge;
+- blank false-positive trace validation;
+- wet wall-interaction evidence;
+- integrated route ledger.
+
+Current claim state remains:
+
+- `full_wave_or_calibrated_optical_solver_current=false`
+- `true_W_eff_current=false`
+- `detector_response_validation_current=false`
+- `detection_probability_current=false`
+- `yield_current=false`
+- `route_score_current=false`
+- `winner_current=false`
+- `JRC_current=false`
+
+The next large block should use this bridge to either ingest measured/solver
+sidewall calibration rows or build the integrated promotion ledger that states
+exactly which calibrated optical, flow, wet, and route-selection inputs are
+still missing before detection probability, yield, route score, or winner can
+be claimed.
