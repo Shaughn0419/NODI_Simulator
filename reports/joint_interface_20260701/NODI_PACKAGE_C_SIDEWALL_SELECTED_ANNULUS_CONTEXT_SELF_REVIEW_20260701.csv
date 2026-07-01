@@ -1,0 +1,5 @@
+review_id,dimension,verdict,notes
+SELANN-SELF-01,selected annulus rerun context is available for rectangle and theta85,PASS_SELECTED_ANNULUS_CONTEXT_NOT_PROBABILITY,Context reduces a ledger blocker but does not promote detection or route claims.
+SELANN-SELF-02,annulus detection values are small-n context rates,PASS_SELECTED_ANNULUS_CONTEXT_NOT_PROBABILITY,Context reduces a ledger blocker but does not promote detection or route claims.
+SELANN-SELF-03,detection probability and route score remain false,PASS_SELECTED_ANNULUS_CONTEXT_NOT_PROBABILITY,Context reduces a ledger blocker but does not promote detection or route claims.
+SELANN-SELF-04,integrated promotion ledger may now replace missing with context-available,PASS_SELECTED_ANNULUS_CONTEXT_NOT_PROBABILITY,Context reduces a ledger blocker but does not promote detection or route claims.

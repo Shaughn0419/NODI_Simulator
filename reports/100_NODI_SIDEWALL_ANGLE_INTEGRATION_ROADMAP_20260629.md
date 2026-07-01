@@ -2047,3 +2047,45 @@ Allowed use is promotion planning and evidence prioritization. Blocked use is
 route scoring, route selection, q_ch weighting, detection probability, yield,
 wet pass, clogging/time-to-clog/recovery, fabrication release, or production
 ingestion.
+
+## 42. Current selected-annulus sidewall context status
+
+The selected-annulus blocker now has a small executable sidewall context packet:
+
+- Module: `nodi_simulator/sidewall_selected_annulus_context.py`.
+- Context version: `sidewall_selected_annulus_context_w500_d900_v1`.
+- Artifact id: `PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_READY_NOT_PROBABILITY`.
+- Cases:
+  - `rectangle_limit_theta90_D900_W500`
+  - `taper_theta85_D900_W500`
+- Reference model:
+  `trapezoid_effective_aperture_surrogate`.
+- Wavelength: 404 nm.
+
+This packet runs a small NODI sidewall selected-annulus smoke and records:
+
+- `selected_annulus_source=initial_position_edge_norm_annulus_diagnostic_v1`
+- `selected_annulus_edge_norm_min=0.5`
+- `selected_annulus_edge_norm_max=0.8`
+- selected-annulus event counts, detected counts, fraction, context rate, and
+  Wilson lower-bound context.
+
+The output can reduce the integrated ledger lane from
+`selected_annulus_context_missing_rerun_required` to
+`selected_annulus_context_available_small_n_not_probability`.
+
+It is still not:
+
+- detection probability;
+- route score;
+- winner/JRC;
+- yield;
+- wet pass;
+- calibrated detector response.
+
+The next ledger refresh should consume this packet and update only the
+selected-annulus blocker status, while keeping detection probability and route
+promotion blocked until calibrated optical, blank false-positive, wet, q_ch,
+and route-selection evidence are all available.

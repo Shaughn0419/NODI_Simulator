@@ -1,0 +1,27 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_READY_NOT_PROBABILITY",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_READY_NOT_PROBABILITY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_20260701",
+    "claim_boundary": "selected_annulus_context_not_detection_probability_not_route_score",
+    "current_head": "3b54a8975866736fb3eba4afac01c3bea312f52e",
+    "branch": "main",
+    "context_version": "sidewall_selected_annulus_context_w500_d900_v1",
+    "source_promotion_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_READY_PREFLIGHT_ONLY",
+    "context_rows": 2,
+    "selected_annulus_context_current_rows": 2,
+    "small_n_synthetic_context": true,
+    "detection_probability_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_current": false,
+    "source_lock_rows": 6,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 79,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "sidewall selected-annulus context;small-n NODI diagnostic rerun;promotion-ledger blocker reduction planning",
+    "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet pass;production ingestion",
+    "semantic_digest": "a212316c87446c661f554f36a2c61122314193e77200b1dedfc9385165567701"
+  }
+}
