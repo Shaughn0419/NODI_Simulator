@@ -1,0 +1,7 @@
+review_id,dimension,verdict,notes
+MAINLINE-SELF-01,all downstream branches authorized as implementation/evidence paths,PASS_AUTHORIZED_ADVANCEMENT_NOT_FINAL_CLAIM,Authorized implementation/evidence generation is separated from final claim promotion.
+MAINLINE-SELF-02,runtime/substep remains first executable local block,PASS_AUTHORIZED_ADVANCEMENT_NOT_FINAL_CLAIM,Authorized implementation/evidence generation is separated from final claim promotion.
+MAINLINE-SELF-03,solver branches are included without premature solver claims,PASS_AUTHORIZED_ADVANCEMENT_NOT_FINAL_CLAIM,Authorized implementation/evidence generation is separated from final claim promotion.
+MAINLINE-SELF-04,wet and route/yield/detection are included without premature final claims,PASS_AUTHORIZED_ADVANCEMENT_NOT_FINAL_CLAIM,Authorized implementation/evidence generation is separated from final claim promotion.
+MAINLINE-SELF-05,ideal rectangle remains first-class while trapezoid sidewall branch advances,PASS_AUTHORIZED_ADVANCEMENT_NOT_FINAL_CLAIM,Authorized implementation/evidence generation is separated from final claim promotion.
+MAINLINE-SELF-06,dirty context is recorded without source-locking unrelated generated artifacts,PASS_AUTHORIZED_ADVANCEMENT_NOT_FINAL_CLAIM,Authorized implementation/evidence generation is separated from final claim promotion.

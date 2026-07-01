@@ -1,0 +1,9 @@
+queue_id,task_id,branch_id,task,execution_mode,dependency,authorized_to_prepare,authorized_to_execute_when_packet_passes,claim_promoted_by_this_task
+Q001,runtime_substep_execution_packet,runtime_substep_execution,Build execution packet that selects low-cost and blocked/prohibitive cases and records no PRS/EAS promotion.,local_nodi_only,next,true,true,false
+Q002,guarded_trajectory_smoke,runtime_substep_execution,Run guarded trajectory smoke for a low-cost trapezoid case and a blocked 526-substep stress case.,local_nodi_allowed,after_Q001,true,true,false
+Q003,comsol_clean_mirror_receipt,trapezoid_flow_solver,Ask COMSOL side to mirror post-proof status before solver launch; this can precede actual COMSOL execution.,comsol_read_only_or_receipt,parallel_after_Q001,true,true,false
+Q004,trapezoid_flow_solver_preflight,trapezoid_flow_solver,Define fixed-pressure/fixed-velocity flow solver inputs and acceptance before any q_ch weighting.,solver_preflight,after_Q003,true,true,false
+Q005,electrokinetic_grid_preflight,electrokinetic_solver,"Define profile-aware grid, zeta/ionic-strength metadata, and blocked-bin handling.",solver_preflight,parallel_after_Q003,true,true,false
+Q006,optical_reference_preflight,optical_reference_solver,Define optical/reference solver or calibration evidence needed for true W_eff and detection response.,solver_preflight,parallel_after_Q003,true,true,false
+Q007,wet_ev_evidence_contract,wet_ev_evidence,Define passability/clogging/recovery/yield evidence fields and wet-control requirements.,wet_contract,parallel_after_Q001,true,true,false
+Q008,route_promotion_contract,route_yield_detection_decision,Bind q_ch/JRC/route_score/winner/yield/detection_probability to source hashes and branch pass states.,decision_contract,after_Q004_Q005_Q006_Q007,true,true,false

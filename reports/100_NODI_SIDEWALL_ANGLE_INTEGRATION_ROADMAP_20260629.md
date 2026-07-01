@@ -1589,3 +1589,32 @@ Current safe route after Package C proof registration:
 6. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.
 
 Only after Package A/B remain green and the runtime/substep execution packet clears its retained blockers should NODI run any sidewall-aware PRS/EAS pilot involving trajectory, near-wall, hindered-diffusion, or wall-distance-bin metrics. Even then, the result should remain `surrogate_sensitivity_only` / `context-only` until measurement or solver evidence is explicitly added and authorized.
+
+## 30. Authorized downstream mainline advancement status
+
+The user has explicitly authorized the downstream runtime/substep, solver, wet, and route/yield/detection branches. This changes the planning state from "do not touch these branches" to "implement and generate evidence, but do not promote incomplete evidence into final claims."
+
+The next integrated packet is:
+
+- Artifact id: `PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_20260701`.
+- Disposition: `NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_READY_FOR_EXECUTION_PACKETS`.
+- Covered branches:
+  - `runtime_substep_execution`
+  - `trapezoid_flow_solver`
+  - `electrokinetic_solver`
+  - `optical_reference_solver`
+  - `wet_ev_evidence`
+  - `route_yield_detection_decision`
+- Branch state: `authorized_to_implement=true` and `evidence_generation_allowed=true`.
+- Current final-claim state: `final_claim_promoted_current=false`.
+
+This wording is intentional. Runtime, solver, wet, route, yield, and detection work are now in-scope for implementation. Their outputs should first be marked as candidate evidence or branch evidence with source hashes, parameter grids, and promotion contracts. A final `route_score`, `winner`, `JRC`, `q_ch`, `yield`, `detection_probability`, wet-pass, fabrication, or production claim becomes true only after the corresponding branch evidence packet satisfies its promotion contract.
+
+The efficient mainline route is:
+
+1. Build the runtime/substep execution packet and run the narrowest guarded NODI trajectory smoke/stress cases.
+2. In parallel, prepare solver preflights for trapezoid flow, electrokinetic grid/field evidence, and optical/reference evidence.
+3. In parallel, prepare the wet/EV evidence contract for passability, clogging, recovery, yield, and detection controls.
+4. Bind route/yield/detection promotion only after the runtime, solver, wet, and Package D precheck evidence hashes exist.
+
+This keeps ideal rectangle as a first-class runtime path while allowing trapezoid sidewall evidence to advance as a coordinated downstream program rather than as isolated micro-gates.
