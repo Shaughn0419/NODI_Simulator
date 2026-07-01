@@ -1732,3 +1732,37 @@ The next most efficient route is to either run or ingest an exact W500/D900
 pressure-flow comparison for the theta85 candidate, or to add an explicit
 W800-to-W500 mapping/calibration contract if the W800 COMSOL family is intended
 to calibrate the W500 NODI sidecar.
+
+## 35. Current route/yield/detection candidate status
+
+The route/yield/detection branch now has a concrete candidate packet:
+
+- Module: `nodi_simulator/route_yield_detection_candidate.py`.
+- Candidate version: `route_yield_detection_candidate_from_qch_context_v1`.
+- Artifact id: `PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_20260701`.
+- Disposition: `NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_READY_NOT_FINAL`.
+- Inputs:
+  - `NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_QCH_ROWS_20260701.csv`
+  - `NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_COMPARISON_ROWS_20260701.csv`
+
+This packet computes a `route_decision_candidate_metric` from candidate q_ch
+flow split and pressure-flow context weight. It also emits
+`candidate_sort_index_under_context` so downstream analysis can inspect the
+candidate ordering without calling it a route winner.
+
+The current candidate metric is intentionally not a formal route score:
+
+- `route_score_current=false`
+- `winner_current=false`
+- `JRC_current=false`
+- `yield_current=false`
+- `detection_probability_current=false`
+
+The wet and optical/detection branches are now explicitly bound as evidence
+gaps rather than treated as out of scope. The next evidence needed before final
+claims can become true is:
+
+1. accepted formal q_ch sidecar plus exact pressure-flow validation;
+2. route-score decision ledger and independent route audit;
+3. wet EV pass/recovery controls and sample-handling evidence;
+4. optical/reference calibration plus detector-response evidence.

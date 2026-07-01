@@ -1,0 +1,5 @@
+target,current_value,candidate_metric_available,required_evidence_before_true,hard_fail_if
+formal_route_score,false,true,accepted formal q_ch sidecar plus exact pressure-flow validation,formal_route_score_true_from_candidate_metric_only
+winner_or_JRC,false,true,route-score decision ledger and independent route audit,winner_or_JRC_true_from_candidate_metric_only
+yield,false,true,wet EV pass/recovery controls and sample handling evidence,yield_true_from_candidate_metric_only
+detection_probability,false,true,optical/reference calibration plus detector response evidence,detection_probability_true_from_candidate_metric_only

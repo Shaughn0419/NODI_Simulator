@@ -1,0 +1,30 @@
+{
+  "disposition": "NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_READY_NOT_FINAL",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_READY_NOT_FINAL",
+    "artifact_id": "PACKAGE_C_ROUTE_YIELD_DETECTION_CANDIDATE_20260701",
+    "claim_boundary": "route_candidate_metric_not_route_score_not_winner_not_yield_not_detection",
+    "current_head": "18ef04d99a8ea86da1efd8a8da76928e374ce840",
+    "branch": "main",
+    "candidate_version": "route_yield_detection_candidate_from_qch_context_v1",
+    "source_qch_sidecar_disposition": "NODI_PACKAGE_C_QCH_SIDECAR_CANDIDATE_READY_NOT_ROUTE",
+    "source_pressure_flow_disposition": "NODI_PACKAGE_C_PRESSURE_FLOW_VALIDATION_CONTEXT_READY_NOT_FORMAL_QCH",
+    "route_candidate_rows": 2,
+    "candidate_metric_rows": 2,
+    "route_score_current": false,
+    "winner_current": false,
+    "JRC_current": false,
+    "yield_current": false,
+    "detection_probability_current": false,
+    "wet_evidence_current": false,
+    "optical_detection_calibration_current": false,
+    "source_lock_rows": 8,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 79,
+    "non_release_dirty_context_rows": 69,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "route/yield/detection candidate metric evidence;candidate ordering preflight;wet/optical evidence gap binding",
+    "blocked_use": "formal route_score;winner;JRC;yield;detection_probability;wet pass claim;fabrication release;production ingestion",
+    "semantic_digest": "417669147f5d3976ca0658deda69e46700d8e494d07353e585266b9ac4cc07a9"
+  }
+}

@@ -1,0 +1,6 @@
+review_id,dimension,verdict,notes
+RYD-SELF-01,candidate route metric computed from q_ch flow split and pressure-flow context,PASS_ROUTE_YIELD_DETECTION_CANDIDATE_NOT_FINAL,Candidate metric advances route branch while preserving formal claim boundaries.
+RYD-SELF-02,candidate sort index is not winner/JRC,PASS_ROUTE_YIELD_DETECTION_CANDIDATE_NOT_FINAL,Candidate metric advances route branch while preserving formal claim boundaries.
+RYD-SELF-03,wet evidence gap remains explicit,PASS_ROUTE_YIELD_DETECTION_CANDIDATE_NOT_FINAL,Candidate metric advances route branch while preserving formal claim boundaries.
+RYD-SELF-04,optical detection evidence gap remains explicit,PASS_ROUTE_YIELD_DETECTION_CANDIDATE_NOT_FINAL,Candidate metric advances route branch while preserving formal claim boundaries.
+RYD-SELF-05,route/yield/detection final claims remain false,PASS_ROUTE_YIELD_DETECTION_CANDIDATE_NOT_FINAL,Candidate metric advances route branch while preserving formal claim boundaries.
