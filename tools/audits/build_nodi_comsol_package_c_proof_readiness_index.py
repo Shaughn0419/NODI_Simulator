@@ -52,6 +52,9 @@ CONSOLIDATION_STATUS = (
 TIMESERIES_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_TIMESERIES_ESS_STATUS_20260701.json"
 )
+STATIONARITY_ENSEMBLE_STATUS = (
+    OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_STATIONARITY_ENSEMBLE_STATUS_20260701.json"
+)
 SUBSTEP_HARDENING_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_SUBSTEP_FAIL_POLICY_STATUS_20260701.json"
 )
@@ -68,6 +71,7 @@ THRESHOLD_TABLE = (
 SOURCE_FILES = {
     "metric_hardening_consolidation_status": CONSOLIDATION_STATUS,
     "timeseries_ess_status": TIMESERIES_STATUS,
+    "stationarity_ensemble_status": STATIONARITY_ENSEMBLE_STATUS,
     "substep_fail_policy_status": SUBSTEP_HARDENING_STATUS,
     "substep_dt_refinement_status": DT_REFINEMENT_STATUS,
     "proof_threshold_status": THRESHOLD_STATUS,
@@ -193,6 +197,7 @@ def no_proof_firewall_rows() -> list[dict[str, str]]:
 def readiness_index_rows() -> list[dict[str, str]]:
     c = read_json_summary(CONSOLIDATION_STATUS)
     t = read_json_summary(TIMESERIES_STATUS)
+    e = read_json_summary(STATIONARITY_ENSEMBLE_STATUS)
     s = read_json_summary(SUBSTEP_HARDENING_STATUS)
     d = read_json_summary(DT_REFINEMENT_STATUS)
     p = read_json_summary(THRESHOLD_STATUS)
@@ -224,6 +229,20 @@ def readiness_index_rows() -> list[dict[str, str]]:
                 f"max_x_l1={t.get('max_x_local_norm_l1_to_uniform', '')}"
             ),
             "next_action": "proof_level_stationarity_and_ess_method_needed",
+        },
+        {
+            "artifact_id": e.get("artifact_id", ""),
+            "artifact_role": "stationarity_ensemble_refinement",
+            "disposition": e.get("disposition", ""),
+            "candidate_status": e.get("stationarity_ensemble_status", ""),
+            "proof_status": e.get("proof_readiness_impact", ""),
+            "key_values": (
+                f"min_independent_ess={e.get('min_independent_ensemble_ess', '')};"
+                f"max_final_u_l1={e.get('max_final_u_accessible_cdf_l1_to_uniform', '')};"
+                f"max_final_x_l1={e.get('max_final_x_local_norm_l1_to_uniform', '')};"
+                f"total_samples={e.get('total_independent_samples', '')}"
+            ),
+            "next_action": "use_as_stationarity_gap_reduction_candidate_not_proof",
         },
         {
             "artifact_id": s.get("artifact_id", ""),
@@ -334,7 +353,7 @@ def external_research_question_rows() -> list[dict[str, str]]:
         (
             "stationarity_ess_method",
             "What proof-level stationarity and ESS method is appropriate for finite-step reflected Brownian motion in a convex offset trapezoid?",
-            "Use threshold table rows for min ESS and u/x-local L1 gaps; do not infer proof/pass or runtime authorization.",
+            "Use stationarity ensemble and threshold rows for min ESS and u/x-local L1 gaps; do not infer proof/pass or runtime authorization.",
         ),
         (
             "near_boundary_band_expectation",
@@ -408,7 +427,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     s = payload["summary"]
     firewall = payload["no_proof_firewall"][0]
     checks = {
-        "Readiness rows": s["readiness_index_rows"] == 5,
+        "Readiness rows": s["readiness_index_rows"] == 6,
         "Blockers present": s["open_blocker_rows"] >= 5,
         "External questions present": s["external_research_question_rows"] >= 4,
         "Source lock complete": s["source_missing_rows"] == 0,

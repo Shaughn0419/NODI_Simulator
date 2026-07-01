@@ -54,6 +54,18 @@ def test_threshold_rows_cover_key_package_c_metrics() -> None:
         by_metric["max_required_substeps_to_meet_threshold"]["current_status"]
         == "candidate_sized_runtime_policy_gap"
     )
+    assert by_metric["min_effective_sample_size"]["source_artifact"] == (
+        "stationarity_ensemble_refinement"
+    )
+    assert float(by_metric["min_effective_sample_size"]["observed_value"]) >= 32768.0
+    assert by_metric["max_u_accessible_cdf_l1_to_uniform"]["current_status"] == (
+        "candidate_and_proof_threshold_met_not_registered"
+    )
+    assert float(by_metric["max_u_accessible_cdf_l1_to_uniform"]["observed_value"]) <= 0.04
+    assert by_metric["max_x_local_norm_l1_to_uniform"]["current_status"] == (
+        "candidate_and_proof_threshold_met_not_registered"
+    )
+    assert float(by_metric["max_x_local_norm_l1_to_uniform"]["observed_value"]) <= 0.04
     assert all(row["claim_boundary"] == thresholds.CLAIM_BOUNDARY for row in rows)
 
 

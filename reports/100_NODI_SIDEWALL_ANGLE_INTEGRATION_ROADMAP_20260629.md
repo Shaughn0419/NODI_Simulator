@@ -1379,12 +1379,15 @@ The next block makes candidate/proof thresholds and remaining proof gaps machine
 - Disposition: `NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
 - Scope: threshold table rows, source lock, no-proof firewall, status/report/manifest.
 - Threshold rows: `13`.
-- Candidate-pass rows: `8`.
-- Proof-gap rows: `5`.
+- Candidate-pass rows: `5`.
+- Proof-gap rows: `2`.
 - Runtime-policy gap rows: `2`.
+- Proof-threshold-met-not-registered rows: `7`.
 - Threshold table status: `candidate_threshold_table_ready_not_proof_registered`.
 - Proof-readiness impact: `proof_gaps_are_explicit_and_machine_readable`.
-- Examples of remaining proof gaps: `max_one_wall_positive_control_ks=0.019246436` passes candidate `<=0.02` but not proof `<=0.01`; `max_u_accessible_cdf_l1_to_uniform=0.284598214` and `max_x_local_norm_l1_to_uniform=0.108537946` pass candidate `<=0.30` but not proof `<=0.04`; `max_required_substeps_to_meet_threshold=526` requires manual runtime-cost review before any runtime/substep policy.
+- Stationarity/ESS rows now use `PACKAGE_C_STATIONARITY_ENSEMBLE_REFINEMENT_20260701`: `min_effective_sample_size=32768.0`, `max_u_accessible_cdf_l1_to_uniform=0.0217651367188`, and `max_x_local_norm_l1_to_uniform=0.0203979492187`, all marked `candidate_and_proof_threshold_met_not_registered`.
+- Remaining proof gaps: `max_one_wall_positive_control_ks=0.019246436` passes candidate `<=0.02` but not proof `<=0.01`; `max_expanded_wall_pileup_ratio=1.298850575` passes candidate `<=1.5` but not proof `<=1.25`.
+- Runtime-policy gaps remain: `max_required_substeps_to_meet_threshold=526` and `max_projected_trigger_value_after_required_substeps=0.999601207629` require manual runtime-cost/substep-policy review before any runtime/substep policy.
 - Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
 
 This block is threshold planning evidence only. It does not register Package C proof/pass and does not make any runtime, PRS/EAS numeric, COMSOL, `.mph`, route, yield, detection, wet, fabrication, or production claim.
@@ -1396,9 +1399,9 @@ The next block consolidates the Package C metric-hardening state into a single m
 - Artifact id: `PACKAGE_C_PROOF_READINESS_INDEX_20260701`.
 - Disposition: `NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
 - Scope: readiness index rows, open blocker rows, external-research question rows, source lock, no-proof firewall, status/report/manifest.
-- Readiness index rows: `5`, covering metric-hardening consolidation, timeseries ESS, substep fail-policy hardening, substep dt-refinement requirements, and proof-threshold table.
-- Open blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, proof-threshold gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
-- External research question rows: `4`: stationarity/ESS method, near-boundary band expectation, one-wall/wall-pileup thresholds, and substep runtime-cost strategy.
+- Readiness index rows: `6`, covering metric-hardening consolidation, timeseries ESS, stationarity ensemble refinement, substep fail-policy hardening, substep dt-refinement requirements, and proof-threshold table.
+- Open blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, remaining proof-threshold gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
+- External research question rows: `4`: stationarity/ESS method review, near-boundary band expectation, one-wall/wall-pileup thresholds, and substep runtime-cost strategy.
 - Proof-readiness index status: `single_entrypoint_ready_not_proof_registered`.
 - Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
 
@@ -1412,22 +1415,42 @@ The next block turns the readiness index into a copyable external-AI prompt that
 - Disposition: `NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION`.
 - Scope: copyable prompt, context rows, research-question rows, blocker rows, source lock, no-proof firewall, status/report/manifest.
 - Context rows: `5`, covering the GitHub-visible entrypoint, artifact roles, current proof gaps, substep runtime cost, and one-wall threshold gap.
-- Research question rows: `4`: stationarity/ESS method, near-boundary band expectation, one-wall/wall-pileup thresholds, and substep runtime-cost strategy.
-- Blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, proof-threshold gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
+- Research question rows: `4`: stationarity/ESS method review, near-boundary band expectation, one-wall/wall-pileup thresholds, and substep runtime-cost strategy.
+- Blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, remaining proof-threshold gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
 - Prompt status: `copyable_external_research_prompt_ready`.
 - GitHub visibility status: `local_worktree_pre_commit_urls_valid_after_publish`.
 - Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
 
 This block is an external research handoff, not a proof/pass registration. Its prompt explicitly tells external AI that it can only inspect GitHub-visible files, must not assume local Codex/COMSOL/`.mph`/uncommitted artifacts, and should answer the four method/literature questions with sources, thresholds, and next evidence priorities. It does not authorize Package C pass, runtime, sidewall PRS/EAS numeric output, NODI recomputation, COMSOL launch, `.mph` load, route/yield/detection/wet/fabrication/production claims, or true `W_eff`.
 
-## 21. Recommended next action
+## 21. Current Package C stationarity ensemble refinement status
 
-Current safe route after the Package C external-research prompt:
+The next local proof-gap reduction block adds independent-ensemble transition-invariance evidence for the finite-step reflection candidate:
 
-1. Use `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis.
-2. In parallel or afterward, continue one local proof-gap-reduction block for stationarity/ESS, one-wall/wall-pileup thresholds, and substep runtime-cost policy; local tests/subagents should cover ordinary regression review.
-3. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
-4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
-5. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.
+- Artifact id: `PACKAGE_C_STATIONARITY_ENSEMBLE_REFINEMENT_20260701`.
+- Disposition: `NODI_PACKAGE_C_STATIONARITY_ENSEMBLE_REFINEMENT_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: independent uniform-support ensemble samples, initial/final histograms, confidence intervals, source lock, no-proof firewall, status/report/manifest.
+- Scenario-seed rows: `18`, covering six representative/stress scenarios and three seeds per scenario.
+- Total independent samples: `589824`; min independent ensemble ESS: `32768.0`.
+- Max final `u_accessible_cdf` L1 to uniform: `0.0217651367188`.
+- Max final `x_local_norm` L1 to uniform: `0.0203979492187`.
+- Max CI95 upper L1: `0.0219939450399`.
+- Support violation count: `0`; exact boundary atom count: `0`; nonconverged reflection count: `0`.
+- Stationarity ensemble status: `candidate_numeric_stationarity_lines_met_not_proof_registered`.
+- Proof-readiness impact: `stationarity_ess_and_u_x_uniformity_gaps_reduced_by_independent_ensemble_candidate`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+This block reduces the stationarity/ESS and u/x-local uniformity gap without registering Package C proof/pass. It is an independent-ensemble candidate check of one-step transition invariance from analytically uniform center support; it is not a validated Brownian solver output, not runtime authorization, and not sidewall PRS/EAS numeric output.
+
+## 22. Recommended next action
+
+Current safe route after the Package C stationarity ensemble refinement:
+
+1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees the stationarity ensemble candidate rather than the old stationarity gap alone.
+2. Continue one local proof-gap-reduction block for the two remaining proof-threshold gaps: one-wall positive-control KS and expanded wall-pileup ratio.
+3. In the same or following block, bind near-boundary band expectation to an accessible-area confidence-interval method and keep the substep runtime-cost policy as manual-authorization-only.
+4. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
+5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
+6. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.
 
 Only after Package A/B remain green and a future Package C proof is explicitly authorized should NODI run any sidewall-aware PRS/EAS pilot involving trajectory, near-wall, hindered-diffusion, or wall-distance-bin metrics. Even then, the result should remain `surrogate_sensitivity_only` / `context-only` until measurement or solver evidence is explicitly added and authorized.

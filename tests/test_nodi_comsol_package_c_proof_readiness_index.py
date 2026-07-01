@@ -21,7 +21,7 @@ def test_readiness_index_payload_is_single_entrypoint_without_promotion() -> Non
 
     assert failures == []
     assert summary["disposition"] == readiness.DISPOSITION
-    assert summary["readiness_index_rows"] == 5
+    assert summary["readiness_index_rows"] == 6
     assert summary["open_blocker_rows"] >= 5
     assert summary["external_research_question_rows"] >= 4
     assert summary["proof_readiness_index_status"] == (
@@ -42,6 +42,7 @@ def test_readiness_index_covers_current_package_c_artifacts() -> None:
     assert roles == {
         "metric_hardening_consolidation",
         "timeseries_ess_candidate",
+        "stationarity_ensemble_refinement",
         "substep_fail_policy_hardening",
         "substep_dt_refinement_requirements",
         "proof_threshold_table",
@@ -50,7 +51,10 @@ def test_readiness_index_covers_current_package_c_artifacts() -> None:
     assert "max_required_substeps=526" in by_role[
         "substep_dt_refinement_requirements"
     ]["key_values"]
-    assert "proof_gap_rows=5" in by_role["proof_threshold_table"]["key_values"]
+    assert "min_independent_ess=32768.0" in by_role[
+        "stationarity_ensemble_refinement"
+    ]["key_values"]
+    assert "proof_gap_rows=2" in by_role["proof_threshold_table"]["key_values"]
     assert all(row["claim_boundary"] == readiness.CLAIM_BOUNDARY for row in rows)
 
 

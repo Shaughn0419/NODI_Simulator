@@ -552,3 +552,47 @@ mph_load_allowed=false
 ```
 
 This packet is a research handoff only. It tells external AI to inspect GitHub-visible files, not local Codex files, and to answer the four research questions with sources, thresholds, and next evidence priorities. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C stationarity ensemble refinement
+
+The next proof-gap reduction block adds independent-ensemble transition-invariance evidence:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_stationarity_ensemble_refinement.py --confirm-package-c-stationarity-ensemble-refinement
+NODI_PACKAGE_C_STATIONARITY_ENSEMBLE_REFINEMENT_CANDIDATE_READY_NO_PROOF_REGISTRATION
+scenario_seed_rows=18
+total_independent_samples=589824
+min_independent_ensemble_ess=32768.0
+max_final_u_accessible_cdf_l1_to_uniform=0.0217651367188
+max_final_x_local_norm_l1_to_uniform=0.0203979492187
+max_ci95_upper_l1=0.0219939450399
+support_violation_count=0
+exact_boundary_atom_count=0
+nonconverged_reflection_count=0
+stationarity_ensemble_status=candidate_numeric_stationarity_lines_met_not_proof_registered
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+The refreshed threshold/readiness chain absorbs this evidence:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_proof_threshold_table.py --confirm-package-c-proof-threshold-table
+NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION
+threshold_rows=13
+proof_gap_rows=2
+proof_threshold_met_not_registered_rows=7
+runtime_policy_gap_rows=2
+
+python tools/audits/build_nodi_comsol_package_c_proof_readiness_index.py --confirm-package-c-proof-readiness-index
+NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
+readiness_index_rows=6
+open_blocker_rows=5
+external_research_question_rows=4
+```
+
+This packet reduces the stationarity/ESS and u/x-local uniformity gap, but it does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.

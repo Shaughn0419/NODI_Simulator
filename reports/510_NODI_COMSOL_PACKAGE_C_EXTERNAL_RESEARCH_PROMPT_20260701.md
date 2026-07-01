@@ -14,7 +14,7 @@ Primary GitHub-visible entrypoint after publish:
 Current disposition:
 - NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
 - artifact_id=PACKAGE_C_PROOF_READINESS_INDEX_20260701
-- readiness_index_rows=5
+- readiness_index_rows=6
 - open_blocker_rows=5
 - external_research_question_rows=4
 
@@ -27,7 +27,7 @@ Hard boundary:
 Open blockers:
 - manual_authorization_ledger_missing: proof_registration_authorized remains false -> explicit manual authorization ledger that supersedes no-auth ledger
 - clean_reviewed_commit_binding_pending: reviewed_commit_binding_status remains pending in candidate packets -> future proof/pass artifact must bind a reviewed clean commit and source lock
-- proof_threshold_gaps_present: max_one_wall_positive_control_ks;max_expanded_wall_pileup_ratio;min_effective_sample_size;max_u_accessible_cdf_l1_to_uniform;max_x_local_norm_l1_to_uniform -> resolve or explicitly accept proof thresholds with external/statistical review
+- proof_threshold_gaps_present: max_one_wall_positive_control_ks;max_expanded_wall_pileup_ratio -> resolve or explicitly accept proof thresholds with external/statistical review
 - runtime_policy_gaps_present: max_required_substeps_to_meet_threshold;max_projected_trigger_value_after_required_substeps -> manual runtime cost and substep policy review required before runtime use
 - no_solver_or_wet_claim_authorized: hindered diffusion, flow, electrokinetic, optical, wet claims all remain blocked -> separate solver/experiment authorization required
 
@@ -39,16 +39,16 @@ Current threshold rows:
 - max_one_wall_positive_control_ks: observed=0.019246436; candidate=<=0.02; proof=<=0.01; status=candidate_pass_proof_gap
 - projection_negative_control_status: observed=expected_fail_observed; candidate=expected_fail_observed; proof=expected_fail_observed; status=candidate_and_proof_threshold_met_not_registered
 - max_expanded_wall_pileup_ratio: observed=1.298850575; candidate=<=1.5; proof=<=1.25; status=candidate_pass_proof_gap
-- min_effective_sample_size: observed=46.559312675; candidate=>=20; proof=effective_sample_size>=5000_or_confidence_interval_justified; status=candidate_pass_proof_gap
-- max_u_accessible_cdf_l1_to_uniform: observed=0.284598214; candidate=<=0.30; proof=<=0.04_hard_target_<=0.03; status=candidate_pass_proof_gap
-- max_x_local_norm_l1_to_uniform: observed=0.108537946; candidate=<=0.30; proof=<=0.04_hard_target_<=0.03; status=candidate_pass_proof_gap
+- min_effective_sample_size: observed=32768.0; candidate=>=20; proof=effective_sample_size>=5000_or_confidence_interval_justified; status=candidate_and_proof_threshold_met_not_registered
+- max_u_accessible_cdf_l1_to_uniform: observed=0.0217651367188; candidate=<=0.30; proof=<=0.04_hard_target_<=0.03; status=candidate_and_proof_threshold_met_not_registered
+- max_x_local_norm_l1_to_uniform: observed=0.0203979492187; candidate=<=0.30; proof=<=0.04_hard_target_<=0.03; status=candidate_and_proof_threshold_met_not_registered
 - substep_policy_bound_trigger_count: observed=6; candidate=equals_triggered_scenario_count; proof=equals_triggered_scenario_count_and_policy_evidence_sha_bound; status=candidate_pass_proof_authorization_gap
 - max_required_substeps_to_meet_threshold: observed=526; candidate=sized_and_reported; proof=manual_runtime_cost_review_or_smaller_dt_policy_required; status=candidate_sized_runtime_policy_gap
 - max_projected_trigger_value_after_required_substeps: observed=0.999601207629; candidate=<=1.0; proof=<=1.0_with_validated_substep_tests; status=candidate_pass_proof_runtime_gap
 
 Research questions to answer in one pass:
 1. What proof-level stationarity and ESS method is appropriate for finite-step reflected Brownian motion in a convex offset trapezoid?
-   Scope guard: Use threshold table rows for min ESS and u/x-local L1 gaps; do not infer proof/pass or runtime authorization.
+   Scope guard: Use stationarity ensemble and threshold rows for min ESS and u/x-local L1 gaps; do not infer proof/pass or runtime authorization.
 2. How should near-boundary band mass be compared to accessible-area expectation with confidence intervals?
    Scope guard: Use exact atom split and raw histogram context; keep no wet/hindered hydrodynamic claim.
 3. Are one-wall KS <=0.01 and wall-pileup ratio <=1.25 reasonable proof-level hard lines, or should sample sizes/metrics change?

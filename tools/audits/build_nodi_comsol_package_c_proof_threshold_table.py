@@ -51,6 +51,9 @@ CONSOLIDATION_STATUS = (
 TIMESERIES_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_TIMESERIES_ESS_STATUS_20260701.json"
 )
+STATIONARITY_ENSEMBLE_STATUS = (
+    OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_STATIONARITY_ENSEMBLE_STATUS_20260701.json"
+)
 SUBSTEP_HARDENING_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_SUBSTEP_FAIL_POLICY_STATUS_20260701.json"
 )
@@ -61,6 +64,7 @@ DT_REFINEMENT_STATUS = (
 SOURCE_FILES = {
     "consolidation_status": CONSOLIDATION_STATUS,
     "timeseries_status": TIMESERIES_STATUS,
+    "stationarity_ensemble_status": STATIONARITY_ENSEMBLE_STATUS,
     "substep_hardening_status": SUBSTEP_HARDENING_STATUS,
     "dt_refinement_status": DT_REFINEMENT_STATUS,
     "threshold_table_builder": PROJECT_ROOT
@@ -208,6 +212,7 @@ def _threshold_row(
 def threshold_rows() -> list[dict[str, str]]:
     c = read_json_summary(CONSOLIDATION_STATUS)
     t = read_json_summary(TIMESERIES_STATUS)
+    e = read_json_summary(STATIONARITY_ENSEMBLE_STATUS)
     s = read_json_summary(SUBSTEP_HARDENING_STATUS)
     d = read_json_summary(DT_REFINEMENT_STATUS)
     rows = [
@@ -276,30 +281,36 @@ def threshold_rows() -> list[dict[str, str]]:
         ),
         _threshold_row(
             metric_id="min_effective_sample_size",
-            observed_value=t.get("min_effective_sample_size", ""),
+            observed_value=e.get("min_independent_ensemble_ess", t.get("min_effective_sample_size", "")),
             candidate_acceptance=">=20",
             proof_acceptance="effective_sample_size>=5000_or_confidence_interval_justified",
-            current_status="candidate_pass_proof_gap",
-            source_artifact="timeseries_ess_candidate",
-            next_action="increase ESS or bind confidence interval method",
+            current_status="candidate_and_proof_threshold_met_not_registered",
+            source_artifact="stationarity_ensemble_refinement",
+            next_action="bind stationarity ensemble source hash and external/statistical review",
         ),
         _threshold_row(
             metric_id="max_u_accessible_cdf_l1_to_uniform",
-            observed_value=t.get("max_u_accessible_cdf_l1_to_uniform", ""),
+            observed_value=e.get(
+                "max_final_u_accessible_cdf_l1_to_uniform",
+                t.get("max_u_accessible_cdf_l1_to_uniform", ""),
+            ),
             candidate_acceptance="<=0.30",
             proof_acceptance="<=0.04_hard_target_<=0.03",
-            current_status="candidate_pass_proof_gap",
-            source_artifact="timeseries_ess_candidate",
-            next_action="longer chains or proof-level stationarity method",
+            current_status="candidate_and_proof_threshold_met_not_registered",
+            source_artifact="stationarity_ensemble_refinement",
+            next_action="bind stationarity ensemble histograms and confidence intervals",
         ),
         _threshold_row(
             metric_id="max_x_local_norm_l1_to_uniform",
-            observed_value=t.get("max_x_local_norm_l1_to_uniform", ""),
+            observed_value=e.get(
+                "max_final_x_local_norm_l1_to_uniform",
+                t.get("max_x_local_norm_l1_to_uniform", ""),
+            ),
             candidate_acceptance="<=0.30",
             proof_acceptance="<=0.04_hard_target_<=0.03",
-            current_status="candidate_pass_proof_gap",
-            source_artifact="timeseries_ess_candidate",
-            next_action="longer chains or proof-level stationarity method",
+            current_status="candidate_and_proof_threshold_met_not_registered",
+            source_artifact="stationarity_ensemble_refinement",
+            next_action="bind stationarity ensemble histograms and confidence intervals",
         ),
         _threshold_row(
             metric_id="substep_policy_bound_trigger_count",
