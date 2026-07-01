@@ -24,7 +24,7 @@ def test_external_research_prompt_payload_is_copyable_without_promotion() -> Non
     assert summary["disposition"] == prompt.DISPOSITION
     assert summary["context_rows"] >= 5
     assert summary["research_question_rows"] >= 4
-    assert summary["blocker_rows"] >= 5
+    assert summary["blocker_rows"] >= 4
     assert summary["prompt_status"] == "copyable_external_research_prompt_ready"
     assert "github.com/Shaughn0419/NODI_Simulator" in markdown
     assert "Do not assume access to local Codex files" in markdown
@@ -50,6 +50,8 @@ def test_external_research_context_rows_include_key_metrics() -> None:
         <= 0.01
     )
     assert "candidate-only" in by_context["one_wall_wall_pileup_refinement"]["details"]
+    assert float(by_context["near_boundary_expected_band_method"]["context_value"]) <= 3.0
+    assert "area(radius+band)" in by_context["near_boundary_expected_band_method"]["details"]
     assert all(row["claim_boundary"] == prompt.CLAIM_BOUNDARY for row in rows)
 
 

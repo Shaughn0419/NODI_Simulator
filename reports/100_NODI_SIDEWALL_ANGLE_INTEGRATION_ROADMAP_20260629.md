@@ -1378,17 +1378,18 @@ The next block makes candidate/proof thresholds and remaining proof gaps machine
 - Artifact id: `PACKAGE_C_PROOF_THRESHOLD_TABLE_20260701`.
 - Disposition: `NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
 - Scope: threshold table rows, source lock, no-proof firewall, status/report/manifest.
-- Threshold rows: `13`.
-- Candidate-pass rows: `3`.
+- Threshold rows: `14`.
+- Candidate-pass rows: `2`.
 - Proof-gap rows: `0`.
-- Proof-method gap rows: `1`.
+- Proof-method gap rows: `0`.
+- Proof-method-bound rows: `1`.
 - Runtime-policy gap rows: `2`.
 - Proof-threshold-met-not-registered rows: `9`.
 - Threshold table status: `candidate_threshold_table_ready_not_proof_registered`.
-- Proof-readiness impact: `numeric_proof_threshold_gaps_reduced_to_method_authorization_and_runtime_policy_gaps`.
+- Proof-readiness impact: `numeric_and_method_candidate_lines_bound_to_authorization_and_runtime_policy_gaps`.
 - Stationarity/ESS rows now use `PACKAGE_C_STATIONARITY_ENSEMBLE_REFINEMENT_20260701`: `min_effective_sample_size=32768.0`, `max_u_accessible_cdf_l1_to_uniform=0.0217651367188`, and `max_x_local_norm_l1_to_uniform=0.0203979492187`, all marked `candidate_and_proof_threshold_met_not_registered`.
 - One-wall/wall-pileup rows now use `PACKAGE_C_ONE_WALL_WALL_PILEUP_REFINEMENT_20260701`: `max_one_wall_positive_control_ks=0.005281493`, `max_expanded_wall_pileup_ratio=1.072659525`, and wall-pileup CI95 high `1.214998175`, all marked `candidate_and_proof_threshold_met_not_registered`.
-- Remaining method gap: `max_near_boundary_band_fraction` still requires an accessible-area expected-band-mass method and confidence-interval binding.
+- Near-boundary rows now use `PACKAGE_C_NEAR_BOUNDARY_EXPECTED_BAND_METHOD_20260701`: the legacy sparse near-boundary row is retained as context, while `max_near_boundary_expected_band_z_abs=2.049081656` is marked `candidate_and_proof_method_bound_not_registered` against candidate line `<=3.0`.
 - Runtime-policy gaps remain: `max_required_substeps_to_meet_threshold=526` and `max_projected_trigger_value_after_required_substeps=0.999601207629` require manual runtime-cost/substep-policy review before any runtime/substep policy.
 - Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
 
@@ -1401,9 +1402,9 @@ The next block consolidates the Package C metric-hardening state into a single m
 - Artifact id: `PACKAGE_C_PROOF_READINESS_INDEX_20260701`.
 - Disposition: `NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
 - Scope: readiness index rows, open blocker rows, external-research question rows, source lock, no-proof firewall, status/report/manifest.
-- Readiness index rows: `7`, covering metric-hardening consolidation, timeseries ESS, stationarity ensemble refinement, one-wall/wall-pileup refinement, substep fail-policy hardening, substep dt-refinement requirements, and proof-threshold table.
-- Open blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, proof-method gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
-- External research question rows: `4`: stationarity/ESS method review, near-boundary band expectation, one-wall/wall-pileup method binding, and substep runtime-cost strategy.
+- Readiness index rows: `8`, covering metric-hardening consolidation, timeseries ESS, stationarity ensemble refinement, one-wall/wall-pileup refinement, near-boundary expected-band method, substep fail-policy hardening, substep dt-refinement requirements, and proof-threshold table.
+- Open blocker rows: `4`: manual authorization ledger missing, clean reviewed commit binding pending, runtime-policy gaps present, and solver/wet claims still unauthorized.
+- External research question rows: `4`: stationarity/ESS method review, near-boundary expected-band external review, one-wall/wall-pileup method binding, and substep runtime-cost strategy.
 - Proof-readiness index status: `single_entrypoint_ready_not_proof_registered`.
 - Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
 
@@ -1416,9 +1417,9 @@ The next block turns the readiness index into a copyable external-AI prompt that
 - Artifact id: `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701`.
 - Disposition: `NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION`.
 - Scope: copyable prompt, context rows, research-question rows, blocker rows, source lock, no-proof firewall, status/report/manifest.
-- Context rows: `5`, covering the GitHub-visible entrypoint, artifact roles, stationarity method context, one-wall/wall-pileup refinement context, and substep runtime cost.
-- Research question rows: `4`: stationarity/ESS method review, near-boundary band expectation, one-wall/wall-pileup method binding, and substep runtime-cost strategy.
-- Blocker rows: `5`: manual authorization ledger missing, clean reviewed commit binding pending, proof-method gaps present, runtime-policy gaps present, and solver/wet claims still unauthorized.
+- Context rows: `6`, covering the GitHub-visible entrypoint, artifact roles, stationarity method context, one-wall/wall-pileup refinement context, near-boundary expected-band method, and substep runtime cost.
+- Research question rows: `4`: stationarity/ESS method review, near-boundary expected-band external review, one-wall/wall-pileup method binding, and substep runtime-cost strategy.
+- Blocker rows: `4`: manual authorization ledger missing, clean reviewed commit binding pending, runtime-policy gaps present, and solver/wet claims still unauthorized.
 - Prompt status: `copyable_external_research_prompt_ready`.
 - GitHub visibility status: `local_worktree_pre_commit_urls_valid_after_publish`.
 - Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
@@ -1460,15 +1461,33 @@ The next local proof-threshold reduction block expands the two remaining numeric
 - Proof-readiness impact: `one_wall_and_wall_pileup_proof_threshold_gaps_reduced_by_expanded_sampling_candidate`.
 - Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
 
-This block closes the remaining one-wall/wall-pileup numeric threshold gaps in candidate evidence, but it still does not register Package C proof/pass. The remaining Package C blockers are method binding for near-boundary expected band mass, manual authorization/clean commit binding, runtime/substep policy review, and separate solver/wet branches.
+This block closes the remaining one-wall/wall-pileup numeric threshold gaps in candidate evidence, but it still does not register Package C proof/pass. After the following near-boundary method-binding block, the remaining Package C blockers are manual authorization/clean commit binding, runtime/substep policy review, and separate solver/wet branches.
 
-## 23. Recommended next action
+## 23. Current Package C near-boundary expected-band method status
 
-Current safe route after the Package C one-wall/wall-pileup refinement:
+The next local method-binding block converts the near-boundary band check from a sparse raw fraction into an area-expectation method:
 
-1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees stationarity, one-wall, and wall-pileup candidate evidence rather than the old numeric gaps.
-2. Continue one local method-binding block for near-boundary expected band mass, including accessible-area expectation, confidence intervals, and explicit exact-atom vs near-band semantics.
-3. Keep the substep runtime-cost policy as manual-authorization-only; the current `526` substep worst case remains a runtime-policy blocker, not an automatic runtime setting.
+- Artifact id: `PACKAGE_C_NEAR_BOUNDARY_EXPECTED_BAND_METHOD_20260701`.
+- Disposition: `NODI_PACKAGE_C_NEAR_BOUNDARY_EXPECTED_BAND_METHOD_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: expected-band area formula rows, legacy sparse context row, source lock, no-proof firewall, status/report/manifest.
+- Formula: `expected_fraction=(Area(radius+a)-Area(radius+b))/Area(radius)` over the center-accessible geometry.
+- Expected-band rows: `24`, covering the first two 1 nm wall-gap bands for the 12 expanded wall-pileup scenarios.
+- Legacy sparse context rows: `1`; the old Gate37 `0.001 nm` / `n=384` near-band row is retained as underpowered sparse context, not as proof failure.
+- Max abs z to expected: `2.049081656` against candidate line `<=3.0`.
+- Max observed first-band fraction: `0.017562866211`; max expected first-band fraction: `0.016840432432`.
+- Method status: `candidate_method_bound_not_proof_registered`.
+- Proof-readiness impact: `near_boundary_expected_band_method_bound_as_candidate_no_proof_registration`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+This block binds the near-boundary expected-band method without registering proof/pass. It is a geometry/statistical method artifact only, not a validated Brownian solver output, not runtime authorization, and not sidewall PRS/EAS numeric output.
+
+## 24. Recommended next action
+
+Current safe route after the Package C near-boundary expected-band method binding:
+
+1. Use the refreshed `PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701` / `reports/510_NODI_COMSOL_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701.md` when asking external AI for broad method/literature synthesis; it now sees stationarity, one-wall, wall-pileup, and near-boundary expected-band candidate evidence.
+2. Keep the substep runtime-cost policy as manual-authorization-only; the current `526` substep worst case remains a runtime-policy blocker, not an automatic runtime setting.
+3. Treat the next local block as authorization-design or runtime-policy-design only; do not auto-register proof/pass from candidate metrics.
 4. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 5. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 6. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.

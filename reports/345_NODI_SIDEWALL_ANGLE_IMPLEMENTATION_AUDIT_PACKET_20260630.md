@@ -640,3 +640,46 @@ external_research_question_rows=4
 ```
 
 This packet closes the remaining one-wall/wall-pileup numeric threshold gaps in candidate evidence only. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims. The remaining blockers are near-boundary expected-band method binding, clean reviewed commit/manual authorization, runtime/substep policy review, and separate solver/wet evidence branches.
+
+## Package C near-boundary expected-band method
+
+The next method-binding block converts the sparse near-boundary band fraction into an analytic area-expectation check:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_near_boundary_expected_band_method.py --confirm-package-c-near-boundary-expected-band-method
+NODI_PACKAGE_C_NEAR_BOUNDARY_EXPECTED_BAND_METHOD_CANDIDATE_READY_NO_PROOF_REGISTRATION
+expected_band_rows=24
+legacy_sparse_context_rows=1
+max_abs_z_to_expected=2.049081656
+max_observed_first_band_fraction=0.017562866211
+max_expected_first_band_fraction=0.016840432432
+near_boundary_expected_band_method_status=candidate_method_bound_not_proof_registered
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+The refreshed threshold/readiness chain now treats the near-boundary method gap as bound candidate evidence, while leaving proof registration blocked:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_proof_threshold_table.py --confirm-package-c-proof-threshold-table
+NODI_PACKAGE_C_PROOF_THRESHOLD_TABLE_CANDIDATE_READY_NO_PROOF_REGISTRATION
+threshold_rows=14
+proof_gap_rows=0
+proof_method_gap_rows=0
+proof_method_bound_not_registered_rows=1
+proof_threshold_met_not_registered_rows=9
+runtime_policy_gap_rows=2
+proof_readiness_impact=numeric_and_method_candidate_lines_bound_to_authorization_and_runtime_policy_gaps
+
+python tools/audits/build_nodi_comsol_package_c_proof_readiness_index.py --confirm-package-c-proof-readiness-index
+NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
+readiness_index_rows=8
+open_blocker_rows=4
+external_research_question_rows=4
+```
+
+This packet binds the near-boundary expected-band method in candidate evidence only. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims. The remaining blockers are clean reviewed commit/manual authorization, runtime/substep policy review, and separate solver/wet evidence branches.

@@ -24,13 +24,14 @@ def test_threshold_table_payload_separates_candidate_pass_from_proof_gaps() -> N
     assert summary["threshold_rows"] >= 10
     assert summary["candidate_pass_rows"] > 0
     assert summary["proof_gap_rows"] == 0
-    assert summary["proof_method_gap_rows"] > 0
+    assert summary["proof_method_gap_rows"] == 0
+    assert summary["proof_method_bound_not_registered_rows"] > 0
     assert summary["runtime_policy_gap_rows"] > 0
     assert summary["threshold_table_status"] == (
         "candidate_threshold_table_ready_not_proof_registered"
     )
     assert summary["proof_readiness_impact"] == (
-        "numeric_proof_threshold_gaps_reduced_to_method_authorization_and_runtime_policy_gaps"
+        "numeric_and_method_candidate_lines_bound_to_authorization_and_runtime_policy_gaps"
     )
     assert summary["proof_registration_authorized"] is False
     assert summary["package_c_validation_status_pass_authorized"] is False
@@ -46,6 +47,8 @@ def test_threshold_rows_cover_key_package_c_metrics() -> None:
 
     assert "support_violation_rows" in by_metric
     assert "max_exact_boundary_atom_fraction" in by_metric
+    assert "legacy_sparse_near_boundary_band_fraction" in by_metric
+    assert "max_near_boundary_expected_band_z_abs" in by_metric
     assert "max_one_wall_positive_control_ks" in by_metric
     assert "max_u_accessible_cdf_l1_to_uniform" in by_metric
     assert "substep_policy_bound_trigger_count" in by_metric
@@ -81,6 +84,16 @@ def test_threshold_rows_cover_key_package_c_metrics() -> None:
         "candidate_and_proof_threshold_met_not_registered"
     )
     assert float(by_metric["max_expanded_wall_pileup_ratio"]["observed_value"]) <= 1.25
+    assert by_metric["legacy_sparse_near_boundary_band_fraction"]["current_status"] == (
+        "candidate_legacy_sparse_context_superseded_not_registered"
+    )
+    assert by_metric["max_near_boundary_expected_band_z_abs"]["source_artifact"] == (
+        "near_boundary_expected_band_method"
+    )
+    assert by_metric["max_near_boundary_expected_band_z_abs"]["current_status"] == (
+        "candidate_and_proof_method_bound_not_registered"
+    )
+    assert float(by_metric["max_near_boundary_expected_band_z_abs"]["observed_value"]) <= 3.0
     assert all(row["claim_boundary"] == thresholds.CLAIM_BOUNDARY for row in rows)
 
 

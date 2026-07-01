@@ -59,6 +59,10 @@ ONE_WALL_WALL_PILEUP_STATUS = (
     OUTPUT_DIR
     / "NODI_COMSOL_PACKAGE_C_ONE_WALL_WALL_PILEUP_STATUS_20260701.json"
 )
+NEAR_BOUNDARY_EXPECTED_BAND_STATUS = (
+    OUTPUT_DIR
+    / "NODI_COMSOL_PACKAGE_C_NEAR_BOUNDARY_EXPECTED_BAND_STATUS_20260701.json"
+)
 SUBSTEP_HARDENING_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_SUBSTEP_FAIL_POLICY_STATUS_20260701.json"
 )
@@ -77,6 +81,7 @@ SOURCE_FILES = {
     "timeseries_ess_status": TIMESERIES_STATUS,
     "stationarity_ensemble_status": STATIONARITY_ENSEMBLE_STATUS,
     "one_wall_wall_pileup_status": ONE_WALL_WALL_PILEUP_STATUS,
+    "near_boundary_expected_band_status": NEAR_BOUNDARY_EXPECTED_BAND_STATUS,
     "substep_fail_policy_status": SUBSTEP_HARDENING_STATUS,
     "substep_dt_refinement_status": DT_REFINEMENT_STATUS,
     "proof_threshold_status": THRESHOLD_STATUS,
@@ -204,6 +209,7 @@ def readiness_index_rows() -> list[dict[str, str]]:
     t = read_json_summary(TIMESERIES_STATUS)
     e = read_json_summary(STATIONARITY_ENSEMBLE_STATUS)
     ow = read_json_summary(ONE_WALL_WALL_PILEUP_STATUS)
+    nb = read_json_summary(NEAR_BOUNDARY_EXPECTED_BAND_STATUS)
     s = read_json_summary(SUBSTEP_HARDENING_STATUS)
     d = read_json_summary(DT_REFINEMENT_STATUS)
     p = read_json_summary(THRESHOLD_STATUS)
@@ -263,6 +269,20 @@ def readiness_index_rows() -> list[dict[str, str]]:
                 f"sample_count={ow.get('one_wall_sample_count', '')}"
             ),
             "next_action": "use_as_one_wall_wall_pileup_threshold_reduction_candidate_not_proof",
+        },
+        {
+            "artifact_id": nb.get("artifact_id", ""),
+            "artifact_role": "near_boundary_expected_band_method",
+            "disposition": nb.get("disposition", ""),
+            "candidate_status": nb.get("near_boundary_expected_band_method_status", ""),
+            "proof_status": nb.get("proof_readiness_impact", ""),
+            "key_values": (
+                f"max_abs_z={nb.get('max_abs_z_to_expected', '')};"
+                f"z_hard_line={nb.get('z_hard_line', '')};"
+                f"expected_band_rows={nb.get('expected_band_rows', '')};"
+                f"legacy_sparse_context_rows={nb.get('legacy_sparse_context_rows', '')}"
+            ),
+            "next_action": "use_as_near_boundary_method_binding_candidate_not_proof",
         },
         {
             "artifact_id": s.get("artifact_id", ""),
@@ -394,9 +414,9 @@ def external_research_question_rows() -> list[dict[str, str]]:
             "Use stationarity ensemble and threshold rows for min ESS and u/x-local L1 gaps; do not infer proof/pass or runtime authorization.",
         ),
         (
-            "near_boundary_band_expectation",
-            "How should near-boundary band mass be compared to accessible-area expectation with confidence intervals?",
-            "Use exact atom split and raw histogram context; keep no wet/hindered hydrodynamic claim.",
+            "near_boundary_expected_band_external_review",
+            "Is the expected-band area formula and z<=3 candidate line an acceptable future proof-registration method binding?",
+            "Use the 513 expected-band method artifact as candidate evidence only; keep no wet/hindered hydrodynamic/runtime claim.",
         ),
         (
             "one_wall_wall_pileup_method_binding",
@@ -465,8 +485,8 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     s = payload["summary"]
     firewall = payload["no_proof_firewall"][0]
     checks = {
-        "Readiness rows": s["readiness_index_rows"] == 7,
-        "Blockers present": s["open_blocker_rows"] >= 5,
+        "Readiness rows": s["readiness_index_rows"] == 8,
+        "Blockers present": s["open_blocker_rows"] >= 4,
         "External questions present": s["external_research_question_rows"] >= 4,
         "Source lock complete": s["source_missing_rows"] == 0,
         "Readiness status": s["proof_readiness_index_status"]

@@ -14,8 +14,8 @@ Primary GitHub-visible entrypoint after publish:
 Current disposition:
 - NODI_PACKAGE_C_PROOF_READINESS_INDEX_CANDIDATE_READY_NO_PROOF_REGISTRATION
 - artifact_id=PACKAGE_C_PROOF_READINESS_INDEX_20260701
-- readiness_index_rows=7
-- open_blocker_rows=5
+- readiness_index_rows=8
+- open_blocker_rows=4
 - external_research_question_rows=4
 
 Hard boundary:
@@ -27,7 +27,6 @@ Hard boundary:
 Open blockers:
 - manual_authorization_ledger_missing: proof_registration_authorized remains false -> explicit manual authorization ledger that supersedes no-auth ledger
 - clean_reviewed_commit_binding_pending: reviewed_commit_binding_status remains pending in candidate packets -> future proof/pass artifact must bind a reviewed clean commit and source lock
-- proof_method_gaps_present: max_near_boundary_band_fraction -> bind proof-level statistical method, expected-band mass model, and uncertainty review
 - runtime_policy_gaps_present: max_required_substeps_to_meet_threshold;max_projected_trigger_value_after_required_substeps -> manual runtime cost and substep policy review required before runtime use
 - no_solver_or_wet_claim_authorized: hindered diffusion, flow, electrokinetic, optical, wet claims all remain blocked -> separate solver/experiment authorization required
 
@@ -35,7 +34,8 @@ Current threshold rows:
 - support_violation_rows: observed=0; candidate=must_equal_0; proof=must_equal_0; status=candidate_and_proof_threshold_met_not_registered
 - nonconverged_reflection_rows: observed=0; candidate=must_equal_0; proof=must_equal_0; status=candidate_and_proof_threshold_met_not_registered
 - max_exact_boundary_atom_fraction: observed=0.0; candidate=<=0.005; proof=must_equal_0; status=candidate_and_proof_threshold_met_not_registered
-- max_near_boundary_band_fraction: observed=0.002604167; candidate=<=0.005; proof=requires_area_expectation_plus_confidence_interval; status=candidate_pass_proof_method_gap
+- legacy_sparse_near_boundary_band_fraction: observed=0.002604167; candidate=<=0.005; proof=superseded_by_expected_area_band_method; status=candidate_legacy_sparse_context_superseded_not_registered
+- max_near_boundary_expected_band_z_abs: observed=2.049081656; candidate=<=3.0; proof=<=3.0_with_area_formula_and_raw_band_artifact_sha_bound; status=candidate_and_proof_method_bound_not_registered
 - max_one_wall_positive_control_ks: observed=0.005281493; candidate=<=0.02; proof=<=0.01; status=candidate_and_proof_threshold_met_not_registered
 - projection_negative_control_status: observed=expected_fail_observed; candidate=expected_fail_observed; proof=expected_fail_observed; status=candidate_and_proof_threshold_met_not_registered
 - max_expanded_wall_pileup_ratio: observed=1.072659525; candidate=<=1.5; proof=<=1.25; status=candidate_and_proof_threshold_met_not_registered
@@ -49,8 +49,8 @@ Current threshold rows:
 Research questions to answer in one pass:
 1. What proof-level stationarity and ESS method is appropriate for finite-step reflected Brownian motion in a convex offset trapezoid?
    Scope guard: Use stationarity ensemble and threshold rows for min ESS and u/x-local L1 gaps; do not infer proof/pass or runtime authorization.
-2. How should near-boundary band mass be compared to accessible-area expectation with confidence intervals?
-   Scope guard: Use exact atom split and raw histogram context; keep no wet/hindered hydrodynamic claim.
+2. Is the expected-band area formula and z<=3 candidate line an acceptable future proof-registration method binding?
+   Scope guard: Use the 513 expected-band method artifact as candidate evidence only; keep no wet/hindered hydrodynamic/runtime claim.
 3. Are the expanded one-wall KS <=0.01 and wall-pileup ratio/CI <=1.25 candidate lines sufficient for future proof registration, and what raw evidence should be bound?
    Scope guard: Use the one-wall/wall-pileup refinement as candidate evidence only; no proof/pass or runtime claim, and avoid turning candidate metrics into validated solver output.
 4. Given max_required_substeps=526, what substep or smaller-dt strategy is numerically defensible before runtime activation?

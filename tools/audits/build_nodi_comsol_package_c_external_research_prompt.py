@@ -232,6 +232,16 @@ def context_rows() -> list[dict[str, str]]:
             "claim_boundary": CLAIM_BOUNDARY,
         },
         {
+            "context_id": "near_boundary_expected_band_method",
+            "context_value": row_by_metric.get("max_near_boundary_expected_band_z_abs", {}).get(
+                "observed_value",
+                "",
+            ),
+            "details": "Near-boundary expected-band method is bound as candidate evidence using area(radius+band) differences; external review should assess method and threshold, not proof/pass.",
+            "github_url": blob_url(THRESHOLD_TABLE),
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+        {
             "context_id": "substep_runtime_cost",
             "context_value": row_by_metric.get("max_required_substeps_to_meet_threshold", {}).get(
                 "observed_value",
@@ -374,7 +384,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     checks = {
         "Context rows": s["context_rows"] >= 5,
         "Research questions": s["research_question_rows"] >= 4,
-        "Blockers": s["blocker_rows"] >= 5,
+        "Blockers": s["blocker_rows"] >= 4,
         "Source lock complete": s["source_missing_rows"] == 0,
         "Prompt has GitHub entrypoint": "github.com/Shaughn0419/NODI_Simulator" in prompt,
         "Prompt states no local file access": "Do not assume access to local Codex files" in prompt,
