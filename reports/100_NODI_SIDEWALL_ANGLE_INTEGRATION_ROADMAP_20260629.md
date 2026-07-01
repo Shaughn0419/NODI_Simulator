@@ -2225,3 +2225,62 @@ The next large block should now move to the detector/blank/optical calibration
 lane or to exact COMSOL/measurement pressure-flow validation, because those are
 the remaining evidence gates before route/yield/detection can be computed as
 accepted claims rather than candidate planning rows.
+
+## 46. Current detector/blank context refresh status
+
+The detector/blank lane now has a sidewall context refresh that joins the latest
+selected-annulus and qch-ledger updates with the existing Tsuyama-aligned
+wet/optical detection context:
+
+- Module: `nodi_simulator/sidewall_detector_blank_context.py`.
+- Builder:
+  `tools/audits/build_nodi_package_c_sidewall_detector_blank_context_refresh.py`.
+- Artifact id:
+  `PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_20260701`.
+- Disposition:
+  `NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_READY_CONTEXT_ONLY`.
+- Claim boundary:
+  `detector_blank_context_not_detector_validation_not_detection_probability`.
+
+The refresh consumes:
+
+- wet/optical detection context rows;
+- selected-annulus sidewall context rows;
+- qch-refreshed integrated promotion ledger rows;
+- optical calibration bridge readiness rows.
+
+For both W500/D900 route candidates, it records:
+
+- selected-annulus context is available but small-N and not probability;
+- qch flow-split context is W500/D900 grid-refined but not formal q_ch;
+- blank false-positive context is nearest-geometry Tsuyama context, not
+  sidewall-specific blank validation;
+- detector response context is detector-identity/readiness context, not a
+  sidewall detector-response calibration;
+- optical calibration remains a synthetic reference seed, not measured blank
+  calibration or full-wave solver output.
+
+The packet emits promotion-update rows for:
+
+1. `blank_false_positive_trace`
+2. `detector_response_bridge`
+
+Both update rows keep `target_claim_current=false`. They reduce the blocker from
+"no context assembled" to "context available but not validation." They still
+require sidewall-specific blank traces or a validated transferable blank model,
+plus detector operator/ROI/slit/standard-particle calibration consuming the
+sidewall reference field.
+
+The following remain false:
+
+- `detector_response_validation_current=false`
+- `sidewall_specific_blank_trace_current=false`
+- `sidewall_specific_optical_calibration_current=false`
+- `detection_probability_current=false`
+- `route_score_current=false`
+- `winner_current=false`
+- `yield_current=false`
+
+This is the correct bridge into route/yield/detection computation: the lane has
+usable context for planning, but not yet the calibrated detector/blank evidence
+needed for accepted detection probability.
