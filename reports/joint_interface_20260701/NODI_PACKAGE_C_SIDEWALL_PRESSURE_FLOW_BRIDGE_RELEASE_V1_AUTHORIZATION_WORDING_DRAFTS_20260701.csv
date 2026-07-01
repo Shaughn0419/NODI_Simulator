@@ -1,0 +1,5 @@
+draft_id,exact_future_wording_draft,authorization_current,draft_status
+allow_mph_load,I authorize COMSOL to load the specified W500/D900 model for pressure-flow validation only.,false,DRAFT_NOT_AUTHORIZATION
+allow_exact_pressure_flow_solve,I authorize the exact W500/D900 pressure-flow solve for PFV-REQUEST-ROUTE-CAND-001/002 only.,false,DRAFT_NOT_AUTHORIZATION
+allow_result_receipt,I authorize writing a receipt-only result package for these two validation requests.,false,DRAFT_NOT_AUTHORIZATION
+allow_formal_qch_review,I authorize a separate FORMAL_QCH_RECEIPT_REVIEW after result receipt.,false,DRAFT_NOT_AUTHORIZATION

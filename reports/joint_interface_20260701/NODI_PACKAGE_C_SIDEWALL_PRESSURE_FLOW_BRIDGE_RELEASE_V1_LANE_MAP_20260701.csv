@@ -1,0 +1,8 @@
+lane,scope,allowed_use,blocked_use,owner,required_next_evidence
+LANE0_STATIC_GEOMETRY_CONTEXT,sidewall angle/top width/depth/geometry hash,context only,proof/pass/runtime/production/q_ch_weighting/route_score/JRC/winner/yield/detection_probability,COMSOL/NODI,future exact source hash
+LANE1_PRESSURE_FLOW_REQUEST,2-row W500/D900 validation request,COMSOL receiver no-run planning,proof/pass/runtime/production/q_ch_weighting/route_score/JRC/winner/yield/detection_probability,COMSOL,future explicit pressure-flow run authorization
+LANE2_CANDIDATE_QCH_GRID,candidate q/split grid,candidate-only not formal sidecar,proof/pass/runtime/production/q_ch_weighting/route_score/JRC/winner/yield/detection_probability,NODI,formal q_ch receipt review
+LANE3_ROUTE_POLICY_PREFLIGHT,route/yield/detection blockers,blocker planning only,proof/pass/runtime/production/q_ch_weighting/route_score/JRC/winner/yield/detection_probability,NODI,future route policy authorization
+LANE4_WET_OPTICAL_DETECTOR_CONTEXT,wet/optical/detector context,review-only future calibration,proof/pass/runtime/production/q_ch_weighting/route_score/JRC/winner/yield/detection_probability,NODI/COMSOL,calibrated evidence
+LANE5_PROMOTION_QUARANTINE,proof/pass/runtime/production/q_ch/JRC/yield/detection,hard blocked,proof/pass/runtime/production/q_ch_weighting/route_score/JRC/winner/yield/detection_probability,NODI,new total-control scope
+LANE6_EXTERNAL_DIRTY_CONTEXT,unrelated or independent dirty context,excluded from release,proof/pass/runtime/production/q_ch_weighting/route_score/JRC/winner/yield/detection_probability,owner thread,clean successor if needed

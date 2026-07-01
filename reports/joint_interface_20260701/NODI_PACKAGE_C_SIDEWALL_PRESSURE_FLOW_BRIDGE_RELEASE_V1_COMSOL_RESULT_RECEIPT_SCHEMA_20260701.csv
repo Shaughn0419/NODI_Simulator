@@ -1,0 +1,23 @@
+field,required,allowed_use,blocked_use
+validation_request_id,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+case_id,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+route_key,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+geometry_descriptor_sha256,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+result_source_type,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+model_or_measurement_id,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+solver_or_instrument_resolution,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+fluid_viscosity_Pa_s,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+channel_length_m,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+pressure_drop_Pa,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+q_total_m3_s,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+q_upper_ports_m3_s,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+q_lower_ports_m3_s,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+port_balance_rel,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+q_ratio_vs_candidate,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+split_delta_abs,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+quality_gate,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+result_hash,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+provenance_hash,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+execution_authorization_id,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+allowed_use,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization
+blocked_use,true,receipt-only pressure-flow result validation,formal_qch or route promotion without future authorization

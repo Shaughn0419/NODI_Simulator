@@ -1,0 +1,5 @@
+consumption_stage,allowed_use,blocked_use,current_authorization
+receipt,"Validate request id, route key, geometry hash, result hash, provenance hash.",formal q_ch;route_score;JRC;yield;detection,false
+comparison,Compute q_ratio_vs_candidate and split_delta_abs for review only.,weighting or production ingestion,false
+review_pass,May record REVIEW_PASS_NOT_FORMAL_QCH.,formal sidecar acceptance without future FORMAL_QCH_RECEIPT_REVIEW,false
+future_gate,Future explicit authorization may open FORMAL_QCH_RECEIPT_REVIEW.,this release does not open it,false

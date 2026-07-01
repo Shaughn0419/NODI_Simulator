@@ -1,0 +1,52 @@
+{
+  "rows": [
+    {
+      "handoff_item": "request_contract",
+      "expected_comsol_response_enum": "RECEIPT_VALIDATE_NOW_NO_RUN",
+      "allowed_comsol_action": "no-run receipt/static binding review/future authorization planning",
+      "forbidden_comsol_action": "COMSOL run;.mph load;formal q_ch weighting;route_score;JRC;winner;yield;detection_probability;runtime;production"
+    },
+    {
+      "handoff_item": "static_geometry_binding",
+      "expected_comsol_response_enum": "STATIC_GEOMETRY_BINDING_REVIEW_NOW_NO_RUN",
+      "allowed_comsol_action": "no-run receipt/static binding review/future authorization planning",
+      "forbidden_comsol_action": "COMSOL run;.mph load;formal q_ch weighting;route_score;JRC;winner;yield;detection_probability;runtime;production"
+    },
+    {
+      "handoff_item": "future_pressure_flow_run",
+      "expected_comsol_response_enum": "FUTURE_COMSOL_PRESSURE_FLOW_RUN_REQUIRED_NOT_AUTHORIZED",
+      "allowed_comsol_action": "no-run receipt/static binding review/future authorization planning",
+      "forbidden_comsol_action": "COMSOL run;.mph load;formal q_ch weighting;route_score;JRC;winner;yield;detection_probability;runtime;production"
+    },
+    {
+      "handoff_item": "future_mph_load",
+      "expected_comsol_response_enum": "FUTURE_MPH_LOAD_REQUIRED_NOT_AUTHORIZED",
+      "allowed_comsol_action": "no-run receipt/static binding review/future authorization planning",
+      "forbidden_comsol_action": "COMSOL run;.mph load;formal q_ch weighting;route_score;JRC;winner;yield;detection_probability;runtime;production"
+    },
+    {
+      "handoff_item": "existing_result_candidate",
+      "expected_comsol_response_enum": "EXISTING_RESULT_CANDIDATE_RECEIPT_ONLY_IF_HASH_MATCHES",
+      "allowed_comsol_action": "no-run receipt/static binding review/future authorization planning",
+      "forbidden_comsol_action": "COMSOL run;.mph load;formal q_ch weighting;route_score;JRC;winner;yield;detection_probability;runtime;production"
+    },
+    {
+      "handoff_item": "hash_mismatch",
+      "expected_comsol_response_enum": "BLOCKED_HASH_MISMATCH",
+      "allowed_comsol_action": "no-run receipt/static binding review/future authorization planning",
+      "forbidden_comsol_action": "COMSOL run;.mph load;formal q_ch weighting;route_score;JRC;winner;yield;detection_probability;runtime;production"
+    },
+    {
+      "handoff_item": "formal_qch_promotion",
+      "expected_comsol_response_enum": "DO_NOT_PROMOTE_TO_FORMAL_QCH",
+      "allowed_comsol_action": "no-run receipt/static binding review/future authorization planning",
+      "forbidden_comsol_action": "COMSOL run;.mph load;formal q_ch weighting;route_score;JRC;winner;yield;detection_probability;runtime;production"
+    },
+    {
+      "handoff_item": "expected_blockers",
+      "expected_comsol_response_enum": "BLOCKED_AS_EXPECTED",
+      "allowed_comsol_action": "no-run receipt/static binding review/future authorization planning",
+      "forbidden_comsol_action": "COMSOL run;.mph load;formal q_ch weighting;route_score;JRC;winner;yield;detection_probability;runtime;production"
+    }
+  ]
+}

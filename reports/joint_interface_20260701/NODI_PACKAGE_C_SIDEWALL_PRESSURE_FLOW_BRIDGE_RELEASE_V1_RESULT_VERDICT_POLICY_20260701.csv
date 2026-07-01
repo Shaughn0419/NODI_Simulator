@@ -1,0 +1,8 @@
+future_result_disposition,meaning,formal_qch_weighting_current,route_score_current,winner_current,yield_current,detection_probability_current
+RECEIPT_ONLY_PENDING_REVIEW,hashes and fields present; no qch promotion,false,false,false,false,false
+REVIEW_PASS_NOT_FORMAL_QCH,ratio/split within review thresholds; still not formal q_ch weighting,false,false,false,false,false
+REVIEW_FAIL_NOT_PROMOTE,comparison outside thresholds; no promotion,false,false,false,false,false
+BLOCKED_HASH_MISMATCH,geometry/result/provenance hash mismatch,false,false,false,false,false
+BLOCKED_ROUTE_MISMATCH,case or route key mismatch,false,false,false,false,false
+BLOCKED_UNAUTHORIZED_RUN,execution_authorization_id absent or not authorized for run source,false,false,false,false,false
+BLOCKED_MISSING_AUTHORIZATION,future run or .mph source lacks explicit authorization,false,false,false,false,false

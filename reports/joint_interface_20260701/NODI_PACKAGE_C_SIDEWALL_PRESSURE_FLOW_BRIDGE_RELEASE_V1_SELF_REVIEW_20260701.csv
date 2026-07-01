@@ -1,0 +1,21 @@
+reviewer,dimension,verdict,finding
+Reviewer 01,source-lock stability,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 02,external dirty exclusion,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 03,request row exactness,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 04,geometry hash binding,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 05,COMSOL sidewall angle convention,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 06,NODI taper convention,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 07,candidate q units,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 08,split fraction semantics,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 09,acceptance thresholds,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 10,result schema completeness,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 11,authorization wording,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 12,formal q_ch firewall,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 13,route/yield/detection firewall,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 14,wet/optical firewall,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 15,Gate2D/EDGE/QCH/BINDING locks,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 16,manifest SHA,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 17,test coverage,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 18,git staging scope,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 19,COMSOL handoff clarity,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
+Reviewer 20,future extensibility beyond W500/D900,PASS,release-scoped bridge preserves no-auth/no-proof/no-formal-qch boundary
