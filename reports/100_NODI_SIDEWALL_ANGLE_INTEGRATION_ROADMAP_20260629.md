@@ -1351,12 +1351,32 @@ The next post-consolidation block converts the timeseries substep review finding
 
 The contract validator now requires future `package_C_validation_status=pass` rows to include substep policy evidence, status, scope, trigger metric, trigger threshold, max observed trigger value, triggered scenario count, bound trigger count, closed review status, and a false runtime-policy authorization flag. Missing or inconsistent fields raise `SIDEWALL-D-PRECHECK-V03`.
 
-## 17. Recommended next action
+## 17. Current Package C substep dt-refinement requirements status
 
-Current safe route after the consolidation and timeseries ESS candidate:
+The next block converts the substep-triggered scenarios into explicit dt/substep reduction requirements:
 
-1. Use the consolidated evidence index, timeseries ESS candidate, and substep/fail-policy hardening packet as the Package C metric-hardening entrypoint, instead of adding another narrow report-only gate.
-2. Continue tightening the remaining proof-level gaps in one larger block: add declared worst-case dt refinement where the substep rows request review, keep any future proof thresholds separate from runtime permission, and bind any future proof/pass attempt to clean reviewed commit evidence.
+- Artifact id: `PACKAGE_C_SUBSTEP_DT_REFINEMENT_REQUIREMENTS_20260701`.
+- Disposition: `NODI_PACKAGE_C_SUBSTEP_DT_REFINEMENT_REQUIREMENTS_CANDIDATE_READY_NO_PROOF_REGISTRATION`.
+- Scope: dt-refinement requirement rows, source lock, no-proof firewall, status/report/manifest.
+- Trigger metric: `brownian_rms_step_over_surface_gap_p05`.
+- Current dt: `2.5e-05 s`.
+- Refinement rows: `6`.
+- Min required substeps to meet threshold: `4`.
+- Max required substeps to meet threshold: `526`.
+- Min required dt to meet threshold: `4.75285171103e-08 s`.
+- Max projected trigger value after required substeps: `0.999601207629`.
+- Candidate status: `requirements_complete_not_runtime_policy_not_proof`.
+- Proof-readiness impact: `substep_review_rows_now_have_explicit_dt_refinement_requirements`.
+- Current boundary remains: `proof_registration_authorized=false`; `package_c_validation_status_pass_authorized=false`; `runtime_allowed=false`; `numeric_prs_eas_allowed=false`; `comsol_launch_allowed=false`; `.mph_load_allowed=false`.
+
+This block is a policy-sizing artifact, not a runtime policy. It shows that the worst current candidate (`narrow_tail_theta70_D900_r150`) would require `526` substeps at the current `dt` to bring the rms-step/surface-gap p05 trigger below `1.0`; future proof/pass review should therefore treat sidewall runtime activation as expensive unless a smaller-dt/substep strategy is explicitly authorized and tested.
+
+## 18. Recommended next action
+
+Current safe route after the consolidation, timeseries ESS candidate, substep/fail-policy hardening, and dt-refinement requirements:
+
+1. Use the consolidated evidence index, timeseries ESS candidate, substep/fail-policy hardening packet, and dt-refinement requirements as the Package C metric-hardening entrypoint.
+2. Continue tightening the remaining proof-level gaps in one larger block: bind future proof/pass attempts to clean reviewed commit evidence, explicit threshold tables, and manual authorization ledger inputs while keeping runtime permission separate.
 3. Keep the authorization ledger placeholder empty until a separate manual authorization explicitly supersedes the no-auth ledger; no builder may auto-fill `proof_registration_authorized=true` or `package_C_validation_status_pass_authorized=true`.
 4. Keep `ideal_rectangle` as a first-class runtime path and keep trapezoid sidewall analysis schema-bound; no rectangular cache may satisfy trapezoid requests.
 5. Use external AI only for broad literature/method synthesis or a major proof-threshold review, not for repetitive micro-audits that local tests/subagents can cover.

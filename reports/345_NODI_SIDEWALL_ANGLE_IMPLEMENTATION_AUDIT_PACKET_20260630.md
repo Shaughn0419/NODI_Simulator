@@ -459,3 +459,30 @@ mph_load_allowed=false
 ```
 
 The contract validator now rejects future `package_C_validation_status=pass` rows unless substep policy evidence, status, scope, trigger metric, threshold, max observed trigger value, triggered scenario count, bound trigger count, closed review status, and false runtime authorization are all present and consistent. This packet does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
+
+## Package C substep dt-refinement requirements
+
+The follow-on sizing block converts the six substep-triggered scenarios into explicit substep/dt reduction requirements:
+
+```text
+python tools/audits/build_nodi_comsol_package_c_substep_dt_refinement_requirements.py --confirm-package-c-substep-dt-refinement-requirements
+NODI_PACKAGE_C_SUBSTEP_DT_REFINEMENT_REQUIREMENTS_CANDIDATE_READY_NO_PROOF_REGISTRATION
+refinement_rows=6
+substep_trigger_metric=brownian_rms_step_over_surface_gap_p05
+substep_trigger_threshold=1.0
+current_dt_s=2.5e-05
+min_required_substeps_to_meet_threshold=4
+max_required_substeps_to_meet_threshold=526
+min_required_dt_s_to_meet_threshold=4.75285171103e-08
+max_projected_trigger_value_after_required_substeps=0.999601207629
+dt_refinement_candidate_status=requirements_complete_not_runtime_policy_not_proof
+proof_readiness_impact=substep_review_rows_now_have_explicit_dt_refinement_requirements
+proof_registration_authorized=false
+package_c_validation_status_pass_authorized=false
+runtime_allowed=false
+numeric_prs_eas_allowed=false
+comsol_launch_allowed=false
+mph_load_allowed=false
+```
+
+This packet is a policy-sizing artifact, not a runtime policy. It does not register proof, mark Package C as passed, authorize runtime, emit numeric PRS/EAS, launch COMSOL, load `.mph`, or create route/yield/detection/wet/fabrication/production claims.
