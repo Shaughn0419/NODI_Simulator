@@ -5,11 +5,13 @@ import math
 import pytest
 
 from nodi_simulator.data_objects import Channel, SimulationConfig
+from nodi_simulator.cross_section_geometry import TrapezoidCrossSection
 from nodi_simulator.runtime_substep_policy import (
     build_trapezoid_runtime_substep_decision,
     estimate_trapezoid_surface_gap_quantile_m,
     required_substeps_for_brownian_surface_gap,
 )
+from nodi_simulator.trajectory import simulate_particle_trajectory
 
 
 def _cfg(*, model: str = "trapezoid_tapered_sidewalls", taper_deg: float = 0.0) -> SimulationConfig:
@@ -113,8 +115,6 @@ def test_surface_gap_quantile_estimator_returns_positive_gap_for_open_support() 
 
 
 def test_surface_gap_quantile_estimator_rejects_bad_quantile() -> None:
-    from nodi_simulator.cross_section_geometry import TrapezoidCrossSection
-
     geometry = TrapezoidCrossSection(
         top_width_m=800e-9,
         depth_m=900e-9,
@@ -126,3 +126,47 @@ def test_surface_gap_quantile_estimator_rejects_bad_quantile() -> None:
             particle_radius_m=50e-9,
             quantile=1.0,
         )
+
+
+def test_low_cost_guarded_trapezoid_trajectory_smoke_stays_inside_support() -> None:
+    from nodi_simulator.data_objects import OpticalSystem
+
+    channel = Channel(width_m=500e-9, depth_m=900e-9)
+    cfg = _cfg(taper_deg=0.0)
+    radius_m = 20e-9
+    decision = build_trapezoid_runtime_substep_decision(
+        channel=channel,
+        sim_cfg=cfg,
+        particle_radius_m=radius_m,
+        surface_gap_quantile_m=7.438709749e-9,
+    )
+
+    assert decision.runtime_allowed is True
+    assert decision.execution_packet_required is True
+
+    optical = OpticalSystem(
+        wavelength_m=660e-9,
+        peak_irradiance_W_m2=1.0e8,
+        beam_waist_x_m=1.0e-6,
+        beam_waist_y_m=1.0e-6,
+        beam_waist_z_m=1.0e-6,
+    )
+    trajectory = simulate_particle_trajectory(
+        channel,
+        optical,
+        cfg,
+        initial_x_m=0.0,
+        initial_z_m=0.0,
+        particle_radius_m=radius_m,
+        diffusion_coefficient=4.0e-12,
+    )
+    geometry = TrapezoidCrossSection(
+        top_width_m=channel.width_m,
+        depth_m=channel.depth_m,
+        sidewall_taper_angle_deg=cfg.sidewall_taper_angle_deg,
+    )
+
+    assert all(
+        geometry.contains_particle_center(float(x), float(z) + channel.depth_m / 2.0, radius_m)
+        for x, z in zip(trajectory["x_m"], trajectory["z_m"], strict=True)
+    )
