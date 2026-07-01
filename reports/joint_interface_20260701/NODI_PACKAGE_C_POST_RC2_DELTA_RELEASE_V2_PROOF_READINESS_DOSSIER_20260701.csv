@@ -1,0 +1,11 @@
+dossier_id,status,allowed_use,blocked_use,future_requirement
+finite_step_reflection_candidate_metrics,CANDIDATE_OR_DRAFT_ONLY,quarantine/context review only,proof/pass/runtime/production promotion,independent review and explicit total-control authorization
+proof_readiness_index,CANDIDATE_OR_DRAFT_ONLY,quarantine/context review only,proof/pass/runtime/production promotion,independent review and explicit total-control authorization
+external_research_prompt,CANDIDATE_OR_DRAFT_ONLY,quarantine/context review only,proof/pass/runtime/production promotion,independent review and explicit total-control authorization
+user_authorization_ledger_draft,CANDIDATE_OR_DRAFT_ONLY,quarantine/context review only,proof/pass/runtime/production promotion,independent review and explicit total-control authorization
+proof_registration_artifact,BLOCKED_FOR_PROOF_REGISTRATION,quarantine/context review only,proof/pass/runtime/production promotion,independent review and explicit total-control authorization
+post_proof_delta_release,BLOCKED_FOR_PROOF_REGISTRATION,quarantine/context review only,proof/pass/runtime/production promotion,independent review and explicit total-control authorization
+runtime_substep_execution_packet,CANDIDATE_OR_DRAFT_ONLY,quarantine/context review only,proof/pass/runtime/production promotion,independent review and explicit total-control authorization
+qch_sidecar_candidate,CANDIDATE_OR_DRAFT_ONLY,quarantine/context review only,proof/pass/runtime/production promotion,independent review and explicit total-control authorization
+route_yield_detection_candidate,CANDIDATE_OR_DRAFT_ONLY,quarantine/context review only,proof/pass/runtime/production promotion,independent review and explicit total-control authorization
+wet_optical_detection_context,CANDIDATE_OR_DRAFT_ONLY,quarantine/context review only,proof/pass/runtime/production promotion,independent review and explicit total-control authorization

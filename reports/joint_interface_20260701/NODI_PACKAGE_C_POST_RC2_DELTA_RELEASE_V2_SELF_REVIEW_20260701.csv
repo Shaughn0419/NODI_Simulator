@@ -1,0 +1,21 @@
+reviewer,dimension,verdict,finding
+Reviewer 01,dirty classification,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 02,commit semantic audit,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 03,positive claim scan,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 04,proof/pass field normalization,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 05,qch lane,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 06,yield/detection lane,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 07,optical lane,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 08,runtime lane,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 09,post-proof lane,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 10,authorization ledger semantics,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 11,quarantine completeness,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 12,release V2 source-lock,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 13,COMSOL mirror request,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 14,Gate2D/EDGE/QCH/BINDING locks,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 15,no-auth mutation strength,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 16,test coverage,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 17,manifest SHA,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 18,git staging scope,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 19,no deletion/revert,PASS_BLOCKED_AS_EXPECTED,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed
+Reviewer 20,final worktree cleanliness,PARTIAL_DIRTY_WORKTREE_REMAINS,promotion surfaces are quarantined or fail-closed; no source deletion/revert performed

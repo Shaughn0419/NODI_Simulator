@@ -1,0 +1,9 @@
+request_id,expected_comsol_response_enum,allowed_comsol_action,forbidden_comsol_action
+promotion_quarantine_register,MIRROR_QUARANTINE_NOW_NO_RUN,no-run receipt/quarantine mirror/static review,COMSOL run;.mph load;solver evidence;q_ch weighting;JRC;yield;winner;detection_probability;runtime;production
+release_v2_status,RECEIPT_VALIDATE_NOW_NO_RUN,no-run receipt/quarantine mirror/static review,COMSOL run;.mph load;solver evidence;q_ch weighting;JRC;yield;winner;detection_probability;runtime;production
+proof_registration_artifact,DO_NOT_CONSUME_POSITIVE_CLAIM,no-run receipt/quarantine mirror/static review,COMSOL run;.mph load;solver evidence;q_ch weighting;JRC;yield;winner;detection_probability;runtime;production
+post_proof_delta_release,DO_NOT_CONSUME_POSITIVE_CLAIM,no-run receipt/quarantine mirror/static review,COMSOL run;.mph load;solver evidence;q_ch weighting;JRC;yield;winner;detection_probability;runtime;production
+qch_candidate_lane,BLOCKED_AS_EXPECTED,no-run receipt/quarantine mirror/static review,COMSOL run;.mph load;solver evidence;q_ch weighting;JRC;yield;winner;detection_probability;runtime;production
+future_solver_evidence,FUTURE_COMSOL_RUN_REQUIRED_NOT_AUTHORIZED,no-run receipt/quarantine mirror/static review,COMSOL run;.mph load;solver evidence;q_ch weighting;JRC;yield;winner;detection_probability;runtime;production
+future_mph_evidence,FUTURE_MPH_LOAD_REQUIRED_NOT_AUTHORIZED,no-run receipt/quarantine mirror/static review,COMSOL run;.mph load;solver evidence;q_ch weighting;JRC;yield;winner;detection_probability;runtime;production
+future_user_authorization,FUTURE_USER_AUTHORIZATION_REQUIRED,no-run receipt/quarantine mirror/static review,COMSOL run;.mph load;solver evidence;q_ch weighting;JRC;yield;winner;detection_probability;runtime;production

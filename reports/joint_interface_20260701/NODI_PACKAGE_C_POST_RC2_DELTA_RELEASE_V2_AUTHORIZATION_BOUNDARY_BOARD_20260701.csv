@@ -1,0 +1,5 @@
+board_lane,allowed_use,blocked_use,execution_allowed,authorization_status
+ALLOWED_NOW_NO_RUN_REVIEW,external research;proof-readiness review;static validator expansion;no-auth mutation replay,no COMSOL run;no proof registration;no runtime,false,DRAFT_OR_BLOCKED_NOT_AUTHORIZATION
+DRAFT_ONLY_NOT_AUTHORIZATION,future signoff wording drafts,does not supersede no-auth ledger;execution_allowed=false,false,DRAFT_OR_BLOCKED_NOT_AUTHORIZATION
+FUTURE_EXPLICIT_AUTH_REQUIRED,NODI dry-run proof harness;COMSOL run;.mph load;solver evidence;formal q_ch sidecar,not allowed in this release,false,DRAFT_OR_BLOCKED_NOT_AUTHORIZATION
+FORBIDDEN_WITHOUT_NEW_TOTAL_CONTROL_SCOPE,proof registration;runtime/production;q_ch/JRC/winner/yield/detection_probability,hard fail if positive,false,DRAFT_OR_BLOCKED_NOT_AUTHORIZATION

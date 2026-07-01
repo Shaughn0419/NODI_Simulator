@@ -1,0 +1,4 @@
+action_id,action,performed,reason
+ACTION-001,source_deletion_or_revert,false,user forbade deletion/revert; quarantine ledger preserves provenance
+ACTION-002,post_rc2_v1_direct_pass,false,V1 contains unresolved proof/pass promotion surface
+ACTION-003,post_rc2_v2_release_recovered,false,blocked until positive claim surfaces are relabeled or superseded cleanly

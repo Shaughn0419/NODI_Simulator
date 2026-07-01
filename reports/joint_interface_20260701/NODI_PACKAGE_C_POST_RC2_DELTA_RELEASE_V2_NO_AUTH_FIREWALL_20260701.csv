@@ -1,0 +1,17 @@
+lock,required_value,observed_release_value,failure_count,release_action
+proof_registration_authorized,false,false,0,hard_fail_if_positive
+package_c_validation_status_pass_authorized,false,false,0,hard_fail_if_positive
+runtime,false,false,0,hard_fail_if_positive
+production,false,false,0,hard_fail_if_positive
+numeric_prs_eas,false,false,0,hard_fail_if_positive
+comsol_launch,false,false,0,hard_fail_if_positive
+mph_load,false,false,0,hard_fail_if_positive
+qch_weighting_authorized,false,false,0,hard_fail_if_positive
+formal_qch_sidecar_current,false,false,0,hard_fail_if_positive
+jrc_authorized,false,false,0,hard_fail_if_positive
+yield_authorized,false,false,0,hard_fail_if_positive
+detection_probability_authorized,false,false,0,hard_fail_if_positive
+Gate2D_rows,4,4,0,hard_fail_if_positive
+EDGE_state,NOT_APPROVED_PREAUTH_ONLY,NOT_APPROVED_PREAUTH_ONLY,0,hard_fail_if_positive
+QCH_state,ABSENT_OR_CANDIDATE_ONLY_NOT_FORMAL_QCH_SIDECAR,ABSENT_OR_CANDIDATE_ONLY_NOT_FORMAL_QCH_SIDECAR,0,hard_fail_if_positive
+BINDING_state,FAIL_CLOSED,FAIL_CLOSED,0,hard_fail_if_positive
