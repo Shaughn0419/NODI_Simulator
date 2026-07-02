@@ -1,0 +1,8 @@
+check_name,check_pass,observed,expected,hard_fail_if_false
+all_source_artifacts_present,True,0,0,True
+answer_axis_rows_cover_three_user_questions,True,3,3,True
+dimension_rows_loaded_from_590,True,546,546,True
+annulus_rows_loaded_from_590,True,168,168,True
+interference_rows_group_selected_annulus_bins,True,168,168,True
+bounded_event_deltas_joined,True,12,12,True
+no_forbidden_primary_columns,True,pass,pass,True
