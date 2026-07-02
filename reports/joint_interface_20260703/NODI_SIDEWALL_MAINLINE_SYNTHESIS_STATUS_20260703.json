@@ -1,0 +1,24 @@
+{
+  "artifact_id": "NODI_SIDEWALL_MAINLINE_SYNTHESIS_20260703",
+  "claim_boundary": "mainline_synthesis_context_not_route_selection",
+  "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+  "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+  "comsol_v4_assumption_set_version": "4.0.0",
+  "date_stamp": "20260703",
+  "disposition": "NODI_SIDEWALL_MAINLINE_SYNTHESIS_READY",
+  "git_branch": "main",
+  "git_head": "5e732bfa25921181fb97a459c2d59cec79750bb2",
+  "payload_sha256": "d2532c61882407d23cbce6a5b8cceccc7f9a5b94e4a703b07833b2393f6c6fa0",
+  "summary": {
+    "aggregate_answer_rows": 3,
+    "exact_pxu_probability_grid_available_now": false,
+    "failed_validation_rows": 0,
+    "next_executable_block": "propagate_objective_envelope_to_runtime_or_report_layer",
+    "route_synthesis_rows": 6,
+    "routes_above_candidate": 5,
+    "routes_retaining_candidate": 1,
+    "routes_retaining_canonical_annulus_context": 2,
+    "routes_shifted_annulus_context": 4
+  },
+  "synthesis_version": "sidewall_mainline_synthesis_v1"
+}

@@ -1,0 +1,7 @@
+check_id,status,detail
+route_synthesis_rows_cover_six_routes,pass,route_synthesis_rows=6
+aggregate_answer_rows_cover_three_questions,pass,aggregate_answer_rows=3
+dimension_context_has_five_above_one_retained,pass,expected 5 routes above candidate and 1 retained under 612 objective
+annulus_context_has_four_shifted_two_retained,pass,expected 4 shifted annulus contexts and 2 retained canonical contexts
+v4_assumption_hash_bound,pass,2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92
+no_forbidden_primary_columns,pass,outputs avoid score/winner/yield/detection/W_eff/q_ch primary columns
