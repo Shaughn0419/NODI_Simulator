@@ -1,0 +1,957 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_VALIDATION_HARDENING_READY_NOT_YIELD",
+    "artifact_id": "PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_VALIDATION_HARDENING_20260701",
+    "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
+    "current_head": "e98b7dbc5985ef96f676e7bc69be9252bae62391",
+    "branch": "main",
+    "source_formal_qch_bridge_disposition": "NODI_PACKAGE_C_SIDEWALL_FORMAL_QCH_RECEIPT_BRIDGE_READY_ROUTE_INPUT_NOT_SCORE",
+    "source_wet_intake_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS",
+    "accepted_fixture_rows": 14,
+    "negative_control_rows": 4,
+    "current_intake_audit_rows": 2,
+    "current_no_observation_rows": 2,
+    "fixture_target_claim_current_rows": 0,
+    "fixture_yield_current_rows": 0,
+    "fixture_wet_pass_probability_current_rows": 0,
+    "fixture_route_score_current_rows": 0,
+    "source_lock_rows": 8,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 93,
+    "non_release_dirty_context_rows": 85,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "wet/surface observation validator hardening;accepted/rejected wet endpoint fixture checks;future yield/wet evidence gate",
+    "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion",
+    "semantic_digest": "b919a0f36582cb92b0e4723c4ef810a5f1fc68e6f5c0bc0605582222d3ee2df0"
+  },
+  "accepted_fixture_rows": [
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-001-material_surface_identity",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "endpoint_id": "material_surface_identity",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-001-ev_sample_panel",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "endpoint_id": "ev_sample_panel",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-001-adhesion_wall_interaction",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "endpoint_id": "adhesion_wall_interaction",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-001-clogging_time_series",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "endpoint_id": "clogging_time_series",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-001-recovery_flush",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "endpoint_id": "recovery_flush",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-001-wet_pass_probability",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "endpoint_id": "wet_pass_probability",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-001-yield_bridge",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "endpoint_id": "yield_bridge",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-002-material_surface_identity",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "material_surface_identity",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-002-ev_sample_panel",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "ev_sample_panel",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-002-adhesion_wall_interaction",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "adhesion_wall_interaction",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-002-clogging_time_series",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "clogging_time_series",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-002-recovery_flush",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "recovery_flush",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-002-wet_pass_probability",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "wet_pass_probability",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "fixture_id": "ACCEPTED-WET-ROUTE-CAND-002-yield_bridge",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "yield_bridge",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "accepted_observation_current": true,
+      "target_claim_current": false,
+      "wet_pass_probability_current": false,
+      "yield_current": false,
+      "detection_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    }
+  ],
+  "negative_control_rows": [
+    {
+      "negative_control_id": "bad_sha",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "material_surface_identity",
+      "observation_validation_status": "wet_observation_rejected_missing_required_evidence",
+      "observation_rejection_reason": "invalid_observation_source_sha256",
+      "route_wet_observation_matrix_status": "wet_surface_observation_intake_partial_observations_not_claim_ready",
+      "accepted_observation_current": false,
+      "target_claim_current": false,
+      "yield_current": false,
+      "wet_pass_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "negative_control_id": "missing_fields",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "ev_sample_panel",
+      "observation_validation_status": "wet_observation_rejected_missing_required_evidence",
+      "observation_rejection_reason": "missing_required_fields",
+      "route_wet_observation_matrix_status": "wet_surface_observation_intake_partial_observations_not_claim_ready",
+      "accepted_observation_current": false,
+      "target_claim_current": false,
+      "yield_current": false,
+      "wet_pass_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "negative_control_id": "low_replicate_count",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "adhesion_wall_interaction",
+      "observation_validation_status": "wet_observation_rejected_missing_required_evidence",
+      "observation_rejection_reason": "insufficient_replicate_count",
+      "route_wet_observation_matrix_status": "wet_surface_observation_intake_partial_observations_not_claim_ready",
+      "accepted_observation_current": false,
+      "target_claim_current": false,
+      "yield_current": false,
+      "wet_pass_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "negative_control_id": "controls_missing",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "endpoint_id": "wet_pass_probability",
+      "observation_validation_status": "wet_observation_rejected_missing_required_evidence",
+      "observation_rejection_reason": "controls_not_pass",
+      "route_wet_observation_matrix_status": "wet_surface_observation_intake_partial_observations_not_claim_ready",
+      "accepted_observation_current": false,
+      "target_claim_current": false,
+      "yield_current": false,
+      "wet_pass_probability_current": false,
+      "route_score_current": false,
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    }
+  ],
+  "current_intake_audit_rows": [
+    {
+      "audit_row_id": "CURRENT-WET-ROUTE-CAND-001",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "route_wet_observation_matrix_status": "wet_surface_observation_intake_ready_no_observations",
+      "accepted_endpoint_count": "0",
+      "missing_endpoint_count": "7",
+      "yield_current": "false",
+      "wet_pass_probability_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    },
+    {
+      "audit_row_id": "CURRENT-WET-ROUTE-CAND-002",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "route_wet_observation_matrix_status": "wet_surface_observation_intake_ready_no_observations",
+      "accepted_endpoint_count": "0",
+      "missing_endpoint_count": "7",
+      "yield_current": "false",
+      "wet_pass_probability_current": "false",
+      "detection_probability_current": "false",
+      "route_score_current": "false",
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "formal_qch_receipt_bridge_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_FORMAL_QCH_RECEIPT_BRIDGE_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "6a72afed7c45df002e6fb3114d795802c48ddc7395d5de0d916d615d23057c45",
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
+      "allowed_use": "wet/surface observation validator hardening;accepted/rejected wet endpoint fixture checks;future yield/wet evidence gate",
+      "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
+    },
+    {
+      "source_id": "wet_surface_observation_intake_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "32d814646ef2e3ed74122064d56bb8fce5c9e5849e3eef9948eb58b1db7cf417",
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
+      "allowed_use": "wet/surface observation validator hardening;accepted/rejected wet endpoint fixture checks;future yield/wet evidence gate",
+      "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
+    },
+    {
+      "source_id": "wet_surface_observation_intake_matrix_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_ROUTE_OBSERVATION_MATRIX_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "fda76bc4bb195300ec591a310128318f14e3838542d2088957aa3ac50045eaaa",
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
+      "allowed_use": "wet/surface observation validator hardening;accepted/rejected wet endpoint fixture checks;future yield/wet evidence gate",
+      "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
+    },
+    {
+      "source_id": "wet_surface_contract_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_EVIDENCE_CONTRACT_CONTRACT_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "20e7b7dcb3146c40c5887add1e30e1098b5937018ce04acc2a5f6772d5e7ea2e",
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
+      "allowed_use": "wet/surface observation validator hardening;accepted/rejected wet endpoint fixture checks;future yield/wet evidence gate",
+      "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
+    },
+    {
+      "source_id": "wet_surface_observation_intake_source",
+      "path": "nodi_simulator/sidewall_wet_surface_observation_intake.py",
+      "exists": "true",
+      "sha256": "d7d66fa3aaa4e7ca5d7a1c50525b84bd6053dea0f61d62d60b1d6f1c7f9797eb",
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
+      "allowed_use": "wet/surface observation validator hardening;accepted/rejected wet endpoint fixture checks;future yield/wet evidence gate",
+      "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
+    },
+    {
+      "source_id": "wet_surface_observation_intake_tests",
+      "path": "tests/test_sidewall_wet_surface_observation_intake.py",
+      "exists": "true",
+      "sha256": "83c1e1f402816a254139fe27150a982771a2cbda461eaa3d005921b96bad9f19",
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
+      "allowed_use": "wet/surface observation validator hardening;accepted/rejected wet endpoint fixture checks;future yield/wet evidence gate",
+      "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
+    },
+    {
+      "source_id": "wet_surface_observation_validation_hardening_builder",
+      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_validation_hardening.py",
+      "exists": "true",
+      "sha256": "8a12761ec3831160fe496d6a3165d60e51e71a58366b3481497e7a7b1184cb9e",
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
+      "allowed_use": "wet/surface observation validator hardening;accepted/rejected wet endpoint fixture checks;future yield/wet evidence gate",
+      "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
+    },
+    {
+      "source_id": "wet_surface_observation_validation_hardening_tests",
+      "path": "tests/test_nodi_package_c_sidewall_wet_surface_observation_validation_hardening.py",
+      "exists": "true",
+      "sha256": "4ff91cdb93cf830394a245e60380c745276baf08acd710ca7f3b06f93375abc6",
+      "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
+      "allowed_use": "wet/surface observation validator hardening;accepted/rejected wet endpoint fixture checks;future yield/wet evidence gate",
+      "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": "M ",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_wet_surface_observation_intake.py",
+      "git_status": " M",
+      "classification": "wet_surface_observation_validation_hardening_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_DIRTY_CLASSIFIER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_validation_hardening_not_source_locked"
+    },
+    {
+      "path": "tests/test_sidewall_wet_surface_observation_intake.py",
+      "git_status": " M",
+      "classification": "wet_surface_observation_validation_hardening_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_wet_surface_observation_validation_hardening.py",
+      "git_status": "??",
+      "classification": "wet_surface_observation_validation_hardening_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_validation_hardening.py",
+      "git_status": "??",
+      "classification": "wet_surface_observation_validation_hardening_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ]
+}

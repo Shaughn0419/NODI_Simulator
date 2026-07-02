@@ -106,6 +106,10 @@ def test_wet_surface_observation_intake_can_accept_complete_sidewall_bundle() ->
     assert {row.observation_validation_status for row in intake_rows} == {
         OBSERVATION_ACCEPTED_STATUS
     }
+    assert {row.observation_rejection_reason for row in intake_rows} == {
+        "accepted_observation_candidate"
+    }
+    assert {row.target_claim_current for row in intake_rows} == {False}
     assert len(matrix_rows) == 1
     matrix = matrix_rows[0]
     assert matrix.route_wet_observation_matrix_status == ROUTE_MATRIX_ACCEPTED_STATUS
@@ -113,6 +117,41 @@ def test_wet_surface_observation_intake_can_accept_complete_sidewall_bundle() ->
     assert matrix.yield_current is False
     assert matrix.route_score_current is False
     assert matrix.detection_probability_current is False
+
+
+def test_wet_surface_observation_intake_rejects_bad_hash_missing_fields_and_low_replicates() -> None:
+    contract_rows = [
+        row for row in _contract_rows() if row["route_candidate_id"] == "ROUTE-CAND-002"
+    ]
+    observations = _accepted_observations_for_route("ROUTE-CAND-002")
+    for row in observations:
+        if row["endpoint_id"] == "material_surface_identity":
+            row["observation_source_sha256"] = "not-a-sha"
+        if row["endpoint_id"] == "ev_sample_panel":
+            row["provided_fields"] = "particle_size_distribution;concentration"
+        if row["endpoint_id"] == "adhesion_wall_interaction":
+            row["replicate_count"] = "2"
+
+    intake_rows, matrix_rows = build_wet_surface_observation_intake(
+        contract_rows=contract_rows,
+        observation_rows=observations,
+    )
+    reasons = {
+        row.endpoint_id: row.observation_rejection_reason
+        for row in intake_rows
+        if row.observation_rejection_reason != "accepted_observation_candidate"
+    }
+
+    assert reasons == {
+        "adhesion_wall_interaction": "insufficient_replicate_count",
+        "ev_sample_panel": "missing_required_fields",
+        "material_surface_identity": "invalid_observation_source_sha256",
+    }
+    assert matrix_rows[0].route_wet_observation_matrix_status == (
+        "wet_surface_observation_intake_partial_observations_not_claim_ready"
+    )
+    assert matrix_rows[0].yield_current is False
+    assert matrix_rows[0].wet_pass_probability_current is False
 
 
 def test_wet_surface_template_and_promotion_update_are_non_claim() -> None:

@@ -54,6 +54,7 @@ class SidewallWetSurfaceObservationIntakeRow:
     replicate_count: int
     uncertainty_interval_status: str
     pre_registered_rule_status: str
+    observation_rejection_reason: str
     observation_validation_status: str
     accepted_observation_current: bool
     target_claim_current: bool
@@ -205,11 +206,12 @@ def _build_intake_row(
     required_fields = _split_semicolon(contract.get("required_fields"))
     provided_fields = _split_semicolon(observation.get("provided_fields"))
     missing_fields = [field for field in required_fields if field not in provided_fields]
-    validation_status = _observation_validation_status(
+    rejection_reason = _observation_rejection_reason(
         contract=contract,
         observation=observation,
         missing_fields=missing_fields,
     )
+    validation_status = _observation_validation_status(observation, rejection_reason)
     accepted = validation_status == OBSERVATION_ACCEPTED_STATUS
     return SidewallWetSurfaceObservationIntakeRow(
         intake_row_id=(
@@ -241,9 +243,10 @@ def _build_intake_row(
         pre_registered_rule_status=str(
             observation.get("pre_registered_rule_status", "")
         ),
+        observation_rejection_reason=rejection_reason,
         observation_validation_status=validation_status,
         accepted_observation_current=accepted,
-        target_claim_current=accepted,
+        target_claim_current=False,
         wet_pass_probability_current=False,
         clogging_rate_current=False,
         time_to_clog_current=False,
@@ -271,41 +274,59 @@ def _contract_key(contract: Mapping[str, Any]) -> tuple[str, str]:
 
 
 def _observation_validation_status(
+    observation: Mapping[str, Any],
+    rejection_reason: str,
+) -> str:
+    if not observation:
+        return OBSERVATION_MISSING_STATUS
+    if rejection_reason != "accepted_observation_candidate":
+        return OBSERVATION_REJECTED_STATUS
+    return OBSERVATION_ACCEPTED_STATUS
+
+
+def _observation_rejection_reason(
     *,
     contract: Mapping[str, Any],
     observation: Mapping[str, Any],
     missing_fields: list[str],
 ) -> str:
     if not observation:
-        return OBSERVATION_MISSING_STATUS
+        return "missing_observation_input"
     if str(observation.get("observation_artifact_class", "")) != str(
         contract.get("required_artifact_class", "")
     ):
-        return OBSERVATION_REJECTED_STATUS
+        return "artifact_class_mismatch"
     if missing_fields:
-        return OBSERVATION_REJECTED_STATUS
-    if str(observation.get("observation_source_sha256", "")) == "":
-        return OBSERVATION_REJECTED_STATUS
+        return "missing_required_fields"
+    if not _valid_sha256(observation.get("observation_source_sha256")):
+        return "invalid_observation_source_sha256"
     if str(observation.get("controls_status", "")) != "controls_pass":
-        return OBSERVATION_REJECTED_STATUS
+        return "controls_not_pass"
     if str(observation.get("source_geometry_match_level", "")) not in {
         "sidewall_specific",
         "validated_transfer",
     }:
-        return OBSERVATION_REJECTED_STATUS
+        return "invalid_source_geometry_match_level"
     if _int_value(observation.get("replicate_count")) < _minimum_replicates(
         str(contract.get("endpoint_id", ""))
     ):
-        return OBSERVATION_REJECTED_STATUS
+        return "insufficient_replicate_count"
     if _requires_uncertainty(str(contract.get("endpoint_id", ""))) and str(
         observation.get("uncertainty_interval_status", "")
     ) != "uncertainty_interval_present":
-        return OBSERVATION_REJECTED_STATUS
+        return "uncertainty_interval_missing"
     if _requires_preregistration(str(contract.get("endpoint_id", ""))) and str(
         observation.get("pre_registered_rule_status", "")
     ) != "pre_registered":
-        return OBSERVATION_REJECTED_STATUS
-    return OBSERVATION_ACCEPTED_STATUS
+        return "pre_registered_rule_missing"
+    return "accepted_observation_candidate"
+
+
+def _valid_sha256(value: Any) -> bool:
+    text = str(value or "").strip()
+    if len(text) != 64:
+        return False
+    return all(char in "0123456789abcdefABCDEF" for char in text)
 
 
 def _route_matrix_rows(
