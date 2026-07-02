@@ -45,6 +45,8 @@ ROUTE_FORMULA_POLICY_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMUL
 ROUTE_FORMULA_POLICY_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_POLICY_ROWS_20260701.csv"
 WINNER_JRC_POLICY_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json"
 WINNER_JRC_POLICY_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REVIEW_ROWS_20260701.csv"
+YIELD_DETECTION_CLAIM_VALUE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json"
+YIELD_DETECTION_CLAIM_VALUE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_VALUE_ROWS_20260701.csv"
 
 ALLOWED_USE = (
     "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;"
@@ -67,6 +69,8 @@ SOURCE_FILES = {
     "route_formula_policy_rows": ROUTE_FORMULA_POLICY_ROWS,
     "winner_jrc_policy_status": WINNER_JRC_POLICY_STATUS,
     "winner_jrc_policy_rows": WINNER_JRC_POLICY_ROWS,
+    "yield_detection_claim_value_status": YIELD_DETECTION_CLAIM_VALUE_STATUS,
+    "yield_detection_claim_value_rows": YIELD_DETECTION_CLAIM_VALUE_ROWS,
     "route_decision_execution_source": PROJECT_ROOT
     / "nodi_simulator/sidewall_route_decision_execution_readiness.py",
     "route_decision_execution_tests": PROJECT_ROOT
@@ -209,6 +213,8 @@ def build_payload() -> dict[str, Any]:
         route_formula_policy_rows=read_csv_rows(ROUTE_FORMULA_POLICY_ROWS),
         winner_jrc_policy_status=load_json(WINNER_JRC_POLICY_STATUS),
         winner_jrc_policy_rows=read_csv_rows(WINNER_JRC_POLICY_ROWS),
+        yield_detection_claim_value_status=load_json(YIELD_DETECTION_CLAIM_VALUE_STATUS),
+        yield_detection_claim_value_rows=read_csv_rows(YIELD_DETECTION_CLAIM_VALUE_ROWS),
     )
     readiness_dicts = [row.to_dict() for row in rows]
     guard_dicts = [row.to_dict() for row in guards]
@@ -245,11 +251,13 @@ def build_payload() -> dict[str, Any]:
         "route_formula_component_vector_ready_rows": sum(row["route_formula_component_vector_ready"] for row in readiness_dicts),
         "route_score_candidate_ready_rows": sum(row["route_score_candidate_ready"] for row in readiness_dicts),
         "winner_jrc_candidate_ready_rows": sum(row["winner_jrc_candidate_ready"] for row in readiness_dicts),
+        "yield_detection_values_ready_rows": sum(row["yield_detection_values_ready"] for row in readiness_dicts),
         "route_score_current_rows": sum(row["route_score_current"] for row in readiness_dicts),
         "winner_current_rows": sum(row["winner_current"] for row in readiness_dicts),
         "JRC_current_rows": sum(row.get("JRC_current", False) for row in readiness_dicts),
         "yield_current_rows": sum(row["yield_current"] for row in readiness_dicts),
         "detection_probability_current_rows": sum(row["detection_probability_current"] for row in readiness_dicts),
+        "wet_pass_probability_current_rows": sum(row["wet_pass_probability_current"] for row in readiness_dicts),
         "production_ingestion_current_rows": sum(row["production_ingestion_current"] for row in readiness_dicts),
         "claim_promotion_allowed_guard_rows": sum(row["claim_promotion_allowed_now"] for row in guard_dicts),
         "source_lock_rows": len(source_lock),
@@ -296,6 +304,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
                 "branch_evidence_and_formula_components_ready_for_route_policy_review",
                 "route_score_candidates_ready_for_winner_jrc_policy_review",
                 "winner_jrc_ready_for_integrated_yield_detection_review",
+                "route_yield_detection_claim_values_ready_for_integrated_review",
             }
             and row["rectangle_baseline_preserved"] is True
             and row["sidewall_trapezoid_route_present"] is True
@@ -345,6 +354,7 @@ def report_markdown(payload: dict[str, Any]) -> str:
         f"- Formula component-vector ready rows: `{s['route_formula_component_vector_ready_rows']}`.",
         f"- Route-score candidate ready rows: `{s['route_score_candidate_ready_rows']}`.",
         f"- Winner/JRC ready rows: `{s['winner_jrc_candidate_ready_rows']}`.",
+        f"- Yield/detection value ready rows: `{s['yield_detection_values_ready_rows']}`.",
         f"- route/yield/detection current rows: `{s['route_score_current_rows']}` / `{s['yield_current_rows']}` / `{s['detection_probability_current_rows']}`.",
         "- Rectangle baseline and sidewall trapezoid route remain side by side; route decisions remain blocked until detector/blank and wet evidence packets contain accepted rows.",
         "",

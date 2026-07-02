@@ -156,3 +156,63 @@ def test_route_decision_can_carry_route_score_and_winner_policy_status() -> None
     assert by_target["winner_JRC"].claim_promotion_allowed_now is True
     assert by_target["yield"].claim_promotion_allowed_now is False
     assert by_target["detection_probability"].claim_promotion_allowed_now is False
+
+
+def test_route_decision_can_carry_yield_detection_value_status() -> None:
+    rows, guards = build_route_decision_execution_readiness(
+        readiness_board_rows=_board_rows(),
+        solver_packet_status={"disposition": "SOLVER"},
+        electrokinetic_status={"disposition": "EK"},
+        comsol_precondition_status={"disposition": "COMSOL"},
+        detector_blank_status={
+            "disposition": "ACTIVATION",
+            "detector_accepted_transfer_rows_total": 2,
+        },
+        wet_observation_status={
+            "disposition": "ACTIVATION",
+            "wet_accepted_endpoint_count_total": 14,
+        },
+        route_formula_policy_rows=[
+            {
+                "route_candidate_id": "R1",
+                "route_score_current": "True",
+                "route_score_activation_allowed_now": "True",
+            },
+            {
+                "route_candidate_id": "R2",
+                "route_score_current": "True",
+                "route_score_activation_allowed_now": "True",
+            },
+        ],
+        winner_jrc_policy_rows=[
+            {"route_candidate_id": "R1", "winner_current": "True", "JRC_current": "True"},
+            {"route_candidate_id": "R2", "winner_current": "False", "JRC_current": "False"},
+        ],
+        yield_detection_claim_value_status={"disposition": "CLAIM-VALUE"},
+        yield_detection_claim_value_rows=[
+            {
+                "route_candidate_id": "R1",
+                "yield_current": "True",
+                "detection_probability_current": "True",
+                "wet_pass_probability_current": "True",
+            },
+            {
+                "route_candidate_id": "R2",
+                "yield_current": "True",
+                "detection_probability_current": "True",
+                "wet_pass_probability_current": "True",
+            },
+        ],
+    )
+
+    assert {row.execution_readiness_status for row in rows} == {
+        "route_yield_detection_claim_values_ready_for_integrated_review"
+    }
+    assert {row.yield_detection_values_ready for row in rows} == {True}
+    assert {row.yield_current for row in rows} == {True}
+    assert {row.detection_probability_current for row in rows} == {True}
+    assert {row.wet_pass_probability_current for row in rows} == {True}
+    by_target = {guard.promotion_target: guard for guard in guards}
+    assert by_target["yield"].claim_promotion_allowed_now is True
+    assert by_target["detection_probability"].claim_promotion_allowed_now is True
+    assert by_target["production_ingestion"].claim_promotion_allowed_now is False

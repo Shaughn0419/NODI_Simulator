@@ -4,7 +4,7 @@
     "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_20260701",
     "execution_status": "route_decision_execution_readiness_ready_branch_statuses_not_claim_ready",
     "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-    "current_head": "5bf638df9bb6c5fe33bb993dc0a7d6b29a206ffb",
+    "current_head": "37d3912fbf0562d549fe91a767ebe3e53108e5ca",
     "branch": "main",
     "readiness_rows": 2,
     "claim_guard_rows": 5,
@@ -16,14 +16,16 @@
     "route_formula_component_vector_ready_rows": 0,
     "route_score_candidate_ready_rows": 0,
     "winner_jrc_candidate_ready_rows": 0,
+    "yield_detection_values_ready_rows": 0,
     "route_score_current_rows": 0,
     "winner_current_rows": 0,
     "JRC_current_rows": 0,
     "yield_current_rows": 0,
     "detection_probability_current_rows": 0,
+    "wet_pass_probability_current_rows": 0,
     "production_ingestion_current_rows": 0,
     "claim_promotion_allowed_guard_rows": 0,
-    "source_lock_rows": 16,
+    "source_lock_rows": 18,
     "source_missing_rows": 0,
     "dirty_context_rows": 93,
     "source_locked_upstream_dirty_context_rows": 0,
@@ -31,7 +33,7 @@
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
     "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review",
-    "semantic_digest": "ca8712096dec99148a96dab4c3ca3a98ffffd7835abdaceecf03472e9d2a7f72"
+    "semantic_digest": "4e2e92283b31c98e6b3725c7a91fbb768e3f06aa642a963c7cd87fc2e6ac6578"
   },
   "readiness_rows": [
     {
@@ -54,6 +56,8 @@
       "route_score_candidate_ready": false,
       "winner_jrc_policy_review_status": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES",
       "winner_jrc_candidate_ready": false,
+      "yield_detection_claim_value_review_status": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_REAL_VALUE_ROWS",
+      "yield_detection_values_ready": false,
       "detector_accepted_transfer_rows": 0,
       "wet_accepted_observation_rows": 0,
       "rectangle_baseline_preserved": true,
@@ -66,6 +70,7 @@
       "JRC_current": false,
       "yield_current": false,
       "detection_probability_current": false,
+      "wet_pass_probability_current": false,
       "production_ingestion_current": false,
       "next_required_evidence": "accepted detector/blank transfer rows, accepted wet observation rows, and route formula component-vector dry run before route/yield/detection policy review",
       "hard_fail_if": "route_score_winner_yield_detection_or_production_true_before_detector_blank_and_wet_evidence_pass",
@@ -91,6 +96,8 @@
       "route_score_candidate_ready": false,
       "winner_jrc_policy_review_status": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES",
       "winner_jrc_candidate_ready": false,
+      "yield_detection_claim_value_review_status": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_REAL_VALUE_ROWS",
+      "yield_detection_values_ready": false,
       "detector_accepted_transfer_rows": 0,
       "wet_accepted_observation_rows": 0,
       "rectangle_baseline_preserved": true,
@@ -103,6 +110,7 @@
       "JRC_current": false,
       "yield_current": false,
       "detection_probability_current": false,
+      "wet_pass_probability_current": false,
       "production_ingestion_current": false,
       "next_required_evidence": "accepted detector/blank transfer rows, accepted wet observation rows, and route formula component-vector dry run before route/yield/detection policy review",
       "hard_fail_if": "route_score_winner_yield_detection_or_production_true_before_detector_blank_and_wet_evidence_pass",
@@ -281,10 +289,28 @@
       "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
+      "source_id": "yield_detection_claim_value_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "72abe93e301c1cb05fe41a8d04b345d77fb6e763a90eb0c81a8bf74065934812",
+      "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
+    },
+    {
+      "source_id": "yield_detection_claim_value_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_VALUE_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "cda3183d46deaaa18c6d9ba9cf52f45ef2ab0d6bbb3aba3f187c93eeb6f724df",
+      "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
+    },
+    {
       "source_id": "route_decision_execution_source",
       "path": "nodi_simulator/sidewall_route_decision_execution_readiness.py",
       "exists": "true",
-      "sha256": "4f1ec95841bd4e139a0ac8d4d6e2614c898c6b441e21cbe4cf37badd1dbb189a",
+      "sha256": "83361111479235b9f84758413d2ab5845c435bf9616eb71388d9bbbfd41fc7cd",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
       "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
       "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
@@ -293,7 +319,7 @@
       "source_id": "route_decision_execution_tests",
       "path": "tests/test_sidewall_route_decision_execution_readiness.py",
       "exists": "true",
-      "sha256": "9e564d28b88811f621b0ae3e3c69e320857ddc134da8ebfd6f2c26ac3e6f19cd",
+      "sha256": "c2f5fbc6b1e6af461fe9da46de4b046fd9d133544cde7645a238c05ecdcee4e9",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
       "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
       "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
@@ -302,7 +328,7 @@
       "source_id": "route_decision_execution_builder",
       "path": "tools/audits/build_nodi_package_c_sidewall_route_decision_execution_readiness.py",
       "exists": "true",
-      "sha256": "c40dd9dbfae6886ee93470eb1bb6b57d2417b9345fbe6627cbf9212780ed5365",
+      "sha256": "e8e2e351451cd421328ce22a40cfc2bb6fa5fcf17edf4384d141a3c2413aa311",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
       "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
       "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
@@ -311,7 +337,7 @@
       "source_id": "route_decision_execution_builder_tests",
       "path": "tests/test_nodi_package_c_sidewall_route_decision_execution_readiness.py",
       "exists": "true",
-      "sha256": "6ccc03af8d742348bf915bb119bd4de9873eac5b81576dccef873d654d5e895a",
+      "sha256": "c176ad96f6d7462a6be3663ce2d48db2887895e59c0ef2a1ea0c1893ade597ae",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
       "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
       "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"

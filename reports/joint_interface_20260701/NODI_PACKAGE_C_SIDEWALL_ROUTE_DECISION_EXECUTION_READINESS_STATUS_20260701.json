@@ -5,7 +5,7 @@
     "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_20260701",
     "execution_status": "route_decision_execution_readiness_ready_branch_statuses_not_claim_ready",
     "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-    "current_head": "5bf638df9bb6c5fe33bb993dc0a7d6b29a206ffb",
+    "current_head": "37d3912fbf0562d549fe91a767ebe3e53108e5ca",
     "branch": "main",
     "readiness_rows": 2,
     "claim_guard_rows": 5,
@@ -17,14 +17,16 @@
     "route_formula_component_vector_ready_rows": 0,
     "route_score_candidate_ready_rows": 0,
     "winner_jrc_candidate_ready_rows": 0,
+    "yield_detection_values_ready_rows": 0,
     "route_score_current_rows": 0,
     "winner_current_rows": 0,
     "JRC_current_rows": 0,
     "yield_current_rows": 0,
     "detection_probability_current_rows": 0,
+    "wet_pass_probability_current_rows": 0,
     "production_ingestion_current_rows": 0,
     "claim_promotion_allowed_guard_rows": 0,
-    "source_lock_rows": 16,
+    "source_lock_rows": 18,
     "source_missing_rows": 0,
     "dirty_context_rows": 93,
     "source_locked_upstream_dirty_context_rows": 0,
@@ -32,6 +34,6 @@
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
     "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review",
-    "semantic_digest": "ca8712096dec99148a96dab4c3ca3a98ffffd7835abdaceecf03472e9d2a7f72"
+    "semantic_digest": "4e2e92283b31c98e6b3725c7a91fbb768e3f06aa642a963c7cd87fc2e6ac6578"
   }
 }

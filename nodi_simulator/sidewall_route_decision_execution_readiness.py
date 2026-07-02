@@ -38,6 +38,8 @@ class SidewallRouteDecisionExecutionReadinessRow:
     route_score_candidate_ready: bool
     winner_jrc_policy_review_status: str
     winner_jrc_candidate_ready: bool
+    yield_detection_claim_value_review_status: str
+    yield_detection_values_ready: bool
     detector_accepted_transfer_rows: int
     wet_accepted_observation_rows: int
     rectangle_baseline_preserved: bool
@@ -50,6 +52,7 @@ class SidewallRouteDecisionExecutionReadinessRow:
     JRC_current: bool
     yield_current: bool
     detection_probability_current: bool
+    wet_pass_probability_current: bool
     production_ingestion_current: bool
     next_required_evidence: str
     hard_fail_if: str
@@ -90,6 +93,8 @@ def build_route_decision_execution_readiness(
     route_formula_policy_rows: list[Mapping[str, Any]] | None = None,
     winner_jrc_policy_status: Mapping[str, Any] | None = None,
     winner_jrc_policy_rows: list[Mapping[str, Any]] | None = None,
+    yield_detection_claim_value_status: Mapping[str, Any] | None = None,
+    yield_detection_claim_value_rows: list[Mapping[str, Any]] | None = None,
 ) -> tuple[list[SidewallRouteDecisionExecutionReadinessRow], list[SidewallRouteDecisionClaimGuardRow]]:
     families = {str(row.get("route_geometry_family", "")) for row in readiness_board_rows}
     rectangle_present = "ideal_rectangle" in families
@@ -111,6 +116,11 @@ def build_route_decision_execution_readiness(
         str(row.get("route_candidate_id", "")): row
         for row in (winner_jrc_policy_rows or [])
     }
+    claim_value_status = yield_detection_claim_value_status or {}
+    claim_value_by_route = {
+        str(row.get("route_candidate_id", "")): row
+        for row in (yield_detection_claim_value_rows or [])
+    }
     route_ids = [
         str(row.get("route_candidate_id", "")) for row in readiness_board_rows
     ]
@@ -122,6 +132,10 @@ def build_route_decision_execution_readiness(
         _winner_jrc_ready(winner_policy_by_route.get(route_id, {}))
         for route_id in route_ids
     ) == 1
+    overall_yield_detection_ready = bool(route_ids) and all(
+        _yield_detection_values_ready(claim_value_by_route.get(route_id, {}))
+        for route_id in route_ids
+    )
     rows = [
         SidewallRouteDecisionExecutionReadinessRow(
             readiness_row_id=f"ROUTE-DECISION-EXEC-{row.get('route_candidate_id', '')}",
@@ -149,6 +163,10 @@ def build_route_decision_execution_readiness(
             ),
             winner_jrc_policy_review_status=str(winner_policy.get("disposition", "")),
             winner_jrc_candidate_ready=overall_winner_ready,
+            yield_detection_claim_value_review_status=str(
+                claim_value_status.get("disposition", "")
+            ),
+            yield_detection_values_ready=overall_yield_detection_ready,
             detector_accepted_transfer_rows=detector_accepted,
             wet_accepted_observation_rows=wet_accepted,
             rectangle_baseline_preserved=rectangle_present,
@@ -165,6 +183,7 @@ def build_route_decision_execution_readiness(
                     formula_policy_by_route.get(str(row.get("route_candidate_id", "")), {})
                 ),
                 winner_ready=overall_winner_ready,
+                yield_detection_ready=overall_yield_detection_ready,
             ),
             route_score_current=_route_score_candidate_ready(
                 formula_policy_by_route.get(str(row.get("route_candidate_id", "")), {})
@@ -179,8 +198,21 @@ def build_route_decision_execution_readiness(
                     "JRC_current"
                 )
             ),
-            yield_current=False,
-            detection_probability_current=False,
+            yield_current=_bool(
+                claim_value_by_route.get(str(row.get("route_candidate_id", "")), {}).get(
+                    "yield_current"
+                )
+            ),
+            detection_probability_current=_bool(
+                claim_value_by_route.get(str(row.get("route_candidate_id", "")), {}).get(
+                    "detection_probability_current"
+                )
+            ),
+            wet_pass_probability_current=_bool(
+                claim_value_by_route.get(str(row.get("route_candidate_id", "")), {}).get(
+                    "wet_pass_probability_current"
+                )
+            ),
             production_ingestion_current=False,
             next_required_evidence=(
                 "accepted detector/blank transfer rows, accepted wet observation rows, "
@@ -198,6 +230,9 @@ def build_route_decision_execution_readiness(
         route_score_ready=bool(rows) and all(row.route_score_current for row in rows),
         winner_ready=sum(row.winner_current for row in rows) == 1
         and all(row.route_score_current for row in rows),
+        yield_ready=bool(rows) and all(row.yield_current for row in rows),
+        detection_ready=bool(rows)
+        and all(row.detection_probability_current for row in rows),
     )
 
 
@@ -208,7 +243,10 @@ def _execution_status(
     component_vector_ready: bool,
     route_score_ready: bool,
     winner_ready: bool,
+    yield_detection_ready: bool,
 ) -> str:
+    if winner_ready and yield_detection_ready:
+        return "route_yield_detection_claim_values_ready_for_integrated_review"
     if winner_ready:
         return "winner_jrc_ready_for_integrated_yield_detection_review"
     if route_score_ready:
@@ -225,6 +263,8 @@ def _claim_guard_rows(
     branch_packets_available: bool,
     route_score_ready: bool = False,
     winner_ready: bool = False,
+    yield_ready: bool = False,
+    detection_ready: bool = False,
 ) -> list[SidewallRouteDecisionClaimGuardRow]:
     specs = [
         (
@@ -241,13 +281,13 @@ def _claim_guard_rows(
         ),
         (
             "yield",
-            False,
+            yield_ready,
             "wet observation evidence plus detector/blank and route policy packets",
             "yield_true_without_wet_detector_and_route_packets",
         ),
         (
             "detection_probability",
-            False,
+            detection_ready,
             "detector/blank transfer, threshold policy, wet context, and uncertainty",
             "detection_probability_true_without_detector_blank_transfer",
         ),
@@ -317,3 +357,11 @@ def _route_score_candidate_ready(row: Mapping[str, Any]) -> bool:
 
 def _winner_jrc_ready(row: Mapping[str, Any]) -> bool:
     return _bool(row.get("winner_current")) and _bool(row.get("JRC_current"))
+
+
+def _yield_detection_values_ready(row: Mapping[str, Any]) -> bool:
+    return (
+        _bool(row.get("yield_current"))
+        and _bool(row.get("detection_probability_current"))
+        and _bool(row.get("wet_pass_probability_current"))
+    )
