@@ -1,0 +1,32 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_MAINLINE_EXECUTION_STATE_UPDATE_READY_RUNTIME_PROFILE_GRID_INTEGRATED",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_MAINLINE_EXECUTION_STATE_UPDATE_READY_RUNTIME_PROFILE_GRID_INTEGRATED",
+    "artifact_id": "PACKAGE_C_SIDEWALL_MAINLINE_EXECUTION_STATE_UPDATE_20260701",
+    "state_update_status": "mainline_state_update_ready_runtime_and_profile_grid_integrated",
+    "claim_boundary": "mainline_state_update_candidate_evidence_not_route_yield_detection",
+    "current_head": "6beb37a763afde1a13d589a5a192e482ee638b77",
+    "branch": "main",
+    "work_order_state_rows": 8,
+    "route_evidence_state_rows": 14,
+    "state_guard_rows": 5,
+    "profile_grid_integrated_rows": 1,
+    "runtime_substep_integrated_rows": 1,
+    "candidate_profile_grid_route_rows": 2,
+    "guarded_runtime_smoke_route_rows": 2,
+    "flow_solver_candidate_route_rows": 1,
+    "comsol_launch_activation_rows": 0,
+    "route_score_activation_rows": 0,
+    "yield_activation_rows": 0,
+    "detection_activation_rows": 0,
+    "source_lock_rows": 14,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 93,
+    "source_locked_upstream_dirty_context_rows": 0,
+    "non_release_dirty_context_rows": 89,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "current sidewall mainline state update;runtime substep smoke integration;profile-grid candidate integration;next evidence prioritization",
+    "blocked_use": "route_score;winner;JRC;yield;detection_probability;COMSOL launch without target binding;wet claim without accepted wet rows;production ingestion",
+    "semantic_digest": "e46ea6a9d10230372f586f71cdf3275aed5590bf9eaf4a22289a523a39ca169b"
+  }
+}
