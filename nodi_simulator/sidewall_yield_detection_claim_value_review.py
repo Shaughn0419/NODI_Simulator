@@ -13,9 +13,12 @@ SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_VERSION = (
     "sidewall_yield_detection_claim_value_review_v1"
 )
 SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_BOUNDARY = (
-    "yield_detection_claim_value_review_requires_real_value_rows"
+    "yield_detection_claim_value_review_requires_simulation_value_rows"
 )
-REAL_CLAIM_VALUE_EVIDENCE_CLASS = "real_claim_value_evidence"
+SIMULATION_CLAIM_VALUE_EVIDENCE_CLASS = "simulation_claim_value_evidence"
+# Backward-compatible import alias. In this simulation-only lane, "real" means
+# hash-bound current simulation evidence, not experimental truth.
+REAL_CLAIM_VALUE_EVIDENCE_CLASS = SIMULATION_CLAIM_VALUE_EVIDENCE_CLASS
 FIXTURE_CLAIM_VALUE_EVIDENCE_CLASS = "fixture_not_evidence"
 
 DETECTION_REQUIRED_FIELDS: tuple[str, ...] = (
@@ -65,6 +68,10 @@ class SidewallYieldDetectionClaimValueReviewRow:
     JRC_current: bool
     detection_value_row_present: bool
     detection_value_validation_status: str
+    detection_probability_simulation_candidate_current: bool
+    detection_probability_simulation_candidate_value: str
+    detection_probability_simulation_candidate_ci_low: str
+    detection_probability_simulation_candidate_ci_high: str
     detection_probability_current: bool
     detection_probability_value_current: str
     detection_probability_ci_low_current: str
@@ -72,11 +79,19 @@ class SidewallYieldDetectionClaimValueReviewRow:
     detection_source_artifact_path_current: str
     yield_value_row_present: bool
     yield_value_validation_status: str
+    yield_simulation_candidate_current: bool
+    yield_simulation_candidate_value: str
+    yield_simulation_candidate_ci_low: str
+    yield_simulation_candidate_ci_high: str
     yield_current: bool
     yield_value_current: str
     yield_ci_low_current: str
     yield_ci_high_current: str
     wet_pass_probability_current: bool
+    wet_pass_probability_simulation_candidate_current: bool
+    wet_pass_probability_simulation_candidate_value: str
+    wet_pass_probability_simulation_candidate_ci_low: str
+    wet_pass_probability_simulation_candidate_ci_high: str
     wet_pass_probability_value_current: str
     wet_pass_probability_ci_low_current: str
     wet_pass_probability_ci_high_current: str
@@ -138,14 +153,14 @@ def build_yield_detection_claim_value_review(
         fixture_not_evidence = source_evidence_class == FIXTURE_CLAIM_VALUE_EVIDENCE_CLASS
         detection_valid = detection_status == "detection_probability_value_accepted"
         yield_valid = yield_status == "yield_wet_value_bundle_accepted"
-        detection_current = (
+        detection_candidate_current = (
             detection_valid
-            and source_evidence_class == REAL_CLAIM_VALUE_EVIDENCE_CLASS
+            and source_evidence_class == SIMULATION_CLAIM_VALUE_EVIDENCE_CLASS
             and not fixture_not_evidence
         )
-        yield_current = (
+        yield_candidate_current = (
             yield_valid
-            and source_evidence_class == REAL_CLAIM_VALUE_EVIDENCE_CLASS
+            and source_evidence_class == SIMULATION_CLAIM_VALUE_EVIDENCE_CLASS
             and not fixture_not_evidence
         )
         rows.append(
@@ -160,58 +175,80 @@ def build_yield_detection_claim_value_review(
                 JRC_current=_bool(winner.get("JRC_current")),
                 detection_value_row_present=bool(detection),
                 detection_value_validation_status=detection_status,
-                detection_probability_current=detection_current,
-                detection_probability_value_current=(
+                detection_probability_simulation_candidate_current=(
+                    detection_candidate_current
+                ),
+                detection_probability_simulation_candidate_value=(
                     str(detection.get("detection_probability_estimate", ""))
-                    if detection_current
+                    if detection_candidate_current
                     else ""
                 ),
-                detection_probability_ci_low_current=(
+                detection_probability_simulation_candidate_ci_low=(
                     str(detection.get("detection_probability_ci_low", ""))
-                    if detection_current
+                    if detection_candidate_current
                     else ""
                 ),
-                detection_probability_ci_high_current=(
+                detection_probability_simulation_candidate_ci_high=(
                     str(detection.get("detection_probability_ci_high", ""))
-                    if detection_current
+                    if detection_candidate_current
                     else ""
                 ),
+                detection_probability_current=False,
+                detection_probability_value_current="",
+                detection_probability_ci_low_current="",
+                detection_probability_ci_high_current="",
                 detection_source_artifact_path_current=(
                     str(detection.get("source_artifact_path", ""))
-                    if detection_current
+                    if detection_candidate_current
                     else ""
                 ),
                 yield_value_row_present=bool(wet_yield),
                 yield_value_validation_status=yield_status,
-                yield_current=yield_current,
-                yield_value_current=(
-                    str(wet_yield.get("yield_estimate", "")) if yield_current else ""
+                yield_simulation_candidate_current=yield_candidate_current,
+                yield_simulation_candidate_value=(
+                    str(wet_yield.get("yield_estimate", ""))
+                    if yield_candidate_current
+                    else ""
                 ),
-                yield_ci_low_current=(
-                    str(wet_yield.get("yield_ci_low", "")) if yield_current else ""
+                yield_simulation_candidate_ci_low=(
+                    str(wet_yield.get("yield_ci_low", ""))
+                    if yield_candidate_current
+                    else ""
                 ),
-                yield_ci_high_current=(
-                    str(wet_yield.get("yield_ci_high", "")) if yield_current else ""
+                yield_simulation_candidate_ci_high=(
+                    str(wet_yield.get("yield_ci_high", ""))
+                    if yield_candidate_current
+                    else ""
                 ),
-                wet_pass_probability_current=yield_current,
-                wet_pass_probability_value_current=(
+                yield_current=False,
+                yield_value_current="",
+                yield_ci_low_current="",
+                yield_ci_high_current="",
+                wet_pass_probability_current=False,
+                wet_pass_probability_simulation_candidate_current=(
+                    yield_candidate_current
+                ),
+                wet_pass_probability_simulation_candidate_value=(
                     str(wet_yield.get("wet_pass_probability_estimate", ""))
-                    if yield_current
+                    if yield_candidate_current
                     else ""
                 ),
-                wet_pass_probability_ci_low_current=(
+                wet_pass_probability_simulation_candidate_ci_low=(
                     str(wet_yield.get("wet_pass_probability_ci_low", ""))
-                    if yield_current
+                    if yield_candidate_current
                     else ""
                 ),
-                wet_pass_probability_ci_high_current=(
+                wet_pass_probability_simulation_candidate_ci_high=(
                     str(wet_yield.get("wet_pass_probability_ci_high", ""))
-                    if yield_current
+                    if yield_candidate_current
                     else ""
                 ),
+                wet_pass_probability_value_current="",
+                wet_pass_probability_ci_low_current="",
+                wet_pass_probability_ci_high_current="",
                 yield_source_artifact_path_current=(
                     str(wet_yield.get("source_artifact_path", ""))
-                    if yield_current
+                    if yield_candidate_current
                     else ""
                 ),
                 route_score_current=_bool(winner.get("route_score_current")),
@@ -219,8 +256,8 @@ def build_yield_detection_claim_value_review(
                 claim_value_review_status=_claim_status(
                     detection_valid=detection_valid,
                     yield_valid=yield_valid,
-                    detection_current=detection_current,
-                    yield_current=yield_current,
+                    detection_current=detection_candidate_current,
+                    yield_current=yield_candidate_current,
                     winner_current=_bool(winner.get("winner_current")),
                     fixture_not_evidence=fixture_not_evidence,
                 ),
@@ -229,7 +266,7 @@ def build_yield_detection_claim_value_review(
                     yield_status=yield_status,
                 ),
                 hard_fail_if=(
-                    "yield_or_detection_probability_current_true_without_real_validated_value_rows"
+                    "yield_or_detection_probability_current_true_without_simulation_validated_value_rows"
                 ),
                 claim_boundary=SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_BOUNDARY,
             )
@@ -397,47 +434,71 @@ def _claim_status(
     fixture_not_evidence: bool,
 ) -> str:
     if detection_current and yield_current and winner_current:
-        return "yield_detection_values_ready_for_integrated_route_claim_review"
+        return "simulation_yield_detection_values_ready_for_integrated_route_candidate_review"
     if detection_current and yield_current:
-        return "yield_detection_values_ready_waiting_winner_jrc"
+        return "simulation_yield_detection_values_ready_waiting_simulation_top_candidate"
     if detection_valid and yield_valid and fixture_not_evidence:
         return "fixture_yield_detection_value_path_passes_not_evidence"
-    return "blocked_until_real_detection_and_yield_value_rows_accepted"
+    return "blocked_until_simulation_detection_and_yield_value_rows_accepted"
 
 
 def _next_required_evidence(*, detection_status: str, yield_status: str) -> str:
     items = []
     if detection_status != "detection_probability_value_accepted":
-        items.append("real detection probability value row with controls and uncertainty")
+        items.append(
+            "simulation-derived detection probability value row with assumptions, "
+            "controls, and uncertainty"
+        )
     if yield_status != "yield_wet_value_bundle_accepted":
-        items.append("real yield and wet-pass value row with controls and uncertainty")
+        items.append(
+            "simulation-derived yield and wet-pass value row with assumptions, "
+            "controls, and uncertainty"
+        )
     return "; ".join(items) or "integrated route/yield/detection review"
 
 
 def _guard_rows(
     rows: list[SidewallYieldDetectionClaimValueReviewRow],
 ) -> list[SidewallYieldDetectionClaimValueGuardRow]:
-    detection_ready = bool(rows) and all(row.detection_probability_current for row in rows)
-    yield_ready = bool(rows) and all(row.yield_current for row in rows)
-    wet_ready = bool(rows) and all(row.wet_pass_probability_current for row in rows)
+    detection_ready = bool(rows) and all(
+        row.detection_probability_simulation_candidate_current for row in rows
+    )
+    yield_ready = bool(rows) and all(
+        row.yield_simulation_candidate_current for row in rows
+    )
+    wet_ready = bool(rows) and all(
+        row.wet_pass_probability_simulation_candidate_current for row in rows
+    )
     specs = [
         (
             "detection_probability",
-            detection_ready,
-            "accepted detection probability value rows for every route",
+            False,
+            "accepted simulation-derived detection probability value rows for every route",
             "detection_probability_true_without_value_rows",
         ),
         (
             "yield",
-            yield_ready,
-            "accepted yield value rows for every route",
+            False,
+            "accepted simulation-derived yield value rows for every route",
             "yield_true_without_value_rows",
         ),
         (
             "wet_pass_probability",
-            wet_ready,
-            "accepted wet-pass value rows for every route",
+            False,
+            "accepted simulation-derived wet-pass value rows for every route",
             "wet_pass_probability_true_without_value_rows",
+        ),
+        (
+            "simulation_detection_probability_candidate",
+            detection_ready,
+            "accepted simulation-derived detection probability value rows for every route",
+            "simulation_detection_candidate_true_without_value_rows",
+        ),
+        (
+            "simulation_yield_wet_candidate",
+            yield_ready and wet_ready,
+            "accepted simulation-derived yield and wet-pass value rows for every route",
+            "simulation_yield_wet_candidate_true_without_value_rows",
         ),
         (
             "production_ingestion",

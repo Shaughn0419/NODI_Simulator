@@ -55,7 +55,10 @@ CANONICAL_YIELD_VALUE_INPUT_ROWS = (
     OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv"
 )
 
-ALLOWED_USE = "manifest-bound yield/detection value input import;source artifact hash binding"
+ALLOWED_USE = (
+    "manifest-bound simulation-derived yield/detection value input import;"
+    "source artifact hash binding"
+)
 BLOCKED_USE = (
     "template-as-evidence;invented detection/yield values;route_score;winner;JRC;"
     "fabrication release;production ingestion"
@@ -167,7 +170,7 @@ def dirty_context_rows() -> list[dict[str, str]]:
             classification = "yield_detection_claim_value_manifest_import_output"
             release_decision = "included_or_rewritten_by_manifest_import_builder"
         elif path in canonical_paths:
-            classification = "claim_value_real_input_context"
+            classification = "claim_value_simulation_input_context"
             release_decision = "source_locked_input_not_rewritten_unless_manifest_import_ready"
         else:
             classification = "non_release_dirty_context"
@@ -276,11 +279,11 @@ def build_payload(
         ),
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
-        "next_high_leverage_step": (
-            "rerun yield_detection_claim_value_review after canonical value rows are written"
-            if imported_rows
-            else "provide source manifest rows for detection_probability_value and yield_wet_value"
-        ),
+            "next_high_leverage_step": (
+                "rerun yield_detection_claim_value_review after canonical value rows are written"
+                if imported_rows
+                else "provide simulation/assumption source manifest rows for detection_probability_value and yield_wet_value"
+            ),
     }
     payload = {
         "summary": summary,
@@ -399,7 +402,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Canonical yield input written: `{s['canonical_yield_input_written']}`",
             f"Claim boundary: `{s['claim_boundary']}`",
             "",
-            "This importer binds detection-probability, yield, and wet-pass value rows to source artifact hashes. It does not create route-score, winner, JRC, production, or fabrication claims, and current claim activation remains owned by the claim-value review packet.",
+            "This importer binds simulation-derived detection-probability, yield, and wet-pass value rows to source artifact hashes. It does not create route-score, winner, JRC, production, or fabrication claims by itself; current claim activation remains owned by the claim-value review packet.",
             "",
         ]
     )

@@ -1,4 +1,4 @@
-"""Create and audit real-evidence input CSV workspaces for sidewall routes."""
+"""Create and audit simulation-evidence input CSV workspaces for sidewall routes."""
 
 from __future__ import annotations
 
@@ -12,15 +12,15 @@ from nodi_simulator.realism_v2_io import read_csv_headers, read_csv_rows
 
 
 SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_VERSION = (
-    "sidewall_real_evidence_input_workspace_v1"
+    "sidewall_simulation_evidence_input_workspace_v1"
 )
 SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_CLAIM_BOUNDARY = (
-    "real_evidence_input_workspace_not_template_as_evidence"
+    "simulation_evidence_input_workspace_not_template_as_evidence"
 )
 
 TARGET_HEADER_ONLY_STATUS = "target_header_only_ready_no_evidence_rows"
 TARGET_REAL_ROWS_PRESENT_STATUS = (
-    "target_real_rows_present_not_rewritten_by_workspace"
+    "target_simulation_rows_present_not_rewritten_by_workspace"
 )
 TARGET_HEADER_MISMATCH_STATUS = "target_header_mismatch_blocked"
 TEMPLATE_MISSING_STATUS = "template_artifact_missing_blocked"
@@ -114,7 +114,7 @@ def _workspace_row(
         target_data_rows=len(target_rows),
     )
     return SidewallRealEvidenceInputWorkspaceRow(
-        workspace_row_id=f"REAL-EVIDENCE-WORKSPACE-{spec.input_branch}",
+        workspace_row_id=f"SIMULATION-EVIDENCE-WORKSPACE-{spec.input_branch}",
         workspace_version=SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_VERSION,
         input_branch=spec.input_branch,
         template_artifact_path=str(template_path),
@@ -130,8 +130,9 @@ def _workspace_row(
         accepted_status_required=spec.accepted_status_required,
         evidence_current=False,
         required_next_action=(
-            "fill target input rows with real artifacts, hashes, controls, "
-            "uncertainty, and pre-registration fields; rerun the eleven-step chain"
+            "fill target input rows with simulation/assumption source artifacts, "
+            "hashes, model controls, uncertainty, and pre-registration fields; "
+            "rerun the eleven-step chain"
         ),
         hard_fail_if="header_only_or_template_rows_counted_as_claim_evidence",
         claim_boundary=SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_CLAIM_BOUNDARY,
@@ -143,7 +144,7 @@ def _blocked_row(
     status: str,
 ) -> SidewallRealEvidenceInputWorkspaceRow:
     return SidewallRealEvidenceInputWorkspaceRow(
-        workspace_row_id=f"REAL-EVIDENCE-WORKSPACE-{spec.input_branch}",
+        workspace_row_id=f"SIMULATION-EVIDENCE-WORKSPACE-{spec.input_branch}",
         workspace_version=SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_VERSION,
         input_branch=spec.input_branch,
         template_artifact_path=str(spec.template_artifact_path),

@@ -4,7 +4,7 @@ from pytest import approx
 
 from nodi_simulator.sidewall_route_formula_policy_review import (
     FIXTURE_EVIDENCE_CLASS,
-    REAL_ACCEPTED_EVIDENCE_CLASS,
+    SIMULATION_ACCEPTED_EVIDENCE_CLASS,
     SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_CLAIM_BOUNDARY,
     build_route_formula_policy_review,
 )
@@ -35,20 +35,21 @@ def _dry_row(
     }
 
 
-def test_real_path_blocks_until_component_vector_ready() -> None:
+def test_simulation_path_blocks_until_component_vector_ready() -> None:
     rows, guards = build_route_formula_policy_review(
         route_formula_dry_run_rows=[
             _dry_row("ROUTE-CAND-001", ready=False),
             _dry_row("ROUTE-CAND-002", ready=False, flow_split="0.375"),
         ],
-        source_evidence_class=REAL_ACCEPTED_EVIDENCE_CLASS,
+        source_evidence_class=SIMULATION_ACCEPTED_EVIDENCE_CLASS,
     )
 
     assert len(rows) == 2
-    assert len(guards) == 5
+    assert len(guards) == 6
     for row in rows:
         assert row.route_formula_component_vector_ready is False
         assert row.route_score_activation_allowed_now is False
+        assert row.simulation_route_score_candidate_current is False
         assert row.route_score_current is False
         assert row.route_score_value_current == ""
         assert row.route_score_candidate_value == 0.0
@@ -58,22 +59,27 @@ def test_real_path_blocks_until_component_vector_ready() -> None:
         assert row.claim_boundary == SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_CLAIM_BOUNDARY
 
 
-def test_real_accepted_path_can_activate_route_score_candidate() -> None:
+def test_simulation_accepted_path_can_activate_route_score_candidate() -> None:
     rows, guards = build_route_formula_policy_review(
         route_formula_dry_run_rows=[
             _dry_row("ROUTE-CAND-001", ready=True, flow_split="0.625"),
             _dry_row("ROUTE-CAND-002", ready=True, flow_split="0.375"),
         ],
-        source_evidence_class=REAL_ACCEPTED_EVIDENCE_CLASS,
+        source_evidence_class=SIMULATION_ACCEPTED_EVIDENCE_CLASS,
     )
 
     by_route = {row.route_candidate_id: row for row in rows}
-    assert by_route["ROUTE-CAND-001"].route_score_current is True
+    assert by_route["ROUTE-CAND-001"].simulation_route_score_candidate_current is True
+    assert by_route["ROUTE-CAND-001"].route_score_current is False
     assert by_route["ROUTE-CAND-001"].route_score_candidate_value == approx(0.85)
     assert by_route["ROUTE-CAND-002"].route_score_candidate_value == approx(0.75)
-    assert by_route["ROUTE-CAND-002"].route_score_value_current == "0.75"
+    assert by_route["ROUTE-CAND-002"].simulation_route_score_value_current == "0.75"
     route_score_guard = next(row for row in guards if row.promotion_target == "route_score")
-    assert route_score_guard.activation_allowed_now is True
+    assert route_score_guard.activation_allowed_now is False
+    simulation_guard = next(
+        row for row in guards if row.promotion_target == "simulation_route_score_candidate"
+    )
+    assert simulation_guard.activation_allowed_now is True
     assert all(row.winner_current is False for row in rows)
 
 
@@ -90,6 +96,7 @@ def test_fixture_path_computes_candidate_without_promotion() -> None:
     for row in rows:
         assert row.fixture_not_evidence is True
         assert row.route_score_activation_allowed_now is False
+        assert row.simulation_route_score_candidate_current is False
         assert row.route_score_current is False
         assert row.route_score_value_current == ""
         assert row.route_formula_policy_review_status == (

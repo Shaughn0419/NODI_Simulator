@@ -20,7 +20,7 @@ from nodi_simulator.realism_v2_io import (  # noqa: E402
     write_json_atomic,
 )
 from nodi_simulator.sidewall_yield_detection_claim_value_review import (  # noqa: E402
-    REAL_CLAIM_VALUE_EVIDENCE_CLASS,
+    SIMULATION_CLAIM_VALUE_EVIDENCE_CLASS,
     SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_BOUNDARY,
     SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_VERSION,
     build_yield_detection_claim_value_review,
@@ -35,7 +35,7 @@ REPORT_DIR = PROJECT_ROOT / "reports"
 PREFIX = "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW"
 ARTIFACT_ID = "PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_20260701"
 DISPOSITION = (
-    "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_REAL_VALUE_ROWS"
+    "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_SIMULATION_VALUE_ROWS"
 )
 READY_DISPOSITION = (
     "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_VALUES_READY_FOR_INTEGRATED_REVIEW"
@@ -50,9 +50,12 @@ DETECTION_VALUE_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTION_PRO
 YIELD_VALUE_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv"
 
 ALLOWED_USE = (
-    "yield and detection-probability claim-value input validation;integrated route review input"
+    "simulation-derived yield and detection-probability claim-value input validation;integrated route review input"
 )
-BLOCKED_USE = "production ingestion;fabrication release;template rows as evidence"
+BLOCKED_USE = (
+    "production ingestion;fabrication release;template rows as evidence;"
+    "unreviewed assumptions as current claims;experimental truth claim"
+)
 
 SOURCE_FILES = {
     "winner_jrc_status": WINNER_JRC_STATUS,
@@ -150,7 +153,7 @@ def dirty_context_rows() -> list[dict[str, str]]:
             classification = "yield_detection_claim_value_output"
             release_decision = "included_or_rewritten_by_claim_value_builder"
         elif path in input_paths:
-            classification = "claim_value_real_input_context"
+            classification = "claim_value_simulation_input_context"
             release_decision = "source_locked_input_not_rewritten_by_builder"
         else:
             classification = "non_release_dirty_context"
@@ -204,7 +207,7 @@ def build_payload() -> dict[str, Any]:
         detection_value_rows=optional_csv(DETECTION_VALUE_INPUT_ROWS),
         yield_value_rows=optional_csv(YIELD_VALUE_INPUT_ROWS),
         artifact_root=PROJECT_ROOT,
-        source_evidence_class=REAL_CLAIM_VALUE_EVIDENCE_CLASS,
+        source_evidence_class=SIMULATION_CLAIM_VALUE_EVIDENCE_CLASS,
     )
     claim_dicts = [row.to_dict() for row in claim_rows]
     guard_dicts = [row.to_dict() for row in guard_rows]
@@ -237,9 +240,17 @@ def build_payload() -> dict[str, Any]:
         for row in source_lock
         if row["source_id"] not in {"detection_value_input_rows", "yield_value_input_rows"}
     )
-    detection_ready = sum(row["detection_probability_current"] for row in claim_dicts)
-    yield_ready = sum(row["yield_current"] for row in claim_dicts)
-    wet_pass_ready = sum(row["wet_pass_probability_current"] for row in claim_dicts)
+    detection_ready = sum(
+        row["detection_probability_simulation_candidate_current"]
+        for row in claim_dicts
+    )
+    yield_ready = sum(
+        row["yield_simulation_candidate_current"] for row in claim_dicts
+    )
+    wet_pass_ready = sum(
+        row["wet_pass_probability_simulation_candidate_current"]
+        for row in claim_dicts
+    )
     disposition = (
         READY_DISPOSITION
         if detection_ready == len(claim_dicts)
@@ -272,6 +283,15 @@ def build_payload() -> dict[str, Any]:
         "detection_probability_current_rows": detection_ready,
         "yield_current_rows": yield_ready,
         "wet_pass_probability_current_rows": wet_pass_ready,
+        "detection_probability_simulation_candidate_rows": detection_ready,
+        "yield_simulation_candidate_rows": yield_ready,
+        "wet_pass_probability_simulation_candidate_rows": wet_pass_ready,
+        "final_claim_current_rows": sum(
+            row["detection_probability_current"]
+            or row["yield_current"]
+            or row["wet_pass_probability_current"]
+            for row in claim_dicts
+        ),
         "production_ingestion_current_rows": sum(
             row["production_ingestion_current"] for row in claim_dicts
         ),
@@ -288,7 +308,7 @@ def build_payload() -> dict[str, Any]:
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
         "next_high_leverage_step": (
-            "provide real detection/yield value input rows, then rerun this review and the integrated decision review"
+            "provide simulation-derived detection/yield value input rows, then rerun this review and the integrated decision review"
         ),
     }
     payload = {
@@ -318,6 +338,8 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         failures.append("expected_two_template_rows_each")
     if s["production_ingestion_current_rows"] != 0:
         failures.append("production_ingestion_unexpectedly_positive")
+    if s["final_claim_current_rows"] != 0:
+        failures.append("final_claim_current_unexpectedly_positive")
     for row in payload["claim_value_rows"]:
         if row["claim_boundary"] != CLAIM_BOUNDARY:
             failures.append(f"claim_boundary_mismatch_{row['route_candidate_id']}")
@@ -385,9 +407,10 @@ def render_markdown(payload: dict[str, Any]) -> str:
             "",
             f"Detection input present: `{s['detection_input_present']}`.",
             f"Yield input present: `{s['yield_input_present']}`.",
-            f"Current detection/yield/wet-pass rows: `{s['detection_probability_current_rows']}` / `{s['yield_current_rows']}` / `{s['wet_pass_probability_current_rows']}`.",
+            f"Simulation detection/yield/wet-pass candidate rows: `{s['detection_probability_current_rows']}` / `{s['yield_current_rows']}` / `{s['wet_pass_probability_current_rows']}`.",
+            f"Final claim current rows: `{s['final_claim_current_rows']}`.",
             "",
-            "This packet defines the real numeric value rows required before detection probability, yield, or wet-pass claims can become current. Templates are not evidence.",
+            "This packet defines the simulation-derived numeric value rows required before detection probability, yield, or wet-pass claims can become current. Templates are not evidence.",
             "",
         ]
     )

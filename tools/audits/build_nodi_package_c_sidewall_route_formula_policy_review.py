@@ -21,7 +21,7 @@ from nodi_simulator.realism_v2_io import (  # noqa: E402
 )
 from nodi_simulator.sidewall_route_formula_policy_review import (  # noqa: E402
     FIXTURE_EVIDENCE_CLASS,
-    REAL_ACCEPTED_EVIDENCE_CLASS,
+    SIMULATION_ACCEPTED_EVIDENCE_CLASS,
     SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_CLAIM_BOUNDARY,
     SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_FORMULA_ID,
     SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_VERSION,
@@ -35,10 +35,10 @@ REPORT_DIR = PROJECT_ROOT / "reports"
 PREFIX = "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW"
 ARTIFACT_ID = "PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_20260701"
 DISPOSITION = (
-    "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_READY_WAITING_FOR_REAL_ACCEPTED_EVIDENCE"
+    "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_READY_WAITING_FOR_SIMULATION_ACCEPTED_EVIDENCE"
 )
 READY_DISPOSITION = (
-    "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_ROUTE_SCORE_CANDIDATES_READY_FOR_WINNER_POLICY_REVIEW"
+    "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_SIMULATION_ROUTE_SCORE_CANDIDATES_READY_FOR_RANKING_REVIEW"
 )
 BLOCKED_DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_FAIL_CLOSED"
 SELF_MANIFEST_SHA256 = "SELF_MANIFEST_NOT_SELF_HASHED_BY_DESIGN"
@@ -61,7 +61,7 @@ SMOKE_DRY_RUN_ROWS = (
 )
 
 ALLOWED_USE = (
-    "route formula policy review;route-score candidate formula activation after real accepted evidence"
+    "route formula policy review;route-score candidate formula activation after accepted simulation evidence"
 )
 BLOCKED_USE = (
     "winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion;"
@@ -201,7 +201,7 @@ def semantic_digest(payload: dict[str, Any]) -> str:
 def build_payload() -> dict[str, Any]:
     current_rows, current_guards = build_route_formula_policy_review(
         route_formula_dry_run_rows=read_csv_rows(CURRENT_DRY_RUN_ROWS),
-        source_evidence_class=REAL_ACCEPTED_EVIDENCE_CLASS,
+        source_evidence_class=SIMULATION_ACCEPTED_EVIDENCE_CLASS,
     )
     fixture_rows, fixture_guards = build_route_formula_policy_review(
         route_formula_dry_run_rows=read_csv_rows(SMOKE_DRY_RUN_ROWS),
@@ -218,6 +218,9 @@ def build_payload() -> dict[str, Any]:
     smoke_status = load_json(SMOKE_STATUS)
     source_missing = sum(row["exists"] != "true" for row in source_lock)
     current_score_rows = sum(row["route_score_current"] for row in policy_dicts)
+    simulation_score_rows = sum(
+        row["simulation_route_score_candidate_current"] for row in policy_dicts
+    )
     fixture_candidate_rows = sum(
         row["route_formula_policy_review_status"]
         == "fixture_route_score_candidate_path_passes_not_evidence"
@@ -225,7 +228,7 @@ def build_payload() -> dict[str, Any]:
     )
     disposition = (
         READY_DISPOSITION
-        if current_score_rows == len(policy_dicts) and policy_dicts
+        if simulation_score_rows == len(policy_dicts) and policy_dicts
         else DISPOSITION
     )
     if (
@@ -261,9 +264,8 @@ def build_payload() -> dict[str, Any]:
             row["route_formula_component_vector_ready"] for row in fixture_dicts
         ),
         "route_score_current_rows": current_score_rows,
-        "route_score_candidate_ready_rows": sum(
-            row["route_score_activation_allowed_now"] for row in policy_dicts
-        ),
+        "simulation_route_score_candidate_current_rows": simulation_score_rows,
+        "route_score_candidate_ready_rows": simulation_score_rows,
         "fixture_route_score_candidate_rows_not_evidence": fixture_candidate_rows,
         "winner_current_rows": sum(row["winner_current"] for row in policy_dicts),
         "JRC_current_rows": sum(row["JRC_current"] for row in policy_dicts),
@@ -284,7 +286,7 @@ def build_payload() -> dict[str, Any]:
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
         "next_high_leverage_step": (
-            "when real detector/wet rows are accepted, rerun activation/dry-run and this policy review; "
+            "when simulation detector/wet rows are accepted, rerun activation/dry-run and this policy review; "
             "then run winner/JRC policy review"
         ),
     }
@@ -388,9 +390,10 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Current policy rows: `{s['policy_rows']}`.",
             f"Current formula-component ready rows: `{s['current_formula_component_ready_rows']}`.",
             f"Current route-score rows: `{s['route_score_current_rows']}`.",
+            f"Simulation route-score candidate rows: `{s['simulation_route_score_candidate_current_rows']}`.",
             f"Fixture candidate rows, not evidence: `{s['fixture_route_score_candidate_rows_not_evidence']}`.",
             "",
-            "The route-score formula is now executable, but current real accepted detector/wet evidence is still absent. Fixture rows only prove the policy-review path and cannot be used as route evidence.",
+            "The route-score formula is executable when accepted simulation detector/wet evidence is present. Fixture rows only prove the policy-review path and cannot be used as route evidence.",
             "",
         ]
     )

@@ -52,7 +52,7 @@ def test_workspace_creates_header_only_target_without_evidence_rows(tmp_path: Pa
     assert read_csv_rows(target) == []
 
 
-def test_workspace_does_not_rewrite_existing_real_rows(tmp_path: Path) -> None:
+def test_workspace_does_not_rewrite_existing_simulation_rows(tmp_path: Path) -> None:
     template = tmp_path / "template.csv"
     target = tmp_path / "target.csv"
     _write_csv(template, [{"route_candidate_id": "ROUTE-CAND-001", "value": ""}])

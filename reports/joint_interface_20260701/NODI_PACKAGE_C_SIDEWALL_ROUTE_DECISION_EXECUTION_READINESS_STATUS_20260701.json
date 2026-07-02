@@ -5,7 +5,7 @@
     "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_20260701",
     "execution_status": "route_decision_execution_readiness_ready_branch_statuses_not_claim_ready",
     "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-    "current_head": "3b2d06097e637fea17809ae255b8bfe545c7e6b7",
+    "current_head": "6d289d83f6ca6ff887cd37dcd25568369eaaaf29",
     "branch": "main",
     "readiness_rows": 2,
     "claim_guard_rows": 5,
@@ -28,12 +28,12 @@
     "claim_promotion_allowed_guard_rows": 0,
     "source_lock_rows": 18,
     "source_missing_rows": 0,
-    "dirty_context_rows": 141,
-    "source_locked_upstream_dirty_context_rows": 5,
-    "non_release_dirty_context_rows": 136,
+    "dirty_context_rows": 174,
+    "source_locked_upstream_dirty_context_rows": 6,
+    "non_release_dirty_context_rows": 165,
     "release_scoped_dirty_blocker_rows": 0,
-    "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
-    "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review",
-    "semantic_digest": "8791bcf09d393cd0ee8c0c48f0dd84bd1123d9deeb7fe4a40631b8884d9353a9"
+    "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status for simulation-derived claims",
+    "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective simulation review",
+    "semantic_digest": "021a7e7b6d7162e3154b704a16418a8fa243f239999110a2dd85c3eb3e2bf3de"
   }
 }

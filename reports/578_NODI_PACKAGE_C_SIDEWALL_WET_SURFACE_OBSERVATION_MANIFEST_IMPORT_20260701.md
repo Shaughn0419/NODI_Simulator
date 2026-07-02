@@ -6,4 +6,4 @@ Rejected import rows: `0`
 Canonical wet input written: `False`
 Claim boundary: `wet_surface_observation_manifest_import_not_yield_not_detection_not_route_score`
 
-This importer binds wet observation rows to source artifact hashes. It does not create wet-pass, clogging, recovery, yield, detection-probability, route-score, winner, JRC, or production claims.
+This importer binds simulation/assumption wet observation rows to source artifact hashes. It does not create wet-pass, clogging, recovery, yield, detection-probability, route-score, winner, JRC, or production claims by itself.

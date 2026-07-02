@@ -7,6 +7,7 @@ Claim boundary: `winner_jrc_policy_review_requires_current_route_scores_not_yiel
 Current review rows: `2`.
 Current route-score rows: `0`.
 Current winner/JRC rows: `0` / `0`.
+Simulation top-candidate rows: `0`.
 Fixture order rows, not evidence: `2`.
 
-Winner/JRC activation is implemented, but it requires current real route-score candidates for every route and a unique top route. Fixture ordering is not evidence.
+Winner/JRC activation is implemented, but it requires current simulation route-score candidates for every route and a unique top route. Fixture ordering is not evidence.

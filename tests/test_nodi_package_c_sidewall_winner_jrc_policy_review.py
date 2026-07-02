@@ -16,11 +16,12 @@ def test_winner_jrc_policy_review_packet_builds() -> None:
     assert summary["disposition"] == builder.DISPOSITION
     assert summary["review_rows"] == 2
     assert summary["fixture_review_rows"] == 2
-    assert summary["guard_rows"] == 4
-    assert summary["fixture_guard_rows"] == 4
+    assert summary["guard_rows"] == 5
+    assert summary["fixture_guard_rows"] == 5
     assert summary["route_score_current_rows"] == 0
     assert summary["winner_current_rows"] == 0
     assert summary["JRC_current_rows"] == 0
+    assert summary["simulation_top_candidate_current_rows"] == 0
     assert summary["fixture_order_rows_not_evidence"] == 2
     assert summary["yield_current_rows"] == 0
     assert summary["detection_probability_current_rows"] == 0
@@ -32,8 +33,9 @@ def test_current_rows_blocked_and_fixture_order_is_not_evidence() -> None:
     fixture = payload["fixture_review_rows"]
 
     for row in current:
-        assert row["source_evidence_class"] == builder.REAL_ACCEPTED_EVIDENCE_CLASS
+        assert row["source_evidence_class"] == builder.SIMULATION_ACCEPTED_EVIDENCE_CLASS
         assert row["route_score_current"] is False
+        assert row["simulation_top_candidate_current"] is False
         assert row["winner_current"] is False
         assert row["JRC_current"] is False
         assert row["winner_jrc_policy_review_status"] == (

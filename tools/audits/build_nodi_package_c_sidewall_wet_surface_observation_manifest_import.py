@@ -53,7 +53,10 @@ CANONICAL_WET_INPUT_ROWS = (
     OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INPUT_ROWS_20260701.csv"
 )
 
-ALLOWED_USE = "manifest-bound wet observation input import;source artifact hash binding"
+ALLOWED_USE = (
+    "manifest-bound simulation/assumption wet observation input import;"
+    "source artifact hash binding"
+)
 BLOCKED_USE = (
     "template-as-evidence;wet_pass_probability;clogging_rate;time_to_clog;"
     "recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
@@ -356,7 +359,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Canonical wet input written: `{s['canonical_wet_input_written']}`",
             f"Claim boundary: `{s['claim_boundary']}`",
             "",
-            "This importer binds wet observation rows to source artifact hashes. It does not create wet-pass, clogging, recovery, yield, detection-probability, route-score, winner, JRC, or production claims.",
+            "This importer binds simulation/assumption wet observation rows to source artifact hashes. It does not create wet-pass, clogging, recovery, yield, detection-probability, route-score, winner, JRC, or production claims by itself.",
             "",
         ]
     )

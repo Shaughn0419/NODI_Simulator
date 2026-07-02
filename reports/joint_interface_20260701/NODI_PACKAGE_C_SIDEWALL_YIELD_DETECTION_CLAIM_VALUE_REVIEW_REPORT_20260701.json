@@ -2,33 +2,45 @@
   "claim_value_rows": [
     {
       "JRC_current": false,
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "claim_row_id": "YIELD-DETECTION-CLAIM-VALUE-ROUTE-CAND-001",
-      "claim_value_review_status": "blocked_until_real_detection_and_yield_value_rows_accepted",
+      "claim_value_review_status": "blocked_until_simulation_detection_and_yield_value_rows_accepted",
       "detection_probability_ci_high_current": "",
       "detection_probability_ci_low_current": "",
       "detection_probability_current": false,
+      "detection_probability_simulation_candidate_ci_high": "",
+      "detection_probability_simulation_candidate_ci_low": "",
+      "detection_probability_simulation_candidate_current": false,
+      "detection_probability_simulation_candidate_value": "",
       "detection_probability_value_current": "",
       "detection_source_artifact_path_current": "",
       "detection_value_row_present": false,
       "detection_value_validation_status": "detection_probability_value_missing",
       "fixture_not_evidence": false,
-      "hard_fail_if": "yield_or_detection_probability_current_true_without_real_validated_value_rows",
-      "next_required_evidence": "real detection probability value row with controls and uncertainty; real yield and wet-pass value row with controls and uncertainty",
+      "hard_fail_if": "yield_or_detection_probability_current_true_without_simulation_validated_value_rows",
+      "next_required_evidence": "simulation-derived detection probability value row with assumptions, controls, and uncertainty; simulation-derived yield and wet-pass value row with assumptions, controls, and uncertainty",
       "production_ingestion_current": false,
       "review_version": "sidewall_yield_detection_claim_value_review_v1",
       "route_candidate_id": "ROUTE-CAND-001",
       "route_geometry_family": "ideal_rectangle",
       "route_score_current": false,
-      "source_evidence_class": "real_claim_value_evidence",
+      "source_evidence_class": "simulation_claim_value_evidence",
       "wet_pass_probability_ci_high_current": "",
       "wet_pass_probability_ci_low_current": "",
       "wet_pass_probability_current": false,
+      "wet_pass_probability_simulation_candidate_ci_high": "",
+      "wet_pass_probability_simulation_candidate_ci_low": "",
+      "wet_pass_probability_simulation_candidate_current": false,
+      "wet_pass_probability_simulation_candidate_value": "",
       "wet_pass_probability_value_current": "",
       "winner_current": false,
       "yield_ci_high_current": "",
       "yield_ci_low_current": "",
       "yield_current": false,
+      "yield_simulation_candidate_ci_high": "",
+      "yield_simulation_candidate_ci_low": "",
+      "yield_simulation_candidate_current": false,
+      "yield_simulation_candidate_value": "",
       "yield_source_artifact_path_current": "",
       "yield_value_current": "",
       "yield_value_row_present": false,
@@ -36,33 +48,45 @@
     },
     {
       "JRC_current": false,
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "claim_row_id": "YIELD-DETECTION-CLAIM-VALUE-ROUTE-CAND-002",
-      "claim_value_review_status": "blocked_until_real_detection_and_yield_value_rows_accepted",
+      "claim_value_review_status": "blocked_until_simulation_detection_and_yield_value_rows_accepted",
       "detection_probability_ci_high_current": "",
       "detection_probability_ci_low_current": "",
       "detection_probability_current": false,
+      "detection_probability_simulation_candidate_ci_high": "",
+      "detection_probability_simulation_candidate_ci_low": "",
+      "detection_probability_simulation_candidate_current": false,
+      "detection_probability_simulation_candidate_value": "",
       "detection_probability_value_current": "",
       "detection_source_artifact_path_current": "",
       "detection_value_row_present": false,
       "detection_value_validation_status": "detection_probability_value_missing",
       "fixture_not_evidence": false,
-      "hard_fail_if": "yield_or_detection_probability_current_true_without_real_validated_value_rows",
-      "next_required_evidence": "real detection probability value row with controls and uncertainty; real yield and wet-pass value row with controls and uncertainty",
+      "hard_fail_if": "yield_or_detection_probability_current_true_without_simulation_validated_value_rows",
+      "next_required_evidence": "simulation-derived detection probability value row with assumptions, controls, and uncertainty; simulation-derived yield and wet-pass value row with assumptions, controls, and uncertainty",
       "production_ingestion_current": false,
       "review_version": "sidewall_yield_detection_claim_value_review_v1",
       "route_candidate_id": "ROUTE-CAND-002",
       "route_geometry_family": "trapezoid_tapered_sidewalls",
       "route_score_current": false,
-      "source_evidence_class": "real_claim_value_evidence",
+      "source_evidence_class": "simulation_claim_value_evidence",
       "wet_pass_probability_ci_high_current": "",
       "wet_pass_probability_ci_low_current": "",
       "wet_pass_probability_current": false,
+      "wet_pass_probability_simulation_candidate_ci_high": "",
+      "wet_pass_probability_simulation_candidate_ci_low": "",
+      "wet_pass_probability_simulation_candidate_current": false,
+      "wet_pass_probability_simulation_candidate_value": "",
       "wet_pass_probability_value_current": "",
       "winner_current": false,
       "yield_ci_high_current": "",
       "yield_ci_low_current": "",
       "yield_current": false,
+      "yield_simulation_candidate_ci_high": "",
+      "yield_simulation_candidate_ci_low": "",
+      "yield_simulation_candidate_current": false,
+      "yield_simulation_candidate_value": "",
       "yield_source_artifact_path_current": "",
       "yield_value_current": "",
       "yield_value_row_present": false,
@@ -155,6 +179,42 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
+      "path": "nodi_simulator/sidewall_real_evidence_input_workspace.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_decision_execution_readiness.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_evidence_input_packet.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "yield_detection_claim_value_build_edit",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
       "path": "papers/provenance/paper_manifest.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
@@ -173,19 +233,37 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/543_NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_20260701.md",
+      "path": "reports/573_NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_20260701.md",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/547_NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_20260701.md",
+      "path": "reports/574_NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_20260701.md",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/575_NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_20260701.md",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/577_NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_20260701.md",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/578_NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_20260701.md",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/579_NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_20260701.md",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
@@ -491,54 +569,6 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_REPORT_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_STATUS_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_REPORT_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_DIRTY_CONTEXT_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
@@ -563,6 +593,12 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_SOURCE_MANIFEST_WORKSPACE_ROWS_20260701.csv",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_STATUS_20260701.json",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
@@ -575,31 +611,37 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_DIRTY_CONTEXT_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_DETECTOR_FIXTURE_ROWS_NOT_EVIDENCE_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_MANIFEST_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_DIRTY_CONTEXT_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_REPORT_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_MANIFEST_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_SOURCE_LOCK_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_REPORT_20260701.json",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_STATUS_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_SOURCE_LOCK_20260701.csv",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_STATUS_20260701.json",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
@@ -611,7 +653,31 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_FIXTURE_GUARD_ROWS_NOT_EVIDENCE_20260701.csv",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_FIXTURE_POLICY_ROWS_NOT_EVIDENCE_20260701.csv",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_GUARD_ROWS_20260701.csv",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_MANIFEST_20260701.csv",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_POLICY_ROWS_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
@@ -630,66 +696,6 @@
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_REPORT_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_STATUS_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_REPORT_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_STATUS_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_AUDIT_ROWS_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
@@ -731,6 +737,24 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_FIXTURE_GUARD_ROWS_NOT_EVIDENCE_20260701.csv",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_FIXTURE_REVIEW_ROWS_NOT_EVIDENCE_20260701.csv",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_GUARD_ROWS_20260701.csv",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_MANIFEST_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
@@ -743,6 +767,12 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REVIEW_ROWS_20260701.csv",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_SOURCE_LOCK_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
@@ -750,12 +780,6 @@
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_review"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_AUDIT_ROWS_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
     },
     {
@@ -898,6 +922,126 @@
     },
     {
       "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_real_evidence_input_workspace.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_route_decision_execution_readiness.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "yield_detection_claim_value_build_edit",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_real_evidence_input_workspace.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_route_evidence_input_packet.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "yield_detection_claim_value_build_edit",
+      "git_status": " M",
+      "path": "tests/test_sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_accepted_evidence_smoke.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_decision_execution_readiness.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_manifest_import.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_validation_hardening.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_manifest_import.py",
+      "release_decision": "ignored_for_yield_detection_claim_value_review"
+    },
+    {
+      "classification": "yield_detection_claim_value_build_edit",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_release_dirty_context",
       "git_status": "??",
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
       "release_decision": "ignored_for_yield_detection_claim_value_review"
@@ -924,37 +1068,57 @@
   "guard_rows": [
     {
       "activation_allowed_now": false,
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "guard_row_id": "YIELD-DETECTION-CLAIM-VALUE-GUARD-detection_probability",
       "hard_fail_if_activated_early": "detection_probability_true_without_value_rows",
       "implementation_authorized": true,
       "promotion_target": "detection_probability",
-      "required_evidence_before_activation": "accepted detection probability value rows for every route",
+      "required_evidence_before_activation": "accepted simulation-derived detection probability value rows for every route",
       "review_version": "sidewall_yield_detection_claim_value_review_v1"
     },
     {
       "activation_allowed_now": false,
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "guard_row_id": "YIELD-DETECTION-CLAIM-VALUE-GUARD-yield",
       "hard_fail_if_activated_early": "yield_true_without_value_rows",
       "implementation_authorized": true,
       "promotion_target": "yield",
-      "required_evidence_before_activation": "accepted yield value rows for every route",
+      "required_evidence_before_activation": "accepted simulation-derived yield value rows for every route",
       "review_version": "sidewall_yield_detection_claim_value_review_v1"
     },
     {
       "activation_allowed_now": false,
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "guard_row_id": "YIELD-DETECTION-CLAIM-VALUE-GUARD-wet_pass_probability",
       "hard_fail_if_activated_early": "wet_pass_probability_true_without_value_rows",
       "implementation_authorized": true,
       "promotion_target": "wet_pass_probability",
-      "required_evidence_before_activation": "accepted wet-pass value rows for every route",
+      "required_evidence_before_activation": "accepted simulation-derived wet-pass value rows for every route",
       "review_version": "sidewall_yield_detection_claim_value_review_v1"
     },
     {
       "activation_allowed_now": false,
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
+      "guard_row_id": "YIELD-DETECTION-CLAIM-VALUE-GUARD-simulation_detection_probability_candidate",
+      "hard_fail_if_activated_early": "simulation_detection_candidate_true_without_value_rows",
+      "implementation_authorized": true,
+      "promotion_target": "simulation_detection_probability_candidate",
+      "required_evidence_before_activation": "accepted simulation-derived detection probability value rows for every route",
+      "review_version": "sidewall_yield_detection_claim_value_review_v1"
+    },
+    {
+      "activation_allowed_now": false,
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
+      "guard_row_id": "YIELD-DETECTION-CLAIM-VALUE-GUARD-simulation_yield_wet_candidate",
+      "hard_fail_if_activated_early": "simulation_yield_wet_candidate_true_without_value_rows",
+      "implementation_authorized": true,
+      "promotion_target": "simulation_yield_wet_candidate",
+      "required_evidence_before_activation": "accepted simulation-derived yield and wet-pass value rows for every route",
+      "review_version": "sidewall_yield_detection_claim_value_review_v1"
+    },
+    {
+      "activation_allowed_now": false,
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "guard_row_id": "YIELD-DETECTION-CLAIM-VALUE-GUARD-production_ingestion",
       "hard_fail_if_activated_early": "production_ingestion_true_from_claim_value_review",
       "implementation_authorized": true,
@@ -966,7 +1130,7 @@
   "input_contract_rows": [
     {
       "accepted_current_rows": 0,
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "input_name": "detection_probability_value_input_rows",
       "input_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv",
       "input_present": true,
@@ -974,7 +1138,7 @@
     },
     {
       "accepted_current_rows": 0,
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "input_name": "yield_wet_value_input_rows",
       "input_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv",
       "input_present": true,
@@ -983,104 +1147,108 @@
   ],
   "source_lock_rows": [
     {
-      "allowed_use": "yield and detection-probability claim-value input validation;integrated route review input",
-      "blocked_use": "production ingestion;fabrication release;template rows as evidence",
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "allowed_use": "simulation-derived yield and detection-probability claim-value input validation;integrated route review input",
+      "blocked_use": "production ingestion;fabrication release;template rows as evidence;unreviewed assumptions as current claims;experimental truth claim",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json",
-      "sha256": "c3433d555e582fdf2a27e71634a51e83bf2f448dc31959b1098a0580a08b82e9",
+      "sha256": "f830636110a2f4b67d1046e8d745692976ad4c8f8053be9c3ccd5c6222e9653b",
       "source_id": "winner_jrc_status"
     },
     {
-      "allowed_use": "yield and detection-probability claim-value input validation;integrated route review input",
-      "blocked_use": "production ingestion;fabrication release;template rows as evidence",
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "allowed_use": "simulation-derived yield and detection-probability claim-value input validation;integrated route review input",
+      "blocked_use": "production ingestion;fabrication release;template rows as evidence;unreviewed assumptions as current claims;experimental truth claim",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REVIEW_ROWS_20260701.csv",
-      "sha256": "86b9e13dee3313b297dc2f03607b2fe93f0a906c3d35f2c0652cc756bee8166f",
+      "sha256": "f19022c98070a8482a753b1d9d9ad2861ff475737081a7af5efcad2157a1e3a3",
       "source_id": "winner_jrc_rows"
     },
     {
-      "allowed_use": "yield and detection-probability claim-value input validation;integrated route review input",
-      "blocked_use": "production ingestion;fabrication release;template rows as evidence",
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "allowed_use": "simulation-derived yield and detection-probability claim-value input validation;integrated route review input",
+      "blocked_use": "production ingestion;fabrication release;template rows as evidence;unreviewed assumptions as current claims;experimental truth claim",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv",
       "sha256": "f0db4e7b572b4216f472e0a6d32e8ca86b5cb80d40a76b0c529f995deeefa929",
       "source_id": "detection_value_input_rows"
     },
     {
-      "allowed_use": "yield and detection-probability claim-value input validation;integrated route review input",
-      "blocked_use": "production ingestion;fabrication release;template rows as evidence",
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "allowed_use": "simulation-derived yield and detection-probability claim-value input validation;integrated route review input",
+      "blocked_use": "production ingestion;fabrication release;template rows as evidence;unreviewed assumptions as current claims;experimental truth claim",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv",
       "sha256": "ebe8e3945ba761d01cca6a8d261d378aae36feb0e62cbaee9dd376c3fee78ab6",
       "source_id": "yield_value_input_rows"
     },
     {
-      "allowed_use": "yield and detection-probability claim-value input validation;integrated route review input",
-      "blocked_use": "production ingestion;fabrication release;template rows as evidence",
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "allowed_use": "simulation-derived yield and detection-probability claim-value input validation;integrated route review input",
+      "blocked_use": "production ingestion;fabrication release;template rows as evidence;unreviewed assumptions as current claims;experimental truth claim",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "exists": "true",
       "path": "nodi_simulator/sidewall_yield_detection_claim_value_review.py",
-      "sha256": "877bce589349aa94ae21deafa4df1789fb83b941af5f3afd63ab42cfe0582350",
+      "sha256": "7549381fbe47cad762fd9dacf0c5fef334e15a74d2d8f38f5a27d6efa5476c25",
       "source_id": "claim_value_source"
     },
     {
-      "allowed_use": "yield and detection-probability claim-value input validation;integrated route review input",
-      "blocked_use": "production ingestion;fabrication release;template rows as evidence",
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "allowed_use": "simulation-derived yield and detection-probability claim-value input validation;integrated route review input",
+      "blocked_use": "production ingestion;fabrication release;template rows as evidence;unreviewed assumptions as current claims;experimental truth claim",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "exists": "true",
       "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
-      "sha256": "aafe881e409c15f70dfec0bc0e0b35635eca95f7c8c3d2e15545323897d4494a",
+      "sha256": "e9edc985c0f57a286bffd0b401d15835ee838a944a85c071162a082049599a36",
       "source_id": "claim_value_builder"
     },
     {
-      "allowed_use": "yield and detection-probability claim-value input validation;integrated route review input",
-      "blocked_use": "production ingestion;fabrication release;template rows as evidence",
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "allowed_use": "simulation-derived yield and detection-probability claim-value input validation;integrated route review input",
+      "blocked_use": "production ingestion;fabrication release;template rows as evidence;unreviewed assumptions as current claims;experimental truth claim",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "exists": "true",
       "path": "tests/test_sidewall_yield_detection_claim_value_review.py",
-      "sha256": "88f36c6cf4f94d2490cccc2146078a3a8a8d4fc631441d2513035fac6f512756",
+      "sha256": "7909e9b97cc710c8a2b1bbce9432293660cc9345960b66581ee45d429f201652",
       "source_id": "claim_value_tests"
     },
     {
-      "allowed_use": "yield and detection-probability claim-value input validation;integrated route review input",
-      "blocked_use": "production ingestion;fabrication release;template rows as evidence",
-      "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+      "allowed_use": "simulation-derived yield and detection-probability claim-value input validation;integrated route review input",
+      "blocked_use": "production ingestion;fabrication release;template rows as evidence;unreviewed assumptions as current claims;experimental truth claim",
+      "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
       "exists": "true",
       "path": "tests/test_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
-      "sha256": "6d9ef4132e10cc853bf5cacde37b5de42b998ce9fd4dfbfde2582e37b688e308",
+      "sha256": "1d25f69574ca145604e06a5ba224705fdc5f9a92c9d7c05d274a49cfd1c0ef38",
       "source_id": "claim_value_builder_tests"
     }
   ],
   "summary": {
-    "allowed_use": "yield and detection-probability claim-value input validation;integrated route review input",
+    "allowed_use": "simulation-derived yield and detection-probability claim-value input validation;integrated route review input",
     "artifact_id": "PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_20260701",
-    "blocked_use": "production ingestion;fabrication release;template rows as evidence",
+    "blocked_use": "production ingestion;fabrication release;template rows as evidence;unreviewed assumptions as current claims;experimental truth claim",
     "branch": "main",
-    "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+    "claim_boundary": "yield_detection_claim_value_review_requires_simulation_value_rows",
     "claim_value_rows": 2,
-    "current_head": "3b2d06097e637fea17809ae255b8bfe545c7e6b7",
+    "current_head": "6d289d83f6ca6ff887cd37dcd25568369eaaaf29",
     "detection_input_present": true,
     "detection_probability_current_rows": 0,
+    "detection_probability_simulation_candidate_rows": 0,
     "detection_template_rows": 2,
-    "dirty_context_rows": 136,
-    "disposition": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_REAL_VALUE_ROWS",
+    "dirty_context_rows": 156,
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_SIMULATION_VALUE_ROWS",
+    "final_claim_current_rows": 0,
     "guard_activation_allowed_rows": 0,
-    "guard_rows": 4,
-    "next_high_leverage_step": "provide real detection/yield value input rows, then rerun this review and the integrated decision review",
-    "non_release_dirty_context_rows": 136,
+    "guard_rows": 6,
+    "next_high_leverage_step": "provide simulation-derived detection/yield value input rows, then rerun this review and the integrated decision review",
+    "non_release_dirty_context_rows": 152,
     "production_ingestion_current_rows": 0,
     "review_version": "sidewall_yield_detection_claim_value_review_v1",
-    "semantic_digest": "7b91f42a528ba75c785f301792188530b86d35be9f4cdd54b33d93c16a8fc033",
+    "semantic_digest": "b2c1550be9d78918881642700e12253bacb289e5c8bf74d9473ad52adea7b6ca",
     "source_lock_rows": 8,
     "source_missing_rows": 0,
     "source_winner_jrc_disposition": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES",
     "wet_pass_probability_current_rows": 0,
+    "wet_pass_probability_simulation_candidate_rows": 0,
     "yield_current_rows": 0,
     "yield_input_present": true,
+    "yield_simulation_candidate_rows": 0,
     "yield_template_rows": 2
   },
   "yield_template_rows": [

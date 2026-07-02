@@ -2,7 +2,7 @@
 
 This module is the first layer that can compute a route-score candidate value,
 but it only promotes `route_score_current` when the upstream component vector is
-ready and the source is real accepted evidence rather than a fixture.
+ready and the source is accepted simulation evidence rather than a fixture.
 """
 
 from __future__ import annotations
@@ -24,7 +24,10 @@ SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_FORMULA_ID = (
 QCH_FLOW_WEIGHT = 0.4
 DETECTOR_GATE_WEIGHT = 0.3
 WET_GATE_WEIGHT = 0.3
-REAL_ACCEPTED_EVIDENCE_CLASS = "real_accepted_detector_wet_evidence"
+SIMULATION_ACCEPTED_EVIDENCE_CLASS = "simulation_accepted_detector_wet_evidence"
+# Backward-compatible import alias. In this simulation-only lane, this is not an
+# experimental evidence class.
+REAL_ACCEPTED_EVIDENCE_CLASS = SIMULATION_ACCEPTED_EVIDENCE_CLASS
 FIXTURE_EVIDENCE_CLASS = "fixture_not_evidence"
 
 
@@ -48,6 +51,9 @@ class SidewallRouteFormulaPolicyReviewRow:
     detector_gate_component_value: float
     wet_gate_component_value: float
     route_score_candidate_value: float
+    simulation_route_score_candidate_current: bool
+    simulation_route_score_value_current: str
+    simulation_route_score_claim_level: str
     route_score_activation_allowed_now: bool
     route_score_current: bool
     route_score_value_current: str
@@ -116,9 +122,9 @@ def _policy_row(
         if component_ready
         else 0.0
     )
-    activation_allowed = (
+    simulation_candidate_allowed = (
         component_ready
-        and source_evidence_class == REAL_ACCEPTED_EVIDENCE_CLASS
+        and source_evidence_class == SIMULATION_ACCEPTED_EVIDENCE_CLASS
         and not fixture_not_evidence
     )
     return SidewallRouteFormulaPolicyReviewRow(
@@ -140,11 +146,14 @@ def _policy_row(
         detector_gate_component_value=detector_component,
         wet_gate_component_value=wet_component,
         route_score_candidate_value=round(candidate_value, 12),
-        route_score_activation_allowed_now=activation_allowed,
-        route_score_current=activation_allowed,
-        route_score_value_current=(
-            f"{candidate_value:.12g}" if activation_allowed else ""
+        simulation_route_score_candidate_current=simulation_candidate_allowed,
+        simulation_route_score_value_current=(
+            f"{candidate_value:.12g}" if simulation_candidate_allowed else ""
         ),
+        simulation_route_score_claim_level="simulation_only_candidate",
+        route_score_activation_allowed_now=False,
+        route_score_current=False,
+        route_score_value_current="",
         winner_current=False,
         JRC_current=False,
         yield_current=False,
@@ -153,16 +162,16 @@ def _policy_row(
         production_ingestion_current=False,
         route_formula_policy_review_status=_review_status(
             component_ready=component_ready,
-            activation_allowed=activation_allowed,
+            activation_allowed=simulation_candidate_allowed,
             fixture_not_evidence=fixture_not_evidence,
         ),
         next_required_action=_next_required_action(
             component_ready=component_ready,
-            activation_allowed=activation_allowed,
+            activation_allowed=simulation_candidate_allowed,
             fixture_not_evidence=fixture_not_evidence,
         ),
         hard_fail_if=(
-            "route_score_current_true_without_real_accepted_evidence_or_component_vector"
+            "route_score_current_true_without_simulation_accepted_evidence_or_component_vector"
         ),
         claim_boundary=SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_CLAIM_BOUNDARY,
     )
@@ -181,10 +190,10 @@ def _review_status(
     fixture_not_evidence: bool,
 ) -> str:
     if activation_allowed:
-        return "route_score_candidate_ready_for_winner_policy_review"
+        return "simulation_route_score_candidate_ready_for_ranking_review"
     if component_ready and fixture_not_evidence:
         return "fixture_route_score_candidate_path_passes_not_evidence"
-    return "blocked_until_formula_component_vector_ready_from_real_evidence"
+    return "blocked_until_formula_component_vector_ready_from_simulation_evidence"
 
 
 def _next_required_action(
@@ -194,22 +203,30 @@ def _next_required_action(
     fixture_not_evidence: bool,
 ) -> str:
     if activation_allowed:
-        return "run winner/JRC policy review with route-score candidate values"
+        return "run ranking/JRC-candidate policy review with simulation route-score candidate values"
     if component_ready and fixture_not_evidence:
-        return "replace fixture rows with real accepted detector/wet input rows"
-    return "complete accepted detector/wet evidence and rerun activation closure"
+        return "replace fixture rows with accepted simulation detector/wet input rows"
+    return "complete accepted simulation detector/wet evidence and rerun activation closure"
 
 
 def _guard_rows(
     rows: list[SidewallRouteFormulaPolicyReviewRow],
 ) -> list[SidewallRouteFormulaPolicyReviewGuardRow]:
-    all_scores_ready = bool(rows) and all(row.route_score_current for row in rows)
+    all_scores_ready = bool(rows) and all(
+        row.simulation_route_score_candidate_current for row in rows
+    )
     specs = [
         (
             "route_score",
+            False,
+            "accepted simulation detector/wet evidence plus ready formula component vector",
+            "route_score_true_without_simulation_accepted_component_vector",
+        ),
+        (
+            "simulation_route_score_candidate",
             all_scores_ready,
-            "real accepted detector/wet evidence plus ready formula component vector",
-            "route_score_true_without_real_accepted_component_vector",
+            "accepted simulation detector/wet evidence plus ready formula component vector",
+            "simulation_route_score_candidate_true_without_component_vector",
         ),
         (
             "winner_JRC",

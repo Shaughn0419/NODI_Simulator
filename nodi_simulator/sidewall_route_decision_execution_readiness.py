@@ -185,9 +185,7 @@ def build_route_decision_execution_readiness(
                 winner_ready=overall_winner_ready,
                 yield_detection_ready=overall_yield_detection_ready,
             ),
-            route_score_current=_route_score_candidate_ready(
-                formula_policy_by_route.get(str(row.get("route_candidate_id", "")), {})
-            ),
+            route_score_current=False,
             winner_current=_bool(
                 winner_policy_by_route.get(str(row.get("route_candidate_id", "")), {}).get(
                     "winner_current"
@@ -215,11 +213,11 @@ def build_route_decision_execution_readiness(
             ),
             production_ingestion_current=False,
             next_required_evidence=(
-                "accepted detector/blank transfer rows, accepted wet observation rows, "
+                "accepted simulation detector/blank transfer rows, accepted wet observation rows, "
                 "and route formula component-vector dry run before route/yield/detection policy review"
             ),
             hard_fail_if=(
-                "route_score_winner_yield_detection_or_production_true_before_detector_blank_and_wet_evidence_pass"
+                "route_score_winner_yield_detection_or_production_true_before_detector_blank_and_wet_simulation_evidence_pass"
             ),
             claim_boundary=SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_CLAIM_BOUNDARY,
         )
@@ -270,7 +268,7 @@ def _claim_guard_rows(
         (
             "route_score",
             route_score_ready,
-            "accepted detector/blank, wet observation, flow/q_ch, and route formula packet",
+            "accepted simulation detector/blank, wet observation, flow/q_ch, and route formula packet",
             "route_score_true_without_all_branch_evidence",
         ),
         (
@@ -282,13 +280,13 @@ def _claim_guard_rows(
         (
             "yield",
             yield_ready,
-            "wet observation evidence plus detector/blank and route policy packets",
+            "simulation wet observation evidence plus detector/blank and route policy packets",
             "yield_true_without_wet_detector_and_route_packets",
         ),
         (
             "detection_probability",
             detection_ready,
-            "detector/blank transfer, threshold policy, wet context, and uncertainty",
+            "simulation detector/blank transfer, threshold policy, wet context, and uncertainty",
             "detection_probability_true_without_detector_blank_transfer",
         ),
         (
@@ -350,18 +348,28 @@ def _component_vector_ready(row: Mapping[str, Any]) -> bool:
 
 
 def _route_score_candidate_ready(row: Mapping[str, Any]) -> bool:
-    return _bool(row.get("route_score_current")) and _bool(
-        row.get("route_score_activation_allowed_now")
+    return _bool(row.get("simulation_route_score_candidate_current")) or (
+        _bool(row.get("route_score_current"))
+        and _bool(row.get("route_score_activation_allowed_now"))
     )
 
 
 def _winner_jrc_ready(row: Mapping[str, Any]) -> bool:
-    return _bool(row.get("winner_current")) and _bool(row.get("JRC_current"))
+    return _bool(row.get("simulation_top_candidate_current")) or (
+        _bool(row.get("winner_current")) and _bool(row.get("JRC_current"))
+    )
 
 
 def _yield_detection_values_ready(row: Mapping[str, Any]) -> bool:
     return (
-        _bool(row.get("yield_current"))
-        and _bool(row.get("detection_probability_current"))
-        and _bool(row.get("wet_pass_probability_current"))
+        (
+            _bool(row.get("yield_simulation_candidate_current"))
+            and _bool(row.get("detection_probability_simulation_candidate_current"))
+            and _bool(row.get("wet_pass_probability_simulation_candidate_current"))
+        )
+        or (
+            _bool(row.get("yield_current"))
+            and _bool(row.get("detection_probability_current"))
+            and _bool(row.get("wet_pass_probability_current"))
+        )
     )

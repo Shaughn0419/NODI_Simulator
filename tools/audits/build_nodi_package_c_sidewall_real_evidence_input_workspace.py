@@ -41,12 +41,12 @@ DATE_STAMP = "20260701"
 OUTPUT_DIR = PROJECT_ROOT / f"reports/joint_interface_{DATE_STAMP}"
 REPORT_DIR = PROJECT_ROOT / "reports"
 PREFIX = "NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE"
-ARTIFACT_ID = "PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_20260701"
-DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_READY_HEADER_ONLY"
+ARTIFACT_ID = "PACKAGE_C_SIDEWALL_SIMULATION_EVIDENCE_INPUT_WORKSPACE_20260701"
+DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_SIMULATION_EVIDENCE_INPUT_WORKSPACE_READY_HEADER_ONLY"
 REAL_ROWS_DISPOSITION = (
-    "NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_REAL_ROWS_PRESENT_RERUN_REQUIRED"
+    "NODI_PACKAGE_C_SIDEWALL_SIMULATION_EVIDENCE_INPUT_WORKSPACE_SIMULATION_ROWS_PRESENT_RERUN_REQUIRED"
 )
-BLOCKED_DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_FAIL_CLOSED"
+BLOCKED_DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_SIMULATION_EVIDENCE_INPUT_WORKSPACE_FAIL_CLOSED"
 SELF_MANIFEST_SHA256 = "SELF_MANIFEST_NOT_SELF_HASHED_BY_DESIGN"
 CLAIM_BOUNDARY = SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_CLAIM_BOUNDARY
 
@@ -62,8 +62,11 @@ YIELD_VALUE_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_WET_
 WET_SOURCE_MANIFEST = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_SOURCE_MANIFEST_20260701.csv"
 CLAIM_VALUE_SOURCE_MANIFEST = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv"
 
-ALLOWED_USE = "create/audit header-only real evidence target CSVs for the sidewall route decision chain"
-BLOCKED_USE = "template-as-evidence;claim activation;production ingestion"
+ALLOWED_USE = (
+    "create/audit header-only simulation/assumption evidence target CSVs for "
+    "the sidewall route decision chain"
+)
+BLOCKED_USE = "template-as-evidence;unreviewed assumptions as claims;production ingestion"
 
 BUILD_EDIT_PATHS = {
     "nodi_simulator/sidewall_real_evidence_input_workspace.py",
@@ -210,17 +213,17 @@ def dirty_context_rows() -> list[dict[str, str]]:
     for line in git_status_lines():
         path = git_path_from_status_line(line)
         if path in BUILD_EDIT_PATHS:
-            classification = "real_evidence_input_workspace_build_edit"
+            classification = "simulation_evidence_input_workspace_build_edit"
             release_decision = "included_in_commit_scope_before_publish"
         elif path in target_paths:
-            classification = "real_evidence_target_input_csv"
-            release_decision = "source_locked_header_only_or_real_input"
+            classification = "simulation_evidence_target_input_csv"
+            release_decision = "source_locked_header_only_or_simulation_input"
         elif path.startswith(output_prefix) or path == output_report:
-            classification = "real_evidence_input_workspace_output"
+            classification = "simulation_evidence_input_workspace_output"
             release_decision = "included_or_rewritten_by_workspace_builder"
         else:
             classification = "non_release_dirty_context"
-            release_decision = "ignored_for_real_evidence_input_workspace"
+            release_decision = "ignored_for_simulation_evidence_input_workspace"
         rows.append(
             {
                 "path": path,
@@ -285,12 +288,12 @@ def _source_manifest_workspace_rows(*, create_missing_targets: bool) -> list[dic
         elif not header_matches:
             status = "source_manifest_header_mismatch_blocked"
         elif data_rows:
-            status = "source_manifest_real_rows_present_not_rewritten_by_workspace"
+            status = "source_manifest_simulation_rows_present_not_rewritten_by_workspace"
         else:
             status = "source_manifest_header_only_ready_no_evidence_rows"
         rows.append(
             {
-                "workspace_row_id": f"REAL-EVIDENCE-SOURCE-MANIFEST-{spec['source_manifest_branch']}",
+                "workspace_row_id": f"SIMULATION-EVIDENCE-SOURCE-MANIFEST-{spec['source_manifest_branch']}",
                 "workspace_version": SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_VERSION,
                 "source_manifest_branch": spec["source_manifest_branch"],
                 "source_manifest_path": display_path(path),
@@ -304,8 +307,9 @@ def _source_manifest_workspace_rows(*, create_missing_targets: bool) -> list[dic
                 "downstream_importer": spec["downstream_importer"],
                 "evidence_current": False,
                 "required_next_action": (
-                    "fill source manifest rows with real source artifact paths, controls, "
-                    "uncertainty, and pre-registration fields; run the downstream importer"
+                    "fill source manifest rows with simulation/assumption source artifact "
+                    "paths, model controls, uncertainty, and pre-registration fields; "
+                    "run the downstream importer"
                 ),
                 "hard_fail_if": "source_manifest_header_only_rows_counted_as_claim_evidence",
                 "claim_boundary": CLAIM_BOUNDARY,
@@ -355,7 +359,7 @@ def build_payload(*, create_missing_targets: bool) -> dict[str, Any]:
         row["target_validation_status"]
         not in {
             "source_manifest_header_only_ready_no_evidence_rows",
-            "source_manifest_real_rows_present_not_rewritten_by_workspace",
+            "source_manifest_simulation_rows_present_not_rewritten_by_workspace",
         }
         for row in source_manifest_rows
     )
@@ -387,6 +391,7 @@ def build_payload(*, create_missing_targets: bool) -> dict[str, Any]:
             for row in row_dicts
         ),
         "target_real_data_rows_total": target_data_rows,
+        "target_simulation_data_rows_total": target_data_rows,
         "target_blocked_rows": target_blocked,
         "source_manifest_created_now_rows": sum(
             row["target_created_now"] for row in source_manifest_rows
@@ -397,6 +402,7 @@ def build_payload(*, create_missing_targets: bool) -> dict[str, Any]:
             for row in source_manifest_rows
         ),
         "source_manifest_real_data_rows_total": source_manifest_data_rows,
+        "source_manifest_simulation_data_rows_total": source_manifest_data_rows,
         "source_manifest_blocked_rows": source_manifest_blocked,
         "evidence_current_rows": sum(row["evidence_current"] for row in row_dicts),
         "source_lock_rows": len(source_lock),
@@ -409,7 +415,8 @@ def build_payload(*, create_missing_targets: bool) -> dict[str, Any]:
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
         "next_high_leverage_step": (
-            "fill source manifests or target CSV rows with real artifacts, then run the eleven-step route evidence command chain"
+            "fill source manifests or target CSV rows with simulation/assumption artifacts, "
+            "then run the eleven-step route evidence command chain"
         ),
     }
     payload = {
@@ -496,7 +503,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
     s = payload["summary"]
     return "\n".join(
         [
-            "# NODI Package C Sidewall Real Evidence Input Workspace",
+            "# NODI Package C Sidewall Simulation Evidence Input Workspace",
             "",
             f"Disposition: `{s['disposition']}`",
             f"Artifact ID: `{s['artifact_id']}`",
@@ -507,12 +514,12 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Header-only target rows: `{s['target_header_only_rows']}`.",
             f"Header-only source manifests: `{s['source_manifest_header_only_rows']}`.",
             f"Headers refreshed now: `{s['target_header_refreshed_now_rows']}`.",
-            f"Real target data rows total: `{s['target_real_data_rows_total']}`.",
-            f"Real source manifest data rows total: `{s['source_manifest_real_data_rows_total']}`.",
+            f"Simulation target data rows total: `{s['target_simulation_data_rows_total']}`.",
+            f"Simulation source manifest data rows total: `{s['source_manifest_simulation_data_rows_total']}`.",
             f"Targets created now: `{s['target_created_now_rows']}`.",
             f"Source manifests created now: `{s['source_manifest_created_now_rows']}`.",
             "",
-            "The target CSV and source manifest files are fillable inputs for real detector, wet, detection-probability, and yield/wet-pass evidence. Header-only files are not evidence.",
+            "The target CSV and source manifest files are fillable inputs for simulation/assumption-bound detector, wet, detection-probability, and yield/wet-pass evidence. Header-only files are not evidence.",
             "",
         ]
     )

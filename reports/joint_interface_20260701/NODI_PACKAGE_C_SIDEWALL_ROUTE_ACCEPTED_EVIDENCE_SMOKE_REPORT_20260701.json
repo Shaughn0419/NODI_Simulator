@@ -2,10 +2,12 @@
   "detector_fixture_rows": [
     {
       "blank_trace_artifact_id": "fixture-blank-ROUTE-CAND-001",
+      "blank_trace_artifact_path": "fixture_not_evidence/detector_blank/ROUTE-CAND-001/blank_trace.csv",
       "blank_trace_geometry_match_level": "sidewall_specific",
       "blank_trace_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
       "controls_status": "controls_pass",
       "detector_response_artifact_id": "fixture-detector-ROUTE-CAND-001",
+      "detector_response_artifact_path": "fixture_not_evidence/detector_blank/ROUTE-CAND-001/detector_response.csv",
       "detector_response_model_id": "fixture-detector-response-v1",
       "detector_response_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
       "false_positive_rate_ci_high": "0.0004",
@@ -21,10 +23,12 @@
     },
     {
       "blank_trace_artifact_id": "fixture-blank-ROUTE-CAND-002",
+      "blank_trace_artifact_path": "fixture_not_evidence/detector_blank/ROUTE-CAND-002/blank_trace.csv",
       "blank_trace_geometry_match_level": "sidewall_specific",
       "blank_trace_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
       "controls_status": "controls_pass",
       "detector_response_artifact_id": "fixture-detector-ROUTE-CAND-002",
+      "detector_response_artifact_path": "fixture_not_evidence/detector_blank/ROUTE-CAND-002/detector_response.csv",
       "detector_response_model_id": "fixture-detector-response-v1",
       "detector_response_sha256": "1212121212121212121212121212121212121212121212121212121212121212",
       "false_positive_rate_ci_high": "0.0004",
@@ -91,6 +95,42 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
+      "path": "nodi_simulator/sidewall_real_evidence_input_workspace.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_decision_execution_readiness.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_evidence_input_packet.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
       "path": "papers/provenance/paper_manifest.csv",
       "release_decision": "ignored_for_route_accepted_evidence_smoke"
     },
@@ -104,12 +144,6 @@
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
-      "release_decision": "ignored_for_route_accepted_evidence_smoke"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
       "release_decision": "ignored_for_route_accepted_evidence_smoke"
     },
     {
@@ -415,36 +449,6 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_DIRTY_CLASSIFIER_20260701.csv",
-      "release_decision": "ignored_for_route_accepted_evidence_smoke"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_accepted_evidence_smoke"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_accepted_evidence_smoke"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_accepted_evidence_smoke"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_accepted_evidence_smoke"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "release_decision": "ignored_for_route_accepted_evidence_smoke"
     },
@@ -551,10 +555,124 @@
       "release_decision": "ignored_for_route_accepted_evidence_smoke"
     },
     {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_real_evidence_input_workspace.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_route_decision_execution_readiness.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_real_evidence_input_workspace.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_route_evidence_input_packet.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
       "classification": "route_accepted_evidence_smoke_build_edit",
-      "git_status": "??",
-      "path": "nodi_simulator/sidewall_route_accepted_evidence_smoke.py",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_accepted_evidence_smoke.py",
       "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_decision_execution_readiness.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_manifest_import.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_validation_hardening.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_manifest_import.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "ignored_for_route_accepted_evidence_smoke"
     },
     {
       "classification": "non_release_dirty_context",
@@ -575,28 +693,10 @@
       "release_decision": "ignored_for_route_accepted_evidence_smoke"
     },
     {
-      "classification": "route_accepted_evidence_smoke_build_edit",
-      "git_status": "??",
-      "path": "tests/test_nodi_package_c_sidewall_route_accepted_evidence_smoke.py",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
-      "classification": "route_accepted_evidence_smoke_build_edit",
-      "git_status": "??",
-      "path": "tests/test_sidewall_route_accepted_evidence_smoke.py",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "classification": "non_release_dirty_context",
       "git_status": "??",
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "release_decision": "ignored_for_route_accepted_evidence_smoke"
-    },
-    {
-      "classification": "route_accepted_evidence_smoke_build_edit",
-      "git_status": "??",
-      "path": "tools/audits/build_nodi_package_c_sidewall_route_accepted_evidence_smoke.py",
-      "release_decision": "included_in_commit_scope_before_publish"
     }
   ],
   "dry_run_rows": [
@@ -716,7 +816,7 @@
   "source_lock_rows": [
     {
       "allowed_use": "fixture-only accepted-evidence smoke for activation closure and formula dry-run path",
-      "blocked_use": "real evidence;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "blocked_use": "simulation evidence source rows;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
       "claim_boundary": "fixture_smoke_not_evidence_not_route_score_not_yield_not_detection",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CALIBRATION_PANEL_ROUTE_EVIDENCE_MATRIX_ROWS_20260701.csv",
@@ -725,7 +825,7 @@
     },
     {
       "allowed_use": "fixture-only accepted-evidence smoke for activation closure and formula dry-run path",
-      "blocked_use": "real evidence;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "blocked_use": "simulation evidence source rows;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
       "claim_boundary": "fixture_smoke_not_evidence_not_route_score_not_yield_not_detection",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_EVIDENCE_CONTRACT_CONTRACT_ROWS_20260701.csv",
@@ -734,34 +834,34 @@
     },
     {
       "allowed_use": "fixture-only accepted-evidence smoke for activation closure and formula dry-run path",
-      "blocked_use": "real evidence;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "blocked_use": "simulation evidence source rows;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
       "claim_boundary": "fixture_smoke_not_evidence_not_route_score_not_yield_not_detection",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_QCH_DETECTOR_WET_BLOCKER_BINDER_BINDER_ROWS_20260701.csv",
-      "sha256": "22cc36b6596e533838d95396aa502fdb6965bc076be8c8c624ef2bbc54e4eae7",
+      "sha256": "55d4d9790dbba20c31d3c1935f49f7c3ff7747076f7a98f0474a34f7d9136565",
       "source_id": "qch_detector_wet_binder_rows"
     },
     {
       "allowed_use": "fixture-only accepted-evidence smoke for activation closure and formula dry-run path",
-      "blocked_use": "real evidence;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "blocked_use": "simulation evidence source rows;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
       "claim_boundary": "fixture_smoke_not_evidence_not_route_score_not_yield_not_detection",
       "exists": "true",
       "path": "nodi_simulator/sidewall_route_accepted_evidence_smoke.py",
-      "sha256": "663b54899db33d20d5655d127ae31d5de0309733794d6ef2d0f4ce2599d5814f",
+      "sha256": "3ba1c013604e93fcd8511200cc713f94dbbdff16976dcaa912fc18e46d472ee5",
       "source_id": "smoke_source"
     },
     {
       "allowed_use": "fixture-only accepted-evidence smoke for activation closure and formula dry-run path",
-      "blocked_use": "real evidence;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "blocked_use": "simulation evidence source rows;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
       "claim_boundary": "fixture_smoke_not_evidence_not_route_score_not_yield_not_detection",
       "exists": "true",
       "path": "tools/audits/build_nodi_package_c_sidewall_route_accepted_evidence_smoke.py",
-      "sha256": "8549397d3f33f39ccbca013355a31b25367775d5f581fba6b639d34056c46542",
+      "sha256": "a1873b0d693a967fa54bfaecbba678802b9298cba1e03b1556ac8617b6e79a75",
       "source_id": "smoke_builder"
     },
     {
       "allowed_use": "fixture-only accepted-evidence smoke for activation closure and formula dry-run path",
-      "blocked_use": "real evidence;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "blocked_use": "simulation evidence source rows;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
       "claim_boundary": "fixture_smoke_not_evidence_not_route_score_not_yield_not_detection",
       "exists": "true",
       "path": "tests/test_sidewall_route_accepted_evidence_smoke.py",
@@ -770,7 +870,7 @@
     },
     {
       "allowed_use": "fixture-only accepted-evidence smoke for activation closure and formula dry-run path",
-      "blocked_use": "real evidence;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "blocked_use": "simulation evidence source rows;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
       "claim_boundary": "fixture_smoke_not_evidence_not_route_score_not_yield_not_detection",
       "exists": "true",
       "path": "tests/test_nodi_package_c_sidewall_route_accepted_evidence_smoke.py",
@@ -782,20 +882,20 @@
     "JRC_current_rows": 0,
     "allowed_use": "fixture-only accepted-evidence smoke for activation closure and formula dry-run path",
     "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_20260701",
-    "blocked_use": "real evidence;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+    "blocked_use": "simulation evidence source rows;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
     "branch": "main",
     "claim_boundary": "fixture_smoke_not_evidence_not_route_score_not_yield_not_detection",
     "component_vector_ready_rows": 2,
-    "current_head": "d1c8c8629e2949f129d106163d8e92ec550169a2",
+    "current_head": "6d289d83f6ca6ff887cd37dcd25568369eaaaf29",
     "detection_probability_current_rows": 0,
     "detector_fixture_rows": 2,
-    "dirty_context_rows": 93,
+    "dirty_context_rows": 109,
     "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_READY_FIXTURE_PATH_PASSES_NOT_EVIDENCE",
     "dry_run_rows": 2,
     "fixture_not_evidence_rows": 2,
     "fixture_path_pass_rows": 2,
-    "next_high_leverage_step": "use real detector/wet input rows, then rerun the same activation closure and dry-run chain",
-    "non_release_dirty_context_rows": 89,
+    "next_high_leverage_step": "use accepted simulation detector/wet input rows, then rerun the same activation closure and dry-run chain",
+    "non_release_dirty_context_rows": 108,
     "production_ingestion_current_rows": 0,
     "route_formula_ready_for_claim_review_rows": 2,
     "route_score_current_rows": 0,

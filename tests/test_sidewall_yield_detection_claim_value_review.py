@@ -91,14 +91,14 @@ def test_claim_value_review_defaults_to_missing_no_claims() -> None:
     )
 
     assert len(rows) == 2
-    assert len(guards) == 4
+    assert len(guards) == 6
     for row in rows:
         assert row.detection_probability_current is False
         assert row.yield_current is False
         assert row.wet_pass_probability_current is False
         assert row.production_ingestion_current is False
         assert row.claim_value_review_status == (
-            "blocked_until_real_detection_and_yield_value_rows_accepted"
+            "blocked_until_simulation_detection_and_yield_value_rows_accepted"
         )
         assert row.claim_boundary == (
             SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_BOUNDARY
@@ -143,19 +143,31 @@ def test_claim_value_review_accepts_valid_detection_and_yield_rows(
         ],
     )
 
-    assert {row.detection_probability_current for row in rows} == {True}
-    assert {row.yield_current for row in rows} == {True}
-    assert {row.wet_pass_probability_current for row in rows} == {True}
+    assert {row.detection_probability_simulation_candidate_current for row in rows} == {
+        True
+    }
+    assert {row.yield_simulation_candidate_current for row in rows} == {True}
+    assert {row.wet_pass_probability_simulation_candidate_current for row in rows} == {
+        True
+    }
+    assert {row.detection_probability_current for row in rows} == {False}
+    assert {row.yield_current for row in rows} == {False}
+    assert {row.wet_pass_probability_current for row in rows} == {False}
     by_route = {row.route_candidate_id: row for row in rows}
     assert by_route["ROUTE-CAND-001"].claim_value_review_status == (
-        "yield_detection_values_ready_for_integrated_route_claim_review"
+        "simulation_yield_detection_values_ready_for_integrated_route_candidate_review"
     )
     assert by_route["ROUTE-CAND-002"].claim_value_review_status == (
-        "yield_detection_values_ready_waiting_winner_jrc"
+        "simulation_yield_detection_values_ready_waiting_simulation_top_candidate"
     )
     by_target = {guard.promotion_target: guard for guard in guards}
-    assert by_target["detection_probability"].activation_allowed_now is True
-    assert by_target["yield"].activation_allowed_now is True
+    assert by_target["detection_probability"].activation_allowed_now is False
+    assert by_target["yield"].activation_allowed_now is False
+    assert (
+        by_target["simulation_detection_probability_candidate"].activation_allowed_now
+        is True
+    )
+    assert by_target["simulation_yield_wet_candidate"].activation_allowed_now is True
     assert by_target["production_ingestion"].activation_allowed_now is False
 
 

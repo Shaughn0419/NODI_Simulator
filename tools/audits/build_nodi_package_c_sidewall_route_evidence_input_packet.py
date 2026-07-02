@@ -55,10 +55,12 @@ DETECTION_VALUE_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECT
 YIELD_VALUE_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv"
 REAL_EVIDENCE_WORKSPACE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_STATUS_20260701.json"
 
-ALLOWED_USE = "single entry packet for detector/wet/value evidence input and full route decision rerun chain"
+ALLOWED_USE = (
+    "single entry packet for detector/wet/value simulation evidence input and full route decision rerun chain"
+)
 BLOCKED_USE = (
     "template-as-evidence;route_score;winner;JRC;yield;detection_probability;"
-    "wet_pass_probability from templates or unaccepted rows;production ingestion"
+    "wet_pass_probability from templates, unreviewed assumptions, or unaccepted rows;production ingestion"
 )
 
 SOURCE_FILES = {
@@ -70,7 +72,7 @@ SOURCE_FILES = {
     "closure_status": CLOSURE_STATUS,
     "closure_rows": CLOSURE_ROWS,
     "claim_value_status": CLAIM_VALUE_STATUS,
-    "real_evidence_workspace_status": REAL_EVIDENCE_WORKSPACE_STATUS,
+    "simulation_evidence_workspace_status": REAL_EVIDENCE_WORKSPACE_STATUS,
     "detection_value_template_rows": DETECTION_VALUE_TEMPLATE_ROWS,
     "yield_value_template_rows": YIELD_VALUE_TEMPLATE_ROWS,
     "claim_value_manifest_import_source": PROJECT_ROOT
@@ -163,7 +165,7 @@ def dirty_context_rows() -> list[dict[str, str]]:
             release_decision = "included_in_commit_scope_before_publish"
         elif path in target_input_paths:
             classification = "route_evidence_target_input_rows"
-            release_decision = "source_locked_header_only_or_real_input"
+            release_decision = "source_locked_header_only_or_simulation_input"
         elif path.startswith(output_prefix) or path == output_report:
             classification = "route_evidence_input_packet_output"
             release_decision = "included_or_rewritten_by_input_packet_builder"
@@ -292,7 +294,7 @@ def build_payload() -> dict[str, Any]:
         "source_activation_disposition": str(activation_summary.get("disposition", "")),
         "source_closure_disposition": str(closure_summary.get("disposition", "")),
         "source_claim_value_disposition": str(claim_value_summary.get("disposition", "")),
-        "source_real_evidence_workspace_disposition": str(
+        "source_simulation_evidence_workspace_disposition": str(
             workspace_summary.get("disposition", "")
         ),
         "workspace_target_header_only_rows": int(
@@ -301,8 +303,11 @@ def build_payload() -> dict[str, Any]:
         "workspace_target_header_refreshed_now_rows": int(
             workspace_summary.get("target_header_refreshed_now_rows", 0)
         ),
-        "workspace_target_real_data_rows_total": int(
-            workspace_summary.get("target_real_data_rows_total", 0)
+        "workspace_target_simulation_data_rows_total": int(
+            workspace_summary.get(
+                "target_simulation_data_rows_total",
+                workspace_summary.get("target_real_data_rows_total", 0),
+            )
         ),
         "detector_input_present": bool(activation_summary.get("detector_input_present")),
         "wet_input_present": bool(activation_summary.get("wet_input_present")),
@@ -314,9 +319,31 @@ def build_payload() -> dict[str, Any]:
         "yield_value_template_rows": int(claim_value_summary.get("yield_template_rows", 0)),
         "detector_accepted_transfer_rows_total": int(activation_summary.get("detector_accepted_transfer_rows_total", 0)),
         "wet_accepted_endpoint_count_total": int(activation_summary.get("wet_accepted_endpoint_count_total", 0)),
-        "detection_probability_current_rows": int(claim_value_summary.get("detection_probability_current_rows", 0)),
+        "detection_probability_current_rows": int(
+            claim_value_summary.get("detection_probability_current_rows", 0)
+        ),
         "yield_current_rows": int(claim_value_summary.get("yield_current_rows", 0)),
-        "wet_pass_probability_current_rows": int(claim_value_summary.get("wet_pass_probability_current_rows", 0)),
+        "wet_pass_probability_current_rows": int(
+            claim_value_summary.get("wet_pass_probability_current_rows", 0)
+        ),
+        "detection_probability_simulation_candidate_rows": int(
+            claim_value_summary.get(
+                "detection_probability_simulation_candidate_rows",
+                claim_value_summary.get("detection_probability_current_rows", 0),
+            )
+        ),
+        "yield_simulation_candidate_rows": int(
+            claim_value_summary.get(
+                "yield_simulation_candidate_rows",
+                claim_value_summary.get("yield_current_rows", 0),
+            )
+        ),
+        "wet_pass_probability_simulation_candidate_rows": int(
+            claim_value_summary.get(
+                "wet_pass_probability_simulation_candidate_rows",
+                claim_value_summary.get("wet_pass_probability_current_rows", 0),
+            )
+        ),
         "input_rows": len(input_dicts),
         "input_branches_missing_current_acceptance": ";".join(
             missing_current_acceptance_branches
@@ -327,9 +354,18 @@ def build_payload() -> dict[str, Any]:
         "route_score_current": False,
         "winner_current": False,
         "JRC_current": False,
-        "yield_current": bool(claim_value_summary.get("yield_current_rows")),
-        "detection_probability_current": bool(claim_value_summary.get("detection_probability_current_rows")),
-        "wet_pass_probability_current": bool(claim_value_summary.get("wet_pass_probability_current_rows")),
+        "yield_current": False,
+        "detection_probability_current": False,
+        "wet_pass_probability_current": False,
+        "yield_simulation_candidate_current": bool(
+            claim_value_summary.get("yield_simulation_candidate_rows")
+        ),
+        "detection_probability_simulation_candidate_current": bool(
+            claim_value_summary.get("detection_probability_simulation_candidate_rows")
+        ),
+        "wet_pass_probability_simulation_candidate_current": bool(
+            claim_value_summary.get("wet_pass_probability_simulation_candidate_rows")
+        ),
         "production_ingestion_current": False,
         "source_lock_rows": len(source_lock),
         "required_source_missing_rows": required_source_missing,
@@ -341,7 +377,7 @@ def build_payload() -> dict[str, Any]:
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
         "next_high_leverage_step": (
-            "populate source manifests/importer inputs for "
+            "populate simulation/assumption source manifests/importer inputs for "
             + ", ".join(missing_current_acceptance_branches)
             + ", then rerun the eleven-step command chain"
             if missing_current_acceptance_branches
@@ -445,7 +481,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Route formula ready rows: `{s['route_formula_ready_for_claim_review_rows']}`.",
             f"Detection probability current rows: `{s['detection_probability_current_rows']}`; yield current rows: `{s['yield_current_rows']}`; wet-pass current rows: `{s['wet_pass_probability_current_rows']}`.",
             "",
-            "This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value evidence, then rerunning the eleven-step chain through route decision readiness.",
+            "This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value simulation evidence, then rerunning the eleven-step chain through route decision readiness.",
             "",
         ]
     )

@@ -50,10 +50,10 @@ YIELD_DETECTION_CLAIM_VALUE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_D
 
 ALLOWED_USE = (
     "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;"
-    "route-score and winner/JRC policy-review status"
+    "route-score and winner/JRC policy-review status for simulation-derived claims"
 )
 BLOCKED_USE = (
-    "yield;detection_probability;production ingestion;fabrication release without respective review"
+    "yield;detection_probability;production ingestion;fabrication release without respective simulation review"
 )
 
 SOURCE_FILES = {
@@ -356,7 +356,7 @@ def report_markdown(payload: dict[str, Any]) -> str:
         f"- Winner/JRC ready rows: `{s['winner_jrc_candidate_ready_rows']}`.",
         f"- Yield/detection value ready rows: `{s['yield_detection_values_ready_rows']}`.",
         f"- route/yield/detection current rows: `{s['route_score_current_rows']}` / `{s['yield_current_rows']}` / `{s['detection_probability_current_rows']}`.",
-        "- Rectangle baseline and sidewall trapezoid route remain side by side; route decisions remain blocked until detector/blank and wet evidence packets contain accepted rows.",
+        "- Rectangle baseline and sidewall trapezoid route remain side by side; route decisions advance when detector/blank and wet simulation evidence packets contain accepted rows.",
         "",
     ])
 

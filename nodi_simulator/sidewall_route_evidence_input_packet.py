@@ -101,10 +101,14 @@ def build_route_evidence_input_packet(
         activation_summary.get("detector_accepted_transfer_rows_total")
     )
     wet_accepted = _int(activation_summary.get("wet_accepted_endpoint_count_total"))
-    detection_accepted = _int(
-        claim_value_summary.get("detection_probability_current_rows")
+    detection_accepted = max(
+        _int(claim_value_summary.get("detection_probability_simulation_candidate_rows")),
+        _int(claim_value_summary.get("detection_probability_current_rows")),
     )
-    yield_accepted = _int(claim_value_summary.get("yield_current_rows"))
+    yield_accepted = max(
+        _int(claim_value_summary.get("yield_simulation_candidate_rows")),
+        _int(claim_value_summary.get("yield_current_rows")),
+    )
     input_rows = [
         SidewallRouteEvidenceInputRow(
             input_row_id="ROUTE-EVIDENCE-INPUT-detector_blank_transfer",
@@ -126,12 +130,12 @@ def build_route_evidence_input_packet(
                 accepted_rows=detector_accepted,
                 ready_text=(
                     "detector blank transfer already has accepted candidate rows; "
-                    "rerun only when replacing detector evidence"
+                    "rerun only when replacing detector simulation evidence"
                 ),
                 missing_text=(
-                    "populate detector blank transfer input rows with accepted hashes, "
-                    "controls, sample counts, uncertainty model, and pre-registered "
-                    "rule status"
+                    "populate detector blank transfer simulation input rows with "
+                    "accepted hashes, model controls, sample counts, uncertainty "
+                    "model, and pre-registered rule status"
                 ),
             ),
             hard_fail_if=(
@@ -157,13 +161,13 @@ def build_route_evidence_input_packet(
                 accepted_rows=wet_accepted,
                 ready_text=(
                     "wet endpoint observation bundle already accepted; rerun only "
-                    "when replacing wet evidence"
+                    "when replacing wet simulation evidence"
                 ),
                 missing_text=(
-                    "populate wet source manifest rows and run the wet observation "
-                    "manifest importer so source hashes, required fields, controls, "
-                    "replicate counts, uncertainty intervals, and pre-registration "
-                    "status are bound before wet intake"
+                    "populate wet simulation/assumption source manifest rows and run "
+                    "the wet observation manifest importer so source hashes, required "
+                    "fields, model controls, replicate counts, uncertainty intervals, "
+                    "and pre-registration status are bound before wet intake"
                 ),
             ),
             hard_fail_if="wet_template_or_context_rows_counted_as_wet_claim",
@@ -187,14 +191,14 @@ def build_route_evidence_input_packet(
                 accepted_rows=detection_accepted,
                 ready_text=(
                     "detection probability value rows already accepted; rerun only "
-                    "when replacing value evidence"
+                    "when replacing simulation value evidence"
                 ),
                 missing_text=(
-                    "populate claim-value source manifest rows with "
+                    "populate claim-value simulation/assumption source manifest rows with "
                     "claim_value_branch=detection_probability_value, estimates, "
                     "confidence intervals, positive-control counts, threshold "
                     "policy, controls, uncertainty model, source artifact path, "
-                    "and pre-registration status; run the claim-value manifest "
+                    "source artifact hash, and pre-registration status; run the claim-value manifest "
                     "importer before claim-value review"
                 ),
             ),
@@ -219,13 +223,13 @@ def build_route_evidence_input_packet(
                 accepted_rows=yield_accepted,
                 ready_text=(
                     "yield and wet-pass value rows already accepted; rerun only "
-                    "when replacing value evidence"
+                    "when replacing simulation value evidence"
                 ),
                 missing_text=(
-                    "populate claim-value source manifest rows with "
+                    "populate claim-value simulation/assumption source manifest rows with "
                     "claim_value_branch=yield_wet_value, yield/wet-pass estimates, "
                     "confidence intervals, wet trial counts, model id, controls, "
-                    "uncertainty model, source artifact path, and pre-registration "
+                    "uncertainty model, source artifact path, source artifact hash, and pre-registration "
                     "status; run the claim-value manifest importer before "
                     "claim-value review"
                 ),
@@ -282,10 +286,10 @@ def _input_required_action(
 
 def _formula_next_required_action(*, detector_ready: bool, wet_ready: bool) -> str:
     if detector_ready and not wet_ready:
-        return "complete accepted wet evidence inputs, then rerun the command chain"
+        return "complete accepted wet simulation evidence inputs, then rerun the command chain"
     if wet_ready and not detector_ready:
-        return "complete accepted detector evidence inputs, then rerun the command chain"
-    return "complete accepted detector and wet evidence inputs, then rerun the command chain"
+        return "complete accepted detector simulation evidence inputs, then rerun the command chain"
+    return "complete accepted detector and wet simulation evidence inputs, then rerun the command chain"
 
 
 def _command_rows() -> list[SidewallRouteEvidenceCommandRow]:
@@ -312,7 +316,7 @@ def _command_rows() -> list[SidewallRouteEvidenceCommandRow]:
             "detector_wet_activation_runner",
             "python tools\\audits\\build_nodi_package_c_sidewall_detector_wet_evidence_activation_runner.py --confirm-sidewall-detector-wet-evidence-activation-runner",
             "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json",
-            "combines detector and wet accepted-evidence branches",
+            "combines detector and wet accepted-simulation-evidence branches",
         ),
         (
             "route_formula_activation_closure",
@@ -330,7 +334,7 @@ def _command_rows() -> list[SidewallRouteEvidenceCommandRow]:
             "route_formula_policy_review",
             "python tools\\audits\\build_nodi_package_c_sidewall_route_formula_policy_review.py --confirm-sidewall-route-formula-policy-review",
             "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json",
-            "activates route-score candidates only after real accepted evidence",
+            "activates route-score candidates only after accepted simulation evidence",
         ),
         (
             "winner_jrc_policy_review",
@@ -348,7 +352,7 @@ def _command_rows() -> list[SidewallRouteEvidenceCommandRow]:
             "yield_detection_claim_value_review",
             "python tools\\audits\\build_nodi_package_c_sidewall_yield_detection_claim_value_review.py --confirm-sidewall-yield-detection-claim-value-review",
             "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json",
-            "accepts real numeric yield/detection/wet-pass value rows",
+            "accepts simulation-derived numeric yield/detection/wet-pass value rows",
         ),
         (
             "route_decision_execution_readiness",

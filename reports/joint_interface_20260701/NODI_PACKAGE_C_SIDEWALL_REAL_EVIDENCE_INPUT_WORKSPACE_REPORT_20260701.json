@@ -4,665 +4,941 @@
       "classification": "non_release_dirty_context",
       "git_status": "M ",
       "path": "REVIEW_BUILD_MANIFEST.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "REVIEW_PACKAGE_HASHES.sha256",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "REVIEW_PACKAGE_MANIFEST.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "configs/realism_v2/ev_sample_profiles.yaml",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "configs/realism_v2/reason_code_vocabulary.yaml",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "configs/realism_v2/route_role_vocabulary.yaml",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "simulation_evidence_input_workspace_build_edit",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_real_evidence_input_workspace.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_decision_execution_readiness.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_evidence_input_packet.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "papers/provenance/paper_manifest.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
-      "classification": "real_evidence_input_workspace_output",
+      "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/577_NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_20260701.md",
-      "release_decision": "included_or_rewritten_by_workspace_builder"
+      "path": "reports/573_NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_20260701.md",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/574_NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_20260701.md",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/575_NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_20260701.md",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
-      "classification": "real_evidence_input_workspace_output",
+      "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "included_or_rewritten_by_workspace_builder"
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_DETECTOR_FIXTURE_ROWS_NOT_EVIDENCE_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
-      "classification": "real_evidence_input_workspace_output",
+      "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_MANIFEST_20260701.csv",
-      "release_decision": "included_or_rewritten_by_workspace_builder"
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_DIRTY_CONTEXT_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
-      "classification": "real_evidence_input_workspace_output",
+      "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_REPORT_20260701.json",
-      "release_decision": "included_or_rewritten_by_workspace_builder"
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_MANIFEST_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
-      "classification": "real_evidence_input_workspace_output",
+      "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_SOURCE_LOCK_20260701.csv",
-      "release_decision": "included_or_rewritten_by_workspace_builder"
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_REPORT_20260701.json",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
-      "classification": "real_evidence_input_workspace_output",
+      "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_STATUS_20260701.json",
-      "release_decision": "included_or_rewritten_by_workspace_builder"
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_SOURCE_LOCK_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
-      "classification": "real_evidence_input_workspace_output",
+      "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_WORKSPACE_ROWS_20260701.csv",
-      "release_decision": "included_or_rewritten_by_workspace_builder"
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_STATUS_20260701.json",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_DIRTY_CONTEXT_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_FIXTURE_GUARD_ROWS_NOT_EVIDENCE_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_FIXTURE_POLICY_ROWS_NOT_EVIDENCE_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_GUARD_ROWS_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_MANIFEST_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_POLICY_ROWS_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_REPORT_20260701.json",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_SOURCE_LOCK_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_DIRTY_CONTEXT_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_FIXTURE_GUARD_ROWS_NOT_EVIDENCE_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_FIXTURE_REVIEW_ROWS_NOT_EVIDENCE_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_GUARD_ROWS_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_MANIFEST_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REPORT_20260701.json",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REVIEW_ROWS_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_SOURCE_LOCK_20260701.csv",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "simulation_evidence_input_workspace_build_edit",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_real_evidence_input_workspace.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_route_decision_execution_readiness.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "simulation_evidence_input_workspace_build_edit",
+      "git_status": " M",
+      "path": "tests/test_sidewall_real_evidence_input_workspace.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_route_evidence_input_packet.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tests/test_sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "simulation_evidence_input_workspace_build_edit",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_accepted_evidence_smoke.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_decision_execution_readiness.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_formula_policy_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_manifest_import.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_validation_hardening.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_winner_jrc_policy_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_manifest_import.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": "??",
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": "??",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": "??",
       "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": "??",
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
-      "release_decision": "ignored_for_real_evidence_input_workspace"
+      "release_decision": "ignored_for_simulation_evidence_input_workspace"
     }
   ],
   "source_lock_rows": [
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_TEMPLATE_ROWS_20260701.csv",
       "sha256": "1346fcb122e2bf39c2b3d2fb0d21636e3dc71deeb5f90115b4cae9ed18257d52",
       "source_id": "detector_template_rows"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_OBSERVATION_TEMPLATE_ROWS_20260701.csv",
       "sha256": "a31af837dff6d5444dab6977b4170a581600c3f2552fa7ea15244cd3af41e7b5",
       "source_id": "wet_template_rows"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_DETECTION_VALUE_TEMPLATE_ROWS_20260701.csv",
       "sha256": "995b11c0e6b9619095e391566317ea89fee279a64d9690e60b07690a27882e55",
       "source_id": "detection_value_template_rows"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_YIELD_VALUE_TEMPLATE_ROWS_20260701.csv",
       "sha256": "2b706ef0d8ffda783c1493d015e72a40a347bfa6230444da485b3090b0394b5c",
       "source_id": "yield_value_template_rows"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "nodi_simulator/sidewall_real_evidence_input_workspace.py",
-      "sha256": "93caeb91e46810cd872b9b409fca3c6dede0891ddd809cfbb424ec130bbd8465",
+      "sha256": "371336e0acc6954b420ca1747e6ad4e7659165fa1e23bfd1724a68eb236bd91d",
       "source_id": "workspace_source"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
-      "sha256": "a5d21a136be500ceceb48685c9bd989cd2cf4ee9b735fafabca715a2662f786f",
+      "sha256": "3e9b72d38da9053d1d1117bb9343213faed2fe5e712ad6e5560f2953cecdec15",
       "source_id": "workspace_builder"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "tests/test_sidewall_real_evidence_input_workspace.py",
-      "sha256": "10bf5b32ba389eac60847379577bcc2dd69a319e0b5855791601fa074910868f",
+      "sha256": "d7be03bf534e72e0cb6187c1d9c3ff9a94067b487c13077ca9bb02087a3313b2",
       "source_id": "workspace_tests"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "tests/test_nodi_package_c_sidewall_real_evidence_input_workspace.py",
-      "sha256": "09d6f35d04205bee40db3bd1d1448fb1edd76f0ab934eb42a3b2bd6d70b82b58",
+      "sha256": "9bd1d7dffe05754a2b51aa235f401b0bc7dfa0976a55de9c022f998b926c61ae",
       "source_id": "workspace_builder_tests"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INPUT_ROWS_20260701.csv",
       "sha256": "22a1b488c78100149eb9d78e3139ecbaa5c69fe906f8ae6deb48ffcfd13cd93c",
       "source_id": "target_detector_input_rows"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INPUT_ROWS_20260701.csv",
       "sha256": "c5cf54e312c4633b512f3b099a06c888a32187b139a70711603ec9678d3b6b87",
       "source_id": "target_wet_input_rows"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv",
       "sha256": "f0db4e7b572b4216f472e0a6d32e8ca86b5cb80d40a76b0c529f995deeefa929",
       "source_id": "target_detection_value_input_rows"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv",
       "sha256": "ebe8e3945ba761d01cca6a8d261d378aae36feb0e62cbaee9dd376c3fee78ab6",
       "source_id": "target_yield_value_input_rows"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_SOURCE_MANIFEST_20260701.csv",
       "sha256": "5382170a09e8bbe4bade6454c287289698bb855419469685bdaebbf16da056f5",
       "source_id": "target_wet_source_manifest"
     },
     {
-      "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-      "blocked_use": "template-as-evidence;claim activation;production ingestion",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+      "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv",
       "sha256": "a7f76ce3227a66291228ed75628973133f12b91cd167e5aa256336098cf45a58",
@@ -671,11 +947,11 @@
   ],
   "source_manifest_workspace_rows": [
     {
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "downstream_importer": "wet_surface_observation_manifest_import",
       "evidence_current": false,
       "hard_fail_if": "source_manifest_header_only_rows_counted_as_claim_evidence",
-      "required_next_action": "fill source manifest rows with real source artifact paths, controls, uncertainty, and pre-registration fields; run the downstream importer",
+      "required_next_action": "fill source manifest rows with simulation/assumption source artifact paths, model controls, uncertainty, and pre-registration fields; run the downstream importer",
       "source_manifest_branch": "wet_surface_observation",
       "source_manifest_columns": "route_candidate_id;endpoint_id;observation_artifact_id;observation_artifact_class;observation_source_artifact;source_geometry_match_level;provided_fields;controls_status;replicate_count;uncertainty_interval_status;pre_registered_rule_status",
       "source_manifest_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_SOURCE_MANIFEST_20260701.csv",
@@ -685,15 +961,15 @@
       "target_header_refreshed_now": false,
       "target_preexisting": true,
       "target_validation_status": "source_manifest_header_only_ready_no_evidence_rows",
-      "workspace_row_id": "REAL-EVIDENCE-SOURCE-MANIFEST-wet_surface_observation",
-      "workspace_version": "sidewall_real_evidence_input_workspace_v1"
+      "workspace_row_id": "SIMULATION-EVIDENCE-SOURCE-MANIFEST-wet_surface_observation",
+      "workspace_version": "sidewall_simulation_evidence_input_workspace_v1"
     },
     {
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "downstream_importer": "yield_detection_claim_value_manifest_import",
       "evidence_current": false,
       "hard_fail_if": "source_manifest_header_only_rows_counted_as_claim_evidence",
-      "required_next_action": "fill source manifest rows with real source artifact paths, controls, uncertainty, and pre-registration fields; run the downstream importer",
+      "required_next_action": "fill source manifest rows with simulation/assumption source artifact paths, model controls, uncertainty, and pre-registration fields; run the downstream importer",
       "source_manifest_branch": "yield_detection_claim_value",
       "source_manifest_columns": "claim_value_branch;route_candidate_id;detection_probability_estimate;detection_probability_ci_low;detection_probability_ci_high;n_positive_control_events;detector_probability_model_id;threshold_policy_id;controls_status;uncertainty_model;pre_registered_rule_status;source_geometry_match_level;source_artifact_path;yield_estimate;yield_ci_low;yield_ci_high;wet_pass_probability_estimate;wet_pass_probability_ci_low;wet_pass_probability_ci_high;n_wet_trials;yield_model_id",
       "source_manifest_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv",
@@ -703,28 +979,29 @@
       "target_header_refreshed_now": false,
       "target_preexisting": true,
       "target_validation_status": "source_manifest_header_only_ready_no_evidence_rows",
-      "workspace_row_id": "REAL-EVIDENCE-SOURCE-MANIFEST-yield_detection_claim_value",
-      "workspace_version": "sidewall_real_evidence_input_workspace_v1"
+      "workspace_row_id": "SIMULATION-EVIDENCE-SOURCE-MANIFEST-yield_detection_claim_value",
+      "workspace_version": "sidewall_simulation_evidence_input_workspace_v1"
     }
   ],
   "summary": {
-    "allowed_use": "create/audit header-only real evidence target CSVs for the sidewall route decision chain",
-    "artifact_id": "PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_20260701",
-    "blocked_use": "template-as-evidence;claim activation;production ingestion",
+    "allowed_use": "create/audit header-only simulation/assumption evidence target CSVs for the sidewall route decision chain",
+    "artifact_id": "PACKAGE_C_SIDEWALL_SIMULATION_EVIDENCE_INPUT_WORKSPACE_20260701",
+    "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
     "branch": "main",
-    "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
-    "current_head": "3b2d06097e637fea17809ae255b8bfe545c7e6b7",
-    "dirty_context_rows": 90,
-    "disposition": "NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_REAL_ROWS_PRESENT_RERUN_REQUIRED",
+    "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
+    "current_head": "6d289d83f6ca6ff887cd37dcd25568369eaaaf29",
+    "dirty_context_rows": 136,
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_EVIDENCE_INPUT_WORKSPACE_SIMULATION_ROWS_PRESENT_RERUN_REQUIRED",
     "evidence_current_rows": 0,
-    "next_high_leverage_step": "fill source manifests or target CSV rows with real artifacts, then run the eleven-step route evidence command chain",
-    "non_release_dirty_context_rows": 83,
-    "semantic_digest": "d3452dce6be8e5faa92426c53ab6cc5ed9a25cbcad8781e93cc5f740bebb05ec",
+    "next_high_leverage_step": "fill source manifests or target CSV rows with simulation/assumption artifacts, then run the eleven-step route evidence command chain",
+    "non_release_dirty_context_rows": 132,
+    "semantic_digest": "5965d5e59e6b1f2d99f5b8db094f0c9dde557b22e936dd886a4dea11615c4a16",
     "source_lock_rows": 14,
     "source_manifest_blocked_rows": 0,
     "source_manifest_created_now_rows": 0,
     "source_manifest_header_only_rows": 2,
     "source_manifest_real_data_rows_total": 0,
+    "source_manifest_simulation_data_rows_total": 0,
     "source_manifest_workspace_rows": 2,
     "source_missing_rows": 0,
     "target_blocked_rows": 0,
@@ -732,37 +1009,38 @@
     "target_header_only_rows": 3,
     "target_header_refreshed_now_rows": 0,
     "target_real_data_rows_total": 2,
+    "target_simulation_data_rows_total": 2,
     "workspace_rows": 4,
-    "workspace_version": "sidewall_real_evidence_input_workspace_v1"
+    "workspace_version": "sidewall_simulation_evidence_input_workspace_v1"
   },
   "workspace_rows": [
     {
       "accepted_status_required": "detector_blank_transfer_bundle_candidate_ready_requires_policy_review",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "evidence_current": false,
       "hard_fail_if": "header_only_or_template_rows_counted_as_claim_evidence",
       "input_branch": "detector_blank_transfer",
-      "required_next_action": "fill target input rows with real artifacts, hashes, controls, uncertainty, and pre-registration fields; rerun the eleven-step chain",
+      "required_next_action": "fill target input rows with simulation/assumption source artifacts, hashes, model controls, uncertainty, and pre-registration fields; rerun the eleven-step chain",
       "target_created_now": false,
       "target_data_rows": 2,
       "target_header_matches_template": true,
       "target_header_refreshed_now": false,
       "target_input_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INPUT_ROWS_20260701.csv",
       "target_preexisting": true,
-      "target_validation_status": "target_real_rows_present_not_rewritten_by_workspace",
+      "target_validation_status": "target_simulation_rows_present_not_rewritten_by_workspace",
       "template_artifact_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_TEMPLATE_ROWS_20260701.csv",
       "template_columns": "route_candidate_id;route_key;source_case_id;qch_sidecar_id;source_panel_matrix_row_id;transfer_artifact_id;blank_trace_artifact_id;blank_trace_artifact_path;blank_trace_sha256;detector_response_artifact_id;detector_response_artifact_path;detector_response_sha256;blank_trace_geometry_match_level;detector_response_model_id;false_positive_rate_estimate;false_positive_rate_ci_low;false_positive_rate_ci_high;n_blank_traces;n_detector_calibration_runs;controls_status;uncertainty_model;pre_registered_rule_status",
       "template_rows": 2,
-      "workspace_row_id": "REAL-EVIDENCE-WORKSPACE-detector_blank_transfer",
-      "workspace_version": "sidewall_real_evidence_input_workspace_v1"
+      "workspace_row_id": "SIMULATION-EVIDENCE-WORKSPACE-detector_blank_transfer",
+      "workspace_version": "sidewall_simulation_evidence_input_workspace_v1"
     },
     {
       "accepted_status_required": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "evidence_current": false,
       "hard_fail_if": "header_only_or_template_rows_counted_as_claim_evidence",
       "input_branch": "wet_surface_observation",
-      "required_next_action": "fill target input rows with real artifacts, hashes, controls, uncertainty, and pre-registration fields; rerun the eleven-step chain",
+      "required_next_action": "fill target input rows with simulation/assumption source artifacts, hashes, model controls, uncertainty, and pre-registration fields; rerun the eleven-step chain",
       "target_created_now": false,
       "target_data_rows": 0,
       "target_header_matches_template": true,
@@ -773,16 +1051,16 @@
       "template_artifact_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_OBSERVATION_TEMPLATE_ROWS_20260701.csv",
       "template_columns": "route_candidate_id;route_key;source_case_id;qch_sidecar_id;endpoint_id;target_claim;required_artifact_class;required_fields;minimum_controls;observation_artifact_id;observation_artifact_class;observation_source_artifact;observation_source_sha256;source_geometry_match_level;provided_fields;controls_status;replicate_count;uncertainty_interval_status;pre_registered_rule_status",
       "template_rows": 14,
-      "workspace_row_id": "REAL-EVIDENCE-WORKSPACE-wet_surface_observation",
-      "workspace_version": "sidewall_real_evidence_input_workspace_v1"
+      "workspace_row_id": "SIMULATION-EVIDENCE-WORKSPACE-wet_surface_observation",
+      "workspace_version": "sidewall_simulation_evidence_input_workspace_v1"
     },
     {
       "accepted_status_required": "detection_probability_value_accepted",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "evidence_current": false,
       "hard_fail_if": "header_only_or_template_rows_counted_as_claim_evidence",
       "input_branch": "detection_probability_value",
-      "required_next_action": "fill target input rows with real artifacts, hashes, controls, uncertainty, and pre-registration fields; rerun the eleven-step chain",
+      "required_next_action": "fill target input rows with simulation/assumption source artifacts, hashes, model controls, uncertainty, and pre-registration fields; rerun the eleven-step chain",
       "target_created_now": false,
       "target_data_rows": 0,
       "target_header_matches_template": true,
@@ -793,16 +1071,16 @@
       "template_artifact_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_DETECTION_VALUE_TEMPLATE_ROWS_20260701.csv",
       "template_columns": "route_candidate_id;route_geometry_family;detection_probability_estimate;detection_probability_ci_low;detection_probability_ci_high;n_positive_control_events;detector_probability_model_id;threshold_policy_id;controls_status;uncertainty_model;pre_registered_rule_status;source_geometry_match_level;source_artifact_path;source_artifact_sha256",
       "template_rows": 2,
-      "workspace_row_id": "REAL-EVIDENCE-WORKSPACE-detection_probability_value",
-      "workspace_version": "sidewall_real_evidence_input_workspace_v1"
+      "workspace_row_id": "SIMULATION-EVIDENCE-WORKSPACE-detection_probability_value",
+      "workspace_version": "sidewall_simulation_evidence_input_workspace_v1"
     },
     {
       "accepted_status_required": "yield_wet_value_bundle_accepted",
-      "claim_boundary": "real_evidence_input_workspace_not_template_as_evidence",
+      "claim_boundary": "simulation_evidence_input_workspace_not_template_as_evidence",
       "evidence_current": false,
       "hard_fail_if": "header_only_or_template_rows_counted_as_claim_evidence",
       "input_branch": "yield_wet_value",
-      "required_next_action": "fill target input rows with real artifacts, hashes, controls, uncertainty, and pre-registration fields; rerun the eleven-step chain",
+      "required_next_action": "fill target input rows with simulation/assumption source artifacts, hashes, model controls, uncertainty, and pre-registration fields; rerun the eleven-step chain",
       "target_created_now": false,
       "target_data_rows": 0,
       "target_header_matches_template": true,
@@ -813,8 +1091,8 @@
       "template_artifact_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_YIELD_VALUE_TEMPLATE_ROWS_20260701.csv",
       "template_columns": "route_candidate_id;route_geometry_family;yield_estimate;yield_ci_low;yield_ci_high;wet_pass_probability_estimate;wet_pass_probability_ci_low;wet_pass_probability_ci_high;n_wet_trials;yield_model_id;controls_status;uncertainty_model;pre_registered_rule_status;source_geometry_match_level;source_artifact_path;source_artifact_sha256",
       "template_rows": 2,
-      "workspace_row_id": "REAL-EVIDENCE-WORKSPACE-yield_wet_value",
-      "workspace_version": "sidewall_real_evidence_input_workspace_v1"
+      "workspace_row_id": "SIMULATION-EVIDENCE-WORKSPACE-yield_wet_value",
+      "workspace_version": "sidewall_simulation_evidence_input_workspace_v1"
     }
   ]
 }

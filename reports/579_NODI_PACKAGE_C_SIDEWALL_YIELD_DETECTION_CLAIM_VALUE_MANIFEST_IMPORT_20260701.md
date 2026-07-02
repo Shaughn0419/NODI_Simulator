@@ -8,4 +8,4 @@ Canonical detection input written: `False`
 Canonical yield input written: `False`
 Claim boundary: `yield_detection_claim_value_manifest_import_not_template_not_route_score`
 
-This importer binds detection-probability, yield, and wet-pass value rows to source artifact hashes. It does not create route-score, winner, JRC, production, or fabrication claims, and current claim activation remains owned by the claim-value review packet.
+This importer binds simulation-derived detection-probability, yield, and wet-pass value rows to source artifact hashes. It does not create route-score, winner, JRC, production, or fabrication claims by itself; current claim activation remains owned by the claim-value review packet.

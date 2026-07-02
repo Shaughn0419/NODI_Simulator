@@ -21,7 +21,7 @@ from nodi_simulator.realism_v2_io import (  # noqa: E402
 )
 from nodi_simulator.sidewall_winner_jrc_policy_review import (  # noqa: E402
     FIXTURE_EVIDENCE_CLASS,
-    REAL_ACCEPTED_EVIDENCE_CLASS,
+    SIMULATION_ACCEPTED_EVIDENCE_CLASS,
     SIDEWALL_WINNER_JRC_POLICY_REVIEW_CLAIM_BOUNDARY,
     SIDEWALL_WINNER_JRC_POLICY_REVIEW_VERSION,
     build_winner_jrc_policy_review,
@@ -37,7 +37,7 @@ DISPOSITION = (
     "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES"
 )
 READY_DISPOSITION = (
-    "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_WINNER_JRC_READY_FOR_INTEGRATED_REVIEW"
+    "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_SIMULATION_TOP_CANDIDATE_READY_FOR_INTEGRATED_REVIEW"
 )
 BLOCKED_DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_FAIL_CLOSED"
 SELF_MANIFEST_SHA256 = "SELF_MANIFEST_NOT_SELF_HASHED_BY_DESIGN"
@@ -188,7 +188,7 @@ def semantic_digest(payload: dict[str, Any]) -> str:
 def build_payload() -> dict[str, Any]:
     review_rows, guard_rows = build_winner_jrc_policy_review(
         route_formula_policy_rows=read_csv_rows(ROUTE_FORMULA_POLICY_ROWS),
-        source_evidence_class=REAL_ACCEPTED_EVIDENCE_CLASS,
+        source_evidence_class=SIMULATION_ACCEPTED_EVIDENCE_CLASS,
     )
     fixture_rows, fixture_guard_rows = build_winner_jrc_policy_review(
         route_formula_policy_rows=read_csv_rows(ROUTE_FORMULA_FIXTURE_ROWS),
@@ -204,12 +204,15 @@ def build_payload() -> dict[str, Any]:
     source_missing = sum(row["exists"] != "true" for row in source_lock)
     winner_rows = sum(row["winner_current"] for row in review_dicts)
     jrc_rows = sum(row["JRC_current"] for row in review_dicts)
+    simulation_top_rows = sum(
+        row["simulation_top_candidate_current"] for row in review_dicts
+    )
     fixture_order_rows = sum(
         row["winner_jrc_policy_review_status"]
         == "fixture_winner_order_path_passes_not_evidence"
         for row in fixture_dicts
     )
-    disposition = READY_DISPOSITION if winner_rows == 1 and jrc_rows == 1 else DISPOSITION
+    disposition = READY_DISPOSITION if simulation_top_rows == 1 else DISPOSITION
     if (
         source_missing
         or len(review_dicts) != 2
@@ -235,6 +238,7 @@ def build_payload() -> dict[str, Any]:
         "fixture_guard_rows": len(fixture_guard_dicts),
         "winner_current_rows": winner_rows,
         "JRC_current_rows": jrc_rows,
+        "simulation_top_candidate_current_rows": simulation_top_rows,
         "fixture_order_rows_not_evidence": fixture_order_rows,
         "route_score_current_rows": sum(row["route_score_current"] for row in review_dicts),
         "unique_top_available_rows": sum(
@@ -257,7 +261,7 @@ def build_payload() -> dict[str, Any]:
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
         "next_high_leverage_step": (
-            "after current route scores and unique top are real, run integrated route/yield/detection review"
+            "after current simulation route scores and unique top are ready, run integrated route/yield/detection review"
         ),
     }
     payload = {
@@ -357,9 +361,10 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Current review rows: `{s['review_rows']}`.",
             f"Current route-score rows: `{s['route_score_current_rows']}`.",
             f"Current winner/JRC rows: `{s['winner_current_rows']}` / `{s['JRC_current_rows']}`.",
+            f"Simulation top-candidate rows: `{s['simulation_top_candidate_current_rows']}`.",
             f"Fixture order rows, not evidence: `{s['fixture_order_rows_not_evidence']}`.",
             "",
-            "Winner/JRC activation is implemented, but it requires current real route-score candidates for every route and a unique top route. Fixture ordering is not evidence.",
+            "Winner/JRC activation is implemented, but it requires current simulation route-score candidates for every route and a unique top route. Fixture ordering is not evidence.",
             "",
         ]
     )

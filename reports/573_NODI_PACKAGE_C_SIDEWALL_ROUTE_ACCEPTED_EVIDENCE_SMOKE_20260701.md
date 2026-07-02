@@ -9,4 +9,4 @@ Fixture path pass rows: `2`.
 Component-vector ready rows: `2`.
 route/yield/detection current rows: `0` / `0` / `0`.
 
-This is a fixture-only smoke artifact. It proves the accepted-evidence code path can open the formula component vector, but the generated fixture rows are not evidence and are not written to the real input paths.
+This is a fixture-only smoke artifact. It proves the accepted-evidence code path can open the formula component vector, but the generated fixture rows are not evidence and are not written to the simulation input paths.

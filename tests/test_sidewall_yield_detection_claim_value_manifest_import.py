@@ -91,13 +91,26 @@ def test_manifest_import_binds_hashes_and_passes_existing_claim_value_review(
         artifact_root=tmp_path,
     )
 
-    assert {row.detection_probability_current for row in review_rows} == {True}
-    assert {row.yield_current for row in review_rows} == {True}
-    assert {row.wet_pass_probability_current for row in review_rows} == {True}
+    assert {row.detection_probability_simulation_candidate_current for row in review_rows} == {
+        True
+    }
+    assert {row.yield_simulation_candidate_current for row in review_rows} == {True}
+    assert {row.wet_pass_probability_simulation_candidate_current for row in review_rows} == {
+        True
+    }
+    assert {row.detection_probability_current for row in review_rows} == {False}
+    assert {row.yield_current for row in review_rows} == {False}
+    assert {row.wet_pass_probability_current for row in review_rows} == {False}
     assert {
         row.activation_allowed_now
         for row in guard_rows
         if row.promotion_target in {"detection_probability", "yield", "wet_pass_probability"}
+    } == {False}
+    assert {
+        row.activation_allowed_now
+        for row in guard_rows
+        if row.promotion_target
+        in {"simulation_detection_probability_candidate", "simulation_yield_wet_candidate"}
     } == {True}
 
 

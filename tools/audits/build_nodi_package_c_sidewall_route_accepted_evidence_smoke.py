@@ -41,7 +41,7 @@ WET_CONTRACT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_EVIDENCE_C
 BINDER_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_QCH_DETECTOR_WET_BLOCKER_BINDER_BINDER_ROWS_20260701.csv"
 
 ALLOWED_USE = "fixture-only accepted-evidence smoke for activation closure and formula dry-run path"
-BLOCKED_USE = "real evidence;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion"
+BLOCKED_USE = "simulation evidence source rows;template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion"
 
 SOURCE_FILES = {
     "detector_panel_rows": DETECTOR_PANEL_ROWS,
@@ -217,7 +217,7 @@ def build_payload() -> dict[str, Any]:
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
         "next_high_leverage_step": (
-            "use real detector/wet input rows, then rerun the same activation closure and dry-run chain"
+            "use accepted simulation detector/wet input rows, then rerun the same activation closure and dry-run chain"
         ),
     }
     payload = {
@@ -314,7 +314,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Component-vector ready rows: `{s['component_vector_ready_rows']}`.",
             f"route/yield/detection current rows: `{s['route_score_current_rows']}` / `{s['yield_current_rows']}` / `{s['detection_probability_current_rows']}`.",
             "",
-            "This is a fixture-only smoke artifact. It proves the accepted-evidence code path can open the formula component vector, but the generated fixture rows are not evidence and are not written to the real input paths.",
+            "This is a fixture-only smoke artifact. It proves the accepted-evidence code path can open the formula component vector, but the generated fixture rows are not evidence and are not written to the simulation input paths.",
             "",
         ]
     )

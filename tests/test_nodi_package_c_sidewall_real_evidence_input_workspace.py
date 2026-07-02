@@ -60,7 +60,7 @@ def _write_templates(tmp_path: Path) -> None:
     )
 
 
-def test_real_evidence_input_workspace_builds_header_only_targets(
+def test_simulation_evidence_input_workspace_builds_header_only_targets(
     tmp_path: Path,
     monkeypatch,
 ) -> None:
@@ -78,11 +78,13 @@ def test_real_evidence_input_workspace_builds_header_only_targets(
     assert summary["target_header_only_rows"] == 4
     assert summary["source_manifest_header_only_rows"] == 2
     assert summary["target_real_data_rows_total"] == 0
+    assert summary["target_simulation_data_rows_total"] == 0
     assert summary["source_manifest_real_data_rows_total"] == 0
+    assert summary["source_manifest_simulation_data_rows_total"] == 0
     assert builder.validate_payload(payload) == []
 
 
-def test_real_evidence_input_workspace_writes_outputs(
+def test_simulation_evidence_input_workspace_writes_outputs(
     tmp_path: Path,
     monkeypatch,
 ) -> None:
@@ -102,7 +104,7 @@ def test_real_evidence_input_workspace_writes_outputs(
     assert (tmp_path / "claim_value_source_manifest.csv").exists()
 
 
-def test_real_evidence_input_workspace_source_manifest_headers(
+def test_simulation_evidence_input_workspace_source_manifest_headers(
     tmp_path: Path,
     monkeypatch,
 ) -> None:

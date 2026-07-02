@@ -527,7 +527,7 @@ def report_markdown(payload: dict[str, Any]) -> str:
             f"- Accepted wet fixture rows: `{s['accepted_fixture_rows']}`.",
             f"- Negative control rows: `{s['negative_control_rows']}`.",
             f"- Current no-observation audit rows: `{s['current_no_observation_rows']}`.",
-            "- Accepted fixtures prove validator behavior only; current real wet observations remain absent.",
+            "- Accepted fixtures prove validator behavior only; current simulation wet observations remain absent.",
             "- Yield, wet pass probability, clogging, recovery, detection probability, and route score remain false.",
             "",
         ]

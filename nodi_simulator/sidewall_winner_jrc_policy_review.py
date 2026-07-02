@@ -10,7 +10,10 @@ SIDEWALL_WINNER_JRC_POLICY_REVIEW_VERSION = "sidewall_winner_jrc_policy_review_v
 SIDEWALL_WINNER_JRC_POLICY_REVIEW_CLAIM_BOUNDARY = (
     "winner_jrc_policy_review_requires_current_route_scores_not_yield_not_detection"
 )
-REAL_ACCEPTED_EVIDENCE_CLASS = "real_accepted_detector_wet_evidence"
+SIMULATION_ACCEPTED_EVIDENCE_CLASS = "simulation_accepted_detector_wet_evidence"
+# Backward-compatible import alias. In this simulation-only lane, this is not an
+# experimental evidence class.
+REAL_ACCEPTED_EVIDENCE_CLASS = SIMULATION_ACCEPTED_EVIDENCE_CLASS
 FIXTURE_EVIDENCE_CLASS = "fixture_not_evidence"
 
 
@@ -25,8 +28,12 @@ class SidewallWinnerJRCPolicyReviewRow:
     route_score_current: bool
     route_score_value_current: str
     route_score_candidate_value: float
+    simulation_route_score_candidate_current: bool
+    simulation_route_score_value_current: str
     candidate_order_index_under_policy: int
     unique_top_route_score_available: bool
+    simulation_top_candidate_current: bool
+    simulation_rank_label: str
     winner_activation_allowed_now: bool
     winner_current: bool
     JRC_current: bool
@@ -80,14 +87,15 @@ def build_winner_jrc_policy_review(
         _float(row.get("route_score_candidate_value")) == top_value
         for row in sorted_rows
     )
-    all_route_scores_current = bool(sorted_rows) and all(
-        _bool(row.get("route_score_current")) for row in sorted_rows
+    all_simulation_scores_current = bool(sorted_rows) and all(
+        _bool(row.get("simulation_route_score_candidate_current"))
+        for row in sorted_rows
     )
     unique_top = bool(sorted_rows) and top_count == 1 and top_value > 0.0
     winner_allowed = (
-        all_route_scores_current
+        all_simulation_scores_current
         and unique_top
-        and source_evidence_class == REAL_ACCEPTED_EVIDENCE_CLASS
+        and source_evidence_class == SIMULATION_ACCEPTED_EVIDENCE_CLASS
         and not fixture_not_evidence
     )
     rows = [
@@ -116,7 +124,7 @@ def _review_row(
     top_value: float,
 ) -> SidewallWinnerJRCPolicyReviewRow:
     score = _float(row.get("route_score_candidate_value"))
-    is_winner = winner_allowed and score == top_value
+    is_simulation_top = winner_allowed and score == top_value
     route_id = str(row.get("route_candidate_id", ""))
     return SidewallWinnerJRCPolicyReviewRow(
         review_row_id=f"WINNER-JRC-POLICY-{route_id}",
@@ -125,15 +133,25 @@ def _review_row(
         route_geometry_family=str(row.get("route_geometry_family", "")),
         source_evidence_class=source_evidence_class,
         fixture_not_evidence=fixture_not_evidence,
-        route_score_current=_bool(row.get("route_score_current")),
-        route_score_value_current=str(row.get("route_score_value_current", "")),
+        route_score_current=False,
+        route_score_value_current="",
         route_score_candidate_value=score,
+        simulation_route_score_candidate_current=_bool(
+            row.get("simulation_route_score_candidate_current")
+        ),
+        simulation_route_score_value_current=str(
+            row.get("simulation_route_score_value_current", "")
+        ),
         candidate_order_index_under_policy=order_index,
         unique_top_route_score_available=unique_top,
+        simulation_top_candidate_current=is_simulation_top,
+        simulation_rank_label=(
+            "simulation_top_candidate" if is_simulation_top else f"simulation_rank_{order_index}"
+        ),
         winner_activation_allowed_now=winner_allowed,
-        winner_current=is_winner,
-        JRC_current=is_winner,
-        JRC_value_current=("JRC_ROUTE_WINNER_POLICY_REVIEW_V1" if is_winner else ""),
+        winner_current=False,
+        JRC_current=False,
+        JRC_value_current="",
         yield_current=False,
         detection_probability_current=False,
         wet_pass_probability_current=False,
@@ -142,14 +160,14 @@ def _review_row(
             winner_allowed=winner_allowed,
             fixture_not_evidence=fixture_not_evidence,
             unique_top=unique_top,
-            route_score_current=_bool(row.get("route_score_current")),
+            route_score_current=_bool(row.get("simulation_route_score_candidate_current")),
         ),
         next_required_action=_next_required_action(
             winner_allowed=winner_allowed,
             fixture_not_evidence=fixture_not_evidence,
             route_score_current=_bool(row.get("route_score_current")),
         ),
-        hard_fail_if="winner_or_JRC_true_without_real_current_route_scores_unique_top",
+        hard_fail_if="winner_or_JRC_true_from_simulation_candidate_without_final_claim_authorization",
         claim_boundary=SIDEWALL_WINNER_JRC_POLICY_REVIEW_CLAIM_BOUNDARY,
     )
 
@@ -162,7 +180,7 @@ def _review_status(
     route_score_current: bool,
 ) -> str:
     if winner_allowed:
-        return "winner_jrc_current_ready_for_integrated_claim_review"
+        return "simulation_top_candidate_ready_for_integrated_candidate_review"
     if fixture_not_evidence and unique_top:
         return "fixture_winner_order_path_passes_not_evidence"
     if not route_score_current:
@@ -179,22 +197,28 @@ def _next_required_action(
     if winner_allowed:
         return "run integrated route/yield/detection claim review"
     if fixture_not_evidence:
-        return "replace fixture score rows with real route-score candidate rows"
+        return "replace fixture score rows with simulation route-score candidate rows"
     if not route_score_current:
-        return "complete real accepted detector/wet evidence and route-score policy review"
+        return "complete accepted simulation detector/wet evidence and route-score policy review"
     return "resolve route-score tie or missing winner/JRC policy condition"
 
 
 def _guard_rows(
     rows: list[SidewallWinnerJRCPolicyReviewRow],
 ) -> list[SidewallWinnerJRCPolicyReviewGuardRow]:
-    winner_ready = sum(row.winner_current for row in rows) == 1
+    simulation_top_ready = sum(row.simulation_top_candidate_current for row in rows) == 1
     specs = [
         (
             "winner_JRC",
-            winner_ready,
+            False,
             "current route scores for all candidates plus unique top route",
             "winner_or_JRC_true_without_unique_current_route_score_top",
+        ),
+        (
+            "simulation_top_candidate",
+            simulation_top_ready,
+            "simulation route scores for all candidates plus unique top route",
+            "simulation_top_candidate_true_without_unique_current_route_score_top",
         ),
         (
             "yield",
