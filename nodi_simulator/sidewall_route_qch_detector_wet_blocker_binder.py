@@ -143,7 +143,11 @@ def _binder_row(
         detection_probability_current=False,
         wet_pass_probability_current=False,
         production_ingestion_current=False,
-        canonical_next_block="detector_blank_transfer_then_wet_observation",
+        canonical_next_block=(
+            "wet_observation"
+            if detector_accepted > 0 and wet_accepted == 0
+            else "detector_blank_transfer_then_wet_observation"
+        ),
         hard_fail_if=(
             "fixture_context_or_qch_ready_input_emits_route_score_yield_detection_or_production"
         ),

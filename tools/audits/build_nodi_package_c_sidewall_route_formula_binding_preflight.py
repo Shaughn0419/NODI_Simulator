@@ -32,6 +32,9 @@ REPORT_DIR = PROJECT_ROOT / "reports"
 PREFIX = "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_BINDING_PREFLIGHT"
 ARTIFACT_ID = "PACKAGE_C_SIDEWALL_ROUTE_FORMULA_BINDING_PREFLIGHT_20260701"
 DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_PREFLIGHT_READY_QCH_READY_DETECTOR_WET_BLOCKED"
+DETECTOR_READY_DISPOSITION = (
+    "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_PREFLIGHT_READY_QCH_DETECTOR_READY_WET_BLOCKED"
+)
 BLOCKED_DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_PREFLIGHT_FAIL_CLOSED"
 SELF_MANIFEST_SHA256 = "SELF_MANIFEST_NOT_SELF_HASHED_BY_DESIGN"
 CLAIM_BOUNDARY = SIDEWALL_ROUTE_FORMULA_BINDING_PREFLIGHT_CLAIM_BOUNDARY
@@ -228,22 +231,32 @@ def build_payload() -> dict[str, Any]:
     source_lock = source_lock_rows()
     dirty_context = dirty_context_rows()
     source_missing = sum(row["exists"] != "true" for row in source_lock)
-    status = (
-        DISPOSITION
-        if source_missing == 0
+    base_ready = (
+        source_missing == 0
         and len(preflight_rows) == 2
         and len(branch_rows) == 12
         and len(guard_rows) == 5
         and int(qch_integration_status.get("accepted_exact_pressure_flow_rows", 0)) == 2
         and int(qch_integration_status.get("route_formula_qch_branch_ready_rows", 0)) == 2
         and sum(row["qch_branch_ready"] for row in preflight_rows) == 2
-        and sum(row["detector_branch_ready"] for row in preflight_rows) == 0
         and sum(row["wet_branch_ready"] for row in preflight_rows) == 0
-        and int(detector_execution_status.get("current_accepted_transfer_rows_total", 0)) == 0
         and int(wet_execution_status.get("current_accepted_observation_rows_total", 0)) == 0
         and sum(row["route_score_current"] for row in preflight_rows) == 0
-        else BLOCKED_DISPOSITION
     )
+    detector_ready = (
+        sum(row["detector_branch_ready"] for row in preflight_rows) == 2
+        and int(detector_execution_status.get("current_accepted_transfer_rows_total", 0)) > 0
+    )
+    detector_missing = (
+        sum(row["detector_branch_ready"] for row in preflight_rows) == 0
+        and int(detector_execution_status.get("current_accepted_transfer_rows_total", 0)) == 0
+    )
+    if base_ready and detector_ready:
+        status = DETECTOR_READY_DISPOSITION
+    elif base_ready and detector_missing:
+        status = DISPOSITION
+    else:
+        status = BLOCKED_DISPOSITION
     summary: dict[str, Any] = {
         "disposition": status,
         "artifact_id": ARTIFACT_ID,
@@ -336,7 +349,7 @@ def build_payload() -> dict[str, Any]:
 def validate_payload(payload: dict[str, Any]) -> list[str]:
     failures: list[str] = []
     summary = payload["summary"]
-    if summary["disposition"] != DISPOSITION:
+    if summary["disposition"] not in {DISPOSITION, DETECTOR_READY_DISPOSITION}:
         failures.append("disposition_not_ready")
     if summary["preflight_rows"] != 2:
         failures.append("expected_two_preflight_rows")
@@ -346,12 +359,12 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         failures.append("source_566_accepted_exact_pressure_flow_not_two")
     if summary["source_566_route_formula_qch_branch_ready_rows"] != 2:
         failures.append("source_566_qch_branch_ready_not_two")
-    if summary["detector_branch_ready_rows"] != 0:
-        failures.append("detector_branch_unexpectedly_ready")
+    if summary["detector_branch_ready_rows"] not in {0, 2}:
+        failures.append("detector_branch_invalid_ready_count")
     if summary["wet_branch_ready_rows"] != 0:
         failures.append("wet_branch_unexpectedly_ready")
-    if summary["detector_accepted_transfer_rows_total"] != 0:
-        failures.append("detector_fixture_or_context_promoted_to_accepted_transfer")
+    if summary["detector_accepted_transfer_rows_total"] not in {0, 2}:
+        failures.append("detector_accepted_transfer_count_invalid")
     if summary["wet_accepted_observation_rows_total"] != 0:
         failures.append("wet_fixture_or_context_promoted_to_accepted_observation")
     for key in (

@@ -70,20 +70,27 @@ def build_detector_blank_transfer_execution_packet(
     list[SidewallDetectorBlankTransferExecutionRow],
     list[SidewallDetectorBlankTransferClaimGuardRow],
 ]:
+    accepted_transfer_rows = _int(intake_status.get("accepted_transfer_rows"))
     rows = [
         _row(
             lane="transfer_intake",
             status=intake_status,
-            current_status="schema_ready_no_current_transfer_evidence",
+            current_status=(
+                "accepted_detector_blank_transfer_candidate_ready_not_probability"
+                if accepted_transfer_rows > 0
+                else "schema_ready_no_current_transfer_evidence"
+            ),
             candidate_or_fixture_rows=_int(intake_status.get("template_rows")),
-            current_accepted_transfer_rows=_int(intake_status.get("accepted_transfer_rows")),
+            current_accepted_transfer_rows=accepted_transfer_rows,
             sidewall_specific_blank_trace_current=_bool(
                 intake_status.get("sidewall_specific_blank_trace_current_rows")
             ),
             detector_response_validation_current=_bool(
                 intake_status.get("detector_response_validation_current_rows")
             ),
-            validated_transfer_current=False,
+            validated_transfer_current=_bool(
+                intake_status.get("validated_transfer_current_rows")
+            ),
             next_required_evidence=(
                 "sidewall-specific or validated-transfer detector/blank rows with "
                 "readout_path_id, ROI_policy_id, BFP_phase_policy, threshold_policy_id, "
@@ -245,6 +252,8 @@ def _claim_guard_rows(
 def _bool(value: Any) -> bool:
     if isinstance(value, bool):
         return value
+    if isinstance(value, (int, float)):
+        return value > 0
     return str(value).strip().lower() in {"1", "true", "yes"}
 
 

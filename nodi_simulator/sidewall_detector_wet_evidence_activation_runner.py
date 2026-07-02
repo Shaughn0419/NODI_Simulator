@@ -152,6 +152,10 @@ def _route_row(
     detector_ready = detector_status == DETECTOR_TRANSFER_ACCEPTED_STATUS
     wet_ready = wet_status == WET_OBSERVATION_ACCEPTED_STATUS
     combined_ready = detector_ready and wet_ready
+    route_formula_blocker_status, next_required_evidence = _formula_blocker_status(
+        detector_ready=detector_ready,
+        wet_ready=wet_ready,
+    )
     return SidewallDetectorWetEvidenceActivationRouteRow(
         activation_row_id=f"DETECTOR-WET-ACTIVATION-{route_id}",
         activation_version=SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_VERSION,
@@ -176,11 +180,7 @@ def _route_row(
         wet_required_endpoint_count=wet_required,
         wet_branch_ready_for_formula=wet_ready,
         combined_detector_wet_ready_for_formula=combined_ready,
-        route_formula_blocker_status=(
-            "detector_wet_branches_ready_for_formula_review"
-            if combined_ready
-            else "blocked_detector_blank_or_wet_accepted_evidence_missing"
-        ),
+        route_formula_blocker_status=route_formula_blocker_status,
         route_score_current=False,
         winner_current=False,
         JRC_current=False,
@@ -188,13 +188,33 @@ def _route_row(
         detection_probability_current=False,
         wet_pass_probability_current=False,
         production_ingestion_current=False,
-        next_required_evidence=(
-            "accepted detector/blank transfer row plus accepted wet endpoint bundle"
-        ),
+        next_required_evidence=next_required_evidence,
         hard_fail_if=(
             "detector_wet_activation_runner_emits_route_score_yield_detection_or_production"
         ),
         claim_boundary=SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_CLAIM_BOUNDARY,
+    )
+
+
+def _formula_blocker_status(*, detector_ready: bool, wet_ready: bool) -> tuple[str, str]:
+    if detector_ready and wet_ready:
+        return (
+            "detector_wet_branches_ready_for_formula_review",
+            "route formula review activation",
+        )
+    if detector_ready:
+        return (
+            "blocked_wet_accepted_evidence_missing",
+            "accepted wet endpoint bundle",
+        )
+    if wet_ready:
+        return (
+            "blocked_detector_blank_accepted_transfer_missing",
+            "accepted detector/blank transfer row",
+        )
+    return (
+        "blocked_detector_blank_or_wet_accepted_evidence_missing",
+        "accepted detector/blank transfer row plus accepted wet endpoint bundle",
     )
 
 

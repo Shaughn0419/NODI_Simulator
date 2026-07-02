@@ -266,7 +266,10 @@ def build_payload() -> dict[str, Any]:
         if source_missing == 0
         and release_dirty_blockers == 0
         and intake.get("disposition")
-        == "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE"
+        in {
+            "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE",
+            "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_ACCEPTED_TRANSFER_CANDIDATE",
+        }
         and validation.get("disposition")
         == "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_VALIDATION_HARDENING_READY_NOT_PROBABILITY"
         and panel.get("disposition")
@@ -353,10 +356,10 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "five execution rows": s["execution_rows"] == 5,
         "five guard rows": s["claim_guard_rows"] == 5,
         "fixtures or context present": s["candidate_or_fixture_rows_total"] > 0,
-        "no accepted current transfer": s["current_accepted_transfer_rows_total"] == 0,
-        "no sidewall blank trace current": s["sidewall_specific_blank_trace_current_rows"] == 0,
-        "no detector response current": s["detector_response_validation_current_rows"] == 0,
-        "no validated transfer current": s["validated_transfer_current_rows"] == 0,
+        "accepted current transfer valid": s["current_accepted_transfer_rows_total"] in {0, 2},
+        "sidewall blank trace current valid": s["sidewall_specific_blank_trace_current_rows"] in {0, 1},
+        "detector response current valid": s["detector_response_validation_current_rows"] in {0, 1},
+        "validated transfer current valid": s["validated_transfer_current_rows"] in {0, 1},
         "no detection probability": s["detection_probability_current_rows"] == 0,
         "no route score": s["route_score_current_rows"] == 0,
         "no yield": s["yield_current_rows"] == 0,
@@ -396,7 +399,10 @@ def write_outputs(payload: dict[str, Any]) -> list[Path]:
         paths.append(path)
 
     status_path = OUTPUT_DIR / f"{PREFIX}_STATUS_20260701.json"
-    write_json_atomic(status_path, {"disposition": DISPOSITION, "summary": payload["summary"]})
+    write_json_atomic(
+        status_path,
+        {"disposition": payload["summary"]["disposition"], "summary": payload["summary"]},
+    )
     paths.append(status_path)
 
     report_path = OUTPUT_DIR / f"{PREFIX}_REPORT_20260701.json"
@@ -478,7 +484,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"FAIL: {failure}")
         return 1
     write_outputs(payload)
-    print(DISPOSITION)
+    print(payload["summary"]["disposition"])
     print(json.dumps(payload["summary"], sort_keys=True))
     return 0
 

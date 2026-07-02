@@ -92,3 +92,56 @@ def test_claim_guards_name_required_transfer_evidence() -> None:
     assert by_target["route_score_winner_JRC"].hard_fail_if_missing_evidence == (
         "route_score_true_without_detector_blank_and_wet_evidence"
     )
+
+
+def test_execution_packet_counts_accepted_intake_without_claim_promotion() -> None:
+    rows, guards = build_detector_blank_transfer_execution_packet(
+        intake_status={
+            "artifact_id": "INTAKE",
+            "disposition": "INTAKE_READY_ACCEPTED",
+            "current_head": "a",
+            "template_rows": 2,
+            "accepted_transfer_rows": 2,
+            "sidewall_specific_blank_trace_current_rows": 2,
+            "detector_response_validation_current_rows": 2,
+            "validated_transfer_current_rows": 0,
+        },
+        validation_status={
+            "artifact_id": "VALIDATOR",
+            "disposition": "VALIDATOR_READY",
+            "current_head": "b",
+            "accepted_fixture_rows": 2,
+        },
+        calibration_panel_status={
+            "artifact_id": "PANEL",
+            "disposition": "PANEL_READY",
+            "current_head": "c",
+            "panel_rows": 12,
+            "sidewall_specific_blank_trace_current": False,
+            "detector_response_validation_current": False,
+        },
+        promotion_ledger_status={
+            "artifact_id": "PROMO",
+            "disposition": "PROMO_READY",
+            "current_head": "d",
+            "refreshed_promotion_lane_rows": 18,
+        },
+        readiness_board_status={
+            "artifact_id": "BOARD",
+            "disposition": "BOARD_READY",
+            "current_head": "e",
+            "board_rows": 2,
+        },
+    )
+
+    transfer = next(row for row in rows if row.lane == "transfer_intake")
+    assert transfer.current_accepted_transfer_rows == 2
+    assert transfer.sidewall_specific_blank_trace_current is True
+    assert transfer.detector_response_validation_current is True
+    assert transfer.validated_transfer_current is False
+    assert transfer.current_status == (
+        "accepted_detector_blank_transfer_candidate_ready_not_probability"
+    )
+    assert {row.detection_probability_current for row in rows} == {False}
+    assert {row.route_score_current for row in rows} == {False}
+    assert {row.claim_promotion_allowed_now for row in guards} == {False}

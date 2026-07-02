@@ -21,9 +21,11 @@ def test_route_qch_detector_wet_binder_builds_from_current_artifacts() -> None:
     assert summary["rectangle_rows"] == 1
     assert summary["trapezoid_rows"] == 1
     assert summary["qch_ready_rows"] == 2
-    assert summary["detector_blocker_rows"] == 2
+    assert summary["detector_blocker_rows"] == 0
+    assert summary["detector_ready_rows"] == 2
     assert summary["wet_blocker_rows"] == 2
-    assert summary["detector_accepted_transfer_rows_total"] == 0
+    assert summary["canonical_next_blocks"] == "wet_observation"
+    assert summary["detector_accepted_transfer_rows_total"] == 2
     assert summary["wet_accepted_observation_rows_total"] == 0
     assert summary["route_score_current"] is False
     assert summary["yield_current"] is False
@@ -39,12 +41,14 @@ def test_binder_rows_are_current_canonical_blocker_board() -> None:
     }
     assert {row["route_formula_qch_branch_status"] for row in rows} == {"ready"}
     assert {row["detector_blank_status"] for row in rows} == {
-        "blocker_not_accepted_evidence"
+        "accepted_detector_blank_transfer_ready"
     }
     assert {row["wet_observation_status"] for row in rows} == {
         "blocker_not_accepted_evidence"
     }
-    assert {row["route_formula_input_ready_count"] for row in rows} == {4}
+    assert {row["canonical_next_block"] for row in rows} == {"wet_observation"}
+    assert {row["detector_accepted_transfer_rows"] for row in rows} == {2}
+    assert {row["route_formula_input_ready_count"] for row in rows} == {5}
     assert {row["route_formula_required_input_count"] for row in rows} == {6}
 
 

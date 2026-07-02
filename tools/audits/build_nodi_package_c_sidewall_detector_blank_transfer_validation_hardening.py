@@ -407,7 +407,10 @@ def build_payload() -> dict[str, Any]:
         and assembly_status.get("disposition")
         == "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_DETECTOR_BLANK_TRANSFER_REFRESH_READY_NOT_CLAIM_READY"
         and transfer_status.get("disposition")
-        == "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE"
+        in {
+            "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE",
+            "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_ACCEPTED_TRANSFER_CANDIDATE",
+        }
         and len(accepted_rows) == 2
         and all(row["transfer_validation_status"] == TRANSFER_ACCEPTED_STATUS for row in accepted_rows)
         and all(row["route_transfer_matrix_status"] == ROUTE_MATRIX_ACCEPTED_STATUS for row in accepted_rows)
@@ -415,7 +418,10 @@ def build_payload() -> dict[str, Any]:
         and all(row["transfer_validation_status"] == TRANSFER_REJECTED_STATUS for row in negative_rows)
         and all(row["route_transfer_matrix_status"] == ROUTE_MATRIX_NO_TRANSFER_STATUS for row in negative_rows)
         and len(current_rows) == 2
-        and all(row["route_transfer_matrix_status"] == ROUTE_MATRIX_NO_TRANSFER_STATUS for row in current_rows)
+        and all(
+            row["route_transfer_matrix_status"] in {ROUTE_MATRIX_NO_TRANSFER_STATUS, ROUTE_MATRIX_ACCEPTED_STATUS}
+            for row in current_rows
+        )
         else BLOCKED_DISPOSITION
     )
     summary: dict[str, Any] = {
@@ -431,6 +437,10 @@ def build_payload() -> dict[str, Any]:
         "current_intake_audit_rows": len(current_rows),
         "current_no_transfer_rows": sum(
             row["route_transfer_matrix_status"] == ROUTE_MATRIX_NO_TRANSFER_STATUS
+            for row in current_rows
+        ),
+        "current_accepted_transfer_rows": sum(
+            row["route_transfer_matrix_status"] == ROUTE_MATRIX_ACCEPTED_STATUS
             for row in current_rows
         ),
         "fixture_detection_probability_current_rows": sum(
@@ -474,7 +484,10 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "two accepted fixtures": s["accepted_fixture_rows"] == 2,
         "four negative controls": s["negative_control_rows"] == 4,
         "two current audit rows": s["current_intake_audit_rows"] == 2,
-        "current no transfer rows": s["current_no_transfer_rows"] == 2,
+        "current transfer state valid": (
+            s["current_no_transfer_rows"] == 2
+            or s["current_accepted_transfer_rows"] == 2
+        ),
         "fixture no probability": s["fixture_detection_probability_current_rows"] == 0,
         "fixture no route score": s["fixture_route_score_current_rows"] == 0,
     }
@@ -523,7 +536,10 @@ def write_outputs(payload: dict[str, Any]) -> list[Path]:
         paths.append(path)
 
     status_path = OUTPUT_DIR / f"{PREFIX}_STATUS_20260701.json"
-    write_json_atomic(status_path, {"disposition": DISPOSITION, "summary": payload["summary"]})
+    write_json_atomic(
+        status_path,
+        {"disposition": payload["summary"]["disposition"], "summary": payload["summary"]},
+    )
     paths.append(status_path)
 
     report_path = OUTPUT_DIR / f"{PREFIX}_REPORT_20260701.json"
@@ -554,8 +570,9 @@ def report_markdown(payload: dict[str, Any]) -> str:
             f"- Accepted transfer fixture rows: `{s['accepted_fixture_rows']}`.",
             f"- Negative control rows: `{s['negative_control_rows']}`.",
             f"- Current no-transfer audit rows: `{s['current_no_transfer_rows']}`.",
+            f"- Current accepted transfer audit rows: `{s['current_accepted_transfer_rows']}`.",
             "- This hardens transfer validation for sha256, false-positive CI, sample counts, controls, and preregistered rules.",
-            "- Accepted fixtures prove validator behavior only; current real transfer evidence remains absent.",
+            "- Current accepted transfer candidates remain detector/blank inputs only, not detection probability or route-score evidence.",
             "- Detection probability, route score, winner/JRC, yield, and wet pass probability remain false.",
             "",
         ]
@@ -605,7 +622,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"FAIL: {failure}")
         return 1
     write_outputs(payload)
-    print(DISPOSITION)
+    print(payload["summary"]["disposition"])
     print(json.dumps(payload["summary"], sort_keys=True))
     return 0
 

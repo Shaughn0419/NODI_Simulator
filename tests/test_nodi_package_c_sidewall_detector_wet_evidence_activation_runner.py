@@ -21,7 +21,9 @@ def test_detector_wet_activation_runner_builds_header_only_input_state() -> None
     assert summary["activation_rows"] == 2
     assert summary["input_contract_rows"] == 2
     assert summary["combined_detector_wet_ready_rows"] == 0
-    assert summary["detector_accepted_transfer_rows_total"] == 0
+    assert summary["detector_branch_ready_rows"] == 2
+    assert summary["wet_branch_ready_rows"] == 0
+    assert summary["detector_accepted_transfer_rows_total"] == 2
     assert summary["wet_accepted_endpoint_count_total"] == 0
     assert summary["route_score_current"] is False
     assert summary["yield_current"] is False
@@ -34,7 +36,10 @@ def test_detector_wet_activation_rows_keep_claims_false() -> None:
 
     assert {row["combined_detector_wet_ready_for_formula"] for row in rows} == {False}
     assert {row["route_formula_blocker_status"] for row in rows} == {
-        "blocked_detector_blank_or_wet_accepted_evidence_missing"
+        "blocked_wet_accepted_evidence_missing"
+    }
+    assert {row["next_required_evidence"] for row in rows} == {
+        "accepted wet endpoint bundle"
     }
     assert {row["route_score_current"] for row in rows} == {False}
     assert {row["yield_current"] for row in rows} == {False}

@@ -219,6 +219,9 @@ def build_payload() -> dict[str, Any]:
     source_lock = source_lock_rows()
     dirty_context = dirty_context_rows()
     source_missing = sum(row["exists"] != "true" for row in source_lock)
+    activation_allowed_targets = {
+        row["claim_target"] for row in guard_rows if row["activation_allowed_now"]
+    }
     status = (
         DISPOSITION
         if source_missing == 0
@@ -226,7 +229,7 @@ def build_payload() -> dict[str, Any]:
         and len(guard_rows) == 5
         and all(row["route_formula_binding_authorized"] for row in closure_rows)
         and sum(row["route_score_current"] for row in closure_rows) == 0
-        and sum(row["activation_allowed_now"] for row in guard_rows) == 0
+        and activation_allowed_targets <= {"detection_probability"}
         else BLOCKED_DISPOSITION
     )
     summary: dict[str, Any] = {
@@ -275,6 +278,7 @@ def build_payload() -> dict[str, Any]:
         "activation_allowed_guard_rows": sum(
             row["activation_allowed_now"] for row in guard_rows
         ),
+        "activation_allowed_targets": ";".join(sorted(activation_allowed_targets)),
         "source_lock_rows": len(source_lock),
         "source_missing_rows": source_missing,
         "dirty_context_rows": len(dirty_context),
@@ -316,12 +320,12 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "profile grid ready": s["profile_grid_candidate_ready_rows"] == 2,
         "detector validator hardened": s["detector_validator_hardened_rows"] == 2,
         "wet validator hardened": s["wet_validator_hardened_rows"] == 2,
-        "no detector accepted": s["detector_accepted_transfer_rows_total"] == 0,
+        "detector accepted": s["detector_accepted_transfer_rows_total"] > 0,
         "no wet accepted": s["wet_accepted_observation_rows_total"] == 0,
         "no route score": s["route_score_current_rows"] == 0,
         "no yield": s["yield_current_rows"] == 0,
         "no detection": s["detection_probability_current_rows"] == 0,
-        "no activation": s["activation_allowed_guard_rows"] == 0,
+        "only detector activation": s["activation_allowed_targets"] in {"", "detection_probability"},
     }
     for row in payload["closure_rows"]:
         checks[f"closure guarded {row['closure_row_id']}"] = (
@@ -347,7 +351,10 @@ def write_outputs(payload: dict[str, Any]) -> list[Path]:
         write_csv_rows(path, rows)
         paths.append(path)
     status_path = OUTPUT_DIR / f"{PREFIX}_STATUS_20260701.json"
-    write_json_atomic(status_path, {"disposition": DISPOSITION, "summary": payload["summary"]})
+    write_json_atomic(
+        status_path,
+        {"disposition": payload["summary"]["disposition"], "summary": payload["summary"]},
+    )
     paths.append(status_path)
     report_path = OUTPUT_DIR / f"{PREFIX}_REPORT_20260701.json"
     write_json_atomic(report_path, payload)
@@ -421,7 +428,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"FAIL: {failure}")
         return 1
     write_outputs(payload)
-    print(DISPOSITION)
+    print(payload["summary"]["disposition"])
     print(json.dumps(payload["summary"], sort_keys=True))
     return 0
 

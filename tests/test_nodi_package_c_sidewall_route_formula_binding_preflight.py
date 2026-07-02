@@ -15,7 +15,7 @@ def test_route_formula_preflight_builds_from_current_artifacts() -> None:
     summary = payload["summary"]
 
     assert failures == []
-    assert summary["disposition"] == builder.DISPOSITION
+    assert summary["disposition"] == builder.DETECTOR_READY_DISPOSITION
     assert summary["preflight_rows"] == 2
     assert summary["branch_rows"] == 12
     assert summary["guard_rows"] == 5
@@ -27,9 +27,9 @@ def test_route_formula_preflight_builds_from_current_artifacts() -> None:
     assert summary["runtime_substep_guard_ready_rows"] == 2
     assert summary["detector_hardening_fixture_rows"] == 2
     assert summary["wet_hardening_fixture_rows"] == 14
-    assert summary["detector_accepted_transfer_rows_total"] == 0
+    assert summary["detector_accepted_transfer_rows_total"] == 2
     assert summary["wet_accepted_observation_rows_total"] == 0
-    assert summary["detector_branch_ready_rows"] == 0
+    assert summary["detector_branch_ready_rows"] == 2
     assert summary["wet_branch_ready_rows"] == 0
     assert summary["route_formula_claim_ready_rows"] == 0
     assert summary["route_score_current"] is False
@@ -46,7 +46,7 @@ def test_preflight_rows_have_parallel_geometry_and_blockers() -> None:
         "ideal_rectangle",
         "trapezoid_tapered_sidewalls",
     }
-    assert {row["route_formula_input_ready_count"] for row in rows} == {4}
+    assert {row["route_formula_input_ready_count"] for row in rows} == {5}
     assert {row["route_formula_required_input_count"] for row in rows} == {6}
     assert {row["route_formula_binding_status"] for row in rows} == {
         "blocked_detector_blank_and_wet_accepted_evidence_required"

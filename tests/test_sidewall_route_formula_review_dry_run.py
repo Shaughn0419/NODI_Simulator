@@ -37,6 +37,27 @@ def test_dry_run_blocks_when_detector_wet_gates_are_missing() -> None:
     assert row.detection_probability_current is False
 
 
+def test_dry_run_marks_detector_ready_and_waits_for_wet_gate() -> None:
+    rows = build_route_formula_review_dry_run(
+        closure_rows=[_closure_row(detector_branch_ready="True")]
+    )
+    row = rows[0]
+
+    assert row.qch_component_ready is True
+    assert row.detector_component_ready is True
+    assert row.wet_component_ready is False
+    assert row.diagnostic_component_completeness_fraction == 0.666667
+    assert row.route_formula_review_dry_run_status == (
+        "blocked_until_wet_evidence_accepted"
+    )
+    assert row.next_required_action == (
+        "complete accepted wet evidence inputs, rerun activation closure"
+    )
+    assert row.route_score_current is False
+    assert row.yield_current is False
+    assert row.detection_probability_current is False
+
+
 def test_dry_run_component_vector_can_be_ready_without_scoring() -> None:
     rows = build_route_formula_review_dry_run(
         closure_rows=[

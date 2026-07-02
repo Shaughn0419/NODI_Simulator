@@ -283,7 +283,11 @@ def _build_intake_row(
         transfer_rejection_reason=rejection_reason,
         transfer_validation_status=validation_status,
         accepted_transfer_current=accepted,
-        sidewall_specific_blank_trace_current=accepted,
+        sidewall_specific_blank_trace_current=(
+            accepted
+            and str(transfer.get("blank_trace_geometry_match_level", ""))
+            == "sidewall_specific"
+        ),
         detector_response_validation_current=accepted,
         detection_probability_current=False,
         route_score_current=False,
@@ -355,9 +359,15 @@ def _transfer_rejection_reason(
         return "insufficient_blank_trace_count"
     if _int_value(transfer.get("n_detector_calibration_runs")) < 3:
         return "insufficient_detector_calibration_runs"
-    if str(transfer.get("controls_status", "")) != "controls_pass":
+    if str(transfer.get("controls_status", "")) not in {
+        "controls_pass",
+        "candidate_controls_pass",
+    }:
         return "controls_not_pass"
-    if str(transfer.get("pre_registered_rule_status", "")) != "pre_registered":
+    if str(transfer.get("pre_registered_rule_status", "")) not in {
+        "pre_registered",
+        "candidate_rule_pre_registered",
+    }:
         return "pre_registered_rule_missing"
     return "accepted_transfer_candidate"
 

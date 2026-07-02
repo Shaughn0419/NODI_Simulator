@@ -17,7 +17,8 @@ def test_detector_blank_transfer_validation_hardening_packet_builds() -> None:
     assert summary["accepted_fixture_rows"] == 2
     assert summary["negative_control_rows"] == 4
     assert summary["current_intake_audit_rows"] == 2
-    assert summary["current_no_transfer_rows"] == 2
+    assert summary["current_no_transfer_rows"] == 0
+    assert summary["current_accepted_transfer_rows"] == 2
     assert summary["fixture_detection_probability_current_rows"] == 0
     assert summary["fixture_route_score_current_rows"] == 0
 
@@ -77,14 +78,14 @@ def test_negative_controls_fail_closed_with_specific_reasons() -> None:
         assert row["route_score_current"] is False
 
 
-def test_current_transfer_audit_remains_no_evidence() -> None:
+def test_current_transfer_audit_accepts_nodi_candidate_without_probability() -> None:
     rows = builder.build_payload()["current_intake_audit_rows"]
 
     assert len(rows) == 2
     assert {row["route_transfer_matrix_status"] for row in rows} == {
-        "detector_blank_transfer_intake_ready_no_transfer_evidence"
+        "detector_blank_transfer_bundle_candidate_ready_requires_policy_review"
     }
-    assert {row["accepted_transfer_count"] for row in rows} == {"0"}
+    assert {row["accepted_transfer_count"] for row in rows} == {"1"}
     assert {row["detection_probability_current"] for row in rows} == {"False"}
     assert {row["route_score_current"] for row in rows} == {"False"}
 

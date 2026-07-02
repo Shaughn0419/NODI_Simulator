@@ -69,6 +69,13 @@ def _closure_rows() -> list[dict[str, object]]:
     return rows
 
 
+def _closure_rows_detector_ready() -> list[dict[str, object]]:
+    rows = _closure_rows()
+    for row in rows:
+        row["detector_accepted_transfer_rows"] = "2"
+    return rows
+
+
 def test_preflight_marks_qch_ready_but_detector_wet_blocked() -> None:
     rows, branches, guards = build_route_formula_binding_preflight(
         qch_delta_rows=_qch_delta_rows(),
@@ -108,3 +115,27 @@ def test_preflight_does_not_emit_claims() -> None:
     assert {row.claim_boundary for row in rows} == {
         SIDEWALL_ROUTE_FORMULA_BINDING_PREFLIGHT_CLAIM_BOUNDARY
     }
+
+
+def test_preflight_marks_detector_ready_but_waits_for_wet() -> None:
+    rows, branches, guards = build_route_formula_binding_preflight(
+        qch_delta_rows=_qch_delta_rows(),
+        route_candidate_rows=_candidate_rows(),
+        detector_wet_closure_rows=_closure_rows_detector_ready(),
+    )
+
+    assert {row.detector_branch_ready for row in rows} == {True}
+    assert {row.wet_branch_ready for row in rows} == {False}
+    assert {row.route_formula_input_ready_count for row in rows} == {5}
+    assert {row.route_formula_required_input_count for row in rows} == {6}
+    assert {row.route_formula_binding_status for row in rows} == {
+        "blocked_detector_blank_and_wet_accepted_evidence_required"
+    }
+    detector_branches = [
+        row for row in branches if row.branch_name == "detector_blank_transfer"
+    ]
+    assert {row.branch_ready_for_formula for row in detector_branches} == {True}
+    assert {row.accepted_evidence_rows for row in detector_branches} == {2}
+    assert {guard.activation_allowed_now for guard in guards} == {False}
+    assert {row.route_score_current for row in rows} == {False}
+    assert {row.detection_probability_current for row in rows} == {False}

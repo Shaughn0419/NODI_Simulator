@@ -29,6 +29,32 @@ def test_activation_runner_defaults_to_detector_wet_blocked() -> None:
     assert {row.detection_probability_current for row in rows} == {False}
 
 
+def test_activation_runner_marks_detector_ready_and_waits_for_wet_only() -> None:
+    rows, _contracts = build_detector_wet_evidence_activation_runner(
+        detector_panel_matrix_rows=_panel_rows(),
+        wet_contract_rows=_contract_rows(),
+        detector_transfer_input_rows=[
+            _complete_transfer_row(route_candidate_id="ROUTE-CAND-001"),
+            _complete_transfer_row(route_candidate_id="ROUTE-CAND-002"),
+        ],
+        detector_input_present=True,
+        wet_input_present=True,
+    )
+
+    assert {row.detector_branch_ready_for_formula for row in rows} == {True}
+    assert {row.wet_branch_ready_for_formula for row in rows} == {False}
+    assert {row.combined_detector_wet_ready_for_formula for row in rows} == {False}
+    assert {row.route_formula_blocker_status for row in rows} == {
+        "blocked_wet_accepted_evidence_missing"
+    }
+    assert {row.next_required_evidence for row in rows} == {
+        "accepted wet endpoint bundle"
+    }
+    assert {row.route_score_current for row in rows} == {False}
+    assert {row.yield_current for row in rows} == {False}
+    assert {row.detection_probability_current for row in rows} == {False}
+
+
 def test_activation_runner_accepts_complete_detector_and_wet_inputs_for_one_route() -> None:
     rows, _contracts = build_detector_wet_evidence_activation_runner(
         detector_panel_matrix_rows=_panel_rows(),

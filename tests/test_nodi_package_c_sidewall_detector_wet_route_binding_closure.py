@@ -26,9 +26,10 @@ def test_detector_wet_route_binding_closure_builds_from_current_artifacts() -> N
     assert summary["profile_grid_candidate_ready_rows"] == 2
     assert summary["detector_validator_hardened_rows"] == 2
     assert summary["wet_validator_hardened_rows"] == 2
-    assert summary["detector_accepted_transfer_rows_total"] == 0
+    assert summary["detector_accepted_transfer_rows_total"] > 0
     assert summary["wet_accepted_observation_rows_total"] == 0
-    assert summary["activation_allowed_guard_rows"] == 0
+    assert summary["activation_allowed_guard_rows"] == 1
+    assert summary["activation_allowed_targets"] == "detection_probability"
 
 
 def test_closure_rows_keep_claims_false_and_geometry_parallel() -> None:

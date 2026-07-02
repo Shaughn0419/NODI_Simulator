@@ -24,11 +24,14 @@ def test_route_formula_review_dry_run_rows_hold_qch_components_only_currently() 
     rows = builder.build_payload()["dry_run_rows"]
 
     assert {row["qch_component_ready"] for row in rows} == {True}
-    assert {row["detector_component_ready"] for row in rows} == {False}
+    assert {row["detector_component_ready"] for row in rows} == {True}
     assert {row["wet_component_ready"] for row in rows} == {False}
-    assert {row["diagnostic_component_ready_count"] for row in rows} == {1}
+    assert {row["diagnostic_component_ready_count"] for row in rows} == {2}
     assert {row["route_formula_review_dry_run_status"] for row in rows} == {
-        "blocked_until_detector_wet_evidence_accepted"
+        "blocked_until_wet_evidence_accepted"
+    }
+    assert {row["next_required_action"] for row in rows} == {
+        "complete accepted wet evidence inputs, rerun activation closure"
     }
     assert all(float(row["diagnostic_qch_component_value"]) > 0 for row in rows)
     assert all(row["route_score_current"] is False for row in rows)

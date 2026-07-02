@@ -16,6 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from nodi_simulator.realism_v2_io import sha256_file, write_csv_rows, write_json_atomic  # noqa: E402
 from nodi_simulator.sidewall_detector_blank_transfer_intake import (  # noqa: E402
+    ROUTE_MATRIX_ACCEPTED_STATUS,
     ROUTE_MATRIX_NO_TRANSFER_STATUS,
     SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_CLAIM_BOUNDARY,
     build_detector_blank_transfer_intake,
@@ -32,6 +33,9 @@ PREFIX = "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE"
 ARTIFACT_ID = "PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_20260701"
 DISPOSITION = (
     "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE"
+)
+ACCEPTED_DISPOSITION = (
+    "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_ACCEPTED_TRANSFER_CANDIDATE"
 )
 BLOCKED_DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_FAIL_CLOSED"
 SELF_MANIFEST_SHA256 = "SELF_MANIFEST_NOT_SELF_HASHED_BY_DESIGN"
@@ -282,9 +286,12 @@ def build_payload() -> dict[str, Any]:
         row["route_transfer_matrix_status"] == ROUTE_MATRIX_NO_TRANSFER_STATUS
         for row in matrix_dicts
     )
-    status = (
-        DISPOSITION
-        if source_missing == 0
+    accepted_matrix_rows = sum(
+        row["route_transfer_matrix_status"] == ROUTE_MATRIX_ACCEPTED_STATUS
+        for row in matrix_dicts
+    )
+    base_checks_pass = (
+        source_missing == 0
         and release_dirty_blockers == 0
         and assembly_status.get("disposition")
         == "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_READY_NOT_CLAIM_READY"
@@ -294,12 +301,15 @@ def build_payload() -> dict[str, Any]:
         and len(matrix_dicts) == 2
         and len(template_rows) == 2
         and len(promotion_updates) == 2
-        and accepted_rows == 0
-        and no_transfer_rows == 2
         and all(row["detection_probability_current"] is False for row in intake_dicts)
         and all(row["route_score_current"] is False for row in intake_dicts)
-        else BLOCKED_DISPOSITION
     )
+    if base_checks_pass and accepted_rows == 2 and accepted_matrix_rows == 2:
+        status = ACCEPTED_DISPOSITION
+    elif base_checks_pass and accepted_rows == 0 and no_transfer_rows == 2:
+        status = DISPOSITION
+    else:
+        status = BLOCKED_DISPOSITION
     summary: dict[str, Any] = {
         "disposition": status,
         "artifact_id": ARTIFACT_ID,
@@ -315,8 +325,14 @@ def build_payload() -> dict[str, Any]:
         "promotion_update_rows": len(promotion_updates),
         "accepted_transfer_rows": accepted_rows,
         "no_transfer_matrix_rows": no_transfer_rows,
+        "accepted_transfer_matrix_rows": accepted_matrix_rows,
         "sidewall_specific_blank_trace_current_rows": sum(
             row["sidewall_specific_blank_trace_current"] for row in intake_dicts
+        ),
+        "validated_transfer_current_rows": sum(
+            row["accepted_transfer_current"]
+            and row["blank_trace_geometry_match_level"] == "validated_transfer"
+            for row in intake_dicts
         ),
         "detector_response_validation_current_rows": sum(
             row["detector_response_validation_current"] for row in intake_dicts
@@ -350,16 +366,21 @@ def build_payload() -> dict[str, Any]:
 
 def validate_payload(payload: dict[str, Any]) -> list[str]:
     summary = payload["summary"]
+    accepted_mode = summary["accepted_transfer_rows"] == 2
     checks = {
-        "disposition pass": summary["disposition"] == DISPOSITION,
+        "disposition pass": summary["disposition"] in {DISPOSITION, ACCEPTED_DISPOSITION},
         "source lock complete": summary["source_missing_rows"] == 0,
         "release scoped dirty blockers absent": summary["release_scoped_dirty_blocker_rows"] == 0,
         "two intake rows": summary["intake_rows"] == 2,
         "two matrix rows": summary["route_transfer_matrix_rows"] == 2,
         "two template rows": summary["template_rows"] == 2,
         "two promotion updates": summary["promotion_update_rows"] == 2,
-        "accepted zero": summary["accepted_transfer_rows"] == 0,
-        "no transfer rows": summary["no_transfer_matrix_rows"] == 2,
+        "accepted count valid": summary["accepted_transfer_rows"] in {0, 2},
+        "matrix count valid": (
+            summary["accepted_transfer_matrix_rows"] == 2
+            if accepted_mode
+            else summary["no_transfer_matrix_rows"] == 2
+        ),
         "detection false": summary["detection_probability_current"] is False,
         "route false": summary["route_score_current"] is False,
         "yield false": summary["yield_current"] is False,
@@ -396,7 +417,10 @@ def write_outputs(payload: dict[str, Any]) -> list[Path]:
         paths.append(path)
 
     status_path = OUTPUT_DIR / f"{PREFIX}_STATUS_20260701.json"
-    write_json_atomic(status_path, {"disposition": DISPOSITION, "summary": payload["summary"]})
+    write_json_atomic(
+        status_path,
+        {"disposition": payload["summary"]["disposition"], "summary": payload["summary"]},
+    )
     paths.append(status_path)
 
     report_path = OUTPUT_DIR / f"{PREFIX}_REPORT_20260701.json"
@@ -475,7 +499,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"FAIL: {failure}")
         return 1
     write_outputs(payload)
-    print(DISPOSITION)
+    print(payload["summary"]["disposition"])
     print(json.dumps(payload["summary"], sort_keys=True))
     return 0
 

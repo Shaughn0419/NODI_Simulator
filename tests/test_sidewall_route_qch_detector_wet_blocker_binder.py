@@ -18,11 +18,11 @@ def _preflight_rows() -> list[dict[str, object]]:
             "exact_pressure_flow_branch_ready": "True",
             "selected_annulus_context_ready": "True",
             "runtime_substep_guard_ready": "True",
-            "detector_accepted_transfer_rows": "0",
+            "detector_accepted_transfer_rows": "1",
             "wet_accepted_observation_rows": "0",
-            "route_formula_input_ready_count": "4",
+            "route_formula_input_ready_count": "5",
             "route_formula_required_input_count": "6",
-            "route_formula_input_completeness_fraction": "0.666667",
+            "route_formula_input_completeness_fraction": "0.833333",
         },
         {
             "route_candidate_id": "ROUTE-CAND-002",
@@ -34,16 +34,16 @@ def _preflight_rows() -> list[dict[str, object]]:
             "exact_pressure_flow_branch_ready": "True",
             "selected_annulus_context_ready": "True",
             "runtime_substep_guard_ready": "True",
-            "detector_accepted_transfer_rows": "0",
+            "detector_accepted_transfer_rows": "1",
             "wet_accepted_observation_rows": "0",
-            "route_formula_input_ready_count": "4",
+            "route_formula_input_ready_count": "5",
             "route_formula_required_input_count": "6",
-            "route_formula_input_completeness_fraction": "0.666667",
+            "route_formula_input_completeness_fraction": "0.833333",
         },
     ]
 
 
-def test_binder_keeps_current_qch_ready_and_detector_wet_blocked() -> None:
+def test_binder_keeps_current_qch_and_detector_ready_with_wet_blocked() -> None:
     rows, supersession = build_route_qch_detector_wet_blocker_binder(
         preflight_rows=_preflight_rows(),
         source_statuses={},
@@ -59,11 +59,14 @@ def test_binder_keeps_current_qch_ready_and_detector_wet_blocked() -> None:
         "formal_qch_input_ready_not_route_score"
     }
     assert {row.detector_blank_status for row in rows} == {
-        "blocker_not_accepted_evidence"
+        "accepted_detector_blank_transfer_ready"
     }
     assert {row.wet_observation_status for row in rows} == {
         "blocker_not_accepted_evidence"
     }
+    assert {row.canonical_next_block for row in rows} == {"wet_observation"}
+    assert {row.detector_accepted_transfer_rows for row in rows} == {1}
+    assert {row.route_formula_input_ready_count for row in rows} == {5}
 
 
 def test_binder_does_not_promote_route_yield_detection_claims() -> None:

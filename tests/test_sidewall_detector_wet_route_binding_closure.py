@@ -73,3 +73,28 @@ def test_closure_harness_blocks_claims_until_accepted_detector_and_wet_rows() ->
         SIDEWALL_DETECTOR_WET_ROUTE_BINDING_CLOSURE_CLAIM_BOUNDARY
     }
     assert {guard.activation_allowed_now for guard in guards} == {False}
+
+
+def test_detector_only_closure_opens_detection_guard_but_not_route_or_yield() -> None:
+    rows, guards = build_detector_wet_route_binding_closure(
+        route_evidence_state_rows=_route_rows(),
+        route_candidate_status={"candidate_metric_rows": 2},
+        selected_annulus_status={"selected_annulus_context_current_rows": 2},
+        detector_execution_status={"current_accepted_transfer_rows_total": 2},
+        detector_validation_status={"accepted_fixture_rows": 2},
+        wet_execution_status={"current_accepted_observation_rows_total": 0},
+        wet_validation_status={"accepted_fixture_rows": 14},
+    )
+
+    assert {row.detector_accepted_transfer_rows for row in rows} == {2}
+    assert {row.wet_accepted_observation_rows for row in rows} == {0}
+    assert {row.route_formula_binding_status for row in rows} == {
+        "blocked_accepted_detector_blank_and_wet_rows_required"
+    }
+    by_target = {guard.claim_target: guard for guard in guards}
+    assert by_target["detection_probability"].activation_allowed_now is True
+    assert by_target["route_score_winner_JRC"].activation_allowed_now is False
+    assert by_target["yield"].activation_allowed_now is False
+    assert {row.route_score_current for row in rows} == {False}
+    assert {row.yield_current for row in rows} == {False}
+    assert {row.detection_probability_current for row in rows} == {False}

@@ -218,9 +218,9 @@ def build_payload() -> dict[str, Any]:
         and int(qch_status.get("accepted_exact_pressure_flow_rows", 0)) == 2
         and int(qch_status.get("route_formula_qch_branch_ready_rows", 0)) == 2
         and int(preflight_status.get("qch_branch_ready_rows", 0)) == 2
-        and int(preflight_status.get("detector_branch_ready_rows", 0)) == 0
+        and int(preflight_status.get("detector_branch_ready_rows", 0)) == 2
         and int(preflight_status.get("wet_branch_ready_rows", 0)) == 0
-        and int(detector_status.get("current_accepted_transfer_rows_total", 0)) == 0
+        and int(detector_status.get("current_accepted_transfer_rows_total", 0)) > 0
         and int(wet_status.get("current_accepted_observation_rows_total", 0)) == 0
         and sum(row["route_score_current"] for row in binder_rows) == 0
         else BLOCKED_DISPOSITION
@@ -242,7 +242,9 @@ def build_payload() -> dict[str, Any]:
         "trapezoid_rows": sum(row["route_geometry_family"] == "trapezoid_tapered_sidewalls" for row in binder_rows),
         "qch_ready_rows": sum(row["qch_status"] == "formal_qch_input_ready_not_route_score" for row in binder_rows),
         "detector_blocker_rows": sum(row["detector_blank_status"] == "blocker_not_accepted_evidence" for row in binder_rows),
+        "detector_ready_rows": sum(row["detector_blank_status"] == "accepted_detector_blank_transfer_ready" for row in binder_rows),
         "wet_blocker_rows": sum(row["wet_observation_status"] == "blocker_not_accepted_evidence" for row in binder_rows),
+        "canonical_next_blocks": ";".join(sorted({row["canonical_next_block"] for row in binder_rows})),
         "route_formula_input_ready_count_total": sum(row["route_formula_input_ready_count"] for row in binder_rows),
         "route_formula_required_input_count_total": sum(row["route_formula_required_input_count"] for row in binder_rows),
         "detector_accepted_transfer_rows_total": int(detector_status.get("current_accepted_transfer_rows_total", 0)),
@@ -286,12 +288,12 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         failures.append("rectangle_trapezoid_parallelism_missing")
     if summary["qch_ready_rows"] != 2:
         failures.append("qch_not_ready_for_both_routes")
-    if summary["detector_blocker_rows"] != 2:
-        failures.append("detector_blocker_not_preserved")
+    if summary["detector_ready_rows"] != 2:
+        failures.append("detector_ready_not_preserved")
     if summary["wet_blocker_rows"] != 2:
         failures.append("wet_blocker_not_preserved")
-    if summary["detector_accepted_transfer_rows_total"] != 0:
-        failures.append("detector_fixture_or_context_promoted_to_accepted_transfer")
+    if summary["detector_accepted_transfer_rows_total"] <= 0:
+        failures.append("detector_accepted_transfer_missing")
     if summary["wet_accepted_observation_rows_total"] != 0:
         failures.append("wet_fixture_or_context_promoted_to_accepted_observation")
     for key in (

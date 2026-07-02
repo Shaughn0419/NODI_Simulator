@@ -65,6 +65,11 @@ def build_route_formula_review_dry_run(
         formula_ready = _bool(row.get("route_formula_ready_for_claim_review"))
         ready_count = sum([qch_ready, detector_ready, wet_ready])
         required_count = 3
+        blocked_status, next_action = _blocked_status_and_next_action(
+            formula_ready=formula_ready,
+            detector_ready=detector_ready,
+            wet_ready=wet_ready,
+        )
         rows.append(
             SidewallRouteFormulaReviewDryRunRow(
                 dry_run_row_id=f"ROUTE-FORMULA-DRY-RUN-{row.get('route_candidate_id', '')}",
@@ -96,7 +101,7 @@ def build_route_formula_review_dry_run(
                 route_formula_review_dry_run_status=(
                     "route_formula_component_vector_ready_for_policy_review_not_scored"
                     if formula_ready
-                    else "blocked_until_detector_wet_evidence_accepted"
+                    else blocked_status
                 ),
                 route_score_current=False,
                 route_score_value_current="",
@@ -106,11 +111,7 @@ def build_route_formula_review_dry_run(
                 detection_probability_current=False,
                 wet_pass_probability_current=False,
                 production_ingestion_current=False,
-                next_required_action=(
-                    "run route formula policy review using component vector; scoring remains separate"
-                    if formula_ready
-                    else "complete accepted detector and wet evidence inputs, rerun activation closure"
-                ),
+                next_required_action=next_action,
                 hard_fail_if=(
                     "dry_run_emits_route_score_winner_yield_detection_or_production"
                 ),
@@ -118,6 +119,33 @@ def build_route_formula_review_dry_run(
             )
         )
     return rows
+
+
+def _blocked_status_and_next_action(
+    *,
+    formula_ready: bool,
+    detector_ready: bool,
+    wet_ready: bool,
+) -> tuple[str, str]:
+    if formula_ready:
+        return (
+            "route_formula_component_vector_ready_for_policy_review_not_scored",
+            "run route formula policy review using component vector; scoring remains separate",
+        )
+    if detector_ready and not wet_ready:
+        return (
+            "blocked_until_wet_evidence_accepted",
+            "complete accepted wet evidence inputs, rerun activation closure",
+        )
+    if wet_ready and not detector_ready:
+        return (
+            "blocked_until_detector_evidence_accepted",
+            "complete accepted detector evidence inputs, rerun activation closure",
+        )
+    return (
+        "blocked_until_detector_wet_evidence_accepted",
+        "complete accepted detector and wet evidence inputs, rerun activation closure",
+    )
 
 
 def _bool(value: Any) -> bool:
