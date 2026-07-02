@@ -1,0 +1,8 @@
+check_id,status,detail
+full_recompute_covers_route_window_diameter_grid,pass,full_recompute_event_rows=208
+weighted_rows_cover_three_modes,pass,weighted_recompute_rows=624
+route_lock_covers_six_routes_times_three_modes,pass,route_lock_rows=18
+execution_status_matches_mode,pass,execute_nodi=True; executed_rows=208
+rectangle_baseline_preserved,pass,rectangle branch is not overwritten by sidewall recompute
+v4_assumption_hash_bound,pass,2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92
+no_forbidden_primary_columns,pass,outputs avoid score/winner/yield/detection/W_eff/q_ch primary columns

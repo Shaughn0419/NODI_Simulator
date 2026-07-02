@@ -1,0 +1,28 @@
+{
+  "artifact_id": "NODI_SIDEWALL_FULL_RECOMPUTE_DISTRIBUTION_WEIGHTED_LOCK_20260703",
+  "claim_boundary": "full_nodi_recompute_distribution_weighted_context_not_exact_pxu",
+  "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+  "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+  "comsol_v4_assumption_set_version": "4.0.0",
+  "date_stamp": "20260703",
+  "disposition": "NODI_SIDEWALL_FULL_RECOMPUTE_DISTRIBUTION_WEIGHTED_LOCK_EXECUTED_READY",
+  "execute_nodi": true,
+  "git_branch": "main",
+  "git_head": "64a1c8adb0f96680c8efadacaa59ebfc44c5476b",
+  "n_events": 32,
+  "payload_sha256": "7f98147c73f69e99cd45b2aaa2b5f8a1addf3d96ff9306d338a38fe553d59bd9",
+  "random_seed": 60700,
+  "summary": {
+    "exact_pxu_probability_grid_available_now": false,
+    "failed_validation_rows": 0,
+    "full_recompute_event_rows": 208,
+    "full_recompute_executed_rows": 208,
+    "full_recompute_failures": 0,
+    "next_executable_block": "608_width_sweep_with_distribution_weights",
+    "question_rows": 3,
+    "rectangle_baseline_status": "preserved_not_overwritten",
+    "route_lock_rows": 18,
+    "weighted_recompute_rows": 624
+  },
+  "synthesis_version": "sidewall_full_recompute_distribution_weighted_lock_v1"
+}
