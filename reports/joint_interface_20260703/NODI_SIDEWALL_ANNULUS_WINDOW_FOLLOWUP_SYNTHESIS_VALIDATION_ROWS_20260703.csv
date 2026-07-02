@@ -1,0 +1,5 @@
+check_name,check_pass,observed,expected,hard_fail_if_false
+route_followup_coverage,True,6,6,True
+window_family_coverage,True,3,3,True
+source_artifacts_present,True,0,0,True
+no_forbidden_primary_columns,True,pass,pass,True

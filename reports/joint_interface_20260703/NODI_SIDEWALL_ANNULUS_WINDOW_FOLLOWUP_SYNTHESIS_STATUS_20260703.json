@@ -1,0 +1,23 @@
+{
+  "allowed_use": "synthesize sidewall candidate-envelope annulus-window follow-up context for next simulation planning",
+  "answer_axis_rows": 3,
+  "artifact_id": "NODI_SIDEWALL_ANNULUS_WINDOW_FOLLOWUP_SYNTHESIS_20260703",
+  "blocked_use": "route winner, scalar score, final detection probability, yield, wet experimental claim, fabrication release, q_ch weighting, true W_eff, or production runtime ingestion",
+  "branch": "main",
+  "claim_boundary": "annulus_window_followup_context_not_probability_not_selection",
+  "current_head": "7f2714c4d318b0af009746f1be5fbf1659dfc206",
+  "dirty_context_rows": 85,
+  "disposition": "NODI_SIDEWALL_ANNULUS_WINDOW_FOLLOWUP_SYNTHESIS_READY",
+  "failed_validation_rows": 0,
+  "non_annulus_followup_dirty_context_rows": 83,
+  "not_primary_answer_frame": "route_winner_or_final_probability",
+  "primary_answer_frame": "annulus_window_followup_for_sidewall_candidate_dimensions",
+  "route_followup_rows": 6,
+  "routes_with_noncanonical_followup_windows": 6,
+  "semantic_digest": "2bc17fc7d55d9d7e8943452bbbcd43d5acc8399b44cd4cab6c75fc2b2190d700",
+  "source_lock_rows": 5,
+  "source_missing_rows": 0,
+  "synthesis_version": "sidewall_annulus_window_followup_synthesis_v1",
+  "validation_rows": 4,
+  "window_family_rows": 3
+}
