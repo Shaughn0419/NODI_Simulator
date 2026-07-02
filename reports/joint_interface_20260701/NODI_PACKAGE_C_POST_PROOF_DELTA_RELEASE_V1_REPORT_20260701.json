@@ -3,21 +3,21 @@
     "disposition": "PASS_NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_READY_FOR_COMSOL_CLEAN_MIRROR_NO_RUN",
     "artifact_id": "PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_20260701",
     "claim_boundary": "post_proof_package_c_finite_step_reflection_surrogate_registered_not_runtime_not_comsol_not_solver_not_wet",
-    "current_head": "b681e4ed8a5c3a739aeb9029b5e5ed3375693b4f",
+    "current_head": "84faf70b62acb66adf2a3527607df76c51965833",
     "branch": "main",
-    "reviewed_evidence_commit_sha": "55e093489b48c48e1ed61b598e8167bf1dc61348",
+    "reviewed_evidence_commit_sha": "e692fff1121312bc47d4e94109b05321605e31a3",
     "proof_registration_authorized": true,
     "proof_registration_authorization_source": "PACKAGE_C_USER_AUTHORIZATION_LEDGER_20260701",
     "package_c_proof_artifact_registered": true,
     "package_c_validation_status_pass_current": true,
     "package_c_validation_status_pass_scope": "finite_step_reflection_surrogate_evidence_only",
     "proof_registration_disposition": "NODI_PACKAGE_C_PROOF_REGISTRATION_ARTIFACT_REGISTERED_NO_RUNTIME",
-    "runtime_policy_disposition": "NODI_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_CANDIDATE_READY_NO_RUNTIME_AUTHORIZATION",
+    "runtime_policy_disposition": "NODI_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_AUTHORIZED_PACKET_GATED",
     "runtime_policy_gap_rows": 4,
     "runtime_guard_policy_version": "trapezoid_runtime_substep_guard_v1",
     "dirty_count_after_exclusions": 0,
-    "dirty_context_rows": 88,
-    "non_release_dirty_context_rows": 69,
+    "dirty_context_rows": 118,
+    "non_release_dirty_context_rows": 97,
     "release_scoped_dirty_blocker_rows": 0,
     "source_lock_rows": 14,
     "source_missing_rows": 0,
@@ -41,14 +41,14 @@
     "fabrication_or_production_release_current": false,
     "allowed_use": "Post-proof Package C clean mirror release;finite-step reflection-surrogate proof-registration handoff;runtime-guard handoff;COMSOL clean mirror request;no-run source/evidence reconciliation",
     "blocked_use": "runtime configuration;runtime execution;NODI runtime recomputation;sidewall PRS/EAS numeric output;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion",
-    "semantic_digest": "e314e30c9fc3638a70db7b911fe8e76d9f11ff8c56aeb4db3b3c0f52ec2249f8"
+    "semantic_digest": "d829ad447df93ea58eb3c2badd2fab7c1bde814bd8575cc201e38adbec675d68"
   },
   "source_lock": [
     {
       "source_id": "proof_registration_status",
       "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_PROOF_REGISTRATION_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "1013a2463da1e337894361c1348c4beb8f8d478bfeec7e7a9c72cfa8a38ff7a3",
+      "sha256": "b796f43351f9b8f812adae9692e54f07dea4219fc6b79d779d317de1e4d9e88d",
       "claim_boundary": "post_proof_package_c_finite_step_reflection_surrogate_registered_not_runtime_not_comsol_not_solver_not_wet",
       "allowed_use": "Post-proof Package C clean mirror release;finite-step reflection-surrogate proof-registration handoff;runtime-guard handoff;COMSOL clean mirror request;no-run source/evidence reconciliation",
       "blocked_use": "runtime configuration;runtime execution;NODI runtime recomputation;sidewall PRS/EAS numeric output;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
@@ -57,7 +57,7 @@
       "source_id": "proof_registration_manifest",
       "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_PROOF_REGISTRATION_MANIFEST_20260701.csv",
       "exists": "true",
-      "sha256": "772af964ddebfc0e3c02aad55b4d58209ecc3361a7be79abb0eeacfc4d6d11da",
+      "sha256": "e664ba0f7db701b7b5d0647b4574183f078c804d755825e5827eca63b43148ea",
       "claim_boundary": "post_proof_package_c_finite_step_reflection_surrogate_registered_not_runtime_not_comsol_not_solver_not_wet",
       "allowed_use": "Post-proof Package C clean mirror release;finite-step reflection-surrogate proof-registration handoff;runtime-guard handoff;COMSOL clean mirror request;no-run source/evidence reconciliation",
       "blocked_use": "runtime configuration;runtime execution;NODI runtime recomputation;sidewall PRS/EAS numeric output;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
@@ -84,7 +84,7 @@
       "source_id": "runtime_substep_policy_status",
       "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "eeecbbce0cda51a7bb4e74fd62df7d6204269a69f1258ff365f5a89954bea969",
+      "sha256": "96e17460ee5a7f4ac32248645cc69bf92fff0ef95aaf4213cc925b294a2dc633",
       "claim_boundary": "post_proof_package_c_finite_step_reflection_surrogate_registered_not_runtime_not_comsol_not_solver_not_wet",
       "allowed_use": "Post-proof Package C clean mirror release;finite-step reflection-surrogate proof-registration handoff;runtime-guard handoff;COMSOL clean mirror request;no-run source/evidence reconciliation",
       "blocked_use": "runtime configuration;runtime execution;NODI runtime recomputation;sidewall PRS/EAS numeric output;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
@@ -93,7 +93,7 @@
       "source_id": "runtime_substep_policy_rows",
       "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_ROWS_20260701.csv",
       "exists": "true",
-      "sha256": "bce7a988d9269fabe0a6935a8eb45fae9fd6c54c8dbd91180001425c5e661a05",
+      "sha256": "a38dbd88f07e2089cafceb699ad5ec04b5887a2b88cb0c77c6750a1246a166ae",
       "claim_boundary": "post_proof_package_c_finite_step_reflection_surrogate_registered_not_runtime_not_comsol_not_solver_not_wet",
       "allowed_use": "Post-proof Package C clean mirror release;finite-step reflection-surrogate proof-registration handoff;runtime-guard handoff;COMSOL clean mirror request;no-run source/evidence reconciliation",
       "blocked_use": "runtime configuration;runtime execution;NODI runtime recomputation;sidewall PRS/EAS numeric output;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
@@ -102,7 +102,7 @@
       "source_id": "user_authorization_ledger_status",
       "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_USER_AUTHORIZATION_LEDGER_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "66d096a0991034790f9584dac60b62a09fc4b83d83cde409dbec6eac990e3b85",
+      "sha256": "f1ba269cfb8c0a7735a39a9f53c54c5e410dc78112320916beacee84b115b2d9",
       "claim_boundary": "post_proof_package_c_finite_step_reflection_surrogate_registered_not_runtime_not_comsol_not_solver_not_wet",
       "allowed_use": "Post-proof Package C clean mirror release;finite-step reflection-surrogate proof-registration handoff;runtime-guard handoff;COMSOL clean mirror request;no-run source/evidence reconciliation",
       "blocked_use": "runtime configuration;runtime execution;NODI runtime recomputation;sidewall PRS/EAS numeric output;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
@@ -156,7 +156,7 @@
       "source_id": "post_proof_delta_release_builder",
       "path": "tools/audits/build_nodi_package_c_post_proof_delta_release.py",
       "exists": "true",
-      "sha256": "be7bdea4d17fd90d2ff59ffb11f2486aee607c3b0bf544f39fdaaeec1aa489a1",
+      "sha256": "0d12c8001e6c34a61915546767b95508de74f7fafda456d23a1d5c2acf09c34c",
       "claim_boundary": "post_proof_package_c_finite_step_reflection_surrogate_registered_not_runtime_not_comsol_not_solver_not_wet",
       "allowed_use": "Post-proof Package C clean mirror release;finite-step reflection-surrogate proof-registration handoff;runtime-guard handoff;COMSOL clean mirror request;no-run source/evidence reconciliation",
       "blocked_use": "runtime configuration;runtime execution;NODI runtime recomputation;sidewall PRS/EAS numeric output;COMSOL launch;.mph load;validated Brownian solver output beyond finite-step surrogate;validated hindered diffusion;trapezoid Poiseuille solver output;fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;true W_eff;reference strength claim;detector response claim;sidewall scattering claim;route_score;winner;JRC;q_ch weighting;yield;detection_probability;wet pass probability;clogging rate;time-to-clog;recovery;fabrication release;production ingestion"
@@ -174,8 +174,8 @@
   "release_seal": [
     {
       "seal_id": "PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_20260701",
-      "current_head": "b681e4ed8a5c3a739aeb9029b5e5ed3375693b4f",
-      "reviewed_evidence_commit_sha": "55e093489b48c48e1ed61b598e8167bf1dc61348",
+      "current_head": "84faf70b62acb66adf2a3527607df76c51965833",
+      "reviewed_evidence_commit_sha": "e692fff1121312bc47d4e94109b05321605e31a3",
       "proof_registration_authorized": "true",
       "package_c_proof_artifact_registered": "true",
       "package_c_validation_status_pass_current": "true",
@@ -316,7 +316,7 @@
   "comsol_request": [
     {
       "request_id": "POST-PROOF-MIRROR-001",
-      "target_nodi_commit": "b681e4ed8a5c3a739aeb9029b5e5ed3375693b4f",
+      "target_nodi_commit": "84faf70b62acb66adf2a3527607df76c51965833",
       "expected_comsol_response_enum": "MIRROR_PROOF_REGISTERED_FINITE_STEP_SURROGATE_ONLY",
       "question": "Mirror NODI Package C proof registration as finite-step reflection-surrogate evidence only.",
       "allowed_action": "clean_mirror_no_run_no_mph_no_numeric_output",
@@ -324,7 +324,7 @@
     },
     {
       "request_id": "POST-PROOF-MIRROR-002",
-      "target_nodi_commit": "b681e4ed8a5c3a739aeb9029b5e5ed3375693b4f",
+      "target_nodi_commit": "84faf70b62acb66adf2a3527607df76c51965833",
       "expected_comsol_response_enum": "MIRROR_RUNTIME_GUARD_NO_RUN",
       "question": "Mirror the runtime/substep guard as a no-run policy handoff, not runtime execution.",
       "allowed_action": "clean_mirror_no_run_no_mph_no_numeric_output",
@@ -332,7 +332,7 @@
     },
     {
       "request_id": "POST-PROOF-MIRROR-003",
-      "target_nodi_commit": "b681e4ed8a5c3a739aeb9029b5e5ed3375693b4f",
+      "target_nodi_commit": "84faf70b62acb66adf2a3527607df76c51965833",
       "expected_comsol_response_enum": "FUTURE_COMSOL_RUN_REQUIRED_NOT_STARTED",
       "question": "Classify future COMSOL solver evidence as a separate branch; do not launch COMSOL now.",
       "allowed_action": "clean_mirror_no_run_no_mph_no_numeric_output",
@@ -340,7 +340,7 @@
     },
     {
       "request_id": "POST-PROOF-MIRROR-004",
-      "target_nodi_commit": "b681e4ed8a5c3a739aeb9029b5e5ed3375693b4f",
+      "target_nodi_commit": "84faf70b62acb66adf2a3527607df76c51965833",
       "expected_comsol_response_enum": "FUTURE_MPH_LOAD_REQUIRED_NOT_STARTED",
       "question": "Classify future .mph inspection as a separate branch; do not load any .mph now.",
       "allowed_action": "clean_mirror_no_run_no_mph_no_numeric_output",
@@ -348,7 +348,7 @@
     },
     {
       "request_id": "POST-PROOF-MIRROR-005",
-      "target_nodi_commit": "b681e4ed8a5c3a739aeb9029b5e5ed3375693b4f",
+      "target_nodi_commit": "84faf70b62acb66adf2a3527607df76c51965833",
       "expected_comsol_response_enum": "FUTURE_SOLVER_WET_BRANCH_REQUIRED_NOT_STARTED",
       "question": "Keep flow/electrokinetic/optical/wet claims out of this post-proof release.",
       "allowed_action": "clean_mirror_no_run_no_mph_no_numeric_output",
@@ -356,7 +356,7 @@
     },
     {
       "request_id": "POST-PROOF-MIRROR-006",
-      "target_nodi_commit": "b681e4ed8a5c3a739aeb9029b5e5ed3375693b4f",
+      "target_nodi_commit": "84faf70b62acb66adf2a3527607df76c51965833",
       "expected_comsol_response_enum": "BLOCKED_AS_EXPECTED",
       "question": "Treat route_score, winner, JRC, q_ch weighting, yield, detection_probability, and production claims as blocked.",
       "allowed_action": "clean_mirror_no_run_no_mph_no_numeric_output",
@@ -365,14 +365,8 @@
   ],
   "dirty_context": [
     {
-      "path": ".gitignore",
-      "git_status": "M ",
-      "classification": "post_proof_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "REVIEW_BUILD_MANIFEST.json",
-      "git_status": " M",
+      "git_status": "M ",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
     },
@@ -426,6 +420,42 @@
     },
     {
       "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/514_NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_20260701.md",
+      "git_status": " M",
+      "classification": "source_locked_upstream_runtime_policy_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_post_proof_blocker"
+    },
+    {
+      "path": "reports/518_NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_20260701.md",
+      "git_status": " M",
+      "classification": "post_proof_release_output",
+      "release_decision": "included_or_rewritten_by_post_proof_release"
+    },
+    {
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/519_NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/520_NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
@@ -677,6 +707,240 @@
       "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
     },
     {
+      "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_FIELD_REQUIREMENTS_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_runtime_policy_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_post_proof_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_runtime_policy_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_post_proof_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_NO_PROOF_FIREWALL_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_runtime_policy_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_post_proof_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "source_locked_upstream_runtime_policy_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_post_proof_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_REPORT_20260701.md",
+      "git_status": " M",
+      "classification": "source_locked_upstream_runtime_policy_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_post_proof_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_runtime_policy_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_post_proof_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_runtime_policy_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_post_proof_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "source_locked_upstream_runtime_policy_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_post_proof_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.csv",
+      "git_status": " M",
+      "classification": "post_proof_release_output",
+      "release_decision": "included_or_rewritten_by_post_proof_release"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "post_proof_release_output",
+      "release_decision": "included_or_rewritten_by_post_proof_release"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "post_proof_release_output",
+      "release_decision": "included_or_rewritten_by_post_proof_release"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_RELEASE_SEAL_20260701.csv",
+      "git_status": " M",
+      "classification": "post_proof_release_output",
+      "release_decision": "included_or_rewritten_by_post_proof_release"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "post_proof_release_output",
+      "release_decision": "included_or_rewritten_by_post_proof_release"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "post_proof_release_output",
+      "release_decision": "included_or_rewritten_by_post_proof_release"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "post_proof_release_output",
+      "release_decision": "included_or_rewritten_by_post_proof_release"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_DIRTY_CLASSIFIER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_post_proof_release_pass_not_source_locked"
+    },
+    {
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -791,100 +1055,16 @@
       "release_decision": "excluded_from_source_lock_recorded_separately"
     },
     {
-      "path": "reports/518_NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_20260701.md",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.csv",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_DIRTY_CONTEXT_20260701.csv",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_MANIFEST_20260701.csv",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_POST_PROOF_GUARDS_20260701.csv",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_RELEASE_SEAL_20260701.csv",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_REPORT_20260701.json",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_SELF_REVIEW_20260701.csv",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_SOURCE_LOCK_20260701.csv",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_STATUS_20260701.json",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_SUPERSEDED_CONTEXT_20260701.csv",
-      "git_status": "??",
-      "classification": "post_proof_release_output",
-      "release_decision": "included_or_rewritten_by_post_proof_release"
-    },
-    {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock_recorded_separately"
     },
     {
-      "path": "tests/test_nodi_package_c_post_proof_delta_release.py",
-      "git_status": "??",
-      "classification": "post_proof_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock_recorded_separately"
-    },
-    {
-      "path": "tools/audits/build_nodi_package_c_post_proof_delta_release.py",
-      "git_status": "??",
-      "classification": "post_proof_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
     },
     {
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",

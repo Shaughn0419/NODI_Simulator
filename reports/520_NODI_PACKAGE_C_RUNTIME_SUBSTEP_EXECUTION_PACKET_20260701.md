@@ -1,7 +1,7 @@
 # NODI Package C Runtime/Substep Execution Packet
 
 - Disposition: `NODI_PACKAGE_C_RUNTIME_SUBSTEP_EXECUTION_PACKET_READY_WITH_GUARDED_SMOKE`.
-- Current head: `c3b2a0d3aa4ba82fd406d43203468159e4178031` on `main`.
+- Current head: `84faf70b62acb66adf2a3527607df76c51965833` on `main`.
 - Semantic digest: `249b374cd84c6c4b0fb73cbf78c98921639687ea19607bef66074839af84668d`.
 - A low-cost trapezoid guarded runtime smoke trajectory was executed with fixed seed `31031`.
 - Low-cost smoke sample count: `8`; support violations: `0`.

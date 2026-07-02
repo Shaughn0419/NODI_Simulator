@@ -1,7 +1,7 @@
 # NODI Package C Authorized Mainline Advancement
 
 - Disposition: `NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_READY_FOR_EXECUTION_PACKETS`.
-- Current head: `2b32485d152f8a92e5354ae886a940078b61d24f` on `main`.
+- Current head: `84faf70b62acb66adf2a3527607df76c51965833` on `main`.
 - Semantic digest: `a455a32e7d9fe41c5b151c82d4cb7608fe3669de1a9ea71653f9512180cc5271`.
 - Package C finite-step reflection proof remains registered and narrowly scoped.
 - Runtime/substep, solver, wet, and route/yield/detection paths are authorized for implementation and evidence generation.
