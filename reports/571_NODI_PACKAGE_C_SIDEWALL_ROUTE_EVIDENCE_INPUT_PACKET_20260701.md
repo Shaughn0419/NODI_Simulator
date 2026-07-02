@@ -6,6 +6,9 @@ Claim boundary: `route_evidence_input_packet_implementation_authorized_evidence_
 
 Detector template rows: `2`; target input present: `False`.
 Wet template rows: `14`; target input present: `False`.
+Detection-value template rows: `2`; target input present: `False`.
+Yield/wet-value template rows: `2`; target input present: `False`.
 Route formula ready rows: `0`.
+Detection probability current rows: `0`; yield current rows: `0`; wet-pass current rows: `0`.
 
-This packet is the single entry point for filling detector/blank transfer and wet/surface observation evidence, then rerunning the four-step chain into route formula review.
+This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value evidence, then rerunning the nine-step chain through route decision readiness.

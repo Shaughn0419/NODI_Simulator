@@ -12,12 +12,17 @@ def test_route_evidence_input_packet_builds_current_input_handoff() -> None:
     summary = payload["summary"]
 
     assert summary["disposition"] == builder.DISPOSITION
-    assert summary["input_rows"] == 2
-    assert summary["command_rows"] == 4
+    assert summary["input_rows"] == 4
+    assert summary["command_rows"] == 9
     assert summary["route_formula_rows"] == 2
     assert summary["detector_template_rows"] == 2
     assert summary["wet_template_rows"] == 14
+    assert summary["detection_value_template_rows"] == 2
+    assert summary["yield_value_template_rows"] == 2
     assert summary["route_formula_ready_for_claim_review_rows"] == 0
+    assert summary["detection_probability_current_rows"] == 0
+    assert summary["yield_current_rows"] == 0
+    assert summary["wet_pass_probability_current_rows"] == 0
     assert summary["route_score_current"] is False
     assert summary["yield_current"] is False
     assert summary["detection_probability_current"] is False
@@ -32,6 +37,11 @@ def test_route_evidence_input_packet_command_chain_order() -> None:
         "wet_surface_observation_intake",
         "detector_wet_activation_runner",
         "route_formula_activation_closure",
+        "route_formula_review_dry_run",
+        "route_formula_policy_review",
+        "winner_jrc_policy_review",
+        "yield_detection_claim_value_review",
+        "route_decision_execution_readiness",
     ]
     assert all("python tools\\audits\\" in row["command"] for row in payload["command_rows"])
 

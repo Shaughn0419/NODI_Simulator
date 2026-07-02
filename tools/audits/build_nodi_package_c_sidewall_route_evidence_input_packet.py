@@ -46,9 +46,14 @@ WET_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERV
 ACTIVATION_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json"
 CLOSURE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_STATUS_20260701.json"
 CLOSURE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_CLOSURE_ROWS_20260701.csv"
+CLAIM_VALUE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json"
+DETECTION_VALUE_TEMPLATE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_DETECTION_VALUE_TEMPLATE_ROWS_20260701.csv"
+YIELD_VALUE_TEMPLATE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_YIELD_VALUE_TEMPLATE_ROWS_20260701.csv"
+DETECTION_VALUE_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv"
+YIELD_VALUE_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv"
 
-ALLOWED_USE = "single entry packet for detector/wet evidence input and route formula rerun chain"
-BLOCKED_USE = "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion"
+ALLOWED_USE = "single entry packet for detector/wet/value evidence input and full route decision rerun chain"
+BLOCKED_USE = "template-as-evidence;production ingestion"
 
 SOURCE_FILES = {
     "detector_intake_status": DETECTOR_INTAKE_STATUS,
@@ -58,6 +63,9 @@ SOURCE_FILES = {
     "activation_status": ACTIVATION_STATUS,
     "closure_status": CLOSURE_STATUS,
     "closure_rows": CLOSURE_ROWS,
+    "claim_value_status": CLAIM_VALUE_STATUS,
+    "detection_value_template_rows": DETECTION_VALUE_TEMPLATE_ROWS,
+    "yield_value_template_rows": YIELD_VALUE_TEMPLATE_ROWS,
     "input_packet_source": PROJECT_ROOT / "nodi_simulator/sidewall_route_evidence_input_packet.py",
     "input_packet_builder": PROJECT_ROOT / "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
     "input_packet_tests": PROJECT_ROOT / "tests/test_sidewall_route_evidence_input_packet.py",
@@ -167,6 +175,8 @@ def source_lock_rows() -> list[dict[str, Any]]:
     for source_id, path in {
         "target_detector_input_rows": DETECTOR_TARGET_INPUT_ROWS,
         "target_wet_input_rows": WET_TARGET_INPUT_ROWS,
+        "target_detection_value_input_rows": DETECTION_VALUE_TARGET_INPUT_ROWS,
+        "target_yield_value_input_rows": YIELD_VALUE_TARGET_INPUT_ROWS,
     }.items():
         rows.append(
             {
@@ -200,15 +210,21 @@ def build_payload() -> dict[str, Any]:
     wet_summary = load_status(WET_INTAKE_STATUS)
     activation_summary = load_status(ACTIVATION_STATUS)
     closure_summary = load_status(CLOSURE_STATUS)
+    claim_value_summary = load_status(CLAIM_VALUE_STATUS)
     input_rows, command_rows, formula_rows = build_route_evidence_input_packet(
         detector_intake_summary=detector_summary,
         wet_intake_summary=wet_summary,
         activation_summary=activation_summary,
+        claim_value_summary=claim_value_summary,
         closure_rows=read_csv_rows(CLOSURE_ROWS),
         detector_template_path=display_path(DETECTOR_TEMPLATE_ROWS),
         wet_template_path=display_path(WET_TEMPLATE_ROWS),
+        detection_value_template_path=display_path(DETECTION_VALUE_TEMPLATE_ROWS),
+        yield_value_template_path=display_path(YIELD_VALUE_TEMPLATE_ROWS),
         detector_target_input_path=display_path(DETECTOR_TARGET_INPUT_ROWS),
         wet_target_input_path=display_path(WET_TARGET_INPUT_ROWS),
+        detection_value_target_input_path=display_path(DETECTION_VALUE_TARGET_INPUT_ROWS),
+        yield_value_target_input_path=display_path(YIELD_VALUE_TARGET_INPUT_ROWS),
     )
     input_dicts = [row.to_dict() for row in input_rows]
     command_dicts = [row.to_dict() for row in command_rows]
@@ -226,12 +242,10 @@ def build_payload() -> dict[str, Any]:
     disposition = READY_DISPOSITION if route_formula_ready == len(formula_dicts) and formula_dicts else DISPOSITION
     if (
         required_source_missing
-        or len(input_dicts) != 2
-        or len(command_dicts) != 4
+        or len(input_dicts) != 4
+        or len(command_dicts) != 9
         or len(formula_dicts) != 2
         or any(row["route_score_current"] for row in formula_dicts)
-        or any(row["yield_current"] for row in formula_dicts)
-        or any(row["detection_probability_current"] for row in formula_dicts)
     ):
         disposition = BLOCKED_DISPOSITION
     summary: dict[str, Any] = {
@@ -245,12 +259,20 @@ def build_payload() -> dict[str, Any]:
         "source_wet_intake_disposition": str(wet_summary.get("disposition", "")),
         "source_activation_disposition": str(activation_summary.get("disposition", "")),
         "source_closure_disposition": str(closure_summary.get("disposition", "")),
+        "source_claim_value_disposition": str(claim_value_summary.get("disposition", "")),
         "detector_input_present": bool(activation_summary.get("detector_input_present")),
         "wet_input_present": bool(activation_summary.get("wet_input_present")),
+        "detection_value_input_present": bool(claim_value_summary.get("detection_input_present")),
+        "yield_value_input_present": bool(claim_value_summary.get("yield_input_present")),
         "detector_template_rows": int(detector_summary.get("template_rows", 0)),
         "wet_template_rows": int(wet_summary.get("template_rows", 0)),
+        "detection_value_template_rows": int(claim_value_summary.get("detection_template_rows", 0)),
+        "yield_value_template_rows": int(claim_value_summary.get("yield_template_rows", 0)),
         "detector_accepted_transfer_rows_total": int(activation_summary.get("detector_accepted_transfer_rows_total", 0)),
         "wet_accepted_endpoint_count_total": int(activation_summary.get("wet_accepted_endpoint_count_total", 0)),
+        "detection_probability_current_rows": int(claim_value_summary.get("detection_probability_current_rows", 0)),
+        "yield_current_rows": int(claim_value_summary.get("yield_current_rows", 0)),
+        "wet_pass_probability_current_rows": int(claim_value_summary.get("wet_pass_probability_current_rows", 0)),
         "input_rows": len(input_dicts),
         "command_rows": len(command_dicts),
         "route_formula_rows": len(formula_dicts),
@@ -258,9 +280,9 @@ def build_payload() -> dict[str, Any]:
         "route_score_current": False,
         "winner_current": False,
         "JRC_current": False,
-        "yield_current": False,
-        "detection_probability_current": False,
-        "wet_pass_probability_current": False,
+        "yield_current": bool(claim_value_summary.get("yield_current_rows")),
+        "detection_probability_current": bool(claim_value_summary.get("detection_probability_current_rows")),
+        "wet_pass_probability_current": bool(claim_value_summary.get("wet_pass_probability_current_rows")),
         "production_ingestion_current": False,
         "source_lock_rows": len(source_lock),
         "required_source_missing_rows": required_source_missing,
@@ -272,7 +294,7 @@ def build_payload() -> dict[str, Any]:
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
         "next_high_leverage_step": (
-            "populate detector and wet target input rows, rerun command chain, then run route formula policy review"
+            "populate detector, wet, detection-value, and yield-value target rows, then rerun the full command chain"
         ),
     }
     payload = {
@@ -294,15 +316,20 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         failures.append("disposition_not_ready")
     if summary["required_source_missing_rows"] != 0:
         failures.append("required_source_missing")
-    if summary["input_rows"] != 2:
-        failures.append("expected_two_input_rows")
-    if summary["command_rows"] != 4:
-        failures.append("expected_four_command_rows")
+    if summary["input_rows"] != 4:
+        failures.append("expected_four_input_rows")
+    if summary["command_rows"] != 9:
+        failures.append("expected_nine_command_rows")
     if summary["route_formula_rows"] != 2:
         failures.append("expected_two_formula_rows")
-    if summary["route_score_current"] or summary["yield_current"] or summary["detection_probability_current"]:
+    if summary["route_score_current"]:
         failures.append("claim_current_unexpectedly_true")
-    if summary["detector_template_rows"] != 2 or summary["wet_template_rows"] != 14:
+    if (
+        summary["detector_template_rows"] != 2
+        or summary["wet_template_rows"] != 14
+        or summary["detection_value_template_rows"] != 2
+        or summary["yield_value_template_rows"] != 2
+    ):
         failures.append("unexpected_template_row_counts")
     return failures
 
@@ -359,9 +386,12 @@ def render_markdown(payload: dict[str, Any]) -> str:
             "",
             f"Detector template rows: `{s['detector_template_rows']}`; target input present: `{s['detector_input_present']}`.",
             f"Wet template rows: `{s['wet_template_rows']}`; target input present: `{s['wet_input_present']}`.",
+            f"Detection-value template rows: `{s['detection_value_template_rows']}`; target input present: `{s['detection_value_input_present']}`.",
+            f"Yield/wet-value template rows: `{s['yield_value_template_rows']}`; target input present: `{s['yield_value_input_present']}`.",
             f"Route formula ready rows: `{s['route_formula_ready_for_claim_review_rows']}`.",
+            f"Detection probability current rows: `{s['detection_probability_current_rows']}`; yield current rows: `{s['yield_current_rows']}`; wet-pass current rows: `{s['wet_pass_probability_current_rows']}`.",
             "",
-            "This packet is the single entry point for filling detector/blank transfer and wet/surface observation evidence, then rerunning the four-step chain into route formula review.",
+            "This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value evidence, then rerunning the nine-step chain through route decision readiness.",
             "",
         ]
     )

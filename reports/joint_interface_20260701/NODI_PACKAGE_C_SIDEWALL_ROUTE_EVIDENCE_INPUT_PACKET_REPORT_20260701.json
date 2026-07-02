@@ -47,6 +47,66 @@
       "purpose": "joins q_ch readiness with detector/wet activation for route formula review",
       "sequence_index": 4,
       "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
+    },
+    {
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "command": "python tools\\audits\\build_nodi_package_c_sidewall_route_formula_review_dry_run.py --confirm-sidewall-route-formula-review-dry-run",
+      "command_id": "route_formula_review_dry_run",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-05-route_formula_review_dry_run",
+      "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_STATUS_20260701.json",
+      "hard_fail_if_previous_step_failed": true,
+      "input_packet_version": "sidewall_route_evidence_input_packet_v1",
+      "purpose": "computes review-only route formula components",
+      "sequence_index": 5,
+      "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
+    },
+    {
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "command": "python tools\\audits\\build_nodi_package_c_sidewall_route_formula_policy_review.py --confirm-sidewall-route-formula-policy-review",
+      "command_id": "route_formula_policy_review",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-06-route_formula_policy_review",
+      "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json",
+      "hard_fail_if_previous_step_failed": true,
+      "input_packet_version": "sidewall_route_evidence_input_packet_v1",
+      "purpose": "activates route-score candidates only after real accepted evidence",
+      "sequence_index": 6,
+      "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
+    },
+    {
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "command": "python tools\\audits\\build_nodi_package_c_sidewall_winner_jrc_policy_review.py --confirm-sidewall-winner-jrc-policy-review",
+      "command_id": "winner_jrc_policy_review",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-07-winner_jrc_policy_review",
+      "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json",
+      "hard_fail_if_previous_step_failed": true,
+      "input_packet_version": "sidewall_route_evidence_input_packet_v1",
+      "purpose": "activates winner/JRC only after current route scores and unique top",
+      "sequence_index": 7,
+      "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
+    },
+    {
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "command": "python tools\\audits\\build_nodi_package_c_sidewall_yield_detection_claim_value_review.py --confirm-sidewall-yield-detection-claim-value-review",
+      "command_id": "yield_detection_claim_value_review",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-08-yield_detection_claim_value_review",
+      "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json",
+      "hard_fail_if_previous_step_failed": true,
+      "input_packet_version": "sidewall_route_evidence_input_packet_v1",
+      "purpose": "accepts real numeric yield/detection/wet-pass value rows",
+      "sequence_index": 8,
+      "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
+    },
+    {
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "command": "python tools\\audits\\build_nodi_package_c_sidewall_route_decision_execution_readiness.py --confirm-sidewall-route-decision-execution-readiness",
+      "command_id": "route_decision_execution_readiness",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-09-route_decision_execution_readiness",
+      "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_STATUS_20260701.json",
+      "hard_fail_if_previous_step_failed": true,
+      "input_packet_version": "sidewall_route_evidence_input_packet_v1",
+      "purpose": "integrates route score, winner/JRC, yield, and detection value status",
+      "sequence_index": 9,
+      "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
     }
   ],
   "dirty_context_rows": [
@@ -97,6 +157,12 @@
       "git_status": " M",
       "path": "configs/realism_v2/route_role_vocabulary.yaml",
       "release_decision": "ignored_for_route_evidence_input_packet"
+    },
+    {
+      "classification": "route_evidence_input_packet_build_edit",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_evidence_input_packet.py",
+      "release_decision": "included_in_commit_scope_before_publish"
     },
     {
       "classification": "non_release_dirty_context",
@@ -562,8 +628,20 @@
     },
     {
       "classification": "route_evidence_input_packet_build_edit",
-      "git_status": "??",
-      "path": "nodi_simulator/sidewall_route_evidence_input_packet.py",
+      "git_status": " M",
+      "path": "tests/test_nodi_package_c_sidewall_route_evidence_input_packet.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "route_evidence_input_packet_build_edit",
+      "git_status": " M",
+      "path": "tests/test_sidewall_route_evidence_input_packet.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "route_evidence_input_packet_build_edit",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
       "release_decision": "included_in_commit_scope_before_publish"
     },
     {
@@ -585,28 +663,10 @@
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
-      "classification": "route_evidence_input_packet_build_edit",
-      "git_status": "??",
-      "path": "tests/test_nodi_package_c_sidewall_route_evidence_input_packet.py",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
-      "classification": "route_evidence_input_packet_build_edit",
-      "git_status": "??",
-      "path": "tests/test_sidewall_route_evidence_input_packet.py",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "classification": "non_release_dirty_context",
       "git_status": "??",
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "route_evidence_input_packet_build_edit",
-      "git_status": "??",
-      "path": "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
-      "release_decision": "included_in_commit_scope_before_publish"
     }
   ],
   "formula_rows": [
@@ -675,12 +735,42 @@
       "target_input_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INPUT_ROWS_20260701.csv",
       "template_artifact_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_OBSERVATION_TEMPLATE_ROWS_20260701.csv",
       "template_rows": 14
+    },
+    {
+      "accepted_status_required": "detection_probability_value_accepted",
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "current_accepted_rows": 0,
+      "current_input_present": false,
+      "hard_fail_if": "detection_probability_template_rows_counted_as_probability_claim",
+      "input_branch": "detection_probability_value",
+      "input_packet_version": "sidewall_route_evidence_input_packet_v1",
+      "input_row_id": "ROUTE-EVIDENCE-INPUT-detection_probability_value",
+      "ready_to_rerun_chain": true,
+      "required_action": "populate detection probability value rows with estimates, confidence intervals, positive-control counts, threshold policy, controls, uncertainty model, source hash, and pre-registration status",
+      "target_input_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv",
+      "template_artifact_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_DETECTION_VALUE_TEMPLATE_ROWS_20260701.csv",
+      "template_rows": 2
+    },
+    {
+      "accepted_status_required": "yield_wet_value_bundle_accepted",
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "current_accepted_rows": 0,
+      "current_input_present": false,
+      "hard_fail_if": "yield_template_rows_counted_as_yield_or_wet_pass_claim",
+      "input_branch": "yield_wet_value",
+      "input_packet_version": "sidewall_route_evidence_input_packet_v1",
+      "input_row_id": "ROUTE-EVIDENCE-INPUT-yield_wet_value",
+      "ready_to_rerun_chain": true,
+      "required_action": "populate yield and wet-pass value rows with estimates, confidence intervals, wet trial counts, model id, controls, uncertainty model, source hash, and pre-registration status",
+      "target_input_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv",
+      "template_artifact_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_YIELD_VALUE_TEMPLATE_ROWS_20260701.csv",
+      "template_rows": 2
     }
   ],
   "source_lock_rows": [
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_STATUS_20260701.json",
@@ -688,8 +778,8 @@
       "source_id": "detector_intake_status"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_TEMPLATE_ROWS_20260701.csv",
@@ -697,8 +787,8 @@
       "source_id": "detector_template_rows"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_STATUS_20260701.json",
@@ -706,8 +796,8 @@
       "source_id": "wet_intake_status"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_OBSERVATION_TEMPLATE_ROWS_20260701.csv",
@@ -715,8 +805,8 @@
       "source_id": "wet_template_rows"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json",
@@ -724,8 +814,8 @@
       "source_id": "activation_status"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_STATUS_20260701.json",
@@ -733,8 +823,8 @@
       "source_id": "closure_status"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_CLOSURE_ROWS_20260701.csv",
@@ -742,44 +832,71 @@
       "source_id": "closure_rows"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "exists": "true",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json",
+      "sha256": "72abe93e301c1cb05fe41a8d04b345d77fb6e763a90eb0c81a8bf74065934812",
+      "source_id": "claim_value_status"
+    },
+    {
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "exists": "true",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_DETECTION_VALUE_TEMPLATE_ROWS_20260701.csv",
+      "sha256": "1c43c80160bafb9f4f3845f74ba9d2a1249957b844d2575b2d3d2bc0580fd751",
+      "source_id": "detection_value_template_rows"
+    },
+    {
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "exists": "true",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_YIELD_VALUE_TEMPLATE_ROWS_20260701.csv",
+      "sha256": "1e05d82489a4a6420085bb458d7c4a9a6c1be072add6d4160f533d957168caf5",
+      "source_id": "yield_value_template_rows"
+    },
+    {
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "nodi_simulator/sidewall_route_evidence_input_packet.py",
-      "sha256": "7b516c5a208ca634b728025666fc914c78cf23035bae1c50c4dc491b7e7e2022",
+      "sha256": "936489bafaa91e53604824700d414565842878bfb24dfc4656c8d00e0c77217d",
       "source_id": "input_packet_source"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
-      "sha256": "6f06dc33fa3943938aecf249dcfd9800bf1dfa331a995229254dcfe98a8367aa",
+      "sha256": "89afecafc70a9a70ad05fe413a9c7409aae15c6eea4029cd55b8f63c1fba8a41",
       "source_id": "input_packet_builder"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "tests/test_sidewall_route_evidence_input_packet.py",
-      "sha256": "6c5bb7263d07ddd6afc44b927523330adc5661c5ff7997c9faf7925e6cdd4a1b",
+      "sha256": "a280b40a678007a782cf0cd3d22932495288e484ba46f43f40ceeebb282c8e89",
       "source_id": "input_packet_tests"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "tests/test_nodi_package_c_sidewall_route_evidence_input_packet.py",
-      "sha256": "e6242103bde0f83f54f244b6555aba488a9e57ac6995ae8ef1143b6c9f12bba7",
+      "sha256": "38a87d874a7495585bfa477a87548498a5dff2b1db7b57e2faa42b8862dc8df3",
       "source_id": "input_packet_builder_tests"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "false",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INPUT_ROWS_20260701.csv",
@@ -787,50 +904,76 @@
       "source_id": "target_detector_input_rows"
     },
     {
-      "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
-      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "false",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INPUT_ROWS_20260701.csv",
       "sha256": "",
       "source_id": "target_wet_input_rows"
+    },
+    {
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "exists": "false",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv",
+      "sha256": "",
+      "source_id": "target_detection_value_input_rows"
+    },
+    {
+      "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;production ingestion",
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "exists": "false",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv",
+      "sha256": "",
+      "source_id": "target_yield_value_input_rows"
     }
   ],
   "summary": {
     "JRC_current": false,
-    "allowed_use": "single entry packet for detector/wet evidence input and route formula rerun chain",
+    "allowed_use": "single entry packet for detector/wet/value evidence input and full route decision rerun chain",
     "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_20260701",
-    "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+    "blocked_use": "template-as-evidence;production ingestion",
     "branch": "main",
     "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
-    "command_rows": 4,
-    "current_head": "e92d85d92bcb6572a8a0dda31bd827b00d4a245a",
+    "command_rows": 9,
+    "current_head": "180c02c4faaf291f1507867fe55f4960b53c0ff8",
     "detection_probability_current": false,
+    "detection_probability_current_rows": 0,
+    "detection_value_input_present": false,
+    "detection_value_template_rows": 2,
     "detector_accepted_transfer_rows_total": 0,
     "detector_input_present": false,
     "detector_template_rows": 2,
     "dirty_context_rows": 93,
     "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_READY_AWAITING_INPUT_ROWS",
     "input_packet_version": "sidewall_route_evidence_input_packet_v1",
-    "input_rows": 2,
-    "next_high_leverage_step": "populate detector and wet target input rows, rerun command chain, then run route formula policy review",
+    "input_rows": 4,
+    "next_high_leverage_step": "populate detector, wet, detection-value, and yield-value target rows, then rerun the full command chain",
     "non_release_dirty_context_rows": 89,
     "production_ingestion_current": false,
     "required_source_missing_rows": 0,
     "route_formula_ready_for_claim_review_rows": 0,
     "route_formula_rows": 2,
     "route_score_current": false,
-    "semantic_digest": "1dd81b23e81e77918a65c33e42f9125afe836b6811fa7722189c0ed08a4331af",
+    "semantic_digest": "e73b87c5777d5658b55cabe51b0b93ff05af8643cf5a4e306dd95e474fa0c874",
     "source_activation_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_READY_NO_CURRENT_ACCEPTED_EVIDENCE",
+    "source_claim_value_disposition": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_REAL_VALUE_ROWS",
     "source_closure_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_READY_CURRENTLY_BLOCKED",
     "source_detector_intake_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE",
-    "source_lock_rows": 13,
+    "source_lock_rows": 18,
     "source_wet_intake_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS",
     "wet_accepted_endpoint_count_total": 0,
     "wet_input_present": false,
     "wet_pass_probability_current": false,
+    "wet_pass_probability_current_rows": 0,
     "wet_template_rows": 14,
     "winner_current": false,
-    "yield_current": false
+    "yield_current": false,
+    "yield_current_rows": 0,
+    "yield_value_input_present": false,
+    "yield_value_template_rows": 2
   }
 }

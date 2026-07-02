@@ -78,16 +78,22 @@ def build_route_evidence_input_packet(
     detector_intake_summary: Mapping[str, Any],
     wet_intake_summary: Mapping[str, Any],
     activation_summary: Mapping[str, Any],
+    claim_value_summary: Mapping[str, Any] | None = None,
     closure_rows: list[Mapping[str, Any]],
     detector_template_path: str,
     wet_template_path: str,
+    detection_value_template_path: str,
+    yield_value_template_path: str,
     detector_target_input_path: str,
     wet_target_input_path: str,
+    detection_value_target_input_path: str,
+    yield_value_target_input_path: str,
 ) -> tuple[
     list[SidewallRouteEvidenceInputRow],
     list[SidewallRouteEvidenceCommandRow],
     list[SidewallRouteEvidenceFormulaRow],
 ]:
+    claim_value_summary = claim_value_summary or {}
     input_rows = [
         SidewallRouteEvidenceInputRow(
             input_row_id="ROUTE-EVIDENCE-INPUT-detector_blank_transfer",
@@ -136,6 +142,50 @@ def build_route_evidence_input_packet(
                 "and pre-registration status where required"
             ),
             hard_fail_if="wet_template_or_context_rows_counted_as_wet_claim",
+            claim_boundary=SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_CLAIM_BOUNDARY,
+        ),
+        SidewallRouteEvidenceInputRow(
+            input_row_id="ROUTE-EVIDENCE-INPUT-detection_probability_value",
+            input_packet_version=SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_VERSION,
+            input_branch="detection_probability_value",
+            template_artifact_path=detection_value_template_path,
+            target_input_path=detection_value_target_input_path,
+            template_rows=_int(claim_value_summary.get("detection_template_rows")),
+            current_input_present=_bool(
+                claim_value_summary.get("detection_input_present")
+            ),
+            current_accepted_rows=_int(
+                claim_value_summary.get("detection_probability_current_rows")
+            ),
+            accepted_status_required="detection_probability_value_accepted",
+            ready_to_rerun_chain=True,
+            required_action=(
+                "populate detection probability value rows with estimates, confidence "
+                "intervals, positive-control counts, threshold policy, controls, "
+                "uncertainty model, source hash, and pre-registration status"
+            ),
+            hard_fail_if=(
+                "detection_probability_template_rows_counted_as_probability_claim"
+            ),
+            claim_boundary=SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_CLAIM_BOUNDARY,
+        ),
+        SidewallRouteEvidenceInputRow(
+            input_row_id="ROUTE-EVIDENCE-INPUT-yield_wet_value",
+            input_packet_version=SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_VERSION,
+            input_branch="yield_wet_value",
+            template_artifact_path=yield_value_template_path,
+            target_input_path=yield_value_target_input_path,
+            template_rows=_int(claim_value_summary.get("yield_template_rows")),
+            current_input_present=_bool(claim_value_summary.get("yield_input_present")),
+            current_accepted_rows=_int(claim_value_summary.get("yield_current_rows")),
+            accepted_status_required="yield_wet_value_bundle_accepted",
+            ready_to_rerun_chain=True,
+            required_action=(
+                "populate yield and wet-pass value rows with estimates, confidence "
+                "intervals, wet trial counts, model id, controls, uncertainty model, "
+                "source hash, and pre-registration status"
+            ),
+            hard_fail_if="yield_template_rows_counted_as_yield_or_wet_pass_claim",
             claim_boundary=SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_CLAIM_BOUNDARY,
         ),
     ]
@@ -198,6 +248,36 @@ def _command_rows() -> list[SidewallRouteEvidenceCommandRow]:
             "python tools\\audits\\build_nodi_package_c_sidewall_route_formula_activation_closure.py --confirm-sidewall-route-formula-activation-closure",
             "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_STATUS_20260701.json",
             "joins q_ch readiness with detector/wet activation for route formula review",
+        ),
+        (
+            "route_formula_review_dry_run",
+            "python tools\\audits\\build_nodi_package_c_sidewall_route_formula_review_dry_run.py --confirm-sidewall-route-formula-review-dry-run",
+            "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_STATUS_20260701.json",
+            "computes review-only route formula components",
+        ),
+        (
+            "route_formula_policy_review",
+            "python tools\\audits\\build_nodi_package_c_sidewall_route_formula_policy_review.py --confirm-sidewall-route-formula-policy-review",
+            "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json",
+            "activates route-score candidates only after real accepted evidence",
+        ),
+        (
+            "winner_jrc_policy_review",
+            "python tools\\audits\\build_nodi_package_c_sidewall_winner_jrc_policy_review.py --confirm-sidewall-winner-jrc-policy-review",
+            "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json",
+            "activates winner/JRC only after current route scores and unique top",
+        ),
+        (
+            "yield_detection_claim_value_review",
+            "python tools\\audits\\build_nodi_package_c_sidewall_yield_detection_claim_value_review.py --confirm-sidewall-yield-detection-claim-value-review",
+            "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json",
+            "accepts real numeric yield/detection/wet-pass value rows",
+        ),
+        (
+            "route_decision_execution_readiness",
+            "python tools\\audits\\build_nodi_package_c_sidewall_route_decision_execution_readiness.py --confirm-sidewall-route-decision-execution-readiness",
+            "NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_STATUS_20260701.json",
+            "integrates route score, winner/JRC, yield, and detection value status",
         ),
     ]
     return [

@@ -15,6 +15,15 @@ def test_route_evidence_input_packet_keeps_templates_separate_from_evidence() ->
             "detector_accepted_transfer_rows_total": 0,
             "wet_accepted_endpoint_count_total": 0,
         },
+        claim_value_summary={
+            "detection_template_rows": 2,
+            "yield_template_rows": 2,
+            "detection_input_present": False,
+            "yield_input_present": False,
+            "detection_probability_current_rows": 0,
+            "yield_current_rows": 0,
+            "wet_pass_probability_current_rows": 0,
+        },
         closure_rows=[
             {
                 "route_candidate_id": "ROUTE-CAND-001",
@@ -28,14 +37,24 @@ def test_route_evidence_input_packet_keeps_templates_separate_from_evidence() ->
         ],
         detector_template_path="detector_template.csv",
         wet_template_path="wet_template.csv",
+        detection_value_template_path="detection_value_template.csv",
+        yield_value_template_path="yield_value_template.csv",
         detector_target_input_path="detector_input.csv",
         wet_target_input_path="wet_input.csv",
+        detection_value_target_input_path="detection_value_input.csv",
+        yield_value_target_input_path="yield_value_input.csv",
     )
 
-    assert len(input_rows) == 2
+    assert len(input_rows) == 4
+    assert {row.input_branch for row in input_rows} == {
+        "detector_blank_transfer",
+        "wet_surface_observation",
+        "detection_probability_value",
+        "yield_wet_value",
+    }
     assert {row.current_accepted_rows for row in input_rows} == {0}
     assert {row.ready_to_rerun_chain for row in input_rows} == {True}
-    assert len(command_rows) == 4
+    assert len(command_rows) == 9
     assert formula_rows[0].route_formula_ready_for_claim_review is False
     assert formula_rows[0].route_score_current is False
     assert formula_rows[0].yield_current is False
@@ -51,6 +70,15 @@ def test_route_evidence_input_packet_can_mark_formula_review_ready_without_claim
             "wet_input_present": True,
             "detector_accepted_transfer_rows_total": 2,
             "wet_accepted_endpoint_count_total": 14,
+        },
+        claim_value_summary={
+            "detection_template_rows": 2,
+            "yield_template_rows": 2,
+            "detection_input_present": False,
+            "yield_input_present": False,
+            "detection_probability_current_rows": 0,
+            "yield_current_rows": 0,
+            "wet_pass_probability_current_rows": 0,
         },
         closure_rows=[
             {
@@ -71,8 +99,12 @@ def test_route_evidence_input_packet_can_mark_formula_review_ready_without_claim
         ],
         detector_template_path="detector_template.csv",
         wet_template_path="wet_template.csv",
+        detection_value_template_path="detection_value_template.csv",
+        yield_value_template_path="yield_value_template.csv",
         detector_target_input_path="detector_input.csv",
         wet_target_input_path="wet_input.csv",
+        detection_value_target_input_path="detection_value_input.csv",
+        yield_value_target_input_path="yield_value_input.csv",
     )
 
     assert formula_rows[0].route_formula_ready_for_claim_review is True
