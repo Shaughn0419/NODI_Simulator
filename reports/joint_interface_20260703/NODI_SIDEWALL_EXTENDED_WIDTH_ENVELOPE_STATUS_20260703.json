@@ -1,0 +1,29 @@
+{
+  "artifact_id": "NODI_SIDEWALL_EXTENDED_WIDTH_ENVELOPE_20260703",
+  "claim_boundary": "extended_width_envelope_context_not_route_selection",
+  "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+  "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+  "comsol_v4_assumption_set_version": "4.0.0",
+  "date_stamp": "20260703",
+  "disposition": "NODI_SIDEWALL_EXTENDED_WIDTH_ENVELOPE_EXECUTED_READY",
+  "execute_nodi": true,
+  "git_branch": "main",
+  "git_head": "bff0d60ea3e4b4fbc1eb71c716eb46dae045fa12",
+  "n_events": 12,
+  "payload_sha256": "5ddb86b5dce9f4b07b014feddb3d2b4b59b363bc027ae7aaa2294ad2e7df0adc",
+  "random_seed": 61000,
+  "summary": {
+    "exact_pxu_probability_grid_available_now": false,
+    "extended_dimension_context_rows": 18,
+    "extended_width_event_rows": 1040,
+    "extended_width_executed_rows": 1040,
+    "extended_width_failures": 0,
+    "extended_width_summary_rows": 90,
+    "extension_anchor_rows": 6,
+    "failed_validation_rows": 0,
+    "next_executable_block": "611_monotonic_width_or_dimension_policy_packet",
+    "question_rows": 3,
+    "weighted_extended_width_event_rows": 3120
+  },
+  "synthesis_version": "sidewall_extended_width_envelope_v1"
+}
