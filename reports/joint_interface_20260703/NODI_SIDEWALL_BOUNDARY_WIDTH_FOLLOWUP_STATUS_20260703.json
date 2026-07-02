@@ -1,0 +1,29 @@
+{
+  "artifact_id": "NODI_SIDEWALL_BOUNDARY_WIDTH_FOLLOWUP_20260703",
+  "claim_boundary": "boundary_width_followup_context_not_route_selection",
+  "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+  "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+  "comsol_v4_assumption_set_version": "4.0.0",
+  "date_stamp": "20260703",
+  "disposition": "NODI_SIDEWALL_BOUNDARY_WIDTH_FOLLOWUP_EXECUTED_READY",
+  "execute_nodi": true,
+  "git_branch": "main",
+  "git_head": "772713a863787eded4531822b3173a8690ff03bf",
+  "n_events": 12,
+  "payload_sha256": "764442bfcdf78569824cb912dc39482c7239be6bc3d8b17f9ec1e4141ebc990c",
+  "random_seed": 60900,
+  "summary": {
+    "boundary_anchor_rows": 6,
+    "boundary_dimension_context_rows": 18,
+    "boundary_followup_event_rows": 832,
+    "boundary_followup_executed_rows": 832,
+    "boundary_followup_failures": 0,
+    "boundary_width_summary_rows": 72,
+    "exact_pxu_probability_grid_available_now": false,
+    "failed_validation_rows": 0,
+    "next_executable_block": "610_lock_or_extend_width_context",
+    "question_rows": 3,
+    "weighted_boundary_event_rows": 2496
+  },
+  "synthesis_version": "sidewall_boundary_width_followup_v1"
+}

@@ -1,0 +1,10 @@
+check_id,status,detail
+boundary_anchors_cover_six_routes,pass,boundary_anchor_rows=6
+boundary_anchors_are_608_upper_edges,pass,all boundary anchors equal the prior 608 local width-grid upper edge
+boundary_followup_event_grid_complete,pass,boundary_followup_event_rows=832 expected=832
+execution_status_matches_mode,pass,execute_nodi=True; executed_rows=832
+weighted_rows_cover_three_modes,pass,weighted_boundary_event_rows=2496
+summary_rows_cover_route_width_weight_grid,pass,boundary_width_summary_rows=72
+dimension_rows_cover_six_routes_times_three_modes,pass,boundary_dimension_context_rows=18
+v4_assumption_hash_bound,pass,2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92
+no_forbidden_primary_columns,pass,outputs avoid score/winner/yield/detection/W_eff/q_ch primary columns
