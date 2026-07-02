@@ -1,0 +1,10 @@
+check_id,check_name,check_pass,check_detail,hard_fail_if_false
+GEOMETRY-EFFECTS-CHECK-001,dimension_rows_have_paired_rectangle_baselines,True,84,True
+GEOMETRY-EFFECTS-CHECK-002,annulus_rows_have_paired_rectangle_baselines,True,210,True
+GEOMETRY-EFFECTS-CHECK-003,response_rows_have_paired_rectangle_baselines,True,84,True
+GEOMETRY-EFFECTS-CHECK-004,dimension_matrix_covers_tail_particles_and_depths,True,tail particles and D900/D1200 present,True
+GEOMETRY-EFFECTS-CHECK-005,bottom_width_preserves_unclipped_negative_values,True,negative bottom width retained in descriptor space,True
+GEOMETRY-EFFECTS-CHECK-006,annulus_remap_has_wall_distance_basis,True,trapezoid local width plus wall distance,True
+GEOMETRY-EFFECTS-CHECK-007,interference_rows_split_position_reference_detector_terms,True,response decomposition present,True
+GEOMETRY-EFFECTS-CHECK-008,forbidden_primary_columns_absent,True,,True
+GEOMETRY-EFFECTS-CHECK-009,not_route_selection_claim_guards_present,True,response rows guarded,True

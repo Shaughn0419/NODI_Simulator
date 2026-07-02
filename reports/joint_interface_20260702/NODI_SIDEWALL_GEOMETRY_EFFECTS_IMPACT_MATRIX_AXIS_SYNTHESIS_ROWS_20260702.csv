@@ -1,0 +1,4 @@
+axis_id,axis_name,impact_matrix_status,evidence_rows,key_observation,next_large_block,not_route_selection_claim
+AXIS-001,dimension_recommendation_sensitivity,sidewall_changes_dimension_window_candidate,84,geometry_closed_candidate;narrowed_window_candidate;particle_tail_blocked_candidate;unchanged_candidate;width_band_shift_candidate,expand width/depth grid and promote candidate drift bands into dimension-window simulation inputs,True
+AXIS-002,selected_annulus_sidewall_remap,annulus_remap_required,210,blocked_or_invalid_slice_rows=39,replace rectangular edge-norm annulus with trapezoid local-width and wall-normal distance bins in PRS-style response maps,True
+AXIS-003,interference_enhancement_sidewall_sensitivity,interference_response_surrogate_changes_candidate,84,changed_response_rows=64,"run response-map expansion over the accepted geometry grid and separate position, reference, and detector-overlap effects",True

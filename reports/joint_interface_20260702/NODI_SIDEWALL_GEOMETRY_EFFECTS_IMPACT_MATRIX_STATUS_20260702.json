@@ -1,0 +1,48 @@
+{
+  "disposition": "NODI_SIDEWALL_GEOMETRY_EFFECTS_IMPACT_MATRIX_READY",
+  "summary": {
+    "alignment_check_rows": 9,
+    "allowed_use": "evaluate how sidewall angle changes NODI dimension windows, selected-annulus coordinates, and interference-response surrogates before larger simulations",
+    "artifact_id": "NODI_SIDEWALL_GEOMETRY_EFFECTS_IMPACT_MATRIX_20260702",
+    "axis_synthesis_rows": 3,
+    "blocked_use": "route selection, scalar scoreboard, production recommendation, wet claim, full optical solver claim, q_ch weighting, or final detection/yield conclusion",
+    "branch": "main",
+    "claim_boundary": "sidewall_angle_effect_matrix_for_dimensions_annulus_and_interference_only",
+    "current_head": "0fd56dbdefdaf1303771a62237d90e1150515bf0",
+    "depth_grid_nm": [
+      900,
+      1200
+    ],
+    "dimension_recommendation_drift_rows": 84,
+    "dirty_context_rows": 86,
+    "disposition": "NODI_SIDEWALL_GEOMETRY_EFFECTS_IMPACT_MATRIX_READY",
+    "failed_alignment_check_rows": 0,
+    "interference_response_sensitivity_rows": 84,
+    "mainline_refocus_disposition": "NODI_SIDEWALL_MAINLINE_REFOCUS_LOCK_READY",
+    "next_large_block": "expand response maps over accepted dimension drift bands and replace rectangular annulus coordinates with trapezoid-local bins",
+    "non_geometry_effects_dirty_context_rows": 83,
+    "not_primary_answer_frame": "route_selection_or_scalar_scoreboard",
+    "particle_diameter_grid_nm": [
+      40.0,
+      60.0,
+      100.0,
+      150.0,
+      220.0,
+      300.0
+    ],
+    "primary_answer_frame": "dimension_window_annulus_range_and_interference_response_sensitivity",
+    "selected_annulus_remap_rows": 210,
+    "semantic_digest": "bab2cc000f73e5971b97047462ff39078059d1fe0580df1025da71722440c73f",
+    "sidewall_angle_grid_deg_comsol": [
+      90.0,
+      89.0,
+      87.0,
+      85.0,
+      83.0,
+      80.0,
+      70.0
+    ],
+    "source_lock_rows": 10,
+    "source_missing_rows": 0
+  }
+}
