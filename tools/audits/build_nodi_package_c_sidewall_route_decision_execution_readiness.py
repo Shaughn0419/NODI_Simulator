@@ -38,8 +38,9 @@ BOARD_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINE
 SOLVER_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_STATUS_20260701.json"
 EK_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ELECTROKINETIC_GRID_PREFLIGHT_STATUS_20260701.json"
 COMSOL_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_COMSOL_LAUNCH_PRECONDITION_STATUS_20260701.json"
-DETECTOR_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_EXECUTION_PACKET_STATUS_20260701.json"
-WET_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WET_OBSERVATION_EXECUTION_PACKET_STATUS_20260701.json"
+DETECTOR_WET_ACTIVATION_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json"
+ROUTE_FORMULA_DRY_RUN_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_STATUS_20260701.json"
+ROUTE_FORMULA_DRY_RUN_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_DRY_RUN_ROWS_20260701.csv"
 
 ALLOWED_USE = "route/yield/detection execution readiness integration;rectangle plus trapezoid route status"
 BLOCKED_USE = "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
@@ -50,8 +51,9 @@ SOURCE_FILES = {
     "solver_branch_status": SOLVER_STATUS,
     "electrokinetic_preflight_status": EK_STATUS,
     "comsol_precondition_status": COMSOL_STATUS,
-    "detector_blank_execution_status": DETECTOR_STATUS,
-    "wet_observation_execution_status": WET_STATUS,
+    "detector_wet_activation_status": DETECTOR_WET_ACTIVATION_STATUS,
+    "route_formula_dry_run_status": ROUTE_FORMULA_DRY_RUN_STATUS,
+    "route_formula_dry_run_rows": ROUTE_FORMULA_DRY_RUN_ROWS,
     "route_decision_execution_source": PROJECT_ROOT
     / "nodi_simulator/sidewall_route_decision_execution_readiness.py",
     "route_decision_execution_tests": PROJECT_ROOT
@@ -186,8 +188,10 @@ def build_payload() -> dict[str, Any]:
         solver_packet_status=load_json(SOLVER_STATUS),
         electrokinetic_status=load_json(EK_STATUS),
         comsol_precondition_status=load_json(COMSOL_STATUS),
-        detector_blank_status=load_json(DETECTOR_STATUS),
-        wet_observation_status=load_json(WET_STATUS),
+        detector_blank_status=load_json(DETECTOR_WET_ACTIVATION_STATUS),
+        wet_observation_status=load_json(DETECTOR_WET_ACTIVATION_STATUS),
+        route_formula_dry_run_status=load_json(ROUTE_FORMULA_DRY_RUN_STATUS),
+        route_formula_dry_run_rows=read_csv_rows(ROUTE_FORMULA_DRY_RUN_ROWS),
     )
     readiness_dicts = [row.to_dict() for row in rows]
     guard_dicts = [row.to_dict() for row in guards]
@@ -203,8 +207,6 @@ def build_payload() -> dict[str, Any]:
         == {"ideal_rectangle", "trapezoid_tapered_sidewalls"}
         and all(row["rectangle_baseline_preserved"] is True for row in readiness_dicts)
         and all(row["sidewall_trapezoid_route_present"] is True for row in readiness_dicts)
-        and all(row["detector_accepted_transfer_rows"] == 0 for row in readiness_dicts)
-        and all(row["wet_accepted_observation_rows"] == 0 for row in readiness_dicts)
         and all(row["route_score_current"] is False for row in readiness_dicts)
         and all(row["claim_promotion_allowed_now"] is False for row in guard_dicts)
         else BLOCKED_DISPOSITION
@@ -223,6 +225,7 @@ def build_payload() -> dict[str, Any]:
         "trapezoid_route_rows": sum(row["route_geometry_family"] == "trapezoid_tapered_sidewalls" for row in readiness_dicts),
         "detector_accepted_transfer_rows_total": sum(row["detector_accepted_transfer_rows"] for row in readiness_dicts),
         "wet_accepted_observation_rows_total": sum(row["wet_accepted_observation_rows"] for row in readiness_dicts),
+        "route_formula_component_vector_ready_rows": sum(row["route_formula_component_vector_ready"] for row in readiness_dicts),
         "route_score_current_rows": sum(row["route_score_current"] for row in readiness_dicts),
         "winner_current_rows": sum(row["winner_current"] for row in readiness_dicts),
         "yield_current_rows": sum(row["yield_current"] for row in readiness_dicts),
@@ -257,8 +260,6 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "two readiness rows": s["readiness_rows"] == 2,
         "five guard rows": s["claim_guard_rows"] == 5,
         "rectangle and trapezoid": s["route_geometry_families"] == "ideal_rectangle;trapezoid_tapered_sidewalls",
-        "no detector accepted": s["detector_accepted_transfer_rows_total"] == 0,
-        "no wet accepted": s["wet_accepted_observation_rows_total"] == 0,
         "no route score": s["route_score_current_rows"] == 0,
         "no winner": s["winner_current_rows"] == 0,
         "no yield": s["yield_current_rows"] == 0,
@@ -269,7 +270,11 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     for row in payload["readiness_rows"]:
         checks[f"route guarded {row['readiness_row_id']}"] = (
             row["claim_boundary"] == CLAIM_BOUNDARY
-            and row["execution_readiness_status"] == "blocked_detector_blank_and_wet_observation_evidence_required"
+            and row["execution_readiness_status"] in {
+                "blocked_detector_blank_and_wet_observation_evidence_required",
+                "blocked_route_formula_component_vector_required",
+                "branch_evidence_and_formula_components_ready_for_route_policy_review",
+            }
             and row["rectangle_baseline_preserved"] is True
             and row["sidewall_trapezoid_route_present"] is True
         )
@@ -315,6 +320,7 @@ def report_markdown(payload: dict[str, Any]) -> str:
         f"- Route geometry families: `{s['route_geometry_families']}`.",
         f"- Detector accepted transfer rows: `{s['detector_accepted_transfer_rows_total']}`.",
         f"- Wet accepted observation rows: `{s['wet_accepted_observation_rows_total']}`.",
+        f"- Formula component-vector ready rows: `{s['route_formula_component_vector_ready_rows']}`.",
         f"- route/yield/detection current rows: `{s['route_score_current_rows']}` / `{s['yield_current_rows']}` / `{s['detection_probability_current_rows']}`.",
         "- Rectangle baseline and sidewall trapezoid route remain side by side; route decisions remain blocked until detector/blank and wet evidence packets contain accepted rows.",
         "",

@@ -21,6 +21,8 @@ def _build():
         comsol_precondition_status={"disposition": "COMSOL"},
         detector_blank_status={"disposition": "DETECTOR", "current_accepted_transfer_rows_total": 0},
         wet_observation_status={"disposition": "WET", "current_accepted_observation_rows_total": 0},
+        route_formula_dry_run_status={"disposition": "DRY"},
+        route_formula_dry_run_rows=[],
     )
 
 
@@ -46,4 +48,47 @@ def test_route_decision_remains_blocked_until_detector_and_wet_rows_are_accepted
     assert {row.claim_boundary for row in rows} == {
         SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_CLAIM_BOUNDARY
     }
+    assert {guard.claim_promotion_allowed_now for guard in guards} == {False}
+
+
+def test_route_decision_can_reach_policy_review_ready_when_evidence_and_components_ready() -> None:
+    rows, guards = build_route_decision_execution_readiness(
+        readiness_board_rows=_board_rows(),
+        solver_packet_status={"disposition": "SOLVER"},
+        electrokinetic_status={"disposition": "EK"},
+        comsol_precondition_status={"disposition": "COMSOL"},
+        detector_blank_status={
+            "disposition": "ACTIVATION",
+            "detector_accepted_transfer_rows_total": 2,
+        },
+        wet_observation_status={
+            "disposition": "ACTIVATION",
+            "wet_accepted_endpoint_count_total": 14,
+        },
+        route_formula_dry_run_status={"disposition": "DRY"},
+        route_formula_dry_run_rows=[
+            {
+                "route_candidate_id": "R1",
+                "route_formula_ready_for_claim_review": "True",
+                "route_formula_review_dry_run_status": (
+                    "route_formula_component_vector_ready_for_policy_review_not_scored"
+                ),
+            },
+            {
+                "route_candidate_id": "R2",
+                "route_formula_ready_for_claim_review": "True",
+                "route_formula_review_dry_run_status": (
+                    "route_formula_component_vector_ready_for_policy_review_not_scored"
+                ),
+            },
+        ],
+    )
+
+    assert {row.execution_readiness_status for row in rows} == {
+        "branch_evidence_and_formula_components_ready_for_route_policy_review"
+    }
+    assert {row.route_formula_component_vector_ready for row in rows} == {True}
+    assert {row.route_score_current for row in rows} == {False}
+    assert {row.yield_current for row in rows} == {False}
+    assert {row.detection_probability_current for row in rows} == {False}
     assert {guard.claim_promotion_allowed_now for guard in guards} == {False}

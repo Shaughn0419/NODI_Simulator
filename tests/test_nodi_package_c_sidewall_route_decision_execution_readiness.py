@@ -20,6 +20,7 @@ def test_route_decision_execution_readiness_builds_from_current_artifacts() -> N
     assert summary["route_geometry_families"] == "ideal_rectangle;trapezoid_tapered_sidewalls"
     assert summary["detector_accepted_transfer_rows_total"] == 0
     assert summary["wet_accepted_observation_rows_total"] == 0
+    assert summary["route_formula_component_vector_ready_rows"] == 0
     assert summary["route_score_current_rows"] == 0
     assert summary["yield_current_rows"] == 0
     assert summary["detection_probability_current_rows"] == 0
@@ -38,6 +39,7 @@ def test_route_rows_keep_claims_false_and_geometry_parallel() -> None:
         assert row["execution_readiness_status"] == (
             "blocked_detector_blank_and_wet_observation_evidence_required"
         )
+        assert row["route_formula_component_vector_ready"] is False
         assert row["route_score_current"] is False
         assert row["yield_current"] is False
         assert row["detection_probability_current"] is False

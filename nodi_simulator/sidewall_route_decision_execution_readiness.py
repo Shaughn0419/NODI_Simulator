@@ -32,6 +32,8 @@ class SidewallRouteDecisionExecutionReadinessRow:
     comsol_launch_precondition_status: str
     detector_blank_transfer_execution_status: str
     wet_observation_execution_status: str
+    route_formula_dry_run_status: str
+    route_formula_component_vector_ready: bool
     detector_accepted_transfer_rows: int
     wet_accepted_observation_rows: int
     rectangle_baseline_preserved: bool
@@ -77,12 +79,19 @@ def build_route_decision_execution_readiness(
     comsol_precondition_status: Mapping[str, Any],
     detector_blank_status: Mapping[str, Any],
     wet_observation_status: Mapping[str, Any],
+    route_formula_dry_run_status: Mapping[str, Any] | None = None,
+    route_formula_dry_run_rows: list[Mapping[str, Any]] | None = None,
 ) -> tuple[list[SidewallRouteDecisionExecutionReadinessRow], list[SidewallRouteDecisionClaimGuardRow]]:
     families = {str(row.get("route_geometry_family", "")) for row in readiness_board_rows}
     rectangle_present = "ideal_rectangle" in families
     trapezoid_present = "trapezoid_tapered_sidewalls" in families
-    detector_accepted = _int(detector_blank_status.get("current_accepted_transfer_rows_total"))
-    wet_accepted = _int(wet_observation_status.get("current_accepted_observation_rows_total"))
+    detector_accepted = _accepted_detector_count(detector_blank_status)
+    wet_accepted = _accepted_wet_count(wet_observation_status)
+    dry_status = route_formula_dry_run_status or {}
+    dry_by_route = {
+        str(row.get("route_candidate_id", "")): row
+        for row in (route_formula_dry_run_rows or [])
+    }
     rows = [
         SidewallRouteDecisionExecutionReadinessRow(
             readiness_row_id=f"ROUTE-DECISION-EXEC-{row.get('route_candidate_id', '')}",
@@ -98,21 +107,31 @@ def build_route_decision_execution_readiness(
             comsol_launch_precondition_status=str(comsol_precondition_status.get("disposition", "")),
             detector_blank_transfer_execution_status=str(detector_blank_status.get("disposition", "")),
             wet_observation_execution_status=str(wet_observation_status.get("disposition", "")),
+            route_formula_dry_run_status=str(dry_status.get("disposition", "")),
+            route_formula_component_vector_ready=_component_vector_ready(
+                dry_by_route.get(str(row.get("route_candidate_id", "")), {})
+            ),
             detector_accepted_transfer_rows=detector_accepted,
             wet_accepted_observation_rows=wet_accepted,
             rectangle_baseline_preserved=rectangle_present,
             sidewall_trapezoid_route_present=trapezoid_present,
             ready_input_count=_int(row.get("ready_route_input_count")),
             missing_claim_evidence_count=_int(row.get("missing_claim_evidence_count")),
-            execution_readiness_status=_execution_status(detector_accepted, wet_accepted),
+            execution_readiness_status=_execution_status(
+                detector_accepted,
+                wet_accepted,
+                _component_vector_ready(
+                    dry_by_route.get(str(row.get("route_candidate_id", "")), {})
+                ),
+            ),
             route_score_current=False,
             winner_current=False,
             yield_current=False,
             detection_probability_current=False,
             production_ingestion_current=False,
             next_required_evidence=(
-                "accepted detector/blank transfer rows and accepted wet observation rows "
-                "before route/yield/detection formula binding"
+                "accepted detector/blank transfer rows, accepted wet observation rows, "
+                "and route formula component-vector dry run before route/yield/detection policy review"
             ),
             hard_fail_if=(
                 "route_score_winner_yield_detection_or_production_true_before_detector_blank_and_wet_evidence_pass"
@@ -124,9 +143,15 @@ def build_route_decision_execution_readiness(
     return rows, _claim_guard_rows(branch_packets_available=True)
 
 
-def _execution_status(detector_accepted: int, wet_accepted: int) -> str:
+def _execution_status(
+    detector_accepted: int,
+    wet_accepted: int,
+    component_vector_ready: bool,
+) -> str:
+    if detector_accepted > 0 and wet_accepted > 0 and component_vector_ready:
+        return "branch_evidence_and_formula_components_ready_for_route_policy_review"
     if detector_accepted > 0 and wet_accepted > 0:
-        return "branch_evidence_ready_for_route_formula_binding"
+        return "blocked_route_formula_component_vector_required"
     return "blocked_detector_blank_and_wet_observation_evidence_required"
 
 
@@ -183,3 +208,29 @@ def _int(value: Any) -> int:
     if value is None or str(value).strip() == "":
         return 0
     return int(float(str(value)))
+
+
+def _bool(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().lower() in {"true", "1", "yes"}
+
+
+def _accepted_detector_count(status: Mapping[str, Any]) -> int:
+    return max(
+        _int(status.get("current_accepted_transfer_rows_total")),
+        _int(status.get("detector_accepted_transfer_rows_total")),
+    )
+
+
+def _accepted_wet_count(status: Mapping[str, Any]) -> int:
+    return max(
+        _int(status.get("current_accepted_observation_rows_total")),
+        _int(status.get("wet_accepted_endpoint_count_total")),
+    )
+
+
+def _component_vector_ready(row: Mapping[str, Any]) -> bool:
+    return _bool(row.get("route_formula_ready_for_claim_review")) and str(
+        row.get("route_formula_review_dry_run_status", "")
+    ) == "route_formula_component_vector_ready_for_policy_review_not_scored"
