@@ -40,7 +40,7 @@ def test_manifest_import_builder_treats_header_only_manifest_as_required(
 ) -> None:
     source_manifest = tmp_path / "source_manifest.csv"
     source_manifest.write_text(
-        "route_candidate_id,endpoint_id,observation_artifact_id,observation_artifact_class,observation_source_artifact,source_geometry_match_level,provided_fields,controls_status,replicate_count,uncertainty_interval_status,pre_registered_rule_status\n",
+        "route_candidate_id,endpoint_id,observation_artifact_id,observation_artifact_class,source_kind,model_or_solver_id,assumption_manifest_id,validity_domain,uncertainty_semantics,claim_level,observation_source_artifact,source_geometry_match_level,provided_fields,controls_status,replicate_count,uncertainty_interval_status,pre_registered_rule_status\n",
         encoding="utf-8",
     )
 

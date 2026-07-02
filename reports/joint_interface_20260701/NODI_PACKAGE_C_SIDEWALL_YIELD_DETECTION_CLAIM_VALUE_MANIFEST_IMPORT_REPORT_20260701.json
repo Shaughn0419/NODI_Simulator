@@ -52,38 +52,14 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "nodi_simulator/sidewall_real_evidence_input_workspace.py",
+      "path": "nodi_simulator/sidewall_wet_surface_observation_manifest_import.py",
       "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
     },
     {
-      "classification": "non_release_dirty_context",
+      "classification": "yield_detection_claim_value_manifest_import_build_edit",
       "git_status": " M",
-      "path": "nodi_simulator/sidewall_route_decision_execution_readiness.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "nodi_simulator/sidewall_route_evidence_input_packet.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "nodi_simulator/sidewall_route_formula_policy_review.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "nodi_simulator/sidewall_winner_jrc_policy_review.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "nodi_simulator/sidewall_yield_detection_claim_value_review.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
+      "path": "nodi_simulator/sidewall_yield_detection_claim_value_manifest_import.py",
+      "release_decision": "included_in_code_commit_scope"
     },
     {
       "classification": "non_release_dirty_context",
@@ -101,36 +77,6 @@
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/573_NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_20260701.md",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/574_NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_20260701.md",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/575_NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_20260701.md",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/577_NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_20260701.md",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/578_NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_20260701.md",
       "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
     },
     {
@@ -472,97 +418,7 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_WORKSPACE_ROWS_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_DETECTOR_FIXTURE_ROWS_NOT_EVIDENCE_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_REPORT_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_ACCEPTED_EVIDENCE_SMOKE_STATUS_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_FIXTURE_GUARD_ROWS_NOT_EVIDENCE_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_FIXTURE_POLICY_ROWS_NOT_EVIDENCE_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_GUARD_ROWS_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_POLICY_ROWS_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_REPORT_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_AUDIT_ROWS_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
     },
     {
@@ -598,55 +454,13 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_DIRTY_CONTEXT_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_SOURCE_MANIFEST_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_FIXTURE_GUARD_ROWS_NOT_EVIDENCE_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_FIXTURE_REVIEW_ROWS_NOT_EVIDENCE_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_GUARD_ROWS_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REPORT_20260701.json",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REVIEW_ROWS_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv",
       "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
     },
     {
@@ -766,115 +580,25 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "tests/test_nodi_package_c_sidewall_route_decision_execution_readiness.py",
+      "path": "tests/test_nodi_package_c_sidewall_wet_surface_observation_manifest_import.py",
       "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "tests/test_nodi_package_c_sidewall_route_formula_policy_review.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tests/test_nodi_package_c_sidewall_winner_jrc_policy_review.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tests/test_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tests/test_sidewall_real_evidence_input_workspace.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tests/test_sidewall_route_evidence_input_packet.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tests/test_sidewall_route_formula_policy_review.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tests/test_sidewall_winner_jrc_policy_review.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tests/test_sidewall_yield_detection_claim_value_review.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_route_accepted_evidence_smoke.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_route_decision_execution_readiness.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_route_formula_policy_review.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_manifest_import.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_validation_hardening.py",
-      "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_winner_jrc_policy_review.py",
+      "path": "tests/test_sidewall_wet_surface_observation_manifest_import.py",
       "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
     },
     {
       "classification": "yield_detection_claim_value_manifest_import_build_edit",
       "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_manifest_import.py",
+      "path": "tests/test_sidewall_yield_detection_claim_value_manifest_import.py",
       "release_decision": "included_in_code_commit_scope"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
       "release_decision": "ignored_for_yield_detection_claim_value_manifest_import"
     },
     {
@@ -912,7 +636,7 @@
       "import_version": "sidewall_yield_detection_claim_value_manifest_import_v1",
       "route_candidate_id": "",
       "source_artifact_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv",
-      "source_artifact_sha256": "a7f76ce3227a66291228ed75628973133f12b91cd167e5aa256336098cf45a58"
+      "source_artifact_sha256": "cb2f1015efa4927dfa4fc5acd4a8eba05f9eb9239cabc7808222bfb562ad21f3"
     }
   ],
   "source_lock_rows": [
@@ -931,7 +655,7 @@
       "claim_boundary": "yield_detection_claim_value_manifest_import_not_template_not_route_score",
       "exists": "true",
       "path": "nodi_simulator/sidewall_yield_detection_claim_value_manifest_import.py",
-      "sha256": "818ecf8869e7750d8e59cebabea1cc183921c6eaaf653819ce6a274a4bf378f3",
+      "sha256": "c9a316c8ce8dd17e984ffe4db87de5ae3e2b6f75e47a27041b0fb4c587c7034e",
       "source_id": "manifest_import_module"
     },
     {
@@ -949,7 +673,7 @@
       "claim_boundary": "yield_detection_claim_value_manifest_import_not_template_not_route_score",
       "exists": "true",
       "path": "tests/test_sidewall_yield_detection_claim_value_manifest_import.py",
-      "sha256": "84eee1b7b9e2ba2715e8368d68f16adb86cd7d40333b812cd8b62ba2ce253a70",
+      "sha256": "a2097d2c06a46d2b27250ef024593274b09ae552f97a83489a34f5fb0b73bae4",
       "source_id": "manifest_import_module_tests"
     },
     {
@@ -967,7 +691,7 @@
       "claim_boundary": "yield_detection_claim_value_manifest_import_not_template_not_route_score",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv",
-      "sha256": "a7f76ce3227a66291228ed75628973133f12b91cd167e5aa256336098cf45a58",
+      "sha256": "cb2f1015efa4927dfa4fc5acd4a8eba05f9eb9239cabc7808222bfb562ad21f3",
       "source_id": "source_manifest"
     }
   ],
@@ -981,9 +705,9 @@
     "canonical_detection_input_written": false,
     "canonical_yield_input_written": false,
     "claim_boundary": "yield_detection_claim_value_manifest_import_not_template_not_route_score",
-    "current_head": "6d289d83f6ca6ff887cd37dcd25568369eaaaf29",
+    "current_head": "da1e392764c004e613c65977e2a28ce37de328b3",
     "detection_probability_current": false,
-    "dirty_context_rows": 150,
+    "dirty_context_rows": 104,
     "disposition": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_READY_MANIFEST_REQUIRED",
     "import_audit_rows": 1,
     "import_version": "sidewall_yield_detection_claim_value_manifest_import_v1",
@@ -991,12 +715,12 @@
     "imported_detection_value_rows": 0,
     "imported_yield_value_rows": 0,
     "next_high_leverage_step": "provide simulation/assumption source manifest rows for detection_probability_value and yield_wet_value",
-    "non_release_dirty_context_rows": 149,
+    "non_release_dirty_context_rows": 102,
     "production_ingestion_current": false,
     "rejected_import_rows": 0,
     "required_source_missing_rows": 0,
     "route_score_current": false,
-    "semantic_digest": "2efb4e08f7486a813b9a1c9740efe459af0ab4a167ce58552ade5987fc2bc409",
+    "semantic_digest": "6e6553ce431bc91b5ded6cadc6e7caedae3ce0029004611fde9189a3e02effc5",
     "source_lock_rows": 6,
     "source_manifest_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv",
     "source_manifest_present": true,

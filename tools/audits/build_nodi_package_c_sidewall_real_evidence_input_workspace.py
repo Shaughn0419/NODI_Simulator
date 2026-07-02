@@ -35,6 +35,9 @@ from nodi_simulator.sidewall_yield_detection_claim_value_review import (  # noqa
     DETECTION_REQUIRED_FIELDS,
     YIELD_REQUIRED_FIELDS,
 )
+from nodi_simulator.sidewall_yield_detection_claim_value_manifest_import import (  # noqa: E402
+    SIMULATION_PROVENANCE_FIELDS as CLAIM_VALUE_PROVENANCE_FIELDS,
+)
 
 
 DATE_STAMP = "20260701"
@@ -183,7 +186,7 @@ def target_files() -> dict[str, Path]:
 
 
 def source_manifest_specs() -> list[dict[str, Any]]:
-    claim_value_headers = ["claim_value_branch"]
+    claim_value_headers = ["claim_value_branch", *CLAIM_VALUE_PROVENANCE_FIELDS]
     for field in (*DETECTION_REQUIRED_FIELDS, *YIELD_REQUIRED_FIELDS):
         if field == "source_artifact_sha256":
             continue

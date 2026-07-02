@@ -17,6 +17,15 @@ SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_CLAIM_BOUNDARY = (
 )
 IMPORT_READY_STATUS = "wet_observation_manifest_row_ready_for_intake"
 IMPORT_REJECTED_STATUS = "wet_observation_manifest_row_rejected"
+ALLOWED_SOURCE_KINDS = {
+    "simulation_manifest",
+    "assumption_manifest",
+    "solver_output",
+    "surrogate_output",
+    "nodi_output",
+    "comsol_context",
+}
+SIMULATION_CLAIM_LEVEL = "simulation_only"
 
 
 @dataclass(frozen=True)
@@ -25,6 +34,12 @@ class SidewallWetSurfaceObservationManifestImportAuditRow:
     import_version: str
     route_candidate_id: str
     endpoint_id: str
+    source_kind: str
+    model_or_solver_id: str
+    assumption_manifest_id: str
+    validity_domain: str
+    uncertainty_semantics: str
+    claim_level: str
     observation_source_artifact: str
     observation_source_sha256: str
     import_status: str
@@ -40,6 +55,12 @@ REQUIRED_MANIFEST_FIELDS = (
     "endpoint_id",
     "observation_artifact_id",
     "observation_artifact_class",
+    "source_kind",
+    "model_or_solver_id",
+    "assumption_manifest_id",
+    "validity_domain",
+    "uncertainty_semantics",
+    "claim_level",
     "observation_source_artifact",
     "source_geometry_match_level",
     "provided_fields",
@@ -91,6 +112,8 @@ def _build_import_row(
     route_id = str(manifest.get("route_candidate_id", ""))
     endpoint_id = str(manifest.get("endpoint_id", ""))
     source_text = str(manifest.get("observation_source_artifact", "")).strip()
+    source_kind = str(manifest.get("source_kind", "")).strip()
+    claim_level = str(manifest.get("claim_level", "")).strip()
     missing_fields = [
         field for field in REQUIRED_MANIFEST_FIELDS if not str(manifest.get(field, "")).strip()
     ]
@@ -100,6 +123,10 @@ def _build_import_row(
         rejection_reason = "contract_row_missing"
     elif missing_fields:
         rejection_reason = "missing_manifest_fields:" + ";".join(missing_fields)
+    elif source_kind not in ALLOWED_SOURCE_KINDS:
+        rejection_reason = "invalid_source_kind"
+    elif claim_level != SIMULATION_CLAIM_LEVEL:
+        rejection_reason = "invalid_claim_level"
     else:
         source_path = Path(source_text)
         if not source_path.is_absolute():
@@ -114,6 +141,16 @@ def _build_import_row(
         import_version=SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_VERSION,
         route_candidate_id=route_id,
         endpoint_id=endpoint_id,
+        source_kind=source_kind,
+        model_or_solver_id=str(manifest.get("model_or_solver_id", "")).strip(),
+        assumption_manifest_id=str(
+            manifest.get("assumption_manifest_id", "")
+        ).strip(),
+        validity_domain=str(manifest.get("validity_domain", "")).strip(),
+        uncertainty_semantics=str(
+            manifest.get("uncertainty_semantics", "")
+        ).strip(),
+        claim_level=claim_level,
         observation_source_artifact=source_text,
         observation_source_sha256=source_sha,
         import_status=status,
@@ -127,6 +164,12 @@ def _build_import_row(
         "endpoint_id": endpoint_id,
         "observation_artifact_id": str(manifest.get("observation_artifact_id", "")),
         "observation_artifact_class": str(manifest.get("observation_artifact_class", "")),
+        "source_kind": source_kind,
+        "model_or_solver_id": str(manifest.get("model_or_solver_id", "")),
+        "assumption_manifest_id": str(manifest.get("assumption_manifest_id", "")),
+        "validity_domain": str(manifest.get("validity_domain", "")),
+        "uncertainty_semantics": str(manifest.get("uncertainty_semantics", "")),
+        "claim_level": claim_level,
         "observation_source_artifact": source_text,
         "observation_source_sha256": source_sha,
         "source_geometry_match_level": str(manifest.get("source_geometry_match_level", "")),

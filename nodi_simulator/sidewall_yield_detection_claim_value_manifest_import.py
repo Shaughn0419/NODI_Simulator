@@ -23,6 +23,24 @@ DETECTION_CLAIM_VALUE_BRANCH = "detection_probability_value"
 YIELD_CLAIM_VALUE_BRANCH = "yield_wet_value"
 IMPORT_READY_STATUS = "yield_detection_claim_value_manifest_row_ready_for_review"
 IMPORT_REJECTED_STATUS = "yield_detection_claim_value_manifest_row_rejected"
+ALLOWED_SOURCE_KINDS = {
+    "simulation_manifest",
+    "assumption_manifest",
+    "solver_output",
+    "surrogate_output",
+    "nodi_output",
+    "comsol_context",
+}
+SIMULATION_CLAIM_LEVEL = "simulation_only"
+SIMULATION_PROVENANCE_FIELDS = (
+    "source_kind",
+    "model_or_solver_id",
+    "assumption_manifest_id",
+    "formula_id",
+    "validity_domain",
+    "uncertainty_semantics",
+    "claim_level",
+)
 
 
 @dataclass(frozen=True)
@@ -31,6 +49,13 @@ class SidewallYieldDetectionClaimValueManifestImportAuditRow:
     import_version: str
     claim_value_branch: str
     route_candidate_id: str
+    source_kind: str
+    model_or_solver_id: str
+    assumption_manifest_id: str
+    formula_id: str
+    validity_domain: str
+    uncertainty_semantics: str
+    claim_level: str
     source_artifact_path: str
     source_artifact_sha256: str
     import_status: str
@@ -86,6 +111,8 @@ def _build_import_row(
     branch = str(manifest.get("claim_value_branch", "")).strip()
     route_id = str(manifest.get("route_candidate_id", "")).strip()
     source_text = str(manifest.get("source_artifact_path", "")).strip()
+    source_kind = str(manifest.get("source_kind", "")).strip()
+    claim_level = str(manifest.get("claim_level", "")).strip()
     rejection_reason = ""
     source_sha = ""
     if branch == DETECTION_CLAIM_VALUE_BRANCH:
@@ -103,11 +130,19 @@ def _build_import_row(
         )
         missing_fields = [
             field
-            for field in ("claim_value_branch", *manifest_required)
+            for field in (
+                "claim_value_branch",
+                *SIMULATION_PROVENANCE_FIELDS,
+                *manifest_required,
+            )
             if not str(manifest.get(field, "")).strip()
         ]
         if missing_fields:
             rejection_reason = "missing_manifest_fields:" + ";".join(missing_fields)
+    if not rejection_reason and source_kind not in ALLOWED_SOURCE_KINDS:
+        rejection_reason = "invalid_source_kind"
+    if not rejection_reason and claim_level != SIMULATION_CLAIM_LEVEL:
+        rejection_reason = "invalid_claim_level"
     if not rejection_reason:
         source_path = Path(source_text)
         if not source_path.is_absolute():
@@ -122,6 +157,17 @@ def _build_import_row(
         import_version=SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_VERSION,
         claim_value_branch=branch,
         route_candidate_id=route_id,
+        source_kind=source_kind,
+        model_or_solver_id=str(manifest.get("model_or_solver_id", "")).strip(),
+        assumption_manifest_id=str(
+            manifest.get("assumption_manifest_id", "")
+        ).strip(),
+        formula_id=str(manifest.get("formula_id", "")).strip(),
+        validity_domain=str(manifest.get("validity_domain", "")).strip(),
+        uncertainty_semantics=str(
+            manifest.get("uncertainty_semantics", "")
+        ).strip(),
+        claim_level=claim_level,
         source_artifact_path=source_text,
         source_artifact_sha256=source_sha,
         import_status=status,
@@ -138,4 +184,10 @@ def _build_import_row(
         )
         for field in required_fields
     }
+    output_row.update(
+        {
+            field: str(manifest.get(field, ""))
+            for field in SIMULATION_PROVENANCE_FIELDS
+        }
+    )
     return output_row, audit_row

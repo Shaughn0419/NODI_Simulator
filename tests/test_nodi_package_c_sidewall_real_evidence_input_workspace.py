@@ -119,10 +119,19 @@ def test_simulation_evidence_input_workspace_source_manifest_headers(
     assert "observation_source_artifact" in by_branch[
         "wet_surface_observation"
     ]["source_manifest_columns"]
+    wet_columns = by_branch["wet_surface_observation"]["source_manifest_columns"]
+    assert "source_kind" in wet_columns
+    assert "model_or_solver_id" in wet_columns
+    assert "claim_level" in wet_columns
     claim_columns = by_branch["yield_detection_claim_value"][
         "source_manifest_columns"
     ]
     assert "claim_value_branch" in claim_columns
+    assert "source_kind" in claim_columns
+    assert "assumption_manifest_id" in claim_columns
+    assert "formula_id" in claim_columns
+    assert "validity_domain" in claim_columns
+    assert "claim_level" in claim_columns
     assert "detection_probability_estimate" in claim_columns
     assert "wet_pass_probability_estimate" in claim_columns
     assert "source_artifact_sha256" not in claim_columns
