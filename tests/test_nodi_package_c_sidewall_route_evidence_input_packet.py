@@ -31,6 +31,8 @@ def test_route_evidence_input_packet_builds_current_input_handoff() -> None:
     assert summary["yield_current"] is False
     assert summary["detection_probability_current"] is False
     assert "detector_blank_transfer" not in summary["next_high_leverage_step"]
+    assert "source manifests/importer inputs" in summary["next_high_leverage_step"]
+    assert "eleven-step command chain" in summary["next_high_leverage_step"]
 
 
 def test_route_evidence_input_packet_command_chain_order() -> None:
@@ -51,6 +53,15 @@ def test_route_evidence_input_packet_command_chain_order() -> None:
         "route_decision_execution_readiness",
     ]
     assert all("python tools\\audits\\" in row["command"] for row in payload["command_rows"])
+
+
+def test_route_evidence_input_packet_source_lock_lists_optional_source_manifests() -> None:
+    payload = builder.build_payload()
+    by_source = {row["source_id"]: row for row in payload["source_lock_rows"]}
+
+    assert by_source["optional_wet_source_manifest"]["exists"] == "false"
+    assert by_source["optional_claim_value_source_manifest"]["exists"] == "false"
+    assert payload["summary"]["required_source_missing_rows"] == 0
 
 
 def test_route_evidence_input_packet_writes_outputs(tmp_path: Path) -> None:

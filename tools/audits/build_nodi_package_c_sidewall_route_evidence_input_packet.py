@@ -43,10 +43,12 @@ DETECTOR_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLAN
 WET_INTAKE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_STATUS_20260701.json"
 WET_TEMPLATE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_OBSERVATION_TEMPLATE_ROWS_20260701.csv"
 WET_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INPUT_ROWS_20260701.csv"
+WET_SOURCE_MANIFEST = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_SOURCE_MANIFEST_20260701.csv"
 ACTIVATION_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json"
 CLOSURE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_STATUS_20260701.json"
 CLOSURE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_CLOSURE_ROWS_20260701.csv"
 CLAIM_VALUE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json"
+CLAIM_VALUE_SOURCE_MANIFEST = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv"
 DETECTION_VALUE_TEMPLATE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_DETECTION_VALUE_TEMPLATE_ROWS_20260701.csv"
 YIELD_VALUE_TEMPLATE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_YIELD_VALUE_TEMPLATE_ROWS_20260701.csv"
 DETECTION_VALUE_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv"
@@ -199,6 +201,8 @@ def source_lock_rows() -> list[dict[str, Any]]:
         "target_wet_input_rows": WET_TARGET_INPUT_ROWS,
         "target_detection_value_input_rows": DETECTION_VALUE_TARGET_INPUT_ROWS,
         "target_yield_value_input_rows": YIELD_VALUE_TARGET_INPUT_ROWS,
+        "optional_wet_source_manifest": WET_SOURCE_MANIFEST,
+        "optional_claim_value_source_manifest": CLAIM_VALUE_SOURCE_MANIFEST,
     }.items():
         rows.append(
             {
@@ -257,7 +261,7 @@ def build_payload() -> dict[str, Any]:
     required_source_missing = sum(
         row["exists"] != "true"
         for row in source_lock
-        if not str(row["source_id"]).startswith("target_")
+        if not str(row["source_id"]).startswith(("target_", "optional_"))
     )
     route_formula_ready = sum(
         row["route_formula_ready_for_claim_review"] for row in formula_dicts
@@ -335,11 +339,11 @@ def build_payload() -> dict[str, Any]:
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
         "next_high_leverage_step": (
-            "populate "
+            "populate source manifests/importer inputs for "
             + ", ".join(missing_current_acceptance_branches)
-            + " target rows, then rerun the full command chain"
+            + ", then rerun the eleven-step command chain"
             if missing_current_acceptance_branches
-            else "all evidence input branches have accepted rows; rerun the full command chain"
+            else "all evidence input branches have accepted rows; rerun the eleven-step command chain"
         ),
     }
     payload = {

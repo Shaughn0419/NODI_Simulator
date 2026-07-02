@@ -160,6 +160,9 @@ def test_route_evidence_input_packet_marks_detector_ready_and_wet_missing() -> N
         by_branch["detector_blank_transfer"].required_action
     )
     assert by_branch["wet_surface_observation"].current_accepted_rows == 0
+    assert "source manifest" in by_branch["wet_surface_observation"].required_action
+    assert "claim-value source manifest" in by_branch["detection_probability_value"].required_action
+    assert "claim-value source manifest" in by_branch["yield_wet_value"].required_action
     assert formula_rows[0].next_required_action == (
         "complete accepted wet evidence inputs, then rerun the command chain"
     )

@@ -184,10 +184,12 @@ def build_route_evidence_input_packet(
                     "when replacing value evidence"
                 ),
                 missing_text=(
-                    "populate detection probability value rows with estimates, "
+                    "populate claim-value source manifest rows with "
+                    "claim_value_branch=detection_probability_value, estimates, "
                     "confidence intervals, positive-control counts, threshold "
-                    "policy, controls, uncertainty model, source hash, and "
-                    "pre-registration status"
+                    "policy, controls, uncertainty model, source artifact path, "
+                    "and pre-registration status; run the claim-value manifest "
+                    "importer before claim-value review"
                 ),
             ),
             hard_fail_if=(
@@ -213,9 +215,12 @@ def build_route_evidence_input_packet(
                     "when replacing value evidence"
                 ),
                 missing_text=(
-                    "populate yield and wet-pass value rows with estimates, "
+                    "populate claim-value source manifest rows with "
+                    "claim_value_branch=yield_wet_value, yield/wet-pass estimates, "
                     "confidence intervals, wet trial counts, model id, controls, "
-                    "uncertainty model, source hash, and pre-registration status"
+                    "uncertainty model, source artifact path, and pre-registration "
+                    "status; run the claim-value manifest importer before "
+                    "claim-value review"
                 ),
             ),
             hard_fail_if="yield_template_rows_counted_as_yield_or_wet_pass_claim",
