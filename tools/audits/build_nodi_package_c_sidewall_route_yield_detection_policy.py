@@ -16,9 +16,11 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from nodi_simulator.realism_v2_io import sha256_file, write_csv_rows, write_json_atomic  # noqa: E402
 from nodi_simulator.sidewall_route_yield_detection_policy import (  # noqa: E402
+    DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS,
     REQUIRED_LANES,
     ROUTE_POLICY_NOT_READY_STATUS,
     SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_CLAIM_BOUNDARY,
+    WET_OBSERVATION_ACCEPTED_STATUS,
     build_route_yield_detection_policy_rows,
     route_yield_detection_policy_promotion_update_rows,
 )
@@ -43,6 +45,14 @@ LEDGER_WET_LANES = (
     OUTPUT_DIR
     / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_PROMOTION_LANE_ROWS_20260701.csv"
 )
+ACTIVATION_STATUS = (
+    OUTPUT_DIR
+    / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json"
+)
+ACTIVATION_ROWS = (
+    OUTPUT_DIR
+    / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_ACTIVATION_ROWS_20260701.csv"
+)
 
 ALLOWED_USE = "route/yield/detection readiness policy;promotion blocker prioritization"
 BLOCKED_USE = (
@@ -53,6 +63,8 @@ BLOCKED_USE = (
 SOURCE_FILES = {
     "integrated_promotion_ledger_wet_surface_status": LEDGER_WET_STATUS,
     "integrated_promotion_ledger_wet_surface_lanes": LEDGER_WET_LANES,
+    "detector_wet_activation_status": ACTIVATION_STATUS,
+    "detector_wet_activation_rows": ACTIVATION_ROWS,
     "route_yield_detection_policy_source": PROJECT_ROOT
     / "nodi_simulator/sidewall_route_yield_detection_policy.py",
     "route_yield_detection_policy_tests": PROJECT_ROOT
@@ -210,8 +222,13 @@ def source_lock_rows() -> list[dict[str, str]]:
 
 def build_payload() -> dict[str, Any]:
     ledger_status = load_json(LEDGER_WET_STATUS)
+    activation_status = load_json(ACTIVATION_STATUS)
+    activation_rows = read_csv_rows(ACTIVATION_ROWS)
     policy_rows, blocker_rows = build_route_yield_detection_policy_rows(
-        read_csv_rows(LEDGER_WET_LANES)
+        _activation_refreshed_lane_rows(
+            read_csv_rows(LEDGER_WET_LANES),
+            activation_rows,
+        )
     )
     policy_dicts = [row.to_dict() for row in policy_rows]
     blocker_dicts = [row.to_dict() for row in blocker_rows]
@@ -226,6 +243,7 @@ def build_payload() -> dict[str, Any]:
         row.route_policy_status == ROUTE_POLICY_NOT_READY_STATUS
         for row in policy_rows
     )
+    ready_rows = len(policy_rows) - not_ready_rows
     status = (
         DISPOSITION
         if source_missing == 0
@@ -235,7 +253,6 @@ def build_payload() -> dict[str, Any]:
         and len(policy_rows) == 2
         and len(blocker_rows) == 2 * len(REQUIRED_LANES)
         and len(promotion_updates) == 1
-        and not_ready_rows == 2
         and all(row.route_score_allowed is False for row in policy_rows)
         and all(row.yield_allowed is False for row in policy_rows)
         and all(row.detection_probability_allowed is False for row in policy_rows)
@@ -248,11 +265,18 @@ def build_payload() -> dict[str, Any]:
         "current_head": git_head(),
         "branch": git_branch(),
         "source_ledger_wet_surface_disposition": ledger_status.get("disposition", ""),
+        "source_detector_wet_activation_disposition": activation_status.get("disposition", ""),
         "policy_rows": len(policy_rows),
         "blocker_rows": len(blocker_rows),
         "required_lanes_per_route": len(REQUIRED_LANES),
         "promotion_update_rows": len(promotion_updates),
         "not_ready_policy_rows": not_ready_rows,
+        "ready_policy_rows": ready_rows,
+        "detector_wet_activation_ready_rows": sum(
+            str(row.get("route_formula_blocker_status", ""))
+            == "detector_wet_branches_ready_for_formula_review"
+            for row in activation_rows
+        ),
         "route_score_allowed_rows": sum(row.route_score_allowed for row in policy_rows),
         "winner_allowed_rows": sum(row.winner_allowed for row in policy_rows),
         "yield_allowed_rows": sum(row.yield_allowed for row in policy_rows),
@@ -305,7 +329,6 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "two policy rows": summary["policy_rows"] == 2,
         "twelve blocker rows": summary["blocker_rows"] == 2 * len(REQUIRED_LANES),
         "one promotion update": summary["promotion_update_rows"] == 1,
-        "two not ready rows": summary["not_ready_policy_rows"] == 2,
         "route score disallowed": summary["route_score_allowed_rows"] == 0,
         "winner disallowed": summary["winner_allowed_rows"] == 0,
         "yield disallowed": summary["yield_allowed_rows"] == 0,
@@ -319,9 +342,49 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
             and row["yield_allowed"] is False
             and row["detection_probability_allowed"] is False
             and row["wet_pass_probability_allowed"] is False
-            and row["route_policy_status"] == ROUTE_POLICY_NOT_READY_STATUS
+            and row["route_policy_status"]
+            in {
+                ROUTE_POLICY_NOT_READY_STATUS,
+                "ready_for_route_yield_detection_claims",
+            }
         )
     return [label for label, ok in checks.items() if not ok]
+
+
+def _activation_refreshed_lane_rows(
+    base_rows: list[dict[str, str]],
+    activation_rows: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    rows = [dict(row) for row in base_rows]
+    activation_by_route = {
+        str(row.get("route_candidate_id", "")): row for row in activation_rows
+    }
+    for row in rows:
+        route_id = str(row.get("route_candidate_id", ""))
+        activation = activation_by_route.get(route_id, {})
+        lane = str(row.get("evidence_lane", ""))
+        detector_ready = (
+            str(activation.get("detector_branch_ready_for_formula", "")).lower()
+            == "true"
+        )
+        wet_ready = (
+            str(activation.get("wet_branch_ready_for_formula", "")).lower()
+            == "true"
+        )
+        if detector_ready and lane in {
+            "detector_response_bridge",
+            "blank_false_positive_trace",
+        }:
+            row["current_status"] = DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS
+            row["next_required_evidence"] = (
+                "route formula policy review after accepted detector/blank transfer"
+            )
+        if wet_ready and lane == "wet_wall_interaction":
+            row["current_status"] = WET_OBSERVATION_ACCEPTED_STATUS
+            row["next_required_evidence"] = (
+                "route formula policy review after accepted wet observation bundle"
+            )
+    return rows
 
 
 def write_outputs(payload: dict[str, Any]) -> list[Path]:

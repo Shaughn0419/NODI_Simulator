@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from nodi_simulator.sidewall_route_yield_detection_policy import (
+    DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS,
     EXACT_PRESSURE_FLOW_READY_STATUS,
     BLANK_GUARD_PANEL_STATUS,
     DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS,
@@ -11,6 +12,7 @@ from nodi_simulator.sidewall_route_yield_detection_policy import (
     ROUTE_POLICY_NOT_READY_STATUS,
     SELECTED_ANNULUS_PANEL_STATUS,
     SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_CLAIM_BOUNDARY,
+    WET_OBSERVATION_ACCEPTED_STATUS,
     WET_OBSERVATION_INTAKE_STATUS,
     build_route_yield_detection_policy_rows,
     route_yield_detection_policy_promotion_update_rows,
@@ -108,6 +110,19 @@ def _rows_after_detector_blank_transfer_refresh() -> list[dict[str, str]]:
             "blank_false_positive_trace",
         }:
             row["current_status"] = DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS
+    return rows
+
+
+def _rows_after_detector_wet_accepted_refresh() -> list[dict[str, str]]:
+    rows = _rows_after_wet_observation_refresh()
+    for row in rows:
+        if row["evidence_lane"] in {
+            "detector_response_bridge",
+            "blank_false_positive_trace",
+        }:
+            row["current_status"] = DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS
+        if row["evidence_lane"] == "wet_wall_interaction":
+            row["current_status"] = WET_OBSERVATION_ACCEPTED_STATUS
     return rows
 
 
@@ -214,6 +229,30 @@ def test_route_yield_detection_policy_recognizes_detector_blank_transfer_intake(
     ]
     assert {blocker.blocker_status for blocker in transfer_blockers} == {
         "blocked_not_claim_ready"
+    }
+
+
+def test_route_yield_detection_policy_recognizes_accepted_detector_wet_bundle() -> None:
+    policy_rows, blocker_rows = build_route_yield_detection_policy_rows(
+        _rows_after_detector_wet_accepted_refresh()
+    )
+    row = policy_rows[0]
+
+    assert row.detector_response_policy_status == (
+        "ready_detector_blank_transfer_candidate_for_policy_review_not_probability"
+    )
+    assert row.blank_false_positive_policy_status == (
+        "ready_blank_false_positive_transfer_candidate_for_policy_review_not_probability"
+    )
+    assert row.wet_surface_policy_status == (
+        "ready_wet_observation_bundle_candidate_for_policy_review_not_yield"
+    )
+    assert row.route_policy_status == "ready_for_route_yield_detection_claims"
+    assert row.route_score_allowed is False
+    assert row.yield_allowed is False
+    assert row.detection_probability_allowed is False
+    assert {blocker.blocker_status for blocker in blocker_rows} == {
+        ROUTE_INPUT_READY_BLOCKER_STATUS
     }
 
 

@@ -21,12 +21,52 @@ def test_sidewall_route_yield_detection_policy_packet_builds() -> None:
     assert summary["required_lanes_per_route"] == 6
     assert summary["promotion_update_rows"] == 1
     assert summary["not_ready_policy_rows"] == 2
+    assert summary["ready_policy_rows"] == 0
+    assert summary["detector_wet_activation_ready_rows"] == 0
     assert summary["route_score_allowed_rows"] == 0
     assert summary["winner_allowed_rows"] == 0
     assert summary["yield_allowed_rows"] == 0
     assert summary["detection_probability_allowed_rows"] == 0
     assert summary["wet_pass_probability_allowed_rows"] == 0
     assert summary["primary_next_execution_blocks"] == ["detector_blank_calibration"]
+
+
+def test_activation_overlay_can_mark_detector_wet_lanes_ready() -> None:
+    rows = builder._activation_refreshed_lane_rows(
+        [
+            {
+                "route_candidate_id": "R",
+                "evidence_lane": "detector_response_bridge",
+                "current_status": "old",
+            },
+            {
+                "route_candidate_id": "R",
+                "evidence_lane": "blank_false_positive_trace",
+                "current_status": "old",
+            },
+            {
+                "route_candidate_id": "R",
+                "evidence_lane": "wet_wall_interaction",
+                "current_status": "old",
+            },
+        ],
+        [
+            {
+                "route_candidate_id": "R",
+                "detector_branch_ready_for_formula": "True",
+                "wet_branch_ready_for_formula": "True",
+            }
+        ],
+    )
+
+    statuses = {row["evidence_lane"]: row["current_status"] for row in rows}
+    assert statuses["detector_response_bridge"] == (
+        builder.DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS
+    )
+    assert statuses["blank_false_positive_trace"] == (
+        builder.DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS
+    )
+    assert statuses["wet_wall_interaction"] == builder.WET_OBSERVATION_ACCEPTED_STATUS
 
 
 def test_policy_rows_bind_current_integrated_ledger_statuses() -> None:

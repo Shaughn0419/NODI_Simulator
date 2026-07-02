@@ -3,14 +3,17 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_READY_NOT_CLAIM_READY",
     "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_20260701",
     "claim_boundary": "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability",
-    "current_head": "275691013dce8b73d920bf451d792fd3f2e48d68",
+    "current_head": "d8e4ec5c1826f32202f684cc438ef2f89fa373b0",
     "branch": "main",
     "source_ledger_wet_surface_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_READY_PREFLIGHT_ONLY",
+    "source_detector_wet_activation_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_READY_NO_CURRENT_ACCEPTED_EVIDENCE",
     "policy_rows": 2,
     "blocker_rows": 12,
     "required_lanes_per_route": 6,
     "promotion_update_rows": 1,
     "not_ready_policy_rows": 2,
+    "ready_policy_rows": 0,
+    "detector_wet_activation_ready_rows": 0,
     "route_score_allowed_rows": 0,
     "winner_allowed_rows": 0,
     "yield_allowed_rows": 0,
@@ -19,10 +22,10 @@
     "primary_next_execution_blocks": [
       "detector_blank_calibration"
     ],
-    "source_lock_rows": 6,
+    "source_lock_rows": 8,
     "source_missing_rows": 0,
-    "dirty_context_rows": 88,
-    "non_release_dirty_context_rows": 80,
+    "dirty_context_rows": 93,
+    "non_release_dirty_context_rows": 85,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "route/yield/detection readiness policy;promotion blocker prioritization",
     "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion",
@@ -243,10 +246,28 @@
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
     },
     {
+      "source_id": "detector_wet_activation_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "afdf54bbb54a6a945dcf46592ff44e75e4393e65500e3682c2f4a8b940187d92",
+      "claim_boundary": "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection readiness policy;promotion blocker prioritization",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "detector_wet_activation_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_ACTIVATION_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "5e0e7f87d6634ca8121199e67c33f4909e6b39ace0de270e62f3b4cf58adcc0d",
+      "claim_boundary": "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection readiness policy;promotion blocker prioritization",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
       "source_id": "route_yield_detection_policy_source",
       "path": "nodi_simulator/sidewall_route_yield_detection_policy.py",
       "exists": "true",
-      "sha256": "fff4049dc7ce57a9da56b90ec3bdcc3ae535f3e16faab81397e27daaff281325",
+      "sha256": "ebf9dadec0339c663699281c0e4ff6030076b5cf7fa78dc3ea0ceb9143466b45",
       "claim_boundary": "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection readiness policy;promotion blocker prioritization",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -255,7 +276,7 @@
       "source_id": "route_yield_detection_policy_tests",
       "path": "tests/test_sidewall_route_yield_detection_policy.py",
       "exists": "true",
-      "sha256": "24e4580fdee0f9473ec570b5e8f58e0588d0749007509494b7d05981ef6f2e57",
+      "sha256": "08aa71ead484e4a6bc1ce9313db56e6711f9c358b96dfd7b2f943241bac4241d",
       "claim_boundary": "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection readiness policy;promotion blocker prioritization",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -264,7 +285,7 @@
       "source_id": "route_yield_detection_policy_builder",
       "path": "tools/audits/build_nodi_package_c_sidewall_route_yield_detection_policy.py",
       "exists": "true",
-      "sha256": "44369da611db6e482de66293de7cb202c3423ee04f89153a9a7d1e623c83d1a2",
+      "sha256": "2cd5aef3b6dfcd736c1d3dcc314c60ed98cd690232c8946effc5f9a55776e81d",
       "claim_boundary": "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection readiness policy;promotion blocker prioritization",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -273,7 +294,7 @@
       "source_id": "route_yield_detection_policy_builder_tests",
       "path": "tests/test_nodi_package_c_sidewall_route_yield_detection_policy.py",
       "exists": "true",
-      "sha256": "efa990bc7b52426e755ed52ab044399ef0af07be25ddc8842239f7aab1757574",
+      "sha256": "add67c720f63be2ceefaa1e90aa25fe250c4a1acc8ee0b75ce1c8a21b0612542",
       "claim_boundary": "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection readiness policy;promotion blocker prioritization",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -348,6 +369,12 @@
     },
     {
       "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_policy_not_source_locked"
+    },
+    {
+      "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_route_yield_detection_policy_not_source_locked"
@@ -653,6 +680,36 @@
       "release_decision": "ignored_for_route_yield_detection_policy_not_source_locked"
     },
     {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_DIRTY_CLASSIFIER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_policy_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_policy_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_policy_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_policy_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_policy_not_source_locked"
+    },
+    {
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -756,12 +813,6 @@
     },
     {
       "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
-      "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_yield_detection_policy_not_source_locked"
-    },
-    {
-      "path": "tests/test_nodi_package_c_sidewall_integrated_promotion_ledger_route_policy_refresh.py",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_route_yield_detection_policy_not_source_locked"

@@ -40,6 +40,12 @@ WET_OBSERVATION_INTAKE_STATUS = "wet_surface_observation_intake_ready_no_observa
 DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS = (
     "detector_blank_transfer_intake_ready_no_transfer_evidence"
 )
+DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS = (
+    "detector_blank_transfer_bundle_candidate_ready_requires_policy_review"
+)
+WET_OBSERVATION_ACCEPTED_STATUS = (
+    "wet_surface_observation_bundle_candidate_ready_requires_policy_review"
+)
 
 REQUIRED_LANES: tuple[str, ...] = (
     "flow_split_qch",
@@ -226,6 +232,13 @@ def _lane_blocker(lane: str, row: Mapping[str, Any]) -> str:
         return ROUTE_INPUT_READY_BLOCKER_STATUS
     if lane == "selected_annulus_detection_context" and status == SELECTED_ANNULUS_PANEL_STATUS:
         return ROUTE_INPUT_READY_BLOCKER_STATUS
+    if lane in {
+        "detector_response_bridge",
+        "blank_false_positive_trace",
+    } and status == DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS:
+        return ROUTE_INPUT_READY_BLOCKER_STATUS
+    if lane == "wet_wall_interaction" and status == WET_OBSERVATION_ACCEPTED_STATUS:
+        return ROUTE_INPUT_READY_BLOCKER_STATUS
     if str(row.get("target_claim_current", "")).lower() != "true":
         return "blocked_not_claim_ready"
     return "ready_for_claim_use"
@@ -260,6 +273,8 @@ def _selected_annulus_policy_status(row: Mapping[str, Any]) -> str:
 
 def _detector_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS:
+        return "ready_detector_blank_transfer_candidate_for_policy_review_not_probability"
     if status == DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS:
         return "not_ready_detector_transfer_intake_ready_no_transfer_evidence"
     if status == DETECTOR_RESPONSE_PANEL_STATUS:
@@ -271,6 +286,8 @@ def _detector_policy_status(row: Mapping[str, Any]) -> str:
 
 def _blank_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS:
+        return "ready_blank_false_positive_transfer_candidate_for_policy_review_not_probability"
     if status == DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS:
         return "not_ready_blank_transfer_intake_ready_no_transfer_evidence"
     if status == BLANK_GUARD_PANEL_STATUS:
@@ -282,6 +299,8 @@ def _blank_policy_status(row: Mapping[str, Any]) -> str:
 
 def _wet_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == WET_OBSERVATION_ACCEPTED_STATUS:
+        return "ready_wet_observation_bundle_candidate_for_policy_review_not_yield"
     if status == WET_OBSERVATION_INTAKE_STATUS:
         return "not_ready_wet_observation_intake_ready_no_observations"
     if status == "wet_surface_evidence_contract_defined_no_wet_validation":
