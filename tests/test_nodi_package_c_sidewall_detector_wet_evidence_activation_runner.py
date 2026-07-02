@@ -9,15 +9,15 @@ from tools.audits import (
 )
 
 
-def test_detector_wet_activation_runner_builds_current_no_input_state() -> None:
+def test_detector_wet_activation_runner_builds_header_only_input_state() -> None:
     payload = builder.build_payload()
     failures = builder.validate_payload(payload)
     summary = payload["summary"]
 
     assert failures == []
     assert summary["disposition"] == builder.DISPOSITION
-    assert summary["detector_input_present"] is False
-    assert summary["wet_input_present"] is False
+    assert summary["detector_input_present"] is True
+    assert summary["wet_input_present"] is True
     assert summary["activation_rows"] == 2
     assert summary["input_contract_rows"] == 2
     assert summary["combined_detector_wet_ready_rows"] == 0

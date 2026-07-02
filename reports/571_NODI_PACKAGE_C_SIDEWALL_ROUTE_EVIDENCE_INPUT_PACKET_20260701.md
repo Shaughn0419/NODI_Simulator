@@ -4,10 +4,10 @@ Disposition: `NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_READY_AWAITING
 Artifact ID: `PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_20260701`
 Claim boundary: `route_evidence_input_packet_implementation_authorized_evidence_gated`
 
-Detector template rows: `2`; target input present: `False`.
-Wet template rows: `14`; target input present: `False`.
-Detection-value template rows: `2`; target input present: `False`.
-Yield/wet-value template rows: `2`; target input present: `False`.
+Detector template rows: `2`; target input present: `True`.
+Wet template rows: `14`; target input present: `True`.
+Detection-value template rows: `2`; target input present: `True`.
+Yield/wet-value template rows: `2`; target input present: `True`.
 Route formula ready rows: `0`.
 Detection probability current rows: `0`; yield current rows: `0`; wet-pass current rows: `0`.
 

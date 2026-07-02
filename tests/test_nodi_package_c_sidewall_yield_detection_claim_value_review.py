@@ -18,8 +18,8 @@ def test_yield_detection_claim_value_packet_builds() -> None:
     assert summary["guard_rows"] == 4
     assert summary["detection_template_rows"] == 2
     assert summary["yield_template_rows"] == 2
-    assert summary["detection_input_present"] is False
-    assert summary["yield_input_present"] is False
+    assert summary["detection_input_present"] is True
+    assert summary["yield_input_present"] is True
     assert summary["detection_probability_current_rows"] == 0
     assert summary["yield_current_rows"] == 0
     assert summary["wet_pass_probability_current_rows"] == 0

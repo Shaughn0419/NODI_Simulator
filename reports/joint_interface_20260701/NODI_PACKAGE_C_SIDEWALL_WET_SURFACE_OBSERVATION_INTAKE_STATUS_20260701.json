@@ -4,12 +4,12 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS",
     "artifact_id": "PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_20260701",
     "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
-    "current_head": "1f751f728477d786585f268d958411356ac1d3b9",
+    "current_head": "a5ccd25a395ef09f839810b78af5d4b97699a987",
     "branch": "main",
     "intake_version": "sidewall_wet_surface_observation_intake_v1",
     "source_detector_blank_panel_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_PANEL_REFRESH_READY_PREFLIGHT_ONLY",
     "source_wet_surface_contract_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_EVIDENCE_CONTRACT_READY_CONTRACT_ONLY",
-    "optional_observation_input_present": false,
+    "optional_observation_input_present": true,
     "intake_rows": 14,
     "route_observation_matrix_rows": 2,
     "template_rows": 14,
@@ -24,13 +24,13 @@
     "detection_probability_current": false,
     "route_score_current": false,
     "winner_current": false,
-    "source_lock_rows": 8,
+    "source_lock_rows": 9,
     "source_missing_rows": 0,
-    "dirty_context_rows": 87,
-    "non_release_dirty_context_rows": 79,
+    "dirty_context_rows": 101,
+    "non_release_dirty_context_rows": 97,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "wet/surface observation intake schema;wet endpoint validation;route wet evidence matrix planning",
     "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion",
-    "semantic_digest": "b446a0d60e4b7a7fde5e3f3cc444143b29a234dabb6c29fd2d18f99ad5a1f6cc"
+    "semantic_digest": "14a5f4d4fe684def21d6b397ee8cf7e6b16c874e14da1cccb0e0c5ba294e9699"
   }
 }

@@ -135,11 +135,20 @@ def dirty_context_rows() -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     output_prefix = f"reports/joint_interface_20260701/{PREFIX}_"
     output_report = f"reports/571_{PREFIX}_20260701.md"
+    target_input_paths = {
+        display_path(DETECTOR_TARGET_INPUT_ROWS),
+        display_path(WET_TARGET_INPUT_ROWS),
+        display_path(DETECTION_VALUE_TARGET_INPUT_ROWS),
+        display_path(YIELD_VALUE_TARGET_INPUT_ROWS),
+    }
     for line in git_status_lines():
         path = git_path_from_status_line(line)
         if path in BUILD_EDIT_PATHS:
             classification = "route_evidence_input_packet_build_edit"
             release_decision = "included_in_commit_scope_before_publish"
+        elif path in target_input_paths:
+            classification = "route_evidence_target_input_rows"
+            release_decision = "source_locked_header_only_or_real_input"
         elif path.startswith(output_prefix) or path == output_report:
             classification = "route_evidence_input_packet_output"
             release_decision = "included_or_rewritten_by_input_packet_builder"

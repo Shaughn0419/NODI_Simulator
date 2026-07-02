@@ -5,14 +5,14 @@ from pathlib import Path
 from tools.audits import build_nodi_package_c_sidewall_detector_blank_transfer_intake as builder
 
 
-def test_detector_blank_transfer_intake_packet_builds_without_transfer_input() -> None:
+def test_detector_blank_transfer_intake_packet_builds_with_header_only_transfer_input() -> None:
     payload = builder.build_payload()
     failures = builder.validate_payload(payload)
 
     assert failures == []
     summary = payload["summary"]
     assert summary["disposition"] == builder.DISPOSITION
-    assert summary["optional_transfer_input_present"] is False
+    assert summary["optional_transfer_input_present"] is True
     assert summary["intake_rows"] == 2
     assert summary["route_transfer_matrix_rows"] == 2
     assert summary["template_rows"] == 2

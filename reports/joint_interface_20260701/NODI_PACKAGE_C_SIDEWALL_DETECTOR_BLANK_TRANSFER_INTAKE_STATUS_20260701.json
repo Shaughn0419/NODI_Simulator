@@ -4,11 +4,11 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE",
     "artifact_id": "PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_20260701",
     "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
-    "current_head": "bb61ba520f9e61166e41c7a17d44a67e60119e3b",
+    "current_head": "a5ccd25a395ef09f839810b78af5d4b97699a987",
     "branch": "main",
     "source_assembly_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_READY_NOT_CLAIM_READY",
     "source_detector_panel_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CALIBRATION_PANEL_READY_CANDIDATE_NOT_PROBABILITY",
-    "optional_transfer_input_present": false,
+    "optional_transfer_input_present": true,
     "intake_rows": 2,
     "route_transfer_matrix_rows": 2,
     "template_rows": 2,
@@ -21,13 +21,13 @@
     "route_score_current": false,
     "winner_current": false,
     "yield_current": false,
-    "source_lock_rows": 8,
+    "source_lock_rows": 9,
     "source_missing_rows": 0,
-    "dirty_context_rows": 87,
-    "non_release_dirty_context_rows": 79,
+    "dirty_context_rows": 94,
+    "non_release_dirty_context_rows": 90,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
     "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion",
-    "semantic_digest": "1d629c2488d61bdd0a1675e4d74f6a2ae3bbd67eb9ae2c8d31ff2536a8599509"
+    "semantic_digest": "6190885da1fc711254dbe0d607e32326987ffd7ff75aec5f2bf2c755eea726ba"
   }
 }

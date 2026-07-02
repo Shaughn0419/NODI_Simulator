@@ -3,11 +3,11 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE",
     "artifact_id": "PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_20260701",
     "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
-    "current_head": "bb61ba520f9e61166e41c7a17d44a67e60119e3b",
+    "current_head": "a5ccd25a395ef09f839810b78af5d4b97699a987",
     "branch": "main",
     "source_assembly_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_READY_NOT_CLAIM_READY",
     "source_detector_panel_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CALIBRATION_PANEL_READY_CANDIDATE_NOT_PROBABILITY",
-    "optional_transfer_input_present": false,
+    "optional_transfer_input_present": true,
     "intake_rows": 2,
     "route_transfer_matrix_rows": 2,
     "template_rows": 2,
@@ -20,14 +20,14 @@
     "route_score_current": false,
     "winner_current": false,
     "yield_current": false,
-    "source_lock_rows": 8,
+    "source_lock_rows": 9,
     "source_missing_rows": 0,
-    "dirty_context_rows": 87,
-    "non_release_dirty_context_rows": 79,
+    "dirty_context_rows": 94,
+    "non_release_dirty_context_rows": 90,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
     "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion",
-    "semantic_digest": "1d629c2488d61bdd0a1675e4d74f6a2ae3bbd67eb9ae2c8d31ff2536a8599509"
+    "semantic_digest": "6190885da1fc711254dbe0d607e32326987ffd7ff75aec5f2bf2c755eea726ba"
   },
   "intake_rows": [
     {
@@ -58,6 +58,7 @@
       "uncertainty_model": "",
       "pre_registered_rule_status": "",
       "missing_required_fields": "blank_trace_artifact_id;blank_trace_sha256;detector_response_artifact_id;detector_response_sha256;blank_trace_geometry_match_level;detector_response_model_id;false_positive_rate_estimate;false_positive_rate_ci_low;false_positive_rate_ci_high;n_blank_traces;n_detector_calibration_runs;controls_status;uncertainty_model;pre_registered_rule_status",
+      "transfer_rejection_reason": "missing_transfer_input",
       "transfer_validation_status": "detector_blank_transfer_missing_panel_ready",
       "accepted_transfer_current": false,
       "sidewall_specific_blank_trace_current": false,
@@ -98,6 +99,7 @@
       "uncertainty_model": "",
       "pre_registered_rule_status": "",
       "missing_required_fields": "blank_trace_artifact_id;blank_trace_sha256;detector_response_artifact_id;detector_response_sha256;blank_trace_geometry_match_level;detector_response_model_id;false_positive_rate_estimate;false_positive_rate_ci_low;false_positive_rate_ci_high;n_blank_traces;n_detector_calibration_runs;controls_status;uncertainty_model;pre_registered_rule_status",
+      "transfer_rejection_reason": "missing_transfer_input",
       "transfer_validation_status": "detector_blank_transfer_missing_panel_ready",
       "accepted_transfer_current": false,
       "sidewall_specific_blank_trace_current": false,
@@ -230,7 +232,7 @@
       "source_id": "route_yield_detection_assembly_status",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "e8db57b5cecdbea771e6813c776489833c2c8a7f63216e688c7fd3a7158e78e3",
+      "sha256": "7fd8c81d1268d008029b2017a9e0bb2bcf8a88f0ff273dc8d60a1a9cb3004a10",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
       "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
       "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion"
@@ -239,7 +241,7 @@
       "source_id": "route_yield_detection_assembly_branch_rows",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_BRANCH_ROWS_20260701.csv",
       "exists": "true",
-      "sha256": "fa6a4dfdadb0e14f66bb0fc4e5e78bca6c7b346c548854502bcf319b1d4839b1",
+      "sha256": "8084a408b8f7cb3cd18dad010b90297bc8dc74c97c0f513b876de5457943235c",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
       "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
       "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion"
@@ -266,7 +268,7 @@
       "source_id": "detector_blank_transfer_intake_source",
       "path": "nodi_simulator/sidewall_detector_blank_transfer_intake.py",
       "exists": "true",
-      "sha256": "f2cd8294829ea9993fd1f5e5e63254b18f9a1d1fb500f4a29afe5718881fe492",
+      "sha256": "6a5ad718a43d63b9125ecc4ae9c077c47b15adf6a9ab653ca7f050b9fa1872e7",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
       "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
       "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion"
@@ -275,7 +277,7 @@
       "source_id": "detector_blank_transfer_intake_tests",
       "path": "tests/test_sidewall_detector_blank_transfer_intake.py",
       "exists": "true",
-      "sha256": "6e01c1eada6d7e188474e3cb818fd36f7e78129fc8a3a95981a5bfe0def4af7f",
+      "sha256": "442de172eddd193a5e758c2766be54b241113aec113d7489fb4e582c9b1ad262",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
       "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
       "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion"
@@ -294,6 +296,15 @@
       "path": "tests/test_nodi_package_c_sidewall_detector_blank_transfer_intake.py",
       "exists": "true",
       "sha256": "1754720c65c92f50cc67332ce16013f0d45c7893577f9d2bf95fe8f8f7f59a69",
+      "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
+      "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
+      "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion"
+    },
+    {
+      "source_id": "optional_detector_blank_transfer_input_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INPUT_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "f8725747c9d0b0a2ce03c9af26ac824f69186da9591dd9d4653adb9625942591",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
       "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
       "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion"
@@ -362,6 +373,12 @@
     },
     {
       "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
+    },
+    {
+      "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
@@ -667,6 +684,36 @@
       "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     },
     {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_DIRTY_CLASSIFIER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
+    },
+    {
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -775,16 +822,22 @@
       "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     },
     {
-      "path": "nodi_simulator/sidewall_detector_blank_transfer_intake.py",
+      "path": "nodi_simulator/sidewall_real_evidence_input_workspace.py",
       "git_status": "??",
-      "classification": "detector_blank_transfer_intake_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     },
     {
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/577_NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_20260701.md",
+      "git_status": "??",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     },
     {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
@@ -799,16 +852,16 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "tests/test_nodi_package_c_sidewall_detector_blank_transfer_intake.py",
+      "path": "tests/test_nodi_package_c_sidewall_real_evidence_input_workspace.py",
       "git_status": "??",
-      "classification": "detector_blank_transfer_intake_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     },
     {
-      "path": "tests/test_sidewall_detector_blank_transfer_intake.py",
+      "path": "tests/test_sidewall_real_evidence_input_workspace.py",
       "git_status": "??",
-      "classification": "detector_blank_transfer_intake_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     },
     {
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
@@ -817,10 +870,10 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "tools/audits/build_nodi_package_c_sidewall_detector_blank_transfer_intake.py",
+      "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
       "git_status": "??",
-      "classification": "detector_blank_transfer_intake_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     }
   ]
 }

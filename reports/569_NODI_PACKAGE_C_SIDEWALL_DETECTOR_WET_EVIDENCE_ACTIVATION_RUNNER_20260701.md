@@ -6,8 +6,8 @@ Claim boundary: `detector_wet_evidence_activation_runner_not_route_score_not_yie
 
 ## Current Inputs
 
-- detector input present: `False`
-- wet input present: `False`
+- detector input present: `True`
+- wet input present: `True`
 - combined ready rows: `0`
 - detector accepted transfer rows: `0`
 - wet accepted endpoint rows: `0`
