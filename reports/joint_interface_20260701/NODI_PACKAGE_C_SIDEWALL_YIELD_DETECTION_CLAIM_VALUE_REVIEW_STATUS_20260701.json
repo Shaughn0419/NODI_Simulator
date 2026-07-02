@@ -1,0 +1,31 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_REAL_VALUE_ROWS",
+  "summary": {
+    "allowed_use": "yield and detection-probability claim-value input validation;integrated route review input",
+    "artifact_id": "PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_20260701",
+    "blocked_use": "production ingestion;fabrication release;template rows as evidence",
+    "branch": "main",
+    "claim_boundary": "yield_detection_claim_value_review_requires_real_value_rows",
+    "claim_value_rows": 2,
+    "current_head": "908db1c5ea4fdf57aada90912e0f3f7b963c7f29",
+    "detection_input_present": false,
+    "detection_probability_current_rows": 0,
+    "detection_template_rows": 2,
+    "dirty_context_rows": 93,
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_REAL_VALUE_ROWS",
+    "guard_activation_allowed_rows": 0,
+    "guard_rows": 4,
+    "next_high_leverage_step": "provide real detection/yield value input rows, then rerun this review and the integrated decision review",
+    "non_release_dirty_context_rows": 89,
+    "production_ingestion_current_rows": 0,
+    "review_version": "sidewall_yield_detection_claim_value_review_v1",
+    "semantic_digest": "dc8a7210ade8b25d0d461a4edc944ad56b88066507734b6242fd8f0cce4c0b0e",
+    "source_lock_rows": 8,
+    "source_missing_rows": 0,
+    "source_winner_jrc_disposition": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES",
+    "wet_pass_probability_current_rows": 0,
+    "yield_current_rows": 0,
+    "yield_input_present": false,
+    "yield_template_rows": 2
+  }
+}

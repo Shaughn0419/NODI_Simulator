@@ -1,0 +1,3 @@
+route_candidate_id,route_geometry_family,yield_estimate,yield_ci_low,yield_ci_high,wet_pass_probability_estimate,wet_pass_probability_ci_low,wet_pass_probability_ci_high,n_wet_trials,yield_model_id,controls_status,uncertainty_model,pre_registered_rule_status,source_geometry_match_level,source_artifact_sha256
+ROUTE-CAND-001,ideal_rectangle,,,,,,,,,controls_pass | controls_missing,,pre_registered | missing,sidewall_specific | validated_transfer,
+ROUTE-CAND-002,trapezoid_tapered_sidewalls,,,,,,,,,controls_pass | controls_missing,,pre_registered | missing,sidewall_specific | validated_transfer,
