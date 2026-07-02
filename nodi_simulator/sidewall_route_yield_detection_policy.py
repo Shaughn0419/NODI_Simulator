@@ -29,6 +29,14 @@ EXACT_PRESSURE_FLOW_READY_STATUS = (
     "exact_w500_d900_pressure_flow_result_accepted_formal_qch_sidecar_ready"
 )
 ROUTE_INPUT_READY_BLOCKER_STATUS = "ready_for_route_input_not_final_claim"
+SELECTED_ANNULUS_PANEL_STATUS = (
+    "expanded_selected_annulus_panel_available_not_probability"
+)
+DETECTOR_RESPONSE_PANEL_STATUS = (
+    "detector_response_panel_candidate_not_sidewall_calibrated"
+)
+BLANK_GUARD_PANEL_STATUS = "nearest_blank_guard_bound_to_panel_not_sidewall_specific"
+WET_OBSERVATION_INTAKE_STATUS = "wet_surface_observation_intake_ready_no_observations"
 
 REQUIRED_LANES: tuple[str, ...] = (
     "flow_split_qch",
@@ -213,6 +221,8 @@ def _lane_blocker(lane: str, row: Mapping[str, Any]) -> str:
         return ROUTE_INPUT_READY_BLOCKER_STATUS
     if lane == "pressure_flow_validation" and status == EXACT_PRESSURE_FLOW_READY_STATUS:
         return ROUTE_INPUT_READY_BLOCKER_STATUS
+    if lane == "selected_annulus_detection_context" and status == SELECTED_ANNULUS_PANEL_STATUS:
+        return ROUTE_INPUT_READY_BLOCKER_STATUS
     if str(row.get("target_claim_current", "")).lower() != "true":
         return "blocked_not_claim_ready"
     return "ready_for_claim_use"
@@ -238,6 +248,8 @@ def _pressure_flow_policy_status(row: Mapping[str, Any]) -> str:
 
 def _selected_annulus_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == SELECTED_ANNULUS_PANEL_STATUS:
+        return "ready_selected_annulus_event_panel_input_not_probability"
     if status == "selected_annulus_context_available_small_n_not_probability":
         return "not_ready_selected_annulus_small_n_not_probability"
     return "not_ready_selected_annulus_context_missing"
@@ -245,6 +257,8 @@ def _selected_annulus_policy_status(row: Mapping[str, Any]) -> str:
 
 def _detector_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == DETECTOR_RESPONSE_PANEL_STATUS:
+        return "not_ready_detector_response_panel_candidate_needs_sidewall_calibration"
     if status == "detector_identity_context_available_not_sidewall_response_validation":
         return "not_ready_detector_identity_context_not_response_validation"
     return "not_ready_detector_response_validation_missing"
@@ -252,6 +266,8 @@ def _detector_policy_status(row: Mapping[str, Any]) -> str:
 
 def _blank_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == BLANK_GUARD_PANEL_STATUS:
+        return "not_ready_blank_guard_panel_bound_needs_sidewall_specific_transfer"
     if status == "nearest_blank_context_available_not_sidewall_specific_validation":
         return "not_ready_nearest_blank_context_not_sidewall_specific_validation"
     return "not_ready_blank_false_positive_validation_missing"
@@ -259,6 +275,8 @@ def _blank_policy_status(row: Mapping[str, Any]) -> str:
 
 def _wet_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == WET_OBSERVATION_INTAKE_STATUS:
+        return "not_ready_wet_observation_intake_ready_no_observations"
     if status == "wet_surface_evidence_contract_defined_no_wet_validation":
         return "not_ready_wet_surface_contract_defined_no_validation"
     return "not_ready_wet_surface_evidence_missing"
@@ -268,6 +286,14 @@ def _primary_next_block(*statuses: str) -> str:
     actionable = [status for status in statuses if not status.startswith("ready_")]
     priority = (
         ("qch_or_pressure_flow_validation", ("qch_missing", "pressure_flow")),
+        (
+            "sidewall_detector_blank_transfer_validation",
+            (
+                "sidewall_calibration",
+                "sidewall_specific_transfer",
+                "blank_guard_panel_bound",
+            ),
+        ),
         ("detector_blank_calibration", ("detector", "blank")),
         ("wet_surface_validation", ("wet_surface",)),
         ("selected_annulus_event_panel_expansion", ("selected_annulus",)),
