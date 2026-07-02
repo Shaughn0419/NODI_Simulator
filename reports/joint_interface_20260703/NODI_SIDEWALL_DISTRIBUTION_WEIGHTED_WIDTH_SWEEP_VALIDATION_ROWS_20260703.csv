@@ -1,0 +1,9 @@
+check_id,status,detail
+width_sweep_covers_candidate_and_two_sided_neighbors,pass,width_sweep_event_rows=1040 expected=1040
+each_route_has_five_widths,pass,"candidate-40, candidate-20, candidate, candidate+20, candidate+40 after source floor"
+execution_status_matches_mode,pass,execute_nodi=True; executed_rows=1040
+weighted_rows_cover_three_modes,pass,weighted_width_event_rows=3120
+summary_rows_cover_route_width_weight_grid,pass,width_summary_rows=90
+dimension_rows_cover_six_routes_times_three_modes,pass,dimension_context_rows=18
+v4_assumption_hash_bound,pass,2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92
+no_forbidden_primary_columns,pass,outputs avoid score/winner/yield/detection/W_eff/q_ch primary columns

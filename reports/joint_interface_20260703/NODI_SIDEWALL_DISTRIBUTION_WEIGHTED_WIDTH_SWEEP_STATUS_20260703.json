@@ -1,0 +1,28 @@
+{
+  "artifact_id": "NODI_SIDEWALL_DISTRIBUTION_WEIGHTED_WIDTH_SWEEP_20260703",
+  "claim_boundary": "distribution_weighted_width_sweep_context_not_route_selection",
+  "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+  "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+  "comsol_v4_assumption_set_version": "4.0.0",
+  "date_stamp": "20260703",
+  "disposition": "NODI_SIDEWALL_DISTRIBUTION_WEIGHTED_WIDTH_SWEEP_EXECUTED_READY",
+  "execute_nodi": true,
+  "git_branch": "main",
+  "git_head": "5f2f7a9c24b5744c060783a43442634be5894096",
+  "n_events": 12,
+  "payload_sha256": "960fa3578109ec86633d4358537c0589900bbd3f84b5256406ce8cb862501f91",
+  "random_seed": 60800,
+  "summary": {
+    "dimension_context_rows": 18,
+    "exact_pxu_probability_grid_available_now": false,
+    "failed_validation_rows": 0,
+    "next_executable_block": "609_dimension_annulus_interference_context_lock",
+    "question_rows": 3,
+    "weighted_width_event_rows": 3120,
+    "width_summary_rows": 90,
+    "width_sweep_event_rows": 1040,
+    "width_sweep_executed_rows": 1040,
+    "width_sweep_failures": 0
+  },
+  "synthesis_version": "sidewall_distribution_weighted_width_sweep_v1"
+}
