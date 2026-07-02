@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path
+
+from nodi_simulator.realism_v2_io import sha256_file
 from nodi_simulator.sidewall_wet_surface_contract import WET_SURFACE_ENDPOINTS
 from nodi_simulator.sidewall_wet_surface_observation_intake import (
     OBSERVATION_ACCEPTED_STATUS,
@@ -73,6 +76,12 @@ def _accepted_observations_for_route(route_id: str) -> list[dict[str, str]]:
     return rows
 
 
+def _source_artifact(tmp_path: Path) -> tuple[str, str]:
+    path = tmp_path / "wet-source.csv"
+    path.write_text("route,endpoint,value\n", encoding="utf-8")
+    return str(path), sha256_file(path)
+
+
 def test_wet_surface_observation_intake_defaults_to_missing_no_claims() -> None:
     intake_rows, matrix_rows = build_wet_surface_observation_intake(
         contract_rows=_contract_rows()
@@ -117,6 +126,52 @@ def test_wet_surface_observation_intake_can_accept_complete_sidewall_bundle() ->
     assert matrix.yield_current is False
     assert matrix.route_score_current is False
     assert matrix.detection_probability_current is False
+
+
+def test_wet_surface_observation_intake_validates_source_artifact_hash(
+    tmp_path: Path,
+) -> None:
+    source_path, source_sha = _source_artifact(tmp_path)
+    observations = _accepted_observations_for_route("ROUTE-CAND-002")
+    for row in observations:
+        row["observation_source_artifact"] = source_path
+        row["observation_source_sha256"] = source_sha
+
+    intake_rows, matrix_rows = build_wet_surface_observation_intake(
+        contract_rows=[
+            row for row in _contract_rows() if row["route_candidate_id"] == "ROUTE-CAND-002"
+        ],
+        observation_rows=observations,
+        artifact_root=tmp_path,
+    )
+
+    assert {row.observation_validation_status for row in intake_rows} == {
+        OBSERVATION_ACCEPTED_STATUS
+    }
+    assert matrix_rows[0].route_wet_observation_matrix_status == ROUTE_MATRIX_ACCEPTED_STATUS
+
+
+def test_wet_surface_observation_intake_rejects_source_hash_mismatch(
+    tmp_path: Path,
+) -> None:
+    source_path, _source_sha = _source_artifact(tmp_path)
+    observations = _accepted_observations_for_route("ROUTE-CAND-002")
+    observations[0]["observation_source_artifact"] = source_path
+    observations[0]["observation_source_sha256"] = "b" * 64
+
+    intake_rows, _matrix_rows = build_wet_surface_observation_intake(
+        contract_rows=[
+            row for row in _contract_rows() if row["route_candidate_id"] == "ROUTE-CAND-002"
+        ],
+        observation_rows=observations,
+        artifact_root=tmp_path,
+    )
+
+    route = next(row for row in intake_rows if row.endpoint_id == observations[0]["endpoint_id"])
+    assert route.observation_rejection_reason == (
+        "invalid_observation_source_artifact_or_sha256"
+    )
+    assert route.accepted_observation_current is False
 
 
 def test_wet_surface_observation_intake_rejects_bad_hash_missing_fields_and_low_replicates() -> None:

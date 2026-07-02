@@ -268,6 +268,7 @@ def intake_payload_rows() -> tuple[
     intake_rows, matrix_rows = build_wet_surface_observation_intake(
         contract_rows=contract_rows,
         observation_rows=observation_rows(),
+        artifact_root=PROJECT_ROOT,
     )
     updates = wet_surface_observation_promotion_update_rows(matrix_rows)
     templates = wet_surface_observation_template_rows(contract_rows)

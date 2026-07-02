@@ -1,7 +1,7 @@
 # NODI Package C Sidewall Route Decision Execution Readiness
 
 - Disposition: `NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_READY_BRANCH_STATUSES_NOT_CLAIMS`.
-- Current head: `fe53844ebcae5954999c3770a1cc92556c828b03` on `main`.
+- Current head: `361f3d6e95ca544f7542daf4a06fb2ee42b9c490` on `main`.
 - Route geometry families: `ideal_rectangle;trapezoid_tapered_sidewalls`.
 - Detector accepted transfer rows: `0`.
 - Wet accepted observation rows: `0`.

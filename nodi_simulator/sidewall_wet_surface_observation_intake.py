@@ -9,7 +9,10 @@ present.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from pathlib import Path
 from typing import Any, Mapping
+
+from nodi_simulator.realism_v2_io import sha256_file
 
 
 SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_VERSION = (
@@ -110,6 +113,7 @@ def build_wet_surface_observation_intake(
     *,
     contract_rows: list[Mapping[str, Any]],
     observation_rows: list[Mapping[str, Any]] | None = None,
+    artifact_root: str | Path | None = None,
 ) -> tuple[
     list[SidewallWetSurfaceObservationIntakeRow],
     list[SidewallWetSurfaceRouteObservationMatrixRow],
@@ -123,7 +127,11 @@ def build_wet_surface_observation_intake(
         for row in observations
     }
     intake_rows = [
-        _build_intake_row(contract, observation_by_key.get(_contract_key(contract), {}))
+        _build_intake_row(
+            contract,
+            observation_by_key.get(_contract_key(contract), {}),
+            artifact_root=artifact_root,
+        )
         for contract in contract_rows
     ]
     matrix_rows = _route_matrix_rows(intake_rows)
@@ -202,6 +210,8 @@ def wet_surface_observation_promotion_update_rows(
 def _build_intake_row(
     contract: Mapping[str, Any],
     observation: Mapping[str, Any],
+    *,
+    artifact_root: str | Path | None,
 ) -> SidewallWetSurfaceObservationIntakeRow:
     required_fields = _split_semicolon(contract.get("required_fields"))
     provided_fields = _split_semicolon(observation.get("provided_fields"))
@@ -210,6 +220,7 @@ def _build_intake_row(
         contract=contract,
         observation=observation,
         missing_fields=missing_fields,
+        artifact_root=artifact_root,
     )
     validation_status = _observation_validation_status(observation, rejection_reason)
     accepted = validation_status == OBSERVATION_ACCEPTED_STATUS
@@ -289,6 +300,7 @@ def _observation_rejection_reason(
     contract: Mapping[str, Any],
     observation: Mapping[str, Any],
     missing_fields: list[str],
+    artifact_root: str | Path | None,
 ) -> str:
     if not observation:
         return "missing_observation_input"
@@ -298,8 +310,11 @@ def _observation_rejection_reason(
         return "artifact_class_mismatch"
     if missing_fields:
         return "missing_required_fields"
-    if not _valid_sha256(observation.get("observation_source_sha256")):
-        return "invalid_observation_source_sha256"
+    if artifact_root is None:
+        if not _valid_sha256(observation.get("observation_source_sha256")):
+            return "invalid_observation_source_sha256"
+    elif not _source_artifact_hash_ok(observation, artifact_root):
+        return "invalid_observation_source_artifact_or_sha256"
     if str(observation.get("controls_status", "")) != "controls_pass":
         return "controls_not_pass"
     if str(observation.get("source_geometry_match_level", "")) not in {
@@ -327,6 +342,27 @@ def _valid_sha256(value: Any) -> bool:
     if len(text) != 64:
         return False
     return all(char in "0123456789abcdefABCDEF" for char in text)
+
+
+def _source_artifact_hash_ok(
+    observation: Mapping[str, Any],
+    artifact_root: str | Path,
+) -> bool:
+    expected_sha = str(observation.get("observation_source_sha256", "")).strip()
+    if not _valid_sha256(expected_sha):
+        return False
+    source_path_text = str(observation.get("observation_source_artifact", "")).strip()
+    if not source_path_text:
+        return False
+    source_path = Path(source_path_text)
+    if not source_path.is_absolute():
+        source_path = Path(artifact_root) / source_path
+    if not source_path.exists():
+        return False
+    try:
+        return sha256_file(source_path).lower() == expected_sha.lower()
+    except OSError:
+        return False
 
 
 def _route_matrix_rows(

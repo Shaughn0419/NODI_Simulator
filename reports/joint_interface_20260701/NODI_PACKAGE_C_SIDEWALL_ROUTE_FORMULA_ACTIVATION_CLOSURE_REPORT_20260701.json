@@ -103,6 +103,18 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
+      "path": "nodi_simulator/sidewall_detector_wet_evidence_activation_runner.py",
+      "release_decision": "ignored_for_route_formula_activation_closure"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_wet_surface_observation_intake.py",
+      "release_decision": "ignored_for_route_formula_activation_closure"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
       "path": "papers/provenance/paper_manifest.csv",
       "release_decision": "ignored_for_route_formula_activation_closure"
     },
@@ -128,18 +140,6 @@
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/547_NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_20260701.md",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/569_NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_20260701.md",
       "release_decision": "ignored_for_route_formula_activation_closure"
     },
     {
@@ -445,49 +445,7 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_INTAKE_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_INPUT_CONTRACT_ROWS_20260701.csv",
       "release_decision": "ignored_for_route_formula_activation_closure"
     },
     {
@@ -548,12 +506,6 @@
       "classification": "non_release_dirty_context",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_INTAKE_ROWS_20260701.csv",
       "release_decision": "ignored_for_route_formula_activation_closure"
     },
     {
@@ -690,20 +642,26 @@
     },
     {
       "classification": "non_release_dirty_context",
-      "git_status": "??",
-      "path": "nodi_simulator/sidewall_real_evidence_input_workspace.py",
+      "git_status": " M",
+      "path": "tests/test_sidewall_wet_surface_observation_intake.py",
+      "release_decision": "ignored_for_route_formula_activation_closure"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_detector_wet_evidence_activation_runner.py",
+      "release_decision": "ignored_for_route_formula_activation_closure"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_intake.py",
       "release_decision": "ignored_for_route_formula_activation_closure"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": "??",
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": "??",
-      "path": "reports/577_NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_20260701.md",
       "release_decision": "ignored_for_route_formula_activation_closure"
     },
     {
@@ -721,25 +679,7 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": "??",
-      "path": "tests/test_nodi_package_c_sidewall_real_evidence_input_workspace.py",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": "??",
-      "path": "tests/test_sidewall_real_evidence_input_workspace.py",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": "??",
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
-      "release_decision": "ignored_for_route_formula_activation_closure"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": "??",
-      "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
       "release_decision": "ignored_for_route_formula_activation_closure"
     }
   ],
@@ -768,7 +708,7 @@
       "claim_boundary": "route_formula_activation_closure_not_route_score_not_winner_not_yield_not_detection",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json",
-      "sha256": "cdf97f02bad1b04ac92cbe8a6f09ad16cd410ef19864b17c3979e05ef70455cc",
+      "sha256": "b2a45430f91500b4bd6a9abf674aa7b84a65a43b0df5e72f8c3f6fadadfb77b7",
       "source_id": "detector_wet_activation_status"
     },
     {
@@ -826,11 +766,11 @@
     "claim_boundary": "route_formula_activation_closure_not_route_score_not_winner_not_yield_not_detection",
     "closure_rows": 2,
     "closure_status": "route_formula_activation_closure_current_qch_ready_detector_wet_pending",
-    "current_head": "a5ccd25a395ef09f839810b78af5d4b97699a987",
+    "current_head": "361f3d6e95ca544f7542daf4a06fb2ee42b9c490",
     "detection_probability_current": false,
-    "dirty_context_rows": 115,
+    "dirty_context_rows": 105,
     "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_READY_CURRENTLY_BLOCKED",
-    "non_release_dirty_context_rows": 115,
+    "non_release_dirty_context_rows": 105,
     "production_ingestion_current": false,
     "route_formula_ready_for_claim_review_rows": 0,
     "route_score_current": false,

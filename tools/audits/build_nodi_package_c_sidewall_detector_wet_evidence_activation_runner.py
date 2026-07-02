@@ -206,6 +206,7 @@ def build_payload() -> dict[str, Any]:
         wet_input_present=WET_INPUT_ROWS.exists(),
         detector_input_path=display_path(DETECTOR_INPUT_ROWS),
         wet_input_path=display_path(WET_INPUT_ROWS),
+        wet_artifact_root=PROJECT_ROOT,
     )
     activation_rows = [row.to_dict() for row in rows]
     input_contract_rows = [row.to_dict() for row in contracts]

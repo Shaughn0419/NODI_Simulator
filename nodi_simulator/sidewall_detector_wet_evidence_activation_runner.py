@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from pathlib import Path
 from typing import Any, Mapping
 
 from nodi_simulator.sidewall_detector_blank_transfer_intake import (
@@ -85,6 +86,7 @@ def build_detector_wet_evidence_activation_runner(
     wet_input_present: bool = False,
     detector_input_path: str = "",
     wet_input_path: str = "",
+    wet_artifact_root: str | Path | None = None,
 ) -> tuple[
     list[SidewallDetectorWetEvidenceActivationRouteRow],
     list[SidewallDetectorWetEvidenceActivationInputContractRow],
@@ -96,6 +98,7 @@ def build_detector_wet_evidence_activation_runner(
     _wet_intake, wet_matrix = build_wet_surface_observation_intake(
         contract_rows=wet_contract_rows,
         observation_rows=wet_observation_input_rows or [],
+        artifact_root=wet_artifact_root,
     )
     detector_by_route = {
         row.route_candidate_id: row for row in detector_matrix
