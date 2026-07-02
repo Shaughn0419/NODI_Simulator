@@ -23,6 +23,9 @@ ASSEMBLY_NOT_CLAIM_READY_STATUS = (
 ASSEMBLY_INPUT_READY_STATUS = "ready_input_not_final_claim"
 ASSEMBLY_CONTEXT_STATUS = "candidate_context_not_claim_ready"
 ASSEMBLY_MISSING_STATUS = "missing_required_observation_or_calibration"
+DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS = (
+    "detector_blank_transfer_intake_ready_no_transfer_evidence"
+)
 
 ROUTE_READY_INPUT_LANES: tuple[str, ...] = (
     "flow_split_qch",
@@ -259,6 +262,11 @@ def _lane_classification(
         "nearest_blank_guard_bound_to_panel_not_sidewall_specific"
     ):
         return ASSEMBLY_CONTEXT_STATUS
+    if lane in {
+        "detector_response_bridge",
+        "blank_false_positive_trace",
+    } and status == DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS:
+        return ASSEMBLY_MISSING_STATUS
     if lane == "integrated_route_ledger" and status == (
         "route_yield_detection_policy_defined_not_ready_for_claims"
     ):
@@ -296,7 +304,7 @@ def _branch_rows(
     branch_specs = [
         (
             "sidewall_detector_blank_transfer_validation",
-            "implementation_ready_from_panel_candidate_requires_sidewall_specific_transfer_evidence",
+            _detector_blank_branch_status(lanes),
             "detector_response_bridge;blank_false_positive_trace",
             _minimum_input_for(
                 lanes,
@@ -375,3 +383,18 @@ def _minimum_input_for(
             if text and text not in items:
                 items.append(text)
     return " | ".join(items)
+
+
+def _detector_blank_branch_status(lanes: dict[str, Mapping[str, Any]]) -> str:
+    detector_status = str(
+        lanes.get("detector_response_bridge", {}).get("current_status", "")
+    )
+    blank_status = str(
+        lanes.get("blank_false_positive_trace", {}).get("current_status", "")
+    )
+    if {
+        detector_status,
+        blank_status,
+    } == {DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS}:
+        return "transfer_intake_ready_waiting_for_sidewall_transfer_rows"
+    return "implementation_ready_from_panel_candidate_requires_sidewall_specific_transfer_evidence"

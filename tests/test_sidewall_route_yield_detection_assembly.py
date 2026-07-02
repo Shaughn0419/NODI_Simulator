@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from nodi_simulator.sidewall_route_yield_detection_assembly import (
     ASSEMBLY_NOT_CLAIM_READY_STATUS,
+    DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS,
     SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_CLAIM_BOUNDARY,
     build_route_yield_detection_assembly,
 )
@@ -52,6 +53,17 @@ def _promotion_rows() -> list[dict[str, str]]:
         for route_id in ("ROUTE-CAND-001", "ROUTE-CAND-002")
         for lane, status in statuses.items()
     ]
+
+
+def _promotion_rows_after_detector_blank_transfer_refresh() -> list[dict[str, str]]:
+    rows = _promotion_rows()
+    for row in rows:
+        if row["evidence_lane"] in {
+            "detector_response_bridge",
+            "blank_false_positive_trace",
+        }:
+            row["current_status"] = DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS
+    return rows
 
 
 def _policy_rows() -> list[dict[str, str]]:
@@ -133,3 +145,30 @@ def test_route_yield_detection_assembly_branch_rows_are_not_claims() -> None:
         row for row in branch_rows if row.branch_name == "detection_probability_calibration"
     ]
     assert {row.implementation_can_start for row in detection_rows} == {False}
+
+
+def test_route_yield_detection_assembly_recognizes_transfer_intake_without_evidence() -> None:
+    assembly_rows, branch_rows = build_route_yield_detection_assembly(
+        _promotion_rows_after_detector_blank_transfer_refresh(),
+        _policy_rows(),
+        _blocker_rows(),
+    )
+
+    assert len(assembly_rows) == 2
+    for row in assembly_rows:
+        assert row.ready_input_lane_count == 3
+        assert row.candidate_context_lane_count == 3
+        assert row.missing_or_blocked_lane_count == 3
+        assert row.detector_response_bridge_status == DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS
+        assert row.blank_false_positive_trace_status == DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS
+        assert row.next_executable_branch == "sidewall_detector_blank_transfer_validation"
+        assert row.detection_probability_allowed is False
+
+    transfer_rows = [
+        row
+        for row in branch_rows
+        if row.branch_name == "sidewall_detector_blank_transfer_validation"
+    ]
+    assert {row.branch_status for row in transfer_rows} == {
+        "transfer_intake_ready_waiting_for_sidewall_transfer_rows"
+    }
