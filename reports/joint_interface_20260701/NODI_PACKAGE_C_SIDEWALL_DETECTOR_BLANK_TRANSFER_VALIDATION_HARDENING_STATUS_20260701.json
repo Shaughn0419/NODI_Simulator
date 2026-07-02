@@ -1,0 +1,26 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_VALIDATION_HARDENING_READY_NOT_PROBABILITY",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_VALIDATION_HARDENING_READY_NOT_PROBABILITY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_VALIDATION_HARDENING_20260701",
+    "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
+    "current_head": "275862754fecd2165b9ec5c39007711ead7e022e",
+    "branch": "main",
+    "source_assembly_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_DETECTOR_BLANK_TRANSFER_REFRESH_READY_NOT_CLAIM_READY",
+    "source_transfer_intake_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE",
+    "accepted_fixture_rows": 2,
+    "negative_control_rows": 4,
+    "current_intake_audit_rows": 2,
+    "current_no_transfer_rows": 2,
+    "fixture_detection_probability_current_rows": 0,
+    "fixture_route_score_current_rows": 0,
+    "source_lock_rows": 9,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 93,
+    "non_release_dirty_context_rows": 85,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "detector/blank transfer validator hardening;accepted/rejected transfer fixture checks;future sidewall transfer evidence gate",
+    "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion",
+    "semantic_digest": "48123c6f95999819c57c932cbea8f8de3caf2f0353683cefed32ea3b5a28518f"
+  }
+}

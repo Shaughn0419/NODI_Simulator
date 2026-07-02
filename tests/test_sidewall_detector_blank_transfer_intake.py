@@ -64,26 +64,7 @@ def test_detector_blank_transfer_intake_defaults_to_no_transfer_evidence() -> No
 
 
 def test_detector_blank_transfer_intake_accepts_complete_sidewall_transfer() -> None:
-    transfer_rows = [
-        {
-            "route_candidate_id": "ROUTE-CAND-001",
-            "transfer_artifact_id": "transfer-001",
-            "blank_trace_artifact_id": "blank-001",
-            "blank_trace_sha256": "a" * 64,
-            "detector_response_artifact_id": "detector-001",
-            "detector_response_sha256": "b" * 64,
-            "blank_trace_geometry_match_level": "sidewall_specific",
-            "detector_response_model_id": "detector-response-v1",
-            "false_positive_rate_estimate": "0.0001",
-            "false_positive_rate_ci_low": "0.0",
-            "false_positive_rate_ci_high": "0.0004",
-            "n_blank_traces": "3",
-            "n_detector_calibration_runs": "3",
-            "controls_status": "controls_pass",
-            "uncertainty_model": "wilson_interval",
-            "pre_registered_rule_status": "pre_registered",
-        }
-    ]
+    transfer_rows = [_complete_transfer_row()]
     intake_rows, matrix_rows = build_detector_blank_transfer_intake(
         panel_matrix_rows=_panel_rows(),
         transfer_input_rows=transfer_rows,
@@ -94,6 +75,7 @@ def test_detector_blank_transfer_intake_accepts_complete_sidewall_transfer() -> 
     ]
     assert len(accepted) == 1
     assert accepted[0].accepted_transfer_current is True
+    assert accepted[0].transfer_rejection_reason == "accepted_transfer_candidate"
     assert accepted[0].detection_probability_current is False
     accepted_matrix = [
         row for row in matrix_rows if row.route_transfer_matrix_status == ROUTE_MATRIX_ACCEPTED_STATUS
@@ -121,3 +103,87 @@ def test_detector_blank_transfer_template_and_promotion_updates_are_not_claims()
         assert update["target_claim_current"] is False
         assert "detection_probability" in update["blocked_promotion"]
         assert "route_score" in update["blocked_promotion"]
+
+
+def test_detector_blank_transfer_intake_rejects_bad_hash_and_probability_ci() -> None:
+    bad_hash = _complete_transfer_row(blank_trace_sha256="not-a-sha")
+    bad_ci = _complete_transfer_row(
+        route_candidate_id="ROUTE-CAND-002",
+        false_positive_rate_estimate="0.001",
+        false_positive_rate_ci_low="0.002",
+        false_positive_rate_ci_high="0.003",
+    )
+
+    intake_rows, matrix_rows = build_detector_blank_transfer_intake(
+        panel_matrix_rows=_panel_rows(),
+        transfer_input_rows=[bad_hash, bad_ci],
+    )
+
+    reasons = {
+        row.route_candidate_id: row.transfer_rejection_reason for row in intake_rows
+    }
+    assert reasons == {
+        "ROUTE-CAND-001": "invalid_blank_trace_sha256",
+        "ROUTE-CAND-002": "invalid_false_positive_ci_order",
+    }
+    assert {row.transfer_validation_status for row in intake_rows} == {
+        "detector_blank_transfer_rejected_missing_required_evidence"
+    }
+    assert {row.route_transfer_matrix_status for row in matrix_rows} == {
+        ROUTE_MATRIX_NO_TRANSFER_STATUS
+    }
+
+
+def test_detector_blank_transfer_intake_rejects_low_sample_and_bad_controls() -> None:
+    low_n = _complete_transfer_row(n_blank_traces="2")
+    bad_controls = _complete_transfer_row(
+        route_candidate_id="ROUTE-CAND-002",
+        controls_status="controls_missing",
+    )
+
+    intake_rows, _matrix_rows = build_detector_blank_transfer_intake(
+        panel_matrix_rows=_panel_rows(),
+        transfer_input_rows=[low_n, bad_controls],
+    )
+
+    reasons = {
+        row.route_candidate_id: row.transfer_rejection_reason for row in intake_rows
+    }
+    assert reasons == {
+        "ROUTE-CAND-001": "insufficient_blank_trace_count",
+        "ROUTE-CAND-002": "controls_not_pass",
+    }
+    assert all(row.accepted_transfer_current is False for row in intake_rows)
+
+
+def _complete_transfer_row(
+    *,
+    route_candidate_id: str = "ROUTE-CAND-001",
+    blank_trace_sha256: str = "a" * 64,
+    detector_response_sha256: str = "b" * 64,
+    false_positive_rate_estimate: str = "0.0001",
+    false_positive_rate_ci_low: str = "0.0",
+    false_positive_rate_ci_high: str = "0.0004",
+    n_blank_traces: str = "3",
+    n_detector_calibration_runs: str = "3",
+    controls_status: str = "controls_pass",
+    pre_registered_rule_status: str = "pre_registered",
+) -> dict[str, str]:
+    return {
+        "route_candidate_id": route_candidate_id,
+        "transfer_artifact_id": f"transfer-{route_candidate_id}",
+        "blank_trace_artifact_id": f"blank-{route_candidate_id}",
+        "blank_trace_sha256": blank_trace_sha256,
+        "detector_response_artifact_id": f"detector-{route_candidate_id}",
+        "detector_response_sha256": detector_response_sha256,
+        "blank_trace_geometry_match_level": "sidewall_specific",
+        "detector_response_model_id": "detector-response-v1",
+        "false_positive_rate_estimate": false_positive_rate_estimate,
+        "false_positive_rate_ci_low": false_positive_rate_ci_low,
+        "false_positive_rate_ci_high": false_positive_rate_ci_high,
+        "n_blank_traces": n_blank_traces,
+        "n_detector_calibration_runs": n_detector_calibration_runs,
+        "controls_status": controls_status,
+        "uncertainty_model": "wilson_interval",
+        "pre_registered_rule_status": pre_registered_rule_status,
+    }

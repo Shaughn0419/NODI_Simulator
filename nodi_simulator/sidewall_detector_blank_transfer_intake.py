@@ -8,6 +8,7 @@ state remains no-transfer-evidence/no-claim when no input rows are provided.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+import math
 from typing import Any, Mapping
 
 
@@ -76,6 +77,7 @@ class SidewallDetectorBlankTransferIntakeRow:
     uncertainty_model: str
     pre_registered_rule_status: str
     missing_required_fields: str
+    transfer_rejection_reason: str
     transfer_validation_status: str
     accepted_transfer_current: bool
     sidewall_specific_blank_trace_current: bool
@@ -217,7 +219,8 @@ def _build_intake_row(
     missing = [
         field for field in REQUIRED_TRANSFER_FIELDS if not str(transfer.get(field, "")).strip()
     ]
-    validation_status = _transfer_validation_status(transfer, missing)
+    rejection_reason = _transfer_rejection_reason(transfer, missing)
+    validation_status = _transfer_validation_status(transfer, rejection_reason)
     accepted = validation_status == TRANSFER_ACCEPTED_STATUS
     return SidewallDetectorBlankTransferIntakeRow(
         intake_row_id=f"DB-TRANSFER-{panel.get('route_candidate_id', '')}",
@@ -253,6 +256,7 @@ def _build_intake_row(
         uncertainty_model=str(transfer.get("uncertainty_model", "")),
         pre_registered_rule_status=str(transfer.get("pre_registered_rule_status", "")),
         missing_required_fields=";".join(missing),
+        transfer_rejection_reason=rejection_reason,
         transfer_validation_status=validation_status,
         accepted_transfer_current=accepted,
         sidewall_specific_blank_trace_current=accepted,
@@ -274,24 +278,57 @@ def _build_intake_row(
 
 def _transfer_validation_status(
     transfer: Mapping[str, Any],
-    missing_fields: list[str],
+    rejection_reason: str,
 ) -> str:
     if not transfer:
         return TRANSFER_MISSING_STATUS
-    geometry_match = str(transfer.get("blank_trace_geometry_match_level", ""))
-    if missing_fields:
-        return TRANSFER_REJECTED_STATUS
-    if geometry_match not in {"sidewall_specific", "validated_transfer"}:
-        return TRANSFER_REJECTED_STATUS
-    if _int_value(transfer.get("n_blank_traces")) < 3:
-        return TRANSFER_REJECTED_STATUS
-    if _int_value(transfer.get("n_detector_calibration_runs")) < 3:
-        return TRANSFER_REJECTED_STATUS
-    if str(transfer.get("controls_status", "")) != "controls_pass":
-        return TRANSFER_REJECTED_STATUS
-    if str(transfer.get("pre_registered_rule_status", "")) != "pre_registered":
+    if rejection_reason != "accepted_transfer_candidate":
         return TRANSFER_REJECTED_STATUS
     return TRANSFER_ACCEPTED_STATUS
+
+
+def _transfer_rejection_reason(
+    transfer: Mapping[str, Any],
+    missing_fields: list[str],
+) -> str:
+    if not transfer:
+        return "missing_transfer_input"
+    if missing_fields:
+        return "missing_required_fields"
+    geometry_match = str(transfer.get("blank_trace_geometry_match_level", ""))
+    if geometry_match not in {"sidewall_specific", "validated_transfer"}:
+        return "invalid_blank_trace_geometry_match_level"
+    if not _valid_sha256(transfer.get("blank_trace_sha256")):
+        return "invalid_blank_trace_sha256"
+    if not _valid_sha256(transfer.get("detector_response_sha256")):
+        return "invalid_detector_response_sha256"
+    fpr = _float_value(transfer.get("false_positive_rate_estimate"))
+    fpr_low = _float_value(transfer.get("false_positive_rate_ci_low"))
+    fpr_high = _float_value(transfer.get("false_positive_rate_ci_high"))
+    if not (_bounded_probability(fpr) and _bounded_probability(fpr_low) and _bounded_probability(fpr_high)):
+        return "invalid_false_positive_probability_values"
+    if not (fpr_low <= fpr <= fpr_high):
+        return "invalid_false_positive_ci_order"
+    if _int_value(transfer.get("n_blank_traces")) < 3:
+        return "insufficient_blank_trace_count"
+    if _int_value(transfer.get("n_detector_calibration_runs")) < 3:
+        return "insufficient_detector_calibration_runs"
+    if str(transfer.get("controls_status", "")) != "controls_pass":
+        return "controls_not_pass"
+    if str(transfer.get("pre_registered_rule_status", "")) != "pre_registered":
+        return "pre_registered_rule_missing"
+    return "accepted_transfer_candidate"
+
+
+def _valid_sha256(value: Any) -> bool:
+    text = str(value or "").strip()
+    if len(text) != 64:
+        return False
+    return all(char in "0123456789abcdefABCDEF" for char in text)
+
+
+def _bounded_probability(value: float) -> bool:
+    return math.isfinite(value) and 0.0 <= value <= 1.0
 
 
 def _route_matrix_rows(
@@ -340,3 +377,10 @@ def _int_value(value: Any) -> int:
         return int(float(value))
     except (TypeError, ValueError):
         return 0
+
+
+def _float_value(value: Any) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return math.nan
