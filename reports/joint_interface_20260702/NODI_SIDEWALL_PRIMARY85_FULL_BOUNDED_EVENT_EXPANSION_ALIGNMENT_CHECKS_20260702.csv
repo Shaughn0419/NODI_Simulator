@@ -1,0 +1,5 @@
+check_name,check_pass,observed,expected,hard_fail_if_false
+full_route_diameter_angle_coverage,True,156,156,True
+paired_delta_coverage,True,78,78,True
+no_forbidden_primary_columns,True,pass,pass,True
+source_artifacts_present,True,0,0,True

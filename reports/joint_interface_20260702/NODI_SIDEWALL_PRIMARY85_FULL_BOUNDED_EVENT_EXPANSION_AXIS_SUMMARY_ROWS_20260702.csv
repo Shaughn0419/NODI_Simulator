@@ -1,0 +1,4 @@
+axis,axis_status,event_rows,executed_rows,delta_rows,key_observation,max_abs_delta
+route_diameter_coverage,executed,156,156,78,all PRS-approved routes and diameters are represented as sparse paired event context,
+selected_annulus_event_context,delta_available,156,156,78,"selected annulus fraction shifts are context only, not probability",1.0
+interference_response_event_context,delta_available,156,156,78,peak-height and local-SNR deltas extend the interference-response context,17.130860357849997
