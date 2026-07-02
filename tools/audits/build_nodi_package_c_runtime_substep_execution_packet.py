@@ -84,6 +84,43 @@ BUILD_EDIT_PATHS = {
     "tests/test_nodi_package_c_runtime_substep_execution_packet.py",
     "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
 }
+UPSTREAM_RUNTIME_POLICY_PREFIX = (
+    "reports/joint_interface_20260701/"
+    "NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_"
+)
+UPSTREAM_RUNTIME_POLICY_PUBLIC_REPORT = (
+    "reports/514_NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_20260701.md"
+)
+UPSTREAM_POST_PROOF_PREFIX = (
+    "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_"
+)
+UPSTREAM_POST_PROOF_PUBLIC_REPORT = (
+    "reports/518_NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_20260701.md"
+)
+UPSTREAM_MAINLINE_PREFIX = (
+    "reports/joint_interface_20260701/NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_"
+)
+UPSTREAM_MAINLINE_PUBLIC_REPORT = (
+    "reports/519_NODI_PACKAGE_C_AUTHORIZED_MAINLINE_ADVANCEMENT_20260701.md"
+)
+
+
+def upstream_runtime_policy_output(path: str) -> bool:
+    return path.startswith(UPSTREAM_RUNTIME_POLICY_PREFIX) or (
+        path == UPSTREAM_RUNTIME_POLICY_PUBLIC_REPORT
+    )
+
+
+def upstream_post_proof_output(path: str) -> bool:
+    return path.startswith(UPSTREAM_POST_PROOF_PREFIX) or (
+        path == UPSTREAM_POST_PROOF_PUBLIC_REPORT
+    )
+
+
+def upstream_mainline_output(path: str) -> bool:
+    return path.startswith(UPSTREAM_MAINLINE_PREFIX) or (
+        path == UPSTREAM_MAINLINE_PUBLIC_REPORT
+    )
 
 STALE_POST_RC2_PATHS = {
     "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
@@ -172,6 +209,15 @@ def dirty_context_rows() -> list[dict[str, str]]:
         elif path in BUILD_EDIT_PATHS:
             classification = "runtime_execution_build_edit"
             release_decision = "included_in_commit_scope_before_publish"
+        elif upstream_runtime_policy_output(path):
+            classification = "source_locked_upstream_runtime_policy_dirty_context"
+            release_decision = "included_in_chain_rebuild_not_runtime_execution_blocker"
+        elif upstream_post_proof_output(path):
+            classification = "source_locked_upstream_post_proof_dirty_context"
+            release_decision = "included_in_chain_rebuild_not_runtime_execution_blocker"
+        elif upstream_mainline_output(path):
+            classification = "source_locked_upstream_mainline_dirty_context"
+            release_decision = "included_in_chain_rebuild_not_runtime_execution_blocker"
         elif release_scoped_path(path):
             classification = "release_scoped_dirty_blocker"
             release_decision = "blocks_runtime_execution_packet"

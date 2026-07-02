@@ -109,6 +109,19 @@ BUILD_EDIT_PATHS = {
     "tools/audits/build_nodi_package_c_post_proof_delta_release.py",
     "tests/test_nodi_package_c_post_proof_delta_release.py",
 }
+UPSTREAM_RUNTIME_POLICY_PREFIX = (
+    "reports/joint_interface_20260701/"
+    "NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_"
+)
+UPSTREAM_RUNTIME_POLICY_PUBLIC_REPORT = (
+    "reports/514_NODI_COMSOL_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_20260701.md"
+)
+
+
+def upstream_runtime_policy_output(path: str) -> bool:
+    return path.startswith(UPSTREAM_RUNTIME_POLICY_PREFIX) or (
+        path == UPSTREAM_RUNTIME_POLICY_PUBLIC_REPORT
+    )
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -184,6 +197,8 @@ def dirty_lines_for_release() -> list[str]:
         # still validates all positive output flags before the files are committed.
         if path in BUILD_EDIT_PATHS:
             continue
+        if upstream_runtime_policy_output(path):
+            continue
         if not release_scoped_path(path):
             continue
         dirty.append(line)
@@ -219,6 +234,9 @@ def dirty_context_rows() -> list[dict[str, str]]:
         elif path in BUILD_EDIT_PATHS:
             classification = "post_proof_build_edit"
             release_decision = "included_in_commit_scope_before_publish"
+        elif upstream_runtime_policy_output(path):
+            classification = "source_locked_upstream_runtime_policy_dirty_context"
+            release_decision = "included_in_chain_rebuild_not_post_proof_blocker"
         elif release_scoped_path(path):
             classification = "release_scoped_dirty_blocker"
             release_decision = "blocks_post_proof_release"
