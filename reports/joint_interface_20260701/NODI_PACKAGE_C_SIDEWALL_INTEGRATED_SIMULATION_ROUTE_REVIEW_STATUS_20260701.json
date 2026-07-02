@@ -1,0 +1,32 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_SIMULATION_ROUTE_REVIEW_READY",
+  "summary": {
+    "allowed_use": "integrated simulation-only route/yield/detection review after dual-track lock",
+    "artifact_id": "PACKAGE_C_SIDEWALL_INTEGRATED_SIMULATION_ROUTE_REVIEW_20260701",
+    "blocked_use": "fabrication release;production ingestion;experimental claim;COMSOL rerun claim;bare final route_score/winner/JRC/yield/detection_probability",
+    "branch": "main",
+    "claim_boundary": "simulation_current_route_yield_detection_not_fabrication_or_production",
+    "current_head": "dff81a0fb50f62ebc2039d67711306bd91b2b779",
+    "dirty_context_rows": 85,
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_SIMULATION_ROUTE_REVIEW_READY",
+    "final_current_total_rows": 0,
+    "next_high_leverage_step": "use simulation_current rows for assumption-bound route narrative and optional production/fabrication-separated promotion package",
+    "non_release_dirty_context_rows": 83,
+    "production_ingestion_current_rows": 0,
+    "review_rows": 2,
+    "semantic_digest": "2db867fbcf0e1157e5d4f18cbba131dd22a1d4aa8411357cd68320ec8f9313e9",
+    "simulation_JRC_current_rows": 2,
+    "simulation_detection_probability_current_rows": 2,
+    "simulation_ready_rows": 2,
+    "simulation_route_score_current_rows": 2,
+    "simulation_wet_pass_probability_current_rows": 2,
+    "simulation_winner_current_rows": 1,
+    "simulation_yield_current_rows": 2,
+    "source_dual_track_disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_CANDIDATE_DUAL_TRACK_LOCK_READY",
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "source_readiness_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_READY_BRANCH_STATUSES_NOT_CLAIMS",
+    "top_route_candidate_id": "ROUTE-CAND-001",
+    "top_route_geometry_family": "ideal_rectangle"
+  }
+}
