@@ -1,0 +1,26 @@
+{
+  "artifact_id": "NODI_SIDEWALL_COMSOL_CROSS_SECTION_DISTRIBUTION_BRIDGE_20260703",
+  "claim_boundary": "distribution_bridge_and_recompute_queue_not_final_probability_result",
+  "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+  "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+  "comsol_v4_assumption_set_version": "4.0.0",
+  "date_stamp": "20260703",
+  "disposition": "NODI_SIDEWALL_COMSOL_CROSS_SECTION_DISTRIBUTION_BRIDGE_READY",
+  "git_branch": "main",
+  "git_head": "0edfcfe122c63bcd19e88b65afb5bcc8f563bbd5",
+  "payload_sha256": "deb1a56659d308b542301c48c473b6c973cd393d4a7ff4186b6b2e3d342cd229",
+  "summary": {
+    "comsol_source_inventory_rows": 4,
+    "current_604_comsol_cross_section_probability_weighted": false,
+    "distribution_model_rows": 4,
+    "exact_comsol_cross_section_probability_grid_available_now": false,
+    "failed_validation_rows": 0,
+    "followup_event_rows_603": 208,
+    "next_executable_block": "606_distribution_weighted_nodi_response_surface_and_full_recompute",
+    "question_impact_rows": 3,
+    "recompute_queue_rows": 24,
+    "route_distribution_binding_rows": 6,
+    "route_rows_604": 6
+  },
+  "synthesis_version": "sidewall_comsol_cross_section_distribution_bridge_v1"
+}

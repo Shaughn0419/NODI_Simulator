@@ -1,0 +1,9 @@
+check_id,status,detail
+604_route_binding_covers_six_routes,pass,route_distribution_binding_rows=6
+current_604_marked_not_comsol_probability_weighted,pass,604 result lock remains NODI event diagnostic until 606 weighting
+comsol_sources_not_silently_promoted_to_exact_pxu_grid,pass,"current COMSOL CSVs are descriptor/bin/shell/field context, not exact P(x,u)"
+distribution_models_include_baseline_trapezoid_and_comsol_context,pass,four explicit distribution bases prevent rectangle/trapezoid/COMSOL mixing
+recompute_queue_has_four_phases_per_route,pass,recompute_queue_rows=24
+question_impacts_cover_three_user_questions,pass,"dimension, annulus, and interference-response all carry distribution gap"
+v4_assumption_hash_bound,pass,2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92
+no_forbidden_primary_columns,pass,bridge outputs avoid score/winner/yield/detection/W_eff/q_ch primary columns
