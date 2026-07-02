@@ -1,0 +1,30 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_RELEASE_ENVELOPE_READY",
+  "summary": {
+    "actual_release_current_rows": 0,
+    "allowed_use": "assumption-bound simulation release envelope after integrated route review",
+    "artifact_id": "PACKAGE_C_SIDEWALL_SIMULATION_RELEASE_ENVELOPE_20260701",
+    "blocked_use": "actual fabrication release;actual production ingestion;experimental release;unqualified route winner outside simulation context",
+    "branch": "main",
+    "claim_boundary": "simulation_release_candidate_not_actual_fabrication_or_production",
+    "current_head": "aa9052079e1c384eb0e901f5e0c981dacfd692a4",
+    "dirty_context_rows": 85,
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_RELEASE_ENVELOPE_READY",
+    "envelope_rows": 2,
+    "next_high_leverage_step": "use the simulation release candidate for downstream narrative, figures, and optional separate actual-production planning",
+    "non_release_dirty_context_rows": 83,
+    "semantic_digest": "cb0a72cecb7ab69a927a76e9045358ee4dcf1781e1aadc819d6bb5aeee827ea1",
+    "simulation_fabrication_readiness_rows": 1,
+    "simulation_production_ingestion_candidate_rows": 1,
+    "simulation_release_candidate_rows": 1,
+    "source_integrated_review_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_SIMULATION_ROUTE_REVIEW_READY",
+    "source_lock_rows": 4,
+    "source_missing_rows": 0,
+    "top_detection_probability_value": 0.953052,
+    "top_route_candidate_id": "ROUTE-CAND-001",
+    "top_route_geometry_family": "ideal_rectangle",
+    "top_route_score_value": 0.843505463527,
+    "top_wet_pass_probability_value": 0.941315,
+    "top_yield_value": 0.817721
+  }
+}
