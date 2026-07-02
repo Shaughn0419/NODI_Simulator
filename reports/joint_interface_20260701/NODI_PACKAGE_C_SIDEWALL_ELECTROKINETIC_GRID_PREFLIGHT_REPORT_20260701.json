@@ -1,0 +1,881 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_ELECTROKINETIC_GRID_PREFLIGHT_READY_PROFILE_GRID_REQUIRED",
+    "artifact_id": "PACKAGE_C_SIDEWALL_ELECTROKINETIC_GRID_PREFLIGHT_20260701",
+    "preflight_status": "electrokinetic_grid_preflight_ready_profile_aware_grid_required",
+    "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection",
+    "current_head": "3ad29b91cab544829b54c83989c3e452cbb3e1eb",
+    "branch": "main",
+    "source_solver_branch_packet_disposition": "NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_READY_BRANCHES_GUARDED",
+    "preflight_rows": 4,
+    "claim_guard_rows": 6,
+    "rectangle_baseline_rows": 1,
+    "trapezoid_preflight_rows": 3,
+    "legacy_rectangle_path_allowed_rows": 1,
+    "profile_aware_grid_current_rows": 0,
+    "electrokinetic_solver_output_current_rows": 0,
+    "electrokinetic_weight_current_rows": 0,
+    "route_score_current_rows": 0,
+    "detection_probability_current_rows": 0,
+    "claim_promotion_allowed_guard_rows": 0,
+    "required_metadata_rows": 4,
+    "required_mutation_test_rows": 4,
+    "source_lock_rows": 8,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 93,
+    "source_locked_upstream_dirty_context_rows": 0,
+    "non_release_dirty_context_rows": 85,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "electrokinetic profile-aware grid preflight;rectangle baseline preservation;sidewall electrokinetic solver requirements and hard-fail checks",
+    "blocked_use": "electrokinetic solver output;electrokinetic weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion;fabrication release",
+    "semantic_digest": "7b3613887e00cff19a171a725f850a6fb25602e6db911f521a946c95e51d5e22"
+  },
+  "preflight_rows": [
+    {
+      "preflight_row_id": "EK-GRID-PREFLIGHT-rectangle_baseline_boltzmann_grid_diagnostic",
+      "preflight_version": "sidewall_electrokinetic_grid_preflight_v1",
+      "case_id": "rectangle_baseline_boltzmann_grid_diagnostic",
+      "source_solver_branch_row_id": "SOLVER-BRANCH-electrokinetic_solver",
+      "user_authorization_status": "authorized",
+      "channel_cross_section_model": "ideal_rectangle",
+      "rectangle_baseline_preserved": true,
+      "sidewall_deg_comsol": 90.0,
+      "width_nm": 500.0,
+      "depth_nm": 900.0,
+      "electrokinetic_grid_geometry_model": "rectangular_grid_surrogate_v1",
+      "electrokinetic_wall_distance_model": "rectangular_nearest_wall_distance_grid_v1",
+      "electrostatic_potential_model_required": "linearized_poisson_boltzmann_or_poisson_boltzmann_solver_required",
+      "zeta_wall_model_required": true,
+      "zeta_particle_model_required": true,
+      "ionic_strength_required": true,
+      "debye_length_required": true,
+      "center_accessible_support_required": true,
+      "blocked_bins_excluded_required": true,
+      "rectangle_limit_test_required": true,
+      "theta_mutation_test_required": true,
+      "zeta_sign_mutation_test_required": true,
+      "ionic_strength_mutation_test_required": true,
+      "current_status": "rectangle_legacy_diagnostic_allowed_not_trapezoid_claim",
+      "current_claim_level": "rectangle_native_or_baseline_diagnostic_not_sidewall_solver",
+      "legacy_rectangle_path_allowed": true,
+      "profile_aware_grid_current": false,
+      "electrokinetic_solver_output_current": false,
+      "electrokinetic_weight_current": false,
+      "route_score_current": false,
+      "detection_probability_current": false,
+      "next_required_evidence": "rectangle-limit comparison when trapezoid grid is implemented",
+      "hard_fail_if": "rectangle_baseline_cache_reused_for_trapezoid_request",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection"
+    },
+    {
+      "preflight_row_id": "EK-GRID-PREFLIGHT-trapezoid_theta85_profile_aware_grid_required",
+      "preflight_version": "sidewall_electrokinetic_grid_preflight_v1",
+      "case_id": "trapezoid_theta85_profile_aware_grid_required",
+      "source_solver_branch_row_id": "SOLVER-BRANCH-electrokinetic_solver",
+      "user_authorization_status": "authorized",
+      "channel_cross_section_model": "trapezoid_tapered_sidewalls",
+      "rectangle_baseline_preserved": true,
+      "sidewall_deg_comsol": 85.0,
+      "width_nm": 500.0,
+      "depth_nm": 900.0,
+      "electrokinetic_grid_geometry_model": "trapezoid_cut_cell_or_fem_grid_v1_required",
+      "electrokinetic_wall_distance_model": "trapezoid_signed_wall_distance_v1_required",
+      "electrostatic_potential_model_required": "linearized_poisson_boltzmann_or_poisson_boltzmann_solver_required",
+      "zeta_wall_model_required": true,
+      "zeta_particle_model_required": true,
+      "ionic_strength_required": true,
+      "debye_length_required": true,
+      "center_accessible_support_required": true,
+      "blocked_bins_excluded_required": true,
+      "rectangle_limit_test_required": true,
+      "theta_mutation_test_required": true,
+      "zeta_sign_mutation_test_required": true,
+      "ionic_strength_mutation_test_required": true,
+      "current_status": "blocked_until_profile_aware_grid_implemented",
+      "current_claim_level": "preflight_only_no_trapezoid_electrokinetic_solver_output",
+      "legacy_rectangle_path_allowed": false,
+      "profile_aware_grid_current": false,
+      "electrokinetic_solver_output_current": false,
+      "electrokinetic_weight_current": false,
+      "route_score_current": false,
+      "detection_probability_current": false,
+      "next_required_evidence": "cut-cell/FEM mesh, center-accessible support, blocked-bin exclusion, rectangle-limit test, and theta mutation test",
+      "hard_fail_if": "trapezoid_uses_rectangular_wall_distance_grid",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection"
+    },
+    {
+      "preflight_row_id": "EK-GRID-PREFLIGHT-trapezoid_metadata_required_zeta_ionic_strength",
+      "preflight_version": "sidewall_electrokinetic_grid_preflight_v1",
+      "case_id": "trapezoid_metadata_required_zeta_ionic_strength",
+      "source_solver_branch_row_id": "SOLVER-BRANCH-electrokinetic_solver",
+      "user_authorization_status": "authorized",
+      "channel_cross_section_model": "trapezoid_tapered_sidewalls",
+      "rectangle_baseline_preserved": true,
+      "sidewall_deg_comsol": 85.0,
+      "width_nm": 500.0,
+      "depth_nm": 900.0,
+      "electrokinetic_grid_geometry_model": "trapezoid_cut_cell_or_fem_grid_v1_required",
+      "electrokinetic_wall_distance_model": "trapezoid_signed_wall_distance_v1_required",
+      "electrostatic_potential_model_required": "linearized_poisson_boltzmann_or_poisson_boltzmann_solver_required",
+      "zeta_wall_model_required": true,
+      "zeta_particle_model_required": true,
+      "ionic_strength_required": true,
+      "debye_length_required": true,
+      "center_accessible_support_required": true,
+      "blocked_bins_excluded_required": true,
+      "rectangle_limit_test_required": true,
+      "theta_mutation_test_required": true,
+      "zeta_sign_mutation_test_required": true,
+      "ionic_strength_mutation_test_required": true,
+      "current_status": "blocked_until_zeta_ionic_strength_and_debye_metadata_bound",
+      "current_claim_level": "metadata_preflight_only_no_electrokinetic_weight",
+      "legacy_rectangle_path_allowed": false,
+      "profile_aware_grid_current": false,
+      "electrokinetic_solver_output_current": false,
+      "electrokinetic_weight_current": false,
+      "route_score_current": false,
+      "detection_probability_current": false,
+      "next_required_evidence": "zeta_wall_model, zeta_particle_model, ionic_strength_M, Debye length, and mutation responses",
+      "hard_fail_if": "electrokinetic_weight_true_without_zeta_or_ionic_strength",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection"
+    },
+    {
+      "preflight_row_id": "EK-GRID-PREFLIGHT-trapezoid_blocked_bins_and_closed_geometry_guard",
+      "preflight_version": "sidewall_electrokinetic_grid_preflight_v1",
+      "case_id": "trapezoid_blocked_bins_and_closed_geometry_guard",
+      "source_solver_branch_row_id": "SOLVER-BRANCH-electrokinetic_solver",
+      "user_authorization_status": "authorized",
+      "channel_cross_section_model": "trapezoid_tapered_sidewalls",
+      "rectangle_baseline_preserved": true,
+      "sidewall_deg_comsol": 70.0,
+      "width_nm": 500.0,
+      "depth_nm": 900.0,
+      "electrokinetic_grid_geometry_model": "trapezoid_cut_cell_or_fem_grid_v1_required",
+      "electrokinetic_wall_distance_model": "trapezoid_signed_wall_distance_v1_required",
+      "electrostatic_potential_model_required": "linearized_poisson_boltzmann_or_poisson_boltzmann_solver_required",
+      "zeta_wall_model_required": true,
+      "zeta_particle_model_required": true,
+      "ionic_strength_required": true,
+      "debye_length_required": true,
+      "center_accessible_support_required": true,
+      "blocked_bins_excluded_required": true,
+      "rectangle_limit_test_required": true,
+      "theta_mutation_test_required": true,
+      "zeta_sign_mutation_test_required": true,
+      "ionic_strength_mutation_test_required": true,
+      "current_status": "blocked_until_closed_geometry_and_blocked_bins_excluded",
+      "current_claim_level": "blocked_geometry_guard_no_solver_output",
+      "legacy_rectangle_path_allowed": false,
+      "profile_aware_grid_current": false,
+      "electrokinetic_solver_output_current": false,
+      "electrokinetic_weight_current": false,
+      "route_score_current": false,
+      "detection_probability_current": false,
+      "next_required_evidence": "closed/near-closed geometry guard, blocked-bin exclusion, and no neighbor-fill policy",
+      "hard_fail_if": "blocked_bin_or_closed_geometry_emits_numeric_electrokinetic_weight",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection"
+    }
+  ],
+  "claim_guard_rows": [
+    {
+      "guard_row_id": "EK-GRID-GUARD-trapezoid_electrokinetic_solver_output",
+      "preflight_version": "sidewall_electrokinetic_grid_preflight_v1",
+      "promotion_target": "trapezoid_electrokinetic_solver_output",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "profile-aware grid, wall-distance model, PB/electrokinetic solver, and tests",
+      "hard_fail_if_missing_evidence": "electrokinetic_solver_output_true_without_profile_aware_grid",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection"
+    },
+    {
+      "guard_row_id": "EK-GRID-GUARD-trapezoid_boltzmann_wall_weighting",
+      "preflight_version": "sidewall_electrokinetic_grid_preflight_v1",
+      "promotion_target": "trapezoid_boltzmann_wall_weighting",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "trapezoid signed wall distances, blocked-bin exclusion, and metadata",
+      "hard_fail_if_missing_evidence": "boltzmann_weighting_true_from_rectangular_grid_under_trapezoid",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection"
+    },
+    {
+      "guard_row_id": "EK-GRID-GUARD-zeta_sign_response",
+      "preflight_version": "sidewall_electrokinetic_grid_preflight_v1",
+      "promotion_target": "zeta_sign_response",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "declared zeta wall/particle model and sign-mutation evidence",
+      "hard_fail_if_missing_evidence": "zeta_response_true_without_zeta_sign_mutation_test",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection"
+    },
+    {
+      "guard_row_id": "EK-GRID-GUARD-ionic_strength_debye_response",
+      "preflight_version": "sidewall_electrokinetic_grid_preflight_v1",
+      "promotion_target": "ionic_strength_debye_response",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "ionic strength, Debye length, and ionic-strength mutation evidence",
+      "hard_fail_if_missing_evidence": "debye_response_true_without_ionic_strength_metadata",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection"
+    },
+    {
+      "guard_row_id": "EK-GRID-GUARD-route_score_or_detection_probability",
+      "preflight_version": "sidewall_electrokinetic_grid_preflight_v1",
+      "promotion_target": "route_score_or_detection_probability",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "electrokinetic packet plus optical/detection and route policy packets",
+      "hard_fail_if_missing_evidence": "route_or_detection_true_from_electrokinetic_preflight_only",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection"
+    },
+    {
+      "guard_row_id": "EK-GRID-GUARD-production_or_fabrication_release",
+      "preflight_version": "sidewall_electrokinetic_grid_preflight_v1",
+      "promotion_target": "production_or_fabrication_release",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "separate production/fabrication release ledger",
+      "hard_fail_if_missing_evidence": "production_release_true_from_electrokinetic_preflight",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "solver_branch_packet_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "ae46350f5ac3d95614e1de67c45a70a77bb1a44f3cf67302f0f604ea98aeb07b",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection",
+      "allowed_use": "electrokinetic profile-aware grid preflight;rectangle baseline preservation;sidewall electrokinetic solver requirements and hard-fail checks",
+      "blocked_use": "electrokinetic solver output;electrokinetic weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion;fabrication release"
+    },
+    {
+      "source_id": "solver_branch_packet_branch_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_BRANCH_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "4420fc32cbbeaf60bf1ee65c178770e4539b2aacfb1bbe682fd7e157a2c9aa93",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection",
+      "allowed_use": "electrokinetic profile-aware grid preflight;rectangle baseline preservation;sidewall electrokinetic solver requirements and hard-fail checks",
+      "blocked_use": "electrokinetic solver output;electrokinetic weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion;fabrication release"
+    },
+    {
+      "source_id": "electrokinetic_transport_source",
+      "path": "nodi_simulator/electrokinetic_transport.py",
+      "exists": "true",
+      "sha256": "dae86c1310bfe0bab740bd24781b287282fcd2098b7155f4c3b9eff7997ec13a",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection",
+      "allowed_use": "electrokinetic profile-aware grid preflight;rectangle baseline preservation;sidewall electrokinetic solver requirements and hard-fail checks",
+      "blocked_use": "electrokinetic solver output;electrokinetic weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion;fabrication release"
+    },
+    {
+      "source_id": "electrokinetic_contract_tests",
+      "path": "tests/test_cross_section_geometry.py",
+      "exists": "true",
+      "sha256": "aff922ff5e3f4a22d7b34315ac79b3bbd65d36d506c5eff703a6c08387569bb7",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection",
+      "allowed_use": "electrokinetic profile-aware grid preflight;rectangle baseline preservation;sidewall electrokinetic solver requirements and hard-fail checks",
+      "blocked_use": "electrokinetic solver output;electrokinetic weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion;fabrication release"
+    },
+    {
+      "source_id": "electrokinetic_grid_preflight_source",
+      "path": "nodi_simulator/sidewall_electrokinetic_grid_preflight.py",
+      "exists": "true",
+      "sha256": "bc0c20f0a28525304fe06641258813b0b126205b2d87c32130908e9dbc2a32b5",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection",
+      "allowed_use": "electrokinetic profile-aware grid preflight;rectangle baseline preservation;sidewall electrokinetic solver requirements and hard-fail checks",
+      "blocked_use": "electrokinetic solver output;electrokinetic weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion;fabrication release"
+    },
+    {
+      "source_id": "electrokinetic_grid_preflight_tests",
+      "path": "tests/test_sidewall_electrokinetic_grid_preflight.py",
+      "exists": "true",
+      "sha256": "531215cac0862b2f63698b915d775c6f5949decf0061d3ee79dea517217aeb32",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection",
+      "allowed_use": "electrokinetic profile-aware grid preflight;rectangle baseline preservation;sidewall electrokinetic solver requirements and hard-fail checks",
+      "blocked_use": "electrokinetic solver output;electrokinetic weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion;fabrication release"
+    },
+    {
+      "source_id": "electrokinetic_grid_preflight_builder",
+      "path": "tools/audits/build_nodi_package_c_sidewall_electrokinetic_grid_preflight.py",
+      "exists": "true",
+      "sha256": "c889e487bb5e344bc2931f7e0e203631aa6f696e5da47e533f0b57fc8d7ba40b",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection",
+      "allowed_use": "electrokinetic profile-aware grid preflight;rectangle baseline preservation;sidewall electrokinetic solver requirements and hard-fail checks",
+      "blocked_use": "electrokinetic solver output;electrokinetic weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion;fabrication release"
+    },
+    {
+      "source_id": "electrokinetic_grid_preflight_builder_tests",
+      "path": "tests/test_nodi_package_c_sidewall_electrokinetic_grid_preflight.py",
+      "exists": "true",
+      "sha256": "34f42f81d450e9391d8b3af8fca8e9096b4886e4124cf4e23439d47a56feafbd",
+      "claim_boundary": "electrokinetic_grid_preflight_preserve_rectangle_not_solver_not_detection",
+      "allowed_use": "electrokinetic profile-aware grid preflight;rectangle baseline preservation;sidewall electrokinetic solver requirements and hard-fail checks",
+      "blocked_use": "electrokinetic solver output;electrokinetic weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion;fabrication release"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": "M ",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_DIRTY_CLASSIFIER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_electrokinetic_grid_preflight_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_electrokinetic_grid_preflight.py",
+      "git_status": "??",
+      "classification": "electrokinetic_grid_preflight_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_electrokinetic_grid_preflight.py",
+      "git_status": "??",
+      "classification": "electrokinetic_grid_preflight_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_sidewall_electrokinetic_grid_preflight.py",
+      "git_status": "??",
+      "classification": "electrokinetic_grid_preflight_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_electrokinetic_grid_preflight.py",
+      "git_status": "??",
+      "classification": "electrokinetic_grid_preflight_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ]
+}
