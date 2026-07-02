@@ -3,7 +3,7 @@
     "disposition": "NODI_PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_READY_NO_PROOF_REGISTRATION",
     "artifact_id": "PACKAGE_C_EXTERNAL_RESEARCH_PROMPT_20260701",
     "claim_boundary": "external_research_prompt_not_package_c_proof_registered_not_runtime",
-    "build_head": "55e093489b48c48e1ed61b598e8167bf1dc61348",
+    "build_head": "e692fff1121312bc47d4e94109b05321605e31a3",
     "context_rows": 9,
     "research_question_rows": 4,
     "blocker_rows": 4,

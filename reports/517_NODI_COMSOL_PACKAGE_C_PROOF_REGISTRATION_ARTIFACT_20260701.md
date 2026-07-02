@@ -1,7 +1,7 @@
 # Package C Proof Registration Artifact
 
 - Disposition: `NODI_PACKAGE_C_PROOF_REGISTRATION_ARTIFACT_REGISTERED_NO_RUNTIME`.
-- Reviewed evidence commit: `55e093489b48c48e1ed61b598e8167bf1dc61348`.
+- Reviewed evidence commit: `e692fff1121312bc47d4e94109b05321605e31a3`.
 - Registered scope: finite-step reflection surrogate evidence only.
 - Package C proof artifact registered: `true`.
 - Package C validation status pass current: `true`, narrowly scoped to reflection-surrogate evidence.
