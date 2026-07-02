@@ -62,6 +62,7 @@ class SidewallRouteEvidenceFormulaRow:
     detector_branch_ready: bool
     wet_branch_ready: bool
     route_formula_ready_for_claim_review: bool
+    route_formula_ready_for_simulation_candidate_review: bool
     route_formula_activation_status: str
     route_score_current: bool
     winner_current: bool
@@ -251,6 +252,12 @@ def build_route_evidence_input_packet(
             route_formula_ready_for_claim_review=_bool(
                 row.get("route_formula_ready_for_claim_review")
             ),
+            route_formula_ready_for_simulation_candidate_review=_bool(
+                row.get(
+                    "route_formula_ready_for_simulation_candidate_review",
+                    row.get("route_formula_ready_for_claim_review"),
+                )
+            ),
             route_formula_activation_status=str(
                 row.get("route_formula_activation_status", "")
             ),
@@ -262,7 +269,12 @@ def build_route_evidence_input_packet(
             ),
             next_required_action=(
                 "route formula policy/review packet can run after q_ch, detector, and wet branches are all ready"
-                if _bool(row.get("route_formula_ready_for_claim_review"))
+                if _bool(
+                    row.get(
+                        "route_formula_ready_for_simulation_candidate_review",
+                        row.get("route_formula_ready_for_claim_review"),
+                    )
+                )
                 else _formula_next_required_action(
                     detector_ready=_bool(row.get("detector_branch_ready")),
                     wet_ready=_bool(row.get("wet_branch_ready")),

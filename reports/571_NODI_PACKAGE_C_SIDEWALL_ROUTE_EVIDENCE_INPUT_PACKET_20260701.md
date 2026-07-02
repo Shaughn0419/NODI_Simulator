@@ -8,10 +8,10 @@ Detector template rows: `2`; target input present: `True`.
 Wet template rows: `14`; target input present: `True`.
 Detection-value template rows: `2`; target input present: `True`.
 Yield/wet-value template rows: `2`; target input present: `True`.
-Workspace header-only target rows: `3`; refreshed now: `0`.
+Workspace header-only target rows: `0`; refreshed now: `0`.
 Detector accepted transfer rows: `2`.
 Missing current-acceptance branches: ``.
-Route formula ready rows: `2`.
+Route formula simulation-candidate ready rows: `2`.
 Detection probability current rows: `0`; yield current rows: `0`; wet-pass current rows: `0`.
 
 This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value simulation evidence, then rerunning the eleven-step chain through route decision readiness.

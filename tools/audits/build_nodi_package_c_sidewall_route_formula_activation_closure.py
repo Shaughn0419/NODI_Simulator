@@ -32,7 +32,9 @@ REPORT_DIR = PROJECT_ROOT / "reports"
 PREFIX = "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE"
 ARTIFACT_ID = "PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_20260701"
 DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_READY_CURRENTLY_BLOCKED"
-READY_DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_READY_FOR_CLAIM_REVIEW"
+READY_DISPOSITION = (
+    "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_READY_FOR_SIMULATION_CANDIDATE_REVIEW"
+)
 BLOCKED_DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_FAIL_CLOSED"
 SELF_MANIFEST_SHA256 = "SELF_MANIFEST_NOT_SELF_HASHED_BY_DESIGN"
 CLAIM_BOUNDARY = SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_CLAIM_BOUNDARY
@@ -159,7 +161,10 @@ def build_payload() -> dict[str, Any]:
     activation_status = load_status(ACTIVATION_STATUS)
     source_lock = source_lock_rows()
     dirty_context = dirty_context_rows()
-    ready_rows = sum(row["route_formula_ready_for_claim_review"] for row in closure_rows)
+    ready_rows = sum(
+        row["route_formula_ready_for_simulation_candidate_review"]
+        for row in closure_rows
+    )
     disposition = READY_DISPOSITION if ready_rows == len(closure_rows) and closure_rows else DISPOSITION
     if (
         sum(row["exists"] != "true" for row in source_lock)
@@ -182,6 +187,7 @@ def build_payload() -> dict[str, Any]:
         "source_activation_disposition": str(activation_status.get("disposition", "")),
         "closure_rows": len(closure_rows),
         "route_formula_ready_for_claim_review_rows": ready_rows,
+        "route_formula_ready_for_simulation_candidate_review_rows": ready_rows,
         "route_score_current": False,
         "winner_current": False,
         "JRC_current": False,
@@ -254,9 +260,9 @@ def render_markdown(payload: dict[str, Any]) -> str:
         f"Artifact ID: `{summary['artifact_id']}`",
         f"Claim boundary: `{summary['claim_boundary']}`",
         "",
-        f"Route formula ready rows: `{summary['route_formula_ready_for_claim_review_rows']}`",
+        f"Route formula simulation-candidate ready rows: `{summary['route_formula_ready_for_simulation_candidate_review_rows']}`",
         "",
-        "This closure joins the canonical q_ch/detector/wet blocker board with the detector/wet activation runner. It does not emit route_score, winner, yield, detection_probability, or production claims.",
+        "This closure joins the canonical q_ch/detector/wet blocker board with the detector/wet activation runner. It prepares simulation-candidate route formula inputs; it does not emit final route_score, winner, yield, detection_probability, or production claims.",
         "",
     ])
 

@@ -5,7 +5,10 @@ from pathlib import Path
 import subprocess
 import sys
 
-from tools.audits import build_nodi_package_c_sidewall_real_evidence_input_workspace as builder
+from tools.audits import (
+    build_nodi_package_c_sidewall_real_evidence_input_workspace as legacy_builder,
+    build_nodi_package_c_sidewall_simulation_assumption_input_workspace as builder,
+)
 
 
 def _write_csv(path: Path, rows: list[dict[str, str]]) -> None:
@@ -77,9 +80,7 @@ def test_simulation_evidence_input_workspace_builds_header_only_targets(
     assert summary["source_manifest_created_now_rows"] == 2
     assert summary["target_header_only_rows"] == 4
     assert summary["source_manifest_header_only_rows"] == 2
-    assert summary["target_real_data_rows_total"] == 0
     assert summary["target_simulation_data_rows_total"] == 0
-    assert summary["source_manifest_real_data_rows_total"] == 0
     assert summary["source_manifest_simulation_data_rows_total"] == 0
     assert builder.validate_payload(payload) == []
 
@@ -97,7 +98,7 @@ def test_simulation_evidence_input_workspace_writes_outputs(
     assert f"{builder.PREFIX}_WORKSPACE_ROWS_20260701.csv" in names
     assert f"{builder.PREFIX}_SOURCE_MANIFEST_WORKSPACE_ROWS_20260701.csv" in names
     assert f"{builder.PREFIX}_MANIFEST_20260701.csv" in names
-    assert f"577_{builder.PREFIX}_20260701.md" in names
+    assert f"582_{builder.PREFIX}_20260701.md" in names
     assert (tmp_path / "detector_input.csv").exists()
     assert (tmp_path / "yield_input.csv").exists()
     assert (tmp_path / "wet_source_manifest.csv").exists()
@@ -137,11 +138,11 @@ def test_simulation_evidence_input_workspace_source_manifest_headers(
     assert "source_artifact_sha256" not in claim_columns
 
 
-def test_real_evidence_input_workspace_cli_requires_confirmation() -> None:
+def test_simulation_assumption_input_workspace_cli_requires_confirmation() -> None:
     result = subprocess.run(
         [
             sys.executable,
-            "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
+            "tools/audits/build_nodi_package_c_sidewall_simulation_assumption_input_workspace.py",
         ],
         cwd=builder.PROJECT_ROOT,
         capture_output=True,
@@ -150,6 +151,24 @@ def test_real_evidence_input_workspace_cli_requires_confirmation() -> None:
     )
 
     assert result.returncode != 0
-    assert "--confirm-sidewall-real-evidence-input-workspace is required" in (
+    assert "--confirm-sidewall-simulation-assumption-input-workspace is required" in (
         result.stderr + result.stdout
     )
+
+
+def test_legacy_real_evidence_cli_flag_is_forwarded(monkeypatch) -> None:
+    seen: dict[str, list[str] | None] = {}
+
+    def fake_canonical_main(argv: list[str] | None = None) -> int:
+        seen["argv"] = argv
+        return 17
+
+    monkeypatch.setattr(legacy_builder, "_canonical_main", fake_canonical_main)
+
+    assert (
+        legacy_builder.main(["--confirm-sidewall-real-evidence-input-workspace"])
+        == 17
+    )
+    assert seen["argv"] == [
+        "--confirm-sidewall-simulation-assumption-input-workspace"
+    ]

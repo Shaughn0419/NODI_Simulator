@@ -13,7 +13,7 @@ SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_CLAIM_BOUNDARY = (
     "route_formula_activation_closure_not_route_score_not_winner_not_yield_not_detection"
 )
 SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_STATUS = (
-    "route_formula_activation_closure_current_qch_ready_detector_wet_pending"
+    "route_formula_activation_closure_simulation_candidate_input_joiner"
 )
 
 
@@ -31,6 +31,7 @@ class SidewallRouteFormulaActivationClosureRow:
     detector_branch_ready: bool
     wet_branch_ready: bool
     route_formula_ready_for_claim_review: bool
+    route_formula_ready_for_simulation_candidate_review: bool
     route_formula_activation_status: str
     route_score_current: bool
     winner_current: bool
@@ -90,8 +91,9 @@ def build_route_formula_activation_closure(
                 detector_branch_ready=detector_ready,
                 wet_branch_ready=wet_ready,
                 route_formula_ready_for_claim_review=formula_ready,
+                route_formula_ready_for_simulation_candidate_review=formula_ready,
                 route_formula_activation_status=(
-                    "route_formula_inputs_ready_for_claim_review_not_auto_scored"
+                    "route_formula_inputs_ready_for_simulation_candidate_review_not_auto_scored"
                     if formula_ready
                     else "blocked_detector_wet_activation_required"
                 ),

@@ -105,7 +105,7 @@ def test_route_evidence_input_packet_can_mark_formula_review_ready_without_claim
                 "wet_branch_ready": "True",
                 "route_formula_ready_for_claim_review": "True",
                 "route_formula_activation_status": (
-                    "route_formula_inputs_ready_for_claim_review_not_auto_scored"
+                    "route_formula_inputs_ready_for_simulation_candidate_review_not_auto_scored"
                 ),
                 "route_score_current": "False",
                 "winner_current": "False",

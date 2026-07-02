@@ -4,11 +4,11 @@ import csv
 from pathlib import Path
 
 from nodi_simulator.realism_v2_io import read_csv_headers, read_csv_rows
-from nodi_simulator.sidewall_real_evidence_input_workspace import (
+from nodi_simulator.sidewall_simulation_assumption_input_workspace import (
     TARGET_HEADER_ONLY_STATUS,
-    TARGET_REAL_ROWS_PRESENT_STATUS,
-    SidewallRealEvidenceInputWorkspaceSpec,
-    build_real_evidence_input_workspace,
+    TARGET_SIMULATION_ROWS_PRESENT_STATUS,
+    SidewallSimulationAssumptionInputWorkspaceSpec,
+    build_simulation_assumption_input_workspace,
 )
 
 
@@ -31,9 +31,9 @@ def test_workspace_creates_header_only_target_without_evidence_rows(tmp_path: Pa
         ],
     )
 
-    rows = build_real_evidence_input_workspace(
+    rows = build_simulation_assumption_input_workspace(
         [
-            SidewallRealEvidenceInputWorkspaceSpec(
+            SidewallSimulationAssumptionInputWorkspaceSpec(
                 input_branch="detection_probability_value",
                 template_artifact_path=str(template),
                 target_input_path=str(target),
@@ -58,9 +58,9 @@ def test_workspace_does_not_rewrite_existing_simulation_rows(tmp_path: Path) -> 
     _write_csv(template, [{"route_candidate_id": "ROUTE-CAND-001", "value": ""}])
     _write_csv(target, [{"route_candidate_id": "ROUTE-CAND-001", "value": "0.5"}])
 
-    rows = build_real_evidence_input_workspace(
+    rows = build_simulation_assumption_input_workspace(
         [
-            SidewallRealEvidenceInputWorkspaceSpec(
+            SidewallSimulationAssumptionInputWorkspaceSpec(
                 input_branch="yield_wet_value",
                 template_artifact_path=str(template),
                 target_input_path=str(target),
@@ -73,5 +73,40 @@ def test_workspace_does_not_rewrite_existing_simulation_rows(tmp_path: Path) -> 
     assert rows[0].target_preexisting is True
     assert rows[0].target_created_now is False
     assert rows[0].target_data_rows == 1
-    assert rows[0].target_validation_status == TARGET_REAL_ROWS_PRESENT_STATUS
+    assert rows[0].target_validation_status == TARGET_SIMULATION_ROWS_PRESENT_STATUS
     assert read_csv_rows(target)[0]["value"] == "0.5"
+
+
+def test_workspace_allows_existing_simulation_rows_with_extended_schema(
+    tmp_path: Path,
+) -> None:
+    template = tmp_path / "template.csv"
+    target = tmp_path / "target.csv"
+    _write_csv(template, [{"route_candidate_id": "ROUTE-CAND-001", "value": ""}])
+    _write_csv(
+        target,
+        [
+            {
+                "route_candidate_id": "ROUTE-CAND-001",
+                "value": "0.5",
+                "source_kind": "simulation_manifest",
+            }
+        ],
+    )
+
+    rows = build_simulation_assumption_input_workspace(
+        [
+            SidewallSimulationAssumptionInputWorkspaceSpec(
+                input_branch="yield_wet_value",
+                template_artifact_path=str(template),
+                target_input_path=str(target),
+                accepted_status_required="yield_wet_value_bundle_accepted",
+            )
+        ],
+        create_missing_targets=True,
+    )
+
+    assert rows[0].target_header_matches_template is False
+    assert rows[0].target_data_rows == 1
+    assert rows[0].target_validation_status == TARGET_SIMULATION_ROWS_PRESENT_STATUS
+    assert read_csv_rows(target)[0]["source_kind"] == "simulation_manifest"

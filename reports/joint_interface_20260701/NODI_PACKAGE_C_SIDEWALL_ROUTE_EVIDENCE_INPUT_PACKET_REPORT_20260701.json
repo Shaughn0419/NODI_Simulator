@@ -183,9 +183,21 @@
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
+      "classification": "route_evidence_input_packet_build_edit",
+      "git_status": " M",
+      "path": "nodi_simulator/sidewall_route_evidence_input_packet.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "nodi_simulator/sidewall_route_formula_policy_review.py",
+      "path": "nodi_simulator/sidewall_route_formula_activation_closure.py",
+      "release_decision": "ignored_for_route_evidence_input_packet"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": "RM",
+      "path": "nodi_simulator/sidewall_real_evidence_input_workspace.py -> nodi_simulator/sidewall_simulation_assumption_input_workspace.py",
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
@@ -209,24 +221,6 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "reports/543_NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_20260701.md",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/561_NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_20260701.md",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/569_NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_20260701.md",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
       "path": "reports/570_NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_20260701.md",
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
@@ -235,42 +229,6 @@
       "git_status": " M",
       "path": "reports/571_NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_20260701.md",
       "release_decision": "included_or_rewritten_by_input_packet_builder"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/572_NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_20260701.md",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/574_NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_20260701.md",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/575_NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_20260701.md",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/576_NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_20260701.md",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/578_NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_20260701.md",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/579_NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_20260701.md",
-      "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
       "classification": "non_release_dirty_context",
@@ -573,105 +531,9 @@
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
-      "classification": "route_evidence_target_input_rows",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv",
-      "release_decision": "source_locked_header_only_or_simulation_input"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_ACTIVATION_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_INPUT_CONTRACT_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_READINESS_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
       "classification": "route_evidence_input_packet_output",
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "included_or_rewritten_by_input_packet_builder"
-    },
-    {
-      "classification": "route_evidence_input_packet_output",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_FORMULA_ROWS_20260701.csv",
-      "release_decision": "included_or_rewritten_by_input_packet_builder"
-    },
-    {
-      "classification": "route_evidence_input_packet_output",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_INPUT_ROWS_20260701.csv",
       "release_decision": "included_or_rewritten_by_input_packet_builder"
     },
     {
@@ -733,312 +595,6 @@
       "git_status": " M",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_STATUS_20260701.json",
       "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_GUARD_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_POLICY_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_DRY_RUN_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "route_evidence_target_input_rows",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INPUT_ROWS_20260701.csv",
-      "release_decision": "source_locked_header_only_or_simulation_input"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_INTAKE_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_PROMOTION_UPDATE_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_ROUTE_OBSERVATION_MATRIX_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_AUDIT_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_SOURCE_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_GUARD_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REVIEW_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_AUDIT_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_VALUE_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_DIRTY_CONTEXT_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_GUARD_ROWS_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_REPORT_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_SOURCE_LOCK_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "route_evidence_target_input_rows",
-      "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv",
-      "release_decision": "source_locked_header_only_or_simulation_input"
     },
     {
       "classification": "non_release_dirty_context",
@@ -1149,39 +705,63 @@
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
-      "classification": "non_release_dirty_context",
+      "classification": "route_evidence_input_packet_build_edit",
       "git_status": " M",
-      "path": "tests/test_nodi_package_c_sidewall_route_decision_execution_readiness.py",
-      "release_decision": "ignored_for_route_evidence_input_packet"
+      "path": "tests/test_nodi_package_c_sidewall_route_evidence_input_packet.py",
+      "release_decision": "included_in_commit_scope_before_publish"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "tests/test_nodi_package_c_sidewall_wet_surface_observation_intake.py",
+      "path": "tests/test_nodi_package_c_sidewall_route_formula_activation_closure.py",
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
       "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tests/test_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "git_status": "RM",
+      "path": "tests/test_nodi_package_c_sidewall_real_evidence_input_workspace.py -> tests/test_nodi_package_c_sidewall_simulation_assumption_input_workspace.py",
       "release_decision": "ignored_for_route_evidence_input_packet"
+    },
+    {
+      "classification": "route_evidence_input_packet_build_edit",
+      "git_status": " M",
+      "path": "tests/test_sidewall_route_evidence_input_packet.py",
+      "release_decision": "included_in_commit_scope_before_publish"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "tests/test_sidewall_route_decision_execution_readiness.py",
+      "path": "tests/test_sidewall_route_formula_activation_closure.py",
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
       "classification": "non_release_dirty_context",
-      "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_intake.py",
+      "git_status": "RM",
+      "path": "tests/test_sidewall_real_evidence_input_workspace.py -> tests/test_sidewall_simulation_assumption_input_workspace.py",
       "release_decision": "ignored_for_route_evidence_input_packet"
+    },
+    {
+      "classification": "route_evidence_input_packet_build_edit",
+      "git_status": " M",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
+      "release_decision": "included_in_commit_scope_before_publish"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
-      "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_formula_activation_closure.py",
+      "release_decision": "ignored_for_route_evidence_input_packet"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": "RM",
+      "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py -> tools/audits/build_nodi_package_c_sidewall_simulation_assumption_input_workspace.py",
+      "release_decision": "ignored_for_route_evidence_input_packet"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": "??",
+      "path": "nodi_simulator/sidewall_real_evidence_input_workspace.py",
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
@@ -1193,7 +773,7 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": "??",
-      "path": "reports/581_NODI_PACKAGE_C_SIDEWALL_SIMULATION_SOURCE_MATERIALIZER_20260701.md",
+      "path": "reports/582_NODI_PACKAGE_C_SIDEWALL_SIMULATION_ASSUMPTION_INPUT_WORKSPACE_20260701.md",
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
@@ -1211,19 +791,13 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": "??",
-      "path": "tests/test_nodi_package_c_sidewall_simulation_source_materializer.py",
-      "release_decision": "ignored_for_route_evidence_input_packet"
-    },
-    {
-      "classification": "non_release_dirty_context",
-      "git_status": "??",
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "release_decision": "ignored_for_route_evidence_input_packet"
     },
     {
       "classification": "non_release_dirty_context",
       "git_status": "??",
-      "path": "tools/audits/build_nodi_package_c_sidewall_simulation_source_materializer.py",
+      "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
       "release_decision": "ignored_for_route_evidence_input_packet"
     }
   ],
@@ -1237,8 +811,9 @@
       "next_required_action": "route formula policy/review packet can run after q_ch, detector, and wet branches are all ready",
       "qch_status": "formal_qch_input_ready_not_route_score",
       "route_candidate_id": "ROUTE-CAND-001",
-      "route_formula_activation_status": "route_formula_inputs_ready_for_claim_review_not_auto_scored",
+      "route_formula_activation_status": "route_formula_inputs_ready_for_simulation_candidate_review_not_auto_scored",
       "route_formula_ready_for_claim_review": true,
+      "route_formula_ready_for_simulation_candidate_review": true,
       "route_geometry_family": "ideal_rectangle",
       "route_score_current": false,
       "wet_branch_ready": true,
@@ -1254,8 +829,9 @@
       "next_required_action": "route formula policy/review packet can run after q_ch, detector, and wet branches are all ready",
       "qch_status": "formal_qch_input_ready_not_route_score",
       "route_candidate_id": "ROUTE-CAND-002",
-      "route_formula_activation_status": "route_formula_inputs_ready_for_claim_review_not_auto_scored",
+      "route_formula_activation_status": "route_formula_inputs_ready_for_simulation_candidate_review_not_auto_scored",
       "route_formula_ready_for_claim_review": true,
+      "route_formula_ready_for_simulation_candidate_review": true,
       "route_geometry_family": "trapezoid_tapered_sidewalls",
       "route_score_current": false,
       "wet_branch_ready": true,
@@ -1381,7 +957,7 @@
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_STATUS_20260701.json",
-      "sha256": "e095897769cb21810e061181b2bcff6a8bf7153039b995c5e110414e6a70ec9e",
+      "sha256": "19af2314a6d206afd4ecf229fda25a0aeab19331f5ae78d2639e3c39677f90ff",
       "source_id": "closure_status"
     },
     {
@@ -1390,7 +966,7 @@
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_CLOSURE_ROWS_20260701.csv",
-      "sha256": "19eddf29c06a2a3161c93a466c65812557d7c6290c9c128888b5249a39ae982a",
+      "sha256": "de38dc1ad0255a71ac3abd9a1b0fcbe709f1ceabf063df53ee204191c823b0f6",
       "source_id": "closure_rows"
     },
     {
@@ -1407,9 +983,18 @@
       "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability from templates, unreviewed assumptions, or unaccepted rows;production ingestion",
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SIMULATION_ASSUMPTION_INPUT_WORKSPACE_STATUS_20260701.json",
+      "sha256": "aeebaf1bf77a94f0fd24528e61c3f383b98c8d77fdd30327411d868fe9e27fdd",
+      "source_id": "simulation_assumption_workspace_status"
+    },
+    {
+      "allowed_use": "single entry packet for detector/wet/value simulation evidence input and full route decision rerun chain",
+      "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability from templates, unreviewed assumptions, or unaccepted rows;production ingestion",
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "exists": "true",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_STATUS_20260701.json",
       "sha256": "2a3c6c6dbc58265b93f69a2f477dbcaa78c380d7adaba2853ed264fbd787f4be",
-      "source_id": "simulation_evidence_workspace_status"
+      "source_id": "legacy_real_evidence_workspace_status"
     },
     {
       "allowed_use": "single entry packet for detector/wet/value simulation evidence input and full route decision rerun chain",
@@ -1471,7 +1056,7 @@
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "nodi_simulator/sidewall_route_evidence_input_packet.py",
-      "sha256": "cd13218cea41947c75360d496fdecb5865c721fab6a8146ff732831da49ea03c",
+      "sha256": "e3f1861e9cec57fd64e2ba5fc598d919b5422c8cb721b9f7edf3934d57575c00",
       "source_id": "input_packet_source"
     },
     {
@@ -1480,7 +1065,7 @@
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
-      "sha256": "953b4fc17667e2e2f9e266e0f6ea7f39e59dea63f65d672896afd0ab42b5cc07",
+      "sha256": "067aceaeb23356384e01639c4a4925d8acb868540dd41d1902020cb52c2f3a31",
       "source_id": "input_packet_builder"
     },
     {
@@ -1489,7 +1074,7 @@
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "tests/test_sidewall_route_evidence_input_packet.py",
-      "sha256": "7cbfb38b818cad5dc269052f46bd933ef7429efed191f9a08f14db58fa7f366f",
+      "sha256": "d72d708fb001c7066a2131267eae2156fc5b17a55bc1b5f462b4a9083ff1c150",
       "source_id": "input_packet_tests"
     },
     {
@@ -1498,7 +1083,7 @@
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "tests/test_nodi_package_c_sidewall_route_evidence_input_packet.py",
-      "sha256": "2480238006cb918f2c04c29861f7ee07158645753fb68949919dc40cf9c185e9",
+      "sha256": "aa64cffd012e84d5a935cde7941994ade61361dcc02c19374a8af68a4c4ad3ee",
       "source_id": "input_packet_builder_tests"
     },
     {
@@ -1564,7 +1149,7 @@
     "branch": "main",
     "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
     "command_rows": 11,
-    "current_head": "bbaf01aeaa5af99332c7fbc76add3d04108028ad",
+    "current_head": "29917c454b238bc8dd98baa5de515185af63b4cf",
     "detection_probability_current": false,
     "detection_probability_current_rows": 0,
     "detection_probability_simulation_candidate_current": true,
@@ -1574,25 +1159,27 @@
     "detector_accepted_transfer_rows_total": 2,
     "detector_input_present": true,
     "detector_template_rows": 2,
-    "dirty_context_rows": 182,
+    "dirty_context_rows": 111,
     "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_READY_FOR_ROUTE_FORMULA_REVIEW",
     "input_branches_missing_current_acceptance": "",
     "input_packet_version": "sidewall_route_evidence_input_packet_v1",
     "input_rows": 4,
     "next_high_leverage_step": "all evidence input branches have accepted rows; rerun the eleven-step command chain",
-    "non_release_dirty_context_rows": 171,
+    "non_release_dirty_context_rows": 101,
     "production_ingestion_current": false,
     "required_source_missing_rows": 0,
     "route_formula_ready_for_claim_review_rows": 2,
+    "route_formula_ready_for_simulation_candidate_review_rows": 2,
     "route_formula_rows": 2,
     "route_score_current": false,
-    "semantic_digest": "1a5ad4f1a7776417a305876ad191d1cd64ff88ef8df941a6c6708fef2071e941",
+    "semantic_digest": "493267df3a599a8a3911d25da52a619a64ca39f327c7107feb0189908304f3c2",
     "source_activation_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_ACCEPTED_INPUT_READY_FOR_FORMULA_REVIEW",
     "source_claim_value_disposition": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_VALUES_READY_FOR_INTEGRATED_REVIEW",
-    "source_closure_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_READY_FOR_CLAIM_REVIEW",
+    "source_closure_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_READY_FOR_SIMULATION_CANDIDATE_REVIEW",
     "source_detector_intake_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_ACCEPTED_TRANSFER_CANDIDATE",
-    "source_lock_rows": 25,
-    "source_simulation_evidence_workspace_disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_EVIDENCE_INPUT_WORKSPACE_SIMULATION_ROWS_PRESENT_RERUN_REQUIRED",
+    "source_lock_rows": 26,
+    "source_simulation_assumption_workspace_disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_ASSUMPTION_INPUT_WORKSPACE_SIMULATION_ROWS_PRESENT_RERUN_REQUIRED",
+    "source_simulation_assumption_workspace_status_source": "simulation_assumption_workspace_status",
     "source_wet_intake_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_ACCEPTED_SIMULATION_BUNDLE_READY",
     "wet_accepted_endpoint_count_total": 14,
     "wet_input_present": true,
@@ -1602,9 +1189,9 @@
     "wet_pass_probability_simulation_candidate_rows": 2,
     "wet_template_rows": 14,
     "winner_current": false,
-    "workspace_target_header_only_rows": 3,
+    "workspace_target_header_only_rows": 0,
     "workspace_target_header_refreshed_now_rows": 0,
-    "workspace_target_simulation_data_rows_total": 2,
+    "workspace_target_simulation_data_rows_total": 20,
     "yield_current": false,
     "yield_current_rows": 0,
     "yield_simulation_candidate_current": true,

@@ -9,15 +9,16 @@ from tools.audits import (
 )
 
 
-def test_route_formula_activation_closure_builds_current_blocked_state() -> None:
+def test_route_formula_activation_closure_builds_current_simulation_candidate_state() -> None:
     payload = builder.build_payload()
     failures = builder.validate_payload(payload)
     summary = payload["summary"]
 
     assert failures == []
-    assert summary["disposition"] == builder.DISPOSITION
+    assert summary["disposition"] == builder.READY_DISPOSITION
     assert summary["closure_rows"] == 2
-    assert summary["route_formula_ready_for_claim_review_rows"] == 0
+    assert summary["route_formula_ready_for_claim_review_rows"] == 2
+    assert summary["route_formula_ready_for_simulation_candidate_review_rows"] == 2
     assert summary["route_score_current"] is False
     assert summary["yield_current"] is False
     assert summary["detection_probability_current"] is False
@@ -28,7 +29,10 @@ def test_route_formula_activation_closure_rows_keep_claims_false() -> None:
     rows = payload["closure_rows"]
 
     assert {row["route_formula_activation_status"] for row in rows} == {
-        "blocked_detector_wet_activation_required"
+        "route_formula_inputs_ready_for_simulation_candidate_review_not_auto_scored"
+    }
+    assert {row["route_formula_ready_for_simulation_candidate_review"] for row in rows} == {
+        True
     }
     assert {row["route_score_current"] for row in rows} == {False}
     assert {row["yield_current"] for row in rows} == {False}

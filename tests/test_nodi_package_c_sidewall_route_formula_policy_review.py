@@ -13,23 +13,23 @@ def test_route_formula_policy_review_packet_builds() -> None:
 
     assert failures == []
     summary = payload["summary"]
-    assert summary["disposition"] == builder.DISPOSITION
+    assert summary["disposition"] == builder.READY_DISPOSITION
     assert summary["policy_rows"] == 2
     assert summary["fixture_policy_rows"] == 2
     assert summary["guard_rows"] == 6
     assert summary["fixture_guard_rows"] == 6
-    assert summary["current_formula_component_ready_rows"] == 0
+    assert summary["current_formula_component_ready_rows"] == 2
     assert summary["fixture_formula_component_ready_rows"] == 2
     assert summary["route_score_current_rows"] == 0
-    assert summary["route_score_candidate_ready_rows"] == 0
-    assert summary["simulation_route_score_candidate_current_rows"] == 0
+    assert summary["route_score_candidate_ready_rows"] == 2
+    assert summary["simulation_route_score_candidate_current_rows"] == 2
     assert summary["fixture_route_score_candidate_rows_not_evidence"] == 2
     assert summary["winner_current_rows"] == 0
     assert summary["yield_current_rows"] == 0
     assert summary["detection_probability_current_rows"] == 0
 
 
-def test_current_rows_wait_for_simulation_evidence_but_fixture_path_scores() -> None:
+def test_current_rows_have_simulation_candidates_but_no_final_route_scores() -> None:
     payload = builder.build_payload()
     current = payload["policy_rows"]
     fixture = payload["fixture_policy_rows"]
@@ -40,12 +40,12 @@ def test_current_rows_wait_for_simulation_evidence_but_fixture_path_scores() -> 
     }
     for row in current:
         assert row["source_evidence_class"] == builder.SIMULATION_ACCEPTED_EVIDENCE_CLASS
-        assert row["route_formula_component_vector_ready"] is False
-        assert row["simulation_route_score_candidate_current"] is False
+        assert row["route_formula_component_vector_ready"] is True
+        assert row["simulation_route_score_candidate_current"] is True
         assert row["route_score_current"] is False
         assert row["route_score_value_current"] == ""
         assert row["route_formula_policy_review_status"] == (
-            "blocked_until_formula_component_vector_ready_from_simulation_evidence"
+            "simulation_route_score_candidate_ready_for_ranking_review"
         )
     by_route = {row["route_candidate_id"]: row for row in fixture}
     assert by_route["ROUTE-CAND-001"]["route_score_candidate_value"] > (

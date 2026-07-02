@@ -53,7 +53,8 @@ DETECTION_VALUE_TEMPLATE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETE
 YIELD_VALUE_TEMPLATE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_YIELD_VALUE_TEMPLATE_ROWS_20260701.csv"
 DETECTION_VALUE_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv"
 YIELD_VALUE_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv"
-REAL_EVIDENCE_WORKSPACE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_STATUS_20260701.json"
+SIMULATION_ASSUMPTION_WORKSPACE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_SIMULATION_ASSUMPTION_INPUT_WORKSPACE_STATUS_20260701.json"
+LEGACY_REAL_EVIDENCE_WORKSPACE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_STATUS_20260701.json"
 
 ALLOWED_USE = (
     "single entry packet for detector/wet/value simulation evidence input and full route decision rerun chain"
@@ -72,7 +73,8 @@ SOURCE_FILES = {
     "closure_status": CLOSURE_STATUS,
     "closure_rows": CLOSURE_ROWS,
     "claim_value_status": CLAIM_VALUE_STATUS,
-    "simulation_evidence_workspace_status": REAL_EVIDENCE_WORKSPACE_STATUS,
+    "simulation_assumption_workspace_status": SIMULATION_ASSUMPTION_WORKSPACE_STATUS,
+    "legacy_real_evidence_workspace_status": LEGACY_REAL_EVIDENCE_WORKSPACE_STATUS,
     "detection_value_template_rows": DETECTION_VALUE_TEMPLATE_ROWS,
     "yield_value_template_rows": YIELD_VALUE_TEMPLATE_ROWS,
     "claim_value_manifest_import_source": PROJECT_ROOT
@@ -239,7 +241,11 @@ def build_payload() -> dict[str, Any]:
     activation_summary = load_status(ACTIVATION_STATUS)
     closure_summary = load_status(CLOSURE_STATUS)
     claim_value_summary = load_status(CLAIM_VALUE_STATUS)
-    workspace_summary = load_status(REAL_EVIDENCE_WORKSPACE_STATUS)
+    workspace_summary = load_status(SIMULATION_ASSUMPTION_WORKSPACE_STATUS)
+    workspace_summary_source = "simulation_assumption_workspace_status"
+    if not workspace_summary:
+        workspace_summary = load_status(LEGACY_REAL_EVIDENCE_WORKSPACE_STATUS)
+        workspace_summary_source = "legacy_real_evidence_workspace_status"
     input_rows, command_rows, formula_rows = build_route_evidence_input_packet(
         detector_intake_summary=detector_summary,
         wet_intake_summary=wet_summary,
@@ -268,7 +274,11 @@ def build_payload() -> dict[str, Any]:
         if not str(row["source_id"]).startswith(("target_", "optional_"))
     )
     route_formula_ready = sum(
-        row["route_formula_ready_for_claim_review"] for row in formula_dicts
+        row.get(
+            "route_formula_ready_for_simulation_candidate_review",
+            row["route_formula_ready_for_claim_review"],
+        )
+        for row in formula_dicts
     )
     disposition = READY_DISPOSITION if route_formula_ready == len(formula_dicts) and formula_dicts else DISPOSITION
     if (
@@ -294,9 +304,10 @@ def build_payload() -> dict[str, Any]:
         "source_activation_disposition": str(activation_summary.get("disposition", "")),
         "source_closure_disposition": str(closure_summary.get("disposition", "")),
         "source_claim_value_disposition": str(claim_value_summary.get("disposition", "")),
-        "source_simulation_evidence_workspace_disposition": str(
+        "source_simulation_assumption_workspace_disposition": str(
             workspace_summary.get("disposition", "")
         ),
+        "source_simulation_assumption_workspace_status_source": workspace_summary_source,
         "workspace_target_header_only_rows": int(
             workspace_summary.get("target_header_only_rows", 0)
         ),
@@ -351,6 +362,7 @@ def build_payload() -> dict[str, Any]:
         "command_rows": len(command_dicts),
         "route_formula_rows": len(formula_dicts),
         "route_formula_ready_for_claim_review_rows": route_formula_ready,
+        "route_formula_ready_for_simulation_candidate_review_rows": route_formula_ready,
         "route_score_current": False,
         "winner_current": False,
         "JRC_current": False,
@@ -478,7 +490,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Workspace header-only target rows: `{s['workspace_target_header_only_rows']}`; refreshed now: `{s['workspace_target_header_refreshed_now_rows']}`.",
             f"Detector accepted transfer rows: `{s['detector_accepted_transfer_rows_total']}`.",
             f"Missing current-acceptance branches: `{s['input_branches_missing_current_acceptance']}`.",
-            f"Route formula ready rows: `{s['route_formula_ready_for_claim_review_rows']}`.",
+            f"Route formula simulation-candidate ready rows: `{s['route_formula_ready_for_simulation_candidate_review_rows']}`.",
             f"Detection probability current rows: `{s['detection_probability_current_rows']}`; yield current rows: `{s['yield_current_rows']}`; wet-pass current rows: `{s['wet_pass_probability_current_rows']}`.",
             "",
             "This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value simulation evidence, then rerunning the eleven-step chain through route decision readiness.",

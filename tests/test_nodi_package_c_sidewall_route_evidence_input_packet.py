@@ -11,7 +11,7 @@ def test_route_evidence_input_packet_builds_current_input_handoff() -> None:
     payload = builder.build_payload()
     summary = payload["summary"]
 
-    assert summary["disposition"] == builder.DISPOSITION
+    assert summary["disposition"] == builder.READY_DISPOSITION
     assert summary["input_rows"] == 4
     assert summary["command_rows"] == 11
     assert summary["route_formula_rows"] == 2
@@ -20,18 +20,24 @@ def test_route_evidence_input_packet_builds_current_input_handoff() -> None:
     assert summary["detection_value_template_rows"] == 2
     assert summary["yield_value_template_rows"] == 2
     assert summary["detector_accepted_transfer_rows_total"] == 2
-    assert summary["input_branches_missing_current_acceptance"] == (
-        "wet_surface_observation;detection_probability_value;yield_wet_value"
-    )
-    assert summary["route_formula_ready_for_claim_review_rows"] == 0
+    assert summary["input_branches_missing_current_acceptance"] == ""
+    assert summary["route_formula_ready_for_claim_review_rows"] == 2
+    assert summary["route_formula_ready_for_simulation_candidate_review_rows"] == 2
     assert summary["detection_probability_current_rows"] == 0
     assert summary["yield_current_rows"] == 0
     assert summary["wet_pass_probability_current_rows"] == 0
+    assert summary["detection_probability_simulation_candidate_rows"] == 2
+    assert summary["yield_simulation_candidate_rows"] == 2
+    assert summary["wet_pass_probability_simulation_candidate_rows"] == 2
+    assert (
+        summary["source_simulation_assumption_workspace_status_source"]
+        == "simulation_assumption_workspace_status"
+    )
     assert summary["route_score_current"] is False
     assert summary["yield_current"] is False
     assert summary["detection_probability_current"] is False
     assert "detector_blank_transfer" not in summary["next_high_leverage_step"]
-    assert "source manifests/importer inputs" in summary["next_high_leverage_step"]
+    assert "accepted rows" in summary["next_high_leverage_step"]
     assert "eleven-step command chain" in summary["next_high_leverage_step"]
     by_branch = {row["input_branch"]: row for row in payload["input_rows"]}
     assert by_branch["wet_surface_observation"]["source_manifest_path"].endswith(
@@ -69,6 +75,10 @@ def test_route_evidence_input_packet_source_lock_lists_optional_source_manifests
     payload = builder.build_payload()
     by_source = {row["source_id"]: row for row in payload["source_lock_rows"]}
 
+    assert by_source["simulation_assumption_workspace_status"]["exists"] in {
+        "true",
+        "false",
+    }
     assert by_source["optional_wet_source_manifest"]["exists"] in {"true", "false"}
     assert by_source["optional_claim_value_source_manifest"]["exists"] in {
         "true",

@@ -1,0 +1,31 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_ASSUMPTION_INPUT_WORKSPACE_SIMULATION_ROWS_PRESENT_RERUN_REQUIRED",
+  "summary": {
+    "allowed_use": "create/audit header-only simulation-assumption target CSVs for the sidewall route decision chain",
+    "artifact_id": "PACKAGE_C_SIDEWALL_SIMULATION_ASSUMPTION_INPUT_WORKSPACE_20260701",
+    "blocked_use": "template-as-evidence;unreviewed assumptions as claims;production ingestion",
+    "branch": "main",
+    "claim_boundary": "simulation_assumption_input_workspace_not_template_as_evidence",
+    "current_head": "29917c454b238bc8dd98baa5de515185af63b4cf",
+    "dirty_context_rows": 91,
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_ASSUMPTION_INPUT_WORKSPACE_SIMULATION_ROWS_PRESENT_RERUN_REQUIRED",
+    "evidence_current_rows": 0,
+    "next_high_leverage_step": "fill source manifests or target CSV rows with simulation-assumption artifacts, then run the eleven-step route evidence command chain",
+    "non_release_dirty_context_rows": 89,
+    "semantic_digest": "4f6789c1ed3f2cfdd51a564e2d59c52bcd51210ca0d5be8195e33516a53f1508",
+    "source_lock_rows": 16,
+    "source_manifest_blocked_rows": 0,
+    "source_manifest_created_now_rows": 0,
+    "source_manifest_header_only_rows": 0,
+    "source_manifest_simulation_data_rows_total": 18,
+    "source_manifest_workspace_rows": 2,
+    "source_missing_rows": 0,
+    "target_blocked_rows": 0,
+    "target_created_now_rows": 0,
+    "target_header_only_rows": 0,
+    "target_header_refreshed_now_rows": 0,
+    "target_simulation_data_rows_total": 20,
+    "workspace_rows": 4,
+    "workspace_version": "sidewall_simulation_assumption_input_workspace_v1"
+  }
+}

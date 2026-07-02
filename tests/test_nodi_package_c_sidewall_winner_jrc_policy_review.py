@@ -13,7 +13,7 @@ def test_winner_jrc_policy_review_packet_builds() -> None:
 
     assert failures == []
     summary = payload["summary"]
-    assert summary["disposition"] == builder.DISPOSITION
+    assert summary["disposition"] == builder.READY_DISPOSITION
     assert summary["review_rows"] == 2
     assert summary["fixture_review_rows"] == 2
     assert summary["guard_rows"] == 5
@@ -21,13 +21,13 @@ def test_winner_jrc_policy_review_packet_builds() -> None:
     assert summary["route_score_current_rows"] == 0
     assert summary["winner_current_rows"] == 0
     assert summary["JRC_current_rows"] == 0
-    assert summary["simulation_top_candidate_current_rows"] == 0
+    assert summary["simulation_top_candidate_current_rows"] == 1
     assert summary["fixture_order_rows_not_evidence"] == 2
     assert summary["yield_current_rows"] == 0
     assert summary["detection_probability_current_rows"] == 0
 
 
-def test_current_rows_blocked_and_fixture_order_is_not_evidence() -> None:
+def test_current_rows_have_simulation_top_candidate_but_no_final_winner() -> None:
     payload = builder.build_payload()
     current = payload["review_rows"]
     fixture = payload["fixture_review_rows"]
@@ -35,11 +35,13 @@ def test_current_rows_blocked_and_fixture_order_is_not_evidence() -> None:
     for row in current:
         assert row["source_evidence_class"] == builder.SIMULATION_ACCEPTED_EVIDENCE_CLASS
         assert row["route_score_current"] is False
-        assert row["simulation_top_candidate_current"] is False
+        assert row["simulation_top_candidate_current"] is (
+            row["route_candidate_id"] == "ROUTE-CAND-001"
+        )
         assert row["winner_current"] is False
         assert row["JRC_current"] is False
         assert row["winner_jrc_policy_review_status"] == (
-            "blocked_until_route_score_candidates_current"
+            "simulation_top_candidate_ready_for_integrated_candidate_review"
         )
     assert [row["route_candidate_id"] for row in fixture] == [
         "ROUTE-CAND-001",

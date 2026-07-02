@@ -33,6 +33,7 @@ def test_formula_activation_closure_blocks_until_detector_wet_ready() -> None:
 
     assert len(rows) == 1
     assert rows[0].route_formula_ready_for_claim_review is False
+    assert rows[0].route_formula_ready_for_simulation_candidate_review is False
     assert rows[0].route_formula_activation_status == "blocked_detector_wet_activation_required"
     assert rows[0].route_score_current is False
     assert rows[0].yield_current is False
@@ -53,6 +54,10 @@ def test_formula_activation_closure_can_reach_review_ready_without_claims() -> N
     )
 
     assert rows[0].route_formula_ready_for_claim_review is True
+    assert rows[0].route_formula_ready_for_simulation_candidate_review is True
+    assert rows[0].route_formula_activation_status == (
+        "route_formula_inputs_ready_for_simulation_candidate_review_not_auto_scored"
+    )
     assert rows[0].route_score_current is False
     assert rows[0].yield_current is False
     assert rows[0].detection_probability_current is False
