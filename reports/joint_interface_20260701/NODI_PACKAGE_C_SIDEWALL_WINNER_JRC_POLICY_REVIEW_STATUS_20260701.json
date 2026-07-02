@@ -1,0 +1,32 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES",
+  "summary": {
+    "JRC_current_rows": 0,
+    "allowed_use": "winner/JRC policy review after route-score candidate policy",
+    "artifact_id": "PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_20260701",
+    "blocked_use": "yield;detection_probability;wet_pass_probability;production ingestion;fixture rows as evidence",
+    "branch": "main",
+    "claim_boundary": "winner_jrc_policy_review_requires_current_route_scores_not_yield_not_detection",
+    "current_head": "a310c2b073b62864b85c1b0def64d8ea76cedcbe",
+    "detection_probability_current_rows": 0,
+    "dirty_context_rows": 93,
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES",
+    "fixture_guard_rows": 4,
+    "fixture_order_rows_not_evidence": 2,
+    "fixture_review_rows": 2,
+    "guard_rows": 4,
+    "next_high_leverage_step": "after current route scores and unique top are real, run integrated route/yield/detection review",
+    "non_release_dirty_context_rows": 89,
+    "production_ingestion_current_rows": 0,
+    "review_rows": 2,
+    "review_version": "sidewall_winner_jrc_policy_review_v1",
+    "route_score_current_rows": 0,
+    "semantic_digest": "1b96d21bc6533b46f149f9e5b101a93309c4374727c40dae773b190254949ff5",
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "source_route_formula_policy_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_READY_WAITING_FOR_REAL_ACCEPTED_EVIDENCE",
+    "unique_top_available_rows": 0,
+    "winner_current_rows": 0,
+    "yield_current_rows": 0
+  }
+}
