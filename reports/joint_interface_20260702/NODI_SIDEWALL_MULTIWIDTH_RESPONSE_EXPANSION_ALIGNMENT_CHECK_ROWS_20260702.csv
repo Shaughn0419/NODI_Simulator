@@ -1,0 +1,8 @@
+check_id,check_name,check_pass,check_detail,hard_fail_if_false
+MULTIWIDTH-EXPANSION-CHECK-001,route_matrix_matches_prs_approved_routes,True,"[(404, 500, 900), (404, 500, 1200), (404, 600, 900), (660, 500, 1500), (660, 800, 900), (660, 800, 1200)]",True
+MULTIWIDTH-EXPANSION-CHECK-002,diameter_grid_matches_prs_approved_diameters,True,"[40, 60, 100, 150, 220, 230, 240, 250, 260, 270, 280, 290, 300]",True
+MULTIWIDTH-EXPANSION-CHECK-003,all_trapezoid_rows_have_rectangle_baseline_angle,True,theta90/theta85/theta70 present,True
+MULTIWIDTH-EXPANSION-CHECK-004,blocked_response_bins_have_blank_proxy_values,True,312,True
+MULTIWIDTH-EXPANSION-CHECK-005,selected_annulus_rows_present,True,168,True
+MULTIWIDTH-EXPANSION-CHECK-006,response_rows_include_prs_sidewall_v2_geometry_fields,True,2520,True
+MULTIWIDTH-EXPANSION-CHECK-007,forbidden_primary_columns_absent,True,,True

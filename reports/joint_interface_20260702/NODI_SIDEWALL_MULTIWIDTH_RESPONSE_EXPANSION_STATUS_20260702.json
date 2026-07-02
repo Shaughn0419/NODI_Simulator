@@ -1,0 +1,30 @@
+{
+  "disposition": "NODI_SIDEWALL_MULTIWIDTH_RESPONSE_EXPANSION_READY",
+  "summary": {
+    "alignment_check_rows": 7,
+    "allowed_use": "expand sidewall-angle sensitivity across PRS-approved width/depth/wavelength routes and produce trapezoid-local response-bin simulation context",
+    "artifact_id": "NODI_SIDEWALL_MULTIWIDTH_RESPONSE_EXPANSION_20260702",
+    "axis_synthesis_rows": 3,
+    "blocked_use": "route winner, route score, fabrication release, production recommendation, true W_eff, detection probability, wet yield, q_ch weighting, or full optical solver",
+    "branch": "main",
+    "claim_boundary": "multiwidth_sidewall_dimension_annulus_response_expansion_not_route_score",
+    "current_head": "97ecbe203fe5e500743fb29495236b973ced0e39",
+    "dimension_window_rows": 546,
+    "dirty_context_rows": 96,
+    "disposition": "NODI_SIDEWALL_MULTIWIDTH_RESPONSE_EXPANSION_READY",
+    "failed_alignment_check_rows": 0,
+    "geometry_effects_disposition": "NODI_SIDEWALL_GEOMETRY_EFFECTS_IMPACT_MATRIX_READY",
+    "mainline_refocus_disposition": "NODI_SIDEWALL_MAINLINE_REFOCUS_LOCK_READY",
+    "next_large_block": "run bounded NODI event shards over changed dimension/annulus bins",
+    "non_multiwidth_response_expansion_dirty_context_rows": 83,
+    "not_primary_answer_frame": "route_selection_or_scalar_scoreboard",
+    "primary_answer_frame": "multiwidth_dimension_window_annulus_and_interference_response_expansion",
+    "prs_approved_diameter_count": 13,
+    "prs_approved_route_count": 6,
+    "selected_annulus_expansion_rows": 168,
+    "semantic_digest": "bf10ced702ce45e3338d3d0058505efd253769b32e2c895549161a9e81f7d34e",
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "trapezoid_local_response_bin_rows": 2520
+  }
+}

@@ -1,0 +1,4 @@
+axis_id,axis_name,expansion_status,evidence_rows,changed_rows,key_observation,next_large_block
+AXIS-001,multiwidth_dimension_window,dimension_window_shift_present,546,378,PRS-approved route matrix shows sidewall-dependent area loss and top-width compensation needs,feed changed dimension bands into full event-run planning
+AXIS-002,selected_annulus_expansion,selected_annulus_remap_present,168,102,blocked_or_partial_response_bin_rows=312,promote trapezoid-local annulus bins into PRS sidewall v2 candidate rows
+AXIS-003,interference_response_expansion,interference_response_shift_present,2520,1271,"response proxy separates particle-size, reference aperture, near-wall, and selected-annulus terms",run bounded NODI event shards on the shifted dimension/annulus grid
