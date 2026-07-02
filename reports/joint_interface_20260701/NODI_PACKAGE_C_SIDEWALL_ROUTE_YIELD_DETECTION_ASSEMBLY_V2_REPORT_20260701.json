@@ -1,0 +1,825 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_READY_NOT_CLAIM_READY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_20260701",
+    "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+    "current_head": "5126ff15a7578c5dab822472c49c71115f468608",
+    "branch": "main",
+    "source_wet_observation_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_OBSERVATION_REFRESH_READY_PREFLIGHT_ONLY",
+    "source_route_policy_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_READY_NOT_CLAIM_READY",
+    "assembly_rows": 2,
+    "branch_rows": 8,
+    "route_geometry_families": "ideal_rectangle;trapezoid_tapered_sidewalls",
+    "branch_names": "detection_probability_calibration;route_candidate_assembly;sidewall_detector_blank_transfer_validation;wet_observation_bundle_intake",
+    "assembly_not_claim_ready_rows": 2,
+    "ready_input_lane_count_total": 6,
+    "candidate_context_lane_count_total": 10,
+    "missing_or_blocked_lane_count_total": 2,
+    "next_executable_branches": "sidewall_detector_blank_transfer_validation",
+    "route_score_allowed_rows": 0,
+    "winner_allowed_rows": 0,
+    "yield_allowed_rows": 0,
+    "detection_probability_allowed_rows": 0,
+    "wet_pass_probability_allowed_rows": 0,
+    "implementation_can_start_branch_rows": 6,
+    "source_lock_rows": 9,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 87,
+    "non_release_dirty_context_rows": 79,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+    "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion",
+    "semantic_digest": "d83cfa08e2c6d1806807934fc47730a0378d9d50f12d9d9f40abf93095699a21"
+  },
+  "assembly_rows": [
+    {
+      "assembly_row_id": "RYD-ASSEMBLY-ROUTE-CAND-001",
+      "assembly_version": "sidewall_route_yield_detection_assembly_v2",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "route_key": "route_rectangle_limit_theta90_D900_W500",
+      "route_geometry_family": "ideal_rectangle",
+      "source_case_id": "rectangle_limit_theta90_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-001",
+      "flow_split_qch_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "pressure_flow_validation_status": "exact_w500_d900_pressure_flow_result_accepted_formal_qch_sidecar_ready",
+      "selected_annulus_detection_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "detector_response_bridge_status": "detector_response_panel_candidate_not_sidewall_calibrated",
+      "blank_false_positive_trace_status": "nearest_blank_guard_bound_to_panel_not_sidewall_specific",
+      "wet_wall_interaction_status": "wet_surface_observation_intake_ready_no_observations",
+      "blank_channel_reference_status": "synthetic_seed_available_not_experimental",
+      "sidewall_geometry_coverage_status": "single_W500_D900_theta85_and_rectangle_seed_only",
+      "integrated_route_policy_status": "route_yield_detection_policy_defined_not_ready_for_claims",
+      "route_policy_status": "not_ready_missing_detector_blank_wet_selected_annulus_evidence_after_formal_qch_pressure_flow",
+      "primary_next_execution_block": "sidewall_detector_blank_transfer_validation",
+      "ready_input_lane_count": 3,
+      "candidate_context_lane_count": 5,
+      "missing_or_blocked_lane_count": 1,
+      "total_tracked_lane_count": 9,
+      "input_completeness_fraction": 1.0,
+      "assembly_status": "assembly_ready_for_detector_blank_transfer_and_wet_input_not_claim_ready",
+      "next_executable_branch": "sidewall_detector_blank_transfer_validation",
+      "next_required_evidence": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | detector response validation and sidewall-specific blank transfer model | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "route_score_allowed": false,
+      "winner_allowed": false,
+      "yield_allowed": false,
+      "detection_probability_allowed": false,
+      "wet_pass_probability_allowed": false,
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability"
+    },
+    {
+      "assembly_row_id": "RYD-ASSEMBLY-ROUTE-CAND-002",
+      "assembly_version": "sidewall_route_yield_detection_assembly_v2",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "route_key": "route_taper_theta85_D900_W500",
+      "route_geometry_family": "trapezoid_tapered_sidewalls",
+      "source_case_id": "taper_theta85_D900_W500",
+      "qch_sidecar_id": "QCH-CAND-002",
+      "flow_split_qch_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+      "pressure_flow_validation_status": "exact_w500_d900_pressure_flow_result_accepted_formal_qch_sidecar_ready",
+      "selected_annulus_detection_context_status": "expanded_selected_annulus_panel_available_not_probability",
+      "detector_response_bridge_status": "detector_response_panel_candidate_not_sidewall_calibrated",
+      "blank_false_positive_trace_status": "nearest_blank_guard_bound_to_panel_not_sidewall_specific",
+      "wet_wall_interaction_status": "wet_surface_observation_intake_ready_no_observations",
+      "blank_channel_reference_status": "synthetic_seed_available_not_experimental",
+      "sidewall_geometry_coverage_status": "single_W500_D900_theta85_and_rectangle_seed_only",
+      "integrated_route_policy_status": "route_yield_detection_policy_defined_not_ready_for_claims",
+      "route_policy_status": "not_ready_missing_detector_blank_wet_selected_annulus_evidence_after_formal_qch_pressure_flow",
+      "primary_next_execution_block": "sidewall_detector_blank_transfer_validation",
+      "ready_input_lane_count": 3,
+      "candidate_context_lane_count": 5,
+      "missing_or_blocked_lane_count": 1,
+      "total_tracked_lane_count": 9,
+      "input_completeness_fraction": 1.0,
+      "assembly_status": "assembly_ready_for_detector_blank_transfer_and_wet_input_not_claim_ready",
+      "next_executable_branch": "sidewall_detector_blank_transfer_validation",
+      "next_required_evidence": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | detector response validation and sidewall-specific blank transfer model | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "route_score_allowed": false,
+      "winner_allowed": false,
+      "yield_allowed": false,
+      "detection_probability_allowed": false,
+      "wet_pass_probability_allowed": false,
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability"
+    }
+  ],
+  "branch_rows": [
+    {
+      "branch_row_id": "RYD-BRANCH-ROUTE-CAND-001-sidewall_detector_blank_transfer_validation",
+      "assembly_version": "sidewall_route_yield_detection_assembly_v2",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "branch_name": "sidewall_detector_blank_transfer_validation",
+      "branch_status": "implementation_ready_from_panel_candidate_requires_sidewall_specific_transfer_evidence",
+      "branch_basis": "detector_response_bridge;blank_false_positive_trace",
+      "minimum_next_input": "detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model",
+      "target_claim": "detection_probability",
+      "target_claim_current": false,
+      "implementation_can_start": true,
+      "result_claim_requires_future_evidence": "sidewall-specific blank traces or validated transferable blank false-positive model plus detector response validation",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability"
+    },
+    {
+      "branch_row_id": "RYD-BRANCH-ROUTE-CAND-001-wet_observation_bundle_intake",
+      "assembly_version": "sidewall_route_yield_detection_assembly_v2",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "branch_name": "wet_observation_bundle_intake",
+      "branch_status": "schema_ready_waiting_for_observation_rows",
+      "branch_basis": "wet_wall_interaction",
+      "minimum_next_input": "sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "target_claim": "yield;wet_pass_probability",
+      "target_claim_current": false,
+      "implementation_can_start": true,
+      "result_claim_requires_future_evidence": "accepted sidewall-specific or validated-transfer wet observation endpoint bundle",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability"
+    },
+    {
+      "branch_row_id": "RYD-BRANCH-ROUTE-CAND-001-route_candidate_assembly",
+      "assembly_version": "sidewall_route_yield_detection_assembly_v2",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "branch_name": "route_candidate_assembly",
+      "branch_status": "assembly_rows_available_not_route_score",
+      "branch_basis": "flow_split_qch;pressure_flow_validation;selected_annulus_detection_context;integrated_route_ledger",
+      "minimum_next_input": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | detector response validation and sidewall-specific blank transfer model | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "target_claim": "route_score;winner",
+      "target_claim_current": false,
+      "implementation_can_start": true,
+      "result_claim_requires_future_evidence": "detector, blank, wet, and explicit decision policy evidence",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability"
+    },
+    {
+      "branch_row_id": "RYD-BRANCH-ROUTE-CAND-001-detection_probability_calibration",
+      "assembly_version": "sidewall_route_yield_detection_assembly_v2",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "branch_name": "detection_probability_calibration",
+      "branch_status": "blocked_until_detector_blank_and_optical_calibration_are_validated",
+      "branch_basis": "selected_annulus_detection_context;detector_response_bridge;blank_false_positive_trace",
+      "minimum_next_input": "sidewall-specific optical/reference calibration, detector response validation, and blank false-positive model",
+      "target_claim": "detection_probability",
+      "target_claim_current": false,
+      "implementation_can_start": false,
+      "result_claim_requires_future_evidence": "calibrated detector model and sidewall-specific blank transfer evidence",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability"
+    },
+    {
+      "branch_row_id": "RYD-BRANCH-ROUTE-CAND-002-sidewall_detector_blank_transfer_validation",
+      "assembly_version": "sidewall_route_yield_detection_assembly_v2",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "branch_name": "sidewall_detector_blank_transfer_validation",
+      "branch_status": "implementation_ready_from_panel_candidate_requires_sidewall_specific_transfer_evidence",
+      "branch_basis": "detector_response_bridge;blank_false_positive_trace",
+      "minimum_next_input": "detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model",
+      "target_claim": "detection_probability",
+      "target_claim_current": false,
+      "implementation_can_start": true,
+      "result_claim_requires_future_evidence": "sidewall-specific blank traces or validated transferable blank false-positive model plus detector response validation",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability"
+    },
+    {
+      "branch_row_id": "RYD-BRANCH-ROUTE-CAND-002-wet_observation_bundle_intake",
+      "assembly_version": "sidewall_route_yield_detection_assembly_v2",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "branch_name": "wet_observation_bundle_intake",
+      "branch_status": "schema_ready_waiting_for_observation_rows",
+      "branch_basis": "wet_wall_interaction",
+      "minimum_next_input": "sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "target_claim": "yield;wet_pass_probability",
+      "target_claim_current": false,
+      "implementation_can_start": true,
+      "result_claim_requires_future_evidence": "accepted sidewall-specific or validated-transfer wet observation endpoint bundle",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability"
+    },
+    {
+      "branch_row_id": "RYD-BRANCH-ROUTE-CAND-002-route_candidate_assembly",
+      "assembly_version": "sidewall_route_yield_detection_assembly_v2",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "branch_name": "route_candidate_assembly",
+      "branch_status": "assembly_rows_available_not_route_score",
+      "branch_basis": "flow_split_qch;pressure_flow_validation;selected_annulus_detection_context;integrated_route_ledger",
+      "minimum_next_input": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | detector response validation and sidewall-specific blank transfer model | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "target_claim": "route_score;winner",
+      "target_claim_current": false,
+      "implementation_can_start": true,
+      "result_claim_requires_future_evidence": "detector, blank, wet, and explicit decision policy evidence",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability"
+    },
+    {
+      "branch_row_id": "RYD-BRANCH-ROUTE-CAND-002-detection_probability_calibration",
+      "assembly_version": "sidewall_route_yield_detection_assembly_v2",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "branch_name": "detection_probability_calibration",
+      "branch_status": "blocked_until_detector_blank_and_optical_calibration_are_validated",
+      "branch_basis": "selected_annulus_detection_context;detector_response_bridge;blank_false_positive_trace",
+      "minimum_next_input": "sidewall-specific optical/reference calibration, detector response validation, and blank false-positive model",
+      "target_claim": "detection_probability",
+      "target_claim_current": false,
+      "implementation_can_start": false,
+      "result_claim_requires_future_evidence": "calibrated detector model and sidewall-specific blank transfer evidence",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "wet_observation_integrated_ledger_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_OBSERVATION_REFRESH_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "c7a5d4882ba9543ef412ea13e02f360e85f668522349ce9ae47af5dc416d5652",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "wet_observation_integrated_ledger_lanes",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_OBSERVATION_REFRESH_PROMOTION_LANE_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "2b026cfbf6dc2300dfd7b6ed231a28287c7f729555bf11e92bf6146e057fcae1",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "route_policy_wet_observation_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "b33643f9a49205c101e63d92c5e3424ebeb95621965057c4a07ac84b64d2f7b4",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "route_policy_wet_observation_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_POLICY_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "3cff58de9370c89cb8b48a335b94e9e7432d5b8d74c0986a5c7dd05de54bdebb",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "route_policy_wet_observation_blockers",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_BLOCKER_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "cb75f071d30b3bf8f1a9aa9d6448477ed9a7199b9115ea1e6cad8915b761ce53",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "route_yield_detection_assembly_source",
+      "path": "nodi_simulator/sidewall_route_yield_detection_assembly.py",
+      "exists": "true",
+      "sha256": "f9b14ed4fe7edced84869dd65a7abb952aee4fdb355e8f1fc71fb984f94c822a",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "route_yield_detection_assembly_tests",
+      "path": "tests/test_sidewall_route_yield_detection_assembly.py",
+      "exists": "true",
+      "sha256": "d12772d7e60494aeb3c0e0fe6edbc2e1b1063db1e03b07cf3590cf80564cd551",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "route_yield_detection_assembly_builder",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_yield_detection_assembly_v2.py",
+      "exists": "true",
+      "sha256": "6242ea5acb7b0ffd2121df8dac5f5d54b09ee1cec5e3baeaaba972d6547b40a4",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "route_yield_detection_assembly_builder_tests",
+      "path": "tests/test_nodi_package_c_sidewall_route_yield_detection_assembly_v2.py",
+      "exists": "true",
+      "sha256": "ba4cea25ed512bfe04f831da8ef3c4dc5a2ed29ccb068468391cd44becd1bc02",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": "M ",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_route_yield_detection_assembly.py",
+      "git_status": "??",
+      "classification": "route_yield_detection_assembly_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_route_yield_detection_assembly_v2.py",
+      "git_status": "??",
+      "classification": "route_yield_detection_assembly_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_sidewall_route_yield_detection_assembly.py",
+      "git_status": "??",
+      "classification": "route_yield_detection_assembly_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_yield_detection_assembly_v2.py",
+      "git_status": "??",
+      "classification": "route_yield_detection_assembly_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ]
+}
