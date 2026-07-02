@@ -1,0 +1,31 @@
+{
+  "disposition": "NODI_SIDEWALL_BOUNDED_EVENT_SHARDS_EXECUTED_READY",
+  "summary": {
+    "alignment_check_rows": 5,
+    "allowed_use": "execute a bounded NODI event shard set to compare rectangle and sidewall contexts for dimension, selected-annulus, and response-map follow-up",
+    "artifact_id": "NODI_SIDEWALL_BOUNDED_EVENT_SHARDS_20260702",
+    "axis_synthesis_rows": 3,
+    "blocked_use": "production PRS, route winner, route score, final detection probability, yield, wet claim, fabrication release, q_ch weighting, or true W_eff",
+    "bounded_route_count": 4,
+    "branch": "main",
+    "claim_boundary": "bounded_nodi_event_context_for_sidewall_dimension_annulus_response_not_probability",
+    "current_head": "589edd007c6fdc2beacdd00ba8b2c4e04d66bf7c",
+    "dirty_context_rows": 85,
+    "disposition": "NODI_SIDEWALL_BOUNDED_EVENT_SHARDS_EXECUTED_READY",
+    "event_shard_rows": 24,
+    "execute_nodi": true,
+    "executed_event_shard_rows": 24,
+    "failed_alignment_check_rows": 0,
+    "multiwidth_response_disposition": "NODI_SIDEWALL_MULTIWIDTH_RESPONSE_EXPANSION_READY",
+    "n_events_requested_per_shard": 4,
+    "next_large_block": "expand executed shards into PRS sidewall v2 candidate rows",
+    "non_bounded_event_shards_dirty_context_rows": 83,
+    "not_primary_answer_frame": "route_selection_or_probability_claim",
+    "paired_delta_rows": 12,
+    "particle_diameter_count": 3,
+    "primary_answer_frame": "bounded_nodi_event_context_for_sidewall_annulus_response",
+    "semantic_digest": "52a552292672af6a1e9af2b70ddbde1bf8b33ca37632e2569070180125d383eb",
+    "source_lock_rows": 5,
+    "source_missing_rows": 0
+  }
+}

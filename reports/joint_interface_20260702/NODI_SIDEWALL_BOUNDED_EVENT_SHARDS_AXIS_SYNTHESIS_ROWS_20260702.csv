@@ -1,0 +1,4 @@
+axis_id,axis_name,axis_status,evidence_rows,executed_rows,key_observation,max_abs_delta
+AXIS-001,bounded_event_execution,executed,24,24,bounded NODI event shards generated paired rectangle/sidewall context,
+AXIS-002,selected_annulus_event_context,annulus_delta_available,12,,"selected annulus fraction and edge norm are compared as context, not probability",0.5
+AXIS-003,interference_response_event_context,response_delta_available,12,,mean peak height and local SNR provide bounded event response context,10.056555961540198

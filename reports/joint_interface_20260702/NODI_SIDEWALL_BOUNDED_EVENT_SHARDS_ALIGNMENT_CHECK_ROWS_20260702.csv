@@ -1,0 +1,6 @@
+check_id,check_name,check_pass,check_detail,hard_fail_if_false
+BOUNDED-SHARD-CHECK-001,bounded_plan_row_count,True,24,True
+BOUNDED-SHARD-CHECK-002,paired_delta_rows_present,True,12,True
+BOUNDED-SHARD-CHECK-003,event_rows_have_no_probability_claim,True,not_detection_probability true,True
+BOUNDED-SHARD-CHECK-004,forbidden_primary_columns_absent,True,,True
+BOUNDED-SHARD-CHECK-005,bounded_routes_include_width_variation,True,"[500, 600, 800]",True
