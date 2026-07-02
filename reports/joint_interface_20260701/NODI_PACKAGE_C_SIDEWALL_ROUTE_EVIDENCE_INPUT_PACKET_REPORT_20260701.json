@@ -14,98 +14,110 @@
     },
     {
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
+      "command": "python tools\\audits\\build_nodi_package_c_sidewall_wet_surface_observation_manifest_import.py --confirm-sidewall-wet-surface-observation-manifest-import",
+      "command_id": "wet_surface_observation_manifest_import",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-02-wet_surface_observation_manifest_import",
+      "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_STATUS_20260701.json",
+      "hard_fail_if_previous_step_failed": true,
+      "input_packet_version": "sidewall_route_evidence_input_packet_v1",
+      "purpose": "imports source-manifest-bound wet observation rows and hashes before wet intake",
+      "sequence_index": 2,
+      "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
+    },
+    {
+      "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "command": "python tools\\audits\\build_nodi_package_c_sidewall_wet_surface_observation_intake.py --confirm-sidewall-wet-surface-observation-intake",
       "command_id": "wet_surface_observation_intake",
-      "command_row_id": "ROUTE-EVIDENCE-COMMAND-02-wet_surface_observation_intake",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-03-wet_surface_observation_intake",
       "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_STATUS_20260701.json",
       "hard_fail_if_previous_step_failed": true,
       "input_packet_version": "sidewall_route_evidence_input_packet_v1",
       "purpose": "wet observation intake accepts or rejects endpoint rows",
-      "sequence_index": 2,
+      "sequence_index": 3,
       "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
     },
     {
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "command": "python tools\\audits\\build_nodi_package_c_sidewall_detector_wet_evidence_activation_runner.py --confirm-sidewall-detector-wet-evidence-activation-runner",
       "command_id": "detector_wet_activation_runner",
-      "command_row_id": "ROUTE-EVIDENCE-COMMAND-03-detector_wet_activation_runner",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-04-detector_wet_activation_runner",
       "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json",
       "hard_fail_if_previous_step_failed": true,
       "input_packet_version": "sidewall_route_evidence_input_packet_v1",
       "purpose": "combines detector and wet accepted-evidence branches",
-      "sequence_index": 3,
+      "sequence_index": 4,
       "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
     },
     {
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "command": "python tools\\audits\\build_nodi_package_c_sidewall_route_formula_activation_closure.py --confirm-sidewall-route-formula-activation-closure",
       "command_id": "route_formula_activation_closure",
-      "command_row_id": "ROUTE-EVIDENCE-COMMAND-04-route_formula_activation_closure",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-05-route_formula_activation_closure",
       "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_STATUS_20260701.json",
       "hard_fail_if_previous_step_failed": true,
       "input_packet_version": "sidewall_route_evidence_input_packet_v1",
       "purpose": "joins q_ch readiness with detector/wet activation for route formula review",
-      "sequence_index": 4,
+      "sequence_index": 5,
       "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
     },
     {
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "command": "python tools\\audits\\build_nodi_package_c_sidewall_route_formula_review_dry_run.py --confirm-sidewall-route-formula-review-dry-run",
       "command_id": "route_formula_review_dry_run",
-      "command_row_id": "ROUTE-EVIDENCE-COMMAND-05-route_formula_review_dry_run",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-06-route_formula_review_dry_run",
       "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_STATUS_20260701.json",
       "hard_fail_if_previous_step_failed": true,
       "input_packet_version": "sidewall_route_evidence_input_packet_v1",
       "purpose": "computes review-only route formula components",
-      "sequence_index": 5,
+      "sequence_index": 6,
       "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
     },
     {
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "command": "python tools\\audits\\build_nodi_package_c_sidewall_route_formula_policy_review.py --confirm-sidewall-route-formula-policy-review",
       "command_id": "route_formula_policy_review",
-      "command_row_id": "ROUTE-EVIDENCE-COMMAND-06-route_formula_policy_review",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-07-route_formula_policy_review",
       "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json",
       "hard_fail_if_previous_step_failed": true,
       "input_packet_version": "sidewall_route_evidence_input_packet_v1",
       "purpose": "activates route-score candidates only after real accepted evidence",
-      "sequence_index": 6,
+      "sequence_index": 7,
       "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
     },
     {
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "command": "python tools\\audits\\build_nodi_package_c_sidewall_winner_jrc_policy_review.py --confirm-sidewall-winner-jrc-policy-review",
       "command_id": "winner_jrc_policy_review",
-      "command_row_id": "ROUTE-EVIDENCE-COMMAND-07-winner_jrc_policy_review",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-08-winner_jrc_policy_review",
       "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json",
       "hard_fail_if_previous_step_failed": true,
       "input_packet_version": "sidewall_route_evidence_input_packet_v1",
       "purpose": "activates winner/JRC only after current route scores and unique top",
-      "sequence_index": 7,
+      "sequence_index": 8,
       "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
     },
     {
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "command": "python tools\\audits\\build_nodi_package_c_sidewall_yield_detection_claim_value_review.py --confirm-sidewall-yield-detection-claim-value-review",
       "command_id": "yield_detection_claim_value_review",
-      "command_row_id": "ROUTE-EVIDENCE-COMMAND-08-yield_detection_claim_value_review",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-09-yield_detection_claim_value_review",
       "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json",
       "hard_fail_if_previous_step_failed": true,
       "input_packet_version": "sidewall_route_evidence_input_packet_v1",
       "purpose": "accepts real numeric yield/detection/wet-pass value rows",
-      "sequence_index": 8,
+      "sequence_index": 9,
       "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
     },
     {
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "command": "python tools\\audits\\build_nodi_package_c_sidewall_route_decision_execution_readiness.py --confirm-sidewall-route-decision-execution-readiness",
       "command_id": "route_decision_execution_readiness",
-      "command_row_id": "ROUTE-EVIDENCE-COMMAND-09-route_decision_execution_readiness",
+      "command_row_id": "ROUTE-EVIDENCE-COMMAND-10-route_decision_execution_readiness",
       "expected_artifact": "NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_STATUS_20260701.json",
       "hard_fail_if_previous_step_failed": true,
       "input_packet_version": "sidewall_route_evidence_input_packet_v1",
       "purpose": "integrates route score, winner/JRC, yield, and detection value status",
-      "sequence_index": 9,
+      "sequence_index": 10,
       "success_disposition_hint": "READY or ACCEPTED disposition; fail closed otherwise"
     }
   ],
@@ -485,13 +497,13 @@
     {
       "classification": "route_evidence_input_packet_output",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_DIRTY_CONTEXT_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_COMMAND_ROWS_20260701.csv",
       "release_decision": "included_or_rewritten_by_input_packet_builder"
     },
     {
       "classification": "route_evidence_input_packet_output",
       "git_status": " M",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_FORMULA_ROWS_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_DIRTY_CONTEXT_20260701.csv",
       "release_decision": "included_or_rewritten_by_input_packet_builder"
     },
     {
@@ -719,7 +731,7 @@
       "input_packet_version": "sidewall_route_evidence_input_packet_v1",
       "input_row_id": "ROUTE-EVIDENCE-INPUT-wet_surface_observation",
       "ready_to_rerun_chain": true,
-      "required_action": "populate all wet endpoint observation rows with source hashes, required fields, controls, replicate counts, uncertainty intervals, and pre-registration status where required",
+      "required_action": "populate wet source manifest rows and run the wet observation manifest importer so source hashes, required fields, controls, replicate counts, uncertainty intervals, and pre-registration status are bound before wet intake",
       "target_input_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INPUT_ROWS_20260701.csv",
       "template_artifact_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_OBSERVATION_TEMPLATE_ROWS_20260701.csv",
       "template_rows": 14
@@ -861,7 +873,7 @@
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "nodi_simulator/sidewall_route_evidence_input_packet.py",
-      "sha256": "0562a6815be20a44aac994178ffef6e95dce187e21e5a09142b3c25eda762eb9",
+      "sha256": "a7a3b34c33290b492658390ebf47ddbd05fb62bd9ed96cbb0c1d2ffe390655bf",
       "source_id": "input_packet_source"
     },
     {
@@ -870,7 +882,7 @@
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
-      "sha256": "855cf20ac6985cf7b5231b3bc88fe263a4227372855113bab804f620fdbe1324",
+      "sha256": "4a22fd0a2717df84063de7ffc99635d6206abc2ad18892beab379eba6158ce47",
       "source_id": "input_packet_builder"
     },
     {
@@ -879,7 +891,7 @@
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "tests/test_sidewall_route_evidence_input_packet.py",
-      "sha256": "78e6af7c02653c5e876cdb029327a1c9ea090131146b0d387addbf328b28f85e",
+      "sha256": "1426304918b46b675ab888a33ebcb26e9c6525589e09cd71485c38466e031d77",
       "source_id": "input_packet_tests"
     },
     {
@@ -888,7 +900,7 @@
       "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
       "exists": "true",
       "path": "tests/test_nodi_package_c_sidewall_route_evidence_input_packet.py",
-      "sha256": "8734e7d4277bea5c747274f2778308485ca7c421896e5c8b4d9c497fc80792a7",
+      "sha256": "18f12cab9f01ea6a067cfab314d5324f85018a6811ae3f21e8c0dfaaf5e9cdf2",
       "source_id": "input_packet_builder_tests"
     },
     {
@@ -935,8 +947,8 @@
     "blocked_use": "template-as-evidence;route_score;winner;JRC;yield;detection_probability;wet_pass_probability from templates or unaccepted rows;production ingestion",
     "branch": "main",
     "claim_boundary": "route_evidence_input_packet_implementation_authorized_evidence_gated",
-    "command_rows": 9,
-    "current_head": "e703ad22f971534e65bcc3f7f197c61c2cbf1f3f",
+    "command_rows": 10,
+    "current_head": "2b24461eba4e4f8d1dccfaa8c88d5f4fce9154ed",
     "detection_probability_current": false,
     "detection_probability_current_rows": 0,
     "detection_value_input_present": true,
@@ -956,7 +968,7 @@
     "route_formula_ready_for_claim_review_rows": 0,
     "route_formula_rows": 2,
     "route_score_current": false,
-    "semantic_digest": "c005e6726a3147ac65b12b5059dcf6176149f46bdb1ba74c8cdf633627d1227b",
+    "semantic_digest": "824a2568e74859cf50dde8fd578826bce09b4c4d619d41cefb48866208775540",
     "source_activation_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_READY_NO_CURRENT_ACCEPTED_EVIDENCE",
     "source_claim_value_disposition": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_REAL_VALUE_ROWS",
     "source_closure_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_READY_CURRENTLY_BLOCKED",

@@ -14,4 +14,4 @@ Missing current-acceptance branches: `wet_surface_observation;detection_probabil
 Route formula ready rows: `0`.
 Detection probability current rows: `0`; yield current rows: `0`; wet-pass current rows: `0`.
 
-This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value evidence, then rerunning the nine-step chain through route decision readiness.
+This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value evidence, then rerunning the ten-step chain through route decision readiness.
