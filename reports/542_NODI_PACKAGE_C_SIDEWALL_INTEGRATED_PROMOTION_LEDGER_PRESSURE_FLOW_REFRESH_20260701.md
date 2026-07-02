@@ -1,7 +1,7 @@
 # NODI Package C Sidewall Integrated Promotion Ledger Pressure-Flow Refresh
 
 - Disposition: `NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_READY_PREFLIGHT_ONLY`.
-- Current head: `92bc2d887edabaeef9263d6a7bdd170e4f289e27` on `main`.
+- Current head: `6c3bb9bef6505927e7cc1634db23f46f3ae2228a` on `main`.
 - Refreshed promotion lane rows: `18`.
 - Pressure-flow delta rows: `2`.
 - Exact W500/D900 route validation requests: `2`.

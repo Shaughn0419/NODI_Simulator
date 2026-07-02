@@ -1,7 +1,7 @@
 # NODI Package C Sidewall Pressure-Flow Result Binder
 
 - Disposition: `NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY`.
-- Current head: `e35b991ca1783c41becd9de5486aafba694a86c9` on `main`.
+- Current head: `6c3bb9bef6505927e7cc1634db23f46f3ae2228a` on `main`.
 - External result input present: `True`.
 - Binding rows: `2`.
 - Formal q_ch sidecar rows: `2`.

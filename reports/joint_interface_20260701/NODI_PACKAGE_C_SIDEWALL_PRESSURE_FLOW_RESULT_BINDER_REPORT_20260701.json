@@ -3,7 +3,7 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_READY",
     "artifact_id": "PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_20260701",
     "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection",
-    "current_head": "e35b991ca1783c41becd9de5486aafba694a86c9",
+    "current_head": "6c3bb9bef6505927e7cc1634db23f46f3ae2228a",
     "branch": "main",
     "source_pressure_flow_harness_disposition": "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_READY_EXECUTION_INPUT",
     "source_pressure_flow_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_READY_PREFLIGHT_ONLY",
@@ -28,8 +28,8 @@
     "promotion_update_rows": 1,
     "source_lock_rows": 10,
     "source_missing_rows": 0,
-    "dirty_context_rows": 93,
-    "non_release_dirty_context_rows": 79,
+    "dirty_context_rows": 115,
+    "non_release_dirty_context_rows": 92,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "pressure-flow external result binding;formal qch sidecar acceptance preflight",
     "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion",
@@ -210,7 +210,7 @@
       "source_id": "pressure_flow_validation_harness_status",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "0840cbecdf56e008a8d873a6da3382f8e13ff8efa20d7b9aec07b3e17b53d827",
+      "sha256": "009bde4a746fefa6c296b0ab5cfbf86e9245b239f74526663cbae85f1e8e2e4d",
       "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection",
       "allowed_use": "pressure-flow external result binding;formal qch sidecar acceptance preflight",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -237,7 +237,7 @@
       "source_id": "integrated_promotion_ledger_pressure_flow_status",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "0c601193c8ca4477167ab21e22e594aa9f5b39a8eb032ef5e4b6ebfd3c2847b9",
+      "sha256": "31e468cfedd03992adae21d79b7cd967e5ccfb0b43fee4ac16d48df075be5819",
       "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection",
       "allowed_use": "pressure-flow external result binding;formal qch sidecar acceptance preflight",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -246,7 +246,7 @@
       "source_id": "integrated_promotion_ledger_pressure_flow_lanes",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_PROMOTION_LANE_ROWS_20260701.csv",
       "exists": "true",
-      "sha256": "335ca1b10dfa6e43bf1ed0458a1a97b15f64272d3973cd7bcbd05973ea1afff3",
+      "sha256": "3a4b9d5e16058ea9125198204887618a634b28ffa1a2c41f67e6e8ce013d4445",
       "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection",
       "allowed_use": "pressure-flow external result binding;formal qch sidecar acceptance preflight",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -273,7 +273,7 @@
       "source_id": "pressure_flow_result_binder_builder",
       "path": "tools/audits/build_nodi_package_c_sidewall_pressure_flow_result_binder.py",
       "exists": "true",
-      "sha256": "f59f72f198e1b7c25a2960a8a620a76d0d3947f79df945464ed7e817f296b152",
+      "sha256": "3b062d9a73f646560438d8aa672ef7b67153f83c02b7f9a73dfde18d527d2785",
       "claim_boundary": "pressure_flow_result_binder_not_route_score_not_yield_not_detection",
       "allowed_use": "pressure-flow external result binding;formal qch sidecar acceptance preflight",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -365,10 +365,34 @@
       "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
     },
     {
+      "path": "reports/521_NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/541_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_20260701.md",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/542_NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_20260701.md",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
       "path": "reports/543_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_20260701.md",
       "git_status": " M",
       "classification": "pressure_flow_result_binder_output",
       "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
+    },
+    {
+      "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
     },
     {
       "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
@@ -671,10 +695,76 @@
       "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_BINDING_ROWS_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_DIRTY_CONTEXT_20260701.csv",
       "git_status": " M",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_PROMOTION_LANE_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_COMSOL_HANDOFF_REQUEST_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_DIRTY_CLASSIFIER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
     },
     {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_DIRTY_CONTEXT_20260701.csv",
@@ -684,12 +774,6 @@
     },
     {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_MANIFEST_20260701.csv",
-      "git_status": " M",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_PROMOTION_UPDATE_ROWS_20260701.csv",
       "git_status": " M",
       "classification": "pressure_flow_result_binder_output",
       "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
@@ -711,6 +795,66 @@
       "git_status": " M",
       "classification": "pressure_flow_result_binder_output",
       "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "source_locked_upstream_pressure_flow_dirty_context",
+      "release_decision": "included_in_chain_rebuild_not_result_binder_blocker"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
     },
     {
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
@@ -821,12 +965,6 @@
       "release_decision": "ignored_for_pressure_flow_result_binder_not_source_locked"
     },
     {
-      "path": "tests/test_nodi_package_c_sidewall_pressure_flow_result_binder.py",
-      "git_status": " M",
-      "classification": "pressure_flow_result_binder_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
@@ -837,12 +975,6 @@
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_ROWS_20260701.csv",
-      "git_status": "??",
-      "classification": "pressure_flow_result_binder_output",
-      "release_decision": "included_or_rewritten_by_pressure_flow_result_binder"
     },
     {
       "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
