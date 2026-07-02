@@ -1,0 +1,33 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_DETECTOR_BLANK_TRANSFER_REFRESH_READY_NOT_CLAIM_READY",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_DETECTOR_BLANK_TRANSFER_REFRESH_READY_NOT_CLAIM_READY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_DETECTOR_BLANK_TRANSFER_REFRESH_20260701",
+    "claim_boundary": "route_yield_detection_policy_not_route_score_not_yield_not_detection_probability",
+    "current_head": "88300f5994460ec50cf8eaabbcd77808e44fa1ba",
+    "branch": "main",
+    "source_detector_blank_transfer_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_TRANSFER_REFRESH_READY_PREFLIGHT_ONLY",
+    "policy_rows": 2,
+    "blocker_rows": 12,
+    "required_lanes_per_route": 6,
+    "promotion_update_rows": 1,
+    "not_ready_policy_rows": 2,
+    "selected_annulus_input_ready_blocker_rows": 2,
+    "detector_transfer_intake_policy_rows": 2,
+    "blank_transfer_intake_policy_rows": 2,
+    "primary_next_execution_blocks": "sidewall_detector_blank_transfer_validation",
+    "route_score_allowed_rows": 0,
+    "winner_allowed_rows": 0,
+    "yield_allowed_rows": 0,
+    "detection_probability_allowed_rows": 0,
+    "wet_pass_probability_allowed_rows": 0,
+    "source_lock_rows": 6,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 87,
+    "non_release_dirty_context_rows": 79,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "route/yield/detection readiness policy after detector/blank transfer intake;promotion blocker prioritization",
+    "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion",
+    "semantic_digest": "ccb13a758fc3855059c316d7d9537748a1b3ea660735bab797666cf9a2b15c68"
+  }
+}

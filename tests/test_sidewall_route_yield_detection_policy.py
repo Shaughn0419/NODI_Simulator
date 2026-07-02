@@ -3,6 +3,7 @@ from __future__ import annotations
 from nodi_simulator.sidewall_route_yield_detection_policy import (
     EXACT_PRESSURE_FLOW_READY_STATUS,
     BLANK_GUARD_PANEL_STATUS,
+    DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS,
     DETECTOR_RESPONSE_PANEL_STATUS,
     FORMAL_QCH_READY_STATUS,
     REQUIRED_LANES,
@@ -99,6 +100,17 @@ def _rows_after_wet_observation_refresh() -> list[dict[str, str]]:
     ]
 
 
+def _rows_after_detector_blank_transfer_refresh() -> list[dict[str, str]]:
+    rows = _rows_after_wet_observation_refresh()
+    for row in rows:
+        if row["evidence_lane"] in {
+            "detector_response_bridge",
+            "blank_false_positive_trace",
+        }:
+            row["current_status"] = DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS
+    return rows
+
+
 def test_route_yield_detection_policy_rolls_up_blocked_lanes() -> None:
     policy_rows, blocker_rows = build_route_yield_detection_policy_rows(_rows())
 
@@ -175,6 +187,33 @@ def test_route_yield_detection_policy_recognizes_current_wet_observation_refresh
     ]
     assert {blocker.blocker_status for blocker in selected_blockers} == {
         ROUTE_INPUT_READY_BLOCKER_STATUS
+    }
+
+
+def test_route_yield_detection_policy_recognizes_detector_blank_transfer_intake() -> None:
+    policy_rows, blocker_rows = build_route_yield_detection_policy_rows(
+        _rows_after_detector_blank_transfer_refresh()
+    )
+    row = policy_rows[0]
+
+    assert row.detector_response_policy_status == (
+        "not_ready_detector_transfer_intake_ready_no_transfer_evidence"
+    )
+    assert row.blank_false_positive_policy_status == (
+        "not_ready_blank_transfer_intake_ready_no_transfer_evidence"
+    )
+    assert row.primary_next_execution_block == "sidewall_detector_blank_transfer_validation"
+    assert row.route_policy_status == ROUTE_POLICY_NOT_READY_STATUS
+    assert row.detection_probability_allowed is False
+    assert row.route_score_allowed is False
+    transfer_blockers = [
+        blocker
+        for blocker in blocker_rows
+        if blocker.evidence_lane
+        in {"detector_response_bridge", "blank_false_positive_trace"}
+    ]
+    assert {blocker.blocker_status for blocker in transfer_blockers} == {
+        "blocked_not_claim_ready"
     }
 
 

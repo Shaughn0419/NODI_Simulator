@@ -37,6 +37,9 @@ DETECTOR_RESPONSE_PANEL_STATUS = (
 )
 BLANK_GUARD_PANEL_STATUS = "nearest_blank_guard_bound_to_panel_not_sidewall_specific"
 WET_OBSERVATION_INTAKE_STATUS = "wet_surface_observation_intake_ready_no_observations"
+DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS = (
+    "detector_blank_transfer_intake_ready_no_transfer_evidence"
+)
 
 REQUIRED_LANES: tuple[str, ...] = (
     "flow_split_qch",
@@ -257,6 +260,8 @@ def _selected_annulus_policy_status(row: Mapping[str, Any]) -> str:
 
 def _detector_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS:
+        return "not_ready_detector_transfer_intake_ready_no_transfer_evidence"
     if status == DETECTOR_RESPONSE_PANEL_STATUS:
         return "not_ready_detector_response_panel_candidate_needs_sidewall_calibration"
     if status == "detector_identity_context_available_not_sidewall_response_validation":
@@ -266,6 +271,8 @@ def _detector_policy_status(row: Mapping[str, Any]) -> str:
 
 def _blank_policy_status(row: Mapping[str, Any]) -> str:
     status = str(row.get("current_status", ""))
+    if status == DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS:
+        return "not_ready_blank_transfer_intake_ready_no_transfer_evidence"
     if status == BLANK_GUARD_PANEL_STATUS:
         return "not_ready_blank_guard_panel_bound_needs_sidewall_specific_transfer"
     if status == "nearest_blank_context_available_not_sidewall_specific_validation":
@@ -292,6 +299,7 @@ def _primary_next_block(*statuses: str) -> str:
                 "sidewall_calibration",
                 "sidewall_specific_transfer",
                 "blank_guard_panel_bound",
+                "transfer_intake_ready_no_transfer_evidence",
             ),
         ),
         ("detector_blank_calibration", ("detector", "blank")),
