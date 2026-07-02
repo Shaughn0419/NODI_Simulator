@@ -46,6 +46,7 @@ class SidewallRealEvidenceInputWorkspaceRow:
     template_columns: str
     target_preexisting: bool
     target_created_now: bool
+    target_header_refreshed_now: bool
     target_data_rows: int
     target_header_matches_template: bool
     target_validation_status: str
@@ -86,6 +87,7 @@ def _workspace_row(
 
     target_preexisting = target_path.exists()
     target_created_now = False
+    target_header_refreshed_now = False
     if create_missing_targets and not target_preexisting:
         _write_header_only_csv(target_path, template_headers)
         target_created_now = True
@@ -96,6 +98,15 @@ def _workspace_row(
         target_headers = read_csv_headers(target_path)
         target_header_matches_template = target_headers == template_headers
         target_rows = read_csv_rows(target_path)
+        if (
+            create_missing_targets
+            and not target_header_matches_template
+            and not target_rows
+        ):
+            _write_header_only_csv(target_path, template_headers)
+            target_header_refreshed_now = True
+            target_header_matches_template = True
+            target_rows = []
 
     status = _target_status(
         target_exists=target_path.exists(),
@@ -112,6 +123,7 @@ def _workspace_row(
         template_columns=";".join(template_headers),
         target_preexisting=target_preexisting,
         target_created_now=target_created_now,
+        target_header_refreshed_now=target_header_refreshed_now,
         target_data_rows=len(target_rows),
         target_header_matches_template=target_header_matches_template,
         target_validation_status=status,
@@ -140,6 +152,7 @@ def _blocked_row(
         template_columns="",
         target_preexisting=Path(spec.target_input_path).exists(),
         target_created_now=False,
+        target_header_refreshed_now=False,
         target_data_rows=0,
         target_header_matches_template=False,
         target_validation_status=status,

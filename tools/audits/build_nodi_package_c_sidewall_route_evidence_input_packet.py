@@ -51,9 +51,13 @@ DETECTION_VALUE_TEMPLATE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETE
 YIELD_VALUE_TEMPLATE_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_YIELD_VALUE_TEMPLATE_ROWS_20260701.csv"
 DETECTION_VALUE_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv"
 YIELD_VALUE_TARGET_INPUT_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv"
+REAL_EVIDENCE_WORKSPACE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_STATUS_20260701.json"
 
 ALLOWED_USE = "single entry packet for detector/wet/value evidence input and full route decision rerun chain"
-BLOCKED_USE = "template-as-evidence;production ingestion"
+BLOCKED_USE = (
+    "template-as-evidence;route_score;winner;JRC;yield;detection_probability;"
+    "wet_pass_probability from templates or unaccepted rows;production ingestion"
+)
 
 SOURCE_FILES = {
     "detector_intake_status": DETECTOR_INTAKE_STATUS,
@@ -64,6 +68,7 @@ SOURCE_FILES = {
     "closure_status": CLOSURE_STATUS,
     "closure_rows": CLOSURE_ROWS,
     "claim_value_status": CLAIM_VALUE_STATUS,
+    "real_evidence_workspace_status": REAL_EVIDENCE_WORKSPACE_STATUS,
     "detection_value_template_rows": DETECTION_VALUE_TEMPLATE_ROWS,
     "yield_value_template_rows": YIELD_VALUE_TEMPLATE_ROWS,
     "input_packet_source": PROJECT_ROOT / "nodi_simulator/sidewall_route_evidence_input_packet.py",
@@ -220,6 +225,7 @@ def build_payload() -> dict[str, Any]:
     activation_summary = load_status(ACTIVATION_STATUS)
     closure_summary = load_status(CLOSURE_STATUS)
     claim_value_summary = load_status(CLAIM_VALUE_STATUS)
+    workspace_summary = load_status(REAL_EVIDENCE_WORKSPACE_STATUS)
     input_rows, command_rows, formula_rows = build_route_evidence_input_packet(
         detector_intake_summary=detector_summary,
         wet_intake_summary=wet_summary,
@@ -269,6 +275,18 @@ def build_payload() -> dict[str, Any]:
         "source_activation_disposition": str(activation_summary.get("disposition", "")),
         "source_closure_disposition": str(closure_summary.get("disposition", "")),
         "source_claim_value_disposition": str(claim_value_summary.get("disposition", "")),
+        "source_real_evidence_workspace_disposition": str(
+            workspace_summary.get("disposition", "")
+        ),
+        "workspace_target_header_only_rows": int(
+            workspace_summary.get("target_header_only_rows", 0)
+        ),
+        "workspace_target_header_refreshed_now_rows": int(
+            workspace_summary.get("target_header_refreshed_now_rows", 0)
+        ),
+        "workspace_target_real_data_rows_total": int(
+            workspace_summary.get("target_real_data_rows_total", 0)
+        ),
         "detector_input_present": bool(activation_summary.get("detector_input_present")),
         "wet_input_present": bool(activation_summary.get("wet_input_present")),
         "detection_value_input_present": bool(claim_value_summary.get("detection_input_present")),
@@ -397,6 +415,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Wet template rows: `{s['wet_template_rows']}`; target input present: `{s['wet_input_present']}`.",
             f"Detection-value template rows: `{s['detection_value_template_rows']}`; target input present: `{s['detection_value_input_present']}`.",
             f"Yield/wet-value template rows: `{s['yield_value_template_rows']}`; target input present: `{s['yield_value_input_present']}`.",
+            f"Workspace header-only target rows: `{s['workspace_target_header_only_rows']}`; refreshed now: `{s['workspace_target_header_refreshed_now_rows']}`.",
             f"Route formula ready rows: `{s['route_formula_ready_for_claim_review_rows']}`.",
             f"Detection probability current rows: `{s['detection_probability_current_rows']}`; yield current rows: `{s['yield_current_rows']}`; wet-pass current rows: `{s['wet_pass_probability_current_rows']}`.",
             "",

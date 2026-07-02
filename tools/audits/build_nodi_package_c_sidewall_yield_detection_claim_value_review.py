@@ -202,6 +202,7 @@ def build_payload() -> dict[str, Any]:
         winner_jrc_rows=winner_rows,
         detection_value_rows=optional_csv(DETECTION_VALUE_INPUT_ROWS),
         yield_value_rows=optional_csv(YIELD_VALUE_INPUT_ROWS),
+        artifact_root=PROJECT_ROOT,
     )
     claim_dicts = [row.to_dict() for row in claim_rows]
     guard_dicts = [row.to_dict() for row in guard_rows]

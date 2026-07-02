@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from pathlib import Path
 from typing import Any, Mapping
+
+from nodi_simulator.realism_v2_io import sha256_file
 
 
 SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_VERSION = (
@@ -25,6 +28,7 @@ DETECTION_REQUIRED_FIELDS: tuple[str, ...] = (
     "uncertainty_model",
     "pre_registered_rule_status",
     "source_geometry_match_level",
+    "source_artifact_path",
     "source_artifact_sha256",
 )
 
@@ -42,6 +46,7 @@ YIELD_REQUIRED_FIELDS: tuple[str, ...] = (
     "uncertainty_model",
     "pre_registered_rule_status",
     "source_geometry_match_level",
+    "source_artifact_path",
     "source_artifact_sha256",
 )
 
@@ -60,6 +65,7 @@ class SidewallYieldDetectionClaimValueReviewRow:
     detection_probability_value_current: str
     detection_probability_ci_low_current: str
     detection_probability_ci_high_current: str
+    detection_source_artifact_path_current: str
     yield_value_row_present: bool
     yield_value_validation_status: str
     yield_current: bool
@@ -70,6 +76,7 @@ class SidewallYieldDetectionClaimValueReviewRow:
     wet_pass_probability_value_current: str
     wet_pass_probability_ci_low_current: str
     wet_pass_probability_ci_high_current: str
+    yield_source_artifact_path_current: str
     route_score_current: bool
     production_ingestion_current: bool
     claim_value_review_status: str
@@ -101,6 +108,7 @@ def build_yield_detection_claim_value_review(
     winner_jrc_rows: list[Mapping[str, Any]],
     detection_value_rows: list[Mapping[str, Any]] | None = None,
     yield_value_rows: list[Mapping[str, Any]] | None = None,
+    artifact_root: str | Path | None = None,
 ) -> tuple[
     list[SidewallYieldDetectionClaimValueReviewRow],
     list[SidewallYieldDetectionClaimValueGuardRow],
@@ -120,8 +128,8 @@ def build_yield_detection_claim_value_review(
         route_id = str(winner.get("route_candidate_id", ""))
         detection = detection_by_route.get(route_id, {})
         wet_yield = yield_by_route.get(route_id, {})
-        detection_status = _detection_validation_status(detection)
-        yield_status = _yield_validation_status(wet_yield)
+        detection_status = _detection_validation_status(detection, artifact_root)
+        yield_status = _yield_validation_status(wet_yield, artifact_root)
         detection_current = detection_status == "detection_probability_value_accepted"
         yield_current = yield_status == "yield_wet_value_bundle_accepted"
         rows.append(
@@ -150,6 +158,11 @@ def build_yield_detection_claim_value_review(
                     if detection_current
                     else ""
                 ),
+                detection_source_artifact_path_current=(
+                    str(detection.get("source_artifact_path", ""))
+                    if detection_current
+                    else ""
+                ),
                 yield_value_row_present=bool(wet_yield),
                 yield_value_validation_status=yield_status,
                 yield_current=yield_current,
@@ -175,6 +188,11 @@ def build_yield_detection_claim_value_review(
                 ),
                 wet_pass_probability_ci_high_current=(
                     str(wet_yield.get("wet_pass_probability_ci_high", ""))
+                    if yield_current
+                    else ""
+                ),
+                yield_source_artifact_path_current=(
+                    str(wet_yield.get("source_artifact_path", ""))
                     if yield_current
                     else ""
                 ),
@@ -215,6 +233,7 @@ def detection_claim_value_template_rows(
             "uncertainty_model": "",
             "pre_registered_rule_status": "pre_registered | missing",
             "source_geometry_match_level": "sidewall_specific | validated_transfer",
+            "source_artifact_path": "",
             "source_artifact_sha256": "",
         }
         for row in winner_jrc_rows
@@ -240,13 +259,17 @@ def yield_claim_value_template_rows(
             "uncertainty_model": "",
             "pre_registered_rule_status": "pre_registered | missing",
             "source_geometry_match_level": "sidewall_specific | validated_transfer",
+            "source_artifact_path": "",
             "source_artifact_sha256": "",
         }
         for row in winner_jrc_rows
     ]
 
 
-def _detection_validation_status(row: Mapping[str, Any]) -> str:
+def _detection_validation_status(
+    row: Mapping[str, Any],
+    artifact_root: str | Path | None,
+) -> str:
     if not row:
         return "detection_probability_value_missing"
     missing = _missing_fields(row, DETECTION_REQUIRED_FIELDS)
@@ -260,12 +283,16 @@ def _detection_validation_status(row: Mapping[str, Any]) -> str:
         return "detection_probability_value_rejected_invalid_interval"
     if _int(row.get("n_positive_control_events")) < 3:
         return "detection_probability_value_rejected_insufficient_positive_controls"
-    if not _common_metadata_ok(row):
-        return "detection_probability_value_rejected_metadata_or_controls"
+    metadata_rejection = _common_metadata_rejection(row, artifact_root)
+    if metadata_rejection:
+        return f"detection_probability_value_rejected_{metadata_rejection}"
     return "detection_probability_value_accepted"
 
 
-def _yield_validation_status(row: Mapping[str, Any]) -> str:
+def _yield_validation_status(
+    row: Mapping[str, Any],
+    artifact_root: str | Path | None,
+) -> str:
     if not row:
         return "yield_wet_value_bundle_missing"
     missing = _missing_fields(row, YIELD_REQUIRED_FIELDS)
@@ -283,20 +310,48 @@ def _yield_validation_status(row: Mapping[str, Any]) -> str:
         return "yield_wet_value_bundle_rejected_invalid_wet_pass_interval"
     if _int(row.get("n_wet_trials")) < 3:
         return "yield_wet_value_bundle_rejected_insufficient_wet_trials"
-    if not _common_metadata_ok(row):
-        return "yield_wet_value_bundle_rejected_metadata_or_controls"
+    metadata_rejection = _common_metadata_rejection(row, artifact_root)
+    if metadata_rejection:
+        return f"yield_wet_value_bundle_rejected_{metadata_rejection}"
     return "yield_wet_value_bundle_accepted"
 
 
-def _common_metadata_ok(row: Mapping[str, Any]) -> bool:
-    return (
-        str(row.get("controls_status", "")) == "controls_pass"
-        and str(row.get("pre_registered_rule_status", "")) == "pre_registered"
-        and str(row.get("source_geometry_match_level", ""))
-        in {"sidewall_specific", "validated_transfer"}
-        and _valid_sha256(row.get("source_artifact_sha256"))
-        and bool(str(row.get("uncertainty_model", "")).strip())
-    )
+def _common_metadata_rejection(
+    row: Mapping[str, Any],
+    artifact_root: str | Path | None,
+) -> str:
+    if (
+        str(row.get("controls_status", "")) != "controls_pass"
+        or str(row.get("pre_registered_rule_status", "")) != "pre_registered"
+        or str(row.get("source_geometry_match_level", ""))
+        not in {"sidewall_specific", "validated_transfer"}
+        or not bool(str(row.get("uncertainty_model", "")).strip())
+    ):
+        return "metadata_or_controls"
+    if not _source_artifact_hash_ok(row, artifact_root):
+        return "source_artifact_missing_or_hash_mismatch"
+    return ""
+
+
+def _source_artifact_hash_ok(
+    row: Mapping[str, Any],
+    artifact_root: str | Path | None,
+) -> bool:
+    expected_sha = str(row.get("source_artifact_sha256", "")).strip()
+    if not _valid_sha256(expected_sha):
+        return False
+    source_path_text = str(row.get("source_artifact_path", "")).strip()
+    if not source_path_text:
+        return False
+    source_path = Path(source_path_text)
+    if not source_path.is_absolute() and artifact_root is not None:
+        source_path = Path(artifact_root) / source_path
+    if not source_path.exists():
+        return False
+    try:
+        return sha256_file(source_path).lower() == expected_sha.lower()
+    except OSError:
+        return False
 
 
 def _probability_interval_ok(value: Any, low: Any, high: Any) -> bool:

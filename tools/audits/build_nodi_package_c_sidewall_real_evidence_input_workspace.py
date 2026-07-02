@@ -259,6 +259,9 @@ def build_payload(*, create_missing_targets: bool) -> dict[str, Any]:
         "branch": git_branch(),
         "workspace_rows": len(row_dicts),
         "target_created_now_rows": sum(row["target_created_now"] for row in row_dicts),
+        "target_header_refreshed_now_rows": sum(
+            row["target_header_refreshed_now"] for row in row_dicts
+        ),
         "target_header_only_rows": sum(
             row["target_validation_status"] == TARGET_HEADER_ONLY_STATUS
             for row in row_dicts
@@ -361,6 +364,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
             "",
             f"Workspace rows: `{s['workspace_rows']}`.",
             f"Header-only target rows: `{s['target_header_only_rows']}`.",
+            f"Headers refreshed now: `{s['target_header_refreshed_now_rows']}`.",
             f"Real target data rows total: `{s['target_real_data_rows_total']}`.",
             f"Targets created now: `{s['target_created_now_rows']}`.",
             "",
