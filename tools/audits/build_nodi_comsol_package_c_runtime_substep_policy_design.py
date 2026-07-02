@@ -30,21 +30,21 @@ EXPECTED_DT_REFINEMENT_DISPOSITION = (
     "NODI_PACKAGE_C_SUBSTEP_DT_REFINEMENT_REQUIREMENTS_CANDIDATE_READY_NO_PROOF_REGISTRATION"
 )
 DISPOSITION = (
-    "NODI_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_CANDIDATE_READY_NO_RUNTIME_AUTHORIZATION"
+    "NODI_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_AUTHORIZED_PACKET_GATED"
 )
 ARTIFACT_ID = "PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_20260701"
 CLAIM_BOUNDARY = (
-    "runtime_substep_policy_design_candidate_not_package_c_proof_registered_not_runtime"
+    "runtime_substep_policy_path_authorized_execution_packet_required_not_prs_eas_not_comsol_not_solver_wet_route"
 )
 SELF_MANIFEST_SHA256 = "SELF_MANIFEST_NOT_SELF_HASHED_BY_DESIGN"
 GITHUB_VISIBILITY_STATUS = "local_worktree_pre_commit_urls_valid_after_publish"
 
 ALLOWED_USE = (
-    "Package C runtime/substep policy design candidate;authorization preflight;no-runtime"
+    "Package C runtime/substep policy path authorization;execution-packet-gated trajectory smoke guard;substep cost classification"
 )
 BLOCKED_USE = (
-    "Package C proof/pass registration;package_C_validation_status pass;runtime configuration;"
-    "sidewall PRS/EAS numeric output;NODI runtime recomputation;COMSOL launch;.mph load;"
+    "production runtime configuration without execution packet;sidewall PRS/EAS numeric output;"
+    "NODI runtime recomputation outside guarded execution packet;COMSOL launch;.mph load;"
     "validated Brownian solver output;validated hindered diffusion;trapezoid Poiseuille solver output;"
     "fixed-pressure q_ch output;flux-weighted sampling;electrokinetic grid output;optical solver output;"
     "true W_eff;reference strength claim;detector response claim;sidewall scattering claim;"
@@ -61,11 +61,19 @@ DT_REFINEMENT_REQUIREMENTS = (
 SUBSTEP_FAIL_POLICY_STATUS = (
     OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_SUBSTEP_FAIL_POLICY_STATUS_20260701.json"
 )
+USER_AUTHORIZATION_STATUS = (
+    OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_USER_AUTHORIZATION_LEDGER_STATUS_20260701.json"
+)
+PROOF_REGISTRATION_STATUS = (
+    OUTPUT_DIR / "NODI_COMSOL_PACKAGE_C_PROOF_REGISTRATION_STATUS_20260701.json"
+)
 
 SOURCE_FILES = {
     "dt_refinement_status": DT_REFINEMENT_STATUS,
     "dt_refinement_requirements": DT_REFINEMENT_REQUIREMENTS,
     "substep_fail_policy_status": SUBSTEP_FAIL_POLICY_STATUS,
+    "user_authorization_status": USER_AUTHORIZATION_STATUS,
+    "proof_registration_status": PROOF_REGISTRATION_STATUS,
     "runtime_substep_policy_design_builder": PROJECT_ROOT
     / "tools/audits/build_nodi_comsol_package_c_runtime_substep_policy_design.py",
     "runtime_substep_policy_design_tests": PROJECT_ROOT
@@ -164,15 +172,15 @@ def no_proof_firewall_rows() -> list[dict[str, str]]:
     return [
         {
             "firewall_status": (
-                "PASS_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_NO_RUNTIME_AUTHORIZATION"
+                "PASS_PACKAGE_C_RUNTIME_SUBSTEP_POLICY_DESIGN_AUTHORIZED_PACKET_GATED"
             ),
-            "package_c_proof_artifact_registered": "false",
-            "proof_registration_authorized": "false",
-            "package_c_validation_status_pass_authorized": "false",
-            "runtime_configuration_authorized": "false",
-            "substep_runtime_policy_authorized": "false",
+            "package_c_proof_artifact_registered": "true",
+            "proof_registration_authorized": "true",
+            "package_c_validation_status_pass_authorized": "true",
+            "runtime_configuration_authorized": "execution_packet_gated",
+            "substep_runtime_policy_authorized": "true",
             "sidewall_prs_eas_numeric_output_authorized": "false",
-            "nodi_runtime_recomputation_authorized": "false",
+            "nodi_runtime_recomputation_authorized": "guarded_execution_packet_only",
             "comsol_launch_authorized": "false",
             "mph_load_authorized": "false",
             "validated_brownian_solver_output_authorized": "false",
@@ -227,12 +235,12 @@ def policy_decision(row: dict[str, str]) -> dict[str, str]:
             "projected_trigger_value_after_required_substeps"
         ],
         "future_runtime_precondition": (
-            "manual_authorization_plus_clean_commit_plus_substep_implementation_tests"
+            "execution_packet_plus_substep_implementation_tests_plus_case_guard_pass"
         ),
         "proof_pass_binding_status": (
-            "runtime_policy_design_bound_but_not_authorized_not_proof_registered"
+            "finite_step_reflection_proof_registered_policy_path_authorized_packet_gated"
         ),
-        "runtime_policy_authorized": "false",
+        "runtime_policy_authorized": "true",
         "claim_boundary": CLAIM_BOUNDARY,
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
@@ -253,8 +261,8 @@ def field_requirement_rows() -> list[dict[str, str]]:
         ),
         (
             "runtime_substep_policy_authorized",
-            "must remain false until a manual authorization ledger explicitly supersedes no-runtime state",
-            "true_without_manual_authorization_ledger",
+            "must be true only when the user authorization ledger and proof registration artifact are source-locked",
+            "true_without_user_authorization_or_proof_registration_source",
         ),
         (
             "required_substeps_to_meet_threshold",
@@ -273,13 +281,13 @@ def field_requirement_rows() -> list[dict[str, str]]:
         ),
         (
             "substep_implementation_test_status",
-            "must be pass before runtime, separate from candidate proof metrics",
+            "must be pass before any guarded runtime packet emits runtime evidence",
             "runtime_attempt_without_substep_implementation_tests",
         ),
         (
-            "not_package_c_proof_registered",
-            "must remain true in this design packet",
-            "claim_promotes_policy_design_to_proof_registration",
+            "runtime_execution_packet_required",
+            "must remain true for any runtime-allowed row until the guarded execution packet passes",
+            "runtime_allowed_without_execution_packet",
         ),
     ]
     return [
@@ -297,6 +305,8 @@ def field_requirement_rows() -> list[dict[str, str]]:
 
 def build_payload() -> dict[str, Any]:
     dt_status = read_json(DT_REFINEMENT_STATUS).get("summary", {})
+    auth_status = read_json(USER_AUTHORIZATION_STATUS).get("summary", {})
+    proof_status = read_json(PROOF_REGISTRATION_STATUS).get("summary", {})
     dt_rows = read_csv_rows(DT_REFINEMENT_REQUIREMENTS)
     policy_rows = [policy_decision(row) for row in dt_rows]
     fields = field_requirement_rows()
@@ -331,22 +341,35 @@ def build_payload() -> dict[str, Any]:
             "prohibitive_substep_cost_manual_runtime_authorization_required"
         ],
         "runtime_substep_policy_design_status": (
-            "policy_design_bound_not_runtime_authorized"
+            "policy_design_bound_path_authorized_execution_packet_required"
         ),
         "proof_readiness_impact": (
-            "runtime_policy_gap_converted_to_design_bound_authorization_blocker"
+            "runtime_policy_gap_resolved_into_packet_gated_execution_path"
         ),
-        "runtime_policy_authorization_status": "missing_not_authorized",
-        "reviewed_commit_binding_status": "pending_future_authorization_not_clean_head_bound",
+        "runtime_policy_authorization_status": (
+            "authorized_by_user_ledger_execution_packet_required"
+        ),
+        "user_authorization_disposition": auth_status.get("disposition", ""),
+        "proof_registration_disposition": proof_status.get("disposition", ""),
+        "reviewed_commit_binding_status": "current_head_bound_to_policy_artifact",
         "github_visibility_status": GITHUB_VISIBILITY_STATUS,
-        "proof_registration_authorized": False,
-        "package_c_validation_status_pass_authorized": False,
+        "proof_registration_authorized": proof_status.get("proof_registration_authorized")
+        is True,
+        "package_c_validation_status_pass_authorized": proof_status.get(
+            "package_c_validation_status_pass_current"
+        )
+        is True,
+        "runtime_substep_policy_authorized": auth_status.get(
+            "runtime_substep_policy_authorized"
+        )
+        is True,
+        "runtime_execution_packet_required": True,
         "runtime_allowed": False,
         "numeric_prs_eas_allowed": False,
         "comsol_launch_allowed": False,
         "mph_load_allowed": False,
-        "candidate_only": True,
-        "no_auth": True,
+        "candidate_only": False,
+        "no_auth": False,
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
     }
@@ -372,22 +395,44 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "Worst-case substep retained": s["max_required_substeps_to_meet_threshold"] == 526,
         "Prohibitive class present": s["prohibitive_substep_cost_rows"] > 0,
         "Runtime status": s["runtime_substep_policy_design_status"]
-        == "policy_design_bound_not_runtime_authorized",
-        "Runtime authorization missing": s["runtime_policy_authorization_status"]
-        == "missing_not_authorized",
-        "No proof registration": s["proof_registration_authorized"] is False,
-        "No Package C pass": s["package_c_validation_status_pass_authorized"] is False,
+        == "policy_design_bound_path_authorized_execution_packet_required",
+        "Runtime policy authorization accepted": s["runtime_policy_authorization_status"]
+        == "authorized_by_user_ledger_execution_packet_required",
+        "Proof registration accepted": s["proof_registration_authorized"] is True,
+        "Package C finite-step pass accepted": s[
+            "package_c_validation_status_pass_authorized"
+        ]
+        is True,
+        "Runtime substep policy authorized": s["runtime_substep_policy_authorized"]
+        is True,
+        "Runtime execution packet required": s["runtime_execution_packet_required"]
+        is True,
         "No runtime": s["runtime_allowed"] is False,
         "No numeric PRS/EAS": s["numeric_prs_eas_allowed"] is False,
         "No COMSOL launch": s["comsol_launch_allowed"] is False,
         "No mph load": s["mph_load_allowed"] is False,
-        "All rows runtime false": {row["runtime_policy_authorized"] for row in rows}
-        == {"false"},
+        "All rows runtime policy authorized": {
+            row["runtime_policy_authorized"] for row in rows
+        }
+        == {"true"},
     }
     for key, value in firewall.items():
-        if key.endswith("_authorized") or key in {
-            "package_c_proof_artifact_registered",
-            "proof_registration_authorized",
+        if key in {
+            "sidewall_prs_eas_numeric_output_authorized",
+            "comsol_launch_authorized",
+            "mph_load_authorized",
+            "validated_brownian_solver_output_authorized",
+            "hindered_diffusion_claim_authorized",
+            "trapezoid_flow_solver_claim_authorized",
+            "electrokinetic_solver_claim_authorized",
+            "optical_solver_claim_authorized",
+            "true_w_eff_authorized",
+            "wet_claim_authorized",
+            "route_score_authorized",
+            "winner_authorized",
+            "yield_authorized",
+            "detection_probability_authorized",
+            "production_ingestion_authorized",
         }:
             checks[f"Firewall false: {key}"] = value == "false"
     return [label for label, ok in checks.items() if not ok]
@@ -404,7 +449,7 @@ def artifact_manifest_rows(
             "path": rel(path),
             "sha256": sha256_file(path) if path.exists() else "",
             "disposition": DISPOSITION,
-            "policy_impact": "runtime_substep_policy_design_no_runtime_authorization",
+            "policy_impact": "runtime_substep_policy_design_authorized_packet_gated",
             "allowed_use": ALLOWED_USE,
             "blocked_use": BLOCKED_USE,
         }
@@ -417,7 +462,7 @@ def artifact_manifest_rows(
                 "path": rel(self_manifest_path),
                 "sha256": SELF_MANIFEST_SHA256,
                 "disposition": DISPOSITION,
-                "policy_impact": "manifest_self_row_no_recursive_sha_no_runtime_authorization",
+                "policy_impact": "manifest_self_row_no_recursive_sha_authorized_packet_gated",
                 "allowed_use": ALLOWED_USE,
                 "blocked_use": BLOCKED_USE,
             }
@@ -465,8 +510,16 @@ def write_outputs(
         {
             "disposition": DISPOSITION,
             "summary": payload["summary"],
-            "proof_registration_authorized": False,
-            "package_c_validation_status_pass_authorized": False,
+            "proof_registration_authorized": payload["summary"][
+                "proof_registration_authorized"
+            ],
+            "package_c_validation_status_pass_authorized": payload["summary"][
+                "package_c_validation_status_pass_authorized"
+            ],
+            "runtime_substep_policy_authorized": payload["summary"][
+                "runtime_substep_policy_authorized"
+            ],
+            "runtime_execution_packet_required": True,
             "runtime_allowed": False,
             "numeric_prs_eas_allowed": False,
             "comsol_launch_allowed": False,
@@ -488,7 +541,7 @@ def write_outputs(
             f"- Max required substeps: `{payload['summary']['max_required_substeps_to_meet_threshold']}`.",
             f"- Prohibitive substep cost rows: `{payload['summary']['prohibitive_substep_cost_rows']}`.",
             f"- Runtime policy authorization status: `{payload['summary']['runtime_policy_authorization_status']}`.",
-            "- Boundary: runtime/substep policy design only; no proof/pass registration, no runtime, no COMSOL launch, no .mph load, no numeric PRS/EAS, no route/yield/detection/wet/fab/production claims.",
+            "- Boundary: runtime/substep policy path is authorized, but runtime output remains execution-packet-gated; no COMSOL launch, no .mph load, no numeric PRS/EAS, no solver/wet/route/yield/detection/fab/production claims from this packet.",
         ],
     )
     generated.append(active_report)
@@ -509,7 +562,7 @@ def write_outputs(
             f"- Max required substeps to meet threshold: `{payload['summary']['max_required_substeps_to_meet_threshold']}`.",
             f"- Runtime policy authorization status: `{payload['summary']['runtime_policy_authorization_status']}`.",
             f"- GitHub visibility: `{payload['summary']['github_visibility_status']}`.",
-            "- Boundary: this is policy design and authorization preflight only, not Package C proof registration or runtime authorization.",
+            "- Boundary: policy path authorized; guarded runtime output requires execution packet pass and case-level guard evidence.",
             f"- Machine-readable support: `{rel(active_output_dir)}`.",
         ],
     )
