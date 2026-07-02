@@ -93,6 +93,29 @@ BUILD_EDIT_PATHS = {
     "tests/test_nodi_package_c_sidewall_pressure_flow_result_binder.py",
     "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
 }
+UPSTREAM_PRESSURE_FLOW_HARNESS_PREFIX = (
+    "reports/joint_interface_20260701/"
+    "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_"
+)
+UPSTREAM_PRESSURE_FLOW_HARNESS_PUBLIC_REPORT = (
+    "reports/541_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_20260701.md"
+)
+UPSTREAM_PRESSURE_FLOW_LEDGER_PREFIX = (
+    "reports/joint_interface_20260701/"
+    "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_"
+)
+UPSTREAM_PRESSURE_FLOW_LEDGER_PUBLIC_REPORT = (
+    "reports/542_NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_20260701.md"
+)
+
+
+def upstream_pressure_flow_output(path: str) -> bool:
+    return (
+        path.startswith(UPSTREAM_PRESSURE_FLOW_HARNESS_PREFIX)
+        or path == UPSTREAM_PRESSURE_FLOW_HARNESS_PUBLIC_REPORT
+        or path.startswith(UPSTREAM_PRESSURE_FLOW_LEDGER_PREFIX)
+        or path == UPSTREAM_PRESSURE_FLOW_LEDGER_PUBLIC_REPORT
+    )
 
 STALE_POST_RC2_PATHS = {
     "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
@@ -187,6 +210,9 @@ def dirty_context_rows() -> list[dict[str, str]]:
         elif path in BUILD_EDIT_PATHS:
             classification = "pressure_flow_result_binder_build_edit"
             release_decision = "included_in_commit_scope_before_publish"
+        elif upstream_pressure_flow_output(path):
+            classification = "source_locked_upstream_pressure_flow_dirty_context"
+            release_decision = "included_in_chain_rebuild_not_result_binder_blocker"
         elif path.startswith(
             "reports/joint_interface_20260701/"
             "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_"

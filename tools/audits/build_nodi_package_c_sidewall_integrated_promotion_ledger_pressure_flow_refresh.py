@@ -79,6 +79,19 @@ BUILD_EDIT_PATHS = {
     "tests/test_nodi_package_c_sidewall_integrated_promotion_ledger_pressure_flow_refresh.py",
     "reports/100_NODI_SIDEWALL_ANGLE_INTEGRATION_ROADMAP_20260629.md",
 }
+UPSTREAM_PRESSURE_FLOW_HARNESS_PREFIX = (
+    "reports/joint_interface_20260701/"
+    "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_"
+)
+UPSTREAM_PRESSURE_FLOW_HARNESS_PUBLIC_REPORT = (
+    "reports/541_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_20260701.md"
+)
+
+
+def upstream_pressure_flow_harness_output(path: str) -> bool:
+    return path.startswith(UPSTREAM_PRESSURE_FLOW_HARNESS_PREFIX) or (
+        path == UPSTREAM_PRESSURE_FLOW_HARNESS_PUBLIC_REPORT
+    )
 
 STALE_POST_RC2_PATHS = {
     "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
@@ -176,6 +189,9 @@ def dirty_context_rows() -> list[dict[str, str]]:
         elif path in BUILD_EDIT_PATHS:
             classification = "integrated_promotion_ledger_pressure_flow_refresh_build_edit"
             release_decision = "included_in_commit_scope_before_publish"
+        elif upstream_pressure_flow_harness_output(path):
+            classification = "source_locked_upstream_pressure_flow_harness_dirty_context"
+            release_decision = "included_in_chain_rebuild_not_pressure_flow_refresh_blocker"
         elif path.startswith(
             "reports/joint_interface_20260701/"
             "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_"
@@ -311,7 +327,16 @@ def build_payload() -> dict[str, Any]:
         "qch": sum(
             row["evidence_lane"] == "flow_split_qch"
             and row["current_status"]
-            == "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation"
+            in {
+                "w500_d900_grid_refined_split_candidate_absolute_q_requires_validation",
+                "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
+            }
+            for row in lanes
+        ),
+        "formal_qch_sidecar": sum(
+            row["evidence_lane"] == "flow_split_qch"
+            and row["current_status"]
+            == "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting"
             for row in lanes
         ),
         "selected_annulus": sum(
@@ -394,6 +419,7 @@ def build_payload() -> dict[str, Any]:
         "closed_geometry_blocked_control_rows": blocked_controls,
         "pressure_flow_validation_harness_rows_integrated": pressure_integrated,
         "qch_grid_refined_lane_rows_retained": retained["qch"],
+        "formal_qch_sidecar_lane_rows_retained": retained["formal_qch_sidecar"],
         "selected_annulus_context_available_rows_retained": retained["selected_annulus"],
         "detector_context_available_rows_retained": retained["detector"],
         "blank_context_available_rows_retained": retained["blank"],
@@ -437,6 +463,10 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "one blocked closed control": summary["closed_geometry_blocked_control_rows"] == 1,
         "pressure flow integrated": summary["pressure_flow_validation_harness_rows_integrated"] == 2,
         "qch retained": summary["qch_grid_refined_lane_rows_retained"] == 2,
+        "formal qch sidecar retained": summary[
+            "formal_qch_sidecar_lane_rows_retained"
+        ]
+        == 2,
         "selected retained": summary["selected_annulus_context_available_rows_retained"] == 2,
         "detector retained": summary["detector_context_available_rows_retained"] == 2,
         "blank retained": summary["blank_context_available_rows_retained"] == 2,

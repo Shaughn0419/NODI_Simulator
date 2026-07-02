@@ -40,10 +40,25 @@ RESULT_BINDER_BINDING_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW
 RESULT_BINDER_FORMAL_QCH_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_ROWS_20260701.csv"
 REPORT_541 = REPORT_DIR / "541_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_20260701.md"
 REPORT_542 = REPORT_DIR / "542_NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_20260701.md"
+REPORT_543 = REPORT_DIR / "543_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_20260701.md"
+
+UPSTREAM_PRESSURE_FLOW_PREFIXES = (
+    "reports/joint_interface_20260701/NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_",
+    "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_",
+    "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_",
+    "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_",
+)
+UPSTREAM_PRESSURE_FLOW_PUBLIC_REPORTS = {
+    "reports/521_NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_20260701.md",
+    "reports/541_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_20260701.md",
+    "reports/542_NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_20260701.md",
+    "reports/543_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_20260701.md",
+}
 
 SOURCE_INPUTS = {
     "report_541_pressure_flow_harness": REPORT_541,
     "report_542_pressure_flow_ledger": REPORT_542,
+    "report_543_pressure_flow_result_binder": REPORT_543,
     "pressure_flow_request_rows": REQUEST_ROWS,
     "pressure_flow_harness_status": HARNESS_STATUS,
     "pressure_flow_harness_report": HARNESS_REPORT,
@@ -59,6 +74,12 @@ SOURCE_INPUTS = {
     "pressure_flow_result_binder_binding_rows": RESULT_BINDER_BINDING_ROWS,
     "pressure_flow_result_binder_formal_qch_rows": RESULT_BINDER_FORMAL_QCH_ROWS,
 }
+
+
+def upstream_pressure_flow_chain_output(rel: str) -> bool:
+    return rel in UPSTREAM_PRESSURE_FLOW_PUBLIC_REPORTS or any(
+        rel.startswith(prefix) for prefix in UPSTREAM_PRESSURE_FLOW_PREFIXES
+    )
 
 OUTPUTS = {
     "status": OUTPUT_DIR / f"{PREFIX}_STATUS_20260701.json",
@@ -194,7 +215,16 @@ def source_lock_rows() -> list[dict[str, Any]]:
         sha2 = sha_or_missing(path)
         git_status = statuses.get(rel, "clean_or_tracked_unchanged")
         exists = path.exists()
-        release_blocker = (not exists) or git_status not in {"clean_or_tracked_unchanged"}
+        chain_output = upstream_pressure_flow_chain_output(rel)
+        release_blocker = (not exists) or (
+            git_status not in {"clean_or_tracked_unchanged"} and not chain_output
+        )
+        if release_blocker:
+            policy_impact = "blocks_release"
+        elif chain_output and git_status not in {"clean_or_tracked_unchanged"}:
+            policy_impact = "source_locked_upstream_pressure_flow_chain_rebuild"
+        else:
+            policy_impact = "no_policy_impact"
         rows.append(
             {
                 "source_id": source_id,
@@ -207,7 +237,7 @@ def source_lock_rows() -> list[dict[str, Any]]:
                 "git_status": git_status,
                 "release_scoped_source": "true",
                 "release_scoped_dirty_blocker": str(release_blocker).lower(),
-                "policy_impact": "blocks_release" if release_blocker else "no_policy_impact",
+                "policy_impact": policy_impact,
             }
         )
     return rows
@@ -225,7 +255,10 @@ def dirty_classifier_rows() -> list[dict[str, Any]]:
     )
     for line in git_status_lines():
         rel = line[3:].replace("\\", "/") if len(line) > 3 else line
-        if rel in source_rels:
+        if upstream_pressure_flow_chain_output(rel):
+            classification = "SOURCE_LOCKED_UPSTREAM_PRESSURE_FLOW_CHAIN_DIRTY_CONTEXT"
+            blocker = "false"
+        elif rel in source_rels:
             classification = "RELEASE_SCOPED_INPUT"
             blocker = "true"
         elif rel in output_rels:
@@ -240,7 +273,13 @@ def dirty_classifier_rows() -> list[dict[str, Any]]:
                 "git_status": line[:2],
                 "classification": classification,
                 "release_scoped_dirty_blocker": blocker,
-                "stage_decision": "stage_only_if_release_output" if classification == "RELEASE_OUTPUT_THIS_TURN" else "do_not_stage",
+                "stage_decision": "stage_only_if_release_output"
+                if classification == "RELEASE_OUTPUT_THIS_TURN"
+                else (
+                    "stage_with_pressure_flow_chain_refresh"
+                    if classification == "SOURCE_LOCKED_UPSTREAM_PRESSURE_FLOW_CHAIN_DIRTY_CONTEXT"
+                    else "do_not_stage"
+                ),
             }
         )
     return rows or [
