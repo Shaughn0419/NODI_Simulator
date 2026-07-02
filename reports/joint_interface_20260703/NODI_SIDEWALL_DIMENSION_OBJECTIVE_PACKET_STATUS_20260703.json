@@ -1,0 +1,25 @@
+{
+  "artifact_id": "NODI_SIDEWALL_DIMENSION_OBJECTIVE_PACKET_20260703",
+  "claim_boundary": "assumption_driven_dimension_objective_context_not_route_selection",
+  "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+  "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+  "comsol_v4_assumption_set_version": "4.0.0",
+  "date_stamp": "20260703",
+  "disposition": "NODI_SIDEWALL_DIMENSION_OBJECTIVE_PACKET_READY",
+  "git_branch": "main",
+  "git_head": "38ffd0d2360de047e8cd33a4d79e76500881f45b",
+  "objective_claim_level": "assumption_driven_simulation_policy_not_route_winner",
+  "objective_function_id": "balanced_peak_snr_95pct_min_width_v1",
+  "payload_sha256": "4ca518e500581b6dcfbdafe0be1153c8ef8d0686274767472ac14b09763ed452",
+  "summary": {
+    "comsol_rows_with_objective_width_above_candidate": 10,
+    "comsol_rows_with_objective_width_equal_candidate": 2,
+    "dimension_objective_rows": 18,
+    "exact_pxu_probability_grid_available_now": false,
+    "failed_validation_rows": 0,
+    "next_executable_block": "objective_width_annulus_response_summary_packet",
+    "objective_summary_rows": 6,
+    "question_rows": 3
+  },
+  "synthesis_version": "sidewall_dimension_objective_packet_v1"
+}
