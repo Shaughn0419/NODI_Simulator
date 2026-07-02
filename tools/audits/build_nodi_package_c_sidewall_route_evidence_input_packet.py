@@ -252,6 +252,8 @@ def build_payload() -> dict[str, Any]:
         wet_target_input_path=display_path(WET_TARGET_INPUT_ROWS),
         detection_value_target_input_path=display_path(DETECTION_VALUE_TARGET_INPUT_ROWS),
         yield_value_target_input_path=display_path(YIELD_VALUE_TARGET_INPUT_ROWS),
+        wet_source_manifest_path=display_path(WET_SOURCE_MANIFEST),
+        claim_value_source_manifest_path=display_path(CLAIM_VALUE_SOURCE_MANIFEST),
     )
     input_dicts = [row.to_dict() for row in input_rows]
     command_dicts = [row.to_dict() for row in command_rows]

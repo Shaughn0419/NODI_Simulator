@@ -43,6 +43,8 @@ def test_route_evidence_input_packet_keeps_templates_separate_from_evidence() ->
         wet_target_input_path="wet_input.csv",
         detection_value_target_input_path="detection_value_input.csv",
         yield_value_target_input_path="yield_value_input.csv",
+        wet_source_manifest_path="wet_source_manifest.csv",
+        claim_value_source_manifest_path="claim_value_source_manifest.csv",
     )
 
     assert len(input_rows) == 4
@@ -52,6 +54,20 @@ def test_route_evidence_input_packet_keeps_templates_separate_from_evidence() ->
         "detection_probability_value",
         "yield_wet_value",
     }
+    by_branch = {row.input_branch: row for row in input_rows}
+    assert by_branch["detector_blank_transfer"].source_manifest_path == ""
+    assert (
+        by_branch["wet_surface_observation"].source_manifest_path
+        == "wet_source_manifest.csv"
+    )
+    assert (
+        by_branch["detection_probability_value"].source_manifest_path
+        == "claim_value_source_manifest.csv"
+    )
+    assert (
+        by_branch["yield_wet_value"].source_manifest_path
+        == "claim_value_source_manifest.csv"
+    )
     assert {row.current_accepted_rows for row in input_rows} == {0}
     assert {row.ready_to_rerun_chain for row in input_rows} == {True}
     assert len(command_rows) == 11
@@ -105,6 +121,8 @@ def test_route_evidence_input_packet_can_mark_formula_review_ready_without_claim
         wet_target_input_path="wet_input.csv",
         detection_value_target_input_path="detection_value_input.csv",
         yield_value_target_input_path="yield_value_input.csv",
+        wet_source_manifest_path="wet_source_manifest.csv",
+        claim_value_source_manifest_path="claim_value_source_manifest.csv",
     )
 
     assert formula_rows[0].route_formula_ready_for_claim_review is True
@@ -152,6 +170,8 @@ def test_route_evidence_input_packet_marks_detector_ready_and_wet_missing() -> N
         wet_target_input_path="wet_input.csv",
         detection_value_target_input_path="detection_value_input.csv",
         yield_value_target_input_path="yield_value_input.csv",
+        wet_source_manifest_path="wet_source_manifest.csv",
+        claim_value_source_manifest_path="claim_value_source_manifest.csv",
     )
 
     by_branch = {row.input_branch: row for row in input_rows}

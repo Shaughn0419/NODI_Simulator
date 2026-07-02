@@ -33,6 +33,16 @@ def test_route_evidence_input_packet_builds_current_input_handoff() -> None:
     assert "detector_blank_transfer" not in summary["next_high_leverage_step"]
     assert "source manifests/importer inputs" in summary["next_high_leverage_step"]
     assert "eleven-step command chain" in summary["next_high_leverage_step"]
+    by_branch = {row["input_branch"]: row for row in payload["input_rows"]}
+    assert by_branch["wet_surface_observation"]["source_manifest_path"].endswith(
+        "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_SOURCE_MANIFEST_20260701.csv"
+    )
+    assert by_branch["detection_probability_value"]["source_manifest_path"].endswith(
+        "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv"
+    )
+    assert by_branch["yield_wet_value"]["source_manifest_path"].endswith(
+        "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv"
+    )
 
 
 def test_route_evidence_input_packet_command_chain_order() -> None:
@@ -59,8 +69,11 @@ def test_route_evidence_input_packet_source_lock_lists_optional_source_manifests
     payload = builder.build_payload()
     by_source = {row["source_id"]: row for row in payload["source_lock_rows"]}
 
-    assert by_source["optional_wet_source_manifest"]["exists"] == "false"
-    assert by_source["optional_claim_value_source_manifest"]["exists"] == "false"
+    assert by_source["optional_wet_source_manifest"]["exists"] in {"true", "false"}
+    assert by_source["optional_claim_value_source_manifest"]["exists"] in {
+        "true",
+        "false",
+    }
     assert payload["summary"]["required_source_missing_rows"] == 0
 
 

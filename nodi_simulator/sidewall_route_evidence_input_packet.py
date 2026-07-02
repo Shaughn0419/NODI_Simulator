@@ -21,6 +21,7 @@ class SidewallRouteEvidenceInputRow:
     input_branch: str
     template_artifact_path: str
     target_input_path: str
+    source_manifest_path: str
     template_rows: int
     current_input_present: bool
     current_accepted_rows: int
@@ -88,6 +89,8 @@ def build_route_evidence_input_packet(
     wet_target_input_path: str,
     detection_value_target_input_path: str,
     yield_value_target_input_path: str,
+    wet_source_manifest_path: str = "",
+    claim_value_source_manifest_path: str = "",
 ) -> tuple[
     list[SidewallRouteEvidenceInputRow],
     list[SidewallRouteEvidenceCommandRow],
@@ -109,6 +112,7 @@ def build_route_evidence_input_packet(
             input_branch="detector_blank_transfer",
             template_artifact_path=detector_template_path,
             target_input_path=detector_target_input_path,
+            source_manifest_path="",
             template_rows=_int(detector_intake_summary.get("template_rows")),
             current_input_present=_bool(
                 activation_summary.get("detector_input_present")
@@ -141,6 +145,7 @@ def build_route_evidence_input_packet(
             input_branch="wet_surface_observation",
             template_artifact_path=wet_template_path,
             target_input_path=wet_target_input_path,
+            source_manifest_path=wet_source_manifest_path,
             template_rows=_int(wet_intake_summary.get("template_rows")),
             current_input_present=_bool(activation_summary.get("wet_input_present")),
             current_accepted_rows=wet_accepted,
@@ -170,6 +175,7 @@ def build_route_evidence_input_packet(
             input_branch="detection_probability_value",
             template_artifact_path=detection_value_template_path,
             target_input_path=detection_value_target_input_path,
+            source_manifest_path=claim_value_source_manifest_path,
             template_rows=_int(claim_value_summary.get("detection_template_rows")),
             current_input_present=_bool(
                 claim_value_summary.get("detection_input_present")
@@ -203,6 +209,7 @@ def build_route_evidence_input_packet(
             input_branch="yield_wet_value",
             template_artifact_path=yield_value_template_path,
             target_input_path=yield_value_target_input_path,
+            source_manifest_path=claim_value_source_manifest_path,
             template_rows=_int(claim_value_summary.get("yield_template_rows")),
             current_input_present=_bool(claim_value_summary.get("yield_input_present")),
             current_accepted_rows=yield_accepted,
