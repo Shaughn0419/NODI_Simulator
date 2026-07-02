@@ -1,0 +1,5 @@
+check_name,check_pass,observed,expected,hard_fail_if_false
+route_diameter_coverage,True,78,78,True
+full_event_delta_join_coverage,True,78,78,True
+source_artifacts_present,True,0,0,True
+no_forbidden_primary_columns,True,pass,pass,True
