@@ -1,0 +1,8 @@
+check_name,check_pass,observed,expected,hard_fail_if_false
+executed_shard_rows_loaded,True,24,24,True
+delta_context_rows_loaded,True,12,12,True
+sidewall_v2_required_fields_present,True,pass,pass,True
+bounded_rows_remain_sparse_context,True,all_false_sparse_or_empty,all_false_sparse_or_empty,True
+forbidden_primary_columns_absent,True,[],[],True
+blocked_bins_do_not_carry_response_values,True,pass,pass,True
+legacy_prs_v1_duplicate_grains_are_sidewall_angle_pairs,True,12,12,True
