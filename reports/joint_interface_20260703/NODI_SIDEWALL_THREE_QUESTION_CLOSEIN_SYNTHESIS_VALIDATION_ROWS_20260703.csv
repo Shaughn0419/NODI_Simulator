@@ -1,0 +1,9 @@
+check_name,check_pass,observed,expected,hard_fail_if_false
+source_artifacts_present,True,0,0,True
+three_canonical_questions_present,True,3,3,True
+route_closein_coverage,True,6,6,True
+all_routes_have_dimension_delta,True,6,6,True
+all_routes_have_noncanonical_annulus_followup,True,6,6,True
+all_routes_have_response_improvement_context,True,6,6,True
+next_simulation_rows_cover_followup_windows,True,16,16,True
+no_forbidden_primary_columns,True,pass,pass,True
