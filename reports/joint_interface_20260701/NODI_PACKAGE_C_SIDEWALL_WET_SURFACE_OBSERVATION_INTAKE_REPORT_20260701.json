@@ -3,7 +3,7 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS",
     "artifact_id": "PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_20260701",
     "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
-    "current_head": "80d7b41cf3fae0c30dcf31bd771a1a4a40593c85",
+    "current_head": "3b2d06097e637fea17809ae255b8bfe545c7e6b7",
     "branch": "main",
     "intake_version": "sidewall_wet_surface_observation_intake_v1",
     "source_detector_blank_panel_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_PANEL_REFRESH_READY_PREFLIGHT_ONLY",
@@ -25,8 +25,8 @@
     "winner_current": false,
     "source_lock_rows": 9,
     "source_missing_rows": 0,
-    "dirty_context_rows": 92,
-    "non_release_dirty_context_rows": 88,
+    "dirty_context_rows": 101,
+    "non_release_dirty_context_rows": 97,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "wet/surface observation intake schema;wet endpoint validation;route wet evidence matrix planning",
     "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion",
@@ -1102,6 +1102,12 @@
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
+      "path": "reports/577_NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
       "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -1426,6 +1432,48 @@
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_WORKSPACE_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_AUDIT_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_DIRTY_CONTEXT_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -1439,6 +1487,12 @@
     },
     {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_SOURCE_LOCK_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
