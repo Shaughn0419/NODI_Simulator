@@ -15,6 +15,8 @@ SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_VERSION = (
 SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_BOUNDARY = (
     "yield_detection_claim_value_review_requires_real_value_rows"
 )
+REAL_CLAIM_VALUE_EVIDENCE_CLASS = "real_claim_value_evidence"
+FIXTURE_CLAIM_VALUE_EVIDENCE_CLASS = "fixture_not_evidence"
 
 DETECTION_REQUIRED_FIELDS: tuple[str, ...] = (
     "route_candidate_id",
@@ -57,6 +59,8 @@ class SidewallYieldDetectionClaimValueReviewRow:
     review_version: str
     route_candidate_id: str
     route_geometry_family: str
+    source_evidence_class: str
+    fixture_not_evidence: bool
     winner_current: bool
     JRC_current: bool
     detection_value_row_present: bool
@@ -109,6 +113,7 @@ def build_yield_detection_claim_value_review(
     detection_value_rows: list[Mapping[str, Any]] | None = None,
     yield_value_rows: list[Mapping[str, Any]] | None = None,
     artifact_root: str | Path | None = None,
+    source_evidence_class: str = REAL_CLAIM_VALUE_EVIDENCE_CLASS,
 ) -> tuple[
     list[SidewallYieldDetectionClaimValueReviewRow],
     list[SidewallYieldDetectionClaimValueGuardRow],
@@ -130,14 +135,27 @@ def build_yield_detection_claim_value_review(
         wet_yield = yield_by_route.get(route_id, {})
         detection_status = _detection_validation_status(detection, artifact_root)
         yield_status = _yield_validation_status(wet_yield, artifact_root)
-        detection_current = detection_status == "detection_probability_value_accepted"
-        yield_current = yield_status == "yield_wet_value_bundle_accepted"
+        fixture_not_evidence = source_evidence_class == FIXTURE_CLAIM_VALUE_EVIDENCE_CLASS
+        detection_valid = detection_status == "detection_probability_value_accepted"
+        yield_valid = yield_status == "yield_wet_value_bundle_accepted"
+        detection_current = (
+            detection_valid
+            and source_evidence_class == REAL_CLAIM_VALUE_EVIDENCE_CLASS
+            and not fixture_not_evidence
+        )
+        yield_current = (
+            yield_valid
+            and source_evidence_class == REAL_CLAIM_VALUE_EVIDENCE_CLASS
+            and not fixture_not_evidence
+        )
         rows.append(
             SidewallYieldDetectionClaimValueReviewRow(
                 claim_row_id=f"YIELD-DETECTION-CLAIM-VALUE-{route_id}",
                 review_version=SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_VERSION,
                 route_candidate_id=route_id,
                 route_geometry_family=str(winner.get("route_geometry_family", "")),
+                source_evidence_class=source_evidence_class,
+                fixture_not_evidence=fixture_not_evidence,
                 winner_current=_bool(winner.get("winner_current")),
                 JRC_current=_bool(winner.get("JRC_current")),
                 detection_value_row_present=bool(detection),
@@ -199,9 +217,12 @@ def build_yield_detection_claim_value_review(
                 route_score_current=_bool(winner.get("route_score_current")),
                 production_ingestion_current=False,
                 claim_value_review_status=_claim_status(
+                    detection_valid=detection_valid,
+                    yield_valid=yield_valid,
                     detection_current=detection_current,
                     yield_current=yield_current,
                     winner_current=_bool(winner.get("winner_current")),
+                    fixture_not_evidence=fixture_not_evidence,
                 ),
                 next_required_evidence=_next_required_evidence(
                     detection_status=detection_status,
@@ -368,14 +389,19 @@ def _probability_interval_ok(value: Any, low: Any, high: Any) -> bool:
 
 def _claim_status(
     *,
+    detection_valid: bool,
+    yield_valid: bool,
     detection_current: bool,
     yield_current: bool,
     winner_current: bool,
+    fixture_not_evidence: bool,
 ) -> str:
     if detection_current and yield_current and winner_current:
         return "yield_detection_values_ready_for_integrated_route_claim_review"
     if detection_current and yield_current:
         return "yield_detection_values_ready_waiting_winner_jrc"
+    if detection_valid and yield_valid and fixture_not_evidence:
+        return "fixture_yield_detection_value_path_passes_not_evidence"
     return "blocked_until_real_detection_and_yield_value_rows_accepted"
 
 

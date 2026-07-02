@@ -4,6 +4,7 @@ from pathlib import Path
 
 from nodi_simulator.realism_v2_io import sha256_file
 from nodi_simulator.sidewall_yield_detection_claim_value_review import (
+    FIXTURE_CLAIM_VALUE_EVIDENCE_CLASS,
     SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_BOUNDARY,
     build_yield_detection_claim_value_review,
     detection_claim_value_template_rows,
@@ -213,6 +214,59 @@ def test_claim_value_review_rejects_source_hash_mismatch(tmp_path: Path) -> None
         "detection_probability_value_rejected_source_artifact_missing_or_hash_mismatch"
     )
     assert route.detection_probability_current is False
+
+
+def test_claim_value_fixture_class_validates_but_does_not_promote(
+    tmp_path: Path,
+) -> None:
+    detection_path, detection_sha = _source_artifact(
+        tmp_path, "detection-source.csv", "route,detection\n"
+    )
+    yield_path, yield_sha = _source_artifact(
+        tmp_path, "yield-source.csv", "route,yield\n"
+    )
+    rows, guards = build_yield_detection_claim_value_review(
+        winner_jrc_rows=_winner_rows(),
+        detection_value_rows=[
+            _detection_row(
+                "ROUTE-CAND-001",
+                source_artifact_path=detection_path,
+                source_artifact_sha256=detection_sha,
+            ),
+            _detection_row(
+                "ROUTE-CAND-002",
+                source_artifact_path=detection_path,
+                source_artifact_sha256=detection_sha,
+            ),
+        ],
+        yield_value_rows=[
+            _yield_row(
+                "ROUTE-CAND-001",
+                source_artifact_path=yield_path,
+                source_artifact_sha256=yield_sha,
+            ),
+            _yield_row(
+                "ROUTE-CAND-002",
+                source_artifact_path=yield_path,
+                source_artifact_sha256=yield_sha,
+            ),
+        ],
+        source_evidence_class=FIXTURE_CLAIM_VALUE_EVIDENCE_CLASS,
+    )
+
+    assert {row.detection_value_validation_status for row in rows} == {
+        "detection_probability_value_accepted"
+    }
+    assert {row.yield_value_validation_status for row in rows} == {
+        "yield_wet_value_bundle_accepted"
+    }
+    assert {row.fixture_not_evidence for row in rows} == {True}
+    assert {row.detection_probability_current for row in rows} == {False}
+    assert {row.yield_current for row in rows} == {False}
+    assert {row.claim_value_review_status for row in rows} == {
+        "fixture_yield_detection_value_path_passes_not_evidence"
+    }
+    assert {guard.activation_allowed_now for guard in guards} == {False}
 
 
 def test_claim_value_templates_track_routes() -> None:

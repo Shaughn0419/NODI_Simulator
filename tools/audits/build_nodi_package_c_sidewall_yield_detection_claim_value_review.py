@@ -20,6 +20,7 @@ from nodi_simulator.realism_v2_io import (  # noqa: E402
     write_json_atomic,
 )
 from nodi_simulator.sidewall_yield_detection_claim_value_review import (  # noqa: E402
+    REAL_CLAIM_VALUE_EVIDENCE_CLASS,
     SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_BOUNDARY,
     SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_VERSION,
     build_yield_detection_claim_value_review,
@@ -203,6 +204,7 @@ def build_payload() -> dict[str, Any]:
         detection_value_rows=optional_csv(DETECTION_VALUE_INPUT_ROWS),
         yield_value_rows=optional_csv(YIELD_VALUE_INPUT_ROWS),
         artifact_root=PROJECT_ROOT,
+        source_evidence_class=REAL_CLAIM_VALUE_EVIDENCE_CLASS,
     )
     claim_dicts = [row.to_dict() for row in claim_rows]
     guard_dicts = [row.to_dict() for row in guard_rows]
