@@ -34,6 +34,10 @@ class SidewallRouteDecisionExecutionReadinessRow:
     wet_observation_execution_status: str
     route_formula_dry_run_status: str
     route_formula_component_vector_ready: bool
+    route_formula_policy_review_status: str
+    route_score_candidate_ready: bool
+    winner_jrc_policy_review_status: str
+    winner_jrc_candidate_ready: bool
     detector_accepted_transfer_rows: int
     wet_accepted_observation_rows: int
     rectangle_baseline_preserved: bool
@@ -43,6 +47,7 @@ class SidewallRouteDecisionExecutionReadinessRow:
     execution_readiness_status: str
     route_score_current: bool
     winner_current: bool
+    JRC_current: bool
     yield_current: bool
     detection_probability_current: bool
     production_ingestion_current: bool
@@ -81,6 +86,10 @@ def build_route_decision_execution_readiness(
     wet_observation_status: Mapping[str, Any],
     route_formula_dry_run_status: Mapping[str, Any] | None = None,
     route_formula_dry_run_rows: list[Mapping[str, Any]] | None = None,
+    route_formula_policy_status: Mapping[str, Any] | None = None,
+    route_formula_policy_rows: list[Mapping[str, Any]] | None = None,
+    winner_jrc_policy_status: Mapping[str, Any] | None = None,
+    winner_jrc_policy_rows: list[Mapping[str, Any]] | None = None,
 ) -> tuple[list[SidewallRouteDecisionExecutionReadinessRow], list[SidewallRouteDecisionClaimGuardRow]]:
     families = {str(row.get("route_geometry_family", "")) for row in readiness_board_rows}
     rectangle_present = "ideal_rectangle" in families
@@ -92,6 +101,27 @@ def build_route_decision_execution_readiness(
         str(row.get("route_candidate_id", "")): row
         for row in (route_formula_dry_run_rows or [])
     }
+    formula_policy = route_formula_policy_status or {}
+    formula_policy_by_route = {
+        str(row.get("route_candidate_id", "")): row
+        for row in (route_formula_policy_rows or [])
+    }
+    winner_policy = winner_jrc_policy_status or {}
+    winner_policy_by_route = {
+        str(row.get("route_candidate_id", "")): row
+        for row in (winner_jrc_policy_rows or [])
+    }
+    route_ids = [
+        str(row.get("route_candidate_id", "")) for row in readiness_board_rows
+    ]
+    overall_route_score_ready = bool(route_ids) and all(
+        _route_score_candidate_ready(formula_policy_by_route.get(route_id, {}))
+        for route_id in route_ids
+    )
+    overall_winner_ready = overall_route_score_ready and sum(
+        _winner_jrc_ready(winner_policy_by_route.get(route_id, {}))
+        for route_id in route_ids
+    ) == 1
     rows = [
         SidewallRouteDecisionExecutionReadinessRow(
             readiness_row_id=f"ROUTE-DECISION-EXEC-{row.get('route_candidate_id', '')}",
@@ -111,6 +141,14 @@ def build_route_decision_execution_readiness(
             route_formula_component_vector_ready=_component_vector_ready(
                 dry_by_route.get(str(row.get("route_candidate_id", "")), {})
             ),
+            route_formula_policy_review_status=str(
+                formula_policy.get("disposition", "")
+            ),
+            route_score_candidate_ready=_route_score_candidate_ready(
+                formula_policy_by_route.get(str(row.get("route_candidate_id", "")), {})
+            ),
+            winner_jrc_policy_review_status=str(winner_policy.get("disposition", "")),
+            winner_jrc_candidate_ready=overall_winner_ready,
             detector_accepted_transfer_rows=detector_accepted,
             wet_accepted_observation_rows=wet_accepted,
             rectangle_baseline_preserved=rectangle_present,
@@ -118,14 +156,29 @@ def build_route_decision_execution_readiness(
             ready_input_count=_int(row.get("ready_route_input_count")),
             missing_claim_evidence_count=_int(row.get("missing_claim_evidence_count")),
             execution_readiness_status=_execution_status(
-                detector_accepted,
-                wet_accepted,
-                _component_vector_ready(
+                detector_accepted=detector_accepted,
+                wet_accepted=wet_accepted,
+                component_vector_ready=_component_vector_ready(
                     dry_by_route.get(str(row.get("route_candidate_id", "")), {})
                 ),
+                route_score_ready=_route_score_candidate_ready(
+                    formula_policy_by_route.get(str(row.get("route_candidate_id", "")), {})
+                ),
+                winner_ready=overall_winner_ready,
             ),
-            route_score_current=False,
-            winner_current=False,
+            route_score_current=_route_score_candidate_ready(
+                formula_policy_by_route.get(str(row.get("route_candidate_id", "")), {})
+            ),
+            winner_current=_bool(
+                winner_policy_by_route.get(str(row.get("route_candidate_id", "")), {}).get(
+                    "winner_current"
+                )
+            ),
+            JRC_current=_bool(
+                winner_policy_by_route.get(str(row.get("route_candidate_id", "")), {}).get(
+                    "JRC_current"
+                )
+            ),
             yield_current=False,
             detection_probability_current=False,
             production_ingestion_current=False,
@@ -140,14 +193,26 @@ def build_route_decision_execution_readiness(
         )
         for row in readiness_board_rows
     ]
-    return rows, _claim_guard_rows(branch_packets_available=True)
+    return rows, _claim_guard_rows(
+        branch_packets_available=True,
+        route_score_ready=bool(rows) and all(row.route_score_current for row in rows),
+        winner_ready=sum(row.winner_current for row in rows) == 1
+        and all(row.route_score_current for row in rows),
+    )
 
 
 def _execution_status(
+    *,
     detector_accepted: int,
     wet_accepted: int,
     component_vector_ready: bool,
+    route_score_ready: bool,
+    winner_ready: bool,
 ) -> str:
+    if winner_ready:
+        return "winner_jrc_ready_for_integrated_yield_detection_review"
+    if route_score_ready:
+        return "route_score_candidates_ready_for_winner_jrc_policy_review"
     if detector_accepted > 0 and wet_accepted > 0 and component_vector_ready:
         return "branch_evidence_and_formula_components_ready_for_route_policy_review"
     if detector_accepted > 0 and wet_accepted > 0:
@@ -156,31 +221,39 @@ def _execution_status(
 
 
 def _claim_guard_rows(
-    *, branch_packets_available: bool
+    *,
+    branch_packets_available: bool,
+    route_score_ready: bool = False,
+    winner_ready: bool = False,
 ) -> list[SidewallRouteDecisionClaimGuardRow]:
     specs = [
         (
             "route_score",
+            route_score_ready,
             "accepted detector/blank, wet observation, flow/q_ch, and route formula packet",
             "route_score_true_without_all_branch_evidence",
         ),
         (
             "winner_JRC",
+            winner_ready,
             "route score packet, JRC policy, source hashes, and no unresolved blockers",
             "winner_or_JRC_true_without_route_decision_packet",
         ),
         (
             "yield",
+            False,
             "wet observation evidence plus detector/blank and route policy packets",
             "yield_true_without_wet_detector_and_route_packets",
         ),
         (
             "detection_probability",
+            False,
             "detector/blank transfer, threshold policy, wet context, and uncertainty",
             "detection_probability_true_without_detector_blank_transfer",
         ),
         (
             "production_ingestion",
+            False,
             "separate production/fabrication release ledger after route decision",
             "production_ingestion_true_from_readiness_packet",
         ),
@@ -193,12 +266,12 @@ def _claim_guard_rows(
             implementation_authorized=True,
             branch_packets_available=branch_packets_available,
             claim_promoted_current=False,
-            claim_promotion_allowed_now=False,
+            claim_promotion_allowed_now=allowed,
             required_evidence_before_true=required,
             hard_fail_if_missing_evidence=hard_fail,
             claim_boundary=SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_CLAIM_BOUNDARY,
         )
-        for target, required, hard_fail in specs
+        for target, allowed, required, hard_fail in specs
     ]
 
 
@@ -234,3 +307,13 @@ def _component_vector_ready(row: Mapping[str, Any]) -> bool:
     return _bool(row.get("route_formula_ready_for_claim_review")) and str(
         row.get("route_formula_review_dry_run_status", "")
     ) == "route_formula_component_vector_ready_for_policy_review_not_scored"
+
+
+def _route_score_candidate_ready(row: Mapping[str, Any]) -> bool:
+    return _bool(row.get("route_score_current")) and _bool(
+        row.get("route_score_activation_allowed_now")
+    )
+
+
+def _winner_jrc_ready(row: Mapping[str, Any]) -> bool:
+    return _bool(row.get("winner_current")) and _bool(row.get("JRC_current"))

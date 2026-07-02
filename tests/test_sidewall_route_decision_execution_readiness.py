@@ -92,3 +92,67 @@ def test_route_decision_can_reach_policy_review_ready_when_evidence_and_componen
     assert {row.yield_current for row in rows} == {False}
     assert {row.detection_probability_current for row in rows} == {False}
     assert {guard.claim_promotion_allowed_now for guard in guards} == {False}
+
+
+def test_route_decision_can_carry_route_score_and_winner_policy_status() -> None:
+    rows, guards = build_route_decision_execution_readiness(
+        readiness_board_rows=_board_rows(),
+        solver_packet_status={"disposition": "SOLVER"},
+        electrokinetic_status={"disposition": "EK"},
+        comsol_precondition_status={"disposition": "COMSOL"},
+        detector_blank_status={
+            "disposition": "ACTIVATION",
+            "detector_accepted_transfer_rows_total": 2,
+        },
+        wet_observation_status={
+            "disposition": "ACTIVATION",
+            "wet_accepted_endpoint_count_total": 14,
+        },
+        route_formula_dry_run_status={"disposition": "DRY"},
+        route_formula_dry_run_rows=[
+            {
+                "route_candidate_id": "R1",
+                "route_formula_ready_for_claim_review": "True",
+                "route_formula_review_dry_run_status": (
+                    "route_formula_component_vector_ready_for_policy_review_not_scored"
+                ),
+            },
+            {
+                "route_candidate_id": "R2",
+                "route_formula_ready_for_claim_review": "True",
+                "route_formula_review_dry_run_status": (
+                    "route_formula_component_vector_ready_for_policy_review_not_scored"
+                ),
+            },
+        ],
+        route_formula_policy_status={"disposition": "FORMULA-POLICY"},
+        route_formula_policy_rows=[
+            {
+                "route_candidate_id": "R1",
+                "route_score_current": "True",
+                "route_score_activation_allowed_now": "True",
+            },
+            {
+                "route_candidate_id": "R2",
+                "route_score_current": "True",
+                "route_score_activation_allowed_now": "True",
+            },
+        ],
+        winner_jrc_policy_status={"disposition": "WINNER-POLICY"},
+        winner_jrc_policy_rows=[
+            {"route_candidate_id": "R1", "winner_current": "True", "JRC_current": "True"},
+            {"route_candidate_id": "R2", "winner_current": "False", "JRC_current": "False"},
+        ],
+    )
+
+    assert {row.execution_readiness_status for row in rows} == {
+        "winner_jrc_ready_for_integrated_yield_detection_review"
+    }
+    assert {row.route_score_current for row in rows} == {True}
+    assert sum(row.winner_current for row in rows) == 1
+    assert sum(row.JRC_current for row in rows) == 1
+    by_target = {guard.promotion_target: guard for guard in guards}
+    assert by_target["route_score"].claim_promotion_allowed_now is True
+    assert by_target["winner_JRC"].claim_promotion_allowed_now is True
+    assert by_target["yield"].claim_promotion_allowed_now is False
+    assert by_target["detection_probability"].claim_promotion_allowed_now is False

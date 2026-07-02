@@ -4,7 +4,7 @@
     "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_20260701",
     "execution_status": "route_decision_execution_readiness_ready_branch_statuses_not_claim_ready",
     "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-    "current_head": "490dd6e7972c607d66c0395c648e0e8716d1ee6c",
+    "current_head": "5bf638df9bb6c5fe33bb993dc0a7d6b29a206ffb",
     "branch": "main",
     "readiness_rows": 2,
     "claim_guard_rows": 5,
@@ -14,21 +14,24 @@
     "detector_accepted_transfer_rows_total": 0,
     "wet_accepted_observation_rows_total": 0,
     "route_formula_component_vector_ready_rows": 0,
+    "route_score_candidate_ready_rows": 0,
+    "winner_jrc_candidate_ready_rows": 0,
     "route_score_current_rows": 0,
     "winner_current_rows": 0,
+    "JRC_current_rows": 0,
     "yield_current_rows": 0,
     "detection_probability_current_rows": 0,
     "production_ingestion_current_rows": 0,
     "claim_promotion_allowed_guard_rows": 0,
-    "source_lock_rows": 12,
+    "source_lock_rows": 16,
     "source_missing_rows": 0,
-    "dirty_context_rows": 101,
-    "source_locked_upstream_dirty_context_rows": 2,
-    "non_release_dirty_context_rows": 99,
+    "dirty_context_rows": 93,
+    "source_locked_upstream_dirty_context_rows": 0,
+    "non_release_dirty_context_rows": 89,
     "release_scoped_dirty_blocker_rows": 0,
-    "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-    "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release",
-    "semantic_digest": "91af59970988f85b2380989d51b3af9f04ec695ffe03e7fc6daf29d918a6f540"
+    "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+    "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review",
+    "semantic_digest": "ca8712096dec99148a96dab4c3ca3a98ffffd7835abdaceecf03472e9d2a7f72"
   },
   "readiness_rows": [
     {
@@ -47,6 +50,10 @@
       "wet_observation_execution_status": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_READY_NO_CURRENT_ACCEPTED_EVIDENCE",
       "route_formula_dry_run_status": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_READY_WAITING_FOR_ACCEPTED_EVIDENCE",
       "route_formula_component_vector_ready": false,
+      "route_formula_policy_review_status": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_READY_WAITING_FOR_REAL_ACCEPTED_EVIDENCE",
+      "route_score_candidate_ready": false,
+      "winner_jrc_policy_review_status": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES",
+      "winner_jrc_candidate_ready": false,
       "detector_accepted_transfer_rows": 0,
       "wet_accepted_observation_rows": 0,
       "rectangle_baseline_preserved": true,
@@ -56,6 +63,7 @@
       "execution_readiness_status": "blocked_detector_blank_and_wet_observation_evidence_required",
       "route_score_current": false,
       "winner_current": false,
+      "JRC_current": false,
       "yield_current": false,
       "detection_probability_current": false,
       "production_ingestion_current": false,
@@ -79,6 +87,10 @@
       "wet_observation_execution_status": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_READY_NO_CURRENT_ACCEPTED_EVIDENCE",
       "route_formula_dry_run_status": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_READY_WAITING_FOR_ACCEPTED_EVIDENCE",
       "route_formula_component_vector_ready": false,
+      "route_formula_policy_review_status": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_READY_WAITING_FOR_REAL_ACCEPTED_EVIDENCE",
+      "route_score_candidate_ready": false,
+      "winner_jrc_policy_review_status": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES",
+      "winner_jrc_candidate_ready": false,
       "detector_accepted_transfer_rows": 0,
       "wet_accepted_observation_rows": 0,
       "rectangle_baseline_preserved": true,
@@ -88,6 +100,7 @@
       "execution_readiness_status": "blocked_detector_blank_and_wet_observation_evidence_required",
       "route_score_current": false,
       "winner_current": false,
+      "JRC_current": false,
       "yield_current": false,
       "detection_probability_current": false,
       "production_ingestion_current": false,
@@ -165,8 +178,8 @@
       "exists": "true",
       "sha256": "ceb20dc9ab7569020321dfa1160c731131ed7c12a9b68d5b4c3c0e1890574f3e",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "readiness_board_rows",
@@ -174,8 +187,8 @@
       "exists": "true",
       "sha256": "80a41c92692ae3d1510e3c3943939b73b4145c569b5d16d1057ff19f4c1a42e3",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "solver_branch_status",
@@ -183,8 +196,8 @@
       "exists": "true",
       "sha256": "ae46350f5ac3d95614e1de67c45a70a77bb1a44f3cf67302f0f604ea98aeb07b",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "electrokinetic_preflight_status",
@@ -192,8 +205,8 @@
       "exists": "true",
       "sha256": "2838d785e5e54bab6f3cdb82ac793f39691bfd814d36a9555409a5218f25f1d1",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "comsol_precondition_status",
@@ -201,8 +214,8 @@
       "exists": "true",
       "sha256": "d46482d4708c6ec068cc342561c8a094508fda46e29513af4b09ead10372de28",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "detector_wet_activation_status",
@@ -210,8 +223,8 @@
       "exists": "true",
       "sha256": "afdf54bbb54a6a945dcf46592ff44e75e4393e65500e3682c2f4a8b940187d92",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "route_formula_dry_run_status",
@@ -219,8 +232,8 @@
       "exists": "true",
       "sha256": "b8903ceafb41734c2b89d25116f4a68813febb6e41c00433d37b7494daff5f7e",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "route_formula_dry_run_rows",
@@ -228,44 +241,80 @@
       "exists": "true",
       "sha256": "eff1e87bdcdac0d661c1f30adee5b414d0cb67b82a6da9488cf137032419b63f",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
+    },
+    {
+      "source_id": "route_formula_policy_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "1e5e0ef04568798bf27720a09563054e8d775108e04e72a3f1518c723cf7ed3a",
+      "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
+    },
+    {
+      "source_id": "route_formula_policy_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_POLICY_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "dcc192757d4bde1f53f36556bcf7aa07994c81274c00a46a34215bfc2792e2f0",
+      "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
+    },
+    {
+      "source_id": "winner_jrc_policy_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "2adbc893fb58bf11e107190b558f9819a98fab84bb129f4d8151af17e7d36746",
+      "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
+    },
+    {
+      "source_id": "winner_jrc_policy_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REVIEW_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "86b9e13dee3313b297dc2f03607b2fe93f0a906c3d35f2c0652cc756bee8166f",
+      "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "route_decision_execution_source",
       "path": "nodi_simulator/sidewall_route_decision_execution_readiness.py",
       "exists": "true",
-      "sha256": "1169bc304c53101b9fdfbaecc1d23da04ae1e2f8106c6d6e5522e258fdbdffad",
+      "sha256": "4f1ec95841bd4e139a0ac8d4d6e2614c898c6b441e21cbe4cf37badd1dbb189a",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "route_decision_execution_tests",
       "path": "tests/test_sidewall_route_decision_execution_readiness.py",
       "exists": "true",
-      "sha256": "521f3aa55baf74a0c99575af214eafe4946b3d29022314e96c4ab2def38afad6",
+      "sha256": "9e564d28b88811f621b0ae3e3c69e320857ddc134da8ebfd6f2c26ac3e6f19cd",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "route_decision_execution_builder",
       "path": "tools/audits/build_nodi_package_c_sidewall_route_decision_execution_readiness.py",
       "exists": "true",
-      "sha256": "0007b7d62a8cf7443fa47007daca396fe035770f0c95e2de23079f55e157e590",
+      "sha256": "c40dd9dbfae6886ee93470eb1bb6b57d2417b9345fbe6627cbf9212780ed5365",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     },
     {
       "source_id": "route_decision_execution_builder_tests",
       "path": "tests/test_nodi_package_c_sidewall_route_decision_execution_readiness.py",
       "exists": "true",
-      "sha256": "d96dc7917eab94d705756ddaaeed250cb7d9d6e680850639ea2ff3293b9d1780",
+      "sha256": "6ccc03af8d742348bf915bb119bd4de9873eac5b81576dccef873d654d5e895a",
       "claim_boundary": "route_decision_execution_readiness_not_route_score_not_yield_not_detection",
-      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status",
-      "blocked_use": "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+      "allowed_use": "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;route-score and winner/JRC policy-review status",
+      "blocked_use": "yield;detection_probability;production ingestion;fabrication release without respective review"
     }
   ],
   "dirty_context": [
@@ -318,10 +367,10 @@
       "release_decision": "ignored_for_route_decision_execution"
     },
     {
-      "path": "nodi_simulator/sidewall_route_yield_detection_readiness_board.py",
+      "path": "nodi_simulator/sidewall_route_decision_execution_readiness.py",
       "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_decision_execution"
+      "classification": "route_decision_execution_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
     },
     {
       "path": "papers/provenance/paper_manifest.csv",
@@ -343,12 +392,6 @@
     },
     {
       "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
-      "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_decision_execution"
-    },
-    {
-      "path": "reports/554_NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_20260701.md",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_route_decision_execution"
@@ -684,48 +727,6 @@
       "release_decision": "ignored_for_route_decision_execution"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_BLOCKER_ROWS_20260701.csv",
-      "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_decision_execution"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_BOARD_ROWS_20260701.csv",
-      "git_status": " M",
-      "classification": "source_locked_upstream_dirty_context",
-      "release_decision": "source_locked_current_workspace_not_in_commit_scope"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_DIRTY_CONTEXT_20260701.csv",
-      "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_decision_execution"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_MANIFEST_20260701.csv",
-      "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_decision_execution"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_REPORT_20260701.json",
-      "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_decision_execution"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_SOURCE_LOCK_20260701.csv",
-      "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_decision_execution"
-    },
-    {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_STATUS_20260701.json",
-      "git_status": " M",
-      "classification": "source_locked_upstream_dirty_context",
-      "release_decision": "source_locked_current_workspace_not_in_commit_scope"
-    },
-    {
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -834,22 +835,22 @@
       "release_decision": "ignored_for_route_decision_execution"
     },
     {
-      "path": "tests/test_nodi_package_c_sidewall_route_yield_detection_readiness_board.py",
+      "path": "tests/test_nodi_package_c_sidewall_route_decision_execution_readiness.py",
       "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_decision_execution"
+      "classification": "route_decision_execution_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
     },
     {
-      "path": "tests/test_sidewall_route_yield_detection_readiness_board.py",
+      "path": "tests/test_sidewall_route_decision_execution_readiness.py",
       "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_decision_execution"
+      "classification": "route_decision_execution_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
     },
     {
-      "path": "tools/audits/build_nodi_package_c_sidewall_route_yield_detection_readiness_board.py",
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_decision_execution_readiness.py",
       "git_status": " M",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_route_decision_execution"
+      "classification": "route_decision_execution_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
     },
     {
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",

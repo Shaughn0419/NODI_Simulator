@@ -21,7 +21,10 @@ def test_route_decision_execution_readiness_builds_from_current_artifacts() -> N
     assert summary["detector_accepted_transfer_rows_total"] == 0
     assert summary["wet_accepted_observation_rows_total"] == 0
     assert summary["route_formula_component_vector_ready_rows"] == 0
+    assert summary["route_score_candidate_ready_rows"] == 0
+    assert summary["winner_jrc_candidate_ready_rows"] == 0
     assert summary["route_score_current_rows"] == 0
+    assert summary["JRC_current_rows"] == 0
     assert summary["yield_current_rows"] == 0
     assert summary["detection_probability_current_rows"] == 0
     assert summary["production_ingestion_current_rows"] == 0
@@ -40,7 +43,16 @@ def test_route_rows_keep_claims_false_and_geometry_parallel() -> None:
             "blocked_detector_blank_and_wet_observation_evidence_required"
         )
         assert row["route_formula_component_vector_ready"] is False
+        assert row["route_formula_policy_review_status"] == (
+            "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_READY_WAITING_FOR_REAL_ACCEPTED_EVIDENCE"
+        )
+        assert row["route_score_candidate_ready"] is False
+        assert row["winner_jrc_policy_review_status"] == (
+            "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES"
+        )
+        assert row["winner_jrc_candidate_ready"] is False
         assert row["route_score_current"] is False
+        assert row["JRC_current"] is False
         assert row["yield_current"] is False
         assert row["detection_probability_current"] is False
         assert row["claim_boundary"] == builder.CLAIM_BOUNDARY

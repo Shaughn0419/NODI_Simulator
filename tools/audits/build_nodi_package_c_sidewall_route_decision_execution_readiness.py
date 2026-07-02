@@ -41,9 +41,18 @@ COMSOL_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_COMSOL_LAUNCH_PRECONDITION
 DETECTOR_WET_ACTIVATION_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json"
 ROUTE_FORMULA_DRY_RUN_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_STATUS_20260701.json"
 ROUTE_FORMULA_DRY_RUN_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_DRY_RUN_ROWS_20260701.csv"
+ROUTE_FORMULA_POLICY_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json"
+ROUTE_FORMULA_POLICY_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_POLICY_ROWS_20260701.csv"
+WINNER_JRC_POLICY_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json"
+WINNER_JRC_POLICY_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REVIEW_ROWS_20260701.csv"
 
-ALLOWED_USE = "route/yield/detection execution readiness integration;rectangle plus trapezoid route status"
-BLOCKED_USE = "route_score;winner;JRC;yield;detection_probability;production ingestion;fabrication release"
+ALLOWED_USE = (
+    "route/yield/detection execution readiness integration;rectangle plus trapezoid route status;"
+    "route-score and winner/JRC policy-review status"
+)
+BLOCKED_USE = (
+    "yield;detection_probability;production ingestion;fabrication release without respective review"
+)
 
 SOURCE_FILES = {
     "readiness_board_status": BOARD_STATUS,
@@ -54,6 +63,10 @@ SOURCE_FILES = {
     "detector_wet_activation_status": DETECTOR_WET_ACTIVATION_STATUS,
     "route_formula_dry_run_status": ROUTE_FORMULA_DRY_RUN_STATUS,
     "route_formula_dry_run_rows": ROUTE_FORMULA_DRY_RUN_ROWS,
+    "route_formula_policy_status": ROUTE_FORMULA_POLICY_STATUS,
+    "route_formula_policy_rows": ROUTE_FORMULA_POLICY_ROWS,
+    "winner_jrc_policy_status": WINNER_JRC_POLICY_STATUS,
+    "winner_jrc_policy_rows": WINNER_JRC_POLICY_ROWS,
     "route_decision_execution_source": PROJECT_ROOT
     / "nodi_simulator/sidewall_route_decision_execution_readiness.py",
     "route_decision_execution_tests": PROJECT_ROOT
@@ -192,6 +205,10 @@ def build_payload() -> dict[str, Any]:
         wet_observation_status=load_json(DETECTOR_WET_ACTIVATION_STATUS),
         route_formula_dry_run_status=load_json(ROUTE_FORMULA_DRY_RUN_STATUS),
         route_formula_dry_run_rows=read_csv_rows(ROUTE_FORMULA_DRY_RUN_ROWS),
+        route_formula_policy_status=load_json(ROUTE_FORMULA_POLICY_STATUS),
+        route_formula_policy_rows=read_csv_rows(ROUTE_FORMULA_POLICY_ROWS),
+        winner_jrc_policy_status=load_json(WINNER_JRC_POLICY_STATUS),
+        winner_jrc_policy_rows=read_csv_rows(WINNER_JRC_POLICY_ROWS),
     )
     readiness_dicts = [row.to_dict() for row in rows]
     guard_dicts = [row.to_dict() for row in guards]
@@ -226,8 +243,11 @@ def build_payload() -> dict[str, Any]:
         "detector_accepted_transfer_rows_total": sum(row["detector_accepted_transfer_rows"] for row in readiness_dicts),
         "wet_accepted_observation_rows_total": sum(row["wet_accepted_observation_rows"] for row in readiness_dicts),
         "route_formula_component_vector_ready_rows": sum(row["route_formula_component_vector_ready"] for row in readiness_dicts),
+        "route_score_candidate_ready_rows": sum(row["route_score_candidate_ready"] for row in readiness_dicts),
+        "winner_jrc_candidate_ready_rows": sum(row["winner_jrc_candidate_ready"] for row in readiness_dicts),
         "route_score_current_rows": sum(row["route_score_current"] for row in readiness_dicts),
         "winner_current_rows": sum(row["winner_current"] for row in readiness_dicts),
+        "JRC_current_rows": sum(row.get("JRC_current", False) for row in readiness_dicts),
         "yield_current_rows": sum(row["yield_current"] for row in readiness_dicts),
         "detection_probability_current_rows": sum(row["detection_probability_current"] for row in readiness_dicts),
         "production_ingestion_current_rows": sum(row["production_ingestion_current"] for row in readiness_dicts),
@@ -274,6 +294,8 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
                 "blocked_detector_blank_and_wet_observation_evidence_required",
                 "blocked_route_formula_component_vector_required",
                 "branch_evidence_and_formula_components_ready_for_route_policy_review",
+                "route_score_candidates_ready_for_winner_jrc_policy_review",
+                "winner_jrc_ready_for_integrated_yield_detection_review",
             }
             and row["rectangle_baseline_preserved"] is True
             and row["sidewall_trapezoid_route_present"] is True
@@ -321,6 +343,8 @@ def report_markdown(payload: dict[str, Any]) -> str:
         f"- Detector accepted transfer rows: `{s['detector_accepted_transfer_rows_total']}`.",
         f"- Wet accepted observation rows: `{s['wet_accepted_observation_rows_total']}`.",
         f"- Formula component-vector ready rows: `{s['route_formula_component_vector_ready_rows']}`.",
+        f"- Route-score candidate ready rows: `{s['route_score_candidate_ready_rows']}`.",
+        f"- Winner/JRC ready rows: `{s['winner_jrc_candidate_ready_rows']}`.",
         f"- route/yield/detection current rows: `{s['route_score_current_rows']}` / `{s['yield_current_rows']}` / `{s['detection_probability_current_rows']}`.",
         "- Rectangle baseline and sidewall trapezoid route remain side by side; route decisions remain blocked until detector/blank and wet evidence packets contain accepted rows.",
         "",
