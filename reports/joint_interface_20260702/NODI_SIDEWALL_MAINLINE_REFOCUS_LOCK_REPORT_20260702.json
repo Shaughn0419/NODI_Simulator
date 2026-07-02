@@ -1,0 +1,991 @@
+{
+  "alignment_check_rows": [
+    {
+      "check_detail": "3",
+      "check_id": "MAINLINE-REFOCUS-CHECK-001",
+      "check_name": "three_axes_present",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "4",
+      "check_id": "MAINLINE-REFOCUS-CHECK-002",
+      "check_name": "all_packages_map_to_refocused_axes",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "winner/ranking is a drift guard, not the route",
+      "check_id": "MAINLINE-REFOCUS-CHECK-003",
+      "check_name": "route_winner_not_primary",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "simulation assumptions are the active source",
+      "check_id": "MAINLINE-REFOCUS-CHECK-004",
+      "check_name": "simulation_not_experimental_waiting",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "ideal rectangle remains baseline",
+      "check_id": "MAINLINE-REFOCUS-CHECK-005",
+      "check_name": "rectangle_and_trapezoid_coexist",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "12",
+      "check_id": "MAINLINE-REFOCUS-CHECK-006",
+      "check_name": "source_lock_complete",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "5",
+      "check_id": "MAINLINE-REFOCUS-CHECK-007",
+      "check_name": "source_hints_cover_annulus_response_and_ledger",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "3",
+      "check_id": "MAINLINE-REFOCUS-CHECK-008",
+      "check_name": "negative_context_sources_registered",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "12",
+      "check_id": "MAINLINE-REFOCUS-CHECK-009",
+      "check_name": "forbidden_fields_include_aliases",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "formal q_ch cannot become recommendation score",
+      "check_id": "MAINLINE-REFOCUS-CHECK-010",
+      "check_name": "qch_is_transport_input_only",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "small-n smoke cannot change recommendation",
+      "check_id": "MAINLINE-REFOCUS-CHECK-011",
+      "check_name": "small_n_smoke_is_context_only",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    }
+  ],
+  "dirty_context_rows": [
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": "M ",
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "papers/provenance/paper_manifest.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": "??",
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "mainline_refocus_output",
+      "git_status": "??",
+      "path": "reports/588_NODI_SIDEWALL_MAINLINE_REFOCUS_LOCK_20260702.md",
+      "release_decision": "included_or_rewritten_by_mainline_refocus_builder"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": "??",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": "??",
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "mainline_refocus_build_edit",
+      "git_status": "??",
+      "path": "tests/test_nodi_sidewall_mainline_refocus_lock.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_mainline_refocus_dirty_context",
+      "git_status": "??",
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "release_decision": "ignored_for_mainline_refocus_lock"
+    },
+    {
+      "classification": "mainline_refocus_build_edit",
+      "git_status": "??",
+      "path": "tools/audits/build_nodi_sidewall_mainline_refocus_lock.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ],
+  "drift_guard_rows": [
+    {
+      "forbidden_primary_frame": "which_route_wins_or_loses",
+      "guard_id": "DRIFT-001",
+      "hard_fail_if": "master_report_or_status_makes_route_winner_the_primary_question",
+      "replacement_frame": "which_dimensions_annuli_and_response_maps_shift"
+    },
+    {
+      "forbidden_primary_frame": "waiting_for_real_experimental_data",
+      "guard_id": "DRIFT-002",
+      "hard_fail_if": "work_package_is_blocked_only_because_project_measurement_is_missing",
+      "replacement_frame": "extreme_simulation_from_NODI_COMSOL_assumptions"
+    },
+    {
+      "forbidden_primary_frame": "single_scalar_sidewall_score",
+      "guard_id": "DRIFT-003",
+      "hard_fail_if": "output_has_score_without_axis_specific_delta_fields",
+      "replacement_frame": "dimension_shift_annulus_shift_interference_delta"
+    },
+    {
+      "forbidden_primary_frame": "trapezoid_replaces_rectangle",
+      "guard_id": "DRIFT-004",
+      "hard_fail_if": "ideal_rectangle_baseline_is_removed_or_overwritten",
+      "replacement_frame": "rectangle_baseline_and_sidewall_geometry_coexist"
+    },
+    {
+      "forbidden_primary_frame": "q_ch_eta_or_q_ch_weighted_recommendation_score",
+      "guard_id": "DRIFT-005",
+      "hard_fail_if": "q_ch_is_multiplied_into_eta_detection_or_recommendation_score",
+      "replacement_frame": "formal_qch_transport_input_only"
+    },
+    {
+      "forbidden_primary_frame": "small_n_smoke_as_recommendation_evidence",
+      "guard_id": "DRIFT-006",
+      "hard_fail_if": "small_n_rows_change_recommended_dimension_or_annulus_without_full_matrix",
+      "replacement_frame": "small_n_smoke_context_only_until_full_matrix"
+    }
+  ],
+  "forbidden_field_rows": [
+    {
+      "allowed_replacement": "use_delta_status_or_annulus_remap_status",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-001",
+      "forbidden_field_or_alias": "winner",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_axis_specific_delta_fields",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-002",
+      "forbidden_field_or_alias": "route_score",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_dimension_family_stability_band",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-003",
+      "forbidden_field_or_alias": "rank",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_recommendation_shift_candidate",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-004",
+      "forbidden_field_or_alias": "ranking",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_ledger_context_status",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-005",
+      "forbidden_field_or_alias": "JRC",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_tail_particle_support_delta_or_wet_surface_context",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-006",
+      "forbidden_field_or_alias": "yield",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_interference_enhancement_delta_map",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-007",
+      "forbidden_field_or_alias": "detection_probability",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_wet_surface_assumption_context",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-008",
+      "forbidden_field_or_alias": "wet_pass_probability",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_extreme_simulation_source_gap",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-009",
+      "forbidden_field_or_alias": "experimental_data_waiting",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_axis_specific_delta_fields",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-010",
+      "forbidden_field_or_alias": "route_score_norm",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_sensitivity_sort_index_only_if_non_primary",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-011",
+      "forbidden_field_or_alias": "rank_under_surrogate",
+      "hard_fail_if_primary_output": true
+    },
+    {
+      "allowed_replacement": "use_sidewall_geometry_sensitivity_delta",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "forbidden_field_id": "FORBIDDEN-FIELD-012",
+      "forbidden_field_or_alias": "sidewall_score_value",
+      "hard_fail_if_primary_output": true
+    }
+  ],
+  "mainline_axis_rows": [
+    {
+      "axis_id": "AXIS-001",
+      "axis_name": "dimension_recommendation_sensitivity",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "must_compare_against": "ideal_rectangle_baseline",
+      "not_primary": "route_winner_or_scoreboard",
+      "primary_question": "Does adding sidewall angle move the recommended NODI channel width/depth family or tolerable geometry window?",
+      "required_inputs": "W_top_nm;depth_nm;sidewall_deg_comsol;W_bottom_unclipped_nm;closure_status;center_accessible_area;220_300nm_support;formal_qch_transport_input_only",
+      "required_outputs": "recommended_dimension_shift_nm;dimension_family_stability_band;geometry_closure_blockers;tail_particle_support_delta;baseline_scope_not_extrapolated"
+    },
+    {
+      "axis_id": "AXIS-002",
+      "axis_name": "selected_annulus_sidewall_remap",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "must_compare_against": "rectangle_selected_annulus_basis",
+      "not_primary": "ranking_route_families",
+      "primary_question": "Does sidewall angle change the selected annulus coordinate range, bin validity, or center-accessible support?",
+      "required_inputs": "annulus_id;old_rectangle_basis;x_nm;u_nm;x_local_norm;u_norm;d_nearest_wall_nm;bin_accessible",
+      "required_outputs": "annulus_remap_status;annulus_range_shift;blocked_bins;new_trapezoid_annulus_basis;no_neighbor_fill_for_blocked_bins;small_n_context_not_recommendation"
+    },
+    {
+      "axis_id": "AXIS-003",
+      "axis_name": "interference_enhancement_sidewall_sensitivity",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "must_compare_against": "rectangle_response_map",
+      "not_primary": "bare_detection_probability",
+      "primary_question": "Does sidewall angle change the interference-enhancement proxy or response map through particle position, reference field, or detector overlap assumptions?",
+      "required_inputs": "response_map_basis;reference_field_model;detector_operator_id;particle_position_distribution;near_wall_response_bins",
+      "required_outputs": "enhancement_delta_map;near_wall_response_shift;reference_field_solver_needed_flags;annulus_response_delta;true_W_eff_not_claimed"
+    }
+  ],
+  "negative_context_rows": [
+    {
+      "allowed_use": "prove_winner_JRC_fields_remain_non_primary_or_false",
+      "blocked_use": "drive_dimension_annulus_or_interference_work",
+      "negative_context_id": "NEGATIVE-CONTEXT-001",
+      "negative_reason": "winner_JRC_policy_review_is_not_the_sidewall_mainline",
+      "source_path": "nodi_simulator/sidewall_winner_jrc_policy_review.py"
+    },
+    {
+      "allowed_use": "reuse_dual_track_pattern_only",
+      "blocked_use": "inherit_route_ranking_as_primary_question",
+      "negative_context_id": "NEGATIVE-CONTEXT-002",
+      "negative_reason": "simulation_candidate_dual_track_is_route_ranking_semantics",
+      "source_path": "tools/audits/build_nodi_package_c_sidewall_simulation_candidate_dual_track_lock.py"
+    },
+    {
+      "allowed_use": "historical_context_or_input_caveat",
+      "blocked_use": "promote_to_sidewall_detection_probability",
+      "negative_context_id": "NEGATIVE-CONTEXT-003",
+      "negative_reason": "wet_optical_detection_context_is_not_sidewall_specific_delta",
+      "source_path": "nodi_simulator/wet_optical_detection_evidence.py"
+    }
+  ],
+  "source_hint_rows": [
+    {
+      "preferred_axis": "AXIS-002",
+      "source_hint_id": "SOURCE-HINT-001",
+      "source_path": "nodi_simulator/sidewall_selected_annulus_context.py",
+      "source_role": "selected_annulus_context_fields",
+      "usable_fields": "channel_cross_section_model;sidewall_deg_comsol;selected_annulus_edge_norm_min;selected_annulus_edge_norm_max;selected_annulus_mean_edge_norm",
+      "use_limit": "context_for_annulus_remap_not_detection_probability"
+    },
+    {
+      "preferred_axis": "AXIS-001;AXIS-003",
+      "source_hint_id": "SOURCE-HINT-002",
+      "source_path": "nodi_simulator/sidewall_reference_surrogate_candidate.py",
+      "source_role": "effective_aperture_surrogate_input",
+      "usable_fields": "A_ref;g_ref;effective_aperture_factor;sidewall_angle",
+      "use_limit": "surrogate_only_not_true_W_eff_or_full_wave_solution"
+    },
+    {
+      "preferred_axis": "AXIS-003",
+      "source_hint_id": "SOURCE-HINT-003",
+      "source_path": "nodi_simulator/sidewall_optical_reference_smoke.py",
+      "source_role": "optical_reference_smoke_context",
+      "usable_fields": "reference_geometry;phi_ref_source;reference_smoke_status",
+      "use_limit": "smoke_context_only_not_detector_response_claim"
+    },
+    {
+      "preferred_axis": "AXIS-003",
+      "source_hint_id": "SOURCE-HINT-004",
+      "source_path": "tools/audits/validate_nodi_position_response_surface.py",
+      "source_role": "response_surface_schema_validator_prototype",
+      "usable_fields": "response_surface_artifact_version;row_scope;bin_id;edge_norm_min;edge_norm_max",
+      "use_limit": "schema_ancestor_not_finished_sidewall_response_map"
+    },
+    {
+      "preferred_axis": "AXIS-001;AXIS-002;AXIS-003",
+      "source_hint_id": "SOURCE-HINT-005",
+      "source_path": "nodi_simulator/sidewall_integrated_promotion_ledger.py",
+      "source_role": "downstream_ledger_consumer",
+      "usable_fields": "next_evidence_focus;claim_boundary;ledger_status",
+      "use_limit": "consume_delta_lock_as_context_not_claim_unlock"
+    }
+  ],
+  "source_lock_rows": [
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "reports/joint_interface_20260702/NODI_COMSOL_V4_UPPER_ASSUMPTION_ALIGNMENT_STATUS_20260702.json",
+      "sha256": "c58b8ab38395811ad1fc192cc60398392b913178ebc8d38c4d3b9f301241d1f0",
+      "source_id": "comsol_v4_upper_alignment_status"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "reports/joint_interface_20260702/NODI_COMSOL_V4_ALIGNMENT_EXTENSION_STATUS_20260702.json",
+      "sha256": "11016c1c382d107ad61f41b1cb9d0a4ccbe8fa94bc577060d975fc90678be6a3",
+      "source_id": "comsol_v4_alignment_extension_status"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "reports/585_NODI_PACKAGE_C_SIDEWALL_SIMULATION_RELEASE_ENVELOPE_20260701.md",
+      "sha256": "c6cec57ab900e36d6d5ab9484d3d74ef1a6da2c58d1407781b355f55f0a5aaab",
+      "source_id": "sidewall_simulation_release_envelope"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "reports/580_NODI_PACKAGE_C_SIDEWALL_SIMULATION_ASSUMPTION_ROUTE_CORRECTION_20260702.md",
+      "sha256": "bc81f7cc46c8f1448cd98b6e3d79830fcd37e6be501d810a7ec5cbfd525949b9",
+      "source_id": "sidewall_route_correction"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "nodi_simulator/sidewall_selected_annulus_context.py",
+      "sha256": "52a36dfaadde59b2abe3d9522b3962701157248e046f296046dd3ff715149710",
+      "source_id": "sidewall_selected_annulus_context"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "nodi_simulator/sidewall_reference_surrogate_candidate.py",
+      "sha256": "876b66e9bde7269e743c792678b933d31935ed6def89030107aeb914d474ca47",
+      "source_id": "sidewall_reference_surrogate_candidate"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "nodi_simulator/sidewall_optical_reference_smoke.py",
+      "sha256": "51968b574e027c3e1e1f73041301c06f218a4a0764ce6a8502c0437d486d0ead",
+      "source_id": "sidewall_optical_reference_smoke"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "tools/audits/validate_nodi_position_response_surface.py",
+      "sha256": "7f75d36289ef136bdf48b0e5af363964939e20748ce8d3290e7028121b5af346",
+      "source_id": "position_response_surface_validator"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "nodi_simulator/sidewall_integrated_promotion_ledger.py",
+      "sha256": "f359f4a91701fc26ed438ed5119165738a4736dc748020e06a9d52891448ae1b",
+      "source_id": "sidewall_integrated_promotion_ledger"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "nodi_simulator/sidewall_winner_jrc_policy_review.py",
+      "sha256": "62f2d23f30ebb445a6bec8df67fe51766664391158f006e7b8d7090ae27ef0a2",
+      "source_id": "sidewall_winner_jrc_policy_review"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "tools/audits/build_nodi_sidewall_mainline_refocus_lock.py",
+      "sha256": "059c4d2f5c3139c3bfaf4ed919c61ebdefc14457a8f8f854ec0ecf97183e858b",
+      "source_id": "mainline_refocus_builder"
+    },
+    {
+      "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+      "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+      "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+      "exists": "true",
+      "path": "tests/test_nodi_sidewall_mainline_refocus_lock.py",
+      "sha256": "886b6b50603ce3bd16df5798d0e4b40a191467260b33086e3128df85986a0ef4",
+      "source_id": "mainline_refocus_tests"
+    }
+  ],
+  "summary": {
+    "alignment_check_rows": 11,
+    "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+    "artifact_id": "NODI_SIDEWALL_MAINLINE_REFOCUS_LOCK_20260702",
+    "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+    "branch": "main",
+    "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+    "current_head": "337f6f4348ae9e08e9e9b6e9cd4997be46bbf68f",
+    "dirty_context_rows": 86,
+    "disposition": "NODI_SIDEWALL_MAINLINE_REFOCUS_LOCK_READY",
+    "drift_guard_rows": 6,
+    "failed_alignment_check_rows": 0,
+    "forbidden_field_rows": 12,
+    "mainline_axis_rows": 3,
+    "negative_context_rows": 3,
+    "next_high_leverage_step": "build dimension recommendation drift matrix, selected-annulus remap, and interference-enhancement sensitivity artifacts as one coherent block",
+    "non_mainline_refocus_dirty_context_rows": 83,
+    "not_primary_mainline": "route_winner_or_scoreboard",
+    "primary_mainline": "sidewall_angle_effect_on_recommended_dimensions_selected_annulus_and_interference_enhancement",
+    "semantic_digest": "53193f16ba7586db9d95626f7f0e5dbcb6c8f52d81df58bba1f22992393ce364",
+    "source_hint_rows": 5,
+    "source_lock_rows": 12,
+    "source_missing_rows": 0,
+    "v4_extension_disposition": "NODI_COMSOL_V4_ALIGNMENT_EXTENSION_READY_DIRTY_SOURCE_AWARE",
+    "v4_upper_alignment_disposition": "NODI_COMSOL_V4_UPPER_ASSUMPTION_ALIGNMENT_READY",
+    "work_package_rows": 4
+  },
+  "work_package_rows": [
+    {
+      "depends_on_axis": "AXIS-001",
+      "first_output": "dimension_recommendation_shift_rows",
+      "hard_checks": "keeps_ideal_rectangle_baseline;preserves_unclipped_bottom_width;reports_blocked_closed_geometries;does_not_emit_route_winner;W500_D900_not_extrapolated_to_full_size_space;formal_qch_transport_input_only",
+      "package_id": "SW-MAIN-001",
+      "package_name": "dimension_recommendation_drift_matrix",
+      "scope": "theta/depth/top-width/particle-tail sweep against rectangle baseline"
+    },
+    {
+      "depends_on_axis": "AXIS-002",
+      "first_output": "annulus_remap_rows",
+      "hard_checks": "all_bins_have_coordinate_basis;blocked_bins_no_numeric_response;no_neighbor_fill;old_annulus_names_do_not_hide_geometry_basis;small_n_smoke_rows_context_only",
+      "package_id": "SW-MAIN-002",
+      "package_name": "selected_annulus_trapezoid_remap",
+      "scope": "map rectangle annulus bins into trapezoid local-width coordinates"
+    },
+    {
+      "depends_on_axis": "AXIS-003",
+      "first_output": "interference_enhancement_delta_rows",
+      "hard_checks": "separates_position_distribution_effect_from_reference_field_effect;marks_solver_required_for_true_reference_change;does_not_reduce_to_detection_probability_only;trapezoid_effective_aperture_surrogate_not_true_W_eff",
+      "package_id": "SW-MAIN-003",
+      "package_name": "interference_enhancement_response_sensitivity",
+      "scope": "response/enhancement proxy maps over rectangle and trapezoid distributions"
+    },
+    {
+      "depends_on_axis": "AXIS-001;AXIS-002;AXIS-003",
+      "first_output": "v4_axis_overlay_rows",
+      "hard_checks": "keeps_v4_id_version_sha;extreme_branch_not_default_merged;uses_simulation_assumptions_not_experimental_waiting",
+      "package_id": "SW-MAIN-004",
+      "package_name": "v4_assumption_overlay_for_axes",
+      "scope": "overlay COMSOL V4 LOW/MID/HIGH/EXTREME assumptions on the three axes"
+    }
+  ]
+}

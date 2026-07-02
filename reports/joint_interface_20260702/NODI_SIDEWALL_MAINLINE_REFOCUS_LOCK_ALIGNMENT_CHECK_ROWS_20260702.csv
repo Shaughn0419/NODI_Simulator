@@ -1,0 +1,12 @@
+check_id,check_name,check_pass,check_detail,hard_fail_if_false
+MAINLINE-REFOCUS-CHECK-001,three_axes_present,True,3,True
+MAINLINE-REFOCUS-CHECK-002,all_packages_map_to_refocused_axes,True,4,True
+MAINLINE-REFOCUS-CHECK-003,route_winner_not_primary,True,"winner/ranking is a drift guard, not the route",True
+MAINLINE-REFOCUS-CHECK-004,simulation_not_experimental_waiting,True,simulation assumptions are the active source,True
+MAINLINE-REFOCUS-CHECK-005,rectangle_and_trapezoid_coexist,True,ideal rectangle remains baseline,True
+MAINLINE-REFOCUS-CHECK-006,source_lock_complete,True,12,True
+MAINLINE-REFOCUS-CHECK-007,source_hints_cover_annulus_response_and_ledger,True,5,True
+MAINLINE-REFOCUS-CHECK-008,negative_context_sources_registered,True,3,True
+MAINLINE-REFOCUS-CHECK-009,forbidden_fields_include_aliases,True,12,True
+MAINLINE-REFOCUS-CHECK-010,qch_is_transport_input_only,True,formal q_ch cannot become recommendation score,True
+MAINLINE-REFOCUS-CHECK-011,small_n_smoke_is_context_only,True,small-n smoke cannot change recommendation,True

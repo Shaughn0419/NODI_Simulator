@@ -1,0 +1,30 @@
+{
+  "disposition": "NODI_SIDEWALL_MAINLINE_REFOCUS_LOCK_READY",
+  "summary": {
+    "alignment_check_rows": 11,
+    "allowed_use": "govern sidewall-angle work toward dimension recommendation drift, selected-annulus remapping, and interference-enhancement sensitivity",
+    "artifact_id": "NODI_SIDEWALL_MAINLINE_REFOCUS_LOCK_20260702",
+    "blocked_use": "route winner as the primary question; score-board driven comparison; waiting for real experiments before simulation progress; collapsing ideal rectangle and trapezoid into one geometry",
+    "branch": "main",
+    "claim_boundary": "sidewall_angle_effect_on_recommendation_annulus_interference_not_route_winner",
+    "current_head": "337f6f4348ae9e08e9e9b6e9cd4997be46bbf68f",
+    "dirty_context_rows": 86,
+    "disposition": "NODI_SIDEWALL_MAINLINE_REFOCUS_LOCK_READY",
+    "drift_guard_rows": 6,
+    "failed_alignment_check_rows": 0,
+    "forbidden_field_rows": 12,
+    "mainline_axis_rows": 3,
+    "negative_context_rows": 3,
+    "next_high_leverage_step": "build dimension recommendation drift matrix, selected-annulus remap, and interference-enhancement sensitivity artifacts as one coherent block",
+    "non_mainline_refocus_dirty_context_rows": 83,
+    "not_primary_mainline": "route_winner_or_scoreboard",
+    "primary_mainline": "sidewall_angle_effect_on_recommended_dimensions_selected_annulus_and_interference_enhancement",
+    "semantic_digest": "53193f16ba7586db9d95626f7f0e5dbcb6c8f52d81df58bba1f22992393ce364",
+    "source_hint_rows": 5,
+    "source_lock_rows": 12,
+    "source_missing_rows": 0,
+    "v4_extension_disposition": "NODI_COMSOL_V4_ALIGNMENT_EXTENSION_READY_DIRTY_SOURCE_AWARE",
+    "v4_upper_alignment_disposition": "NODI_COMSOL_V4_UPPER_ASSUMPTION_ALIGNMENT_READY",
+    "work_package_rows": 4
+  }
+}
