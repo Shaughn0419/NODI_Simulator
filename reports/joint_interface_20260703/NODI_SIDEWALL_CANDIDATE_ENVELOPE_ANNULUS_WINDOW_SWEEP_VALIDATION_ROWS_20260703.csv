@@ -1,0 +1,5 @@
+check_name,check_pass,observed,expected,hard_fail_if_false
+annulus_window_event_coverage,True,234,234,True
+route_window_summary_coverage,True,18,18,True
+source_artifacts_present,True,0,0,True
+no_forbidden_primary_columns,True,pass,pass,True
