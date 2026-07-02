@@ -1,0 +1,10 @@
+check_id,status,detail
+edge4_transport_bins_available_for_220_and_300,pass,edge_bin_rows=8
+edge4_not_promoted_to_exact_pxu,pass,COMSOL edge bins remain transport descriptors
+window_weights_cover_three_modes,pass,"uniform, outlet-flux, and residence weighting modes present"
+weighted_response_rows_match_event_rows_times_modes,pass,weighted_window_response_rows=624
+route_synthesis_covers_six_routes_times_three_modes,pass,route_weighted_synthesis_rows=18
+question_rows_cover_three_user_questions,pass,"dimension, annulus, and interference-response questions retained"
+comsol_weighting_shifts_annulus_context_for_at_least_one_route,pass,coarse COMSOL edge weighting is directionally active
+v4_assumption_hash_bound,pass,2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92
+no_forbidden_primary_columns,pass,outputs avoid score/winner/yield/detection/W_eff/q_ch primary columns

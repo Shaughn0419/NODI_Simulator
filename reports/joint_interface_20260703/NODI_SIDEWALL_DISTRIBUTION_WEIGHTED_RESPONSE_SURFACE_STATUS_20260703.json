@@ -1,0 +1,25 @@
+{
+  "artifact_id": "NODI_SIDEWALL_DISTRIBUTION_WEIGHTED_RESPONSE_SURFACE_20260703",
+  "claim_boundary": "distribution_weighted_response_surface_surrogate_not_final_pxu",
+  "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+  "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+  "comsol_v4_assumption_set_version": "4.0.0",
+  "date_stamp": "20260703",
+  "disposition": "NODI_SIDEWALL_DISTRIBUTION_WEIGHTED_RESPONSE_SURFACE_READY",
+  "git_branch": "main",
+  "git_head": "abef0dbb33af5c6ed9fb246fc47f8b3f7451ce3f",
+  "payload_sha256": "4017e6e2df92aa09817e2dc555a0b32ac126d8ade96cc52499ac3104febc0a4e",
+  "summary": {
+    "exact_pxu_probability_grid_available_now": false,
+    "failed_validation_rows": 0,
+    "next_action_rows": 6,
+    "next_executable_block": "607_full_nodi_recompute_distribution_weighted_dimension_annulus_response",
+    "question_result_rows": 3,
+    "route_weighted_synthesis_rows": 18,
+    "source_event_rows_603": 208,
+    "transport_bin_rows": 8,
+    "weighted_window_response_rows": 624,
+    "window_weight_rows": 18
+  },
+  "synthesis_version": "sidewall_distribution_weighted_response_surface_v1"
+}
