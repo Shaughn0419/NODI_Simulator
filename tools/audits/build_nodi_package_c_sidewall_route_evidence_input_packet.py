@@ -263,6 +263,9 @@ def build_payload() -> dict[str, Any]:
         or any(row["route_score_current"] for row in formula_dicts)
     ):
         disposition = BLOCKED_DISPOSITION
+    missing_current_acceptance_branches = [
+        row["input_branch"] for row in input_dicts if row["current_accepted_rows"] == 0
+    ]
     summary: dict[str, Any] = {
         "disposition": disposition,
         "artifact_id": ARTIFACT_ID,
@@ -301,6 +304,9 @@ def build_payload() -> dict[str, Any]:
         "yield_current_rows": int(claim_value_summary.get("yield_current_rows", 0)),
         "wet_pass_probability_current_rows": int(claim_value_summary.get("wet_pass_probability_current_rows", 0)),
         "input_rows": len(input_dicts),
+        "input_branches_missing_current_acceptance": ";".join(
+            missing_current_acceptance_branches
+        ),
         "command_rows": len(command_dicts),
         "route_formula_rows": len(formula_dicts),
         "route_formula_ready_for_claim_review_rows": route_formula_ready,
@@ -321,7 +327,11 @@ def build_payload() -> dict[str, Any]:
         "allowed_use": ALLOWED_USE,
         "blocked_use": BLOCKED_USE,
         "next_high_leverage_step": (
-            "populate detector, wet, detection-value, and yield-value target rows, then rerun the full command chain"
+            "populate "
+            + ", ".join(missing_current_acceptance_branches)
+            + " target rows, then rerun the full command chain"
+            if missing_current_acceptance_branches
+            else "all evidence input branches have accepted rows; rerun the full command chain"
         ),
     }
     payload = {
@@ -416,6 +426,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Detection-value template rows: `{s['detection_value_template_rows']}`; target input present: `{s['detection_value_input_present']}`.",
             f"Yield/wet-value template rows: `{s['yield_value_template_rows']}`; target input present: `{s['yield_value_input_present']}`.",
             f"Workspace header-only target rows: `{s['workspace_target_header_only_rows']}`; refreshed now: `{s['workspace_target_header_refreshed_now_rows']}`.",
+            f"Detector accepted transfer rows: `{s['detector_accepted_transfer_rows_total']}`.",
+            f"Missing current-acceptance branches: `{s['input_branches_missing_current_acceptance']}`.",
             f"Route formula ready rows: `{s['route_formula_ready_for_claim_review_rows']}`.",
             f"Detection probability current rows: `{s['detection_probability_current_rows']}`; yield current rows: `{s['yield_current_rows']}`; wet-pass current rows: `{s['wet_pass_probability_current_rows']}`.",
             "",

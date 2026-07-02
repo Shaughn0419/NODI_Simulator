@@ -112,3 +112,55 @@ def test_route_evidence_input_packet_can_mark_formula_review_ready_without_claim
     assert formula_rows[0].route_score_current is False
     assert formula_rows[0].yield_current is False
     assert formula_rows[0].detection_probability_current is False
+
+
+def test_route_evidence_input_packet_marks_detector_ready_and_wet_missing() -> None:
+    input_rows, _commands, formula_rows = build_route_evidence_input_packet(
+        detector_intake_summary={"template_rows": 2},
+        wet_intake_summary={"template_rows": 14},
+        activation_summary={
+            "detector_input_present": True,
+            "wet_input_present": True,
+            "detector_accepted_transfer_rows_total": 2,
+            "wet_accepted_endpoint_count_total": 0,
+        },
+        claim_value_summary={
+            "detection_template_rows": 2,
+            "yield_template_rows": 2,
+            "detection_input_present": True,
+            "yield_input_present": True,
+            "detection_probability_current_rows": 0,
+            "yield_current_rows": 0,
+            "wet_pass_probability_current_rows": 0,
+        },
+        closure_rows=[
+            {
+                "route_candidate_id": "ROUTE-CAND-001",
+                "route_geometry_family": "ideal_rectangle",
+                "qch_status": "formal_qch_input_ready_not_route_score",
+                "detector_branch_ready": "True",
+                "wet_branch_ready": "False",
+                "route_formula_ready_for_claim_review": "False",
+                "route_formula_activation_status": "blocked_wet_accepted_evidence_missing",
+            }
+        ],
+        detector_template_path="detector_template.csv",
+        wet_template_path="wet_template.csv",
+        detection_value_template_path="detection_value_template.csv",
+        yield_value_template_path="yield_value_template.csv",
+        detector_target_input_path="detector_input.csv",
+        wet_target_input_path="wet_input.csv",
+        detection_value_target_input_path="detection_value_input.csv",
+        yield_value_target_input_path="yield_value_input.csv",
+    )
+
+    by_branch = {row.input_branch: row for row in input_rows}
+    assert by_branch["detector_blank_transfer"].current_accepted_rows == 2
+    assert "already has accepted candidate rows" in (
+        by_branch["detector_blank_transfer"].required_action
+    )
+    assert by_branch["wet_surface_observation"].current_accepted_rows == 0
+    assert formula_rows[0].next_required_action == (
+        "complete accepted wet evidence inputs, then rerun the command chain"
+    )
+    assert formula_rows[0].route_score_current is False

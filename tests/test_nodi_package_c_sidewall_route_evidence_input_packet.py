@@ -19,6 +19,10 @@ def test_route_evidence_input_packet_builds_current_input_handoff() -> None:
     assert summary["wet_template_rows"] == 14
     assert summary["detection_value_template_rows"] == 2
     assert summary["yield_value_template_rows"] == 2
+    assert summary["detector_accepted_transfer_rows_total"] == 2
+    assert summary["input_branches_missing_current_acceptance"] == (
+        "wet_surface_observation;detection_probability_value;yield_wet_value"
+    )
     assert summary["route_formula_ready_for_claim_review_rows"] == 0
     assert summary["detection_probability_current_rows"] == 0
     assert summary["yield_current_rows"] == 0
@@ -26,6 +30,7 @@ def test_route_evidence_input_packet_builds_current_input_handoff() -> None:
     assert summary["route_score_current"] is False
     assert summary["yield_current"] is False
     assert summary["detection_probability_current"] is False
+    assert "detector_blank_transfer" not in summary["next_high_leverage_step"]
 
 
 def test_route_evidence_input_packet_command_chain_order() -> None:

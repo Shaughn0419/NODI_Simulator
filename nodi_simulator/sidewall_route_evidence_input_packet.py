@@ -94,6 +94,14 @@ def build_route_evidence_input_packet(
     list[SidewallRouteEvidenceFormulaRow],
 ]:
     claim_value_summary = claim_value_summary or {}
+    detector_accepted = _int(
+        activation_summary.get("detector_accepted_transfer_rows_total")
+    )
+    wet_accepted = _int(activation_summary.get("wet_accepted_endpoint_count_total"))
+    detection_accepted = _int(
+        claim_value_summary.get("detection_probability_current_rows")
+    )
+    yield_accepted = _int(claim_value_summary.get("yield_current_rows"))
     input_rows = [
         SidewallRouteEvidenceInputRow(
             input_row_id="ROUTE-EVIDENCE-INPUT-detector_blank_transfer",
@@ -105,16 +113,22 @@ def build_route_evidence_input_packet(
             current_input_present=_bool(
                 activation_summary.get("detector_input_present")
             ),
-            current_accepted_rows=_int(
-                activation_summary.get("detector_accepted_transfer_rows_total")
-            ),
+            current_accepted_rows=detector_accepted,
             accepted_status_required=(
                 "detector_blank_transfer_bundle_candidate_ready_requires_policy_review"
             ),
             ready_to_rerun_chain=True,
-            required_action=(
-                "populate detector blank transfer input rows with accepted hashes, controls, "
-                "sample counts, uncertainty model, and pre-registered rule status"
+            required_action=_input_required_action(
+                accepted_rows=detector_accepted,
+                ready_text=(
+                    "detector blank transfer already has accepted candidate rows; "
+                    "rerun only when replacing detector evidence"
+                ),
+                missing_text=(
+                    "populate detector blank transfer input rows with accepted hashes, "
+                    "controls, sample counts, uncertainty model, and pre-registered "
+                    "rule status"
+                ),
             ),
             hard_fail_if=(
                 "detector_template_rows_counted_as_evidence_or_probability_claim"
@@ -129,17 +143,22 @@ def build_route_evidence_input_packet(
             target_input_path=wet_target_input_path,
             template_rows=_int(wet_intake_summary.get("template_rows")),
             current_input_present=_bool(activation_summary.get("wet_input_present")),
-            current_accepted_rows=_int(
-                activation_summary.get("wet_accepted_endpoint_count_total")
-            ),
+            current_accepted_rows=wet_accepted,
             accepted_status_required=(
                 "wet_surface_observation_bundle_candidate_ready_requires_policy_review"
             ),
             ready_to_rerun_chain=True,
-            required_action=(
-                "populate all wet endpoint observation rows with source hashes, "
-                "required fields, controls, replicate counts, uncertainty intervals, "
-                "and pre-registration status where required"
+            required_action=_input_required_action(
+                accepted_rows=wet_accepted,
+                ready_text=(
+                    "wet endpoint observation bundle already accepted; rerun only "
+                    "when replacing wet evidence"
+                ),
+                missing_text=(
+                    "populate all wet endpoint observation rows with source hashes, "
+                    "required fields, controls, replicate counts, uncertainty "
+                    "intervals, and pre-registration status where required"
+                ),
             ),
             hard_fail_if="wet_template_or_context_rows_counted_as_wet_claim",
             claim_boundary=SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_CLAIM_BOUNDARY,
@@ -154,15 +173,21 @@ def build_route_evidence_input_packet(
             current_input_present=_bool(
                 claim_value_summary.get("detection_input_present")
             ),
-            current_accepted_rows=_int(
-                claim_value_summary.get("detection_probability_current_rows")
-            ),
+            current_accepted_rows=detection_accepted,
             accepted_status_required="detection_probability_value_accepted",
             ready_to_rerun_chain=True,
-            required_action=(
-                "populate detection probability value rows with estimates, confidence "
-                "intervals, positive-control counts, threshold policy, controls, "
-                "uncertainty model, source hash, and pre-registration status"
+            required_action=_input_required_action(
+                accepted_rows=detection_accepted,
+                ready_text=(
+                    "detection probability value rows already accepted; rerun only "
+                    "when replacing value evidence"
+                ),
+                missing_text=(
+                    "populate detection probability value rows with estimates, "
+                    "confidence intervals, positive-control counts, threshold "
+                    "policy, controls, uncertainty model, source hash, and "
+                    "pre-registration status"
+                ),
             ),
             hard_fail_if=(
                 "detection_probability_template_rows_counted_as_probability_claim"
@@ -177,13 +202,20 @@ def build_route_evidence_input_packet(
             target_input_path=yield_value_target_input_path,
             template_rows=_int(claim_value_summary.get("yield_template_rows")),
             current_input_present=_bool(claim_value_summary.get("yield_input_present")),
-            current_accepted_rows=_int(claim_value_summary.get("yield_current_rows")),
+            current_accepted_rows=yield_accepted,
             accepted_status_required="yield_wet_value_bundle_accepted",
             ready_to_rerun_chain=True,
-            required_action=(
-                "populate yield and wet-pass value rows with estimates, confidence "
-                "intervals, wet trial counts, model id, controls, uncertainty model, "
-                "source hash, and pre-registration status"
+            required_action=_input_required_action(
+                accepted_rows=yield_accepted,
+                ready_text=(
+                    "yield and wet-pass value rows already accepted; rerun only "
+                    "when replacing value evidence"
+                ),
+                missing_text=(
+                    "populate yield and wet-pass value rows with estimates, "
+                    "confidence intervals, wet trial counts, model id, controls, "
+                    "uncertainty model, source hash, and pre-registration status"
+                ),
             ),
             hard_fail_if="yield_template_rows_counted_as_yield_or_wet_pass_claim",
             claim_boundary=SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_CLAIM_BOUNDARY,
@@ -214,13 +246,33 @@ def build_route_evidence_input_packet(
             next_required_action=(
                 "route formula policy/review packet can run after q_ch, detector, and wet branches are all ready"
                 if _bool(row.get("route_formula_ready_for_claim_review"))
-                else "complete accepted detector and wet evidence inputs, then rerun the command chain"
+                else _formula_next_required_action(
+                    detector_ready=_bool(row.get("detector_branch_ready")),
+                    wet_ready=_bool(row.get("wet_branch_ready")),
+                )
             ),
             claim_boundary=SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_CLAIM_BOUNDARY,
         )
         for row in sorted(closure_rows, key=lambda item: str(item.get("route_candidate_id", "")))
     ]
     return input_rows, command_rows, formula_rows
+
+
+def _input_required_action(
+    *,
+    accepted_rows: int,
+    ready_text: str,
+    missing_text: str,
+) -> str:
+    return ready_text if accepted_rows > 0 else missing_text
+
+
+def _formula_next_required_action(*, detector_ready: bool, wet_ready: bool) -> str:
+    if detector_ready and not wet_ready:
+        return "complete accepted wet evidence inputs, then rerun the command chain"
+    if wet_ready and not detector_ready:
+        return "complete accepted detector evidence inputs, then rerun the command chain"
+    return "complete accepted detector and wet evidence inputs, then rerun the command chain"
 
 
 def _command_rows() -> list[SidewallRouteEvidenceCommandRow]:
