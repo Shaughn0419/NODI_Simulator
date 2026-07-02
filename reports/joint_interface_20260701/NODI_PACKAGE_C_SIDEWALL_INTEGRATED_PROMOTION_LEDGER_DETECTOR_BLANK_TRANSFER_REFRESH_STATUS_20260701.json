@@ -1,0 +1,32 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_TRANSFER_REFRESH_READY_PREFLIGHT_ONLY",
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_TRANSFER_REFRESH_READY_PREFLIGHT_ONLY",
+    "artifact_id": "PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_TRANSFER_REFRESH_20260701",
+    "claim_boundary": "promotion_ledger_detector_blank_transfer_refresh_not_detection_probability",
+    "current_head": "dde143e1b70dde9c351d9f9912f0c1f43c03bd04",
+    "branch": "main",
+    "source_base_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_OBSERVATION_REFRESH_READY_PREFLIGHT_ONLY",
+    "source_transfer_intake_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE",
+    "refreshed_promotion_lane_rows": 18,
+    "detector_blank_transfer_delta_rows": 4,
+    "detector_transfer_intake_rows": 2,
+    "blank_transfer_intake_rows": 2,
+    "formal_qch_lane_rows_retained": 2,
+    "pressure_flow_validation_rows_retained": 2,
+    "selected_annulus_panel_rows_retained": 2,
+    "wet_observation_intake_rows_retained": 2,
+    "detection_probability_current": false,
+    "route_score_current": false,
+    "winner_current": false,
+    "yield_current": false,
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 85,
+    "non_release_dirty_context_rows": 79,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "integrated promotion ledger detector/blank transfer refresh;detector blank transfer intake handoff",
+    "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion",
+    "semantic_digest": "62377c0935eb1bce63b35bb50476c378916b4e1914dd5c9c72627fa716b2d411"
+  }
+}
