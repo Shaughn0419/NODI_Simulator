@@ -13,7 +13,7 @@ def test_route_evidence_input_packet_builds_current_input_handoff() -> None:
 
     assert summary["disposition"] == builder.DISPOSITION
     assert summary["input_rows"] == 4
-    assert summary["command_rows"] == 10
+    assert summary["command_rows"] == 11
     assert summary["route_formula_rows"] == 2
     assert summary["detector_template_rows"] == 2
     assert summary["wet_template_rows"] == 14
@@ -46,6 +46,7 @@ def test_route_evidence_input_packet_command_chain_order() -> None:
         "route_formula_review_dry_run",
         "route_formula_policy_review",
         "winner_jrc_policy_review",
+        "yield_detection_claim_value_manifest_import",
         "yield_detection_claim_value_review",
         "route_decision_execution_readiness",
     ]

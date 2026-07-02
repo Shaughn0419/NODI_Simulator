@@ -327,6 +327,12 @@ def _command_rows() -> list[SidewallRouteEvidenceCommandRow]:
             "activates winner/JRC only after current route scores and unique top",
         ),
         (
+            "yield_detection_claim_value_manifest_import",
+            "python tools\\audits\\build_nodi_package_c_sidewall_yield_detection_claim_value_manifest_import.py --confirm-sidewall-yield-detection-claim-value-manifest-import",
+            "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_STATUS_20260701.json",
+            "imports source-manifest-bound yield/detection value rows and hashes before claim-value review",
+        ),
+        (
             "yield_detection_claim_value_review",
             "python tools\\audits\\build_nodi_package_c_sidewall_yield_detection_claim_value_review.py --confirm-sidewall-yield-detection-claim-value-review",
             "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json",

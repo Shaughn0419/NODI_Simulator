@@ -71,6 +71,14 @@ SOURCE_FILES = {
     "real_evidence_workspace_status": REAL_EVIDENCE_WORKSPACE_STATUS,
     "detection_value_template_rows": DETECTION_VALUE_TEMPLATE_ROWS,
     "yield_value_template_rows": YIELD_VALUE_TEMPLATE_ROWS,
+    "claim_value_manifest_import_source": PROJECT_ROOT
+    / "nodi_simulator/sidewall_yield_detection_claim_value_manifest_import.py",
+    "claim_value_manifest_import_builder": PROJECT_ROOT
+    / "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_manifest_import.py",
+    "claim_value_manifest_import_tests": PROJECT_ROOT
+    / "tests/test_sidewall_yield_detection_claim_value_manifest_import.py",
+    "claim_value_manifest_import_builder_tests": PROJECT_ROOT
+    / "tests/test_nodi_package_c_sidewall_yield_detection_claim_value_manifest_import.py",
     "input_packet_source": PROJECT_ROOT / "nodi_simulator/sidewall_route_evidence_input_packet.py",
     "input_packet_builder": PROJECT_ROOT / "tools/audits/build_nodi_package_c_sidewall_route_evidence_input_packet.py",
     "input_packet_tests": PROJECT_ROOT / "tests/test_sidewall_route_evidence_input_packet.py",
@@ -258,7 +266,7 @@ def build_payload() -> dict[str, Any]:
     if (
         required_source_missing
         or len(input_dicts) != 4
-        or len(command_dicts) != 10
+        or len(command_dicts) != 11
         or len(formula_dicts) != 2
         or any(row["route_score_current"] for row in formula_dicts)
     ):
@@ -355,8 +363,8 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         failures.append("required_source_missing")
     if summary["input_rows"] != 4:
         failures.append("expected_four_input_rows")
-    if summary["command_rows"] != 10:
-        failures.append("expected_ten_command_rows")
+    if summary["command_rows"] != 11:
+        failures.append("expected_eleven_command_rows")
     if summary["route_formula_rows"] != 2:
         failures.append("expected_two_formula_rows")
     if summary["route_score_current"]:
@@ -431,7 +439,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Route formula ready rows: `{s['route_formula_ready_for_claim_review_rows']}`.",
             f"Detection probability current rows: `{s['detection_probability_current_rows']}`; yield current rows: `{s['yield_current_rows']}`; wet-pass current rows: `{s['wet_pass_probability_current_rows']}`.",
             "",
-            "This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value evidence, then rerunning the ten-step chain through route decision readiness.",
+            "This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value evidence, then rerunning the eleven-step chain through route decision readiness.",
             "",
         ]
     )
