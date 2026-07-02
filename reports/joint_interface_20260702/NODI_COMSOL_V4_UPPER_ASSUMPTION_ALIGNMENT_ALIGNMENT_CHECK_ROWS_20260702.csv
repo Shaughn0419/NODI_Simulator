@@ -1,0 +1,14 @@
+check_id,check_name,check_pass,check_detail,hard_fail_if_false
+V4-ALIGN-CHECK-001,v4_contract_file_exists,True,C:\Users\Yan\Desktop\Yan\codex project\comsol test\comsol_ev_pbs_bonded_cross_junction\roadmap\EV_PBS_SAMPLE_SURFACE_CANONICAL_CONTRACT_V4_20260627.json,True
+V4-ALIGN-CHECK-002,v4_contract_sha_matches_agents_lock,True,2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92,True
+V4-ALIGN-CHECK-003,v4_identity_matches_expected,True,EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627@4.0.0,True
+V4-ALIGN-CHECK-004,v4_governance_version_matches_expected,True,2026-06-27.1,True
+V4-ALIGN-CHECK-005,v4_scenario_set_complete,True,EXTREV-SCEN-EXTREME;EXTREV-SCEN-HIGH;EXTREV-SCEN-LOW;EXTREV-SCEN-MID,True
+V4-ALIGN-CHECK-006,v4_bootstrap_sha_bound_on_all_scenarios,True,4,True
+V4-ALIGN-CHECK-007,extreme_branch_remains_preflight_separate,True,EXTREV-SCEN-EXTREME,True
+V4-ALIGN-CHECK-008,nodi_release_envelope_ready,True,NODI_PACKAGE_C_SIDEWALL_SIMULATION_RELEASE_ENVELOPE_READY,True
+V4-ALIGN-CHECK-009,nodi_route_bindings_cover_two_geometry_families,True,ideal_rectangle;trapezoid_tapered_sidewalls,True
+V4-ALIGN-CHECK-010,nodi_route_rows_all_carry_v4_identity,True,2,True
+V4-ALIGN-CHECK-011,simulation_claims_allowed_under_alignment,True,simulation_route_score/yield/detection/wet_pass bound to V4 scenarios,True
+V4-ALIGN-CHECK-012,no_actual_release_leakage,True,actual release remains separate from V4 simulation alignment,True
+V4-ALIGN-CHECK-013,all_sources_exist,True,11,True

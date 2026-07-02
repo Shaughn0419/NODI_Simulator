@@ -1,0 +1,932 @@
+{
+  "alignment_check_rows": [
+    {
+      "check_detail": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\EV_PBS_SAMPLE_SURFACE_CANONICAL_CONTRACT_V4_20260627.json",
+      "check_id": "V4-ALIGN-CHECK-001",
+      "check_name": "v4_contract_file_exists",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+      "check_id": "V4-ALIGN-CHECK-002",
+      "check_name": "v4_contract_sha_matches_agents_lock",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627@4.0.0",
+      "check_id": "V4-ALIGN-CHECK-003",
+      "check_name": "v4_identity_matches_expected",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "2026-06-27.1",
+      "check_id": "V4-ALIGN-CHECK-004",
+      "check_name": "v4_governance_version_matches_expected",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "EXTREV-SCEN-EXTREME;EXTREV-SCEN-HIGH;EXTREV-SCEN-LOW;EXTREV-SCEN-MID",
+      "check_id": "V4-ALIGN-CHECK-005",
+      "check_name": "v4_scenario_set_complete",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "4",
+      "check_id": "V4-ALIGN-CHECK-006",
+      "check_name": "v4_bootstrap_sha_bound_on_all_scenarios",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "EXTREV-SCEN-EXTREME",
+      "check_id": "V4-ALIGN-CHECK-007",
+      "check_name": "extreme_branch_remains_preflight_separate",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_RELEASE_ENVELOPE_READY",
+      "check_id": "V4-ALIGN-CHECK-008",
+      "check_name": "nodi_release_envelope_ready",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "ideal_rectangle;trapezoid_tapered_sidewalls",
+      "check_id": "V4-ALIGN-CHECK-009",
+      "check_name": "nodi_route_bindings_cover_two_geometry_families",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "2",
+      "check_id": "V4-ALIGN-CHECK-010",
+      "check_name": "nodi_route_rows_all_carry_v4_identity",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "simulation_route_score/yield/detection/wet_pass bound to V4 scenarios",
+      "check_id": "V4-ALIGN-CHECK-011",
+      "check_name": "simulation_claims_allowed_under_alignment",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "actual release remains separate from V4 simulation alignment",
+      "check_id": "V4-ALIGN-CHECK-012",
+      "check_name": "no_actual_release_leakage",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    },
+    {
+      "check_detail": "11",
+      "check_id": "V4-ALIGN-CHECK-013",
+      "check_name": "all_sources_exist",
+      "check_pass": true,
+      "hard_fail_if_false": true
+    }
+  ],
+  "dirty_context_rows": [
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": "M ",
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "papers/provenance/paper_manifest.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": " M",
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": "??",
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": "??",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "v4_alignment_build_edit",
+      "git_status": "??",
+      "path": "tests/test_nodi_comsol_v4_upper_assumption_alignment.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": "??",
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "release_decision": "ignored_for_v4_alignment"
+    },
+    {
+      "classification": "v4_alignment_build_edit",
+      "git_status": "??",
+      "path": "tools/audits/build_nodi_comsol_v4_upper_assumption_alignment.py",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "classification": "non_alignment_dirty_context",
+      "git_status": "??",
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "release_decision": "ignored_for_v4_alignment"
+    }
+  ],
+  "route_binding_rows": [
+    {
+      "actual_fabrication_release_current": false,
+      "actual_measurement_or_calibration_claim": false,
+      "actual_production_ingestion_current": false,
+      "alignment_status": "aligned_to_comsol_v4_upper_assumptions",
+      "binding_version": "nodi_comsol_v4_upper_assumption_alignment_v1",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+      "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+      "comsol_v4_assumption_set_version": "4.0.0",
+      "comsol_v4_claim_boundary": "literature_derived_descriptor_closure_scenario_only_not_project_measurement_or_calibration",
+      "comsol_v4_governance_version": "2026-06-27.1",
+      "comsol_v4_scenario_set_bound": "EXTREV-SCEN-EXTREME;EXTREV-SCEN-HIGH;EXTREV-SCEN-LOW;EXTREV-SCEN-MID",
+      "extreme_branch_policy": "bound_as_preflight_required_not_merged_into_low_mid_high_default",
+      "geometry_root_binding": "nodi_sidewall_geometry_family::ideal_rectangle",
+      "hydraulic_anchor_binding": "nodi_sidewall_simulation_fixed_velocity_route_formula_anchor_v1",
+      "roughness_state_id_binding": "ideal_smooth_wall_surrogate_v1",
+      "route_candidate_id": "ROUTE-CAND-001",
+      "route_geometry_family": "ideal_rectangle",
+      "route_v4_binding_row_id": "ROUTE-V4-BINDING-ROUTE-CAND-001",
+      "simulation_claims_authorized_by_alignment": true,
+      "simulation_detection_probability_value": 0.953052,
+      "simulation_rank_index": 1,
+      "simulation_release_candidate_current": true,
+      "simulation_release_label": "SIMULATION_RELEASE_CANDIDATE",
+      "simulation_route_score_value": 0.843505463527,
+      "simulation_wet_pass_probability_value": 0.941315,
+      "simulation_yield_value": 0.817721,
+      "surface_chemistry_contract_binding": "PEG_silane_unverified_project_QC_contract_v4",
+      "surface_state_contract_binding": "nodi_comsol_v4_simulation_surface_state_overlay_v1",
+      "wall_state_id_binding": "ideal_rectangle_smooth_wall_state_surrogate_v1"
+    },
+    {
+      "actual_fabrication_release_current": false,
+      "actual_measurement_or_calibration_claim": false,
+      "actual_production_ingestion_current": false,
+      "alignment_status": "aligned_to_comsol_v4_upper_assumptions",
+      "binding_version": "nodi_comsol_v4_upper_assumption_alignment_v1",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+      "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+      "comsol_v4_assumption_set_version": "4.0.0",
+      "comsol_v4_claim_boundary": "literature_derived_descriptor_closure_scenario_only_not_project_measurement_or_calibration",
+      "comsol_v4_governance_version": "2026-06-27.1",
+      "comsol_v4_scenario_set_bound": "EXTREV-SCEN-EXTREME;EXTREV-SCEN-HIGH;EXTREV-SCEN-LOW;EXTREV-SCEN-MID",
+      "extreme_branch_policy": "bound_as_preflight_required_not_merged_into_low_mid_high_default",
+      "geometry_root_binding": "nodi_sidewall_geometry_family::trapezoid_tapered_sidewalls",
+      "hydraulic_anchor_binding": "nodi_sidewall_simulation_fixed_velocity_route_formula_anchor_v1",
+      "roughness_state_id_binding": "trapezoid_smooth_sidewall_surrogate_v1",
+      "route_candidate_id": "ROUTE-CAND-002",
+      "route_geometry_family": "trapezoid_tapered_sidewalls",
+      "route_v4_binding_row_id": "ROUTE-V4-BINDING-ROUTE-CAND-002",
+      "simulation_claims_authorized_by_alignment": true,
+      "simulation_detection_probability_value": 0.908051,
+      "simulation_rank_index": 2,
+      "simulation_release_candidate_current": false,
+      "simulation_release_label": "SIMULATION_BACKUP_ROUTE",
+      "simulation_route_score_value": 0.756494536473,
+      "simulation_wet_pass_probability_value": 0.764198,
+      "simulation_yield_value": 0.650561,
+      "surface_chemistry_contract_binding": "PEG_silane_unverified_project_QC_contract_v4",
+      "surface_state_contract_binding": "nodi_comsol_v4_simulation_surface_state_overlay_v1",
+      "wall_state_id_binding": "trapezoid_tapered_sidewall_state_surrogate_v1"
+    }
+  ],
+  "source_lock_rows": [
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\EV_PBS_SAMPLE_SURFACE_CANONICAL_CONTRACT_V4_20260627.json",
+      "sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+      "source_id": "comsol_v4_contract_json"
+    },
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\EV_PBS_WET_MODEL_BOOTSTRAP_MANIFEST_V4_20260627.csv",
+      "sha256": "55b32c6d8fd73f9c77d3c6e2fc01ebbcc48d0078dff159b8154c552acb99361d",
+      "source_id": "comsol_v4_bootstrap_manifest"
+    },
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\EV_PBS_SAMPLE_SURFACE_CANONICAL_CONTRACT_V4_MANIFEST_20260627.csv",
+      "sha256": "251baa23468b864aefb7689ffadd1b3d3793f51bc75035bcfe81c78b844bd4a7",
+      "source_id": "comsol_v4_contract_manifest"
+    },
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\p0_model_package\\model_contracts\\sample_surface_assumption_set.v4.schema.json",
+      "sha256": "3d92306440265adca410b64d1ace50007d87fc1bf3d75f86647be8c127043a0d",
+      "source_id": "comsol_v4_schema"
+    },
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\AGENTS.md",
+      "sha256": "cd11d81a59a47e59ce10a6ae13d4a880f5a76c581d70719845c7d8c6c3c3f461",
+      "source_id": "comsol_agent_instructions"
+    },
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SIMULATION_RELEASE_ENVELOPE_STATUS_20260701.json",
+      "sha256": "924e8571ec1c8dacac0e31100a2698a51281d91d7634454caa4e09ee3db63c5e",
+      "source_id": "nodi_simulation_release_status"
+    },
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SIMULATION_RELEASE_ENVELOPE_ENVELOPE_ROWS_20260701.csv",
+      "sha256": "0cb07cb5862927fcc93c4631bd20692d03909c4a9723e84c6b80a3b18454c982",
+      "source_id": "nodi_simulation_release_rows"
+    },
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_SIMULATION_ROUTE_REVIEW_STATUS_20260701.json",
+      "sha256": "6de4ec4e0e5a8e084548338ab0acb343df711745014914b0d2cfcb6ac53381a8",
+      "source_id": "nodi_integrated_simulation_status"
+    },
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_SIMULATION_ROUTE_REVIEW_REVIEW_ROWS_20260701.csv",
+      "sha256": "57d270fa6c467aaaa57ad2fc15d93a8fd4c6cca248514333c41b05040dc650f1",
+      "source_id": "nodi_integrated_simulation_rows"
+    },
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "tools/audits/build_nodi_comsol_v4_upper_assumption_alignment.py",
+      "sha256": "03143ac332a68cc5640a2f21e28d5e57826797148c5b6b0d9bf82f830d23a1d7",
+      "source_id": "alignment_builder"
+    },
+    {
+      "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+      "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+      "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+      "exists": "true",
+      "path": "tests/test_nodi_comsol_v4_upper_assumption_alignment.py",
+      "sha256": "f1716d4174e24d2849db83920dcf33dc40623e98f31373d3747619435eb22691",
+      "source_id": "alignment_tests"
+    }
+  ],
+  "summary": {
+    "alignment_check_rows": 13,
+    "allowed_use": "bind NODI sidewall simulation candidates to the COMSOL V4 upper sample/surface/wet-rough-wall assumption contract",
+    "artifact_id": "NODI_COMSOL_V4_UPPER_ASSUMPTION_ALIGNMENT_20260702",
+    "blocked_use": "unbound V4 scenario use; silent V4 hash drift; treating V4 assumptions as project measurement/calibration; overwriting COMSOL V4; actual fabrication or production without a separate simulation-to-fabrication handoff",
+    "branch": "main",
+    "claim_boundary": "comsol_v4_bound_extreme_simulation_alignment_not_project_measurement",
+    "comsol_project_root": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction",
+    "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+    "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+    "comsol_v4_assumption_set_version": "4.0.0",
+    "comsol_v4_expected_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+    "comsol_v4_sha_match": true,
+    "current_head": "b59e7e6db6220fa2506c0701aa69cfced9057e27",
+    "dirty_context_rows": 85,
+    "disposition": "NODI_COMSOL_V4_UPPER_ASSUMPTION_ALIGNMENT_READY",
+    "failed_alignment_check_rows": 0,
+    "next_high_leverage_step": "expand NODI sidewall simulation scoring into explicit COMSOL V4 LOW/MID/HIGH/EXTREME scenario overlays while preserving the V4 assumption-set identity and hash",
+    "nodi_release_envelope_disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_RELEASE_ENVELOPE_READY",
+    "non_alignment_dirty_context_rows": 83,
+    "route_binding_aligned_rows": 2,
+    "route_binding_rows": 2,
+    "semantic_digest": "d7b7a535d04a4c401ec41579f7d7ac14be9009fa4a4b6dba9ec41685cbff5d9c",
+    "simulation_release_candidate_rows": 1,
+    "source_lock_rows": 11,
+    "source_missing_rows": 0,
+    "top_detection_probability_value": 0.953052,
+    "top_route_candidate_id": "ROUTE-CAND-001",
+    "top_route_geometry_family": "ideal_rectangle",
+    "top_route_score_value": 0.843505463527,
+    "top_wet_pass_probability_value": 0.941315,
+    "top_yield_value": 0.817721,
+    "v4_extreme_preflight_rows": 1,
+    "v4_low_mid_high_rows": 3,
+    "v4_scenario_rows": 4
+  },
+  "v4_scenario_rows": [
+    {
+      "PEG_QC_scope": "failed_patchy_or_low_coverage_PEG_extreme_stress",
+      "W_Fuchs": 3.0,
+      "aggregation_efficiency_alpha": 0.3333333333,
+      "assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+      "assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+      "assumption_set_version": "4.0.0",
+      "bootstrap_status": "BLOCKED_UNTIL_MODEL_IDENTITY_AND_V4_DESCRIPTOR_CLOSURE_AXES_RESOLVED",
+      "buffer_pH": 7.4,
+      "claim_boundary": "literature_derived_descriptor_closure_scenario_only_not_project_measurement_or_calibration",
+      "compute_authorized_now": "false_preflight_required",
+      "delta_corona_fouling_nm": 25.0,
+      "extreme_preflight_status": "required",
+      "fraction_above_220_nm": 0.35,
+      "fraction_above_300_nm": 0.15,
+      "geometry_root_requirement": "required_external_binding",
+      "governance_version": "2026-06-27.1",
+      "hydraulic_anchor_requirement": "required_external_binding",
+      "nodi_alignment_status": "aligned_extreme_branch_preflight_required",
+      "roughness_mode_requirement": "must_bind_stage119_or_later_surface_state_contract",
+      "scenario_id": "EXTREV-SCEN-EXTREME",
+      "scenario_label": "EXTREME_DIRTY_OR_AGGREGATE_RICH",
+      "scenario_role": "optional_extreme_review_branch_not_default",
+      "sigma0_N_m": 0.001,
+      "surface_binding_policy": "must_resolve_before_wet_model_execution",
+      "total_protein_center_mg_mL": 10.0,
+      "use_authorized_now": "review_only_until_local_python_preflight",
+      "v4_scenario_alignment_row_id": "V4-SCENARIO-EXTREV-SCEN-EXTREME",
+      "zeta_center_mV": -5.0
+    },
+    {
+      "PEG_QC_scope": "failed_edge_or_low_coverage_PEG_stress",
+      "W_Fuchs": 3.0,
+      "aggregation_efficiency_alpha": 0.3333333333,
+      "assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+      "assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+      "assumption_set_version": "4.0.0",
+      "bootstrap_status": "BLOCKED_UNTIL_MODEL_IDENTITY_AND_V4_DESCRIPTOR_CLOSURE_AXES_RESOLVED",
+      "buffer_pH": 7.4,
+      "claim_boundary": "literature_derived_descriptor_closure_scenario_only_not_project_measurement_or_calibration",
+      "compute_authorized_now": "local_python_scenario_only",
+      "delta_corona_fouling_nm": 15.0,
+      "extreme_preflight_status": "not_applicable",
+      "fraction_above_220_nm": 0.2,
+      "fraction_above_300_nm": 0.08,
+      "geometry_root_requirement": "required_external_binding",
+      "governance_version": "2026-06-27.1",
+      "hydraulic_anchor_requirement": "required_external_binding",
+      "nodi_alignment_status": "aligned_to_nodi_simulation_overlay",
+      "roughness_mode_requirement": "must_bind_stage119_or_later_surface_state_contract",
+      "scenario_id": "EXTREV-SCEN-HIGH",
+      "scenario_label": "plasma_conditioned_high_corona_tail_stress",
+      "scenario_role": "pessimistic_clogging_stress_screening",
+      "sigma0_N_m": 0.001,
+      "surface_binding_policy": "must_resolve_before_wet_model_execution",
+      "total_protein_center_mg_mL": 1.0,
+      "use_authorized_now": "local_python_scenario_screening_only",
+      "v4_scenario_alignment_row_id": "V4-SCENARIO-EXTREV-SCEN-HIGH",
+      "zeta_center_mV": -8.0
+    },
+    {
+      "PEG_QC_scope": "good_PEG_passivation_assumed_not_measured",
+      "W_Fuchs": 1000.0,
+      "aggregation_efficiency_alpha": 0.001,
+      "assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+      "assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+      "assumption_set_version": "4.0.0",
+      "bootstrap_status": "BLOCKED_UNTIL_MODEL_IDENTITY_AND_V4_DESCRIPTOR_CLOSURE_AXES_RESOLVED",
+      "buffer_pH": 7.4,
+      "claim_boundary": "literature_derived_descriptor_closure_scenario_only_not_project_measurement_or_calibration",
+      "compute_authorized_now": "local_python_scenario_only",
+      "delta_corona_fouling_nm": 1.0,
+      "extreme_preflight_status": "not_applicable",
+      "fraction_above_220_nm": 0.005,
+      "fraction_above_300_nm": 0.001,
+      "geometry_root_requirement": "required_external_binding",
+      "governance_version": "2026-06-27.1",
+      "hydraulic_anchor_requirement": "required_external_binding",
+      "nodi_alignment_status": "aligned_to_nodi_simulation_overlay",
+      "roughness_mode_requirement": "must_bind_stage119_or_later_surface_state_contract",
+      "scenario_id": "EXTREV-SCEN-LOW",
+      "scenario_label": "SEC_PBS_low_corona_small_EV",
+      "scenario_role": "clean_end_member_screening",
+      "sigma0_N_m": 1e-05,
+      "surface_binding_policy": "must_resolve_before_wet_model_execution",
+      "total_protein_center_mg_mL": 0.02,
+      "use_authorized_now": "local_python_scenario_screening_only",
+      "v4_scenario_alignment_row_id": "V4-SCENARIO-EXTREV-SCEN-LOW",
+      "zeta_center_mV": -25.0
+    },
+    {
+      "PEG_QC_scope": "partial_or_unknown_PEG_passivation",
+      "W_Fuchs": 30.0,
+      "aggregation_efficiency_alpha": 0.0333333333,
+      "assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+      "assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+      "assumption_set_version": "4.0.0",
+      "bootstrap_status": "BLOCKED_UNTIL_MODEL_IDENTITY_AND_V4_DESCRIPTOR_CLOSURE_AXES_RESOLVED",
+      "buffer_pH": 7.4,
+      "claim_boundary": "literature_derived_descriptor_closure_scenario_only_not_project_measurement_or_calibration",
+      "compute_authorized_now": "local_python_scenario_only",
+      "delta_corona_fouling_nm": 5.0,
+      "extreme_preflight_status": "not_applicable",
+      "fraction_above_220_nm": 0.05,
+      "fraction_above_300_nm": 0.01,
+      "geometry_root_requirement": "required_external_binding",
+      "governance_version": "2026-06-27.1",
+      "hydraulic_anchor_requirement": "required_external_binding",
+      "nodi_alignment_status": "aligned_to_nodi_simulation_overlay",
+      "roughness_mode_requirement": "must_bind_stage119_or_later_surface_state_contract",
+      "scenario_id": "EXTREV-SCEN-MID",
+      "scenario_label": "PBS_unknown_corona_mixed_EV",
+      "scenario_role": "middle_uncertainty_screening",
+      "sigma0_N_m": 0.0001,
+      "surface_binding_policy": "must_resolve_before_wet_model_execution",
+      "total_protein_center_mg_mL": 0.12,
+      "use_authorized_now": "local_python_scenario_screening_only",
+      "v4_scenario_alignment_row_id": "V4-SCENARIO-EXTREV-SCEN-MID",
+      "zeta_center_mV": -15.0
+    }
+  ]
+}
