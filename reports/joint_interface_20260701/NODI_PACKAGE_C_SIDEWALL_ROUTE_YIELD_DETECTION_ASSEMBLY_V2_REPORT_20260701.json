@@ -3,33 +3,35 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_READY_NOT_CLAIM_READY",
     "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_20260701",
     "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
-    "current_head": "5126ff15a7578c5dab822472c49c71115f468608",
+    "current_head": "2a214847182ee7bf3921a855b599aa32bd3f4e03",
     "branch": "main",
-    "source_wet_observation_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_OBSERVATION_REFRESH_READY_PREFLIGHT_ONLY",
-    "source_route_policy_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_READY_NOT_CLAIM_READY",
+    "source_wet_observation_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_READY_PREFLIGHT_ONLY",
+    "source_route_policy_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_READY_NOT_CLAIM_READY",
     "assembly_rows": 2,
     "branch_rows": 8,
     "route_geometry_families": "ideal_rectangle;trapezoid_tapered_sidewalls",
     "branch_names": "detection_probability_calibration;route_candidate_assembly;sidewall_detector_blank_transfer_validation;wet_observation_bundle_intake",
     "assembly_not_claim_ready_rows": 2,
-    "ready_input_lane_count_total": 6,
-    "candidate_context_lane_count_total": 10,
-    "missing_or_blocked_lane_count_total": 2,
-    "next_executable_branches": "sidewall_detector_blank_transfer_validation",
+    "assembly_policy_review_ready_rows": 0,
+    "detector_wet_activation_ready_rows": 0,
+    "ready_input_lane_count_total": 4,
+    "candidate_context_lane_count_total": 6,
+    "missing_or_blocked_lane_count_total": 6,
+    "next_executable_branches": "detector_blank_calibration",
     "route_score_allowed_rows": 0,
     "winner_allowed_rows": 0,
     "yield_allowed_rows": 0,
     "detection_probability_allowed_rows": 0,
     "wet_pass_probability_allowed_rows": 0,
     "implementation_can_start_branch_rows": 6,
-    "source_lock_rows": 9,
+    "source_lock_rows": 10,
     "source_missing_rows": 0,
-    "dirty_context_rows": 87,
-    "non_release_dirty_context_rows": 79,
+    "dirty_context_rows": 93,
+    "non_release_dirty_context_rows": 85,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
     "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion",
-    "semantic_digest": "d83cfa08e2c6d1806807934fc47730a0378d9d50f12d9d9f40abf93095699a21"
+    "semantic_digest": "4adafb1e8aa3f8cc5c883cfc15695214df718d6ad81ea516ee6dbea2f0432d39"
   },
   "assembly_rows": [
     {
@@ -42,23 +44,23 @@
       "qch_sidecar_id": "QCH-CAND-001",
       "flow_split_qch_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
       "pressure_flow_validation_status": "exact_w500_d900_pressure_flow_result_accepted_formal_qch_sidecar_ready",
-      "selected_annulus_detection_context_status": "expanded_selected_annulus_panel_available_not_probability",
-      "detector_response_bridge_status": "detector_response_panel_candidate_not_sidewall_calibrated",
-      "blank_false_positive_trace_status": "nearest_blank_guard_bound_to_panel_not_sidewall_specific",
-      "wet_wall_interaction_status": "wet_surface_observation_intake_ready_no_observations",
+      "selected_annulus_detection_context_status": "selected_annulus_context_available_small_n_not_probability",
+      "detector_response_bridge_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "blank_false_positive_trace_status": "nearest_blank_context_available_not_sidewall_specific_validation",
+      "wet_wall_interaction_status": "wet_surface_evidence_contract_defined_no_wet_validation",
       "blank_channel_reference_status": "synthetic_seed_available_not_experimental",
       "sidewall_geometry_coverage_status": "single_W500_D900_theta85_and_rectangle_seed_only",
       "integrated_route_policy_status": "route_yield_detection_policy_defined_not_ready_for_claims",
       "route_policy_status": "not_ready_missing_detector_blank_wet_selected_annulus_evidence_after_formal_qch_pressure_flow",
-      "primary_next_execution_block": "sidewall_detector_blank_transfer_validation",
-      "ready_input_lane_count": 3,
-      "candidate_context_lane_count": 5,
-      "missing_or_blocked_lane_count": 1,
+      "primary_next_execution_block": "detector_blank_calibration",
+      "ready_input_lane_count": 2,
+      "candidate_context_lane_count": 3,
+      "missing_or_blocked_lane_count": 3,
       "total_tracked_lane_count": 9,
-      "input_completeness_fraction": 1.0,
+      "input_completeness_fraction": 0.666667,
       "assembly_status": "assembly_ready_for_detector_blank_transfer_and_wet_input_not_claim_ready",
-      "next_executable_branch": "sidewall_detector_blank_transfer_validation",
-      "next_required_evidence": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | detector response validation and sidewall-specific blank transfer model | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "next_executable_branch": "detector_blank_calibration",
+      "next_required_evidence": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | sidewall detector calibration, blank false-positive traces, and larger event panel | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific wet EV evidence bundle with material/surface identity, EV characterization, controls, time-series clogging, recovery/flush, and yield balance | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific wet EV evidence bundle with material/surface identity, EV characterization, controls, time-series clogging, recovery/flush, and yield balance",
       "route_score_allowed": false,
       "winner_allowed": false,
       "yield_allowed": false,
@@ -76,23 +78,23 @@
       "qch_sidecar_id": "QCH-CAND-002",
       "flow_split_qch_status": "formal_qch_sidecar_accepted_exact_pressure_flow_not_route_weighting",
       "pressure_flow_validation_status": "exact_w500_d900_pressure_flow_result_accepted_formal_qch_sidecar_ready",
-      "selected_annulus_detection_context_status": "expanded_selected_annulus_panel_available_not_probability",
-      "detector_response_bridge_status": "detector_response_panel_candidate_not_sidewall_calibrated",
-      "blank_false_positive_trace_status": "nearest_blank_guard_bound_to_panel_not_sidewall_specific",
-      "wet_wall_interaction_status": "wet_surface_observation_intake_ready_no_observations",
+      "selected_annulus_detection_context_status": "selected_annulus_context_available_small_n_not_probability",
+      "detector_response_bridge_status": "detector_identity_context_available_not_sidewall_response_validation",
+      "blank_false_positive_trace_status": "nearest_blank_context_available_not_sidewall_specific_validation",
+      "wet_wall_interaction_status": "wet_surface_evidence_contract_defined_no_wet_validation",
       "blank_channel_reference_status": "synthetic_seed_available_not_experimental",
       "sidewall_geometry_coverage_status": "single_W500_D900_theta85_and_rectangle_seed_only",
       "integrated_route_policy_status": "route_yield_detection_policy_defined_not_ready_for_claims",
       "route_policy_status": "not_ready_missing_detector_blank_wet_selected_annulus_evidence_after_formal_qch_pressure_flow",
-      "primary_next_execution_block": "sidewall_detector_blank_transfer_validation",
-      "ready_input_lane_count": 3,
-      "candidate_context_lane_count": 5,
-      "missing_or_blocked_lane_count": 1,
+      "primary_next_execution_block": "detector_blank_calibration",
+      "ready_input_lane_count": 2,
+      "candidate_context_lane_count": 3,
+      "missing_or_blocked_lane_count": 3,
       "total_tracked_lane_count": 9,
-      "input_completeness_fraction": 1.0,
+      "input_completeness_fraction": 0.666667,
       "assembly_status": "assembly_ready_for_detector_blank_transfer_and_wet_input_not_claim_ready",
-      "next_executable_branch": "sidewall_detector_blank_transfer_validation",
-      "next_required_evidence": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | detector response validation and sidewall-specific blank transfer model | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "next_executable_branch": "detector_blank_calibration",
+      "next_required_evidence": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | sidewall detector calibration, blank false-positive traces, and larger event panel | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific wet EV evidence bundle with material/surface identity, EV characterization, controls, time-series clogging, recovery/flush, and yield balance | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific wet EV evidence bundle with material/surface identity, EV characterization, controls, time-series clogging, recovery/flush, and yield balance",
       "route_score_allowed": false,
       "winner_allowed": false,
       "yield_allowed": false,
@@ -123,7 +125,7 @@
       "branch_name": "wet_observation_bundle_intake",
       "branch_status": "schema_ready_waiting_for_observation_rows",
       "branch_basis": "wet_wall_interaction",
-      "minimum_next_input": "sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "minimum_next_input": "sidewall-specific wet EV evidence bundle with material/surface identity, EV characterization, controls, time-series clogging, recovery/flush, and yield balance",
       "target_claim": "yield;wet_pass_probability",
       "target_claim_current": false,
       "implementation_can_start": true,
@@ -137,7 +139,7 @@
       "branch_name": "route_candidate_assembly",
       "branch_status": "assembly_rows_available_not_route_score",
       "branch_basis": "flow_split_qch;pressure_flow_validation;selected_annulus_detection_context;integrated_route_ledger",
-      "minimum_next_input": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | detector response validation and sidewall-specific blank transfer model | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "minimum_next_input": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | sidewall detector calibration, blank false-positive traces, and larger event panel | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific wet EV evidence bundle with material/surface identity, EV characterization, controls, time-series clogging, recovery/flush, and yield balance",
       "target_claim": "route_score;winner",
       "target_claim_current": false,
       "implementation_can_start": true,
@@ -179,7 +181,7 @@
       "branch_name": "wet_observation_bundle_intake",
       "branch_status": "schema_ready_waiting_for_observation_rows",
       "branch_basis": "wet_wall_interaction",
-      "minimum_next_input": "sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "minimum_next_input": "sidewall-specific wet EV evidence bundle with material/surface identity, EV characterization, controls, time-series clogging, recovery/flush, and yield balance",
       "target_claim": "yield;wet_pass_probability",
       "target_claim_current": false,
       "implementation_can_start": true,
@@ -193,7 +195,7 @@
       "branch_name": "route_candidate_assembly",
       "branch_status": "assembly_rows_available_not_route_score",
       "branch_basis": "flow_split_qch;pressure_flow_validation;selected_annulus_detection_context;integrated_route_ledger",
-      "minimum_next_input": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | detector response validation and sidewall-specific blank transfer model | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific or validated-transfer wet observation rows for all endpoints",
+      "minimum_next_input": "detector/blank calibration plus wet/surface validation and explicit route selection policy | route policy plus calibrated detector/wet/yield evidence | sidewall detector calibration, blank false-positive traces, and larger event panel | detector operator, ROI/slit throughput, and standard-particle calibration consuming sidewall reference field | sidewall-specific blank traces or validated transferable blank false-positive model | sidewall-specific wet EV evidence bundle with material/surface identity, EV characterization, controls, time-series clogging, recovery/flush, and yield balance",
       "target_claim": "route_score;winner",
       "target_claim_current": false,
       "implementation_can_start": true,
@@ -218,45 +220,54 @@
   "source_lock": [
     {
       "source_id": "wet_observation_integrated_ledger_status",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_OBSERVATION_REFRESH_STATUS_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "c7a5d4882ba9543ef412ea13e02f360e85f668522349ce9ae47af5dc416d5652",
+      "sha256": "0e0f277be6ab2e1d791d8ccda73160de362b01d43504239b62c47d71f5ee502b",
       "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
     },
     {
       "source_id": "wet_observation_integrated_ledger_lanes",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_OBSERVATION_REFRESH_PROMOTION_LANE_ROWS_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_PROMOTION_LANE_ROWS_20260701.csv",
       "exists": "true",
-      "sha256": "2b026cfbf6dc2300dfd7b6ed231a28287c7f729555bf11e92bf6146e057fcae1",
+      "sha256": "6d2640b53864f72afa77b0ccda5793e39e168b4a70d122f2c3a197203bf6149e",
       "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
     },
     {
       "source_id": "route_policy_wet_observation_status",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_STATUS_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "b33643f9a49205c101e63d92c5e3424ebeb95621965057c4a07ac84b64d2f7b4",
+      "sha256": "4d7d113671d1cbbfd05419f0cb99ac8cce405b903c484c429e2083a1bf3007f8",
       "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
     },
     {
       "source_id": "route_policy_wet_observation_rows",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_POLICY_ROWS_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_POLICY_ROWS_20260701.csv",
       "exists": "true",
-      "sha256": "3cff58de9370c89cb8b48a335b94e9e7432d5b8d74c0986a5c7dd05de54bdebb",
+      "sha256": "88bc42e19a2f93cb92ac4e3cf83723f22cad0b45104059889f6f7f61cfa93e12",
       "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
     },
     {
       "source_id": "route_policy_wet_observation_blockers",
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_BLOCKER_ROWS_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_BLOCKER_ROWS_20260701.csv",
       "exists": "true",
-      "sha256": "cb75f071d30b3bf8f1a9aa9d6448477ed9a7199b9115ea1e6cad8915b761ce53",
+      "sha256": "6a35e790bda36b529b39bd372217bc84ab4e33131bf5795cfa9cd5eaa62b221f",
+      "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
+      "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
+      "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
+    },
+    {
+      "source_id": "detector_wet_activation_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_ACTIVATION_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "5e0e7f87d6634ca8121199e67c33f4909e6b39ace0de270e62f3b4cf58adcc0d",
       "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -265,7 +276,7 @@
       "source_id": "route_yield_detection_assembly_source",
       "path": "nodi_simulator/sidewall_route_yield_detection_assembly.py",
       "exists": "true",
-      "sha256": "f9b14ed4fe7edced84869dd65a7abb952aee4fdb355e8f1fc71fb984f94c822a",
+      "sha256": "a7e85d5cb6c278584e7f18106e15be7ccbe797f0b1b71586c677d5e1d799cf33",
       "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -274,7 +285,7 @@
       "source_id": "route_yield_detection_assembly_tests",
       "path": "tests/test_sidewall_route_yield_detection_assembly.py",
       "exists": "true",
-      "sha256": "d12772d7e60494aeb3c0e0fe6edbc2e1b1063db1e03b07cf3590cf80564cd551",
+      "sha256": "db43b5008e2c49ddd6f95b036282493b9a4341fbaed4ba6a93a450b9313da1f5",
       "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -283,7 +294,7 @@
       "source_id": "route_yield_detection_assembly_builder",
       "path": "tools/audits/build_nodi_package_c_sidewall_route_yield_detection_assembly_v2.py",
       "exists": "true",
-      "sha256": "6242ea5acb7b0ffd2121df8dac5f5d54b09ee1cec5e3baeaaba972d6547b40a4",
+      "sha256": "c5791dc1d92eb81b3e14b2af627ea6403134687a310bc431f137cfd0b4f0f46e",
       "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -292,7 +303,7 @@
       "source_id": "route_yield_detection_assembly_builder_tests",
       "path": "tests/test_nodi_package_c_sidewall_route_yield_detection_assembly_v2.py",
       "exists": "true",
-      "sha256": "ba4cea25ed512bfe04f831da8ef3c4dc5a2ed29ccb068468391cd44becd1bc02",
+      "sha256": "c72688f46c629c7250ae1930d2b2a9d2c8f2fa396e74593f804b50bd3415679c",
       "claim_boundary": "route_yield_detection_assembly_not_route_score_not_yield_not_detection_probability",
       "allowed_use": "route/yield/detection assembly coordination;next executable branch selection;rectangle and sidewall route comparison context",
       "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;production ingestion"
@@ -348,6 +359,12 @@
       "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
     },
     {
+      "path": "nodi_simulator/sidewall_route_yield_detection_assembly.py",
+      "git_status": " M",
+      "classification": "route_yield_detection_assembly_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
       "path": "papers/provenance/paper_manifest.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -361,6 +378,12 @@
     },
     {
       "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
@@ -666,6 +689,36 @@
       "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
     },
     {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_DIRTY_CLASSIFIER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
+    },
+    {
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -774,8 +827,20 @@
       "release_decision": "ignored_for_route_yield_detection_assembly_not_source_locked"
     },
     {
-      "path": "nodi_simulator/sidewall_route_yield_detection_assembly.py",
-      "git_status": "??",
+      "path": "tests/test_nodi_package_c_sidewall_route_yield_detection_assembly_v2.py",
+      "git_status": " M",
+      "classification": "route_yield_detection_assembly_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_sidewall_route_yield_detection_assembly.py",
+      "git_status": " M",
+      "classification": "route_yield_detection_assembly_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_yield_detection_assembly_v2.py",
+      "git_status": " M",
       "classification": "route_yield_detection_assembly_build_edit",
       "release_decision": "included_in_commit_scope_before_publish"
     },
@@ -798,28 +863,10 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "tests/test_nodi_package_c_sidewall_route_yield_detection_assembly_v2.py",
-      "git_status": "??",
-      "classification": "route_yield_detection_assembly_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
-      "path": "tests/test_sidewall_route_yield_detection_assembly.py",
-      "git_status": "??",
-      "classification": "route_yield_detection_assembly_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "tools/audits/build_nodi_package_c_sidewall_route_yield_detection_assembly_v2.py",
-      "git_status": "??",
-      "classification": "route_yield_detection_assembly_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
     }
   ]
 }

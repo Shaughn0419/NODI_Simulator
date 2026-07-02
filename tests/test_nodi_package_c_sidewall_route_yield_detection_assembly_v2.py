@@ -20,16 +20,52 @@ def test_sidewall_route_yield_detection_assembly_v2_packet_builds() -> None:
         "ideal_rectangle;trapezoid_tapered_sidewalls"
     )
     assert summary["next_executable_branches"] == (
-        "sidewall_detector_blank_transfer_validation"
+        "detector_blank_calibration"
     )
-    assert summary["ready_input_lane_count_total"] == 6
-    assert summary["candidate_context_lane_count_total"] == 10
-    assert summary["missing_or_blocked_lane_count_total"] == 2
+    assert summary["ready_input_lane_count_total"] == 4
+    assert summary["candidate_context_lane_count_total"] == 6
+    assert summary["missing_or_blocked_lane_count_total"] == 6
+    assert summary["assembly_policy_review_ready_rows"] == 0
+    assert summary["detector_wet_activation_ready_rows"] == 0
     assert summary["route_score_allowed_rows"] == 0
     assert summary["winner_allowed_rows"] == 0
     assert summary["yield_allowed_rows"] == 0
     assert summary["detection_probability_allowed_rows"] == 0
     assert summary["wet_pass_probability_allowed_rows"] == 0
+
+
+def test_assembly_activation_overlay_marks_detector_wet_lanes_ready() -> None:
+    rows = builder._activation_refreshed_lane_rows(
+        [
+            {
+                "route_candidate_id": "R",
+                "evidence_lane": "detector_response_bridge",
+                "current_status": "old",
+            },
+            {
+                "route_candidate_id": "R",
+                "evidence_lane": "blank_false_positive_trace",
+                "current_status": "old",
+            },
+            {
+                "route_candidate_id": "R",
+                "evidence_lane": "wet_wall_interaction",
+                "current_status": "old",
+            },
+        ],
+        [
+            {
+                "route_candidate_id": "R",
+                "detector_branch_ready_for_formula": "True",
+                "wet_branch_ready_for_formula": "True",
+            }
+        ],
+    )
+
+    statuses = {row["evidence_lane"]: row["current_status"] for row in rows}
+    assert statuses["detector_response_bridge"] == builder.DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS
+    assert statuses["blank_false_positive_trace"] == builder.DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS
+    assert statuses["wet_wall_interaction"] == builder.WET_OBSERVATION_ACCEPTED_STATUS
 
 
 def test_assembly_rows_bind_rectangle_and_taper_routes() -> None:
@@ -47,16 +83,16 @@ def test_assembly_rows_bind_rectangle_and_taper_routes() -> None:
             "exact_w500_d900_pressure_flow_result_accepted_formal_qch_sidecar_ready"
         )
         assert row["selected_annulus_detection_context_status"] == (
-            "expanded_selected_annulus_panel_available_not_probability"
+            "selected_annulus_context_available_small_n_not_probability"
         )
         assert row["detector_response_bridge_status"] == (
-            "detector_response_panel_candidate_not_sidewall_calibrated"
+            "detector_identity_context_available_not_sidewall_response_validation"
         )
         assert row["blank_false_positive_trace_status"] == (
-            "nearest_blank_guard_bound_to_panel_not_sidewall_specific"
+            "nearest_blank_context_available_not_sidewall_specific_validation"
         )
         assert row["wet_wall_interaction_status"] == (
-            "wet_surface_observation_intake_ready_no_observations"
+            "wet_surface_evidence_contract_defined_no_wet_validation"
         )
         assert row["route_score_allowed"] is False
         assert row["yield_allowed"] is False

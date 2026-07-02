@@ -15,8 +15,13 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from nodi_simulator.realism_v2_io import sha256_file, write_csv_rows, write_json_atomic  # noqa: E402
+from nodi_simulator.sidewall_route_yield_detection_policy import (  # noqa: E402
+    DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS,
+    WET_OBSERVATION_ACCEPTED_STATUS,
+)
 from nodi_simulator.sidewall_route_yield_detection_assembly import (  # noqa: E402
     ASSEMBLY_NOT_CLAIM_READY_STATUS,
+    ASSEMBLY_ROUTE_POLICY_REVIEW_READY_STATUS,
     SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_CLAIM_BOUNDARY,
     build_route_yield_detection_assembly,
 )
@@ -35,23 +40,27 @@ CLAIM_BOUNDARY = SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_CLAIM_BOUNDARY
 
 WET_OBSERVATION_LEDGER_STATUS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_OBSERVATION_REFRESH_STATUS_20260701.json"
+    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_STATUS_20260701.json"
 )
 WET_OBSERVATION_LEDGER_LANES = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_OBSERVATION_REFRESH_PROMOTION_LANE_ROWS_20260701.csv"
+    / "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_PROMOTION_LANE_ROWS_20260701.csv"
 )
 ROUTE_POLICY_STATUS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_STATUS_20260701.json"
+    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_STATUS_20260701.json"
 )
 ROUTE_POLICY_ROWS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_POLICY_ROWS_20260701.csv"
+    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_POLICY_ROWS_20260701.csv"
 )
 ROUTE_POLICY_BLOCKERS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_BLOCKER_ROWS_20260701.csv"
+    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_BLOCKER_ROWS_20260701.csv"
+)
+ACTIVATION_ROWS = (
+    OUTPUT_DIR
+    / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_ACTIVATION_ROWS_20260701.csv"
 )
 
 ALLOWED_USE = (
@@ -69,6 +78,7 @@ SOURCE_FILES = {
     "route_policy_wet_observation_status": ROUTE_POLICY_STATUS,
     "route_policy_wet_observation_rows": ROUTE_POLICY_ROWS,
     "route_policy_wet_observation_blockers": ROUTE_POLICY_BLOCKERS,
+    "detector_wet_activation_rows": ACTIVATION_ROWS,
     "route_yield_detection_assembly_source": PROJECT_ROOT
     / "nodi_simulator/sidewall_route_yield_detection_assembly.py",
     "route_yield_detection_assembly_tests": PROJECT_ROOT
@@ -238,8 +248,12 @@ def semantic_digest(payload: dict[str, Any]) -> str:
 def build_payload() -> dict[str, Any]:
     wet_ledger_status = load_json(WET_OBSERVATION_LEDGER_STATUS)
     policy_status = load_json(ROUTE_POLICY_STATUS)
+    activation_rows = read_csv_rows(ACTIVATION_ROWS)
     assembly_rows, branch_rows = build_route_yield_detection_assembly(
-        read_csv_rows(WET_OBSERVATION_LEDGER_LANES),
+        _activation_refreshed_lane_rows(
+            read_csv_rows(WET_OBSERVATION_LEDGER_LANES),
+            activation_rows,
+        ),
         read_csv_rows(ROUTE_POLICY_ROWS),
         read_csv_rows(ROUTE_POLICY_BLOCKERS),
     )
@@ -258,9 +272,9 @@ def build_payload() -> dict[str, Any]:
         if source_missing == 0
         and release_dirty_blockers == 0
         and wet_ledger_status.get("disposition")
-        == "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_OBSERVATION_REFRESH_READY_PREFLIGHT_ONLY"
+        == "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_WET_SURFACE_REFRESH_READY_PREFLIGHT_ONLY"
         and policy_status.get("disposition")
-        == "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_READY_NOT_CLAIM_READY"
+        == "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_READY_NOT_CLAIM_READY"
         and len(assembly_dicts) == 2
         and len(branch_dicts) == 8
         and geometry_families == ["ideal_rectangle", "trapezoid_tapered_sidewalls"]
@@ -271,7 +285,14 @@ def build_payload() -> dict[str, Any]:
             "sidewall_detector_blank_transfer_validation",
             "wet_observation_bundle_intake",
         }
-        and all(row["assembly_status"] == ASSEMBLY_NOT_CLAIM_READY_STATUS for row in assembly_dicts)
+        and all(
+            row["assembly_status"]
+            in {
+                ASSEMBLY_NOT_CLAIM_READY_STATUS,
+                ASSEMBLY_ROUTE_POLICY_REVIEW_READY_STATUS,
+            }
+            for row in assembly_dicts
+        )
         and all(row["route_score_allowed"] is False for row in assembly_dicts)
         and all(row["yield_allowed"] is False for row in assembly_dicts)
         and all(row["detection_probability_allowed"] is False for row in assembly_dicts)
@@ -292,6 +313,15 @@ def build_payload() -> dict[str, Any]:
         "assembly_not_claim_ready_rows": sum(
             row["assembly_status"] == ASSEMBLY_NOT_CLAIM_READY_STATUS
             for row in assembly_dicts
+        ),
+        "assembly_policy_review_ready_rows": sum(
+            row["assembly_status"] == ASSEMBLY_ROUTE_POLICY_REVIEW_READY_STATUS
+            for row in assembly_dicts
+        ),
+        "detector_wet_activation_ready_rows": sum(
+            str(row.get("route_formula_blocker_status", ""))
+            == "detector_wet_branches_ready_for_formula_review"
+            for row in activation_rows
         ),
         "ready_input_lane_count_total": sum(
             row["ready_input_lane_count"] for row in assembly_dicts
@@ -351,7 +381,11 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         ),
         "next branch current": (
             summary["next_executable_branches"]
-            == "sidewall_detector_blank_transfer_validation"
+            in {
+                "sidewall_detector_blank_transfer_validation",
+                "detector_blank_calibration",
+                "route_formula_policy_review",
+            }
         ),
         "route score blocked": summary["route_score_allowed_rows"] == 0,
         "winner blocked": summary["winner_allowed_rows"] == 0,
@@ -367,6 +401,36 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
             and "not_detection_probability" in row["claim_boundary"]
         )
     return [label for label, ok in checks.items() if not ok]
+
+
+def _activation_refreshed_lane_rows(
+    base_rows: list[dict[str, str]],
+    activation_rows: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    rows = [dict(row) for row in base_rows]
+    activation_by_route = {
+        str(row.get("route_candidate_id", "")): row for row in activation_rows
+    }
+    for row in rows:
+        route_id = str(row.get("route_candidate_id", ""))
+        activation = activation_by_route.get(route_id, {})
+        lane = str(row.get("evidence_lane", ""))
+        detector_ready = (
+            str(activation.get("detector_branch_ready_for_formula", "")).lower()
+            == "true"
+        )
+        wet_ready = (
+            str(activation.get("wet_branch_ready_for_formula", "")).lower()
+            == "true"
+        )
+        if detector_ready and lane in {
+            "detector_response_bridge",
+            "blank_false_positive_trace",
+        }:
+            row["current_status"] = DETECTOR_BLANK_TRANSFER_ACCEPTED_STATUS
+        if wet_ready and lane == "wet_wall_interaction":
+            row["current_status"] = WET_OBSERVATION_ACCEPTED_STATUS
+    return rows
 
 
 def write_outputs(payload: dict[str, Any]) -> list[Path]:

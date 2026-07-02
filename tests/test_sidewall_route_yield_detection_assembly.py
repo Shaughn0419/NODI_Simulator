@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from nodi_simulator.sidewall_route_yield_detection_assembly import (
     ASSEMBLY_NOT_CLAIM_READY_STATUS,
+    ASSEMBLY_ROUTE_POLICY_REVIEW_READY_STATUS,
     DETECTOR_BLANK_TRANSFER_NO_EVIDENCE_STATUS,
     SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_CLAIM_BOUNDARY,
     build_route_yield_detection_assembly,
@@ -80,6 +81,14 @@ def _policy_rows() -> list[dict[str, str]]:
     ]
 
 
+def _ready_policy_rows() -> list[dict[str, str]]:
+    rows = _policy_rows()
+    for row in rows:
+        row["route_policy_status"] = "ready_for_route_yield_detection_claims"
+        row["primary_next_execution_block"] = "route_formula_policy_review"
+    return rows
+
+
 def _blocker_rows() -> list[dict[str, str]]:
     blocker_status = {
         "flow_split_qch": "ready_for_route_input_not_final_claim",
@@ -99,6 +108,13 @@ def _blocker_rows() -> list[dict[str, str]]:
         for route_id in ("ROUTE-CAND-001", "ROUTE-CAND-002")
         for lane, status in blocker_status.items()
     ]
+
+
+def _ready_blocker_rows() -> list[dict[str, str]]:
+    rows = _blocker_rows()
+    for row in rows:
+        row["blocker_status"] = "ready_for_route_input_not_final_claim"
+    return rows
 
 
 def test_route_yield_detection_assembly_keeps_rectangle_and_trapezoid_parallel() -> None:
@@ -171,4 +187,28 @@ def test_route_yield_detection_assembly_recognizes_transfer_intake_without_evide
     ]
     assert {row.branch_status for row in transfer_rows} == {
         "transfer_intake_ready_waiting_for_sidewall_transfer_rows"
+    }
+
+
+def test_route_yield_detection_assembly_can_reach_policy_review_ready_without_claims() -> None:
+    assembly_rows, branch_rows = build_route_yield_detection_assembly(
+        _promotion_rows(),
+        _ready_policy_rows(),
+        _ready_blocker_rows(),
+    )
+
+    assert {row.assembly_status for row in assembly_rows} == {
+        ASSEMBLY_ROUTE_POLICY_REVIEW_READY_STATUS
+    }
+    assert {row.next_executable_branch for row in assembly_rows} == {
+        "route_formula_policy_review"
+    }
+    assert {row.route_score_allowed for row in assembly_rows} == {False}
+    assert {row.yield_allowed for row in assembly_rows} == {False}
+    assert {row.detection_probability_allowed for row in assembly_rows} == {False}
+    route_branch_rows = [
+        row for row in branch_rows if row.branch_name == "route_candidate_assembly"
+    ]
+    assert {row.branch_status for row in route_branch_rows} == {
+        "route_formula_policy_review_ready_not_scored"
     }

@@ -20,6 +20,9 @@ SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_CLAIM_BOUNDARY = (
 ASSEMBLY_NOT_CLAIM_READY_STATUS = (
     "assembly_ready_for_detector_blank_transfer_and_wet_input_not_claim_ready"
 )
+ASSEMBLY_ROUTE_POLICY_REVIEW_READY_STATUS = (
+    "assembly_ready_for_route_formula_policy_review_not_claim"
+)
 ASSEMBLY_INPUT_READY_STATUS = "ready_input_not_final_claim"
 ASSEMBLY_CONTEXT_STATUS = "candidate_context_not_claim_ready"
 ASSEMBLY_MISSING_STATUS = "missing_required_observation_or_calibration"
@@ -153,6 +156,9 @@ def build_route_yield_detection_assembly(
                 "sidewall_detector_blank_transfer_validation",
             )
         )
+        assembly_status = _assembly_status(policy)
+        if assembly_status == ASSEMBLY_ROUTE_POLICY_REVIEW_READY_STATUS:
+            next_branch = "route_formula_policy_review"
         next_required = _route_next_required_evidence(lanes, policy, blocker_map)
         assembly_rows.append(
             SidewallRouteYieldDetectionAssemblyRow(
@@ -187,7 +193,7 @@ def build_route_yield_detection_assembly(
                 missing_or_blocked_lane_count=missing_or_blocked,
                 total_tracked_lane_count=total,
                 input_completeness_fraction=round(ready_inputs / len(ROUTE_READY_INPUT_LANES), 6),
-                assembly_status=ASSEMBLY_NOT_CLAIM_READY_STATUS,
+                assembly_status=assembly_status,
                 next_executable_branch=next_branch,
                 next_required_evidence=next_required,
                 route_score_allowed=False,
@@ -252,7 +258,7 @@ def _lane_classification(
     blocker_map: dict[str, Mapping[str, Any]],
 ) -> str:
     blocker_status = str(blocker_map.get(lane, {}).get("blocker_status", ""))
-    if lane in ROUTE_READY_INPUT_LANES and blocker_status == "ready_for_route_input_not_final_claim":
+    if blocker_status == "ready_for_route_input_not_final_claim":
         return ASSEMBLY_INPUT_READY_STATUS
     if lane == "detector_response_bridge" and status == (
         "detector_response_panel_candidate_not_sidewall_calibrated"
@@ -274,6 +280,12 @@ def _lane_classification(
     if lane in ROUTE_CONTEXT_LANES and status and status != "lane_missing":
         return ASSEMBLY_CONTEXT_STATUS
     return ASSEMBLY_MISSING_STATUS
+
+
+def _assembly_status(policy: Mapping[str, Any]) -> str:
+    if str(policy.get("route_policy_status", "")) == "ready_for_route_yield_detection_claims":
+        return ASSEMBLY_ROUTE_POLICY_REVIEW_READY_STATUS
+    return ASSEMBLY_NOT_CLAIM_READY_STATUS
 
 
 def _route_next_required_evidence(
@@ -326,7 +338,7 @@ def _branch_rows(
         ),
         (
             "route_candidate_assembly",
-            "assembly_rows_available_not_route_score",
+            _route_candidate_assembly_branch_status(policy),
             "flow_split_qch;pressure_flow_validation;selected_annulus_detection_context;integrated_route_ledger",
             str(policy.get("next_required_evidence", "")),
             "route_score;winner",
@@ -368,6 +380,12 @@ def _branch_rows(
             future_evidence,
         ) in branch_specs
     ]
+
+
+def _route_candidate_assembly_branch_status(policy: Mapping[str, Any]) -> str:
+    if str(policy.get("route_policy_status", "")) == "ready_for_route_yield_detection_claims":
+        return "route_formula_policy_review_ready_not_scored"
+    return "assembly_rows_available_not_route_score"
 
 
 def _minimum_input_for(
