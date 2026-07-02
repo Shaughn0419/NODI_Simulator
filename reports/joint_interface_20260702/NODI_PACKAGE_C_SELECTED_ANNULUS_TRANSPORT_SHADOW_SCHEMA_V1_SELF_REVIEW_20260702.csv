@@ -1,0 +1,21 @@
+reviewer,dimension,verdict,finding
+Reviewer 01,legacy 0.5-0.8 freeze,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 02,COMSOL transported-position separation,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 03,edge4 ambiguity hard blocks,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 04,edge20 exact-annulus future condition,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 05,sidewall angle convention,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 06,coordinate frame provenance,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 07,BFP ROI annulus separation,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 08,velocity weighting separation,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 09,residence weighting separation,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 10,forbidden claim firewall,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 11,q_ch/formal sidecar lock,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 12,route_score/JRC/winner lock,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 13,yield/detection lock,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 14,source-lock stability,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 15,external dirty exclusion,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 16,manifest SHA stability,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 17,test coverage,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 18,git staging scope,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 19,COMSOL handoff clarity,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context
+Reviewer 20,future sensitivity plan boundary,PASS_CONTEXT_ONLY_NO_DECISION_USE,schema separates legacy initial-position annulus from COMSOL transported-position shadow context

@@ -1,0 +1,4 @@
+lane,basis,annulus,decision_use_allowed,allowed_use,blocked_use
+legacy_selected_annulus_paper_audit,initial_position_edge_norm,0.5-0.8,false,paper_audit_lens_and_engineering_cross_check,COMSOL transported-position decision weighting
+engineering_all_crossing_main,all_crossing_engineering_context,not_applicable,false,main engineering gate remains separate from paper-audit annulus,selected-annulus tuned replacement ranking
+comsol_weighted_selected_annulus_shadow,transported_position_edge_norm_shadow,requires_exact_0.5-0.8_source,false,shadow diagnostic/context-only planning,chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim

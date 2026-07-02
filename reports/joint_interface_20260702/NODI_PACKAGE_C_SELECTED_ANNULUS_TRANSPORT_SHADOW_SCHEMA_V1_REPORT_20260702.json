@@ -1,0 +1,1954 @@
+{
+  "source_lock": [
+    {
+      "source_group": "NODI",
+      "source_id": "engineering_guide",
+      "path": "00_工程总指南.md",
+      "exists": "true",
+      "row_count": "NA",
+      "sha256_pass1": "437e4b2c9631b562d8451b72deabd6ca6afac66f7bdbfeb2e9b805efd2b5eeb0",
+      "sha256_pass2": "437e4b2c9631b562d8451b72deabd6ca6afac66f7bdbfeb2e9b805efd2b5eeb0",
+      "source_stable_two_pass": "true",
+      "git_status": "clean_or_tracked_unchanged",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "NODI",
+      "source_id": "core_formula_notes",
+      "path": "25_核心计算逻辑与公式总说明.md",
+      "exists": "true",
+      "row_count": "NA",
+      "sha256_pass1": "0f4f2ac6d74b7429f066266f641b2fd266dcd7ead8276d0f7ea8988e8db76a82",
+      "sha256_pass2": "0f4f2ac6d74b7429f066266f641b2fd266dcd7ead8276d0f7ea8988e8db76a82",
+      "source_stable_two_pass": "true",
+      "git_status": "clean_or_tracked_unchanged",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "NODI",
+      "source_id": "data_objects",
+      "path": "nodi_simulator/data_objects.py",
+      "exists": "true",
+      "row_count": "NA",
+      "sha256_pass1": "97dcb7dbf9dd167f4aa848a34adf67988bfdbd21cb19f166f74f100c639de961",
+      "sha256_pass2": "97dcb7dbf9dd167f4aa848a34adf67988bfdbd21cb19f166f74f100c639de961",
+      "source_stable_two_pass": "true",
+      "git_status": "clean_or_tracked_unchanged",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "NODI",
+      "source_id": "design_claim_governance",
+      "path": "nodi_simulator/design_claim_governance.py",
+      "exists": "true",
+      "row_count": "NA",
+      "sha256_pass1": "6b91b73826076ec2bd5f5d35d1a6b64634303b77ac26ee28c07b839e79560bb8",
+      "sha256_pass2": "6b91b73826076ec2bd5f5d35d1a6b64634303b77ac26ee28c07b839e79560bb8",
+      "source_stable_two_pass": "true",
+      "git_status": "clean_or_tracked_unchanged",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "NODI",
+      "source_id": "parameter_sweep",
+      "path": "nodi_simulator/parameter_sweep.py",
+      "exists": "true",
+      "row_count": "NA",
+      "sha256_pass1": "afa4deaa40337626e9cecf2182671dcfb3c475a66daea8bd1b564fa8eb648938",
+      "sha256_pass2": "afa4deaa40337626e9cecf2182671dcfb3c475a66daea8bd1b564fa8eb648938",
+      "source_stable_two_pass": "true",
+      "git_status": "clean_or_tracked_unchanged",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "NODI",
+      "source_id": "tsuyama_selected_annulus_joint_fit",
+      "path": "tools/audits/tsuyama_selected_annulus_joint_fit.py",
+      "exists": "true",
+      "row_count": "NA",
+      "sha256_pass1": "87b8db78fd2312d498281de01bca352044983e1b622b3eb742f37f4de91870c1",
+      "sha256_pass2": "87b8db78fd2312d498281de01bca352044983e1b622b3eb742f37f4de91870c1",
+      "source_stable_two_pass": "true",
+      "git_status": "clean_or_tracked_unchanged",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "NODI",
+      "source_id": "selected_annulus_context_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_STATUS_20260701.json",
+      "exists": "true",
+      "row_count": "NA",
+      "sha256_pass1": "6039b65b78db032346f22e388c864733c8f2316c4cd65e32ec572d5970db704e",
+      "sha256_pass2": "6039b65b78db032346f22e388c864733c8f2316c4cd65e32ec572d5970db704e",
+      "source_stable_two_pass": "true",
+      "git_status": "clean_or_tracked_unchanged",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "NODI",
+      "source_id": "selected_annulus_context_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_CONTEXT_ROWS_20260701.csv",
+      "exists": "true",
+      "row_count": "2",
+      "sha256_pass1": "8d3b98d700c1ceb62026ce473ff0f76b81b6286f5e8153f9b86680545d2d4e50",
+      "sha256_pass2": "8d3b98d700c1ceb62026ce473ff0f76b81b6286f5e8153f9b86680545d2d4e50",
+      "source_stable_two_pass": "true",
+      "git_status": "clean_or_tracked_unchanged",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "NODI",
+      "source_id": "pressure_flow_bridge_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
+      "exists": "true",
+      "row_count": "NA",
+      "sha256_pass1": "54362c56c03c48c98d8de905dcb5c362e3363abdf4bb4ca26a06915bf63b143e",
+      "sha256_pass2": "54362c56c03c48c98d8de905dcb5c362e3363abdf4bb4ca26a06915bf63b143e",
+      "source_stable_two_pass": "true",
+      "git_status": " M",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "context_nonblocking",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "NODI",
+      "source_id": "qch_grid_candidate_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFRESH_STATUS_20260701.json",
+      "exists": "true",
+      "row_count": "NA",
+      "sha256_pass1": "67699c8de92bcc6a317f3cfab0e2057a7e8002e7ca21e2e861e6fdff35c037e5",
+      "sha256_pass2": "67699c8de92bcc6a317f3cfab0e2057a7e8002e7ca21e2e861e6fdff35c037e5",
+      "source_stable_two_pass": "true",
+      "git_status": "clean_or_tracked_unchanged",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "COMSOL",
+      "source_id": "tpd_prs_chi_context_sidecar_bins",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\TPD_PRS_CHI_CONTEXT_SIDECAR_BINS_20260622.csv",
+      "exists": "true",
+      "row_count": "64",
+      "sha256_pass1": "8c2f785d5d4d7a16af0b4817b7f97a7ecf8824e84cc2f9b602e1b67906dcefc1",
+      "sha256_pass2": "8c2f785d5d4d7a16af0b4817b7f97a7ecf8824e84cc2f9b602e1b67906dcefc1",
+      "source_stable_two_pass": "true",
+      "git_status": "read_only_external",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "COMSOL",
+      "source_id": "tpd_prs_chi_context_sidecar_aggregate",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\TPD_PRS_CHI_CONTEXT_SIDECAR_AGGREGATE_20260622.csv",
+      "exists": "true",
+      "row_count": "16",
+      "sha256_pass1": "8f2be800709a2332ddecca6e43e1ccc619aa93b502eeeb0bffb5b41f9e8a6381",
+      "sha256_pass2": "8f2be800709a2332ddecca6e43e1ccc619aa93b502eeeb0bffb5b41f9e8a6381",
+      "source_stable_two_pass": "true",
+      "git_status": "read_only_external",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "COMSOL",
+      "source_id": "transported_position_source_smoke",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\TRANSPORTED_POSITION_SOURCE_SMOKE_COMBINED_RETRY3_20260621.csv",
+      "exists": "true",
+      "row_count": "32",
+      "sha256_pass1": "1c0d902dc01a39e3a3cc6c104696b782ddd06235d1630051d2b5163d6d827b61",
+      "sha256_pass2": "1c0d902dc01a39e3a3cc6c104696b782ddd06235d1630051d2b5163d6d827b61",
+      "source_stable_two_pass": "true",
+      "git_status": "read_only_external",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "COMSOL",
+      "source_id": "gate10_sidewall_descriptor_export",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_GATE10_SIDEWALL_DESCRIPTOR_EXPORT_20260629.csv",
+      "exists": "true",
+      "row_count": "11",
+      "sha256_pass1": "52b3eda530e1c536974fd0474e1e2b28e61fb8d442f99f0126016a16364e1213",
+      "sha256_pass2": "52b3eda530e1c536974fd0474e1e2b28e61fb8d442f99f0126016a16364e1213",
+      "source_stable_two_pass": "true",
+      "git_status": "read_only_external",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    },
+    {
+      "source_group": "COMSOL",
+      "source_id": "pressure_flow_bridge_ack",
+      "path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction\\roadmap\\COMSOL_TO_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_ACK_V1_20260701.json",
+      "exists": "true",
+      "row_count": "NA",
+      "sha256_pass1": "33b1de4a727d79370a5ad9b8a4d86e4410c8623bded857335d4dad644f39fecb",
+      "sha256_pass2": "33b1de4a727d79370a5ad9b8a4d86e4410c8623bded857335d4dad644f39fecb",
+      "source_stable_two_pass": "true",
+      "git_status": "read_only_external",
+      "release_scoped_dirty_blocker": "false",
+      "source_lock_role": "release_scoped_semantic_source",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    }
+  ],
+  "dirty_classifier": [
+    {
+      "path": "EVIEW_BUILD_MANIFEST.json",
+      "git_status": "M ",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "nodi_simulator/sidewall_route_yield_detection_assembly.py",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_DIRTY_CLASSIFIER_20260701.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "CONTEXT_SOURCE_DIRTY_NONBLOCKING",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "tests/test_sidewall_route_yield_detection_assembly.py",
+      "git_status": " M",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "reports/545_NODI_PACKAGE_C_SELECTED_ANNULUS_TRANSPORT_SHADOW_SCHEMA_V1_20260702.md",
+      "git_status": "??",
+      "classification": "RELEASE_OUTPUT_THIS_TURN",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "stage_only_if_release_output"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "tests/test_nodi_package_c_selected_annulus_transport_shadow_schema.py",
+      "git_status": "??",
+      "classification": "RELEASE_OUTPUT_THIS_TURN",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "stage_only_if_release_output"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_selected_annulus_transport_shadow_schema.py",
+      "git_status": "??",
+      "classification": "RELEASE_OUTPUT_THIS_TURN",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "stage_only_if_release_output"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_route_yield_detection_assembly_detector_blank_transfer_refresh.py",
+      "git_status": "??",
+      "classification": "EXTERNAL_DIRTY_EXCLUDED",
+      "release_scoped_dirty_blocker": "false",
+      "stage_decision": "do_not_stage"
+    }
+  ],
+  "selection_function_schema": [
+    {
+      "field": "selection_function_id",
+      "type": "string",
+      "requirement": "required",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "selection_function_version",
+      "type": "string",
+      "requirement": "required",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "selection_basis",
+      "type": "enum",
+      "requirement": "initial_position_edge_norm|transported_position_edge_norm|prs_edge20_edge_norm|transported_position_xz_norm",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "selection_source_system",
+      "type": "enum",
+      "requirement": "NODI|COMSOL|COMSOL_TO_NODI",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "edge_norm_definition",
+      "type": "enum",
+      "requirement": "max_abs_xz_norm",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "annulus_edge_norm_min",
+      "type": "number",
+      "requirement": "required",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "annulus_edge_norm_max",
+      "type": "number",
+      "requirement": "required",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "boundary_rule",
+      "type": "enum",
+      "requirement": "min_inclusive_max_inclusive",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "bin_schema",
+      "type": "enum",
+      "requirement": "edge_norm_4|edge_norm_20|exact_annulus_0p5_0p8|xz_norm_2d",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "weighting_basis",
+      "type": "enum",
+      "requirement": "event_count|velocity_weighted|residence_time_weighted|not_applicable",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "coordinate_frame_id",
+      "type": "string",
+      "requirement": "required",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "coordinate_frame_version",
+      "type": "string",
+      "requirement": "required",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "selection_status",
+      "type": "enum",
+      "requirement": "available_exact|available_context_partial|unavailable_empty|unbound|blocked_mixed_bin|blocked_coordinate_unverified|blocked_claim_promotion",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "allowed_use",
+      "type": "string",
+      "requirement": "required",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "blocked_use",
+      "type": "string",
+      "requirement": "required",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    }
+  ],
+  "annulus_transport_context_schema": [
+    {
+      "field": "artifact_version",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "source_run_id",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "source_artifacts_json",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "distribution_source_sha256",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "model_or_measurement_id",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "route_geometry_id_comsol",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "route_geometry_id_comsol_version",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "process_state",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "width_nm",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "depth_nm",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "diameter_nm",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "sidewall_angle_convention",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "sidewall_deg_comsol",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "sidewall_taper_angle_deg_nodi",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "angle_conversion_formula_id",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "cross_section_geometry_version",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "geometry_descriptor_sha256",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "flow_condition_id",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "flow_condition_scope",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "weighting_basis",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "n_samples",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "occupancy_fraction",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "occupancy_fraction_uncertainty",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "tpd_bin_id",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "tpd_edge_norm_min",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "tpd_edge_norm_max",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "prs_edge20_bin_start",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "prs_edge20_bin_end",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "prs_bin_ids",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "prs_bin_count",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "mapping_status",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "not_prs_response_bin",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "not_chi_scalar",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "not_qch_eta",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "not_yield",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "not_winner",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "not_detection_probability",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "formal_qch_weighting_current",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "route_score_current",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "winner_current",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "yield_current",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "detection_probability_current",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    },
+    {
+      "field": "context_status",
+      "required": "true",
+      "allowed_use": "schema_review;context_only_transport_annulus_diagnostic;PRS_edge20_mapping_validation;future_authorized_task_specification",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim",
+      "decision_use_allowed": "false"
+    }
+  ],
+  "legacy_freeze": [
+    {
+      "legacy_lane_name": "legacy_selected_annulus_paper_audit",
+      "annulus_edge_norm_min": "0.5",
+      "annulus_edge_norm_max": "0.8",
+      "source": "initial_position_edge_norm_annulus_diagnostic_v1",
+      "role": "paper_audit_lens_and_engineering_cross_check",
+      "decision_use_allowed_for_comsol_transport_shadow": "false",
+      "canonical_change_allowed": "false_without_future_signed_sensitivity_plan",
+      "roi_or_bfp_annulus": "false",
+      "claim_boundary": "legacy_initial_position_annulus_not_transported_position_not_decision_use"
+    }
+  ],
+  "edge_disposition": [
+    {
+      "bin_or_window": "0.0-0.25",
+      "bin_schema": "edge_norm_4",
+      "disposition": "CONTEXT_ONLY_CENTER_SIDE_BUCKET_OUTSIDE_LEGACY_SELECTED_ANNULUS",
+      "exact_selected_annulus_allowed": "false"
+    },
+    {
+      "bin_or_window": "0.25-0.5",
+      "bin_schema": "edge_norm_4",
+      "disposition": "CONTEXT_ONLY_PRE_ANNULUS_BUCKET_OUTSIDE_LEGACY_SELECTED_ANNULUS",
+      "exact_selected_annulus_allowed": "false"
+    },
+    {
+      "bin_or_window": "0.5-0.75",
+      "bin_schema": "edge_norm_4",
+      "disposition": "CONTEXT_ONLY_LOWER_ANNULUS_SLICE_NOT_EXACT",
+      "exact_selected_annulus_allowed": "false"
+    },
+    {
+      "bin_or_window": "0.75-1.0",
+      "bin_schema": "edge_norm_4",
+      "disposition": "BLOCKED_MIXED_ANNULUS_NEAR_WALL_REQUIRES_0P8_SPLIT",
+      "exact_selected_annulus_allowed": "false"
+    },
+    {
+      "bin_or_window": "0.5-0.8",
+      "bin_schema": "exact_annulus_0p5_0p8",
+      "disposition": "BLOCKED_UNLESS_EDGE20_10_TO_15_OR_EXPLICIT_0P8_SPLIT",
+      "exact_selected_annulus_allowed": "false_until_split_source_validated"
+    },
+    {
+      "bin_or_window": "edge_10..edge_15",
+      "bin_schema": "edge_norm_20",
+      "disposition": "FUTURE_CONTEXT_ONLY_EXACT_ANNULUS_CANDIDATE_IF_SOURCE_VALIDATED",
+      "exact_selected_annulus_allowed": "context_only_after_source_validation"
+    }
+  ],
+  "shadow_lane_plan": [
+    {
+      "lane": "legacy_selected_annulus_paper_audit",
+      "basis": "initial_position_edge_norm",
+      "annulus": "0.5-0.8",
+      "decision_use_allowed": "false",
+      "allowed_use": "paper_audit_lens_and_engineering_cross_check",
+      "blocked_use": "COMSOL transported-position decision weighting"
+    },
+    {
+      "lane": "engineering_all_crossing_main",
+      "basis": "all_crossing_engineering_context",
+      "annulus": "not_applicable",
+      "decision_use_allowed": "false",
+      "allowed_use": "main engineering gate remains separate from paper-audit annulus",
+      "blocked_use": "selected-annulus tuned replacement ranking"
+    },
+    {
+      "lane": "comsol_weighted_selected_annulus_shadow",
+      "basis": "transported_position_edge_norm_shadow",
+      "annulus": "requires_exact_0.5-0.8_source",
+      "decision_use_allowed": "false",
+      "allowed_use": "shadow diagnostic/context-only planning",
+      "blocked_use": "chi_selected;q_ch*eta;q_ch*chi*eta;formal_qch_weighting;route_score;JRC;winner;yield;detection_probability;wet_pass;runtime;production;proof;pass_claim"
+    }
+  ],
+  "optimization_guardrails": [
+    {
+      "guardrail": "target_audit_before_annulus_change",
+      "requirement": "targets_classified_direct_inferred_operational_diagnostic_only",
+      "hard_fail_if": "window_changed_to_fit_single_target_without_sensitivity_plan"
+    },
+    {
+      "guardrail": "legacy_baseline_required",
+      "requirement": "old_0p5_0p8_baseline_kept_for_comparison",
+      "hard_fail_if": "legacy_window_replaced_silently"
+    },
+    {
+      "guardrail": "family_generalization",
+      "requirement": "new_window_must_improve_across_candidate_families",
+      "hard_fail_if": "single_target_overfit"
+    },
+    {
+      "guardrail": "no_2020_pod_anchor",
+      "requirement": "2020_POD_thermal_counting_not_2022_NODI_selected_annulus_anchor",
+      "hard_fail_if": "POD_counting_recast_as_NODI_annulus_calibration"
+    },
+    {
+      "guardrail": "no_global_ev_default_mutation",
+      "requirement": "paper_audit_and_engineering_lanes_remain_separate",
+      "hard_fail_if": "global_default_changed_by_shadow_context"
+    }
+  ],
+  "sidewall_diagnostics_plan": [
+    {
+      "diagnostic": "support_accessibility_definition",
+      "required_binding": "geometry_descriptor_sha256;sidewall_deg_comsol;sidewall_taper_angle_deg_nodi;coordinate_frame_id",
+      "allowed_use": "diagnostic planning only",
+      "blocked_use": "passability verdict;route_score;JRC;runtime;production"
+    },
+    {
+      "diagnostic": "top_local_bottom_normalization",
+      "required_binding": "geometry_descriptor_sha256;sidewall_deg_comsol;sidewall_taper_angle_deg_nodi;coordinate_frame_id",
+      "allowed_use": "diagnostic planning only",
+      "blocked_use": "passability verdict;route_score;JRC;runtime;production"
+    },
+    {
+      "diagnostic": "wall_distance",
+      "required_binding": "geometry_descriptor_sha256;sidewall_deg_comsol;sidewall_taper_angle_deg_nodi;coordinate_frame_id",
+      "allowed_use": "diagnostic planning only",
+      "blocked_use": "passability verdict;route_score;JRC;runtime;production"
+    },
+    {
+      "diagnostic": "finite_size_support",
+      "required_binding": "geometry_descriptor_sha256;sidewall_deg_comsol;sidewall_taper_angle_deg_nodi;coordinate_frame_id",
+      "allowed_use": "diagnostic planning only",
+      "blocked_use": "passability verdict;route_score;JRC;runtime;production"
+    },
+    {
+      "diagnostic": "coordinate_frame",
+      "required_binding": "geometry_descriptor_sha256;sidewall_deg_comsol;sidewall_taper_angle_deg_nodi;coordinate_frame_id",
+      "allowed_use": "diagnostic planning only",
+      "blocked_use": "passability verdict;route_score;JRC;runtime;production"
+    },
+    {
+      "diagnostic": "geometry_hash",
+      "required_binding": "geometry_descriptor_sha256;sidewall_deg_comsol;sidewall_taper_angle_deg_nodi;coordinate_frame_id",
+      "allowed_use": "diagnostic planning only",
+      "blocked_use": "passability verdict;route_score;JRC;runtime;production"
+    }
+  ],
+  "forbidden_claim_audit": [
+    {
+      "term": "chi_selected",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "chi_selected_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "q_ch*eta",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "q_ch*eta_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "q_ch*chi*eta",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "q_ch*chi*eta_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "formal_qch_weighting",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "formal_qch_weighting_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "route_score",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "route_score_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "JRC",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "JRC_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "winner",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "winner_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "yield",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "yield_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "detection_probability",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "detection_probability_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "wet_pass",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "wet_pass_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "runtime",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "runtime_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "production",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "production_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    },
+    {
+      "term": "BFP_ROI_annulus",
+      "allowed_context": "negative_fixture_or_blocked_use_only",
+      "positive_output_allowed": "false",
+      "hard_fail_if": "BFP_ROI_annulus_positive_or_decision_use_true",
+      "observed_positive_count": "0"
+    }
+  ],
+  "mutation_results": [
+    {
+      "mutation_family": "edge4_0p75_1p0_promoted_to_exact_0p75_0p8",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "edge4_0p5_1p0_promoted_to_exact_0p5_0p8",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "exact_annulus_without_edge20_or_0p8_split",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "sidewall_85_used_as_nodi_taper",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "sidewall_5_used_as_comsol_sidewall",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "missing_angle_conversion_formula",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "BFP_ROI_annulus_mixed_with_event_position_annulus",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "velocity_weighting_collapsed_to_winner",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "residence_weighting_collapsed_to_winner",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "source_sha_mismatch_same_paper_claim",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "chi_selected_spoof",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "q_ch_eta_spoof",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "formal_qch_weighting_spoof",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "route_score_spoof",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "JRC_spoof",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "winner_spoof",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "yield_spoof",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "detection_probability_spoof",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "runtime_flag_true",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    },
+    {
+      "mutation_family": "production_flag_true",
+      "row_equivalent_count": 50000,
+      "expected_result": "expected_fail_or_context_quarantine",
+      "observed_unexpected_pass": 0,
+      "authorization_promotion": 0,
+      "proof_promotion": 0,
+      "formal_qch_promotion": 0,
+      "route_score_promotion": 0,
+      "yield_detection_promotion": 0,
+      "chi_selected_promotion": 0
+    }
+  ],
+  "self_review": [
+    {
+      "reviewer": "Reviewer 01",
+      "dimension": "legacy 0.5-0.8 freeze",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 02",
+      "dimension": "COMSOL transported-position separation",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 03",
+      "dimension": "edge4 ambiguity hard blocks",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 04",
+      "dimension": "edge20 exact-annulus future condition",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 05",
+      "dimension": "sidewall angle convention",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 06",
+      "dimension": "coordinate frame provenance",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 07",
+      "dimension": "BFP ROI annulus separation",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 08",
+      "dimension": "velocity weighting separation",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 09",
+      "dimension": "residence weighting separation",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 10",
+      "dimension": "forbidden claim firewall",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 11",
+      "dimension": "q_ch/formal sidecar lock",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 12",
+      "dimension": "route_score/JRC/winner lock",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 13",
+      "dimension": "yield/detection lock",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 14",
+      "dimension": "source-lock stability",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 15",
+      "dimension": "external dirty exclusion",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 16",
+      "dimension": "manifest SHA stability",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 17",
+      "dimension": "test coverage",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 18",
+      "dimension": "git staging scope",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 19",
+      "dimension": "COMSOL handoff clarity",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    },
+    {
+      "reviewer": "Reviewer 20",
+      "dimension": "future sensitivity plan boundary",
+      "verdict": "PASS_CONTEXT_ONLY_NO_DECISION_USE",
+      "finding": "schema separates legacy initial-position annulus from COMSOL transported-position shadow context"
+    }
+  ],
+  "summary": {
+    "disposition": "PASS_NODI_PACKAGE_C_SELECTED_ANNULUS_TRANSPORT_SHADOW_SCHEMA_V1_READY_CONTEXT_ONLY_NO_DECISION_USE",
+    "current_head": "7cc469bc153bd33b734aa07ae736ad9ef3bb478c",
+    "branch": "main",
+    "comsol_head_reference": "60e206ef7ddc3221ac3f0469909604eac2d41385",
+    "source_lock_rows": 15,
+    "source_lock_failures": 0,
+    "release_scoped_dirty_blocker_rows": 0,
+    "external_dirty_excluded": true,
+    "external_dirty_rows": 91,
+    "selection_function_schema_rows": 15,
+    "annulus_transport_context_schema_rows": 43,
+    "legacy_freeze_rows": 1,
+    "edge_disposition_rows": 6,
+    "shadow_lane_rows": 3,
+    "guardrail_rows": 5,
+    "diagnostics_rows": 6,
+    "forbidden_claim_rows": 13,
+    "self_review_rows": 20,
+    "mutation_row_equivalent_total": 1000000,
+    "unexpected_pass": 0,
+    "authorization_promotion": 0,
+    "proof_promotion": 0,
+    "formal_qch_promotion": 0,
+    "route_score_promotion": 0,
+    "yield_detection_promotion": 0,
+    "chi_selected_promotion": 0,
+    "decision_use_allowed": false,
+    "Gate2D_rows": 4,
+    "EDGE_state": "NOT_APPROVED_PREAUTH_ONLY",
+    "QCH_state": "CANDIDATE_ONLY_NOT_FORMAL_QCH_SIDECAR",
+    "BINDING_state": "FAIL_CLOSED",
+    "validation_failures": []
+  }
+}
