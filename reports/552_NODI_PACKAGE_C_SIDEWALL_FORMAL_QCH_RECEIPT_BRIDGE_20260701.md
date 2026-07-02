@@ -1,7 +1,7 @@
 # NODI Package C Sidewall Formal q_ch Receipt Bridge
 
 - Disposition: `NODI_PACKAGE_C_SIDEWALL_FORMAL_QCH_RECEIPT_BRIDGE_READY_ROUTE_INPUT_NOT_SCORE`.
-- Current head: `fa697f617e363f3329f42123bb3dfd6e1bbb8582` on `main`.
+- Current head: `d6c924eff5567f1423df8af25344b92740600400` on `main`.
 - Bridge rows: `2`.
 - Route geometry families: `ideal_rectangle;trapezoid_tapered_sidewalls`.
 - Formal q_ch sidecar rows current: `2`.

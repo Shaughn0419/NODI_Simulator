@@ -7,7 +7,7 @@ Claim boundary: `route_qch_detector_wet_blocker_binder_not_route_score_not_yield
 ## Canonical State
 
 - q_ch ready rows: `2`
-- detector blocker rows: `2`
+- detector blocker rows: `0`
 - wet blocker rows: `2`
 - rectangle rows: `1`
 - trapezoid rows: `1`

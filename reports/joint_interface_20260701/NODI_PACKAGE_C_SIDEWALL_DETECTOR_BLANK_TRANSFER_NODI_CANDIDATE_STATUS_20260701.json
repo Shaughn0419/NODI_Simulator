@@ -1,0 +1,26 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_NODI_CANDIDATE_READY_FOR_INTAKE",
+  "summary": {
+    "allowed_use": "NODI-side sidewall detector/blank transfer candidate source rows;canonical detector blank transfer input rows for intake validation",
+    "artifact_id": "PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_NODI_CANDIDATE_20260701",
+    "blank_trace_source_artifacts": 2,
+    "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion;wet claim",
+    "branch": "main",
+    "candidate_transfer_rows": 2,
+    "claim_boundary": "detector_blank_transfer_nodi_candidate_not_detection_probability_not_route_score",
+    "current_head": "d6c924eff5567f1423df8af25344b92740600400",
+    "detection_probability_current": false,
+    "detector_response_source_artifacts": 2,
+    "dirty_context_rows": 178,
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_NODI_CANDIDATE_READY_FOR_INTAKE",
+    "non_release_dirty_context_rows": 176,
+    "panel_rows": 2,
+    "route_score_current": false,
+    "semantic_digest": "b7f480b582b03bc491737d9d4de1cf41f99becf3b860935aeccbf88b0cd6c31c",
+    "source_lock_rows": 3,
+    "source_missing_rows": 0,
+    "wet_pass_probability_current": false,
+    "winner_current": false,
+    "yield_current": false
+  }
+}

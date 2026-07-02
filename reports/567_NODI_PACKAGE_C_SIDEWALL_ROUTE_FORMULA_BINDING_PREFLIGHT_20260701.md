@@ -1,6 +1,6 @@
 # NODI Package C Sidewall Route Formula Binding Preflight
 
-Disposition: `NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_PREFLIGHT_READY_QCH_READY_DETECTOR_WET_BLOCKED`
+Disposition: `NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_PREFLIGHT_READY_QCH_DETECTOR_READY_WET_BLOCKED`
 Artifact ID: `PACKAGE_C_SIDEWALL_ROUTE_FORMULA_BINDING_PREFLIGHT_20260701`
 Claim boundary: `route_formula_binding_preflight_not_route_score_not_winner_not_yield_not_detection`
 
@@ -10,7 +10,7 @@ Claim boundary: `route_formula_binding_preflight_not_route_score_not_winner_not_
 - exact pressure-flow ready rows: `2`
 - selected-annulus ready rows: `2`
 - runtime/substep guard ready rows: `2`
-- detector branch ready rows: `0`
+- detector branch ready rows: `2`
 - wet branch ready rows: `0`
 - route formula claim-ready rows: `0`
 

@@ -1,10 +1,10 @@
 {
-  "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE",
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_ACCEPTED_TRANSFER_CANDIDATE",
   "summary": {
-    "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE",
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_ACCEPTED_TRANSFER_CANDIDATE",
     "artifact_id": "PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_20260701",
     "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
-    "current_head": "a31346420f405702dd9fb72e686617814233bbb7",
+    "current_head": "d6c924eff5567f1423df8af25344b92740600400",
     "branch": "main",
     "source_assembly_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_READY_NOT_CLAIM_READY",
     "source_detector_panel_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CALIBRATION_PANEL_READY_CANDIDATE_NOT_PROBABILITY",
@@ -13,21 +13,23 @@
     "route_transfer_matrix_rows": 2,
     "template_rows": 2,
     "promotion_update_rows": 2,
-    "accepted_transfer_rows": 0,
-    "no_transfer_matrix_rows": 2,
+    "accepted_transfer_rows": 2,
+    "no_transfer_matrix_rows": 0,
+    "accepted_transfer_matrix_rows": 2,
     "sidewall_specific_blank_trace_current_rows": 0,
-    "detector_response_validation_current_rows": 0,
+    "validated_transfer_current_rows": 2,
+    "detector_response_validation_current_rows": 2,
     "detection_probability_current": false,
     "route_score_current": false,
     "winner_current": false,
     "yield_current": false,
     "source_lock_rows": 9,
     "source_missing_rows": 0,
-    "dirty_context_rows": 96,
-    "non_release_dirty_context_rows": 89,
+    "dirty_context_rows": 178,
+    "non_release_dirty_context_rows": 164,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
     "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion",
-    "semantic_digest": "d08b1a7e1f7afe0260cefd1a1f5d9c4174de6052ef183f7de40a6ab629ed3ab6"
+    "semantic_digest": "4a5c9e56a0ba241c8cc4a996ef86a8c7127f801f985daca313b8af38a3021c71"
   }
 }
