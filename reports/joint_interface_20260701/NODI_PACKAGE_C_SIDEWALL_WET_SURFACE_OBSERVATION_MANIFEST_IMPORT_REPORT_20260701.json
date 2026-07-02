@@ -69,6 +69,12 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
+      "path": "reports/547_NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_20260701.md",
+      "release_decision": "ignored_for_wet_surface_observation_manifest_import"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
       "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
       "release_decision": "ignored_for_wet_surface_observation_manifest_import"
     },
@@ -369,6 +375,30 @@
     {
       "classification": "non_release_dirty_context",
       "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_DIRTY_CONTEXT_20260701.csv",
+      "release_decision": "ignored_for_wet_surface_observation_manifest_import"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_MANIFEST_20260701.csv",
+      "release_decision": "ignored_for_wet_surface_observation_manifest_import"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_REPORT_20260701.json",
+      "release_decision": "ignored_for_wet_surface_observation_manifest_import"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_STATUS_20260701.json",
+      "release_decision": "ignored_for_wet_surface_observation_manifest_import"
+    },
+    {
+      "classification": "non_release_dirty_context",
+      "git_status": " M",
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "release_decision": "ignored_for_wet_surface_observation_manifest_import"
     },
@@ -481,12 +511,6 @@
       "release_decision": "ignored_for_wet_surface_observation_manifest_import"
     },
     {
-      "classification": "wet_surface_observation_manifest_import_output",
-      "git_status": "??",
-      "path": "reports/578_NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_20260701.md",
-      "release_decision": "included_or_rewritten_by_manifest_import_builder"
-    },
-    {
       "classification": "non_release_dirty_context",
       "git_status": "??",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
@@ -577,14 +601,14 @@
     "claim_boundary": "wet_surface_observation_manifest_import_not_yield_not_detection_not_route_score",
     "clogging_rate_current": false,
     "contract_rows": 14,
-    "current_head": "5ed1043e6828c2bb8afa90e7ddc6ef900a2c7503",
+    "current_head": "80d7b41cf3fae0c30dcf31bd771a1a4a40593c85",
     "detection_probability_current": false,
-    "dirty_context_rows": 84,
+    "dirty_context_rows": 88,
     "disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_READY_MANIFEST_REQUIRED",
     "import_audit_rows": 1,
     "import_version": "sidewall_wet_surface_observation_manifest_import_v1",
     "imported_observation_rows": 0,
-    "non_release_dirty_context_rows": 83,
+    "non_release_dirty_context_rows": 88,
     "recovery_current": false,
     "rejected_import_rows": 0,
     "required_source_missing_rows": 0,
