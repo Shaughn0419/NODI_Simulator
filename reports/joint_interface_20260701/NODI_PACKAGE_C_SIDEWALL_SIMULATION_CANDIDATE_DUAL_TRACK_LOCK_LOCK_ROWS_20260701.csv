@@ -1,0 +1,5 @@
+track_id,candidate_signal,simulation_candidate_rows,final_current_rows,candidate_ready,final_locked_false
+wet_surface_observation,wet_accepted_observation_rows_total,28,0,True,True
+route_score,simulation_route_score_candidate_current_rows,2,0,True,True
+winner_jrc,simulation_top_candidate_current_rows,1,0,True,True
+yield_detection_values,yield_detection_values_ready_rows,2,0,True,True

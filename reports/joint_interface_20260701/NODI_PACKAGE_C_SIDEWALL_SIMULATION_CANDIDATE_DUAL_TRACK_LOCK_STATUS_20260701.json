@@ -1,0 +1,31 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_CANDIDATE_DUAL_TRACK_LOCK_READY",
+  "summary": {
+    "allowed_use": "simulation-candidate route ranking and integrated review bookkeeping; candidate values may drive the simulation branch",
+    "artifact_id": "PACKAGE_C_SIDEWALL_SIMULATION_CANDIDATE_DUAL_TRACK_LOCK_20260701",
+    "blocked_use": "final route_score;final winner;final JRC;final yield;final detection_probability;wet_pass_probability as final production claim;production ingestion;fabrication release",
+    "branch": "main",
+    "candidate_ready_rows": 4,
+    "claim_boundary": "simulation_candidates_available_final_claims_locked_false",
+    "current_head": "dee7bab356acaec503533e16a93122827b169918",
+    "dirty_context_rows": 85,
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_SIMULATION_CANDIDATE_DUAL_TRACK_LOCK_READY",
+    "final_current_total_rows": 0,
+    "final_locked_false_rows": 4,
+    "lock_rows": 4,
+    "next_high_leverage_step": "use simulation candidate rows for integrated simulation route review; do not promote final/current claims without a separate promotion package",
+    "non_release_dirty_context_rows": 83,
+    "route_score_candidate_ready_rows": 2,
+    "semantic_digest": "6551e822c5b1ca39d7ac717556e046a5300d1839c18b637572a6bdab88e57b28",
+    "source_claim_value_disposition": "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_VALUES_READY_FOR_INTEGRATED_REVIEW",
+    "source_lock_rows": 7,
+    "source_missing_rows": 0,
+    "source_readiness_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_READY_BRANCH_STATUSES_NOT_CLAIMS",
+    "source_route_formula_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_SIMULATION_ROUTE_SCORE_CANDIDATES_READY_FOR_RANKING_REVIEW",
+    "source_wet_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_ACCEPTED_SIMULATION_BUNDLE_READY",
+    "source_winner_jrc_disposition": "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_SIMULATION_TOP_CANDIDATE_READY_FOR_INTEGRATED_REVIEW",
+    "wet_accepted_observation_rows_total": 28,
+    "winner_jrc_candidate_ready_rows": 2,
+    "yield_detection_values_ready_rows": 2
+  }
+}
