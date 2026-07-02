@@ -110,6 +110,33 @@ def _wet(route_id: str) -> dict[str, str]:
     }
 
 
+def _activation(route_id: str) -> dict[str, str]:
+    return {
+        "route_candidate_id": route_id,
+        "detector_transfer_matrix_status": (
+            "detector_blank_transfer_intake_ready_no_transfer_evidence"
+        ),
+        "detector_branch_ready_for_formula": "False",
+        "wet_observation_matrix_status": (
+            "wet_surface_observation_intake_ready_no_observations"
+        ),
+        "wet_branch_ready_for_formula": "False",
+        "route_formula_blocker_status": (
+            "blocked_detector_blank_or_wet_accepted_evidence_missing"
+        ),
+    }
+
+
+def _formula(route_id: str) -> dict[str, str]:
+    return {
+        "route_candidate_id": route_id,
+        "route_formula_ready_for_claim_review": "False",
+        "route_formula_review_dry_run_status": (
+            "blocked_until_detector_wet_evidence_accepted"
+        ),
+    }
+
+
 def _build() -> tuple[list[dict[str, object]], list[dict[str, object]]]:
     routes = ("ROUTE-CAND-001", "ROUTE-CAND-002")
     rows, blockers = build_route_yield_detection_readiness_board(
@@ -121,6 +148,8 @@ def _build() -> tuple[list[dict[str, object]], list[dict[str, object]]]:
         assembly_rows=[_assembly(route) for route in routes],
         detector_transfer_audit_rows=[_transfer(route) for route in routes],
         wet_observation_audit_rows=[_wet(route) for route in routes],
+        detector_wet_activation_rows=[_activation(route) for route in routes],
+        route_formula_dry_run_rows=[_formula(route) for route in routes],
     )
     return [row.to_dict() for row in rows], [row.to_dict() for row in blockers]
 
@@ -129,7 +158,7 @@ def test_readiness_board_keeps_rectangle_and_trapezoid_parallel() -> None:
     rows, blockers = _build()
 
     assert len(rows) == 2
-    assert len(blockers) == 10
+    assert len(blockers) == 12
     assert {row["route_geometry_family"] for row in rows} == {
         "ideal_rectangle",
         "trapezoid_tapered_sidewalls",
@@ -140,9 +169,11 @@ def test_readiness_board_keeps_rectangle_and_trapezoid_parallel() -> None:
         assert row["selected_annulus_context_status"] == READY_ROUTE_INPUT
         assert row["detector_blank_transfer_status"] == MISSING_CLAIM_EVIDENCE
         assert row["wet_observation_status"] == MISSING_CLAIM_EVIDENCE
+        assert row["route_formula_component_status"] == MISSING_CLAIM_EVIDENCE
+        assert row["route_formula_component_vector_ready"] is False
         assert row["ready_route_input_count"] == 3
-        assert row["missing_claim_evidence_count"] == 2
-        assert row["readiness_fraction"] == 0.6
+        assert row["missing_claim_evidence_count"] == 3
+        assert row["readiness_fraction"] == 0.5
         assert row["board_status"] == READINESS_BOARD_STATUS
         assert row["primary_next_execution_block"] == (
             "sidewall_detector_blank_transfer_validation"
@@ -186,4 +217,4 @@ def test_readiness_blockers_show_ready_inputs_and_missing_claim_evidence() -> No
         row["evidence_lane"]
         for row in blockers
         if row["readiness_class"] == MISSING_CLAIM_EVIDENCE
-    } == {"detector_blank_transfer", "wet_observation"}
+    } == {"detector_blank_transfer", "wet_observation", "route_formula_component"}

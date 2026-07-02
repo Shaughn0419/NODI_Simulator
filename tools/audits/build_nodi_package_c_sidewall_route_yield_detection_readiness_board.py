@@ -18,6 +18,7 @@ from nodi_simulator.realism_v2_io import sha256_file, write_csv_rows, write_json
 from nodi_simulator.sidewall_route_yield_detection_readiness_board import (  # noqa: E402
     MISSING_CLAIM_EVIDENCE,
     READINESS_BOARD_STATUS,
+    READINESS_BOARD_FORMULA_POLICY_REVIEW_STATUS,
     READY_ROUTE_INPUT,
     SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_CLAIM_BOUNDARY,
     build_route_yield_detection_readiness_board,
@@ -47,39 +48,39 @@ FORMAL_QCH_ROWS = (
 )
 ASSEMBLY_STATUS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_DETECTOR_BLANK_TRANSFER_REFRESH_STATUS_20260701.json"
+    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_STATUS_20260701.json"
 )
 ASSEMBLY_ROWS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_DETECTOR_BLANK_TRANSFER_REFRESH_ASSEMBLY_ROWS_20260701.csv"
+    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_ASSEMBLY_ROWS_20260701.csv"
 )
 POLICY_STATUS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_STATUS_20260701.json"
+    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_STATUS_20260701.json"
 )
 POLICY_ROWS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_POLICY_ROWS_20260701.csv"
+    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_POLICY_ROWS_20260701.csv"
 )
 POLICY_BLOCKER_ROWS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_BLOCKER_ROWS_20260701.csv"
+    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_BLOCKER_ROWS_20260701.csv"
 )
-TRANSFER_HARDENING_STATUS = (
+ACTIVATION_STATUS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_VALIDATION_HARDENING_STATUS_20260701.json"
+    / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json"
 )
-TRANSFER_CURRENT_ROWS = (
+ACTIVATION_ROWS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_VALIDATION_HARDENING_CURRENT_INTAKE_AUDIT_ROWS_20260701.csv"
+    / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_ACTIVATION_ROWS_20260701.csv"
 )
-WET_HARDENING_STATUS = (
+FORMULA_DRY_RUN_STATUS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_VALIDATION_HARDENING_STATUS_20260701.json"
+    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_STATUS_20260701.json"
 )
-WET_CURRENT_ROWS = (
+FORMULA_DRY_RUN_ROWS = (
     OUTPUT_DIR
-    / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_VALIDATION_HARDENING_CURRENT_INTAKE_AUDIT_ROWS_20260701.csv"
+    / "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_DRY_RUN_ROWS_20260701.csv"
 )
 
 ALLOWED_USE = (
@@ -99,10 +100,10 @@ SOURCE_FILES = {
     "route_yield_detection_policy_status": POLICY_STATUS,
     "route_yield_detection_policy_rows": POLICY_ROWS,
     "route_yield_detection_policy_blocker_rows": POLICY_BLOCKER_ROWS,
-    "detector_blank_transfer_hardening_status": TRANSFER_HARDENING_STATUS,
-    "detector_blank_transfer_current_rows": TRANSFER_CURRENT_ROWS,
-    "wet_surface_observation_hardening_status": WET_HARDENING_STATUS,
-    "wet_surface_observation_current_rows": WET_CURRENT_ROWS,
+    "detector_wet_activation_status": ACTIVATION_STATUS,
+    "detector_wet_activation_rows": ACTIVATION_ROWS,
+    "route_formula_dry_run_status": FORMULA_DRY_RUN_STATUS,
+    "route_formula_dry_run_rows": FORMULA_DRY_RUN_ROWS,
     "readiness_board_source": PROJECT_ROOT
     / "nodi_simulator/sidewall_route_yield_detection_readiness_board.py",
     "readiness_board_tests": PROJECT_ROOT
@@ -284,15 +285,17 @@ def build_payload() -> dict[str, Any]:
     formal_status = load_json(FORMAL_QCH_STATUS)
     assembly_status = load_json(ASSEMBLY_STATUS)
     policy_status = load_json(POLICY_STATUS)
-    transfer_status = load_json(TRANSFER_HARDENING_STATUS)
-    wet_status = load_json(WET_HARDENING_STATUS)
+    activation_status = load_json(ACTIVATION_STATUS)
+    formula_status = load_json(FORMULA_DRY_RUN_STATUS)
     board_rows, blocker_rows = build_route_yield_detection_readiness_board(
         formal_qch_bridge_rows=read_csv_rows(FORMAL_QCH_ROWS),
         policy_rows=read_csv_rows(POLICY_ROWS),
         policy_blocker_rows=read_csv_rows(POLICY_BLOCKER_ROWS),
         assembly_rows=read_csv_rows(ASSEMBLY_ROWS),
-        detector_transfer_audit_rows=read_csv_rows(TRANSFER_CURRENT_ROWS),
-        wet_observation_audit_rows=read_csv_rows(WET_CURRENT_ROWS),
+        detector_transfer_audit_rows=[],
+        wet_observation_audit_rows=[],
+        detector_wet_activation_rows=read_csv_rows(ACTIVATION_ROWS),
+        route_formula_dry_run_rows=read_csv_rows(FORMULA_DRY_RUN_ROWS),
     )
     board_dicts = [row.to_dict() for row in board_rows]
     blocker_dicts = [row.to_dict() for row in blocker_rows]
@@ -309,19 +312,39 @@ def build_payload() -> dict[str, Any]:
         and formal_status.get("disposition")
         == "NODI_PACKAGE_C_SIDEWALL_FORMAL_QCH_RECEIPT_BRIDGE_READY_ROUTE_INPUT_NOT_SCORE"
         and assembly_status.get("disposition")
-        == "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_DETECTOR_BLANK_TRANSFER_REFRESH_READY_NOT_CLAIM_READY"
+        == "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_READY_NOT_CLAIM_READY"
         and policy_status.get("disposition")
-        == "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_WET_OBSERVATION_REFRESH_READY_NOT_CLAIM_READY"
-        and transfer_status.get("disposition")
-        == "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_VALIDATION_HARDENING_READY_NOT_PROBABILITY"
-        and wet_status.get("disposition")
-        == "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_VALIDATION_HARDENING_READY_NOT_YIELD"
+        == "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_POLICY_READY_NOT_CLAIM_READY"
+        and activation_status.get("disposition")
+        in {
+            "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_READY_NO_CURRENT_ACCEPTED_EVIDENCE",
+            "NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_ACCEPTED_INPUT_READY_FOR_FORMULA_REVIEW",
+        }
+        and formula_status.get("disposition")
+        in {
+            "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_READY_WAITING_FOR_ACCEPTED_EVIDENCE",
+            "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_COMPONENT_VECTOR_READY_FOR_POLICY_REVIEW",
+        }
         and len(board_dicts) == 2
-        and len(blocker_dicts) == 10
-        and all(row["board_status"] == READINESS_BOARD_STATUS for row in board_dicts)
+        and len(blocker_dicts) == 12
+        and all(
+            row["board_status"]
+            in {READINESS_BOARD_STATUS, READINESS_BOARD_FORMULA_POLICY_REVIEW_STATUS}
+            for row in board_dicts
+        )
         and all(row["ready_route_input_count"] == 3 for row in board_dicts)
-        and all(row["missing_claim_evidence_count"] == 2 for row in board_dicts)
-        and all(row["primary_next_execution_block"] == "sidewall_detector_blank_transfer_validation" for row in board_dicts)
+        and all(row["missing_claim_evidence_count"] == 3 for row in board_dicts)
+        and all(
+            row["primary_next_execution_block"]
+            in {
+                "detector_blank_calibration",
+                "sidewall_detector_blank_transfer_validation",
+                "wet_observation_bundle_intake",
+                "route_formula_review_dry_run",
+                "route_formula_policy_review",
+            }
+            for row in board_dicts
+        )
         and all(row["route_score_current"] is False for row in board_dicts)
         and all(row["yield_current"] is False for row in board_dicts)
         and all(row["detection_probability_current"] is False for row in board_dicts)
@@ -336,8 +359,8 @@ def build_payload() -> dict[str, Any]:
         "source_formal_qch_disposition": formal_status.get("disposition", ""),
         "source_assembly_disposition": assembly_status.get("disposition", ""),
         "source_policy_disposition": policy_status.get("disposition", ""),
-        "source_transfer_hardening_disposition": transfer_status.get("disposition", ""),
-        "source_wet_hardening_disposition": wet_status.get("disposition", ""),
+        "source_activation_disposition": activation_status.get("disposition", ""),
+        "source_formula_dry_run_disposition": formula_status.get("disposition", ""),
         "board_rows": len(board_dicts),
         "blocker_rows": len(blocker_dicts),
         "route_geometry_families": ";".join(
@@ -348,6 +371,13 @@ def build_payload() -> dict[str, Any]:
         ),
         "missing_claim_evidence_count_total": sum(
             row["missing_claim_evidence_count"] for row in board_dicts
+        ),
+        "route_formula_component_vector_ready_rows": sum(
+            row["route_formula_component_vector_ready"] for row in board_dicts
+        ),
+        "formula_policy_review_ready_rows": sum(
+            row["board_status"] == READINESS_BOARD_FORMULA_POLICY_REVIEW_STATUS
+            for row in board_dicts
         ),
         "ready_blocker_rows": sum(
             row["readiness_class"] == READY_ROUTE_INPUT for row in blocker_dicts
@@ -406,17 +436,21 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         "source lock complete": s["source_missing_rows"] == 0,
         "release scoped dirty blockers absent": s["release_scoped_dirty_blocker_rows"] == 0,
         "two board rows": s["board_rows"] == 2,
-        "ten blocker rows": s["blocker_rows"] == 10,
+        "twelve blocker rows": s["blocker_rows"] == 12,
         "rectangle and trapezoid": (
             s["route_geometry_families"] == "ideal_rectangle;trapezoid_tapered_sidewalls"
         ),
         "six ready inputs": s["ready_route_input_count_total"] == 6,
-        "four missing claim blockers": s["missing_claim_evidence_count_total"] == 4,
+        "six missing claim blockers": s["missing_claim_evidence_count_total"] == 6,
         "six ready blocker rows": s["ready_blocker_rows"] == 6,
-        "four missing blocker rows": s["missing_blocker_rows"] == 4,
+        "six missing blocker rows": s["missing_blocker_rows"] == 6,
         "primary branch": (
             s["primary_next_execution_blocks"]
-            == "sidewall_detector_blank_transfer_validation"
+            in {
+                "detector_blank_calibration",
+                "sidewall_detector_blank_transfer_validation",
+                "route_formula_policy_review",
+            }
         ),
         "secondary branch": s["secondary_next_execution_blocks"]
         == "wet_observation_bundle_intake",
@@ -435,6 +469,7 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
             and row["selected_annulus_context_status"] == READY_ROUTE_INPUT
             and row["detector_blank_transfer_status"] == MISSING_CLAIM_EVIDENCE
             and row["wet_observation_status"] == MISSING_CLAIM_EVIDENCE
+            and row["route_formula_component_status"] == MISSING_CLAIM_EVIDENCE
             and row["claim_boundary"] == CLAIM_BOUNDARY
         )
     for row in payload["blocker_rows"]:
@@ -493,10 +528,12 @@ def report_markdown(payload: dict[str, Any]) -> str:
             f"- Route geometry families: `{s['route_geometry_families']}`.",
             f"- Ready route input lanes total: `{s['ready_route_input_count_total']}`.",
             f"- Missing claim-evidence lanes total: `{s['missing_claim_evidence_count_total']}`.",
+            f"- Route formula component-vector ready rows: `{s['route_formula_component_vector_ready_rows']}`.",
+            f"- Formula policy-review ready rows: `{s['formula_policy_review_ready_rows']}`.",
             f"- Primary next execution block: `{s['primary_next_execution_blocks']}`.",
             f"- Secondary next execution block: `{s['secondary_next_execution_blocks']}`.",
             "- Formal q_ch, pressure-flow, and selected-annulus context are route inputs only.",
-            "- Detector/blank transfer and wet/surface observations remain the current claim blockers.",
+            "- Detector/blank transfer, wet/surface observations, and route formula component vectors remain the current claim blockers unless accepted evidence is supplied.",
             "- Route score, winner/JRC, yield, detection probability, wet pass probability, and production ingestion remain false.",
             "",
         ]

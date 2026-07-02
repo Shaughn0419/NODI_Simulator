@@ -13,13 +13,16 @@ from typing import Any, Mapping
 
 
 SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_VERSION = (
-    "sidewall_route_yield_detection_readiness_board_v1"
+    "sidewall_route_yield_detection_readiness_board_v2"
 )
 SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_CLAIM_BOUNDARY = (
     "route_yield_detection_readiness_board_not_route_score_not_yield_not_detection_probability"
 )
 READINESS_BOARD_STATUS = (
     "route_inputs_ready_waiting_detector_blank_and_wet_evidence_not_claim_ready"
+)
+READINESS_BOARD_FORMULA_POLICY_REVIEW_STATUS = (
+    "route_inputs_and_formula_components_ready_for_policy_review_not_claim_ready"
 )
 READY_ROUTE_INPUT = "ready_route_input_not_final_claim"
 MISSING_CLAIM_EVIDENCE = "missing_required_claim_evidence"
@@ -43,6 +46,10 @@ class SidewallRouteYieldDetectionReadinessBoardRow:
     selected_annulus_context_status: str
     detector_blank_transfer_status: str
     wet_observation_status: str
+    route_formula_component_status: str
+    detector_wet_activation_status: str
+    route_formula_dry_run_status: str
+    route_formula_component_vector_ready: bool
     ready_route_input_count: int
     missing_claim_evidence_count: int
     readiness_fraction: float
@@ -89,6 +96,8 @@ def build_route_yield_detection_readiness_board(
     assembly_rows: list[Mapping[str, Any]],
     detector_transfer_audit_rows: list[Mapping[str, Any]],
     wet_observation_audit_rows: list[Mapping[str, Any]],
+    detector_wet_activation_rows: list[Mapping[str, Any]] | None = None,
+    route_formula_dry_run_rows: list[Mapping[str, Any]] | None = None,
 ) -> tuple[
     list[SidewallRouteYieldDetectionReadinessBoardRow],
     list[SidewallRouteYieldDetectionReadinessBlockerRow],
@@ -98,9 +107,17 @@ def build_route_yield_detection_readiness_board(
     assembly_by_route = _by_route(assembly_rows)
     transfer_by_route = _by_route(detector_transfer_audit_rows)
     wet_by_route = _by_route(wet_observation_audit_rows)
+    activation_by_route = _by_route(detector_wet_activation_rows or [])
+    formula_by_route = _by_route(route_formula_dry_run_rows or [])
     policy_blockers_by_route = _blockers_by_route(policy_blocker_rows)
 
-    route_ids = sorted(set(qch_by_route) | set(policy_by_route) | set(assembly_by_route))
+    route_ids = sorted(
+        set(qch_by_route)
+        | set(policy_by_route)
+        | set(assembly_by_route)
+        | set(activation_by_route)
+        | set(formula_by_route)
+    )
     board_rows: list[SidewallRouteYieldDetectionReadinessBoardRow] = []
     blocker_rows: list[SidewallRouteYieldDetectionReadinessBlockerRow] = []
     for route_id in route_ids:
@@ -109,16 +126,22 @@ def build_route_yield_detection_readiness_board(
         assembly = assembly_by_route.get(route_id, {})
         transfer = transfer_by_route.get(route_id, {})
         wet = wet_by_route.get(route_id, {})
+        activation = activation_by_route.get(route_id, {})
+        formula = formula_by_route.get(route_id, {})
         blockers = policy_blockers_by_route.get(route_id, {})
 
+        detector_ready = _detector_transfer_ready(transfer, activation)
+        wet_ready = _wet_observation_ready(wet, activation)
+        formula_ready = _route_formula_ready(formula)
         ready_lanes = {
             "formal_qch": _formal_qch_ready(qch),
             "pressure_flow": _pressure_flow_ready(policy, qch),
             "selected_annulus": _selected_annulus_ready(policy, assembly),
         }
         missing_lanes = {
-            "detector_blank_transfer": not _detector_transfer_ready(transfer),
-            "wet_observation": not _wet_observation_ready(wet),
+            "detector_blank_transfer": not detector_ready,
+            "wet_observation": not wet_ready,
+            "route_formula_component": not formula_ready,
         }
         blocker_rows.extend(
             _blocker_rows_for_route(
@@ -131,11 +154,18 @@ def build_route_yield_detection_readiness_board(
                 assembly=assembly,
                 transfer=transfer,
                 wet=wet,
+                activation=activation,
+                formula=formula,
             )
         )
         ready_count = sum(ready_lanes.values())
         missing_count = sum(missing_lanes.values())
         total_lanes = len(ready_lanes) + len(missing_lanes)
+        board_status = _board_status(
+            detector_ready=detector_ready,
+            wet_ready=wet_ready,
+            formula_ready=formula_ready,
+        )
         board_rows.append(
             SidewallRouteYieldDetectionReadinessBoardRow(
                 board_row_id=f"RYD-READINESS-{route_id}",
@@ -176,18 +206,34 @@ def build_route_yield_detection_readiness_board(
                     missing_lanes["detector_blank_transfer"]
                 ),
                 wet_observation_status=_missing_status(missing_lanes["wet_observation"]),
+                route_formula_component_status=_missing_status(
+                    missing_lanes["route_formula_component"]
+                ),
+                detector_wet_activation_status=str(
+                    activation.get("route_formula_blocker_status", "")
+                ),
+                route_formula_dry_run_status=str(
+                    formula.get("route_formula_review_dry_run_status", "")
+                ),
+                route_formula_component_vector_ready=formula_ready,
                 ready_route_input_count=ready_count,
                 missing_claim_evidence_count=missing_count,
                 readiness_fraction=round(ready_count / total_lanes, 6),
                 primary_next_execution_block=str(
-                    assembly.get("next_executable_branch")
-                    or policy.get(
-                        "primary_next_execution_block",
-                        "sidewall_detector_blank_transfer_validation",
+                    _primary_next_execution_block(
+                        detector_ready=detector_ready,
+                        wet_ready=wet_ready,
+                        formula_ready=formula_ready,
+                        assembly=assembly,
+                        policy=policy,
                     )
                 ),
-                secondary_next_execution_block="wet_observation_bundle_intake",
-                board_status=READINESS_BOARD_STATUS,
+                secondary_next_execution_block=_secondary_next_execution_block(
+                    detector_ready=detector_ready,
+                    wet_ready=wet_ready,
+                    formula_ready=formula_ready,
+                ),
+                board_status=board_status,
                 route_score_current=False,
                 winner_current=False,
                 yield_current=False,
@@ -256,20 +302,88 @@ def _selected_annulus_ready(
     policy: Mapping[str, Any],
     assembly: Mapping[str, Any],
 ) -> bool:
-    return (
-        str(policy.get("selected_annulus_policy_status", ""))
-        == "ready_selected_annulus_event_panel_input_not_probability"
-        and str(assembly.get("selected_annulus_detection_context_status", ""))
-        == "expanded_selected_annulus_panel_available_not_probability"
-    )
+    policy_status = str(policy.get("selected_annulus_policy_status", ""))
+    assembly_status = str(assembly.get("selected_annulus_detection_context_status", ""))
+    return policy_status in {
+        "ready_selected_annulus_event_panel_input_not_probability",
+        "not_ready_selected_annulus_small_n_not_probability",
+    } and assembly_status in {
+        "expanded_selected_annulus_panel_available_not_probability",
+        "selected_annulus_context_available_small_n_not_probability",
+    }
 
 
-def _detector_transfer_ready(row: Mapping[str, Any]) -> bool:
-    return _int_value(row.get("accepted_transfer_count")) > 0
+def _detector_transfer_ready(
+    transfer: Mapping[str, Any],
+    activation: Mapping[str, Any],
+) -> bool:
+    if activation:
+        return _bool_value(activation.get("detector_branch_ready_for_formula"))
+    return _int_value(transfer.get("accepted_transfer_count")) > 0
 
 
-def _wet_observation_ready(row: Mapping[str, Any]) -> bool:
-    return _int_value(row.get("accepted_endpoint_count")) >= 7
+def _wet_observation_ready(
+    wet: Mapping[str, Any],
+    activation: Mapping[str, Any],
+) -> bool:
+    if activation:
+        return _bool_value(activation.get("wet_branch_ready_for_formula"))
+    return _int_value(wet.get("accepted_endpoint_count")) >= 7
+
+
+def _route_formula_ready(row: Mapping[str, Any]) -> bool:
+    return _bool_value(row.get("route_formula_ready_for_claim_review")) and str(
+        row.get("route_formula_review_dry_run_status", "")
+    ) == "route_formula_component_vector_ready_for_policy_review_not_scored"
+
+
+def _board_status(
+    *,
+    detector_ready: bool,
+    wet_ready: bool,
+    formula_ready: bool,
+) -> str:
+    if detector_ready and wet_ready and formula_ready:
+        return READINESS_BOARD_FORMULA_POLICY_REVIEW_STATUS
+    return READINESS_BOARD_STATUS
+
+
+def _primary_next_execution_block(
+    *,
+    detector_ready: bool,
+    wet_ready: bool,
+    formula_ready: bool,
+    assembly: Mapping[str, Any],
+    policy: Mapping[str, Any],
+) -> str:
+    if detector_ready and wet_ready and formula_ready:
+        return "route_formula_policy_review"
+    if not detector_ready:
+        return str(
+            assembly.get("next_executable_branch")
+            or policy.get(
+                "primary_next_execution_block",
+                "sidewall_detector_blank_transfer_validation",
+            )
+        )
+    if not wet_ready:
+        return "wet_observation_bundle_intake"
+    return "route_formula_review_dry_run"
+
+
+def _secondary_next_execution_block(
+    *,
+    detector_ready: bool,
+    wet_ready: bool,
+    formula_ready: bool,
+) -> str:
+    if not detector_ready and not wet_ready:
+        return "wet_observation_bundle_intake"
+    if detector_ready and not wet_ready:
+        return "route_formula_review_dry_run"
+    if detector_ready and wet_ready and not formula_ready:
+        return "route_formula_policy_review_after_component_vector"
+    return "route_claim_policy_review"
 
 
 def _ready_status(ok: bool) -> str:
@@ -291,6 +405,8 @@ def _blocker_rows_for_route(
     assembly: Mapping[str, Any],
     transfer: Mapping[str, Any],
     wet: Mapping[str, Any],
+    activation: Mapping[str, Any],
+    formula: Mapping[str, Any],
 ) -> list[SidewallRouteYieldDetectionReadinessBlockerRow]:
     specs = [
         (
@@ -320,7 +436,10 @@ def _blocker_rows_for_route(
         (
             "detector_blank_transfer",
             not missing_lanes["detector_blank_transfer"],
-            str(transfer.get("route_transfer_matrix_status", "")),
+            str(
+                activation.get("detector_transfer_matrix_status")
+                or transfer.get("route_transfer_matrix_status", "")
+            ),
             "detection_probability",
             _text_from_blocker(
                 policy_blockers,
@@ -332,7 +451,10 @@ def _blocker_rows_for_route(
         (
             "wet_observation",
             not missing_lanes["wet_observation"],
-            str(wet.get("route_wet_observation_matrix_status", "")),
+            str(
+                activation.get("wet_observation_matrix_status")
+                or wet.get("route_wet_observation_matrix_status", "")
+            ),
             "yield;wet_pass_probability",
             _text_from_blocker(
                 policy_blockers,
@@ -340,6 +462,14 @@ def _blocker_rows_for_route(
                 "accepted wet/surface endpoint bundle",
             ),
             "yield_or_wet_pass_true_without_wet_observation_bundle",
+        ),
+        (
+            "route_formula_component",
+            not missing_lanes["route_formula_component"],
+            str(formula.get("route_formula_review_dry_run_status", "")),
+            "route_score;winner;yield;detection_probability",
+            "route formula component vector ready for policy review",
+            "route_score_or_winner_true_without_formula_component_policy_review",
         ),
     ]
     rows: list[SidewallRouteYieldDetectionReadinessBlockerRow] = []

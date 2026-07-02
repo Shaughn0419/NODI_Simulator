@@ -15,18 +15,21 @@ def test_readiness_board_packet_builds_from_current_artifacts() -> None:
     summary = payload["summary"]
     assert summary["disposition"] == builder.DISPOSITION
     assert summary["board_rows"] == 2
-    assert summary["blocker_rows"] == 10
+    assert summary["blocker_rows"] == 12
     assert summary["route_geometry_families"] == (
         "ideal_rectangle;trapezoid_tapered_sidewalls"
     )
     assert summary["ready_route_input_count_total"] == 6
-    assert summary["missing_claim_evidence_count_total"] == 4
+    assert summary["missing_claim_evidence_count_total"] == 6
     assert summary["ready_blocker_rows"] == 6
-    assert summary["missing_blocker_rows"] == 4
-    assert summary["primary_next_execution_blocks"] == (
-        "sidewall_detector_blank_transfer_validation"
-    )
+    assert summary["missing_blocker_rows"] == 6
+    assert summary["primary_next_execution_blocks"] in {
+        "detector_blank_calibration",
+        "sidewall_detector_blank_transfer_validation",
+    }
     assert summary["secondary_next_execution_blocks"] == "wet_observation_bundle_intake"
+    assert summary["route_formula_component_vector_ready_rows"] == 0
+    assert summary["formula_policy_review_ready_rows"] == 0
     assert summary["route_score_current_rows"] == 0
     assert summary["winner_current_rows"] == 0
     assert summary["yield_current_rows"] == 0
@@ -49,9 +52,11 @@ def test_readiness_board_rows_mark_inputs_ready_and_claim_evidence_missing() -> 
         assert row["selected_annulus_context_status"] == builder.READY_ROUTE_INPUT
         assert row["detector_blank_transfer_status"] == builder.MISSING_CLAIM_EVIDENCE
         assert row["wet_observation_status"] == builder.MISSING_CLAIM_EVIDENCE
+        assert row["route_formula_component_status"] == builder.MISSING_CLAIM_EVIDENCE
+        assert row["route_formula_component_vector_ready"] is False
         assert row["ready_route_input_count"] == 3
-        assert row["missing_claim_evidence_count"] == 2
-        assert row["readiness_fraction"] == 0.6
+        assert row["missing_claim_evidence_count"] == 3
+        assert row["readiness_fraction"] == 0.5
         assert row["route_score_current"] is False
         assert row["yield_current"] is False
         assert row["detection_probability_current"] is False
@@ -61,7 +66,7 @@ def test_readiness_board_rows_mark_inputs_ready_and_claim_evidence_missing() -> 
 def test_readiness_blockers_are_specific_and_non_claim() -> None:
     rows = builder.build_payload()["blocker_rows"]
 
-    assert len(rows) == 10
+    assert len(rows) == 12
     assert {
         row["evidence_lane"]
         for row in rows
@@ -75,7 +80,7 @@ def test_readiness_blockers_are_specific_and_non_claim() -> None:
         row["evidence_lane"]
         for row in rows
         if row["readiness_class"] == builder.MISSING_CLAIM_EVIDENCE
-    } == {"detector_blank_transfer", "wet_observation"}
+    } == {"detector_blank_transfer", "wet_observation", "route_formula_component"}
     for row in rows:
         assert row["target_claim_current"] is False
         assert row["claim_boundary"] == builder.CLAIM_BOUNDARY
