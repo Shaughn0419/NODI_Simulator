@@ -5,7 +5,7 @@
     "artifact_id": "PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_20260701",
     "packet_status": "solver_branch_execution_packet_ready_for_branch_packets_claims_guarded",
     "claim_boundary": "solver_branch_execution_packet_authorized_prepare_not_solver_claim_not_route_yield_detection",
-    "current_head": "008078350de971d7b6ecfef3826fde973df6b98d",
+    "current_head": "378dc75c59fe64500ebc4535312962f4724b762f",
     "branch": "main",
     "source_policy_disposition": "NODI_PACKAGE_C_SIDEWALL_AUTHORIZATION_EXECUTION_POLICY_LEDGER_READY_CLAIMS_GUARDED",
     "source_flow_disposition": "NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_READY_NOT_QCH",
@@ -19,7 +19,7 @@
     "authorized_execute_when_packet_passes_rows": 6,
     "candidate_evidence_current_rows": 4,
     "candidate_output_rows_total": 18,
-    "blocked_rows_total": 23,
+    "blocked_rows_total": 25,
     "final_solver_claim_current_rows": 0,
     "q_ch_weighting_current_rows": 0,
     "route_score_current_rows": 0,
@@ -38,12 +38,12 @@
     "route_decision_rows": 1,
     "source_lock_rows": 16,
     "source_missing_rows": 0,
-    "dirty_context_rows": 93,
+    "dirty_context_rows": 89,
     "source_locked_upstream_dirty_context_rows": 0,
     "non_release_dirty_context_rows": 85,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "sidewall solver/wet/route branch execution packet;authorized branch preparation;candidate/context evidence inventory;next execution prioritization",
     "blocked_use": "final solver claim;formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;COMSOL launch without branch packet;.mph load without branch packet;fabrication release;production ingestion",
-    "semantic_digest": "eae999e63c4d2a98d9555f87a8ef7138cbd948fa1f7721940992dfd7f9abdcfc"
+    "semantic_digest": "0b5d262cadb34e82161f8e3d2eb86135f990c9b4962e4ab465831134de4f7ca9"
   }
 }

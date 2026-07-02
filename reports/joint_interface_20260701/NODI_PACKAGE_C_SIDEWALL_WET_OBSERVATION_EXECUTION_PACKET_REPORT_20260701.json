@@ -4,7 +4,7 @@
     "artifact_id": "PACKAGE_C_SIDEWALL_WET_OBSERVATION_EXECUTION_PACKET_20260701",
     "execution_status": "wet_observation_execution_packet_ready_observation_rows_required",
     "claim_boundary": "wet_observation_execution_packet_not_yield_not_wet_pass_not_detection",
-    "current_head": "68a4e4301a3b54dad9c1219a406ce2b708bce5e4",
+    "current_head": "378dc75c59fe64500ebc4535312962f4724b762f",
     "branch": "main",
     "source_contract_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_EVIDENCE_CONTRACT_READY_CONTRACT_ONLY",
     "source_intake_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS",
@@ -26,13 +26,13 @@
     "claim_promotion_allowed_guard_rows": 0,
     "source_lock_rows": 10,
     "source_missing_rows": 0,
-    "dirty_context_rows": 93,
+    "dirty_context_rows": 96,
     "source_locked_upstream_dirty_context_rows": 0,
-    "non_release_dirty_context_rows": 85,
+    "non_release_dirty_context_rows": 92,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "wet observation execution blocker closure;contract/fixture/context inventory;future accepted wet evidence requirements",
     "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion;fabrication release",
-    "semantic_digest": "2a559edafe4e3547a75b68255b1c2e021529b8e63fbc5001af4f299df4d7e68e"
+    "semantic_digest": "250fb0265be665cb76168c4bc98110221fa6f6cdf570b1170f2dad5d1122b19d"
   },
   "execution_rows": [
     {
@@ -62,7 +62,7 @@
       "lane": "wet_observation_intake",
       "source_artifact_id": "PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_20260701",
       "source_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS",
-      "source_head": "1f751f728477d786585f268d958411356ac1d3b9",
+      "source_head": "361f3d6e95ca544f7542daf4a06fb2ee42b9c490",
       "current_status": "intake_schema_ready_no_observations",
       "contract_or_fixture_rows": 14,
       "current_accepted_observation_rows": 0,
@@ -146,7 +146,7 @@
       "lane": "route_readiness_blocker",
       "source_artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_20260701",
       "source_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_READY_INPUTS_NOT_CLAIMS",
-      "source_head": "d2bc2b9585a358cbcdbf28fa73963f47bfe5f7de",
+      "source_head": "490dd6e7972c607d66c0395c648e0e8716d1ee6c",
       "current_status": "route_readiness_secondary_blocker_still_wet_observation",
       "contract_or_fixture_rows": 2,
       "current_accepted_observation_rows": 0,
@@ -238,7 +238,7 @@
       "source_id": "wet_observation_intake_status",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "32d814646ef2e3ed74122064d56bb8fce5c9e5849e3eef9948eb58b1db7cf417",
+      "sha256": "1b89656af83fb945145e575f8ecae72d7cc5055ed50e24dea2384cce2b7482ec",
       "claim_boundary": "wet_observation_execution_packet_not_yield_not_wet_pass_not_detection",
       "allowed_use": "wet observation execution blocker closure;contract/fixture/context inventory;future accepted wet evidence requirements",
       "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion;fabrication release"
@@ -274,7 +274,7 @@
       "source_id": "route_readiness_board_status",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "766784c6e4521603f25618e1ae609a9f61ffa6b4952485046f2606396af52ffa",
+      "sha256": "ceb20dc9ab7569020321dfa1160c731131ed7c12a9b68d5b4c3c0e1890574f3e",
       "claim_boundary": "wet_observation_execution_packet_not_yield_not_wet_pass_not_detection",
       "allowed_use": "wet observation execution blocker closure;contract/fixture/context inventory;future accepted wet evidence requirements",
       "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion;fabrication release"
@@ -385,6 +385,12 @@
     },
     {
       "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_observation_execution"
+    },
+    {
+      "path": "reports/556_NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_20260701.md",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_observation_execution"
@@ -720,6 +726,42 @@
       "release_decision": "ignored_for_wet_observation_execution"
     },
     {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_BRANCH_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_observation_execution"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_observation_execution"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_observation_execution"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_observation_execution"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_observation_execution"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_observation_execution"
+    },
+    {
       "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -828,12 +870,6 @@
       "release_decision": "ignored_for_wet_observation_execution"
     },
     {
-      "path": "nodi_simulator/sidewall_wet_observation_execution_packet.py",
-      "git_status": "??",
-      "classification": "wet_observation_execution_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
@@ -852,28 +888,10 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "tests/test_nodi_package_c_sidewall_wet_observation_execution_packet.py",
-      "git_status": "??",
-      "classification": "wet_observation_execution_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
-      "path": "tests/test_sidewall_wet_observation_execution_packet.py",
-      "git_status": "??",
-      "classification": "wet_observation_execution_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "tools/audits/build_nodi_package_c_sidewall_wet_observation_execution_packet.py",
-      "git_status": "??",
-      "classification": "wet_observation_execution_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
     }
   ]
 }

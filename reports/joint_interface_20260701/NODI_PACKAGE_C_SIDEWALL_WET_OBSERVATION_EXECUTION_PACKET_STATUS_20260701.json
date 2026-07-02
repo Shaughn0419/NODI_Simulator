@@ -5,7 +5,7 @@
     "artifact_id": "PACKAGE_C_SIDEWALL_WET_OBSERVATION_EXECUTION_PACKET_20260701",
     "execution_status": "wet_observation_execution_packet_ready_observation_rows_required",
     "claim_boundary": "wet_observation_execution_packet_not_yield_not_wet_pass_not_detection",
-    "current_head": "68a4e4301a3b54dad9c1219a406ce2b708bce5e4",
+    "current_head": "378dc75c59fe64500ebc4535312962f4724b762f",
     "branch": "main",
     "source_contract_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_EVIDENCE_CONTRACT_READY_CONTRACT_ONLY",
     "source_intake_disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS",
@@ -27,12 +27,12 @@
     "claim_promotion_allowed_guard_rows": 0,
     "source_lock_rows": 10,
     "source_missing_rows": 0,
-    "dirty_context_rows": 93,
+    "dirty_context_rows": 96,
     "source_locked_upstream_dirty_context_rows": 0,
-    "non_release_dirty_context_rows": 85,
+    "non_release_dirty_context_rows": 92,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "wet observation execution blocker closure;contract/fixture/context inventory;future accepted wet evidence requirements",
     "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion;fabrication release",
-    "semantic_digest": "2a559edafe4e3547a75b68255b1c2e021529b8e63fbc5001af4f299df4d7e68e"
+    "semantic_digest": "250fb0265be665cb76168c4bc98110221fa6f6cdf570b1170f2dad5d1122b19d"
   }
 }

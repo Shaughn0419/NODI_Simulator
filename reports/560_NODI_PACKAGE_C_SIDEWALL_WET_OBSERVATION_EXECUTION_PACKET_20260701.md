@@ -1,7 +1,7 @@
 # NODI Package C Sidewall Wet Observation Execution Packet
 
 - Disposition: `NODI_PACKAGE_C_SIDEWALL_WET_OBSERVATION_EXECUTION_PACKET_READY_OBSERVATIONS_REQUIRED`.
-- Current head: `68a4e4301a3b54dad9c1219a406ce2b708bce5e4` on `main`.
+- Current head: `378dc75c59fe64500ebc4535312962f4724b762f` on `main`.
 - Execution rows: `6`.
 - Contract/fixture/context rows total: `64`.
 - Current accepted observation rows: `0`.

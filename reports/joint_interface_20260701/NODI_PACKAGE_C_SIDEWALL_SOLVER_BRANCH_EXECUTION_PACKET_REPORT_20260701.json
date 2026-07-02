@@ -4,7 +4,7 @@
     "artifact_id": "PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_20260701",
     "packet_status": "solver_branch_execution_packet_ready_for_branch_packets_claims_guarded",
     "claim_boundary": "solver_branch_execution_packet_authorized_prepare_not_solver_claim_not_route_yield_detection",
-    "current_head": "008078350de971d7b6ecfef3826fde973df6b98d",
+    "current_head": "378dc75c59fe64500ebc4535312962f4724b762f",
     "branch": "main",
     "source_policy_disposition": "NODI_PACKAGE_C_SIDEWALL_AUTHORIZATION_EXECUTION_POLICY_LEDGER_READY_CLAIMS_GUARDED",
     "source_flow_disposition": "NODI_PACKAGE_C_TRAPEZOID_FLOW_SOLVER_CANDIDATE_READY_NOT_QCH",
@@ -18,7 +18,7 @@
     "authorized_execute_when_packet_passes_rows": 6,
     "candidate_evidence_current_rows": 4,
     "candidate_output_rows_total": 18,
-    "blocked_rows_total": 23,
+    "blocked_rows_total": 25,
     "final_solver_claim_current_rows": 0,
     "q_ch_weighting_current_rows": 0,
     "route_score_current_rows": 0,
@@ -37,13 +37,13 @@
     "route_decision_rows": 1,
     "source_lock_rows": 16,
     "source_missing_rows": 0,
-    "dirty_context_rows": 93,
+    "dirty_context_rows": 89,
     "source_locked_upstream_dirty_context_rows": 0,
     "non_release_dirty_context_rows": 85,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "sidewall solver/wet/route branch execution packet;authorized branch preparation;candidate/context evidence inventory;next execution prioritization",
     "blocked_use": "final solver claim;formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;COMSOL launch without branch packet;.mph load without branch packet;fabrication release;production ingestion",
-    "semantic_digest": "eae999e63c4d2a98d9555f87a8ef7138cbd948fa1f7721940992dfd7f9abdcfc"
+    "semantic_digest": "0b5d262cadb34e82161f8e3d2eb86135f990c9b4962e4ab465831134de4f7ca9"
   },
   "branch_rows": [
     {
@@ -228,10 +228,10 @@
       "current_candidate_evidence_status": "route_inputs_partly_ready_claim_evidence_missing",
       "candidate_evidence_artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_20260701",
       "candidate_evidence_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_READY_INPUTS_NOT_CLAIMS",
-      "candidate_source_head": "d2bc2b9585a358cbcdbf28fa73963f47bfe5f7de",
+      "candidate_source_head": "490dd6e7972c607d66c0395c648e0e8716d1ee6c",
       "candidate_rows": 2,
       "candidate_output_rows": 6,
-      "blocked_rows": 4,
+      "blocked_rows": 6,
       "execution_packet_status": "route_promotion_packet_blocked_until_branch_evidence_passes",
       "next_execution_step": "wait for flow/q_ch, optical/detection, and wet observation evidence packets; then bind route score and yield/detection formula text",
       "current_claim_level": "readiness_board_only_not_route_score_not_yield_not_detection",
@@ -460,7 +460,7 @@
       "source_id": "route_readiness_status",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_STATUS_20260701.json",
       "exists": "true",
-      "sha256": "766784c6e4521603f25618e1ae609a9f61ffa6b4952485046f2606396af52ffa",
+      "sha256": "ceb20dc9ab7569020321dfa1160c731131ed7c12a9b68d5b4c3c0e1890574f3e",
       "claim_boundary": "solver_branch_execution_packet_authorized_prepare_not_solver_claim_not_route_yield_detection",
       "allowed_use": "sidewall solver/wet/route branch execution packet;authorized branch preparation;candidate/context evidence inventory;next execution prioritization",
       "blocked_use": "final solver claim;formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;COMSOL launch without branch packet;.mph load without branch packet;fabrication release;production ingestion"
@@ -469,7 +469,7 @@
       "source_id": "route_readiness_rows",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_READINESS_BOARD_BOARD_ROWS_20260701.csv",
       "exists": "true",
-      "sha256": "b65f54f5eb03e1b1f8f9d559cb69bbe80e71b649154c13b4d97edef668de7d96",
+      "sha256": "80a41c92692ae3d1510e3c3943939b73b4145c569b5d16d1057ff19f4c1a42e3",
       "claim_boundary": "solver_branch_execution_packet_authorized_prepare_not_solver_claim_not_route_yield_detection",
       "allowed_use": "sidewall solver/wet/route branch execution packet;authorized branch preparation;candidate/context evidence inventory;next execution prioritization",
       "blocked_use": "final solver claim;formal q_ch weighting;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;clogging_rate;time_to_clog;recovery;COMSOL launch without branch packet;.mph load without branch packet;fabrication release;production ingestion"
@@ -1023,12 +1023,6 @@
       "release_decision": "ignored_for_solver_branch_packet_not_source_locked"
     },
     {
-      "path": "nodi_simulator/sidewall_solver_branch_execution_packet.py",
-      "git_status": "??",
-      "classification": "solver_branch_packet_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
@@ -1047,28 +1041,10 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "tests/test_nodi_package_c_sidewall_solver_branch_execution_packet.py",
-      "git_status": "??",
-      "classification": "solver_branch_packet_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
-      "path": "tests/test_sidewall_solver_branch_execution_packet.py",
-      "git_status": "??",
-      "classification": "solver_branch_packet_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
-    },
-    {
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "tools/audits/build_nodi_package_c_sidewall_solver_branch_execution_packet.py",
-      "git_status": "??",
-      "classification": "solver_branch_packet_build_edit",
-      "release_decision": "included_in_commit_scope_before_publish"
     }
   ]
 }

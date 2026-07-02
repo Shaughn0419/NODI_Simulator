@@ -1,7 +1,7 @@
 # NODI Package C Sidewall Solver Branch Execution Packet
 
 - Disposition: `NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_READY_BRANCHES_GUARDED`.
-- Current head: `008078350de971d7b6ecfef3826fde973df6b98d` on `main`.
+- Current head: `378dc75c59fe64500ebc4535312962f4724b762f` on `main`.
 - Branch rows: `6`.
 - Claim guard rows: `8`.
 - Candidate-evidence rows current: `4`.
