@@ -1,0 +1,9 @@
+check_id,check_name,check_pass,check_detail,hard_fail_if_false
+V4-EXT-CHECK-001,v4_alignment_ready,True,NODI_COMSOL_V4_UPPER_ASSUMPTION_ALIGNMENT_READY,True
+V4-EXT-CHECK-002,route_universe_crosswalk_has_four_layers,True,4,True
+V4-EXT-CHECK-003,readout_noise_physical_ceiling_bound_for_two_routes,True,2,True
+V4-EXT-CHECK-004,wet_surface_v4_bound_for_route_x_scenario_matrix,True,8,True
+V4-EXT-CHECK-005,state_machine_has_four_simulation_states,True,4,True
+V4-EXT-CHECK-006,quarantine_artifacts_not_active_sources,True,1,True
+V4-EXT-CHECK-007,dirty_source_dependencies_are_visible,True,13,True
+V4-EXT-CHECK-008,all_sources_exist,True,26,True

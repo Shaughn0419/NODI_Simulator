@@ -1,0 +1,5 @@
+state_order,state_id,state_meaning,allowed_next_state,final_or_production_state,requires_v4_identity,requires_source_hash,claim_boundary
+1,simulation_source_hash_locked,source manifests and route rows carry hashes and V4 identity,simulation_candidate_metric,False,True,True,comsol_v4_bound_simulation_extension_dirty_source_aware
+2,simulation_candidate_metric,"route score, yield, detection, and wet-pass metrics are simulation-current",simulation_release_candidate,False,True,True,comsol_v4_bound_simulation_extension_dirty_source_aware
+3,simulation_release_candidate,one simulation route may be selected as simulation release candidate,solver_supported_candidate,False,True,True,comsol_v4_bound_simulation_extension_dirty_source_aware
+4,solver_supported_candidate,future solver branch may attach solver support without collapsing grains,,False,True,True,comsol_v4_bound_simulation_extension_dirty_source_aware

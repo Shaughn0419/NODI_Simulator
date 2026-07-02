@@ -1,0 +1,26 @@
+{
+  "disposition": "NODI_COMSOL_V4_ALIGNMENT_EXTENSION_READY_DIRTY_SOURCE_AWARE",
+  "summary": {
+    "alignment_check_rows": 8,
+    "allowed_use": "extend the COMSOL V4 alignment into route-universe, readout/noise, physical-ceiling, wet/surface, and simulation state-machine bindings",
+    "artifact_id": "NODI_COMSOL_V4_ALIGNMENT_EXTENSION_20260702",
+    "blocked_use": "silent clean-source assumption; direct production/fabrication promotion; route-universe grain collapse; bypassing readout/noise or physical-ceiling diagnostics",
+    "branch": "main",
+    "claim_boundary": "comsol_v4_bound_simulation_extension_dirty_source_aware",
+    "current_head": "be97754e628ae82430c472db5d0e2f191bad15ad",
+    "dirty_source_dependency_rows": 13,
+    "dirty_source_policy": "dirty NODI source dependencies are visible and not treated as clean external-review inputs",
+    "disposition": "NODI_COMSOL_V4_ALIGNMENT_EXTENSION_READY_DIRTY_SOURCE_AWARE",
+    "failed_alignment_check_rows": 0,
+    "next_high_leverage_step": "either commit/refresh dirty NODI upper-assumption sources or build scenario-expanded sidewall scoring using the dirty-source-aware bindings as explicit inputs",
+    "quarantine_guard_rows": 1,
+    "readout_noise_binding_rows": 2,
+    "route_universe_crosswalk_rows": 4,
+    "semantic_digest": "28e4fdbae1c212a8375da502620af30cac450cb7b760a06a5906b3d8469d955b",
+    "source_alignment_disposition": "NODI_COMSOL_V4_UPPER_ASSUMPTION_ALIGNMENT_READY",
+    "source_dependency_rows": 26,
+    "source_missing_rows": 0,
+    "state_machine_rows": 4,
+    "wet_surface_v4_binding_rows": 8
+  }
+}
