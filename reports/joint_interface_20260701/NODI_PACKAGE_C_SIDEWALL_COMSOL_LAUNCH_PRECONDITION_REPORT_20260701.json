@@ -1,0 +1,931 @@
+{
+  "summary": {
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_COMSOL_LAUNCH_PRECONDITION_READY_TARGET_BINDING_REQUIRED",
+    "artifact_id": "PACKAGE_C_SIDEWALL_COMSOL_LAUNCH_PRECONDITION_20260701",
+    "precondition_status": "comsol_launch_precondition_ready_target_binding_required",
+    "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim",
+    "current_head": "3a94d349d3fae4b99f813dc195500ad4b84d8c44",
+    "branch": "main",
+    "source_solver_branch_packet_disposition": "NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_READY_BRANCHES_GUARDED",
+    "source_electrokinetic_preflight_disposition": "NODI_PACKAGE_C_SIDEWALL_ELECTROKINETIC_GRID_PREFLIGHT_READY_PROFILE_GRID_REQUIRED",
+    "comsol_path": "C:\\Users\\Yan\\Documents\\Comsol64Yan\\COMSOL64\\Multiphysics\\bin\\win64\\comsol.exe",
+    "comsolbatch_path": "C:\\Users\\Yan\\Documents\\Comsol64Yan\\COMSOL64\\Multiphysics\\bin\\win64\\comsolbatch.exe",
+    "comsolbatch_version": "COMSOL Multiphysics 6.4.0.293",
+    "comsol_project_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction",
+    "comsol_project_head": "1555b0876989b381e6df0bf5d1e44952d77cb11a",
+    "comsol_project_dirty_count": 3751,
+    "precondition_rows": 5,
+    "context_rows": 4,
+    "claim_guard_rows": 6,
+    "toolchain_passed_rows": 1,
+    "precondition_passed_rows": 2,
+    "launch_allowed_now_rows": 0,
+    "mph_load_allowed_now_rows": 0,
+    "target_model_bound_rows": 0,
+    "launch_command_hash_bound_rows": 0,
+    "claim_promotion_allowed_guard_rows": 0,
+    "stale_legacy_mirror_context_rows": 1,
+    "source_lock_rows": 8,
+    "source_missing_rows": 0,
+    "dirty_context_rows": 93,
+    "source_locked_upstream_dirty_context_rows": 0,
+    "non_release_dirty_context_rows": 85,
+    "release_scoped_dirty_blocker_rows": 0,
+    "allowed_use": "COMSOL toolchain and launch precondition evidence;current-head mirror requirement;target model/script binding checklist",
+    "blocked_use": "COMSOL launch;.mph load;solver output claim;formal q_ch;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;fabrication release;production ingestion",
+    "semantic_digest": "2ee043da89854efcf582d1b14f1bdb7b6711f82326c752bf9781bd4888ae9971"
+  },
+  "precondition_rows": [
+    {
+      "precondition_row_id": "COMSOL-LAUNCH-PRECONDITION-toolchain_detection",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "lane": "toolchain_detection",
+      "current_status": "comsol_toolchain_detected_version_checked",
+      "user_authorization_status": "authorized",
+      "authorized_to_prepare": true,
+      "authorized_to_launch_when_preconditions_pass": true,
+      "precondition_passed": true,
+      "launch_allowed_now": false,
+      "mph_load_allowed_now": false,
+      "comsol_executable_detected": true,
+      "comsolbatch_executable_detected": true,
+      "version_check_passed": true,
+      "nodi_current_head_bound": true,
+      "comsol_side_project_detected": true,
+      "comsol_side_project_head_bound": true,
+      "comsol_side_project_clean_required": true,
+      "target_mph_or_model_bound": false,
+      "branch_solver_script_bound": false,
+      "launch_command_hash_bound": false,
+      "output_manifest_path_bound": false,
+      "current_claim_level": "toolchain_detection_only_no_model_launch",
+      "next_required_evidence": "target model path, solver script, command hash, and output manifest",
+      "hard_fail_if": "launch_started_from_toolchain_detection_only",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "precondition_row_id": "COMSOL-LAUNCH-PRECONDITION-clean_mirror_receipt",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "lane": "clean_mirror_receipt",
+      "current_status": "clean_mirror_receipt_required_for_current_nodi_head",
+      "user_authorization_status": "authorized",
+      "authorized_to_prepare": true,
+      "authorized_to_launch_when_preconditions_pass": true,
+      "precondition_passed": false,
+      "launch_allowed_now": false,
+      "mph_load_allowed_now": false,
+      "comsol_executable_detected": true,
+      "comsolbatch_executable_detected": true,
+      "version_check_passed": true,
+      "nodi_current_head_bound": true,
+      "comsol_side_project_detected": true,
+      "comsol_side_project_head_bound": true,
+      "comsol_side_project_clean_required": true,
+      "target_mph_or_model_bound": false,
+      "branch_solver_script_bound": false,
+      "launch_command_hash_bound": false,
+      "output_manifest_path_bound": false,
+      "current_claim_level": "receipt_required_no_comsol_launch",
+      "next_required_evidence": "COMSOL-side mirror receipt targeting current NODI head",
+      "hard_fail_if": "comsol_launch_true_without_current_head_clean_mirror_receipt",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "precondition_row_id": "COMSOL-LAUNCH-PRECONDITION-target_model_binding",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "lane": "target_model_binding",
+      "current_status": "blocked_target_mph_or_solver_script_not_bound",
+      "user_authorization_status": "authorized",
+      "authorized_to_prepare": true,
+      "authorized_to_launch_when_preconditions_pass": true,
+      "precondition_passed": false,
+      "launch_allowed_now": false,
+      "mph_load_allowed_now": false,
+      "comsol_executable_detected": true,
+      "comsolbatch_executable_detected": true,
+      "version_check_passed": true,
+      "nodi_current_head_bound": true,
+      "comsol_side_project_detected": true,
+      "comsol_side_project_head_bound": true,
+      "comsol_side_project_clean_required": true,
+      "target_mph_or_model_bound": false,
+      "branch_solver_script_bound": false,
+      "launch_command_hash_bound": false,
+      "output_manifest_path_bound": false,
+      "current_claim_level": "launch_precondition_not_model_execution",
+      "next_required_evidence": "branch-specific target .mph or solver-generation script, source descriptor, output manifest path, and command hash",
+      "hard_fail_if": "mph_load_or_solver_run_true_without_target_model_binding",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "precondition_row_id": "COMSOL-LAUNCH-PRECONDITION-electrokinetic_dependency",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "lane": "electrokinetic_dependency",
+      "current_status": "electrokinetic_preflight_available_but_no_solver_grid_output",
+      "user_authorization_status": "authorized",
+      "authorized_to_prepare": true,
+      "authorized_to_launch_when_preconditions_pass": true,
+      "precondition_passed": true,
+      "launch_allowed_now": false,
+      "mph_load_allowed_now": false,
+      "comsol_executable_detected": true,
+      "comsolbatch_executable_detected": true,
+      "version_check_passed": true,
+      "nodi_current_head_bound": true,
+      "comsol_side_project_detected": true,
+      "comsol_side_project_head_bound": true,
+      "comsol_side_project_clean_required": true,
+      "target_mph_or_model_bound": false,
+      "branch_solver_script_bound": false,
+      "launch_command_hash_bound": false,
+      "output_manifest_path_bound": false,
+      "current_claim_level": "electrokinetic_preflight_dependency_only",
+      "next_required_evidence": "profile-aware electrokinetic grid implementation or explicit branch exclusion",
+      "hard_fail_if": "electrokinetic_solver_claim_true_from_comsol_launch_precondition",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "precondition_row_id": "COMSOL-LAUNCH-PRECONDITION-launch_command_binding",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "lane": "launch_command_binding",
+      "current_status": "blocked_launch_command_hash_missing",
+      "user_authorization_status": "authorized",
+      "authorized_to_prepare": true,
+      "authorized_to_launch_when_preconditions_pass": true,
+      "precondition_passed": false,
+      "launch_allowed_now": false,
+      "mph_load_allowed_now": false,
+      "comsol_executable_detected": true,
+      "comsolbatch_executable_detected": true,
+      "version_check_passed": true,
+      "nodi_current_head_bound": true,
+      "comsol_side_project_detected": true,
+      "comsol_side_project_head_bound": true,
+      "comsol_side_project_clean_required": true,
+      "target_mph_or_model_bound": false,
+      "branch_solver_script_bound": false,
+      "launch_command_hash_bound": false,
+      "output_manifest_path_bound": false,
+      "current_claim_level": "command_preflight_not_execution",
+      "next_required_evidence": "dry-run command string, command sha256, expected outputs, and timeout policy",
+      "hard_fail_if": "comsolbatch_started_without_command_hash_and_output_manifest",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    }
+  ],
+  "context_rows": [
+    {
+      "context_row_id": "COMSOL-CONTEXT-toolchain",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "context_kind": "toolchain",
+      "context_path": "C:\\Users\\Yan\\Documents\\Comsol64Yan\\COMSOL64\\Multiphysics\\bin\\win64\\comsolbatch.exe",
+      "context_status": "detected",
+      "target_nodi_commit": "3a94d349d3fae4b99f813dc195500ad4b84d8c44",
+      "observed_value": "COMSOL Multiphysics 6.4.0.293",
+      "stale_or_missing_reason": "",
+      "allowed_use": "toolchain availability evidence for future branch packet",
+      "blocked_use": "model launch or solver claim",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "context_row_id": "COMSOL-CONTEXT-comsol-side-project",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "context_kind": "sibling_project",
+      "context_path": "C:\\Users\\Yan\\Desktop\\Yan\\codex project\\comsol test\\comsol_ev_pbs_bonded_cross_junction",
+      "context_status": "detected",
+      "target_nodi_commit": "3a94d349d3fae4b99f813dc195500ad4b84d8c44",
+      "observed_value": "1555b0876989b381e6df0bf5d1e44952d77cb11a",
+      "stale_or_missing_reason": "dirty_rows=3751",
+      "allowed_use": "project location and head context for clean mirror receipt",
+      "blocked_use": "implicit acceptance of dirty COMSOL state",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "context_row_id": "COMSOL-CONTEXT-legacy-mirror-request",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "context_kind": "legacy_mirror_request",
+      "context_path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.csv",
+      "context_status": "stale_for_current_head",
+      "target_nodi_commit": "3a94d349d3fae4b99f813dc195500ad4b84d8c44",
+      "observed_value": "b681e4ed8a5c3a739aeb9029b5e5ed3375693b4f",
+      "stale_or_missing_reason": "legacy request targets older NODI commit",
+      "allowed_use": "historical no-run mirror context only",
+      "blocked_use": "current launch authorization or current mirror receipt",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "context_row_id": "COMSOL-CONTEXT-target-model-binding",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "context_kind": "target_model_binding",
+      "context_path": "",
+      "context_status": "missing_target_mph_or_solver_script",
+      "target_nodi_commit": "3a94d349d3fae4b99f813dc195500ad4b84d8c44",
+      "observed_value": "",
+      "stale_or_missing_reason": "no branch-specific NODI sidewall target model/script bound",
+      "allowed_use": "next execution requirement",
+      "blocked_use": "COMSOL launch or .mph load",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    }
+  ],
+  "claim_guard_rows": [
+    {
+      "guard_row_id": "COMSOL-LAUNCH-GUARD-comsol_launch",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "promotion_target": "comsol_launch",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "current-head mirror receipt, target model/script, command hash, output manifest",
+      "hard_fail_if_missing_evidence": "comsol_launch_true_without_all_preconditions",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "guard_row_id": "COMSOL-LAUNCH-GUARD-mph_load",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "promotion_target": "mph_load",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "target .mph path, read mode, expected extracted fields, and output hash",
+      "hard_fail_if_missing_evidence": "mph_load_true_without_target_mph_binding",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "guard_row_id": "COMSOL-LAUNCH-GUARD-pressure_flow_solver_claim",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "promotion_target": "pressure_flow_solver_claim",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "solver output manifest, tolerance, mesh/grid validation, and source hash",
+      "hard_fail_if_missing_evidence": "pressure_flow_solver_claim_true_without_solver_manifest",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "guard_row_id": "COMSOL-LAUNCH-GUARD-electrokinetic_solver_claim",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "promotion_target": "electrokinetic_solver_claim",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "profile-aware grid solver package and electrokinetic preflight pass",
+      "hard_fail_if_missing_evidence": "electrokinetic_claim_true_from_launch_precondition",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "guard_row_id": "COMSOL-LAUNCH-GUARD-formal_q_ch_or_route_score",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "promotion_target": "formal_q_ch_or_route_score",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "formal q_ch sidecar plus route/yield/detection contract",
+      "hard_fail_if_missing_evidence": "q_ch_or_route_score_true_from_comsol_precondition",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    },
+    {
+      "guard_row_id": "COMSOL-LAUNCH-GUARD-yield_detection_wet_or_production",
+      "precondition_version": "sidewall_comsol_launch_precondition_v1",
+      "promotion_target": "yield_detection_wet_or_production",
+      "implementation_authorized": true,
+      "claim_promoted_current": false,
+      "claim_promotion_allowed_now": false,
+      "required_evidence_before_true": "wet/detection evidence packets and separate release ledger",
+      "hard_fail_if_missing_evidence": "yield_detection_or_production_true_from_comsol_precondition",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim"
+    }
+  ],
+  "source_lock": [
+    {
+      "source_id": "solver_branch_packet_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "ae46350f5ac3d95614e1de67c45a70a77bb1a44f3cf67302f0f604ea98aeb07b",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim",
+      "allowed_use": "COMSOL toolchain and launch precondition evidence;current-head mirror requirement;target model/script binding checklist",
+      "blocked_use": "COMSOL launch;.mph load;solver output claim;formal q_ch;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "solver_branch_packet_branch_rows",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_SOLVER_BRANCH_EXECUTION_PACKET_BRANCH_ROWS_20260701.csv",
+      "exists": "true",
+      "sha256": "4420fc32cbbeaf60bf1ee65c178770e4539b2aacfb1bbe682fd7e157a2c9aa93",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim",
+      "allowed_use": "COMSOL toolchain and launch precondition evidence;current-head mirror requirement;target model/script binding checklist",
+      "blocked_use": "COMSOL launch;.mph load;solver output claim;formal q_ch;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "electrokinetic_grid_preflight_status",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ELECTROKINETIC_GRID_PREFLIGHT_STATUS_20260701.json",
+      "exists": "true",
+      "sha256": "2838d785e5e54bab6f3cdb82ac793f39691bfd814d36a9555409a5218f25f1d1",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim",
+      "allowed_use": "COMSOL toolchain and launch precondition evidence;current-head mirror requirement;target model/script binding checklist",
+      "blocked_use": "COMSOL launch;.mph load;solver output claim;formal q_ch;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "legacy_post_proof_mirror_request",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_PROOF_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.csv",
+      "exists": "true",
+      "sha256": "b6ecaf9f2fae3bcfe081244efe586d19d2a5e83294a1456cc11b947678bfa230",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim",
+      "allowed_use": "COMSOL toolchain and launch precondition evidence;current-head mirror requirement;target model/script binding checklist",
+      "blocked_use": "COMSOL launch;.mph load;solver output claim;formal q_ch;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "comsol_launch_precondition_source",
+      "path": "nodi_simulator/sidewall_comsol_launch_precondition.py",
+      "exists": "true",
+      "sha256": "c6907addf86384627d2bcbc4b224d2e304978a42e53d4d8b8272c1994efaea51",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim",
+      "allowed_use": "COMSOL toolchain and launch precondition evidence;current-head mirror requirement;target model/script binding checklist",
+      "blocked_use": "COMSOL launch;.mph load;solver output claim;formal q_ch;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "comsol_launch_precondition_tests",
+      "path": "tests/test_sidewall_comsol_launch_precondition.py",
+      "exists": "true",
+      "sha256": "48f093784b41483676d6edb44f77cdd701a5fbc6f7413f52bff2c22f715799a1",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim",
+      "allowed_use": "COMSOL toolchain and launch precondition evidence;current-head mirror requirement;target model/script binding checklist",
+      "blocked_use": "COMSOL launch;.mph load;solver output claim;formal q_ch;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "comsol_launch_precondition_builder",
+      "path": "tools/audits/build_nodi_package_c_sidewall_comsol_launch_precondition.py",
+      "exists": "true",
+      "sha256": "d580a10fa69c731620c64dec23892ca408c7ccc3089e3b83dd297d5e44099cd9",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim",
+      "allowed_use": "COMSOL toolchain and launch precondition evidence;current-head mirror requirement;target model/script binding checklist",
+      "blocked_use": "COMSOL launch;.mph load;solver output claim;formal q_ch;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;fabrication release;production ingestion"
+    },
+    {
+      "source_id": "comsol_launch_precondition_builder_tests",
+      "path": "tests/test_nodi_package_c_sidewall_comsol_launch_precondition.py",
+      "exists": "true",
+      "sha256": "07ecd7526e6afbf28605bd7189df9dedfabdeb7629fe767d02787f9d11d3fe33",
+      "claim_boundary": "comsol_launch_precondition_authorized_path_not_launch_not_solver_claim",
+      "allowed_use": "COMSOL toolchain and launch precondition evidence;current-head mirror requirement;target model/script binding checklist",
+      "blocked_use": "COMSOL launch;.mph load;solver output claim;formal q_ch;route_score;winner;JRC;yield;detection_probability;wet_pass_probability;fabrication release;production ingestion"
+    }
+  ],
+  "dirty_context": [
+    {
+      "path": "REVIEW_BUILD_MANIFEST.json",
+      "git_status": "M ",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_HASHES.sha256",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "REVIEW_PACKAGE_MANIFEST.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/ev_sample_profiles.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/forbidden_claims_lexicon.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/noise_readout_scenario_bundle.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/reason_code_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/paper_manifest.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "papers/provenance/unavailable_or_not_packaged_papers.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/518_NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_AND_RELEASE_V2_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/544_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CLOSURE_AND_RC2_BACKLOG_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/SIDEWALL_STATIC_INTEROP_RC1_NODI_MASTER_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE24_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_GATE24_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE25_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_GATE25_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE26_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_GATE26_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE27_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_CANDIDATE_EVIDENCE_MAP_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_CANDIDATE_MANIFEST_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_RAW_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_PROOF_SUMMARY_METRICS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_SOURCE_LOCK_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/NODI_COMSOL_GATE30_31_SIDEWALL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_COMSOL_REINTAKE_POINTER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_CURRENT_AUDIT_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_RELEASE_PACKET_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_SOURCE_LOCK_CLOSURE_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_FINAL_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_MANIFEST_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_REPORT_20260630.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SELF_REVIEW_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_SOURCE_LOCK_LEDGER_20260630.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_STATUS_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260630/SIDEWALL_STATIC_INTEROP_RC1_VERSION_LOCK_20260630.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_DELTA_INVENTORY_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_RELEASE_SEAL_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V2_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_CENSUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_COMMIT_SEMANTIC_LEDGER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_PROMOTION_SURFACE_QUARANTINE_V1_QUARANTINE_REGISTER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_DIRTY_CLASSIFIER_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/bfp_roi_operator_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/candidate_universe_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/ev_prior_contaminant_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_route_sensitivity.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/noise_readout_scenario_bundle.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_extended_pairwise_stability.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_mandatory_audit_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/top_candidate_particle_panel_audit.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_mandatory_audit/tsuyama_bfp_reference_summary.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/full_wave_green_tensor_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_contract_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_diagnostic_schema_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_input_binding_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/physical_ceiling_route_coverage_manifest.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/roughness_leakage_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/transport_residence_time_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "results/post_v2_physical_ceiling/vector_jones_polarization_diagnostic.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_comsol_launch_precondition_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_comsol_launch_precondition.py",
+      "git_status": "??",
+      "classification": "comsol_launch_precondition_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_comsol_launch_precondition.py",
+      "git_status": "??",
+      "classification": "comsol_launch_precondition_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_sidewall_comsol_launch_precondition.py",
+      "git_status": "??",
+      "classification": "comsol_launch_precondition_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
+      "git_status": "??",
+      "classification": "superseded_post_rc2_context",
+      "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_comsol_launch_precondition.py",
+      "git_status": "??",
+      "classification": "comsol_launch_precondition_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    }
+  ]
+}
