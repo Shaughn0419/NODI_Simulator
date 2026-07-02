@@ -1,0 +1,31 @@
+{
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_READY_WAITING_FOR_ACCEPTED_EVIDENCE",
+  "summary": {
+    "JRC_current_rows": 0,
+    "allowed_use": "review-only route formula component dry run after q_ch and detector/wet activation closure",
+    "artifact_id": "PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_20260701",
+    "blocked_use": "route_score;winner;JRC;yield;detection_probability;wet_pass_probability;production ingestion",
+    "branch": "main",
+    "claim_boundary": "route_formula_review_dry_run_components_not_route_score_not_winner",
+    "component_vector_ready_rows": 0,
+    "current_head": "64a544dbaf9e001fc188cf01dedea0e18ef827f6",
+    "detection_probability_current_rows": 0,
+    "dirty_context_rows": 93,
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_READY_WAITING_FOR_ACCEPTED_EVIDENCE",
+    "dry_run_rows": 2,
+    "dry_run_version": "sidewall_route_formula_review_dry_run_v1",
+    "next_high_leverage_step": "run formula policy review after accepted detector and wet evidence make component vectors ready",
+    "non_release_dirty_context_rows": 89,
+    "production_ingestion_current_rows": 0,
+    "route_formula_ready_for_claim_review_rows": 0,
+    "route_score_current_rows": 0,
+    "semantic_digest": "329c6b39c2712c2bd68f57db4528f6b95ebcc3f44092271be9e48a1abc2081e4",
+    "source_closure_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_READY_CURRENTLY_BLOCKED",
+    "source_input_packet_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_READY_AWAITING_INPUT_ROWS",
+    "source_lock_rows": 8,
+    "source_missing_rows": 0,
+    "wet_pass_probability_current_rows": 0,
+    "winner_current_rows": 0,
+    "yield_current_rows": 0
+  }
+}
