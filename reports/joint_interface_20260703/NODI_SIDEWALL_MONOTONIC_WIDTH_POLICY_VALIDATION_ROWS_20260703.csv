@@ -1,0 +1,8 @@
+check_id,status,detail
+trajectory_rows_cover_608_609_610,pass,width_trajectory_rows=252
+response_surface_rows_cover_unique_widths,pass,response_surface_rows=198
+dimension_policy_rows_cover_six_routes_times_three_modes,pass,dimension_policy_rows=18
+annulus_policy_rows_cover_six_routes_times_three_modes,pass,annulus_policy_rows=18
+comsol_peak_upper_edge_all_rows,pass,12 COMSOL-weighted rows keep peak response at the upper tested width
+v4_assumption_hash_bound,pass,2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92
+no_forbidden_primary_columns,pass,outputs avoid score/winner/yield/detection/W_eff/q_ch primary columns

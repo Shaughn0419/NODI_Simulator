@@ -1,0 +1,24 @@
+{
+  "artifact_id": "NODI_SIDEWALL_MONOTONIC_WIDTH_POLICY_20260703",
+  "claim_boundary": "monotonic_width_policy_context_not_route_selection",
+  "comsol_v4_assumption_set_id": "EV_PBS_SAMPLE_SURFACE_ASSUMPTION_SET_V4_20260627",
+  "comsol_v4_assumption_set_sha256": "2bd97d7684a582343da05bc519f47d598baf29efa5e0157ea8330e9fae223d92",
+  "comsol_v4_assumption_set_version": "4.0.0",
+  "date_stamp": "20260703",
+  "disposition": "NODI_SIDEWALL_MONOTONIC_WIDTH_POLICY_READY",
+  "git_branch": "main",
+  "git_head": "b61258965b8aac7ccaa28bebd5176eb075bb5115",
+  "payload_sha256": "342aa28118226be53af6792ba5c036712506ca772506990b0822cb670b7f78a9",
+  "summary": {
+    "annulus_policy_rows": 18,
+    "comsol_peak_upper_edge_rows": 12,
+    "dimension_policy_rows": 18,
+    "exact_pxu_probability_grid_available_now": false,
+    "failed_validation_rows": 0,
+    "next_executable_block": "dimension_constraints_or_objective_packet",
+    "question_rows": 3,
+    "response_surface_rows": 198,
+    "width_trajectory_rows": 252
+  },
+  "synthesis_version": "sidewall_monotonic_width_policy_v1"
+}
