@@ -54,7 +54,7 @@ def test_route_evidence_input_packet_keeps_templates_separate_from_evidence() ->
     }
     assert {row.current_accepted_rows for row in input_rows} == {0}
     assert {row.ready_to_rerun_chain for row in input_rows} == {True}
-    assert len(command_rows) == 9
+    assert len(command_rows) == 10
     assert formula_rows[0].route_formula_ready_for_claim_review is False
     assert formula_rows[0].route_score_current is False
     assert formula_rows[0].yield_current is False

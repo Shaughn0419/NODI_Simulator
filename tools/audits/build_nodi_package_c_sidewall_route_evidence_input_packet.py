@@ -258,7 +258,7 @@ def build_payload() -> dict[str, Any]:
     if (
         required_source_missing
         or len(input_dicts) != 4
-        or len(command_dicts) != 9
+        or len(command_dicts) != 10
         or len(formula_dicts) != 2
         or any(row["route_score_current"] for row in formula_dicts)
     ):
@@ -355,8 +355,8 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
         failures.append("required_source_missing")
     if summary["input_rows"] != 4:
         failures.append("expected_four_input_rows")
-    if summary["command_rows"] != 9:
-        failures.append("expected_nine_command_rows")
+    if summary["command_rows"] != 10:
+        failures.append("expected_ten_command_rows")
     if summary["route_formula_rows"] != 2:
         failures.append("expected_two_formula_rows")
     if summary["route_score_current"]:
@@ -431,7 +431,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Route formula ready rows: `{s['route_formula_ready_for_claim_review_rows']}`.",
             f"Detection probability current rows: `{s['detection_probability_current_rows']}`; yield current rows: `{s['yield_current_rows']}`; wet-pass current rows: `{s['wet_pass_probability_current_rows']}`.",
             "",
-            "This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value evidence, then rerunning the nine-step chain through route decision readiness.",
+            "This packet is the single entry point for filling detector/blank transfer, wet/surface observation, detection-probability value, and yield/wet-pass value evidence, then rerunning the ten-step chain through route decision readiness.",
             "",
         ]
     )

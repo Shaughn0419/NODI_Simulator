@@ -155,9 +155,10 @@ def build_route_evidence_input_packet(
                     "when replacing wet evidence"
                 ),
                 missing_text=(
-                    "populate all wet endpoint observation rows with source hashes, "
-                    "required fields, controls, replicate counts, uncertainty "
-                    "intervals, and pre-registration status where required"
+                    "populate wet source manifest rows and run the wet observation "
+                    "manifest importer so source hashes, required fields, controls, "
+                    "replicate counts, uncertainty intervals, and pre-registration "
+                    "status are bound before wet intake"
                 ),
             ),
             hard_fail_if="wet_template_or_context_rows_counted_as_wet_claim",
@@ -282,6 +283,12 @@ def _command_rows() -> list[SidewallRouteEvidenceCommandRow]:
             "python tools\\audits\\build_nodi_package_c_sidewall_detector_blank_transfer_intake.py --confirm-sidewall-detector-blank-transfer-intake",
             "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_STATUS_20260701.json",
             "detector blank transfer intake accepts or rejects detector input rows",
+        ),
+        (
+            "wet_surface_observation_manifest_import",
+            "python tools\\audits\\build_nodi_package_c_sidewall_wet_surface_observation_manifest_import.py --confirm-sidewall-wet-surface-observation-manifest-import",
+            "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_STATUS_20260701.json",
+            "imports source-manifest-bound wet observation rows and hashes before wet intake",
         ),
         (
             "wet_surface_observation_intake",

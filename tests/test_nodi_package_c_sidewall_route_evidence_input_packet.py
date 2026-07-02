@@ -13,7 +13,7 @@ def test_route_evidence_input_packet_builds_current_input_handoff() -> None:
 
     assert summary["disposition"] == builder.DISPOSITION
     assert summary["input_rows"] == 4
-    assert summary["command_rows"] == 9
+    assert summary["command_rows"] == 10
     assert summary["route_formula_rows"] == 2
     assert summary["detector_template_rows"] == 2
     assert summary["wet_template_rows"] == 14
@@ -39,6 +39,7 @@ def test_route_evidence_input_packet_command_chain_order() -> None:
 
     assert command_ids == [
         "detector_blank_transfer_intake",
+        "wet_surface_observation_manifest_import",
         "wet_surface_observation_intake",
         "detector_wet_activation_runner",
         "route_formula_activation_closure",
