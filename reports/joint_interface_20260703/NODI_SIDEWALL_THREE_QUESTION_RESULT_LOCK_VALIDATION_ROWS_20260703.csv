@@ -1,0 +1,9 @@
+check_name,check_pass,observed,expected,hard_fail_if_false
+source_artifacts_present,True,0,0,True
+three_question_result_rows_present,True,3,3,True
+route_result_coverage,True,6,6,True
+all_routes_have_dimension_delta_context,True,6,6,True
+all_routes_have_annulus_change_context,True,6,6,True
+response_positive_route_context_present,True,4,4,True
+next_action_coverage,True,6,6,True
+no_forbidden_primary_columns,True,pass,pass,True
