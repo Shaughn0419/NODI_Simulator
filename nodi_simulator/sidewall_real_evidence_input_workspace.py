@@ -131,7 +131,7 @@ def _workspace_row(
         evidence_current=False,
         required_next_action=(
             "fill target input rows with real artifacts, hashes, controls, "
-            "uncertainty, and pre-registration fields; rerun the nine-step chain"
+            "uncertainty, and pre-registration fields; rerun the eleven-step chain"
         ),
         hard_fail_if="header_only_or_template_rows_counted_as_claim_evidence",
         claim_boundary=SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_CLAIM_BOUNDARY,

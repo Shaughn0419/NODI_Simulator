@@ -197,6 +197,20 @@ def build_payload(
                 "claim_boundary": CLAIM_BOUNDARY,
             }
         )
+    elif not manifest_rows:
+        audit_dicts.append(
+            {
+                "import_row_id": "WET-OBS-MANIFEST-IMPORT-source-manifest",
+                "import_version": SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_VERSION,
+                "route_candidate_id": "",
+                "endpoint_id": "",
+                "observation_source_artifact": display_path(source_manifest),
+                "observation_source_sha256": sha256_file(source_manifest),
+                "import_status": "wet_observation_source_manifest_header_only_no_rows",
+                "import_rejection_reason": "source_manifest_rows_missing",
+                "claim_boundary": CLAIM_BOUNDARY,
+            }
+        )
     source_lock = source_lock_rows(source_manifest)
     dirty_context = dirty_context_rows()
     required_source_missing = sum(
@@ -208,7 +222,7 @@ def build_payload(
     )
     if required_source_missing:
         disposition = BLOCKED_DISPOSITION
-    elif not source_manifest.exists():
+    elif not source_manifest.exists() or not manifest_rows:
         disposition = MANIFEST_REQUIRED_DISPOSITION
     elif imported_rows and rejected_rows == 0:
         disposition = READY_DISPOSITION

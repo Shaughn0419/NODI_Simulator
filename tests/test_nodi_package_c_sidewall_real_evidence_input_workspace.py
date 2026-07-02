@@ -31,6 +31,14 @@ def _patch_paths(monkeypatch, tmp_path: Path) -> None:
         builder, "DETECTION_VALUE_TARGET_INPUT_ROWS", tmp_path / "detection_input.csv"
     )
     monkeypatch.setattr(builder, "YIELD_VALUE_TARGET_INPUT_ROWS", tmp_path / "yield_input.csv")
+    monkeypatch.setattr(
+        builder, "WET_SOURCE_MANIFEST", tmp_path / "wet_source_manifest.csv"
+    )
+    monkeypatch.setattr(
+        builder,
+        "CLAIM_VALUE_SOURCE_MANIFEST",
+        tmp_path / "claim_value_source_manifest.csv",
+    )
 
 
 def _write_templates(tmp_path: Path) -> None:
@@ -64,9 +72,13 @@ def test_real_evidence_input_workspace_builds_header_only_targets(
 
     assert summary["disposition"] == builder.DISPOSITION
     assert summary["workspace_rows"] == 4
+    assert summary["source_manifest_workspace_rows"] == 2
     assert summary["target_created_now_rows"] == 4
+    assert summary["source_manifest_created_now_rows"] == 2
     assert summary["target_header_only_rows"] == 4
+    assert summary["source_manifest_header_only_rows"] == 2
     assert summary["target_real_data_rows_total"] == 0
+    assert summary["source_manifest_real_data_rows_total"] == 0
     assert builder.validate_payload(payload) == []
 
 
@@ -81,10 +93,37 @@ def test_real_evidence_input_workspace_writes_outputs(
 
     names = {path.name for path in outputs}
     assert f"{builder.PREFIX}_WORKSPACE_ROWS_20260701.csv" in names
+    assert f"{builder.PREFIX}_SOURCE_MANIFEST_WORKSPACE_ROWS_20260701.csv" in names
     assert f"{builder.PREFIX}_MANIFEST_20260701.csv" in names
     assert f"577_{builder.PREFIX}_20260701.md" in names
     assert (tmp_path / "detector_input.csv").exists()
     assert (tmp_path / "yield_input.csv").exists()
+    assert (tmp_path / "wet_source_manifest.csv").exists()
+    assert (tmp_path / "claim_value_source_manifest.csv").exists()
+
+
+def test_real_evidence_input_workspace_source_manifest_headers(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    _patch_paths(monkeypatch, tmp_path)
+    _write_templates(tmp_path)
+    payload = builder.build_payload(create_missing_targets=True)
+
+    by_branch = {
+        row["source_manifest_branch"]: row
+        for row in payload["source_manifest_workspace_rows"]
+    }
+    assert "observation_source_artifact" in by_branch[
+        "wet_surface_observation"
+    ]["source_manifest_columns"]
+    claim_columns = by_branch["yield_detection_claim_value"][
+        "source_manifest_columns"
+    ]
+    assert "claim_value_branch" in claim_columns
+    assert "detection_probability_estimate" in claim_columns
+    assert "wet_pass_probability_estimate" in claim_columns
+    assert "source_artifact_sha256" not in claim_columns
 
 
 def test_real_evidence_input_workspace_cli_requires_confirmation() -> None:

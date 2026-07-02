@@ -14,9 +14,10 @@ from tests.test_sidewall_wet_surface_observation_manifest_import import (
 )
 
 
-def test_manifest_import_builder_defaults_to_manifest_required() -> None:
+def test_manifest_import_builder_defaults_to_manifest_required(tmp_path: Path) -> None:
+    missing_manifest = tmp_path / "missing_source_manifest.csv"
     payload = builder.build_payload(
-        source_manifest=builder.DEFAULT_SOURCE_MANIFEST,
+        source_manifest=missing_manifest,
         artifact_root=builder.PROJECT_ROOT,
     )
     failures = builder.validate_payload(payload)
@@ -31,6 +32,32 @@ def test_manifest_import_builder_defaults_to_manifest_required() -> None:
     assert summary["detection_probability_current"] is False
     assert payload["import_audit_rows"][0]["import_rejection_reason"] == (
         "source_manifest_missing"
+    )
+
+
+def test_manifest_import_builder_treats_header_only_manifest_as_required(
+    tmp_path: Path,
+) -> None:
+    source_manifest = tmp_path / "source_manifest.csv"
+    source_manifest.write_text(
+        "route_candidate_id,endpoint_id,observation_artifact_id,observation_artifact_class,observation_source_artifact,source_geometry_match_level,provided_fields,controls_status,replicate_count,uncertainty_interval_status,pre_registered_rule_status\n",
+        encoding="utf-8",
+    )
+
+    payload = builder.build_payload(
+        source_manifest=source_manifest,
+        artifact_root=tmp_path,
+    )
+    failures = builder.validate_payload(payload)
+    summary = payload["summary"]
+
+    assert failures == []
+    assert summary["disposition"] == builder.MANIFEST_REQUIRED_DISPOSITION
+    assert summary["source_manifest_present"] is True
+    assert summary["imported_observation_rows"] == 0
+    assert summary["canonical_wet_input_written"] is False
+    assert payload["import_audit_rows"][0]["import_rejection_reason"] == (
+        "source_manifest_rows_missing"
     )
 
 

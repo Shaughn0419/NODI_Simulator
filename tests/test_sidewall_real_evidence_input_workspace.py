@@ -47,6 +47,7 @@ def test_workspace_creates_header_only_target_without_evidence_rows(tmp_path: Pa
     assert rows[0].target_data_rows == 0
     assert rows[0].target_validation_status == TARGET_HEADER_ONLY_STATUS
     assert rows[0].evidence_current is False
+    assert "eleven-step chain" in rows[0].required_next_action
     assert read_csv_headers(target) == ["route_candidate_id", "source_artifact_sha256"]
     assert read_csv_rows(target) == []
 
