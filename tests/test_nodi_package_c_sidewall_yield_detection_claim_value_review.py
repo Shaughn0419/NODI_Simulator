@@ -13,7 +13,7 @@ def test_yield_detection_claim_value_packet_builds() -> None:
 
     assert failures == []
     summary = payload["summary"]
-    assert summary["disposition"] == builder.DISPOSITION
+    assert summary["disposition"] == builder.READY_DISPOSITION
     assert summary["claim_value_rows"] == 2
     assert summary["guard_rows"] == 6
     assert summary["detection_template_rows"] == 2
@@ -23,14 +23,14 @@ def test_yield_detection_claim_value_packet_builds() -> None:
     assert summary["detection_probability_current_rows"] == 0
     assert summary["yield_current_rows"] == 0
     assert summary["wet_pass_probability_current_rows"] == 0
-    assert summary["detection_probability_simulation_candidate_rows"] == 0
-    assert summary["yield_simulation_candidate_rows"] == 0
-    assert summary["wet_pass_probability_simulation_candidate_rows"] == 0
+    assert summary["detection_probability_simulation_candidate_rows"] == 2
+    assert summary["yield_simulation_candidate_rows"] == 2
+    assert summary["wet_pass_probability_simulation_candidate_rows"] == 2
     assert summary["final_claim_current_rows"] == 0
     assert summary["production_ingestion_current_rows"] == 0
 
 
-def test_claim_value_rows_block_current_claims_without_simulation_inputs() -> None:
+def test_claim_value_rows_accept_simulation_candidates_without_final_claims() -> None:
     rows = builder.build_payload()["claim_value_rows"]
 
     assert {row["route_candidate_id"] for row in rows} == {
@@ -38,17 +38,14 @@ def test_claim_value_rows_block_current_claims_without_simulation_inputs() -> No
         "ROUTE-CAND-002",
     }
     for row in rows:
-        assert row["detection_value_row_present"] is False
-        assert row["yield_value_row_present"] is False
+        assert row["detection_value_row_present"] is True
+        assert row["yield_value_row_present"] is True
         assert row["detection_probability_current"] is False
         assert row["yield_current"] is False
         assert row["wet_pass_probability_current"] is False
-        assert row["detection_probability_simulation_candidate_current"] is False
-        assert row["yield_simulation_candidate_current"] is False
-        assert row["wet_pass_probability_simulation_candidate_current"] is False
-        assert row["claim_value_review_status"] == (
-            "blocked_until_simulation_detection_and_yield_value_rows_accepted"
-        )
+        assert row["detection_probability_simulation_candidate_current"] is True
+        assert row["yield_simulation_candidate_current"] is True
+        assert row["wet_pass_probability_simulation_candidate_current"] is True
         assert row["claim_boundary"] == builder.CLAIM_BOUNDARY
 
 

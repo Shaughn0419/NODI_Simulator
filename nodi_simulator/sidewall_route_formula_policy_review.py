@@ -1,8 +1,8 @@
 """Route formula policy review for sidewall route-score candidates.
 
-This module is the first layer that can compute a route-score candidate value,
-but it only promotes `route_score_current` when the upstream component vector is
-ready and the source is accepted simulation evidence rather than a fixture.
+This module is the first layer that can compute a route-score candidate value.
+It only promotes `simulation_route_score_candidate_current`; final
+`route_score_current` remains false here.
 """
 
 from __future__ import annotations

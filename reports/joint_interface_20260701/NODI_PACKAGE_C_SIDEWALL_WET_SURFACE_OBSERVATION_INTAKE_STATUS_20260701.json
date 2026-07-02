@@ -1,10 +1,10 @@
 {
-  "disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS",
+  "disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_ACCEPTED_SIMULATION_BUNDLE_READY",
   "summary": {
-    "disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS",
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_ACCEPTED_SIMULATION_BUNDLE_READY",
     "artifact_id": "PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_20260701",
     "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
-    "current_head": "3b2d06097e637fea17809ae255b8bfe545c7e6b7",
+    "current_head": "bbaf01aeaa5af99332c7fbc76add3d04108028ad",
     "branch": "main",
     "intake_version": "sidewall_wet_surface_observation_intake_v1",
     "source_detector_blank_panel_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_PANEL_REFRESH_READY_PREFLIGHT_ONLY",
@@ -14,8 +14,9 @@
     "route_observation_matrix_rows": 2,
     "template_rows": 14,
     "promotion_update_rows": 1,
-    "accepted_observation_rows": 0,
-    "no_observation_matrix_rows": 2,
+    "accepted_observation_rows": 14,
+    "no_observation_matrix_rows": 0,
+    "accepted_observation_matrix_rows": 2,
     "wet_pass_probability_current": false,
     "clogging_rate_current": false,
     "time_to_clog_current": false,
@@ -26,11 +27,11 @@
     "winner_current": false,
     "source_lock_rows": 9,
     "source_missing_rows": 0,
-    "dirty_context_rows": 101,
-    "non_release_dirty_context_rows": 97,
+    "dirty_context_rows": 182,
+    "non_release_dirty_context_rows": 167,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "wet/surface observation intake schema;wet endpoint validation;route wet evidence matrix planning",
     "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion",
-    "semantic_digest": "14a5f4d4fe684def21d6b397ee8cf7e6b16c874e14da1cccb0e0c5ba294e9699"
+    "semantic_digest": "dc5149d8d8331fbb8092dc4068f266757c4625a1dc7d2c7d496d0b54b9fcd260"
   }
 }

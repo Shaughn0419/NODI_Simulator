@@ -19,11 +19,11 @@ def test_route_decision_execution_readiness_builds_from_current_artifacts() -> N
     assert summary["claim_guard_rows"] == 5
     assert summary["route_geometry_families"] == "ideal_rectangle;trapezoid_tapered_sidewalls"
     assert summary["detector_accepted_transfer_rows_total"] == 4
-    assert summary["wet_accepted_observation_rows_total"] == 0
-    assert summary["route_formula_component_vector_ready_rows"] == 0
-    assert summary["route_score_candidate_ready_rows"] == 0
-    assert summary["winner_jrc_candidate_ready_rows"] == 0
-    assert summary["yield_detection_values_ready_rows"] == 0
+    assert summary["wet_accepted_observation_rows_total"] == 28
+    assert summary["route_formula_component_vector_ready_rows"] == 2
+    assert summary["route_score_candidate_ready_rows"] == 2
+    assert summary["winner_jrc_candidate_ready_rows"] == 2
+    assert summary["yield_detection_values_ready_rows"] == 2
     assert summary["route_score_current_rows"] == 0
     assert summary["JRC_current_rows"] == 0
     assert summary["yield_current_rows"] == 0
@@ -42,21 +42,21 @@ def test_route_rows_keep_claims_false_and_geometry_parallel() -> None:
         assert row["rectangle_baseline_preserved"] is True
         assert row["sidewall_trapezoid_route_present"] is True
         assert row["execution_readiness_status"] == (
-            "blocked_detector_blank_and_wet_observation_evidence_required"
+            "route_yield_detection_claim_values_ready_for_integrated_review"
         )
-        assert row["route_formula_component_vector_ready"] is False
+        assert row["route_formula_component_vector_ready"] is True
         assert row["route_formula_policy_review_status"] == (
-            "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_READY_WAITING_FOR_SIMULATION_ACCEPTED_EVIDENCE"
+            "NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_SIMULATION_ROUTE_SCORE_CANDIDATES_READY_FOR_RANKING_REVIEW"
         )
-        assert row["route_score_candidate_ready"] is False
+        assert row["route_score_candidate_ready"] is True
         assert row["winner_jrc_policy_review_status"] == (
-            "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_READY_WAITING_FOR_CURRENT_ROUTE_SCORES"
+            "NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_SIMULATION_TOP_CANDIDATE_READY_FOR_INTEGRATED_REVIEW"
         )
-        assert row["winner_jrc_candidate_ready"] is False
+        assert row["winner_jrc_candidate_ready"] is True
         assert row["yield_detection_claim_value_review_status"] == (
-            "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_READY_AWAITING_SIMULATION_VALUE_ROWS"
+            "NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_VALUES_READY_FOR_INTEGRATED_REVIEW"
         )
-        assert row["yield_detection_values_ready"] is False
+        assert row["yield_detection_values_ready"] is True
         assert row["route_score_current"] is False
         assert row["JRC_current"] is False
         assert row["yield_current"] is False

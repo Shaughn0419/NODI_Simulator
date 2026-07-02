@@ -16,6 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from nodi_simulator.realism_v2_io import sha256_file, write_csv_rows, write_json_atomic  # noqa: E402
 from nodi_simulator.sidewall_wet_surface_observation_intake import (  # noqa: E402
+    ROUTE_MATRIX_ACCEPTED_STATUS,
     ROUTE_MATRIX_NO_OBSERVATIONS_STATUS,
     SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_CLAIM_BOUNDARY,
     SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_VERSION,
@@ -33,6 +34,9 @@ PREFIX = "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE"
 ARTIFACT_ID = "PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_20260701"
 DISPOSITION = (
     "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS"
+)
+ACCEPTED_DISPOSITION = (
+    "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_ACCEPTED_SIMULATION_BUNDLE_READY"
 )
 BLOCKED_DISPOSITION = "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_FAIL_CLOSED"
 SELF_MANIFEST_SHA256 = "SELF_MANIFEST_NOT_SELF_HASHED_BY_DESIGN"
@@ -303,12 +307,15 @@ def build_payload() -> dict[str, Any]:
         row["route_wet_observation_matrix_status"] == ROUTE_MATRIX_NO_OBSERVATIONS_STATUS
         for row in matrix_rows
     )
+    matrix_accepted = sum(
+        row["route_wet_observation_matrix_status"] == ROUTE_MATRIX_ACCEPTED_STATUS
+        for row in matrix_rows
+    )
     accepted_observations = sum(
         row["accepted_observation_current"] == "true" for row in intake_rows
     )
-    status = (
-        DISPOSITION
-        if source_missing == 0
+    common_ready = (
+        source_missing == 0
         and release_dirty_blockers == 0
         and detector_blank_panel_status.get("disposition")
         == "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_PANEL_REFRESH_READY_PREFLIGHT_ONLY"
@@ -318,10 +325,13 @@ def build_payload() -> dict[str, Any]:
         and len(matrix_rows) == 2
         and len(updates) == 1
         and len(templates) == 14
-        and matrix_no_observations == 2
-        and accepted_observations == 0
-        else BLOCKED_DISPOSITION
     )
+    if common_ready and matrix_accepted == 2 and accepted_observations == len(intake_rows):
+        status = ACCEPTED_DISPOSITION
+    elif common_ready and matrix_no_observations == 2 and accepted_observations == 0:
+        status = DISPOSITION
+    else:
+        status = BLOCKED_DISPOSITION
     summary: dict[str, Any] = {
         "disposition": status,
         "artifact_id": ARTIFACT_ID,
@@ -342,6 +352,7 @@ def build_payload() -> dict[str, Any]:
         "promotion_update_rows": len(updates),
         "accepted_observation_rows": accepted_observations,
         "no_observation_matrix_rows": matrix_no_observations,
+        "accepted_observation_matrix_rows": matrix_accepted,
         "wet_pass_probability_current": False,
         "clogging_rate_current": False,
         "time_to_clog_current": False,
@@ -375,16 +386,25 @@ def build_payload() -> dict[str, Any]:
 
 def validate_payload(payload: dict[str, Any]) -> list[str]:
     summary = payload["summary"]
+    no_observation_ready = (
+        summary["disposition"] == DISPOSITION
+        and summary["accepted_observation_rows"] == 0
+        and summary["no_observation_matrix_rows"] == 2
+    )
+    accepted_simulation_ready = (
+        summary["disposition"] == ACCEPTED_DISPOSITION
+        and summary["accepted_observation_rows"] == summary["intake_rows"]
+        and summary["accepted_observation_matrix_rows"] == 2
+    )
     checks = {
-        "disposition pass": summary["disposition"] == DISPOSITION,
+        "disposition pass": no_observation_ready or accepted_simulation_ready,
         "source lock complete": summary["source_missing_rows"] == 0,
         "release scoped dirty blockers absent": summary["release_scoped_dirty_blocker_rows"] == 0,
         "fourteen intake rows": summary["intake_rows"] == 14,
         "two matrix rows": summary["route_observation_matrix_rows"] == 2,
         "fourteen template rows": summary["template_rows"] == 14,
         "one promotion update": summary["promotion_update_rows"] == 1,
-        "no accepted observations": summary["accepted_observation_rows"] == 0,
-        "two no-observation matrix rows": summary["no_observation_matrix_rows"] == 2,
+        "observation mode coherent": no_observation_ready or accepted_simulation_ready,
         "yield false": summary["yield_current"] is False,
         "wet pass false": summary["wet_pass_probability_current"] is False,
         "detection false": summary["detection_probability_current"] is False,
@@ -392,7 +412,8 @@ def validate_payload(payload: dict[str, Any]) -> list[str]:
     }
     for row in payload["route_observation_matrix_rows"]:
         checks[f"matrix no claim {row['matrix_row_id']}"] = (
-            row["route_wet_observation_matrix_status"] == ROUTE_MATRIX_NO_OBSERVATIONS_STATUS
+            row["route_wet_observation_matrix_status"]
+            in {ROUTE_MATRIX_NO_OBSERVATIONS_STATUS, ROUTE_MATRIX_ACCEPTED_STATUS}
             and row["yield_current"] == "false"
             and row["wet_pass_probability_current"] == "false"
             and row["detection_probability_current"] == "false"
@@ -426,7 +447,10 @@ def write_outputs(payload: dict[str, Any]) -> list[Path]:
         paths.append(path)
 
     status_path = OUTPUT_DIR / f"{PREFIX}_STATUS_20260701.json"
-    write_json_atomic(status_path, {"disposition": DISPOSITION, "summary": payload["summary"]})
+    write_json_atomic(
+        status_path,
+        {"disposition": payload["summary"]["disposition"], "summary": payload["summary"]},
+    )
     paths.append(status_path)
 
     report_path = OUTPUT_DIR / f"{PREFIX}_REPORT_20260701.json"
@@ -456,8 +480,8 @@ def report_markdown(payload: dict[str, Any]) -> str:
             f"- Intake rows: `{s['intake_rows']}`.",
             f"- Route observation matrix rows: `{s['route_observation_matrix_rows']}`.",
             f"- Observation template rows: `{s['template_rows']}`.",
-            "- No sidewall wet observations are present in this packet.",
-            "- Wet pass probability, clogging, recovery, yield, detection probability, and route score remain false.",
+            f"- Accepted simulation observation rows: `{s['accepted_observation_rows']}`.",
+            "- Wet pass probability, clogging, recovery, yield, detection probability, and route score remain false at this intake layer.",
             "",
         ]
     )
@@ -504,7 +528,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"FAIL: {failure}")
         return 1
     write_outputs(payload)
-    print(DISPOSITION)
+    print(payload["summary"]["disposition"])
     print(json.dumps(payload["summary"], sort_keys=True))
     return 0
 

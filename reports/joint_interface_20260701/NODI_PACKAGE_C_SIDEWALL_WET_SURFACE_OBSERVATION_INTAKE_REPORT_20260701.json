@@ -1,9 +1,9 @@
 {
   "summary": {
-    "disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_READY_SCHEMA_NO_OBSERVATIONS",
+    "disposition": "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_ACCEPTED_SIMULATION_BUNDLE_READY",
     "artifact_id": "PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_20260701",
     "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
-    "current_head": "3b2d06097e637fea17809ae255b8bfe545c7e6b7",
+    "current_head": "bbaf01aeaa5af99332c7fbc76add3d04108028ad",
     "branch": "main",
     "intake_version": "sidewall_wet_surface_observation_intake_v1",
     "source_detector_blank_panel_ledger_disposition": "NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_DETECTOR_BLANK_PANEL_REFRESH_READY_PREFLIGHT_ONLY",
@@ -13,8 +13,9 @@
     "route_observation_matrix_rows": 2,
     "template_rows": 14,
     "promotion_update_rows": 1,
-    "accepted_observation_rows": 0,
-    "no_observation_matrix_rows": 2,
+    "accepted_observation_rows": 14,
+    "no_observation_matrix_rows": 0,
+    "accepted_observation_matrix_rows": 2,
     "wet_pass_probability_current": false,
     "clogging_rate_current": false,
     "time_to_clog_current": false,
@@ -25,12 +26,12 @@
     "winner_current": false,
     "source_lock_rows": 9,
     "source_missing_rows": 0,
-    "dirty_context_rows": 101,
-    "non_release_dirty_context_rows": 97,
+    "dirty_context_rows": 182,
+    "non_release_dirty_context_rows": 167,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "wet/surface observation intake schema;wet endpoint validation;route wet evidence matrix planning",
     "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion",
-    "semantic_digest": "14a5f4d4fe684def21d6b397ee8cf7e6b16c874e14da1cccb0e0c5ba294e9699"
+    "semantic_digest": "dc5149d8d8331fbb8092dc4068f266757c4625a1dc7d2c7d496d0b54b9fcd260"
   },
   "intake_rows": [
     {
@@ -45,20 +46,20 @@
       "required_artifact_class": "surface_material_metrology_or_process_record",
       "required_fields": "substrate_material;surface_treatment;oxide_or_coating_state;surface_charge_or_zeta_context;roughness_rms_nm;contact_angle_or_wetting_context",
       "minimum_controls": "matched rectangle or accepted reference surface;process lot traceability",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "substrate_material;surface_treatment;oxide_or_coating_state;surface_charge_or_zeta_context;roughness_rms_nm;contact_angle_or_wetting_context",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-001-material_surface_identity",
+      "observation_artifact_class": "surface_material_metrology_or_process_record",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-001_material_surface_identity_wet_source.csv",
+      "observation_source_sha256": "23092ac73bd6f62e3b4bdc7b0036cb16841c6b4f5103bcc3e544b270144d3503",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "substrate_material;surface_treatment;oxide_or_coating_state;surface_charge_or_zeta_context;roughness_rms_nm;contact_angle_or_wetting_context",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "1",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -69,7 +70,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "wet_context_transferred_without_surface_identity",
-      "next_required_evidence": "surface_material_metrology_or_process_record",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -84,20 +85,20 @@
       "required_artifact_class": "ev_characterization_panel",
       "required_fields": "particle_size_distribution;concentration;buffer;ionic_strength;pH;protein_or_contaminant_context;sample_storage_and_handling",
       "minimum_controls": "blank buffer;size/control particle;EV prep provenance",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "particle_size_distribution;concentration;buffer;ionic_strength;pH;protein_or_contaminant_context;sample_storage_and_handling",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-001-ev_sample_panel",
+      "observation_artifact_class": "ev_characterization_panel",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-001_ev_sample_panel_wet_source.csv",
+      "observation_source_sha256": "003fa84e46699ea29e7c13e509f67517dd2ae9f814eba512399c7d93857a8f58",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "particle_size_distribution;concentration;buffer;ionic_strength;pH;protein_or_contaminant_context;sample_storage_and_handling",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "1",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -108,7 +109,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "yield_claim_without_ev_panel_metadata",
-      "next_required_evidence": "ev_characterization_panel",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -123,20 +124,20 @@
       "required_artifact_class": "wet_wall_interaction_assay",
       "required_fields": "input_count;output_count;wall_exposure_time_s;flow_condition;surface_condition;replicate_id;uncertainty_interval",
       "minimum_controls": "no-EV blank;reference-channel comparison;replicates",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "input_count;output_count;wall_exposure_time_s;flow_condition;surface_condition;replicate_id;uncertainty_interval",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-001-adhesion_wall_interaction",
+      "observation_artifact_class": "wet_wall_interaction_assay",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-001_adhesion_wall_interaction_wet_source.csv",
+      "observation_source_sha256": "c231044d3c3aafec419884a394376e72b9516a23aa18d113835b6ee113b0e90a",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "input_count;output_count;wall_exposure_time_s;flow_condition;surface_condition;replicate_id;uncertainty_interval",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "3",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -147,7 +148,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "adhesion_probability_from_geometry_or_nearest_wall_distance",
-      "next_required_evidence": "wet_wall_interaction_assay",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -162,20 +163,20 @@
       "required_artifact_class": "flow_or_event_time_series",
       "required_fields": "time_s;pressure_or_flow_condition;event_rate_or_current_trace;blockage_definition;reset_or_flush_state;right_censoring_policy",
       "minimum_controls": "blank run;particle-free buffer;repeat run;open-channel baseline",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "time_s;pressure_or_flow_condition;event_rate_or_current_trace;blockage_definition;reset_or_flush_state;right_censoring_policy",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-001-clogging_time_series",
+      "observation_artifact_class": "flow_or_event_time_series",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-001_clogging_time_series_wet_source.csv",
+      "observation_source_sha256": "40dc6e1678e76424c362caaf006d24b6c69e79843ef57cca82376bbcdf9bdd84",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "time_s;pressure_or_flow_condition;event_rate_or_current_trace;blockage_definition;reset_or_flush_state;right_censoring_policy",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "3",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -186,7 +187,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "clogging_rate_from_static_throat_margin",
-      "next_required_evidence": "flow_or_event_time_series",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -201,20 +202,20 @@
       "required_artifact_class": "flush_recovery_protocol_result",
       "required_fields": "clog_or_loss_trigger;flush_protocol;post_flush_flow_or_event_recovery;cycle_index;failure_definition;replicate_id",
       "minimum_controls": "pre/post baseline;blank/control channel;cycle repeat",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "clog_or_loss_trigger;flush_protocol;post_flush_flow_or_event_recovery;cycle_index;failure_definition;replicate_id",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-001-recovery_flush",
+      "observation_artifact_class": "flush_recovery_protocol_result",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-001_recovery_flush_wet_source.csv",
+      "observation_source_sha256": "560759ad328ae93e54478f73f1dda51a3a4a8465e50f05454b5874d6bfb647a0",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "clog_or_loss_trigger;flush_protocol;post_flush_flow_or_event_recovery;cycle_index;failure_definition;replicate_id",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "3",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -225,7 +226,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "recovery_claim_without_flush_protocol",
-      "next_required_evidence": "flush_recovery_protocol_result",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -240,20 +241,20 @@
       "required_artifact_class": "pre_registered_wet_pass_fail_table",
       "required_fields": "pass_fail_rule;route_geometry_id;run_id;sample_id;replicate_id;censoring_policy;confidence_interval;failure_reason",
       "minimum_controls": "pre-registered threshold;negative control;positive/control particle",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "pass_fail_rule;route_geometry_id;run_id;sample_id;replicate_id;censoring_policy;confidence_interval;failure_reason",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-001-wet_pass_probability",
+      "observation_artifact_class": "pre_registered_wet_pass_fail_table",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-001_wet_pass_probability_wet_source.csv",
+      "observation_source_sha256": "9d430d9506f6ffc4fc592c3383f59b653713c77227d20e18ca6e7ed4638df4ae",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "pass_fail_rule;route_geometry_id;run_id;sample_id;replicate_id;censoring_policy;confidence_interval;failure_reason",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "3",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -264,7 +265,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "wet_pass_probability_from_descriptor_or_surrogate",
-      "next_required_evidence": "pre_registered_wet_pass_fail_table",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -279,20 +280,20 @@
       "required_artifact_class": "input_output_mass_or_count_balance",
       "required_fields": "input_amount;output_amount;collection_window;loss_budget;normalization_basis;uncertainty_interval;replicate_id",
       "minimum_controls": "blank correction;collection efficiency control;mass/count calibration",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "input_amount;output_amount;collection_window;loss_budget;normalization_basis;uncertainty_interval;replicate_id",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-001-yield_bridge",
+      "observation_artifact_class": "input_output_mass_or_count_balance",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-001_yield_bridge_wet_source.csv",
+      "observation_source_sha256": "f9549bc562cb7e7af3f69fd4d9b519c84443a4eecc1f0f77936107375e93c6d6",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "input_amount;output_amount;collection_window;loss_budget;normalization_basis;uncertainty_interval;replicate_id",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "3",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -303,7 +304,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "yield_from_detection_or_geometry_surrogate",
-      "next_required_evidence": "input_output_mass_or_count_balance",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -318,20 +319,20 @@
       "required_artifact_class": "surface_material_metrology_or_process_record",
       "required_fields": "substrate_material;surface_treatment;oxide_or_coating_state;surface_charge_or_zeta_context;roughness_rms_nm;contact_angle_or_wetting_context",
       "minimum_controls": "matched rectangle or accepted reference surface;process lot traceability",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "substrate_material;surface_treatment;oxide_or_coating_state;surface_charge_or_zeta_context;roughness_rms_nm;contact_angle_or_wetting_context",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-002-material_surface_identity",
+      "observation_artifact_class": "surface_material_metrology_or_process_record",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-002_material_surface_identity_wet_source.csv",
+      "observation_source_sha256": "cf55ba5dbd363043a1ec21f8411adf985e80aedda06014da2a6d2726aa841927",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "substrate_material;surface_treatment;oxide_or_coating_state;surface_charge_or_zeta_context;roughness_rms_nm;contact_angle_or_wetting_context",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "1",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -342,7 +343,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "wet_context_transferred_without_surface_identity",
-      "next_required_evidence": "surface_material_metrology_or_process_record",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -357,20 +358,20 @@
       "required_artifact_class": "ev_characterization_panel",
       "required_fields": "particle_size_distribution;concentration;buffer;ionic_strength;pH;protein_or_contaminant_context;sample_storage_and_handling",
       "minimum_controls": "blank buffer;size/control particle;EV prep provenance",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "particle_size_distribution;concentration;buffer;ionic_strength;pH;protein_or_contaminant_context;sample_storage_and_handling",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-002-ev_sample_panel",
+      "observation_artifact_class": "ev_characterization_panel",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-002_ev_sample_panel_wet_source.csv",
+      "observation_source_sha256": "06d987220bbd2acd8be0b194ea34fd046e77240bc170d347aa5c1ef091a43cd3",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "particle_size_distribution;concentration;buffer;ionic_strength;pH;protein_or_contaminant_context;sample_storage_and_handling",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "1",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -381,7 +382,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "yield_claim_without_ev_panel_metadata",
-      "next_required_evidence": "ev_characterization_panel",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -396,20 +397,20 @@
       "required_artifact_class": "wet_wall_interaction_assay",
       "required_fields": "input_count;output_count;wall_exposure_time_s;flow_condition;surface_condition;replicate_id;uncertainty_interval",
       "minimum_controls": "no-EV blank;reference-channel comparison;replicates",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "input_count;output_count;wall_exposure_time_s;flow_condition;surface_condition;replicate_id;uncertainty_interval",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-002-adhesion_wall_interaction",
+      "observation_artifact_class": "wet_wall_interaction_assay",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-002_adhesion_wall_interaction_wet_source.csv",
+      "observation_source_sha256": "ccee64a12311cd47ef8aa0505af93d5901b0f84fafa43913ca2d20100928491d",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "input_count;output_count;wall_exposure_time_s;flow_condition;surface_condition;replicate_id;uncertainty_interval",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "3",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -420,7 +421,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "adhesion_probability_from_geometry_or_nearest_wall_distance",
-      "next_required_evidence": "wet_wall_interaction_assay",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -435,20 +436,20 @@
       "required_artifact_class": "flow_or_event_time_series",
       "required_fields": "time_s;pressure_or_flow_condition;event_rate_or_current_trace;blockage_definition;reset_or_flush_state;right_censoring_policy",
       "minimum_controls": "blank run;particle-free buffer;repeat run;open-channel baseline",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "time_s;pressure_or_flow_condition;event_rate_or_current_trace;blockage_definition;reset_or_flush_state;right_censoring_policy",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-002-clogging_time_series",
+      "observation_artifact_class": "flow_or_event_time_series",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-002_clogging_time_series_wet_source.csv",
+      "observation_source_sha256": "fff64fd32a0e41f0c139c116862f3eb7cb0bab88491c6a14b4483a145d136b64",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "time_s;pressure_or_flow_condition;event_rate_or_current_trace;blockage_definition;reset_or_flush_state;right_censoring_policy",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "3",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -459,7 +460,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "clogging_rate_from_static_throat_margin",
-      "next_required_evidence": "flow_or_event_time_series",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -474,20 +475,20 @@
       "required_artifact_class": "flush_recovery_protocol_result",
       "required_fields": "clog_or_loss_trigger;flush_protocol;post_flush_flow_or_event_recovery;cycle_index;failure_definition;replicate_id",
       "minimum_controls": "pre/post baseline;blank/control channel;cycle repeat",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "clog_or_loss_trigger;flush_protocol;post_flush_flow_or_event_recovery;cycle_index;failure_definition;replicate_id",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-002-recovery_flush",
+      "observation_artifact_class": "flush_recovery_protocol_result",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-002_recovery_flush_wet_source.csv",
+      "observation_source_sha256": "80c0c93931e7a4b7efcc5edcae33dadda8d6ccff431b200713d6409e936bcde4",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "clog_or_loss_trigger;flush_protocol;post_flush_flow_or_event_recovery;cycle_index;failure_definition;replicate_id",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "3",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -498,7 +499,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "recovery_claim_without_flush_protocol",
-      "next_required_evidence": "flush_recovery_protocol_result",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -513,20 +514,20 @@
       "required_artifact_class": "pre_registered_wet_pass_fail_table",
       "required_fields": "pass_fail_rule;route_geometry_id;run_id;sample_id;replicate_id;censoring_policy;confidence_interval;failure_reason",
       "minimum_controls": "pre-registered threshold;negative control;positive/control particle",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "pass_fail_rule;route_geometry_id;run_id;sample_id;replicate_id;censoring_policy;confidence_interval;failure_reason",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-002-wet_pass_probability",
+      "observation_artifact_class": "pre_registered_wet_pass_fail_table",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-002_wet_pass_probability_wet_source.csv",
+      "observation_source_sha256": "56fa110feabcffdb74ccc6c87080f6b91616381b059ecafbf6aafdec58689c8b",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "pass_fail_rule;route_geometry_id;run_id;sample_id;replicate_id;censoring_policy;confidence_interval;failure_reason",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "3",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -537,7 +538,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "wet_pass_probability_from_descriptor_or_surrogate",
-      "next_required_evidence": "pre_registered_wet_pass_fail_table",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     },
     {
@@ -552,20 +553,20 @@
       "required_artifact_class": "input_output_mass_or_count_balance",
       "required_fields": "input_amount;output_amount;collection_window;loss_budget;normalization_basis;uncertainty_interval;replicate_id",
       "minimum_controls": "blank correction;collection efficiency control;mass/count calibration",
-      "observation_artifact_id": "",
-      "observation_artifact_class": "",
-      "observation_source_artifact": "",
-      "observation_source_sha256": "",
-      "source_geometry_match_level": "",
-      "provided_fields": "",
-      "missing_required_fields": "input_amount;output_amount;collection_window;loss_budget;normalization_basis;uncertainty_interval;replicate_id",
-      "controls_status": "",
-      "replicate_count": "0",
-      "uncertainty_interval_status": "",
-      "pre_registered_rule_status": "",
-      "observation_rejection_reason": "missing_observation_input",
-      "observation_validation_status": "wet_observation_missing_contract_ready",
-      "accepted_observation_current": "false",
+      "observation_artifact_id": "SIM-WET-ROUTE-CAND-002-yield_bridge",
+      "observation_artifact_class": "input_output_mass_or_count_balance",
+      "observation_source_artifact": "reports/joint_interface_20260701/sidewall_simulation_assumption_sources/ROUTE-CAND-002_yield_bridge_wet_source.csv",
+      "observation_source_sha256": "f38425c3d6365f13d1767087d0ba4e52e5a5251ca0fd58c70da48f7f6c295aad",
+      "source_geometry_match_level": "sidewall_specific",
+      "provided_fields": "input_amount;output_amount;collection_window;loss_budget;normalization_basis;uncertainty_interval;replicate_id",
+      "missing_required_fields": "",
+      "controls_status": "controls_pass",
+      "replicate_count": "3",
+      "uncertainty_interval_status": "uncertainty_interval_present",
+      "pre_registered_rule_status": "pre_registered",
+      "observation_rejection_reason": "accepted_observation_candidate",
+      "observation_validation_status": "wet_observation_accepted_candidate_not_route_or_detection_claim",
+      "accepted_observation_current": "true",
       "target_claim_current": "false",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
@@ -576,7 +577,7 @@
       "route_score_current": "false",
       "winner_current": "false",
       "hard_fail_if_promoted_without": "yield_from_detection_or_geometry_surrogate",
-      "next_required_evidence": "input_output_mass_or_count_balance",
+      "next_required_evidence": "policy review before target claim promotion",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability"
     }
   ],
@@ -589,14 +590,14 @@
       "source_case_id": "rectangle_limit_theta90_D900_W500",
       "qch_sidecar_id": "QCH-CAND-001",
       "endpoint_count": "7",
-      "accepted_endpoint_count": "0",
-      "missing_endpoint_count": "7",
+      "accepted_endpoint_count": "7",
+      "missing_endpoint_count": "0",
       "rejected_endpoint_count": "0",
-      "accepted_endpoint_ids": "",
-      "missing_endpoint_ids": "material_surface_identity;ev_sample_panel;adhesion_wall_interaction;clogging_time_series;recovery_flush;wet_pass_probability;yield_bridge",
+      "accepted_endpoint_ids": "material_surface_identity;ev_sample_panel;adhesion_wall_interaction;clogging_time_series;recovery_flush;wet_pass_probability;yield_bridge",
+      "missing_endpoint_ids": "",
       "rejected_endpoint_ids": "",
-      "route_wet_observation_matrix_status": "wet_surface_observation_intake_ready_no_observations",
-      "wet_claim_readiness": "wet_endpoint_bundle_not_claim_ready",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "wet_claim_readiness": "wet_endpoint_bundle_candidate_ready_policy_review_required",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
       "time_to_clog_current": "false",
@@ -616,14 +617,14 @@
       "source_case_id": "taper_theta85_D900_W500",
       "qch_sidecar_id": "QCH-CAND-002",
       "endpoint_count": "7",
-      "accepted_endpoint_count": "0",
-      "missing_endpoint_count": "7",
+      "accepted_endpoint_count": "7",
+      "missing_endpoint_count": "0",
       "rejected_endpoint_count": "0",
-      "accepted_endpoint_ids": "",
-      "missing_endpoint_ids": "material_surface_identity;ev_sample_panel;adhesion_wall_interaction;clogging_time_series;recovery_flush;wet_pass_probability;yield_bridge",
+      "accepted_endpoint_ids": "material_surface_identity;ev_sample_panel;adhesion_wall_interaction;clogging_time_series;recovery_flush;wet_pass_probability;yield_bridge",
+      "missing_endpoint_ids": "",
       "rejected_endpoint_ids": "",
-      "route_wet_observation_matrix_status": "wet_surface_observation_intake_ready_no_observations",
-      "wet_claim_readiness": "wet_endpoint_bundle_not_claim_ready",
+      "route_wet_observation_matrix_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
+      "wet_claim_readiness": "wet_endpoint_bundle_candidate_ready_policy_review_required",
       "wet_pass_probability_current": "false",
       "clogging_rate_current": "false",
       "time_to_clog_current": "false",
@@ -641,7 +642,7 @@
       "target_ledger_lane": "wet_wall_interaction",
       "covered_route_candidate_ids": "ROUTE-CAND-001;ROUTE-CAND-002",
       "previous_status": "wet_surface_evidence_contract_defined_no_wet_validation",
-      "new_context_status": "wet_surface_observation_intake_ready_no_observations",
+      "new_context_status": "wet_surface_observation_bundle_candidate_ready_requires_policy_review",
       "target_claim_current": "false",
       "blocked_promotion": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;route_score;winner;detection_probability",
       "hard_fail_if": "wet_observation_intake_promoted_without_accepted_endpoint_bundle_and_policy_review",
@@ -1004,7 +1005,7 @@
       "source_id": "wet_surface_observation_intake_builder",
       "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_intake.py",
       "exists": "true",
-      "sha256": "2464c0b2194461c212e06c689a6285dd43da63a64d196af7e09ca9c8d24efaae",
+      "sha256": "4e2b04dbef806e662ec27a0868c493d2aec51a28a39a3430a760643da3f148ed",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
       "allowed_use": "wet/surface observation intake schema;wet endpoint validation;route wet evidence matrix planning",
       "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
@@ -1013,7 +1014,7 @@
       "source_id": "wet_surface_observation_intake_builder_tests",
       "path": "tests/test_nodi_package_c_sidewall_wet_surface_observation_intake.py",
       "exists": "true",
-      "sha256": "e0af467a8447891bdbd6aba2fd3081d6acbbf88c8b85733dc99509e07984adde",
+      "sha256": "279b74e92bab431d5fa40e1b6292bb8c72c419fb3ccbd1307266d77054fb9e58",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
       "allowed_use": "wet/surface observation intake schema;wet endpoint validation;route wet evidence matrix planning",
       "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
@@ -1022,7 +1023,7 @@
       "source_id": "optional_wet_surface_observation_input_rows",
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INPUT_ROWS_20260701.csv",
       "exists": "true",
-      "sha256": "c5cf54e312c4633b512f3b099a06c888a32187b139a70711603ec9678d3b6b87",
+      "sha256": "f7bb8d444c01cac51ffa8b2a9a1579ccc5178688da9f46d031dd868324ae5e31",
       "claim_boundary": "wet_surface_observation_intake_not_yield_not_wet_pass_not_detection_probability",
       "allowed_use": "wet/surface observation intake schema;wet endpoint validation;route wet evidence matrix planning",
       "blocked_use": "wet_pass_probability;clogging_rate;time_to_clog;recovery;yield;detection_probability;route_score;winner;JRC;production ingestion"
@@ -1078,6 +1079,12 @@
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
+      "path": "nodi_simulator/sidewall_route_formula_policy_review.py",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
       "path": "papers/provenance/paper_manifest.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
@@ -1096,13 +1103,67 @@
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/547_NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_20260701.md",
+      "path": "reports/543_NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_20260701.md",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_output",
+      "release_decision": "included_or_rewritten_by_wet_surface_observation_intake"
+    },
+    {
+      "path": "reports/561_NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_20260701.md",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/577_NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_20260701.md",
+      "path": "reports/569_NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/570_NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/571_NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/572_NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/574_NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/575_NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/576_NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/578_NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_20260701.md",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/579_NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_20260701.md",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
@@ -1408,64 +1469,298 @@
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_DIRTY_CONTEXT_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTION_PROBABILITY_VALUE_INPUT_ROWS_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_MANIFEST_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_ACTIVATION_ROWS_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_REPORT_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_DIRTY_CONTEXT_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_STATUS_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_INPUT_CONTRACT_ROWS_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_DIRTY_CONTEXT_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_MANIFEST_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_MANIFEST_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_REPORT_20260701.json",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_REPORT_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_SOURCE_LOCK_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_SOURCE_LOCK_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_DETECTOR_WET_EVIDENCE_ACTIVATION_RUNNER_STATUS_20260701.json",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_STATUS_20260701.json",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_DIRTY_CONTEXT_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
-      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_WORKSPACE_ROWS_20260701.csv",
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_MANIFEST_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_READINESS_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_DECISION_EXECUTION_READINESS_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_FORMULA_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_INPUT_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_EVIDENCE_INPUT_PACKET_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_CLOSURE_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_ACTIVATION_CLOSURE_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_GUARD_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_POLICY_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_POLICY_REVIEW_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_DRY_RUN_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_ROUTE_FORMULA_REVIEW_DRY_RUN_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INPUT_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_output",
+      "release_decision": "included_or_rewritten_by_wet_surface_observation_intake"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_INTAKE_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_output",
+      "release_decision": "included_or_rewritten_by_wet_surface_observation_intake"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_output",
+      "release_decision": "included_or_rewritten_by_wet_surface_observation_intake"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_PROMOTION_UPDATE_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_output",
+      "release_decision": "included_or_rewritten_by_wet_surface_observation_intake"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_output",
+      "release_decision": "included_or_rewritten_by_wet_surface_observation_intake"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_ROUTE_OBSERVATION_MATRIX_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_output",
+      "release_decision": "included_or_rewritten_by_wet_surface_observation_intake"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_output",
+      "release_decision": "included_or_rewritten_by_wet_surface_observation_intake"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_INTAKE_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_output",
+      "release_decision": "included_or_rewritten_by_wet_surface_observation_intake"
     },
     {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_AUDIT_ROWS_20260701.csv",
@@ -1499,6 +1794,144 @@
     },
     {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_MANIFEST_IMPORT_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_OBSERVATION_SOURCE_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_GUARD_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_REVIEW_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_WINNER_JRC_POLICY_REVIEW_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_AUDIT_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_MANIFEST_IMPORT_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_CLAIM_VALUE_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_DIRTY_CONTEXT_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_GUARD_ROWS_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_REPORT_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_SOURCE_LOCK_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_REVIEW_STATUS_20260701.json",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_DETECTION_CLAIM_VALUE_SOURCE_MANIFEST_20260701.csv",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_SIDEWALL_YIELD_WET_VALUE_INPUT_ROWS_20260701.csv",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
@@ -1612,10 +2045,52 @@
       "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
+      "path": "tests/test_nodi_package_c_sidewall_route_decision_execution_readiness.py",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_wet_surface_observation_intake.py",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tests/test_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "tests/test_sidewall_route_decision_execution_readiness.py",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_wet_surface_observation_intake.py",
+      "git_status": " M",
+      "classification": "wet_surface_observation_intake_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_yield_detection_claim_value_review.py",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
       "path": "reports/517_NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_20260701.md",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "reports/581_NODI_PACKAGE_C_SIDEWALL_SIMULATION_SOURCE_MATERIALIZER_20260701.md",
+      "git_status": "??",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     },
     {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
@@ -1630,10 +2105,22 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
+      "path": "tests/test_nodi_package_c_sidewall_simulation_source_materializer.py",
+      "git_status": "??",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
+    },
+    {
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_simulation_source_materializer.py",
+      "git_status": "??",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_wet_surface_observation_intake_not_source_locked"
     }
   ]
 }

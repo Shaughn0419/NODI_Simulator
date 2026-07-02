@@ -94,7 +94,7 @@ def test_route_decision_can_reach_policy_review_ready_when_evidence_and_componen
     assert {guard.claim_promotion_allowed_now for guard in guards} == {False}
 
 
-def test_route_decision_can_carry_route_score_and_winner_policy_status() -> None:
+def test_route_decision_can_carry_simulation_route_score_and_top_candidate_status() -> None:
     rows, guards = build_route_decision_execution_readiness(
         readiness_board_rows=_board_rows(),
         solver_packet_status={"disposition": "SOLVER"},
@@ -129,36 +129,35 @@ def test_route_decision_can_carry_route_score_and_winner_policy_status() -> None
         route_formula_policy_rows=[
             {
                 "route_candidate_id": "R1",
-                "route_score_current": "True",
-                "route_score_activation_allowed_now": "True",
+                "simulation_route_score_candidate_current": "True",
             },
             {
                 "route_candidate_id": "R2",
-                "route_score_current": "True",
-                "route_score_activation_allowed_now": "True",
+                "simulation_route_score_candidate_current": "True",
             },
         ],
         winner_jrc_policy_status={"disposition": "WINNER-POLICY"},
         winner_jrc_policy_rows=[
-            {"route_candidate_id": "R1", "winner_current": "True", "JRC_current": "True"},
-            {"route_candidate_id": "R2", "winner_current": "False", "JRC_current": "False"},
+            {"route_candidate_id": "R1", "simulation_top_candidate_current": "True"},
+            {"route_candidate_id": "R2", "simulation_top_candidate_current": "False"},
         ],
     )
 
     assert {row.execution_readiness_status for row in rows} == {
         "winner_jrc_ready_for_integrated_yield_detection_review"
     }
-    assert {row.route_score_current for row in rows} == {True}
-    assert sum(row.winner_current for row in rows) == 1
-    assert sum(row.JRC_current for row in rows) == 1
+    assert {row.route_score_candidate_ready for row in rows} == {True}
+    assert {row.route_score_current for row in rows} == {False}
+    assert sum(row.winner_current for row in rows) == 0
+    assert sum(row.JRC_current for row in rows) == 0
     by_target = {guard.promotion_target: guard for guard in guards}
-    assert by_target["route_score"].claim_promotion_allowed_now is True
-    assert by_target["winner_JRC"].claim_promotion_allowed_now is True
+    assert by_target["route_score"].claim_promotion_allowed_now is False
+    assert by_target["winner_JRC"].claim_promotion_allowed_now is False
     assert by_target["yield"].claim_promotion_allowed_now is False
     assert by_target["detection_probability"].claim_promotion_allowed_now is False
 
 
-def test_route_decision_can_carry_yield_detection_value_status() -> None:
+def test_route_decision_can_carry_simulation_yield_detection_value_status() -> None:
     rows, guards = build_route_decision_execution_readiness(
         readiness_board_rows=_board_rows(),
         solver_packet_status={"disposition": "SOLVER"},
@@ -175,32 +174,30 @@ def test_route_decision_can_carry_yield_detection_value_status() -> None:
         route_formula_policy_rows=[
             {
                 "route_candidate_id": "R1",
-                "route_score_current": "True",
-                "route_score_activation_allowed_now": "True",
+                "simulation_route_score_candidate_current": "True",
             },
             {
                 "route_candidate_id": "R2",
-                "route_score_current": "True",
-                "route_score_activation_allowed_now": "True",
+                "simulation_route_score_candidate_current": "True",
             },
         ],
         winner_jrc_policy_rows=[
-            {"route_candidate_id": "R1", "winner_current": "True", "JRC_current": "True"},
-            {"route_candidate_id": "R2", "winner_current": "False", "JRC_current": "False"},
+            {"route_candidate_id": "R1", "simulation_top_candidate_current": "True"},
+            {"route_candidate_id": "R2", "simulation_top_candidate_current": "False"},
         ],
         yield_detection_claim_value_status={"disposition": "CLAIM-VALUE"},
         yield_detection_claim_value_rows=[
             {
                 "route_candidate_id": "R1",
-                "yield_current": "True",
-                "detection_probability_current": "True",
-                "wet_pass_probability_current": "True",
+                "yield_simulation_candidate_current": "True",
+                "detection_probability_simulation_candidate_current": "True",
+                "wet_pass_probability_simulation_candidate_current": "True",
             },
             {
                 "route_candidate_id": "R2",
-                "yield_current": "True",
-                "detection_probability_current": "True",
-                "wet_pass_probability_current": "True",
+                "yield_simulation_candidate_current": "True",
+                "detection_probability_simulation_candidate_current": "True",
+                "wet_pass_probability_simulation_candidate_current": "True",
             },
         ],
     )
@@ -209,10 +206,10 @@ def test_route_decision_can_carry_yield_detection_value_status() -> None:
         "route_yield_detection_claim_values_ready_for_integrated_review"
     }
     assert {row.yield_detection_values_ready for row in rows} == {True}
-    assert {row.yield_current for row in rows} == {True}
-    assert {row.detection_probability_current for row in rows} == {True}
-    assert {row.wet_pass_probability_current for row in rows} == {True}
+    assert {row.yield_current for row in rows} == {False}
+    assert {row.detection_probability_current for row in rows} == {False}
+    assert {row.wet_pass_probability_current for row in rows} == {False}
     by_target = {guard.promotion_target: guard for guard in guards}
-    assert by_target["yield"].claim_promotion_allowed_now is True
-    assert by_target["detection_probability"].claim_promotion_allowed_now is True
+    assert by_target["yield"].claim_promotion_allowed_now is False
+    assert by_target["detection_probability"].claim_promotion_allowed_now is False
     assert by_target["production_ingestion"].claim_promotion_allowed_now is False

@@ -280,12 +280,16 @@ def build_payload() -> dict[str, Any]:
         "yield_template_rows": len(yield_templates),
         "detection_input_present": DETECTION_VALUE_INPUT_ROWS.exists(),
         "yield_input_present": YIELD_VALUE_INPUT_ROWS.exists(),
-        "detection_probability_current_rows": detection_ready,
-        "yield_current_rows": yield_ready,
-        "wet_pass_probability_current_rows": wet_pass_ready,
         "detection_probability_simulation_candidate_rows": detection_ready,
         "yield_simulation_candidate_rows": yield_ready,
         "wet_pass_probability_simulation_candidate_rows": wet_pass_ready,
+        "detection_probability_current_rows": sum(
+            row["detection_probability_current"] for row in claim_dicts
+        ),
+        "yield_current_rows": sum(row["yield_current"] for row in claim_dicts),
+        "wet_pass_probability_current_rows": sum(
+            row["wet_pass_probability_current"] for row in claim_dicts
+        ),
         "final_claim_current_rows": sum(
             row["detection_probability_current"]
             or row["yield_current"]
@@ -407,7 +411,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
             "",
             f"Detection input present: `{s['detection_input_present']}`.",
             f"Yield input present: `{s['yield_input_present']}`.",
-            f"Simulation detection/yield/wet-pass candidate rows: `{s['detection_probability_current_rows']}` / `{s['yield_current_rows']}` / `{s['wet_pass_probability_current_rows']}`.",
+            f"Simulation detection/yield/wet-pass candidate rows: `{s['detection_probability_simulation_candidate_rows']}` / `{s['yield_simulation_candidate_rows']}` / `{s['wet_pass_probability_simulation_candidate_rows']}`.",
+            f"Final detection/yield/wet-pass current rows: `{s['detection_probability_current_rows']}` / `{s['yield_current_rows']}` / `{s['wet_pass_probability_current_rows']}`.",
             f"Final claim current rows: `{s['final_claim_current_rows']}`.",
             "",
             "This packet defines the simulation-derived numeric value rows required before detection probability, yield, or wet-pass claims can become current. Templates are not evidence.",
