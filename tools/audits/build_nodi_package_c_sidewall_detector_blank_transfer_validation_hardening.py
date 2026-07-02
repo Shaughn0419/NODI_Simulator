@@ -182,6 +182,11 @@ def release_scoped_path(path: str) -> bool:
 
 def dirty_context_rows() -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
+    source_paths = {
+        display_path(source_path)
+        for source_path in SOURCE_FILES.values()
+        if source_path.exists()
+    }
     for line in git_status_lines():
         path = git_path_from_status_line(line)
         if path in STALE_POST_RC2_PATHS:
@@ -190,6 +195,11 @@ def dirty_context_rows() -> list[dict[str, str]]:
         elif path in BUILD_EDIT_PATHS:
             classification = "detector_blank_transfer_validation_hardening_build_edit"
             release_decision = "included_in_commit_scope_before_publish"
+        elif path in source_paths:
+            classification = "source_locked_upstream_dirty_context"
+            release_decision = (
+                "allowed_when_same_commit_scope_and_bound_by_source_lock_sha"
+            )
         elif path.startswith(
             "reports/joint_interface_20260701/"
             "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_VALIDATION_HARDENING_"
@@ -255,8 +265,15 @@ def _complete_transfer_row(
         "route_candidate_id": route_candidate_id,
         "transfer_artifact_id": f"fixture-transfer-{route_candidate_id}",
         "blank_trace_artifact_id": f"fixture-blank-{route_candidate_id}",
+        "blank_trace_artifact_path": (
+            f"fixture_not_evidence/detector_blank/{route_candidate_id}/blank_trace.csv"
+        ),
         "blank_trace_sha256": blank_sha,
         "detector_response_artifact_id": f"fixture-detector-{route_candidate_id}",
+        "detector_response_artifact_path": (
+            f"fixture_not_evidence/detector_blank/{route_candidate_id}/"
+            "detector_response.csv"
+        ),
         "detector_response_sha256": detector_sha,
         "blank_trace_geometry_match_level": geometry_match,
         "detector_response_model_id": "fixture-detector-response-v1",
@@ -427,6 +444,10 @@ def build_payload() -> dict[str, Any]:
         "dirty_context_rows": len(dirty_context),
         "non_release_dirty_context_rows": sum(
             row["classification"] == "non_release_dirty_context" for row in dirty_context
+        ),
+        "source_locked_upstream_dirty_context_rows": sum(
+            row["classification"] == "source_locked_upstream_dirty_context"
+            for row in dirty_context
         ),
         "release_scoped_dirty_blocker_rows": release_dirty_blockers,
         "allowed_use": ALLOWED_USE,

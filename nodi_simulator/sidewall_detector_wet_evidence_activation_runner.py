@@ -86,6 +86,7 @@ def build_detector_wet_evidence_activation_runner(
     wet_input_present: bool = False,
     detector_input_path: str = "",
     wet_input_path: str = "",
+    detector_artifact_root: str | Path | None = None,
     wet_artifact_root: str | Path | None = None,
 ) -> tuple[
     list[SidewallDetectorWetEvidenceActivationRouteRow],
@@ -94,6 +95,7 @@ def build_detector_wet_evidence_activation_runner(
     _detector_intake, detector_matrix = build_detector_blank_transfer_intake(
         panel_matrix_rows=detector_panel_matrix_rows,
         transfer_input_rows=detector_transfer_input_rows or [],
+        artifact_root=detector_artifact_root,
     )
     _wet_intake, wet_matrix = build_wet_surface_observation_intake(
         contract_rows=wet_contract_rows,

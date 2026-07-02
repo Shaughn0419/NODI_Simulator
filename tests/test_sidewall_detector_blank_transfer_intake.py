@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path
+
+from nodi_simulator.realism_v2_io import sha256_file
 from nodi_simulator.sidewall_detector_blank_transfer_intake import (
     ROUTE_MATRIX_ACCEPTED_STATUS,
     ROUTE_MATRIX_NO_TRANSFER_STATUS,
@@ -83,6 +86,60 @@ def test_detector_blank_transfer_intake_accepts_complete_sidewall_transfer() -> 
     assert len(accepted_matrix) == 1
 
 
+def test_detector_blank_transfer_intake_validates_source_artifact_hash(
+    tmp_path: Path,
+) -> None:
+    blank_path, blank_sha = _source_artifact(tmp_path, "blank_trace.csv")
+    detector_path, detector_sha = _source_artifact(tmp_path, "detector_response.csv")
+    intake_rows, _matrix_rows = build_detector_blank_transfer_intake(
+        panel_matrix_rows=_panel_rows(),
+        transfer_input_rows=[
+            _complete_transfer_row(
+                blank_trace_artifact_path=blank_path.name,
+                blank_trace_sha256=blank_sha,
+                detector_response_artifact_path=detector_path.name,
+                detector_response_sha256=detector_sha,
+            )
+        ],
+        artifact_root=tmp_path,
+    )
+
+    accepted = [
+        row for row in intake_rows if row.transfer_validation_status == TRANSFER_ACCEPTED_STATUS
+    ]
+    assert len(accepted) == 1
+    assert accepted[0].blank_trace_artifact_path == blank_path.name
+    assert accepted[0].detector_response_artifact_path == detector_path.name
+
+
+def test_detector_blank_transfer_intake_rejects_source_hash_mismatch(
+    tmp_path: Path,
+) -> None:
+    blank_path, blank_sha = _source_artifact(tmp_path, "blank_trace.csv")
+    detector_path, _detector_sha = _source_artifact(tmp_path, "detector_response.csv")
+    intake_rows, _matrix_rows = build_detector_blank_transfer_intake(
+        panel_matrix_rows=_panel_rows(),
+        transfer_input_rows=[
+            _complete_transfer_row(
+                blank_trace_artifact_path=blank_path.name,
+                blank_trace_sha256=blank_sha,
+                detector_response_artifact_path=detector_path.name,
+                detector_response_sha256="f" * 64,
+            )
+        ],
+        artifact_root=tmp_path,
+    )
+
+    rejected = [
+        row for row in intake_rows if row.route_candidate_id == "ROUTE-CAND-001"
+    ][0]
+    assert (
+        rejected.transfer_rejection_reason
+        == "invalid_detector_response_artifact_or_sha256"
+    )
+    assert rejected.accepted_transfer_current is False
+
+
 def test_detector_blank_transfer_template_and_promotion_updates_are_not_claims() -> None:
     intake_rows, matrix_rows = build_detector_blank_transfer_intake(
         panel_matrix_rows=_panel_rows()
@@ -159,7 +216,9 @@ def test_detector_blank_transfer_intake_rejects_low_sample_and_bad_controls() ->
 def _complete_transfer_row(
     *,
     route_candidate_id: str = "ROUTE-CAND-001",
+    blank_trace_artifact_path: str = "blank-trace.csv",
     blank_trace_sha256: str = "a" * 64,
+    detector_response_artifact_path: str = "detector-response.csv",
     detector_response_sha256: str = "b" * 64,
     false_positive_rate_estimate: str = "0.0001",
     false_positive_rate_ci_low: str = "0.0",
@@ -173,8 +232,10 @@ def _complete_transfer_row(
         "route_candidate_id": route_candidate_id,
         "transfer_artifact_id": f"transfer-{route_candidate_id}",
         "blank_trace_artifact_id": f"blank-{route_candidate_id}",
+        "blank_trace_artifact_path": blank_trace_artifact_path,
         "blank_trace_sha256": blank_trace_sha256,
         "detector_response_artifact_id": f"detector-{route_candidate_id}",
+        "detector_response_artifact_path": detector_response_artifact_path,
         "detector_response_sha256": detector_response_sha256,
         "blank_trace_geometry_match_level": "sidewall_specific",
         "detector_response_model_id": "detector-response-v1",
@@ -187,3 +248,12 @@ def _complete_transfer_row(
         "uncertainty_model": "wilson_interval",
         "pre_registered_rule_status": pre_registered_rule_status,
     }
+
+
+def _source_artifact(tmp_path: Path, name: str) -> tuple[Path, str]:
+    path = tmp_path / name
+    path.write_text(
+        "route_candidate_id,value\nROUTE-CAND-001,detector-blank-source\n",
+        encoding="utf-8",
+    )
+    return path, sha256_file(path)

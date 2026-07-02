@@ -9,7 +9,10 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 import math
+from pathlib import Path
 from typing import Any, Mapping
+
+from nodi_simulator.realism_v2_io import sha256_file
 
 
 SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_VERSION = (
@@ -32,8 +35,10 @@ ROUTE_MATRIX_ACCEPTED_STATUS = (
 
 REQUIRED_TRANSFER_FIELDS: tuple[str, ...] = (
     "blank_trace_artifact_id",
+    "blank_trace_artifact_path",
     "blank_trace_sha256",
     "detector_response_artifact_id",
+    "detector_response_artifact_path",
     "detector_response_sha256",
     "blank_trace_geometry_match_level",
     "detector_response_model_id",
@@ -63,8 +68,10 @@ class SidewallDetectorBlankTransferIntakeRow:
     panel_detector_response_context_status: str
     transfer_artifact_id: str
     blank_trace_artifact_id: str
+    blank_trace_artifact_path: str
     blank_trace_sha256: str
     detector_response_artifact_id: str
+    detector_response_artifact_path: str
     detector_response_sha256: str
     blank_trace_geometry_match_level: str
     detector_response_model_id: str
@@ -124,6 +131,7 @@ def build_detector_blank_transfer_intake(
     *,
     panel_matrix_rows: list[Mapping[str, Any]],
     transfer_input_rows: list[Mapping[str, Any]] | None = None,
+    artifact_root: str | Path | None = None,
 ) -> tuple[
     list[SidewallDetectorBlankTransferIntakeRow],
     list[SidewallDetectorBlankTransferRouteMatrixRow],
@@ -133,7 +141,11 @@ def build_detector_blank_transfer_intake(
         str(row.get("route_candidate_id", "")): row for row in transfer_rows
     }
     intake_rows = [
-        _build_intake_row(panel, transfer_by_route.get(str(panel.get("route_candidate_id", "")), {}))
+        _build_intake_row(
+            panel,
+            transfer_by_route.get(str(panel.get("route_candidate_id", "")), {}),
+            artifact_root=artifact_root,
+        )
         for panel in panel_matrix_rows
     ]
     return intake_rows, _route_matrix_rows(intake_rows)
@@ -153,8 +165,10 @@ def detector_blank_transfer_template_rows(
                 "source_panel_matrix_row_id": str(panel.get("matrix_row_id", "")),
                 "transfer_artifact_id": "",
                 "blank_trace_artifact_id": "",
+                "blank_trace_artifact_path": "",
                 "blank_trace_sha256": "",
                 "detector_response_artifact_id": "",
+                "detector_response_artifact_path": "",
                 "detector_response_sha256": "",
                 "blank_trace_geometry_match_level": "sidewall_specific | validated_transfer",
                 "detector_response_model_id": "",
@@ -215,11 +229,17 @@ def detector_blank_transfer_promotion_update_rows(
 def _build_intake_row(
     panel: Mapping[str, Any],
     transfer: Mapping[str, Any],
+    *,
+    artifact_root: str | Path | None,
 ) -> SidewallDetectorBlankTransferIntakeRow:
     missing = [
         field for field in REQUIRED_TRANSFER_FIELDS if not str(transfer.get(field, "")).strip()
     ]
-    rejection_reason = _transfer_rejection_reason(transfer, missing)
+    rejection_reason = _transfer_rejection_reason(
+        transfer,
+        missing,
+        artifact_root=artifact_root,
+    )
     validation_status = _transfer_validation_status(transfer, rejection_reason)
     accepted = validation_status == TRANSFER_ACCEPTED_STATUS
     return SidewallDetectorBlankTransferIntakeRow(
@@ -238,8 +258,12 @@ def _build_intake_row(
         ),
         transfer_artifact_id=str(transfer.get("transfer_artifact_id", "")),
         blank_trace_artifact_id=str(transfer.get("blank_trace_artifact_id", "")),
+        blank_trace_artifact_path=str(transfer.get("blank_trace_artifact_path", "")),
         blank_trace_sha256=str(transfer.get("blank_trace_sha256", "")),
         detector_response_artifact_id=str(transfer.get("detector_response_artifact_id", "")),
+        detector_response_artifact_path=str(
+            transfer.get("detector_response_artifact_path", "")
+        ),
         detector_response_sha256=str(transfer.get("detector_response_sha256", "")),
         blank_trace_geometry_match_level=str(
             transfer.get("blank_trace_geometry_match_level", "")
@@ -267,7 +291,7 @@ def _build_intake_row(
         yield_current=False,
         next_required_evidence=(
             "sidewall-specific blank traces, detector response calibration, "
-            "controls, uncertainty, source hashes, and policy review"
+            "controls, uncertainty, source artifact paths/hashes, and policy review"
         ),
         hard_fail_if_promoted_without=(
             "detector_blank_transfer_promoted_without_accepted_transfer_bundle"
@@ -290,6 +314,8 @@ def _transfer_validation_status(
 def _transfer_rejection_reason(
     transfer: Mapping[str, Any],
     missing_fields: list[str],
+    *,
+    artifact_root: str | Path | None,
 ) -> str:
     if not transfer:
         return "missing_transfer_input"
@@ -298,10 +324,26 @@ def _transfer_rejection_reason(
     geometry_match = str(transfer.get("blank_trace_geometry_match_level", ""))
     if geometry_match not in {"sidewall_specific", "validated_transfer"}:
         return "invalid_blank_trace_geometry_match_level"
-    if not _valid_sha256(transfer.get("blank_trace_sha256")):
-        return "invalid_blank_trace_sha256"
-    if not _valid_sha256(transfer.get("detector_response_sha256")):
-        return "invalid_detector_response_sha256"
+    if artifact_root is None:
+        if not _valid_sha256(transfer.get("blank_trace_sha256")):
+            return "invalid_blank_trace_sha256"
+        if not _valid_sha256(transfer.get("detector_response_sha256")):
+            return "invalid_detector_response_sha256"
+    else:
+        if not _artifact_hash_ok(
+            transfer,
+            path_field="blank_trace_artifact_path",
+            sha_field="blank_trace_sha256",
+            artifact_root=artifact_root,
+        ):
+            return "invalid_blank_trace_artifact_or_sha256"
+        if not _artifact_hash_ok(
+            transfer,
+            path_field="detector_response_artifact_path",
+            sha_field="detector_response_sha256",
+            artifact_root=artifact_root,
+        ):
+            return "invalid_detector_response_artifact_or_sha256"
     fpr = _float_value(transfer.get("false_positive_rate_estimate"))
     fpr_low = _float_value(transfer.get("false_positive_rate_ci_low"))
     fpr_high = _float_value(transfer.get("false_positive_rate_ci_high"))
@@ -325,6 +367,27 @@ def _valid_sha256(value: Any) -> bool:
     if len(text) != 64:
         return False
     return all(char in "0123456789abcdefABCDEF" for char in text)
+
+
+def _artifact_hash_ok(
+    transfer: Mapping[str, Any],
+    *,
+    path_field: str,
+    sha_field: str,
+    artifact_root: str | Path,
+) -> bool:
+    expected = str(transfer.get(sha_field, "")).strip().lower()
+    if not _valid_sha256(expected):
+        return False
+    artifact_path_text = str(transfer.get(path_field, "")).strip()
+    if not artifact_path_text:
+        return False
+    artifact_path = Path(artifact_path_text)
+    if not artifact_path.is_absolute():
+        artifact_path = Path(artifact_root) / artifact_path
+    if not artifact_path.exists() or not artifact_path.is_file():
+        return False
+    return sha256_file(artifact_path).lower() == expected
 
 
 def _bounded_probability(value: float) -> bool:

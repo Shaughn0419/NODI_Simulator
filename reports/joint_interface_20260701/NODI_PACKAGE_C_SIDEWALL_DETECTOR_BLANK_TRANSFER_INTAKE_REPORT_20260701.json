@@ -3,7 +3,7 @@
     "disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_READY_SCHEMA_NO_TRANSFER_EVIDENCE",
     "artifact_id": "PACKAGE_C_SIDEWALL_DETECTOR_BLANK_TRANSFER_INTAKE_20260701",
     "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
-    "current_head": "a5ccd25a395ef09f839810b78af5d4b97699a987",
+    "current_head": "a31346420f405702dd9fb72e686617814233bbb7",
     "branch": "main",
     "source_assembly_disposition": "NODI_PACKAGE_C_SIDEWALL_ROUTE_YIELD_DETECTION_ASSEMBLY_V2_READY_NOT_CLAIM_READY",
     "source_detector_panel_disposition": "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CALIBRATION_PANEL_READY_CANDIDATE_NOT_PROBABILITY",
@@ -22,12 +22,12 @@
     "yield_current": false,
     "source_lock_rows": 9,
     "source_missing_rows": 0,
-    "dirty_context_rows": 94,
-    "non_release_dirty_context_rows": 90,
+    "dirty_context_rows": 96,
+    "non_release_dirty_context_rows": 89,
     "release_scoped_dirty_blocker_rows": 0,
     "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
     "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion",
-    "semantic_digest": "6190885da1fc711254dbe0d607e32326987ffd7ff75aec5f2bf2c755eea726ba"
+    "semantic_digest": "d08b1a7e1f7afe0260cefd1a1f5d9c4174de6052ef183f7de40a6ab629ed3ab6"
   },
   "intake_rows": [
     {
@@ -44,8 +44,10 @@
       "panel_detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
       "transfer_artifact_id": "",
       "blank_trace_artifact_id": "",
+      "blank_trace_artifact_path": "",
       "blank_trace_sha256": "",
       "detector_response_artifact_id": "",
+      "detector_response_artifact_path": "",
       "detector_response_sha256": "",
       "blank_trace_geometry_match_level": "",
       "detector_response_model_id": "",
@@ -57,7 +59,7 @@
       "controls_status": "",
       "uncertainty_model": "",
       "pre_registered_rule_status": "",
-      "missing_required_fields": "blank_trace_artifact_id;blank_trace_sha256;detector_response_artifact_id;detector_response_sha256;blank_trace_geometry_match_level;detector_response_model_id;false_positive_rate_estimate;false_positive_rate_ci_low;false_positive_rate_ci_high;n_blank_traces;n_detector_calibration_runs;controls_status;uncertainty_model;pre_registered_rule_status",
+      "missing_required_fields": "blank_trace_artifact_id;blank_trace_artifact_path;blank_trace_sha256;detector_response_artifact_id;detector_response_artifact_path;detector_response_sha256;blank_trace_geometry_match_level;detector_response_model_id;false_positive_rate_estimate;false_positive_rate_ci_low;false_positive_rate_ci_high;n_blank_traces;n_detector_calibration_runs;controls_status;uncertainty_model;pre_registered_rule_status",
       "transfer_rejection_reason": "missing_transfer_input",
       "transfer_validation_status": "detector_blank_transfer_missing_panel_ready",
       "accepted_transfer_current": false,
@@ -67,7 +69,7 @@
       "route_score_current": false,
       "winner_current": false,
       "yield_current": false,
-      "next_required_evidence": "sidewall-specific blank traces, detector response calibration, controls, uncertainty, source hashes, and policy review",
+      "next_required_evidence": "sidewall-specific blank traces, detector response calibration, controls, uncertainty, source artifact paths/hashes, and policy review",
       "hard_fail_if_promoted_without": "detector_blank_transfer_promoted_without_accepted_transfer_bundle",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score"
     },
@@ -85,8 +87,10 @@
       "panel_detector_response_context_status": "detector_identity_context_available_not_sidewall_response_validation",
       "transfer_artifact_id": "",
       "blank_trace_artifact_id": "",
+      "blank_trace_artifact_path": "",
       "blank_trace_sha256": "",
       "detector_response_artifact_id": "",
+      "detector_response_artifact_path": "",
       "detector_response_sha256": "",
       "blank_trace_geometry_match_level": "",
       "detector_response_model_id": "",
@@ -98,7 +102,7 @@
       "controls_status": "",
       "uncertainty_model": "",
       "pre_registered_rule_status": "",
-      "missing_required_fields": "blank_trace_artifact_id;blank_trace_sha256;detector_response_artifact_id;detector_response_sha256;blank_trace_geometry_match_level;detector_response_model_id;false_positive_rate_estimate;false_positive_rate_ci_low;false_positive_rate_ci_high;n_blank_traces;n_detector_calibration_runs;controls_status;uncertainty_model;pre_registered_rule_status",
+      "missing_required_fields": "blank_trace_artifact_id;blank_trace_artifact_path;blank_trace_sha256;detector_response_artifact_id;detector_response_artifact_path;detector_response_sha256;blank_trace_geometry_match_level;detector_response_model_id;false_positive_rate_estimate;false_positive_rate_ci_low;false_positive_rate_ci_high;n_blank_traces;n_detector_calibration_runs;controls_status;uncertainty_model;pre_registered_rule_status",
       "transfer_rejection_reason": "missing_transfer_input",
       "transfer_validation_status": "detector_blank_transfer_missing_panel_ready",
       "accepted_transfer_current": false,
@@ -108,7 +112,7 @@
       "route_score_current": false,
       "winner_current": false,
       "yield_current": false,
-      "next_required_evidence": "sidewall-specific blank traces, detector response calibration, controls, uncertainty, source hashes, and policy review",
+      "next_required_evidence": "sidewall-specific blank traces, detector response calibration, controls, uncertainty, source artifact paths/hashes, and policy review",
       "hard_fail_if_promoted_without": "detector_blank_transfer_promoted_without_accepted_transfer_bundle",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score"
     }
@@ -132,7 +136,7 @@
       "route_score_current": false,
       "winner_current": false,
       "yield_current": false,
-      "next_required_evidence": "sidewall-specific blank traces, detector response calibration, controls, uncertainty, source hashes, and policy review",
+      "next_required_evidence": "sidewall-specific blank traces, detector response calibration, controls, uncertainty, source artifact paths/hashes, and policy review",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score"
     },
     {
@@ -153,7 +157,7 @@
       "route_score_current": false,
       "winner_current": false,
       "yield_current": false,
-      "next_required_evidence": "sidewall-specific blank traces, detector response calibration, controls, uncertainty, source hashes, and policy review",
+      "next_required_evidence": "sidewall-specific blank traces, detector response calibration, controls, uncertainty, source artifact paths/hashes, and policy review",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score"
     }
   ],
@@ -166,8 +170,10 @@
       "source_panel_matrix_row_id": "DB-CAL-MATRIX-ROUTE-CAND-001",
       "transfer_artifact_id": "",
       "blank_trace_artifact_id": "",
+      "blank_trace_artifact_path": "",
       "blank_trace_sha256": "",
       "detector_response_artifact_id": "",
+      "detector_response_artifact_path": "",
       "detector_response_sha256": "",
       "blank_trace_geometry_match_level": "sidewall_specific | validated_transfer",
       "detector_response_model_id": "",
@@ -188,8 +194,10 @@
       "source_panel_matrix_row_id": "DB-CAL-MATRIX-ROUTE-CAND-002",
       "transfer_artifact_id": "",
       "blank_trace_artifact_id": "",
+      "blank_trace_artifact_path": "",
       "blank_trace_sha256": "",
       "detector_response_artifact_id": "",
+      "detector_response_artifact_path": "",
       "detector_response_sha256": "",
       "blank_trace_geometry_match_level": "sidewall_specific | validated_transfer",
       "detector_response_model_id": "",
@@ -268,7 +276,7 @@
       "source_id": "detector_blank_transfer_intake_source",
       "path": "nodi_simulator/sidewall_detector_blank_transfer_intake.py",
       "exists": "true",
-      "sha256": "6a5ad718a43d63b9125ecc4ae9c077c47b15adf6a9ab653ca7f050b9fa1872e7",
+      "sha256": "4712be12dbd0edf5669e8bcb606e6088dd873af13b60229dede33376e76bd9c0",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
       "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
       "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion"
@@ -277,7 +285,7 @@
       "source_id": "detector_blank_transfer_intake_tests",
       "path": "tests/test_sidewall_detector_blank_transfer_intake.py",
       "exists": "true",
-      "sha256": "442de172eddd193a5e758c2766be54b241113aec113d7489fb4e582c9b1ad262",
+      "sha256": "f0503422440ddbdf7578b3f7dd22cf32d242b4024dc294ee755c0acbdeaeb5ae",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
       "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
       "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion"
@@ -286,7 +294,7 @@
       "source_id": "detector_blank_transfer_intake_builder",
       "path": "tools/audits/build_nodi_package_c_sidewall_detector_blank_transfer_intake.py",
       "exists": "true",
-      "sha256": "042540c7193b5f65da84f636d69d3141a46e1da6a73130a2a8ed83455b268189",
+      "sha256": "5d5c95505da65769385039daca66d443afe46072c9a73b651b357620d3422d32",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
       "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
       "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion"
@@ -295,7 +303,7 @@
       "source_id": "detector_blank_transfer_intake_builder_tests",
       "path": "tests/test_nodi_package_c_sidewall_detector_blank_transfer_intake.py",
       "exists": "true",
-      "sha256": "1754720c65c92f50cc67332ce16013f0d45c7893577f9d2bf95fe8f8f7f59a69",
+      "sha256": "b78f5116ee4fe3cb4d03503db539e306c12d9d16ba080aa71e47b0d5736772f1",
       "claim_boundary": "detector_blank_transfer_intake_not_detection_probability_not_route_score",
       "allowed_use": "detector/blank transfer intake schema;sidewall blank trace validation;detector response calibration handoff",
       "blocked_use": "detection_probability;route_score;winner;JRC;yield;wet_pass_probability;production ingestion"
@@ -355,6 +363,24 @@
     },
     {
       "path": "configs/realism_v2/route_role_vocabulary.yaml",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_detector_blank_transfer_intake.py",
+      "git_status": " M",
+      "classification": "detector_blank_transfer_intake_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "nodi_simulator/sidewall_detector_wet_evidence_activation_runner.py",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
+    },
+    {
+      "path": "nodi_simulator/sidewall_route_accepted_evidence_smoke.py",
       "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
@@ -822,8 +848,26 @@
       "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     },
     {
-      "path": "nodi_simulator/sidewall_real_evidence_input_workspace.py",
-      "git_status": "??",
+      "path": "tests/test_sidewall_detector_blank_transfer_intake.py",
+      "git_status": " M",
+      "classification": "detector_blank_transfer_intake_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_detector_blank_transfer_intake.py",
+      "git_status": " M",
+      "classification": "detector_blank_transfer_intake_build_edit",
+      "release_decision": "included_in_commit_scope_before_publish"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_detector_blank_transfer_validation_hardening.py",
+      "git_status": " M",
+      "classification": "non_release_dirty_context",
+      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
+    },
+    {
+      "path": "tools/audits/build_nodi_package_c_sidewall_detector_wet_evidence_activation_runner.py",
+      "git_status": " M",
       "classification": "non_release_dirty_context",
       "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     },
@@ -832,12 +876,6 @@
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "reports/577_NODI_PACKAGE_C_SIDEWALL_REAL_EVIDENCE_INPUT_WORKSPACE_20260701.md",
-      "git_status": "??",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     },
     {
       "path": "reports/joint_interface_20260701/NODI_PACKAGE_C_POST_RC2_DELTA_RELEASE_V1_COMSOL_CLEAN_MIRROR_REQUEST_20260701.md",
@@ -852,28 +890,10 @@
       "release_decision": "excluded_from_source_lock"
     },
     {
-      "path": "tests/test_nodi_package_c_sidewall_real_evidence_input_workspace.py",
-      "git_status": "??",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
-    },
-    {
-      "path": "tests/test_sidewall_real_evidence_input_workspace.py",
-      "git_status": "??",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
-    },
-    {
       "path": "tools/audits/build_nodi_package_c_post_rc2_delta_release.py",
       "git_status": "??",
       "classification": "superseded_post_rc2_context",
       "release_decision": "excluded_from_source_lock"
-    },
-    {
-      "path": "tools/audits/build_nodi_package_c_sidewall_real_evidence_input_workspace.py",
-      "git_status": "??",
-      "classification": "non_release_dirty_context",
-      "release_decision": "ignored_for_detector_blank_transfer_intake_not_source_locked"
     }
   ]
 }

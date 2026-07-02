@@ -149,8 +149,15 @@ def _detector_fixture_rows(panel_rows: list[Mapping[str, Any]]) -> list[dict[str
                 "route_candidate_id": route_id,
                 "transfer_artifact_id": f"fixture-transfer-{route_id}",
                 "blank_trace_artifact_id": f"fixture-blank-{route_id}",
+                "blank_trace_artifact_path": (
+                    f"fixture_not_evidence/detector_blank/{route_id}/blank_trace.csv"
+                ),
                 "blank_trace_sha256": _hex(index),
                 "detector_response_artifact_id": f"fixture-detector-{route_id}",
+                "detector_response_artifact_path": (
+                    f"fixture_not_evidence/detector_blank/{route_id}/"
+                    "detector_response.csv"
+                ),
                 "detector_response_sha256": _hex(index + 16),
                 "blank_trace_geometry_match_level": "sidewall_specific",
                 "detector_response_model_id": "fixture-detector-response-v1",

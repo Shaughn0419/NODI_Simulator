@@ -6,7 +6,7 @@ Claim boundary: `real_evidence_input_workspace_not_template_as_evidence`
 
 Workspace rows: `4`.
 Header-only target rows: `4`.
-Headers refreshed now: `2`.
+Headers refreshed now: `1`.
 Real target data rows total: `0`.
 Targets created now: `0`.
 

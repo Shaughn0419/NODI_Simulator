@@ -8,7 +8,7 @@ Detector template rows: `2`; target input present: `True`.
 Wet template rows: `14`; target input present: `True`.
 Detection-value template rows: `2`; target input present: `True`.
 Yield/wet-value template rows: `2`; target input present: `True`.
-Workspace header-only target rows: `4`; refreshed now: `2`.
+Workspace header-only target rows: `4`; refreshed now: `1`.
 Route formula ready rows: `0`.
 Detection probability current rows: `0`; yield current rows: `0`; wet-pass current rows: `0`.
 

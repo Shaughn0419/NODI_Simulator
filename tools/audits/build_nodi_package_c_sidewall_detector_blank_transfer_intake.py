@@ -265,6 +265,7 @@ def build_payload() -> dict[str, Any]:
     intake_rows, matrix_rows = build_detector_blank_transfer_intake(
         panel_matrix_rows=panel_rows,
         transfer_input_rows=transfer_input_rows,
+        artifact_root=PROJECT_ROOT,
     )
     template_rows = detector_blank_transfer_template_rows(panel_rows)
     promotion_updates = detector_blank_transfer_promotion_update_rows(matrix_rows)
