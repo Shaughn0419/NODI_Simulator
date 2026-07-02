@@ -88,10 +88,13 @@ def test_build_outputs_passes_with_external_dirty_excluded():
     assert summary["source_lock_failures"] == 0
     assert summary["external_dirty_excluded"] is True
     assert summary["formal_qch_weighting_current"] is False
+    assert summary["formal_qch_sidecar_current"] is True
+    assert summary["formal_qch_sidecar_rows"] == 2
+    assert summary["accepted_exact_pressure_flow_binding_rows"] == 2
     assert summary["route_score_current"] is False
     assert summary["yield_current"] is False
     assert summary["detection_probability_current"] is False
     assert summary["Gate2D_rows"] == 4
     assert summary["EDGE_state"] == "NOT_APPROVED_PREAUTH_ONLY"
-    assert summary["QCH_state"] == "CANDIDATE_ONLY_NOT_FORMAL_QCH_SIDECAR"
-    assert summary["BINDING_state"] == "FAIL_CLOSED"
+    assert summary["QCH_state"] == "FORMAL_QCH_SIDECAR_READY_NOT_ROUTE_WEIGHTING"
+    assert summary["BINDING_state"] == "ACCEPTED_EXACT_PRESSURE_FLOW_BINDING_READY"

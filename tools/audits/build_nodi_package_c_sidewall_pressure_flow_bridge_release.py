@@ -20,7 +20,7 @@ OUTPUT_DIR = PROJECT_ROOT / f"reports/joint_interface_{DATE_STAMP}"
 REPORT_DIR = PROJECT_ROOT / "reports"
 COMSOL_REPO = PROJECT_ROOT.parent / "comsol test/comsol_ev_pbs_bonded_cross_junction"
 PREFIX = "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1"
-PASS_DISPOSITION = "PASS_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_READY_FOR_COMSOL_RECEIVER_NO_AUTH"
+PASS_DISPOSITION = "PASS_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_READY_WITH_FORMAL_QCH_SIDECAR"
 PARTIAL_DISPOSITION = "PARTIAL_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_BRIDGE_RELEASE_V1_BLOCKED_RELEASE_SCOPED_SOURCE_DRIFT_NO_AUTH"
 SELF_MANIFEST_SHA256 = "SELF_MANIFEST_NOT_SELF_HASHED_BY_DESIGN"
 
@@ -35,6 +35,9 @@ QCH_GRID_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_QCH_GRID_VALIDATION_REFR
 SELECTED_ANNULUS_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_SELECTED_ANNULUS_CONTEXT_STATUS_20260701.json"
 DETECTOR_BLANK_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_DETECTOR_BLANK_CONTEXT_REFRESH_STATUS_20260701.json"
 WET_SURFACE_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_WET_SURFACE_EVIDENCE_CONTRACT_STATUS_20260701.json"
+RESULT_BINDER_STATUS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_STATUS_20260701.json"
+RESULT_BINDER_BINDING_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_BINDING_ROWS_20260701.csv"
+RESULT_BINDER_FORMAL_QCH_ROWS = OUTPUT_DIR / "NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_RESULT_BINDER_FORMAL_QCH_SIDECAR_ROWS_20260701.csv"
 REPORT_541 = REPORT_DIR / "541_NODI_PACKAGE_C_SIDEWALL_PRESSURE_FLOW_VALIDATION_HARNESS_20260701.md"
 REPORT_542 = REPORT_DIR / "542_NODI_PACKAGE_C_SIDEWALL_INTEGRATED_PROMOTION_LEDGER_PRESSURE_FLOW_REFRESH_20260701.md"
 
@@ -52,6 +55,9 @@ SOURCE_INPUTS = {
     "selected_annulus_status": SELECTED_ANNULUS_STATUS,
     "detector_blank_status": DETECTOR_BLANK_STATUS,
     "wet_surface_contract_status": WET_SURFACE_STATUS,
+    "pressure_flow_result_binder_status": RESULT_BINDER_STATUS,
+    "pressure_flow_result_binder_binding_rows": RESULT_BINDER_BINDING_ROWS,
+    "pressure_flow_result_binder_formal_qch_rows": RESULT_BINDER_FORMAL_QCH_ROWS,
 }
 
 OUTPUTS = {
@@ -537,6 +543,7 @@ def validate_status_summaries() -> list[str]:
         "route_policy": ROUTE_POLICY_STATUS,
         "qch_grid": QCH_GRID_STATUS,
         "wet_surface": WET_SURFACE_STATUS,
+        "result_binder": RESULT_BINDER_STATUS,
     }.items():
         summary = load_summary(path)
         if int(summary.get("source_missing_rows", 0)) != 0:
@@ -546,6 +553,11 @@ def validate_status_summaries() -> list[str]:
         for field in ("formal_qch_weighting_current", "route_score_current", "winner_current", "yield_current", "detection_probability_current"):
             if field in summary and not bool_false(summary.get(field)):
                 failures.append(f"{label} {field} not false")
+    result_binder = load_summary(RESULT_BINDER_STATUS)
+    if result_binder.get("formal_qch_sidecar_current") is not True:
+        failures.append("result_binder formal_qch_sidecar_current not true")
+    if int(result_binder.get("formal_qch_sidecar_rows", 0)) != 2:
+        failures.append("result_binder formal_qch_sidecar_rows != 2")
     return failures
 
 
@@ -576,6 +588,7 @@ def build_outputs() -> dict[str, Any]:
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
     head = git_head()
     requests = read_csv_rows(REQUEST_ROWS)
+    result_binder = load_summary(RESULT_BINDER_STATUS)
     source_rows = source_lock_rows()
     dirty_rows = dirty_classifier_rows()
     request_failures = validate_request_rows(requests)
@@ -608,8 +621,9 @@ def build_outputs() -> dict[str, Any]:
     write_text(
         OUTPUTS["handoff_md"],
         "# NODI Package C Sidewall Pressure-Flow Bridge Request V1\n\n"
-        "COMSOL should perform no-run receiver validation now. Future pressure-flow solves or `.mph` loads require explicit authorization. "
-        "The two W500/D900 request rows are receipt-contract inputs only and must not be promoted to formal q_ch, route_score, JRC, winner, yield, or detection probability.\n",
+        "COMSOL-side readers should mirror the accepted pressure-flow binding and formal qch sidecar as received evidence. "
+        "Future pressure-flow solves or `.mph` loads require a separate execution packet. "
+        "The sidecar must not be promoted to route weighting, route_score, JRC, winner, yield, or detection probability by this bridge.\n",
     )
     write_csv_rows(OUTPUTS["auth_wording"], auth_wording)
     write_csv_rows(OUTPUTS["mutation"], mutations)
@@ -637,6 +651,12 @@ def build_outputs() -> dict[str, Any]:
             "final_worktree_not_clean_due_external_dirty": external_dirty_count > 0,
             "validation_failures": failures,
             "formal_qch_weighting_current": False,
+            "formal_qch_sidecar_current": result_binder.get("formal_qch_sidecar_current")
+            is True,
+            "formal_qch_sidecar_rows": int(result_binder.get("formal_qch_sidecar_rows", 0)),
+            "accepted_exact_pressure_flow_binding_rows": int(
+                result_binder.get("accepted_exact_pressure_flow_binding_rows", 0)
+            ),
             "route_score_current": False,
             "winner_current": False,
             "yield_current": False,
@@ -646,8 +666,8 @@ def build_outputs() -> dict[str, Any]:
             "production": False,
             "Gate2D_rows": 4,
             "EDGE_state": "NOT_APPROVED_PREAUTH_ONLY",
-            "QCH_state": "CANDIDATE_ONLY_NOT_FORMAL_QCH_SIDECAR",
-            "BINDING_state": "FAIL_CLOSED",
+            "QCH_state": "FORMAL_QCH_SIDECAR_READY_NOT_ROUTE_WEIGHTING",
+            "BINDING_state": "ACCEPTED_EXACT_PRESSURE_FLOW_BINDING_READY",
             "mutation_row_equivalent_total": sum(int(row["row_equivalent_count"]) for row in mutations),
             "unexpected_pass": 0,
             "authorization_promotion": 0,
@@ -664,8 +684,8 @@ def build_outputs() -> dict[str, Any]:
         "# NODI Package C Sidewall Pressure-Flow Bridge Release V1\n\n"
         f"Disposition: `{disposition}`\n\n"
         f"Current HEAD: `{head}`\n\n"
-        "This package freezes the two W500/D900 pressure-flow validation requests as a COMSOL-facing no-auth receipt contract. "
-        "It does not authorize COMSOL execution, `.mph` loading, formal q_ch, route_score, JRC, winner, yield, detection probability, runtime, or production.\n",
+        "This package mirrors the accepted W500/D900 pressure-flow result binding as a formal qch sidecar. "
+        "It does not authorize COMSOL execution, `.mph` loading, route weighting, route_score, JRC, winner, yield, detection probability, runtime, or production.\n",
     )
     write_csv_rows(OUTPUTS["manifest"], manifest_rows(disposition))
     return status_payload
